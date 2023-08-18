@@ -1,0 +1,1547 @@
+{
+  "range": "المجال",
+  "fieldConstraint": "مقيد قيمة الحقل",
+  "fieldModifier": "تعديل قيمة الحقل المدخلة",
+  "reset": "إعادة تعيين",
+  "ineverseOperation": "عكس العملية",
+  "advancedSearch": "بحث متقدم",
+  "display_field": "حقل العرض",
+  "treeView": "عرض الشجرة",
+  "cardView": "عرض البطاقات",
+  "newheader": "خانة رأسية جديدة",
+  "newtopic": "موضوع جديد",
+  "updateRoles": "تعديل الصلاحيات",
+  "alternatives": "البدلاء",
+  "initial": "ابتدائي",
+  "foreignField": "الحقل المقابل",
+  "localField": "الحقل المحلي",
+  "interfaceField": "حقل التمثيل",
+  "regionAccessSettings": "إعدادات الصلاحية وفقا للمنطقة",
+  "usersGroups": "مجموعات المستخدمين",
+  "back": "الرجوع",
+  "build": "بناء",
+  "recordViewSettings": "إعدادات عرض السجلات",
+  "tableSettings": "إعدادات الجدول",
+  "enableWorkflow": "تفعيل الموافقات على البيانات",
+  "indirectTable": "إدخال البيانات بطريقة غير مباشرة",
+  "staticTable": "جدول مستقل عن الموضوعات",
+  "record": "السجل",
+  "addContent": "إضافة محتوى",
+  "videoLink": "رابط الفيديو",
+  "actions": "التنبيهات",
+  "importData": "استيراد البيانات",
+  "tables": "الجداول",
+  "addBlueprint": "إضافة نموذج",
+  "list": "القائمة",
+  "access": "الصلاحيات",
+  "workspace": "الرئيسية",
+  "constant": "ثابت",
+  "table": "جدول",
+  "countDisplayName": "مسمى العرض لحقل التعداد",
+  "countFieldName": "مسمى حقل التعداد",
+  "falseValue": "قيمة عدم التحقق",
+  "trueValue": "قيمة التحقق",
+  "tooltipContent": "محتوى التفصيل",
+  "useGoogleMap": "استخدام خرائط جوجل",
+  "zoomLevel": "مستوى التكبير",
+  "operaotr": "عملية المقارنة",
+  "alias": "إعادة تسمية",
+  "removeParam": "إزالة خانة بحث",
+  "updateParam": "تعديل خانة بحث",
+  "addParam": "إضافة خانة بحث",
+  "maxRecordsCount": "العدد الأقصى للسجلات",
+  "ip": "عنوان IP",
+  "addIp": "إضافة عنوان IP",
+  "ipAllowedAddresses": "العناوين IPs المصرح لها الوصول",
+  "updateClient": "تعديل مسمى عميل",
+  "addClient": "إضافة عميل",
+  "clientName": "اسم العميل",
+  "clientsList": "قائمة العملاء",
+  "recordsPerPage": "عدد السجلات في الصفحة",
+  "contentViewTypes": [
+    { "name": "نص منسق", "value": "richText" },
+    { "name": "صورة", "value": "image" },
+    { "name": "قيديو", "value": "video" }
+  ],
+  "reportViewTypes": [
+    { "name": "نص منسق", "value": "richText" },
+    { "name": "صورة", "value": "image" },
+    { "name": "قيديو", "value": "video" },
+    { "name": "تصوير بيانات", "value": "dataViz" }
+  ],
+  "calcFields": "حساب الحقول",
+  "dataVizStages": [
+    { "name": "تصفية", "value": "filter" },
+    { "name": "تجميع", "value": "group" },
+    { "name": "تحديد العدد", "value": "limit" },
+    { "name": "ترتيب", "value": "sort" },
+    { "name": "تحويل قيم إلى حقول", "value": "transpose" }
+  ],
+  "selectOperation": "اختر عملية",
+  "modifyRecords": "تعديل السجلات",
+  "serieNameField": "حقل اسم المتوالية",
+  "serieName": "اسم المتوالية",
+  "serie": "المتوالية",
+  "series": "المتواليات",
+  "transposeFields": "تحويل قيم إلى خانات",
+  "sortRecords": "ترتيب السجلات",
+  "formEnd": "آخر السجلات",
+  "limitRecords": "تحديد عدد السجلات",
+  "anyCase": "حالة واحدة على الأقل",
+  "groupFields": "حقول التجميع",
+  "logical": "منطقي",
+  "groupMethod": "طريقة التجميع",
+  "statisticsMethods": [
+    { "name": "أول قيمة", "value": "first" },
+    { "name": "آخر قيمة", "value": "last" },
+    { "name": "العدد", "value": "count" },
+    { "name": "أقل قيمة", "value": "min" },
+    { "name": "أعلى قيمة", "value": "max" },
+    { "name": "مجال القيم", "value": "range" },
+    { "name": "المجموع", "value": "sum" },
+    { "name": "المعدل", "value": "mean" },
+    { "name": "قيمة الربع الأول", "value": "q1" },
+    { "name": "القيمة المتوسطة", "value": "medean" },
+    { "name": "قيمة الربع الثالث", "value": "q3" },
+    { "name": "النطاق الربيعي", "value": "iqr" },
+    { "name": "التباين", "value": "variance" },
+    { "name": "الانحراف المعياري", "value": "std" },
+    { "name": "القيمة السائدة", "value": "mode" },
+    { "name": "انحراف القيم", "value": "skewness" },
+    { "name": "مدى التفرط", "value": "kurtosis" }
+  ],
+  "_minutes": "دقائق",
+  "showInternalRegions": "عرض المناطق الداخلية",
+  "selectMap": "اختر خريطة",
+  "dataVizFilterOperators": [
+    {
+      "name": "يساوي",
+      "value": "eq"
+    },
+    {
+      "name": "لا يساوي",
+      "value": "ne"
+    },
+    {
+      "name": "أكبر من",
+      "value": "gt"
+    },
+    {
+      "name": "أكبر أو يساوي",
+      "value": "gte"
+    },
+    {
+      "name": "أقل من",
+      "value": "lt"
+    },
+    {
+      "name": "أقل أو يساوي",
+      "value": "lte"
+    }
+  ],
+  "filterOperations": {
+    "gte": "أكبر أو يساوي",
+    "lte": "أقل أو يساوي",
+    "eq": "يساوي",
+    "ne": "لا يساوي",
+    "in": "إحدى",
+    "nin": "غير إحدى",
+    "match": "يحوي",
+    "ummatch": "لا بحوي"
+  },
+  "filterRecords": "تصفية السجلات",
+  "video": "مقطع فيديو",
+  "addVideo": "إضافة مقطع فيدبو",
+  "text": "النص",
+  "addText": "إضافة نص",
+  "endDateField": "حقل تاريخ الإنتهاء",
+  "startDateField": "حقل تاريخ البدء",
+  "categoryField": " حقل التصنيف",
+  "indicatorField": "حقل قيمة المؤشر",
+  "levels": "المستويات",
+  "showIndicator": "عرض مؤشر",
+  "blinkStartLevel": "القيمة المبدئية للوميض",
+  "redStartLevel": "القيمة المبدئية للون الأحمر",
+  "orangeStartLevel": "القيمة المبدئية للون البرتقالي",
+  "maxSize": "القيمة الأعلى للقياس",
+  "minSize": "القيمة الأدني للقياس",
+  "useSize": "تحجيم النقاط",
+  "yFields": "حقول القيم العامودية",
+  "xField": "حقل القيمة الأفقية",
+  "clusterCounts": "عدد المجموعات",
+  "useCluster": "تفعيل حساب المجموعات المتقاربة",
+  "onEachGroup": "لكل مجموعة",
+  "polynomialOrder": "عدد الحدود",
+  "useRegression": "تفعيل حساب الإرتباط",
+  "regressionType": "نوع الإرتباط",
+  "regressionTypes": [
+    {
+      "name": "خطي",
+      "value": "linear"
+    },
+    {
+      "name": "لوغاريتمي",
+      "value": "logarithmic"
+    },
+    {
+      "name": "أسي",
+      "value": "exponential"
+    },
+    {
+      "name": "متعدد الحدود",
+      "value": "polynomial"
+    }
+  ],
+  "maxFields": "حقول القيم العليا",
+  "InverseIndicator": "عكس المؤشر",
+  "indicator": "مؤشر",
+  "doughnut": "مفرغ",
+  "effectStartValue": "القيمة الأدنى للتنبيه المرئي",
+  "locField": "حقل الموقع",
+  "valueField": "حقل القيمة",
+  "regionField": "حقل المنطقة",
+  "mapType": "نوع الخريطة",
+  "mapTypesList": [
+    {
+      "name": "تصنيف مناطق",
+      "value": "regions"
+    },
+    {
+      "name": "نقطي",
+      "value": "scatter"
+    },
+    {
+      "name": "متعدد التصنيفات",
+      "value": "pie"
+    }
+  ],
+  "area": "مساحي",
+  "markPoints": "تحديد النقاط",
+  "markPointsList": [
+    {
+      "name": "المعدل",
+      "value": "average"
+    },
+    {
+      "name": "القيمة الأدنى",
+      "value": "min"
+    },
+    {
+      "name": "القيمة الأعلى",
+      "value": "max"
+    }
+  ],
+  "markLines": "تحديد الخطوط",
+  "markLinesList": [
+    {
+      "name": "المعدل",
+      "value": "average"
+    },
+    {
+      "name": "القيمة الأدنى",
+      "value": "min"
+    },
+    {
+      "name": "القيمة الأعلى",
+      "value": "max"
+    }
+  ],
+  "color": " اللون",
+  "colorsRange": "نطاق الألوان",
+  "sizeField": "حقل القياس",
+  "nameField": "حقل التسمية",
+  "chartTypes": [
+    {
+      "name": "عمودي أو أفقي",
+      "value": "bar"
+    },
+    {
+      "name": "وصفي",
+      "value": "boxplot"
+    },
+    {
+      "name": "هرمي",
+      "value": "hierarchical"
+    },
+    {
+      "name": "خطي / مساحي",
+      "value": "line"
+    },
+    {
+      "name": "خرائط",
+      "value": "map"
+    },
+    {
+      "name": "دائري",
+      "value": "pie"
+    },
+    {
+      "name": "إنجاز",
+      "value": "polar"
+    },
+    {
+      "name": "رادار",
+      "value": "radar"
+    },
+    {
+      "name": "نقطي",
+      "value": "scatter"
+    },
+    {
+      "name": "جدول",
+      "value": "table"
+    },
+    {
+      "name": "مجال زمني",
+      "value": "timeline"
+    }
+  ],
+  "horizontal": "أفقي",
+  "groupField": "حقل التجميع",
+  "valueFields": "حقول القيم",
+  "categoriesField": "حقل التصنيف",
+  "addDataViz": "تصوير بيانات جديد",
+  "removeView": "إزالة النافذة",
+  "updateView": "تعديل النافذة",
+  "addView": "نافذة جديدة",
+  "viewSize": "حجم النافذة",
+  "width": "العرض",
+  "viewWidthSizes": [
+    {
+      "name": "ربع الشاشة",
+      "value": 3
+    },
+    {
+      "name": "ثلث الشاشة",
+      "value": 4
+    },
+    {
+      "name": "نصف الشاشة",
+      "value": 6
+    },
+    {
+      "name": "ثلثي الشاشة",
+      "value": 8
+    },
+    {
+      "name": "ثلاثة أرباع الشاشة",
+      "value": 9
+    },
+    {
+      "name": "كامل الشاشة",
+      "value": 12
+    }
+  ],
+  "height": "الطول",
+  "viewHeightSizes": [
+    {
+      "name": "نصف الشاشة",
+      "value": 1
+    },
+    {
+      "name": "كامل الشاشة",
+      "value": 2
+    }
+  ],
+  "subTitle": "العنوان الفرعي",
+  "viewSettings": "إعدادات العرض",
+  "viewSettingsInfo": "تحديد الحقول وتفاصيل الإظهار",
+  "viewDetails": "بيانات العرض",
+  "viewDetailsInfo": "تحديد العنوان ومصدر البيانات ونوع الإظهار",
+  "dataVizTypes": [
+    {
+      "name": "تصنيفي",
+      "value": "categorical"
+    },
+    {
+      "name": "التغير",
+      "value": "change"
+    },
+    {
+      "name": "هرمي",
+      "value": "hierarchical"
+    },
+    {
+      "name": "خريطة",
+      "value": "map"
+    },
+    {
+      "name": "رسم بياني نقطي",
+      "value": "plot"
+    },
+    {
+      "name": "إنجاز",
+      "value": "progress"
+    },
+    {
+      "name": "مخطط رادار",
+      "value": "radar"
+    },
+    {
+      "name": "جدول",
+      "value": "table"
+    },
+    {
+      "name": "مخطط زمني",
+      "value": "timeline"
+    }
+  ],
+  "removeSlide": "إزالة شاشة",
+  "playTime": "مدة العرض",
+  "updateSlide": "تعديل شاشة",
+  "addSlide": "شاشة جديدة",
+  "slides": "الشاشات",
+  "dashboardDetails": "البيانات التعريفية لشاشة الإحصائيات",
+  "updateDashboard": "تعديل شاشة إحصائيات",
+  "addDashboard": "شاشة إحصائيات جديدة",
+  "recordDetails": "بيانات السجل",
+  "seen": "المشاهدات",
+  "banner": "اللافتة",
+  "approve_date": "تاريخ الاعتماد",
+  "removeAttachment": "حذف المرفق",
+  "confirmRemoveAttachment": "هل أنت متأكد من حذف المرفق؟",
+  "image": "الصورة",
+  "addImage": "إضافة صورة",
+  "attachment": "المرفق",
+  "addAttachment": "إضافة مرفق",
+  "comments": "التعلبقات",
+  "commentsInfo": "تعليقات على الموضوع من بقية المستخدمين",
+  "saveHistory": "حفظ التعديلات السابقة",
+  "history": "التحديثات المسبقة",
+  "historyInfo": "قائمة بآخر التحديثات التي أجريت على الموضوع",
+  "topicDetails": "البيانات التعريفية وتفاصيل الموضوع",
+  "backTo": "العودة إلى",
+  "richText": "نص منسق",
+  "records": "السجلات",
+  "defineFields": "تعريف الحقول",
+  "language": "اللغة",
+  "signinInfo": "بيانات الدخول",
+  "changeAvatar": "تغيير الصورة",
+  "confirmSignout": "هل أنت متأكد من تسجيل الخروج؟",
+  "supervision": "الإشراف",
+  "updates": "التحديثات",
+  "attachments": "المرفقات",
+  "attachmentsInfo": "المرفقات المتعلقة بالموضوع من ملفات وصور",
+  "chooseImage": "اختر صورة",
+  "removeVlueprint": "إزلة نموذج",
+  "removeOrgunit": "إزلة وحدة إدارية",
+  "blueprintsList": "قائمة النماذج",
+  "addBanner": "أضف لافتة",
+  "updateBanner": "تحديث اللافتة",
+  "orgunitsListDesc": "تحديد صلاحية الوصول إلى وحدات إدارية محددة",
+  "blueprintListDesc": "قائمة النماذج المتضمنة لدى المحور",
+  "themeDetails": "البيانات التعريفية للمحور",
+  "backToThemes": "العودة إلى المحاور",
+  "source": "المصدر",
+  "topicalRecords": "سجلات موضوعية",
+  "topicalRecordsInfo": "تتضمن السجلات على عنوان، ملخص، لفتة ومشاهدات",
+  "collaborators": "المساهمون",
+  "collaboratorsDeffinition": "المستخدمون المخولون بإدارة السجلات ضمن مخزن البيانات",
+  "leftField": "الحقل الأيمن",
+  "rightField": "الحقل الأيسر",
+  "joinContraints": "مقيدات الربط",
+  "newStage": "مرحلة جديدة",
+  "stageOutput": "مخرجات المرحلة",
+  "initialOutput": "المخرجات الأولية",
+  "valueConstraint": "تقييد القيمة",
+  "save": "حفظ",
+  "historySize": "حفظ آخر تعديلات",
+  "dataStoreBranchesDeffinition": "مخازن بيانات تجميعية مشتقة من المخزن الحالي",
+  "adminMenuDesc": "إدارة الهيكيلة والصلاحيات",
+  "dataMenuDesc": "إدارة البيانات والتحليل",
+  "blueprintsManagementDesc": "تصميم النماذج والتخطيط",
+  "mainMenuDesc": "تحرير المحتوى والمراقبة",
+  "dashboard": "شاشة الإحصائيات",
+  "dashboards": "شاشات الإحصائيات",
+  "pestras": "نظام بسترس",
+  "mapFields": "توحيد الحقول",
+  "welcomeMsg": "تخطيط إستراتيجي، إدارة مخاطر، مؤشرات قياس، تحليل بيانات وغيرها من الأنظمة في منصة واحدة",
+  "aggrStages": [
+    {
+      "name": "تجزئة حقل",
+      "value": "bucket",
+      "desc": "يصنف المستندات الواردة إلى عدد محدد من المجموعات ، تسمى الحاويات ، بناءً على تعبير محدد"
+    },
+    {
+      "name": "نعويض القيم الخالية",
+      "value": "fill",
+      "desc": "تعويض قيم الحقول الخالية والمفقودة داخل المستندات"
+    },
+    {
+      "name": "تجميع حسب حقول معينة",
+      "value": "group",
+      "desc": "فصل المستندات إلى مجموعات وفقًا لمفتاح المجموعة"
+    },
+    {
+      "name": "تحديد عدد السجلات",
+      "value": "limit",
+      "desc": "الحد من عدد المستندات التي سيتم تمريرها إلى المرحلة التالية"
+    },
+    {
+      "name": "ربط أفقي مع مخزن بيانات",
+      "value": "join",
+      "desc": "ربط المستندات الحالية مع مستندات من مخزن بيانات خارجي للمعالجة"
+    },
+    {
+      "name": "تصفية السجلات",
+      "value": "match",
+      "desc": "تصفية المستندات غير المطابقة للشرط (الشروط) المحددة فقط إلى مرحلة التالية"
+    },
+    {
+      "name": "عينة عشوائية",
+      "value": "sample",
+      "desc": "الاختيار عشوائيًا العدد المحدد من المستندات من مستندات الإدخال"
+    },
+    {
+      "name": "اختيار حقول",
+      "value": "select",
+      "desc": "الإبقاء على الحقول المححدة ويصفي باقي الحقول"
+    },
+    {
+      "name": "إضافة حقول",
+      "value": "set",
+      "desc": "إضافة حقولًا جديدة إلى المستندات"
+    },
+    {
+      "name": "إضافة حقول تراكمية",
+      "value": "setWindowFields",
+      "desc": "تنفيذ عمليات على نطاق محدد من المستندات في مجموعة، ويعيد النتائج بناءً على العملية المختارة"
+    },
+    {
+      "name": "تخطي عدد من السجلات",
+      "value": "skip",
+      "desc": "تخطى العدد المحدد من المستندات قبل الإنتقال إلى المرحلة التالية"
+    },
+    {
+      "name": "ترتيب السجلات",
+      "value": "sort",
+      "desc": "إعادة ترتيب كل مستندات الإدخال قبل الإنتقال إلى المرحلة التالية"
+    },
+    {
+      "name": "ربط رأسي مع مخزن بيانات",
+      "value": "union",
+      "desc": "ربط المستندات الحالية رأسياً مع مستندات من مخزن بيانات خارجي للمعالجة"
+    },
+    {
+      "name": "إزالة حقول",
+      "value": "unset",
+      "desc": "إزالة / استبعاد الحقول المحددة من المستندات"
+    }
+  ],
+  "outputs": "المخرجات",
+  "chooseField": "اختر حقل",
+  "createFieldOptions": [
+    {
+      "name": "يدوي",
+      "value": 1
+    },
+    {
+      "name": "استخلاص",
+      "value": 2
+    },
+    {
+      "name": "تراكمي",
+      "value": 3
+    }
+  ],
+  "setStageOperations": [
+    {
+      "name": "تحويل",
+      "value": "convert"
+    },
+    {
+      "name": "تعديل زمني",
+      "value": "dateAdd"
+    },
+    {
+      "name": "فارق زمني",
+      "value": "dateDiff"
+    },
+    {
+      "name": "صيغة حسابية",
+      "value": "mathExpr"
+    },
+    {
+      "name": "ضمن مجال رقمي",
+      "value": "minmax"
+    },
+    {
+      "name": "تعديل قيمة",
+      "value": "modifiers"
+    },
+    {
+      "name": "جبر القيمة",
+      "value": "round"
+    },
+    {
+      "name": "قيمة شرطية",
+      "value": "switch"
+    }
+  ],
+  "fillOptions": [
+    {
+      "name": "قيمة",
+      "value": null
+    },
+    {
+      "name": "خطي",
+      "value": "linear"
+    },
+    {
+      "name": "السابق",
+      "value": "locf"
+    }
+  ],
+  "orderOptions": [
+    {
+      "name": "تنازلي",
+      "value": -1
+    },
+    {
+      "name": "تصاعدي",
+      "value": 1
+    }
+  ],
+  "groupBy": "التجميع بحسب",
+  "roundPlace": "الفاصلة العشرية",
+  "onNullValue": "القيمة في حالة عدم توفر قيمة للمدخل",
+  "onErrorValue": "القيمة في حالة الخطأ",
+  "convertOptionTypes": [
+    {
+      "name": "رقم صحيح",
+      "value": "int"
+    },
+    {
+      "name": "رقم عشري",
+      "value": "double"
+    },
+    {
+      "name": "قيمة منطقية",
+      "value": "bool"
+    },
+    {
+      "name": "نص",
+      "value": "string"
+    },
+    {
+      "name": "تاريخ",
+      "value": "date"
+    }
+  ],
+  "fieldDetails": "بيانات الحقل",
+  "unique": "متفرد",
+  "required": "إلزامي",
+  "attributesInfo": "نوع الحقل والقيود والقيمة الإفتراضية وخصائص أخرى",
+  "attributes": "الخصائص",
+  "definitionInfo": "البيانات التعريفية للحقل",
+  "definition": "التعريف",
+  "hierarchical": "سجلات هرمي",
+  "hierarchicalInfo": "إمكانية ربط السجلات بشكل هرمي (أب وأبناء)",
+  "dataStoreConstraintsSettingInfo": "تفعيل القيود على تحديث البيانات أو نشرها",
+  "blueprintGeneralSettings": "إعدادات الهيكلية والصور والمرفقات",
+  "generalSettings": "إعدادات عامة",
+  "updateVlueprint": "تعديل بيانات النموذج",
+  "blueprintAnalysisSettings": "إعداد عمليات التحليل الخاصة بالنموذج",
+  "analysis": "التحليل",
+  "blueprintSettingsDesc": "إعدادات خاصة بالنموذج",
+  "blueprintDetails": "البيانات التعريفية للنموذج",
+  "fieldsDeffinition": "تعريف وإعداد الخانات الخاصة بالنموذج",
+  "continue": "استمرار",
+  "addDataStoreDetails": "برجاء إضافة البيانات التعريفية لمخزن البيانات الجديد",
+  "backToVlueprints": "العودة إلى النماذج",
+  "backToDataStores": "العودة إلى مخازن البيانات",
+  "invalidData": "البيانات غير صحيحة",
+  "coordinates": "الإحداثيات",
+  "newCoords": "إحداثيات جديدة",
+  "regionsList": "قائمة المناطق",
+  "categoriesList": "قائمة التصنيفات",
+  "week": "أسبوع",
+  "activity": "النشاط",
+  "usersList": "قائمة المستخدمون",
+  "updateLogo": "تعديل الشعار",
+  "orgunitStructure": "هيكلية الإدارة",
+  "count": "العدد",
+  "class": "الفئة",
+  "branchesOrgunits": "وحدات إدارية متفرعة",
+  "orgunitsList": "قائمة الوحدات الإدارية",
+  "ownerName": "أمانة عمان الكبرى",
+  "newRecord": "إضافة بيانات",
+  "byThemes": "ضمن محور",
+  "specificTopics": "مواضيع مخصصة",
+  "topic": "موضوع",
+  "blueprint": "النموذج",
+  "others": "أخرى",
+  "relations": "الإرتباطات",
+  "mainDetails": "البيانات الرئيسية",
+  "deactivate": "تجميد",
+  "activate": "تفعيل",
+  "removeImages": "إزالة صور",
+  "remove": "إزالة",
+  "uploadImages": "حمل صور",
+  "images": "الصور",
+  "workflow": "سير العمل",
+  "draft": "مسودة",
+  "pendingApproval": "قيد الإعتماد",
+  "pending": "قيد الإعتماد",
+  "requestApproval": "طلب اعتماد",
+  "approved": "معتمد",
+  "approve": "اعتماد",
+  "icon": "الأيقونة",
+  "general": "عام",
+  "conditionalIcons": "الأيقونات الشرطية",
+  "defaultIcon": "الأيقونة الإفتراضية",
+  "loactionIconSettingsInfo": "الأيقونات الإفتراضية والأيقونات الشرطية",
+  "loactionIconSettings": "إعدادات أيقونة الموقع",
+  "parents": "قابل للتفرع من",
+  "all": "الكل",
+  "maxAttachmentsCount": "العدد الأقصى للمرفقات",
+  "maxImagesCount": "العدد الأقصى للصور",
+  "blueprintSettings": "إعدادات النموذج",
+  "addSettings": "إضافة إعدادات",
+  "addNew": "أضف جديد",
+  "_year": "سنة",
+  "year": "السنة",
+  "years": "السنوات",
+  "_month": "شهر",
+  "month": "الشهر",
+  "months": "الشهور",
+  "_day": "يوم",
+  "day": "اليوم",
+  "days": "الأيام",
+  "hour": "الساعة",
+  "hours": "الساعات",
+  "minute": "الدقيقة",
+  "minutes": "الدقائق",
+  "second": "الثانية",
+  "seconds": "الثواني",
+  "inCaseOfSuccess": "في حال تحقق البند",
+  "conditions": "الشروط",
+  "conditionDetails": "بنود الشرط",
+  "current": "الحالي",
+  "unbounded": "غير مقيد",
+  "cumulation": "التراكم",
+  "cumulationField": "حقل التراكم",
+  "cumulationBounds": "حدود التراكم",
+  "cumulationStart": "بداية التراكم",
+  "cumulationEnd": "نهاية التراكم",
+  "partition": "التقسيم",
+  "partitions": "التقسيمات",
+  "cumulateOperations": [
+    {
+      "name": "تجميع",
+      "value": "sum"
+    },
+    {
+      "name": "الفيمة الأدنى",
+      "value": "min"
+    },
+    {
+      "name": "القيمة الأعلى",
+      "value": "max"
+    },
+    {
+      "name": "المعدل",
+      "value": "avg"
+    },
+    {
+      "name": "العدد",
+      "value": "count"
+    }
+  ],
+  "sort": "الترتيب",
+  "ascending": "تصاعدي",
+  "descending": "تنازلي",
+  "selectField": "اختر حقل",
+  "selectFields": "اختر الحقول",
+  "tags": "الدلالات",
+  "addVlueprint": "نموذج جديد",
+  "limit": "القيد",
+  "input": "المدخل",
+  "output": "المخرج",
+  "stores": "المخازن",
+  "blueprints": "النماذج",
+  "exportData": "تصدير البيانات",
+  "export": "تصدير",
+  "newLocation": "موقع جديد",
+  "currentLocation": "الموقع الحالي",
+  "location": "الموقع",
+  "deleteCleansingSetting": "حذف إعدادات التحقق",
+  "confirmDeleteCleansingSettings": "هل أنت متأكد من حذف إعدادات التحقق؟",
+  "accuracy": "الدقة",
+  "minimum": "الحد الأدنى",
+  "maximum": "الحد الأعلى",
+  "omit": "حذف السجل",
+  "allFields": "جميع الخانات",
+  "castOptions": [
+    {
+      "name": "نص",
+      "value": "string"
+    },
+    {
+      "name": "رقمي",
+      "value": "number"
+    },
+    {
+      "name": "منطقي",
+      "value": "boolean"
+    },
+    {
+      "name": "تاريخ",
+      "value": "date"
+    }
+  ],
+  "cleansingStages": [
+    "تحويل",
+    "تعويض القيم",
+    "تحديد",
+    "إزالة فراغات النص",
+    "جبر القيمة",
+    "تضمين",
+    "جزء من تاريخ",
+    "إعادة تسمية الحقل"
+  ],
+  "AddFieldCleansingSettings": "إضافة إعدادات التحقق من البيانات لحقل",
+  "notFound": "غير موجود",
+  "example": "مثال",
+  "callDate": "تاريخ الإستدعاء",
+  "details": "البيانات",
+  "dataManagement": "إدارة البيانات",
+  "blueprintsManagment": "إدارة النماذج",
+  "compareToDateHint": "في حال إدخال تاريخ يرجى الإلتزام بالصيغى التالية: 'YYYY-MM-DD'",
+  "compareToEntryDateHint": "لإجراء مقارنة مع تاريخ الإدخال يمكنك إدخال الرمز: '@@'",
+  "operation": "العملية",
+  "operations": "العمليات",
+  "private": "خاص",
+  "public": "عام",
+  "addNewReport": "إضافة تقرير جديد",
+  "addNewRisk": "إضافة خطر جديد",
+  "chooseFile": "اختر ملف",
+  "documents": "الملفات",
+  "relatedTopics": "مواضيع مرتبطة",
+  "add": "إضافة",
+  "appName": "نظام المرصد الحضري",
+  "messages": {
+    "network_disconnected": "لا يوجد اتصال بالشبكة",
+    "loggedout": "تم تسجيل الخروج"
+  },
+  "menu": "القائمة",
+  "feeds": "الرئيسية",
+  "orgunits": "الوحدات الإدارية",
+  "groups": "المجموعات",
+  "users": "المستخدمون",
+  "categories": "التصنيفات",
+  "themes": "المحاور",
+  "regions": "المناطق",
+  "topics": "الموضوعات",
+  "tasks": "المهام",
+  "risks": "المخاطر",
+  "reports": "التقارير",
+  "pilots": "الربان",
+  "map": "الخريطة",
+  "maps": "الخرائط",
+  "errors": {
+    "File too large": "حجم الملف  تخطى الحجم المسموح به",
+    "fieldNotFound": "الحقل غير موجود",
+    "summaryRequired": "الرجاء إدخال الملخص للنموذج",
+    "nameRequired": "الإسم إلزامي",
+    "titleRequired": "الإسم إلزامي!",
+    "userNotFound": "المستخدم غير موجود",
+    "username": "الرجاء التحقق من اسم المستخدم",
+    "password": "الرجاء التحقق من كلمة المرور",
+    "currPasswordRequired": "الرجاء إدخال كلمة المرور الحالية",
+    "newPasswordRequired": "الرجاء إدخال كلمة المرور الجديدة",
+    "newPasswordInvalid": "كلمة المرور الجديدة غير مطابقة للشروط",
+    "confirmPasswordInvalid": "الرجاء تأكيد كلمة المرور الجديدة",
+    "wrongPassword": "كلمة المرور غير صحيحة",
+    "default": "خطأ في إتمام العملية.. الرجاء المحاولة لاحقا",
+    "nameAlreadyExists": "الإسم مستخدم مسبقا",
+    "titleAlreadyExists": "الإسم مستخدم مسبقا",
+    "categoryRequired": "التصنيف إلزامي",
+    "defaultValueRequired": "القيمة الإفتراضية إلزامية",
+    "fullnameRequired": "اسم المستخدم إلزامي",
+    "logoRequired": "الشعار إلزامي",
+    "usernameAlreadyExists": "اسم المستخدم موجود مسبقا!",
+    "valueRequired": "القيمة إلزامية",
+    "invalidSize": "حجم الملف كبير",
+    "invalidWidth": "عرض الصورة غير مطابق",
+    "invalidHeight": "طول الصورة غير مطابق",
+    "widthTooLarge": "عرض الصورة كبير",
+    "heightTooLarge": "طول الصورة كبير",
+    "widthTooSmall": "عرض الصورة صغير",
+    "heightTooSmall": "طول الصورة صغير",
+    "countExceed": "عدد الملفات أكثر من الحد"
+  },
+  "success": {
+    "blueprintAdd": "تم إضافة النموذج بنجاح",
+    "default": "تمت العملية بنجاح",
+    "orgunitAdd": "تم إضافة الوحدة الإدارية بنجاح",
+    "orgunitUpdate": "تم تعديل الوحدة الإدارية بنجاح",
+    "categoryAdd": "تم إضافة التصنيف بنجاع",
+    "categoryUpdate": "تم تعديل التصنيف بنجاح",
+    "topicAdd": "تم إضافة الموضوع بنجاع",
+    "branchAdd": "تم إضافة الفرع بنجاع",
+    "topicUpdate": "تم تعديل الموضوع بنجاح",
+    "update": "تم تعديل بنجاح",
+    "groupAdd": "تم إضافة المجموعة بنجاع",
+    "groupUpdate": "تم تعديل المجموعة بنجاح",
+    "orgunitRemove": "تم إزالة الوحدة الإدارية بنجاح",
+    "themeAdd": "تم إضافة المحور بنجاع",
+    "themeUpdate": "تم تعديل المحور بنجاح",
+    "themeSettingsAdd": "تم إضافة إعدادات  تصنيف جديد بنجاع",
+    "themeSettingsRemove": "تم إزالة إعدادات التصنيف بنجاح",
+    "themeSettingsUpdate": "تم تعديل إعدادات التصنيف بنجاح",
+    "roleRemove": "تم إزالة الصلاحية بنجاح",
+    "groupRemove": "تم إزالة المجموعة بنجاح",
+    "roleAdd": "تم إضافة الصلاحية بنجاع",
+    "userAdd": "تم إضافة المستخدم بنجاع",
+    "regionAdd": "تم إضافة المنطقة بنجاع",
+    "regionUpdate": "تم تعديل المنطقة بنجاح",
+    "orgunitLogoUpdate": "تم تعديل شعار الوحدة الإدارية بنجاع",
+    "usernameUpdate": "تم تعديل اسم المستخدم بنجاح",
+    "personalInfoUpdate": "تم تعديل البيانات الشخصية بنجاح",
+    "passwordUpdate": "تم تعديل كبمة المرور بنجاح",
+    "avatarUpdate": "تم تعديل الصورة الشخصية بنجاح",
+    "dataStoreAdd": "تم إضافة مخزن البيانات بنجاع",
+    "fieldAdd": "تم إضافة حقل جديد بنجاع"
+  },
+  "logoutAlertTitle": "تسجيل الخروج",
+  "logoutAlertContent": "هل أنت متأكد من نسجيل الخروج؟",
+  "ok": "نعم",
+  "yes": "نعم",
+  "no": "لا",
+  "cancel": "إلغاء",
+  "roles": "الصلاحيات",
+  "root": "Root",
+  "admin": "Admin",
+  "author": "Author",
+  "data_engineer": "Data Engineer",
+  "contributer": "Contributer",
+  "guest": "Guest",
+  "personalInfo": "البيانات الشخصية",
+  "account": "حسابي",
+  "sign": "تسجيل الدخول",
+  "username": "إسم المستخدم",
+  "password": "كلمة المرور",
+  "remember_me": "تذكرني!",
+  "signin": "دخول",
+  "signout": "تسجيل الخروج",
+  "close": "إغلاق",
+  "pageNotFound": "الصفحة غير موجودة!",
+  "orgunit": "الوحدة الإدارية",
+  "welcome": "مرحبا بك في",
+  "rights": "AL MERGAB © 2023",
+  "name": "الإسم",
+  "serial": "التسلسل",
+  "createDate": "تاريخ الإنشاء",
+  "entry_date": "تاريخ الإنشاء",
+  "lastModified": "آخر تعديل",
+  "last_modified": "آخر تعديل",
+  "noDataMsg": "لا يوجد بيانات",
+  "search": "بحث",
+  "edit": "تعديل",
+  "update": "تعديل",
+  "addOrgunit": "إضافة وحدة إدارية",
+  "parent": "متفرع من",
+  "none": "لا يوجد",
+  "updateOrgunit": "تعديل الوحدة الإدارية",
+  "main": "الرئيسية",
+  "addCategory": "إضافة تصنيف",
+  "updateCategory": "تعديل التصنيف",
+  "addTopic": "إضافة موضوع",
+  "desc": "التفصيل",
+  "system": "النظام",
+  "systemFields": "حقول النظام",
+  "system_administration": "إدارة النظام",
+  "settings": "الإعدادات",
+  "title": "العنوان",
+  "addBranch": "إضافة فرع",
+  "branches": "الفروع",
+  "addGroup": "إضافة مجموعة",
+  "readOnly": "عرض فقط",
+  "updateGroup": "تعديل المجموعة",
+  "removeOrgunt": "إزالة وحدة إدارية",
+  "confrimRemoveOrgunit": "هل أنت متأكد من إزالة الوحدة الإدارية؟",
+  "dataStores": "مخازن البيانات",
+  "addTheme": "محور جديد",
+  "updateTheme": "تعديل المحور",
+  "categoriesSettings": "إعدادات التصنيف",
+  "defaultValue": "القيمة الإفتراضية",
+  "multiValues": "متعدد القيم",
+  "addThemeSettings": "إضافة إعدادات تصنيف",
+  "_category": "تصنيف",
+  "category": "التصنيف",
+  "removeCatOptions": "إزالة إعدادات التصنيف",
+  "confirmRemoveCatOptions": "هل أنت متأكد من إزالة إعدادات التصنيف؟",
+  "updateThemeSettings": "تعديل إعدادات التصنيف",
+  "fullname": "الإسم",
+  "isActive": "فعال",
+  "userDetails": "بيانات المستخدم",
+  "email": "البريد الإلكتروني",
+  "mobile": "الموبايل",
+  "removeRole": "إزالة صلاحية",
+  "confirmRemoveRole": "هل أنت متأكد من إزالة الصلاحية؟",
+  "removeGroup": "إزالة مجموعة",
+  "confirmRemoveGroup": "هل أنت متأكد من إزالة المجموعة؟",
+  "addRole": "إضافة صلاحية",
+  "addUser": "إضافة مستخدم",
+  "addRegion": "إضافة منطقة",
+  "updateRegion": "تعديل منطقة",
+  "updateOrgunitLogo": "تعديل شعار وحدة إدارية",
+  "signingin": "جاري تسجيل الدخول",
+  "updateUsername": "تعديل اسم المستخدم",
+  "updatePersonalInfo": "تعديل البيانات الشخصية",
+  "updatePassword": "إعادة تعيين كلمة المرور",
+  "currPassword": "كلمة المرور الحالية",
+  "newPassword": "كلمة المرور الجديدة",
+  "confirmNewPassword": "تأكيد كلمة المرور الجديدة",
+  "updateAvatar": "تعديل الصورة الشخصية",
+  "type": "النوع",
+  "manual": "يدوي",
+  "manualEntry": "إدخال يدوي",
+  "aggregational": "تجميعي",
+  "aggregationSettings": "إعدادات التجميع",
+  "dataStoresTypes": [
+    {
+      "value": "table",
+      "name": "جدول"
+    },
+    {
+      "value": "web_service",
+      "name": "خدمة ويب"
+    },
+    {
+      "value": "aggregational",
+      "name": "تجميعي"
+    }
+  ],
+  "updateInterval": "فترات التحديث",
+  "intervals": "الفترات",
+  "intervalsList": [
+    {
+      "name": "لا يوجد",
+      "value": 0
+    },
+    {
+      "name": "شهري",
+      "value": 1
+    },
+    {
+      "name": "ربعي",
+      "value": 3
+    },
+    {
+      "name": "نصفي",
+      "value": 6
+    },
+    {
+      "name": "سنوي",
+      "value": 12
+    }
+  ],
+  "addDataStore": "إضافة مخزن بيانات",
+  "updateDataStore": "تعديل بيانات مخزن بيانات",
+  "owner": "المسؤول",
+  "fields": "الحقول",
+  "aggr": "التجميع",
+  "webService": "خدمة الويب",
+  "webServices": "خدمات الويب",
+  "noUpdates": "غير قابل للتعديل",
+  "noUpdatesInfo": "منع صلاحية التعديل على البيانات بعد النشر",
+  "requiresApproval": "اعتماد قبل النشر",
+  "requiresApprovalInfo": "يجب اعتماد البيانات من قبل الإدارة قيل النشر",
+  "data": "البيانات",
+  "blueprintData": "قائمة السجلات ضمن مخزن البيانات",
+  "statistics": "الإحصائيات",
+  "displayName": "مسمى العرض",
+  "isSystem": "النظام",
+  "unit": "وحدة القياس",
+  "fieldTypesList": [
+    {
+      "name": "غير معروف",
+      "value": "unknown"
+    },
+    {
+      "name": "إسناد",
+      "value": "serial"
+    },
+    {
+      "name": "منطقي",
+      "value": "boolean"
+    },
+    {
+      "name": "رقم صحيح",
+      "value": "int"
+    },
+    {
+      "name": "رقم عشري",
+      "value": "double"
+    },
+    {
+      "name": "نص",
+      "value": "string"
+    },
+    {
+      "name": "تاريخ",
+      "value": "date"
+    },
+    {
+      "name": "زمني",
+      "value": "datetime"
+    },
+    {
+      "name": "موقع",
+      "value": "location"
+    },
+    {
+      "name": "تصنيف",
+      "value": "category"
+    },
+    {
+      "name": "منطقة",
+      "value": "region"
+    },
+    {
+      "name": "صورة",
+      "value": "image"
+    }
+  ],
+  "fieldTypesMap": {
+    "unknown": "غير معروف",
+    "serial": "إسناد",
+    "boolean": "منطقي",
+    "int": "رقم صحيح",
+    "double": "رقم عشري",
+    "string": "نص",
+    "date": "تاريخ",
+    "datetime": "زمني",
+    "location": "موقع",
+    "category": "تصنيف",
+    "region": "منطقة",
+    "image": "صورة"
+  },
+  "referenceType": "نوع الإسناد",
+  "referenceTypesList": [
+    {
+      "name": "مخزن بيانات",
+      "value": "data_store"
+    },
+    {
+      "name": "وحدة إدارية",
+      "value": "orgunit"
+    },
+    {
+      "name": "مستخدم",
+      "value": "user"
+    }
+  ],
+  "referenceTypesMap": {
+    "category": "تصنيف",
+    "ordinal": "ترتيبي",
+    "region": "منطقة"
+  },
+  "isStatistable": "إحصائي",
+  "publish": "نشر",
+  "cancelPublish": "إلغاء النشر",
+  "removeUser": "إزالة مستخدم",
+  "removeTopic": "إزالة موضوع",
+  "removeDataStore": "إزالة مخزن بيانات",
+  "removePilot": "إزالة ربان",
+  "confirmRequest": "هل أنت متأكد من طلبك؟",
+  "confirmOperation": "هل أنت متأكد من العملية؟",
+  "addField": "حقل جديد",
+  "ordinal": "ترتيبي",
+  "value": "القيمة",
+  "entryDate": "تاريخ الإدخال",
+  "order": "الترتيب",
+  "noWsConfig": "لا يوجد إعدادات  لخدمةالويب",
+  "addWsConfig": "إضافة إعدادات خدمة الويب",
+  "updateWsConfig": "تعديل إعدادات خدمة الويب",
+  "resourceUri": "رابط الخدمة",
+  "httpMethod": "طريقة الطلب",
+  "httpMethods": [
+    {
+      "name": "GET",
+      "value": "get"
+    },
+    {
+      "name": "POST",
+      "value": "post"
+    }
+  ],
+  "dataPath": "مسار البيانات",
+  "fetchDay": "يوم الإستدعاء من الشهر",
+  "makeInitRequest": "تفعيل الطلب الإبتدائي للبيانات",
+  "replaceData": "استبدال البيانات بعد كل طلب",
+  "auth": "المصادقة",
+  "authSettings": "إعدادات المصادقة",
+  "removeAuthSetting": "إزالة إعدادات المصداقية",
+  "confirmRemoveAuth": "هل أنت متأكد من إزالة إعدادات المصداقية",
+  "params": "البنود",
+  "headers": "البيانات الرأسية",
+  "requestHeaders": "بيانات الطلب الرأسية",
+  "requestQueryFields": "خانات الإستعلم للطلب",
+  "removeQueryOption": "إزالة حقل الإستعلام",
+  "confirmRemoveQueryOption": "هل أنت متأكد من إزالة حقل الإستعلام؟",
+  "addQueryOption": "إضافة خانة استعلام",
+  "cleansing": "إعداد البيانات",
+  "cleansingSettings": "إعدادات التحقق من البيانات",
+  "addAuthSettings": "إضافة إعدادات المصادقة",
+  "updateAuthSettings": "تعديل إعدادات المصادقة",
+  "addHeader": "إضافة معلومة رأسية",
+  "removeHeader": "إزالة المعلومة الرأسية",
+  "confirmRemoveHeader": "هل أنت متأكد من إزالة المعلومة الرأسية؟",
+  "headerKey": "اسم الحقل الرأسية",
+  "fieldName": "اسم الحقل",
+  "field": "الحقل",
+  "use": "استخدام",
+  "usernameAndPassword": "اسم المستخدم وكلمة المرور",
+  "contentType": "نوع المحتوى المرسل",
+  "httpContentTypes": [
+    {
+      "name": "JSON",
+      "value": "application/json"
+    },
+    {
+      "name": "URLENCODED",
+      "value": "application/x-www-form-urlencoded"
+    }
+  ],
+  "acceptContent": "نوع المحتوى العائد",
+  "acceptContentTypes": [
+    {
+      "name": "JSON",
+      "value": "application/json"
+    },
+    {
+      "name": "XML",
+      "value": "text/xml"
+    },
+    {
+      "name": "CSV",
+      "value": "text/csv"
+    }
+  ],
+  "dateFormat": "صيغة التاريخ",
+  "addToDate": "أضف إلى التاريخ",
+  "modifyDate": "نعديل التاريخ",
+  "queryDest": "طريقة التضمين",
+  "body": "محتوى",
+  "queryDests": [
+    {
+      "name": "بحث",
+      "value": "search"
+    },
+    {
+      "name": "محتوى",
+      "value": "body"
+    },
+    {
+      "name": "مسار الرابط",
+      "value": "path"
+    }
+  ],
+  "usage": "الإستخدام",
+  "usages": [
+    {
+      "name": "الطلبات اللاحقة",
+      "value": 0
+    },
+    {
+      "name": "الطلب الإبتدائي",
+      "value": 1
+    },
+    {
+      "name": "كل الطلبات",
+      "value": 2
+    }
+  ],
+  "mainDataStore": "مخزن البيانات الأول",
+  "joins": "الإرتباطات",
+  "newName": "المسمى الجديد",
+  "isTemp": "مؤقت",
+  "filters": "المحددات",
+  "delete": "حذف",
+  "aggrForm": "إعدادات التجميع",
+  "dataStore": "مخزن البيانات",
+  "submit": "تثبيت",
+  "noFieldsFound": "لا يوجد خانات متاحة في مخزن البيانات",
+  "constraintsOperator": "المقارن",
+  "constraintsOperators": [
+    {
+      "name": "يساوي",
+      "value": "$eq"
+    },
+    {
+      "name": "لا يساوي",
+      "value": "$ne"
+    },
+    {
+      "name": "أكبر من",
+      "value": "$gt"
+    },
+    {
+      "name": "أكبر أو يساوي",
+      "value": "$gte"
+    },
+    {
+      "name": "أقل من",
+      "value": "$lt"
+    },
+    {
+      "name": "أقل أو يساوي",
+      "value": "$lte"
+    },
+    {
+      "name": "ضمن مجال",
+      "value": "$inRange"
+    },
+    {
+      "name": "خارج مجال",
+      "value": "$outRange"
+    },
+    {
+      "name": "إحدى",
+      "value": "$in"
+    },
+    {
+      "name": "غير إحدى",
+      "value": "$nin"
+    },
+    {
+      "name": "يقارب",
+      "value": "$regex"
+    }
+  ],
+  "filterOperators": [
+    {
+      "name": "يساوي",
+      "value": "$eq"
+    },
+    {
+      "name": "لا يساوي",
+      "value": "$ne"
+    },
+    {
+      "name": "أكبر من",
+      "value": "$gt"
+    },
+    {
+      "name": "أكبر أو يساوي",
+      "value": "$gte"
+    },
+    {
+      "name": "أقل من",
+      "value": "$lt"
+    },
+    {
+      "name": "أقل أو يساوي",
+      "value": "$lte"
+    },
+    {
+      "name": "إحدى",
+      "value": "$in"
+    },
+    {
+      "name": "غير إحدى",
+      "value": "$nin"
+    },
+    {
+      "name": "يقارب",
+      "value": "$regex"
+    }
+  ],
+  "modifiers": "تعديل القيمة",
+  "inputModifiers": "تعديل قيمة المدخل",
+  "valueModifier": "معدل القيمة",
+  "compareToModifier": "معدل قيمة المقارنة",
+  "valueModifiers": [
+    {
+      "name": "رقم صحيح",
+      "value": "int"
+    },
+    {
+      "name": "رقم عشري",
+      "value": "double"
+    },
+    {
+      "name": "قيمة منطقية",
+      "value": "boolean"
+    },
+    {
+      "name": "نص",
+      "value": "string"
+    },
+    {
+      "name": "تاريخ",
+      "value": "date"
+    },
+    {
+      "name": "جبر القيمة",
+      "value": "round"
+    },
+    {
+      "name": "جبر تنازلي",
+      "value": "floor"
+    },
+    {
+      "name": "جبر تصاعدي",
+      "value": "ceil"
+    },
+    {
+      "name": "إزلة الفراغات من الجانبين",
+      "value": "trim"
+    },
+    {
+      "name": "السنة",
+      "value": "year"
+    },
+    {
+      "name": "الشهر",
+      "value": "month"
+    },
+    {
+      "name": "اليوم",
+      "value": "day"
+    },
+    {
+      "name": "الساعات",
+      "value": "hour"
+    },
+    {
+      "name": "الدقائق",
+      "value": "minute"
+    },
+    {
+      "name": "الثواني",
+      "value": "second"
+    }
+  ],
+  "allMatch": "تحقق من جميع المقارنات",
+  "constraints": "المقيدات",
+  "constraint": "المقارنة",
+  "addConstraint": "أضف مقارنة",
+  "addSelection": "إضافة حقل",
+  "addFilter": "إضافة محدد",
+  "user": "المستخدم",
+  "joinOptions": "إعدادات الدمج",
+  "aggrJoinForm": "إعدادات الدمج والتجميع",
+  "extract": "استخلاص",
+  "compute": "الإستخلاص",
+  "mathExpr": "صيغة حسابية",
+  "formula": "المعادلة",
+  "cumsum": "تراكمي",
+  "dateUnit": "وحدة تاريخ",
+  "dateUnitsList": [
+    {
+      "value": "year",
+      "name": "سنة"
+    },
+    {
+      "value": "month",
+      "name": "شهر"
+    },
+    {
+      "value": "day",
+      "name": "يوم"
+    }
+  ],
+  "dateUnits": {
+    "year": "سنة",
+    "month": "شهر",
+    "day": "يوم"
+  },
+  "dateAdd": "تعديل زمني",
+  "dateDelte": "فارق زمني",
+  "src": "المصدر",
+  "amount": "المقدار",
+  "format": "الصيغة",
+  "from": "من",
+  "to": "إلى",
+  "removeConstraint": "إزالة مقارنة",
+  "confirmRemoveConstraint": "هل أنت متأكد منإزالة المقارنة؟",
+  "computeTypes": [
+    {
+      "name": "شرطي",
+      "value": "switch"
+    },
+    {
+      "name": "صيغة حسابية",
+      "value": "math_expr"
+    },
+    {
+      "name": "تراكمي",
+      "value": "cumulate"
+    },
+    {
+      "name": "معالجة",
+      "value": "modifier"
+    },
+    {
+      "name": "تعديل زمني",
+      "value": "date_add"
+    },
+    {
+      "name": "فارق زمني",
+      "value": "date_diff"
+    }
+  ],
+  "addContraint": "إضافة مقارنة",
+  "join": "الربط",
+  "addJoin": "إضافة ربط جديد",
+  "removeJoin": "إزالة الإرتباط",
+  "confirmRemoveJoin": "هل أنت متأكد من إزالة الإرتباط؟",
+  "logo": "الشعار",
+  "selectLogo": "اختيار الشعار",
+  "implicit": "ضمني",
+  "compareTo": "قيم المقارنة",
+  "group": "المجموعة",
+  "addNewTopic": "إضافة موضوع جديد",
+  "theme": "المحور",
+  "region": "المنطقة",
+  "summary": "الملخص",
+  "branchOf": "متفرع من",
+  "read": "إقرأ",
+  "taskStatesList": [
+    "قيد الإجراء",
+    "تأكيد الإتمام",
+    "تمت",
+    "تأكيد الإلغاء",
+    "ملغية",
+    "لم تبدأ",
+    "متأخرة"
+  ],
+  "riskStatesList": [
+    "قيد الدراسة",
+    "تأكيد الإتمام",
+    "تمت",
+    "تأكيد الإلغاء",
+    "ملغية"
+  ],
+  "timespan": "المدة الزمنية",
+  "priority": "الأولوية",
+  "measureLevels": [
+    {
+      "name": "منخفضة جدا",
+      "value": 0
+    },
+    {
+      "name": "منخفضة",
+      "value": 1
+    },
+    {
+      "name": "متوسطة",
+      "value": 2
+    },
+    {
+      "name": "عالية",
+      "value": 3
+    },
+    {
+      "name": "طارئة",
+      "value": 4
+    }
+  ],
+  "addNewTask": "إضافة مهمة جديدة",
+  "startDate": "تاريخ البدء",
+  "endDate": "تاريخ الإنتهاء"
+}

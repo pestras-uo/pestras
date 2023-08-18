@@ -43,3 +43,4 @@ Thumbs.db
 # 
 **/.env
 ecosystem.config.js
+public/uploads/*

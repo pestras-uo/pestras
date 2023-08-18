@@ -1,1 +1,65 @@
 /* You can add global styles to this file, and also import other style files */
+:root {
+  --font-family: 'Almarai', sans-serif;
+  --font-family-headers: 'Almarai', sans-serif;
+  --font-size: 14px;
+}
+
+[lang=ar] {
+  --letter-spacing: 0.03em;
+}
+
+// quill editor
+// -----------------------------------------------------------------------------------------------------------------------
+@import '~quill/dist/quill.core.css';
+@import '~quill/dist/quill.snow.css';
+
+.ql-toolbar {
+  direction: ltr !important;
+  background-color: var(--surface3);
+  border-radius: 8px 8px 0 0;
+}
+
+quill-editor {
+  width: 100%;
+  border: 2px solid var(--surface3);
+  border-radius: 8px;
+
+  &.quill-outline {
+    border-color: var(--surface4);
+  }
+
+  &.quill-surface1 .ql-container {
+    background-color: var(--surface1);
+  }
+}
+
+quill-editor .ql-toolbar,
+quill-editor .ql-container {
+  border: none !important;
+}
+
+.ql-container {
+  font-family: var(--font-family);
+  font-size: 1rem;
+  min-height: 240px;
+  border-radius: 0 0 8px 8px;
+  background-color: var(--surface3);
+
+}
+
+quill-editor:focus-within {
+  border-color: var(--primary);
+
+  .ql-container {
+    background-color: transparent;
+  }
+
+  &.quill-surface1 .ql-container {
+    background-color: var(--surface1);
+  }
+}
+
+.ql-editor p {
+  line-height: 1.8;
+}

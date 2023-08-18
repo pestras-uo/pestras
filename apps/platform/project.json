@@ -4,7 +4,7 @@
   "projectType": "application",
   "prefix": "pestras",
   "sourceRoot": "apps/platform/src",
-  "tags": [],
+  "tags": ["scope:platform"],
   "targets": {
     "build": {
       "executor": "@angular-devkit/build-angular:browser",
@@ -38,13 +38,33 @@
           ],
           "outputHashing": "all"
         },
+        "staging": {
+          "buildOptimizer": false,
+          "optimization": false,
+          "vendorChunk": true,
+          "extractLicenses": false,
+          "sourceMap": true,
+          "namedChunks": true,
+          "fileReplacements": [
+            {
+              "replace": "apps/platform/src/environments/environment.ts",
+              "with": "apps/platform/src/environments/environment.staging.ts"
+            }
+          ]
+        },
         "development": {
           "buildOptimizer": false,
           "optimization": false,
           "vendorChunk": true,
           "extractLicenses": false,
           "sourceMap": true,
-          "namedChunks": true
+          "namedChunks": true,
+          "fileReplacements": [
+            {
+              "replace": "apps/platform/src/environments/environment.ts",
+              "with": "apps/platform/src/environments/environment.development.ts"
+            }
+          ]
         }
       },
       "defaultConfiguration": "production"
