@@ -17,6 +17,7 @@
     "paths": {
       "@pestras/backend/models": ["libs/backend/models/src/index.ts"],
       "@pestras/backend/util": ["libs/backend/util/src/index.ts"],
+      "@pestras/frontend/state": ["libs/frontend/state/src/index.ts"],
       "@pestras/frontend/ui": ["libs/frontend/ui/src/index.ts"],
       "@pestras/frontend/util/contra": [
         "libs/frontend/util/contra/src/index.ts"

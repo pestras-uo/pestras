@@ -39,6 +39,10 @@
               {
                 "sourceTag": "scope:frontend-ui",
                 "onlyDependOnLibsWithTags": ["scope:shared"]
+              },
+              {
+                "sourceTag": "scope:frontend-state",
+                "onlyDependOnLibsWithTags": ["scope:shared", "scope:frontend-util-stator"]
               }
             ]
           }
