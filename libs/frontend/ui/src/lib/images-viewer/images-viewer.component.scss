@@ -1,0 +1,27 @@
+.thumbnail {
+  cursor: pointer;
+  transition: scale 200ms;
+
+  &:hover {
+    scale: 1.1;
+  }
+}
+
+.enlarge {
+  padding: 32px;
+  gap: 32px;
+  width: 100vw;
+  height: 100vh;
+  display: grid;
+  grid-template-rows: 1fr auto;
+
+  .img-wapper {
+    width: calc(100vw - 64px);
+    height: calc(100vh - 128px);
+  }
+
+  img {
+    max-width: 100%;
+    max-height: 100%;
+  }
+}

@@ -1,0 +1,22 @@
+<div>
+  <div *ngFor="let toast of toasts$ | async" class="toast flex align-items-stretch shadow-4" [ngClass]="toast.classes">
+
+    <div *ngIf="toast.type === 'info'" class="toast-icon flex align-items-center p-3 bg-primary">
+      <i color="white" puiIcon="info"></i>
+    </div>
+
+    <div *ngIf="toast.type === 'success'" class="toast-icon flex align-items-center p-3 bg-success">
+      <i color="white" puiIcon="check"></i>
+    </div>
+
+    <div *ngIf="toast.type === 'warn'" class="toast-icon flex align-items-center p-3 bg-warn">
+      <i color="white" puiIcon="warning"></i>
+    </div>
+
+    <div *ngIf="toast.type === 'error'" class="toast-icon flex align-items-center p-3 bg-danger">
+      <i color="white" puiIcon="error"></i>
+    </div>
+
+    <p class="p-3 bold">{{toast.msg}}</p>
+  </div>
+</div>

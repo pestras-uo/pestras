@@ -1,0 +1,60 @@
+:host {
+  display: block;
+  max-width: 100%;
+  max-height: 100%;
+  background-color: var(--surface2);
+  border-radius: 16px;
+  overflow: hidden;
+  padding: 8px;
+  transition: background-color 250ms;
+
+  &:hover {
+    background-color: var(--surface3);
+  }
+
+  &.droping {
+    background-color: var(--accent);
+  }
+
+  .empty-container {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    width: 100%;
+    height: 100%;
+    align-items: center;
+    justify-content: center;
+
+    p {
+      color: var(--text2);
+    }
+  }
+
+  &.large p{
+    font-size: 1.5rem;
+  }
+
+  .images-container {
+    display: flex;
+    width: 100%;
+    height: 100%;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 8px;
+
+    img {
+      border-radius: 8px;
+      height: 96px;
+    }
+  }
+
+  .image-container {
+    position: relative;
+
+    button {
+      position: absolute;
+      inset-block-start: 8px;
+      inset-inline-end: 8px;
+    }
+  }
+}

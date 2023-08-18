@@ -1,0 +1,88 @@
+:host {
+  --height: 40px;
+  --shape-height: 24px;
+
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  height: var(--height);
+
+  &.small {
+    --height: 24px;
+    --shape-height: 20px;
+
+    p {
+      font-size: 0.85rem;
+    }
+  }
+
+  .shape {
+    position: relative;
+    height: var(--shape-height);
+    width: calc(var(--shape-height) * 2 - 4px);
+    border-radius: calc(var(--shape-height) / 2);
+    cursor: pointer;
+    overflow: hidden;
+
+    &:before {
+      opacity: 1;
+      display: block;
+      position: absolute;
+      content: " ";
+      z-index: 1;
+      width: 100%;
+      height: 100%;
+      transition: opacity 200ms;
+    }
+
+    &.primary:before {
+      background-color: var(--primary);
+    }
+
+    &.success:before {
+      background-color: var(--success);
+    }
+
+    &.warn:before {
+      background-color: var(--warn);
+    }
+
+    &.danger:before {
+      background-color: var(--danger);
+    }
+
+    &.off {
+      .circle {
+        transform: translateX(100%);
+      }
+
+      &::before {
+        opacity: 0.3;
+      }
+    }
+
+    &.null {
+      .circle {
+        transform: translateX(50%);
+      }
+
+      &::before {
+        opacity: 0.6;
+      }
+    }
+  }
+
+  .circle {
+    position: absolute;
+    z-index: 2;
+    inset-inline-end: 2px;
+    inset-block-start: 2px;
+    height: calc(var(--shape-height) - 4px);
+    aspect-ratio: 1/1;
+    border-radius: 50%;
+    box-shadow: 0px 0px 4px rgba(0,0,0,0.2);
+    background-color: var(--surface1);
+    transform: translateX(0);
+    transition: transform 200ms ease-out;
+  }
+}

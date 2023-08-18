@@ -1,0 +1,16 @@
+:host {
+  width: 100%;
+  min-height: 36px;
+
+  .fc-small & {
+    min-height: 28px;
+  }
+
+  p {
+    line-height: 36px;
+
+    .fc-small & {
+      line-height: 28px;
+    }
+  }
+}

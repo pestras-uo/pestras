@@ -1,0 +1,39 @@
+<div class="flex flex-wrap gap-2">
+
+  <div class="relative radius-4 overflow-hidden" *ngFor="let image of images; let i = index">
+    <img class="h-4 thumbnail" [src]="host + image.src" [alt]="image.title" (click)="enlarge(enlargeTmp, i)">
+    <button *ngIf="canRemove" class="btn-tiny btn-icon btn-round btn-surface1 shadow-2 absolute ibs-3 iis-3"
+      (click)="remove.emit(image.id)">
+      <i size="tiny" puiIcon="close"></i>
+    </button>
+  </div>
+
+  <ng-template #enlargeTmp>
+    <div class="enlarge">
+
+      <div class="img-wapper flex align-items-center justify-content-center">
+        <img class="radius-8 shadpw-6" [src]="host + images[selected].src" [alt]="images[selected].title">
+      </div>
+
+      <div class="flex align-items-center">
+        <button *ngIf="images.length > 1" class="btn-small btn-icon btn-round btn-surface1 shadow-2"
+          (click)="prev()">
+          <i class="rtl-y-flip" size="small" puiIcon="arrow_back"></i>
+        </button>
+
+        <div class="grow"></div>
+  
+        <button class="btn-small btn-icon btn-danger btn-round shadow-2" (click)="closeEnlarge()">
+          <i size="small" puiIcon="close"></i>
+        </button>
+
+        <div class="grow"></div>
+        
+        <button *ngIf="images.length > 1" class="btn-small btn-icon btn-round btn-surface1 shadow-2"
+          (click)="next()">
+          <i class="rtl-y-flip" size="small" puiIcon="arrow_forward"></i>
+        </button>
+      </div>
+    </div>
+  </ng-template>
+</div>

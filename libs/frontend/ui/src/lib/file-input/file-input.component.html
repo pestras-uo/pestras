@@ -1,0 +1,11 @@
+<input 
+  #input 
+  [id]="labelRef" 
+  class="hide" 
+  type="file" 
+  [accept]="accept" 
+  [multiple]="max > 1"
+  (change)="filesChange(input.files)">
+
+<p *ngIf="max === 1">{{message}}: <strong *ngIf="size" class="f9">{{size}} {{unit}}</strong></p>
+<p *ngIf="max > 1">{{message}}: <strong *ngIf="size" class="f9">{{total}}</strong></p>

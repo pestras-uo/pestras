@@ -1,0 +1,19 @@
+:host {
+  display: block;
+
+  td.bool:not(td.bool:last-child) {
+    text-align: center;
+  }
+
+  .date {
+    width: 96px;
+  }
+
+  .sub-content {
+    display: none;
+  }
+
+  .selected + .sub-content {
+    display: table-row;
+  }
+}

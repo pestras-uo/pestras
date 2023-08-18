@@ -1,0 +1,84 @@
+.indicator {
+  // ['#55DD88', '#FFBB55', '#FF4455'];
+  --green: #55DD88;
+  --orange: #FFBB55;
+  --red: #FF4455;
+  --state: var(--green);
+  --size: 28px;
+
+  display: inline-block;
+  position: relative;
+  width: var(--size);
+  height: var(--size);
+  background-color: var(--state);
+  border-radius: 50%;
+
+  &:before {
+    display: none;
+    position: absolute;
+    content: " ";
+    width: var(--size);
+    height: var(--size);
+    background-color: var(--state);
+    border-radius: 50%;
+    animation: indicator-blink 1.5s ease-out infinite;
+  }
+  
+  &:after {
+    display: none;
+    position: absolute;
+    content: " ";
+    width: var(--size);
+    height: var(--size);
+    background-color: var(--state);
+    border-radius: 50%;
+    animation: indicator-blink-more 1.5s ease-out infinite 0.5s;
+  }
+
+  &.orange {
+    --state: var(--orange);
+  }
+
+  &.red {
+    --state: var(--red);
+  }
+
+  &.blink {
+    --state: var(--red);
+
+    &:before,
+    &:after {
+      display: block;
+    }
+  }
+
+  &.small {
+    --size: 20px;
+  }
+
+  &.large {
+    --size: 40px;
+  }
+}
+  
+@keyframes indicator-blink {
+  0% {
+    opacity: 1;
+    scale: 1;
+  }
+  100% {
+    opacity: 0;
+    scale: 1.75;
+  }
+}
+
+@keyframes indicator-blink-more {
+  0% {
+    opacity: 1;
+    scale: 1;
+  }
+  100% {
+    opacity: 0;
+    scale: 2;
+  }
+}

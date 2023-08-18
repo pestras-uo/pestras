@@ -1,0 +1,31 @@
+<ng-container *ngIf="ready$ | async">
+
+  <google-map #map [options]="options" [zoom]="zoom" (mapDrag)="drag()" (mapDragend)="dragend()">
+
+    <map-marker *ngIf="mode === 'pick'" [position]="pickMarkerPosition"
+      icon="assets/imgs/location-accent-icon.png"></map-marker>
+
+    <map-marker *ngFor="let marker of markers" [position]="marker.position"
+      icon="assets/imgs/location-icon.png"></map-marker>
+
+    <map-polygon *ngIf="polygon" [paths]="polygon.coords" [options]="{ fillColor: polygon.fillColor, strokeColor: polygon.strokeColor}"></map-polygon>
+
+  </google-map>
+
+  <div *ngIf="mode === 'pick'" class="map-action">
+
+    <button *ngIf="this.currPosition" class="btn-small btn-icon btn-success shadow-2" (click)="setCurrent()">
+      <i puiIcon="location_on" size="small" color="white"></i>
+    </button>
+
+    <button class="btn-small btn-icon btn-danger shadow-2" (click)="exitPickMode(null)">
+      <i puiIcon="close" size="small" color="white"></i>
+    </button>
+
+    <button class="btn-small btn-icon btn-primary shadow-2" (click)="exitPickMode(pickMarkerPosition)">
+      <i puiIcon="check" size="small" color="white"></i>
+    </button>
+
+  </div>
+
+</ng-container>

@@ -1,17 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { DestroyRef, inject } from "@angular/core";
-import { BehaviorSubject, Observable, Subject, distinctUntilChanged, filter, switchMap, takeUntil } from "rxjs";
-
-export function gate<T>(state: BehaviorSubject<boolean> | Observable<boolean>, inverse = false) {
-  return (source: Observable<T>) => {
-    return state
-      .pipe(
-        filter(val => inverse ? !val : val),
-        distinctUntilChanged(),
-        switchMap(() => source)
-      );
-  }
-}
+import { Subject, takeUntil } from "rxjs";
 
 export function Unsubscriber(constructor: any) {
   // get reference to the original ngOnDestory method

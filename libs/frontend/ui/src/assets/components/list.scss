@@ -1,0 +1,62 @@
+:where(.list) {
+
+  > :where(.list-item) {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+    min-height: 40px;
+    background-color: transparent;
+    border-block-end: 1px solid var(--border1);
+
+    &:last-of-type {
+      border-block-end: none;
+    }
+  }
+
+  &.list-clean {
+    >.list-item {
+      border-block-end: none;
+      border-radius: 8px;
+    }
+  }
+
+  &.list-actions>.list-item {
+    cursor: pointer;
+    transition: background-color 250ms;
+
+    &:hover {
+      background-color: var(--surface2);
+    }
+  }
+
+
+  .list-item.active {
+    border-inline-start: 5px solid var(--primary);
+  }
+
+  .list-item-hero {
+    display: flex;
+    width: 48px;
+    height: 48px;
+    border-radius: 24px;
+    background-color: var(--surface4);
+    align-items: center;
+    justify-content: center;
+    margin-inline-end: calc(var(--spacing) / 2);
+    font-weight: bold;
+    overflow: hidden;
+    text-align: center;
+
+    &.list-item-hero-large {
+      width: 56px;
+      height: 56px;
+      border-radius: 28px;
+    }
+
+    &.list-item-hero-small {
+      width: 40px;
+      height: 40px;
+      border-radius: 20px;
+    }
+  }
+}

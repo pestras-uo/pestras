@@ -1,0 +1,7 @@
+<div 
+  *ngFor="let image of images; let i = index"
+  class="image"
+  [style.background-image]="'url(' + image + ')'"
+  [class.active]="i === active"
+  [class.fading]="i === fading">
+</div>

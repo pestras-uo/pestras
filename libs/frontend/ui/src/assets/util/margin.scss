@@ -1,0 +1,143 @@
+// Copyright (c) 2021 Pestras
+// 
+// This software is released under the MIT License.
+// https://opensource.org/licenses/MIT
+
+.m-auto {
+  margin: auto;
+}
+.mb-auto {
+  margin-block: auto;
+}
+.mi-auto {
+  margin-inline: auto;
+}
+.i-auto {
+  inset: auto;
+}
+.ib-auto {
+  inset-block: auto;
+}
+.ibs-auto {
+  inset-block-start: auto;
+}
+.ibe-auto {
+  inset-block-end: auto;
+}
+.ii-auto {
+  inset-inline: auto;
+}
+.iis-auto {
+  inset-inline-start: auto;
+}
+.iie-auto {
+  inset-inline-end: auto;
+}
+
+@each $name, $value in $sizes {
+
+  .gap-#{$name} {
+    gap: $value + px !important;
+  }
+
+  .col-gap-#{$name} {
+    column-gap: $value + px !important;
+  }
+
+  .row-gap-#{$name} {
+    row-gap: $value + px !important;
+  }
+
+  .m-#{$name} {
+    margin: $value + px !important;
+  }
+
+  .mb-#{$name} {
+    margin-block: $value + px !important;
+  }
+
+  .mi-#{$name} {
+    margin-inline: $value + px !important;
+  }
+
+  .mbs-#{$name} {
+    margin-block-start: $value + px !important;
+  }
+
+  .mbe-#{$name} {
+    margin-block-end: $value + px !important;
+  }
+
+  .mis-#{$name} {
+    margin-inline-start: $value + px !important;
+  }
+
+  .mie-#{$name} {
+    margin-inline-end: $value + px !important;
+  }
+
+  .p-#{$name} {
+    padding: $value + px !important;
+  }
+
+  .pb-#{$name} {
+    padding-block: $value + px !important;
+  }
+
+  .pi-#{$name} {
+    padding-inline: $value + px !important;
+  }
+
+  .pbs-#{$name} {
+    padding-block-start: $value + px !important;
+  }
+
+  .pbe-#{$name} {
+    padding-block-end: $value + px !important;
+  }
+
+  .pis-#{$name} {
+    padding-inline-start: $value + px !important;
+  }
+
+  .pie-#{$name} {
+    padding-inline-end: $value + px !important;
+  }
+
+  .i-#{$name} {
+    inset: $value + px !important;
+  }
+
+  .ib-#{$name} {
+    inset-block: $value + px !important;
+  }
+
+  .ii-#{$name} {
+    inset-inline: $value + px !important;
+  }
+
+  .ibs-#{$name} {
+    inset-block-start: $value + px !important;
+  }
+
+  .ibe-#{$name} {
+    inset-block-end: $value + px !important;
+  }
+
+  .iis-#{$name} {
+    inset-inline-start: $value + px !important;
+  }
+
+  .iie-#{$name} {
+    inset-inline-end: $value + px !important;
+  }
+
+  .list-border-#{$name} {
+
+    &:not(:last-of-type) {
+      padding-block-end: $value + px !important;
+      margin-block-end: $value + px !important;
+      border-block-end: 1px solid var(--border1);
+    }
+  }
+}

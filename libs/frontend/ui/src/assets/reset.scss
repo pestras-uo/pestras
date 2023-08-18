@@ -1,0 +1,157 @@
+// Copyright (c) 2021 Pestras
+// 
+// This software is released under the MIT License.
+// https://opensource.org/licenses/MIT
+
+*,
+*::after,
+*::before {
+  margin: 0;
+  padding: 0;
+  border: none;
+  box-sizing: border-box;
+  border-color: inherit;
+}
+
+html {
+  -webkit-text-size-adjust: none;
+  text-size-adjust: none;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  html {
+    scroll-behavior: smooth;
+  }
+}
+
+html,
+body {
+  height: 100%;
+  font-family: var(--font-family);
+  font-size: var(--font-size);
+  color: var(--text2);
+  background-color: var(--surface3);
+  border-color: var(--border1);
+  letter-spacing: var(--letter-spacing);
+  overflow: hidden;
+  line-height: 1.8;
+}
+
+p {
+  color: var(--text2);
+  font-size: 0.9rem;
+}
+
+a {
+  cursor: pointer;
+  color: var(--primary);
+  text-decoration: none;
+}
+
+/* Chrome, Safari, Edge, Opera */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+input[type="number"] {
+  -moz-appearance: textfield;
+  appearance: textfield;
+}
+
+textarea {
+  line-height: 1.6em;
+}
+
+img {
+  display: block;
+  max-width: 100%;
+}
+
+input,
+select,
+option,
+button,
+textarea {
+  box-sizing: border-box;
+  font-family: var(--font-family);
+}
+
+option {
+  padding: 4px;
+}
+
+label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.85rem;
+  margin-block-end: 4px;
+  font-weight: bold;
+}
+
+menu,
+ol,
+ul {
+  list-style: none;
+  padding-inline-start: 0;
+}
+
+:focus:not(focus-visible) {
+  outline: none;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  color: var(--text1);
+  font-family: var(--font-family-headers);
+  line-height: 1.2em;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+label,
+button,
+select,
+summary,
+[type=radio],
+[type=submit],
+[type=checkbox] {
+  cursor: pointer;
+}
+
+::-webkit-scrollbar {
+  width: 4px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: transparent;
+
+  &:focus-within,
+  &:active,
+  &:hover {
+    background: var(--scroller);
+  }
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: var(--scroller-thumb);
+  border-radius: 2px;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: var(--scroller-thumb-hover);
+}

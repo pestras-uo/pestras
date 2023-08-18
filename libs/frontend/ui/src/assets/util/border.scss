@@ -1,0 +1,150 @@
+// Copyright (c) 2021 Pestras
+// 
+// This software is released under the MIT License.
+// https://opensource.org/licenses/MIT
+
+$border-sizes: 2, 3, 4, 5, 6, 7, 8, 9;
+
+.border {
+  border: 1px solid var(--border1);
+}
+.border2 {
+  border: 1px solid var(--border2);
+}
+.border-b {
+  border-block: 1px solid var(--border1);
+}
+.border-i {
+  border-inline: 1px solid var(--border1);
+}
+.border-bs {
+  border-block-start: 1px solid var(--border1);
+}
+.border-be {
+  border-block-end: 1px solid var(--border1);
+}
+.border-is {
+  border-inline-start: 1px solid var(--border1);
+}
+.border-ie {
+  border-inline-end: 1px solid var(--border1);
+}
+
+@each $size in $border-sizes {
+  border-#{$size} {
+    border: $size + px solid var(--border1);
+  }
+  .border-b-#{$size} {
+    border-block: $size + px solid var(--border1);
+  }
+  .border-i-#{$size} {
+    border-inline: $size + px solid var(--border1);
+  }
+  .border-bs-#{$size} {
+    border-block-start: $size + px solid var(--border1);
+  }
+  .border-be-#{$size} {
+    border-block-end: $size + px solid var(--border1);
+  }
+  .border-is-#{$size} {
+    border-inline-start: $size + px solid var(--border1);
+  }
+  .border-ie-#{$size} {
+    border-inline-end: $size + px solid var(--border1);
+  }
+  // width only
+  border-w-#{$size} {
+    border-width: $size + px;
+  }
+  .border-wb-#{$size} {
+    border-block: $size + px;
+  }
+  .border-wi-#{$size} {
+    border-inline: $size + px;
+  }
+  .border-wbs-#{$size} {
+    border-block-start: $size + px;
+  }
+  .border-wbe-#{$size} {
+    border-block-end: $size + px;
+  }
+  .border-wis-#{$size} {
+    border-inline-start: $size + px;
+  }
+  .border-wie-#{$size} {
+    border-inline-end: $size + px;
+  }
+}
+
+.border-none {
+  border-style: none;
+}
+.border-dashed {
+  border-style: dashed;
+}
+.border-dotted {
+  border-style: dotted;
+}
+.border-solid {
+  border-style: solid;
+}
+.border-double {
+  border-style: double;
+}
+.border-groove {
+  border-style: groove;
+}
+.border-inset {
+  border-style: inset;
+}
+.border-unset {
+  border-style: unset;
+}
+.border-outset {
+  border-style: outset;
+}
+.border-ridge {
+  border-style: ridge;
+}
+
+@each $name, $value in $sizes {
+  .radius-#{$name} {
+    border-radius: $value + px;
+  }
+}
+
+[dir="ltr"],
+.ltr {
+  @each $name, $value in $sizes {
+    .radius-bsis-#{$name} {
+      border-top-left-radius: $value + px;
+    }
+    .radius-bsie-#{$name} {
+      border-top-right-radius: $value + px;
+    }
+    .radius-beis-#{$name} {
+      border-bottom-left-radius: $value + px;
+    }
+    .radius-beie-#{$name} {
+      border-bottom-right-radius: $value + px;
+    }
+  }
+}
+
+[dir="rtl"],
+.rtl {
+  @each $name, $value in $sizes {
+    .radius-bsis-#{$name} {
+      border-top-right-radius: $value + px;
+    }
+    .radius-bsie-#{$name} {
+      border-top-left-radius: $value + px;
+    }
+    .radius-beis-#{$name} {
+      border-bottom-right-radius: $value + px;
+    }
+    .radius-beie-#{$name} {
+      border-bottom-left-radius: $value + px;
+    }
+  }
+}

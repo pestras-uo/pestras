@@ -1,0 +1,114 @@
+// Copyright (c) 2021 Pestras
+// 
+// This software is released under the MIT License.
+// https://opensource.org/licenses/MIT
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  border-radius: 8px;
+  overflow: hidden;
+  border-spacing: 0;
+
+  &.no-collapse {
+    border-collapse: unset;
+  }
+
+  thead,
+  tfoot {
+    position: sticky;
+  }
+
+  thead {
+    inset-block-start: 0;
+  }
+
+  tfoot {
+    inset-block-end: 0;
+  }
+
+  thead tr,
+  tfoot tr:not(:last-child) {
+    border-block-end: 1px solid var(--border2);
+  }
+
+  thead tr,
+  tfoot tr {
+
+    th {
+      text-align: start;
+      padding: 12px;
+      white-space: nowrap;
+      overflow: hidden;
+
+      >* {
+        vertical-align: middle;
+      }
+
+      &:first-child {
+        [dir=rtl] & {
+          border-radius: 0 8px 8px 0;
+        }
+
+        [dir=ltr] & {
+          border-radius: 8px 0 0 8px;
+        }
+      }
+
+      &:last-child {
+        [dir=ltr] & {
+          border-radius: 0 8px 8px 0;
+        }
+
+        [dir=rtl] & {
+          border-radius: 8px 0 0 8px;
+        }
+      }
+    }
+  }
+
+  tbody tr {
+    border-block-end: 1px solid var(--border1);
+
+    &:last-child {
+      border-block-end-color: transparent;
+    }
+
+    td {
+      text-align: start;
+      padding: 12px;
+      color: var(--text1);
+      font-size: 0.95rem;
+      white-space: nowrap;
+      overflow: hidden;
+
+      >* {
+        vertical-align: middle;
+      }
+
+      &.table-index {
+        width: 40px;
+        font-weight: bold;
+      }
+    }
+
+  }
+
+  tbody tr.row-hover {
+    transition: border-color 250ms;
+
+    &:hover {
+      border-color: var(--primary);
+    }
+  }
+
+  .index-col {
+    width: 32px;
+    font-weight: bold;
+  }
+
+  .icon-col {
+    width: 44px;
+    text-align: center;
+  }
+}

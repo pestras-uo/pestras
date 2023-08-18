@@ -1,0 +1,75 @@
+// Copyright (c) 2021 Pestras
+// 
+// This software is released under the MIT License.
+// https://opensource.org/licenses/MIT
+
+.icon {
+  // --icon: url(/assets/imgs/icons/user.svg);
+  --icon: none;
+  --size: 26px;
+  
+  display: inline-block;
+  width: var(--size);
+  height: var(--size);
+  min-width: var(--size);
+  min-height: var(--size);
+  -webkit-mask: var(--icon) no-repeat center;
+  mask: var(--icon) no-repeat center;
+  background-color: var(--text2);
+
+  &.icon-primary {
+    background-color: var(--primary);
+  }
+  &.icon-accent {
+    background-color: var(--accent);
+  }
+  &.icon-success {
+    background-color: var(--success);
+  }
+  &.icon-warn {
+    background-color: var(--warn);
+  }
+  &.icon-danger {
+    background-color: var(--danger);
+  }
+  &.icon-text1 {
+    background-color: var(--text1);
+  }
+  &.icon-text2 {
+    background-color: var(--text2);
+  }
+  &.icon-text3 {
+    background-color: var(--text3);
+  }
+  &.icon-text4 {
+    background-color: var(--text4);
+  }
+
+  &.icon-tiny {
+    --size: 16px;
+  }
+
+  &.icon-small {
+    --size: 20px;
+  }
+
+  &.icon-mid {
+    --size: 26px;
+  }
+
+  &.icon-large {
+    --size: 36px;
+  }
+
+  &.icon-larger {
+    --size: 48px;
+  }
+
+  &.icon-huge {
+    --size: 64px;
+  }
+
+  &.icon-fit {
+    --size: 100%;
+  }
+}

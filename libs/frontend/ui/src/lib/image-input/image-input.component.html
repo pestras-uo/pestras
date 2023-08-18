@@ -1,0 +1,17 @@
+<pui-file-input #input class="hide" [formControl]="imageControl" [labelRef]="labelRef" [max]="max"
+  [placeholder]="placeholder" [maxSize]="maxSize" [accept]="accept" (invalidList)="onInvalid($event)">
+</pui-file-input>
+
+<div class="empty-container cursor-pointer" *ngIf="paths.length === 0" (click)="input.open()">
+  <i class="icon-huge" puiIcon="imagesmode"></i>
+  <p class="text-3">{{message}}</p>
+</div>
+
+<div class="images-container" *ngIf="paths.length > 0">
+  <div class="image-container" *ngFor="let path of paths; let i = index">
+    <button class="button btn-icon btn-tiny" (click)="removeImage(i)">
+      <i class="icon-tiny" puiIcon="close"></i>
+    </button>
+    <img [src]="path" alt="Image">
+  </div>
+</div>

@@ -1,0 +1,242 @@
+// Copyright (c 2021 Pestras
+// 
+// This software is released under the MIT License.
+// https://opensource.org/licenses/MIT
+
+.primary {
+  color: var(--primary) !important;
+}
+
+.primary-overlay {
+  color: var(--primary-overlay) !important;
+}
+
+.accent {
+  color: var(--accent) !important;
+}
+
+.accent-overlay {
+  color: var(--accent-overlay) !important;
+}
+
+.success {
+  color: var(--success) !important;
+}
+
+.success-overlay {
+  color: var(--success-overlay) !important;
+}
+
+.warn {
+  color: var(--warn) !important;
+}
+
+.warn-overlay {
+  color: var(--warn-overlay) !important;
+}
+
+.danger {
+  color: var(--danger) !important;
+}
+
+.danger-overlay {
+  color: var(--danger-overlay) !important;
+}
+
+.text1 {
+  color: var(--text1) !important;
+}
+
+.text2 {
+  color: var(--text2) !important;
+}
+
+.text3 {
+  color: var(--text3) !important;
+}
+
+.text4 {
+  color: var(--text4) !important;
+}
+
+.transparent {
+  color: transparent !important;
+}
+
+.contrast {
+  color: var(--contrast) !important;
+}
+
+.extream {
+  color: var(--extream) !important;
+}
+
+.white {
+  color: white !important;
+}
+
+.black {
+  color: black !important;
+}
+
+.bg-transparent {
+  background-color: transparent !important;
+}
+
+.bg-contrast {
+  background-color: var(--contrast) !important;
+  color: var(--extream);
+}
+
+.bg-extream {
+  background-color: var(--extream) !important;
+  color: var(--contrast);
+}
+
+.bg-white {
+  background-color: white !important;
+}
+
+.bg-black {
+  background-color: black !important;
+}
+
+.bg-text1 {
+  background-color: var(--text1) !important;
+  color: var(--extream);
+}
+
+.bg-text2 {
+  background-color: var(--text2) !important;
+  color: var(--extream);
+}
+
+.bg-text3 {
+  background-color: var(--text3) !important;
+  color: var(--extream);
+}
+
+.bg-text4 {
+  background-color: var(--text4) !important;
+  color: var(--extream);
+}
+
+.bg-primary {
+  background-color: var(--primary) !important;
+  color: var(--extream);
+}
+
+.bg-primary-overlay {
+  background-color: var(--primary-overlay) !important;
+  color: var(--text1);
+}
+
+.bg-accent {
+  background-color: var(--accent) !important;
+  color: var(--text1);
+}
+
+.bg-accent-overlay {
+  background-color: var(--accent-overlay) !important;
+  color: var(--text1);
+}
+
+.bg-success {
+  background-color: var(--success) !important;
+  color: var(--extream);
+}
+
+.bg-success-overlay {
+  background-color: var(--success-overlay) !important;
+  color: var(--text1);
+}
+
+.bg-warn {
+  background-color: var(--warn) !important;
+  color: var(--extream);
+}
+
+.bg-warn-overlay {
+  background-color: var(--warn-overlay) !important;
+  color: var(--text1);
+}
+
+.bg-danger {
+  background-color: var(--danger) !important;
+  color: var(--extream);
+}
+
+.bg-danger-overlay {
+  background-color: var(--danger-overlay) !important;
+  color: var(--text1);
+}
+
+.bg-surface1 {
+  background-color: var(--surface1);
+  color: var(--text2);
+}
+
+.bg-surface2 {
+  background-color: var(--surface2);
+  color: var(--text2);
+}
+
+.bg-surface3 {
+  background-color: var(--surface3);
+  color: var(--text1);
+}
+
+.bg-surface4 {
+  background-color: var(--surface4);
+  color: var(--text1);
+}
+
+.border1 {
+  border-color: var(--border1) !important;
+}
+
+.border2 {
+  border-color: var(--border2) !important;
+}
+
+.border-primary {
+  border-color: var(--primary) !important;
+}
+
+.border-accent {
+  border-color: var(--accent) !important;
+}
+
+.border-success {
+  border-color: var(--success) !important;
+}
+
+.border-warn {
+  border-color: var(--warn) !important;
+}
+
+.border-danger {
+  border-color: var(--danger) !important;
+}
+
+.border-transparent {
+  border-color: transparent !important;
+}
+
+.border-contrast {
+  border-color: var(--contrast) !important;
+}
+
+@for $i from 1 through 19 {
+  .color-gray-#{i} {
+    color: hsl(0 0% $i * 5%);
+  }
+
+  .bg-gray-#{i} {
+    background-color: hsl(0 0% $i * 5%);
+  }
+
+  .border-gray-#{i} {
+    border-color: hsl(0 0% $i * 5%);
+  }
+}

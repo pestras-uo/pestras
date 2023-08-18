@@ -1,0 +1,24 @@
+.accordion {
+
+  >.card {
+
+    .card-body {
+      height: 0;
+      opacity: 0;
+      overflow: hidden;
+      padding-block: 0;
+      transition: height 250ms 150ms, opacity 200ms;
+    }
+
+    &.active {
+
+      .card-body {
+        height: auto;
+        padding-block: var(--padding);
+        opacity: 1;
+        overflow: auto;
+        transition: height 250ms, opacity 200ms 150ms;
+      }
+    }
+  }
+}

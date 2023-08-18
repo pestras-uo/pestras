@@ -1,0 +1,5 @@
+<p *ngFor="let item of list" class="fc-switch-item" [class.active]="has(item)" (click)="toggle(item)">
+
+  {{item.name}}
+
+</p>

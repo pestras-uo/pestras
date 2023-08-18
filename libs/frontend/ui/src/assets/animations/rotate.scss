@@ -1,0 +1,30 @@
+@keyframes rotate {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+.rotate {
+  --duration: 1s;
+  animation-duration: var(--duration);
+  animation-iteration-count: infinite;
+
+  &.dur-250ms {
+    --duration: 250ms;
+  }
+
+  &.dur-500ms {
+    --duration: 500ms;
+  }
+
+  &.dur-750ms {
+    --duration: 750ms;
+  }
+
+  &.dur-1s {
+    --duration: 1s;
+  }
+
+  &.dur-2s {
+    --duration: 2s;
+  }
+}

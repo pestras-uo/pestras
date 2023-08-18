@@ -1,0 +1,23 @@
+:host {
+  display: block;
+  position: relative;
+  width: 100%;
+  height: 100%;
+
+  .map-action {
+    position: absolute;
+    z-index: 10;
+    inset-block-end: 32px;
+    inset-inline-end: 32px;
+    width: max-content;
+    height: max-content;
+    display: flex;
+    gap: 8px;
+    align-items: center;
+  }
+
+  ::ng-deep .map-container {
+    width: 100% !important;
+    height: 100% !important;
+  }
+}

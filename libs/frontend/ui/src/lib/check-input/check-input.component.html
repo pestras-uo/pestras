@@ -1,0 +1,11 @@
+<div
+  [class]="'shape ' + color"
+  [class.disabled]="disabled"
+  [class.null]="control.value === null"
+  [class.off]="control.value === false"
+  (click)="toggle()"
+>
+  <div class="circle"></div>
+</div>
+
+<p>{{ label }}</p>

@@ -1,0 +1,173 @@
+// Copyright (c) 2021 Pestras
+// 
+// This software is released under the MIT License.
+// https://opensource.org/licenses/MIT
+
+$dim-sizes: (
+  0: 0,
+  1: 32,
+  2: 64,
+  3: 96,
+  4: 128,
+  5: 160,
+  6: 192,
+  7: 224,
+  8: 256,
+  9: 288,
+  10: 320,
+  11: 352,
+  12: 384,
+  13: 416,
+  14: 448,
+  15: 480,
+  16: 512,
+  17: 544,
+  18: 576,
+  19: 608,
+  20: 640,
+  21: 672,
+  22: 704,
+  23: 736,
+  24: 768,
+  25: 800,
+  26: 832,
+  27: 864,
+  28: 896,
+  29: 928,
+  30: 960
+);
+
+@each $name, $size in $dim-sizes {
+  .w-#{$name} {
+    width: $size + px;
+  }
+  .maxw-#{$name} {
+    max-width: $size + px;
+  }
+  .minw-#{$name} {
+    min-width: $size + px;
+  }
+  .h-#{$name} {
+    height: $size + px;
+  }
+  .maxh-#{$name} {
+    max-height: $size + px;
+  }
+  .minh-#{$name} {
+    min-height: $size + px;
+  }
+  // flex fixed sizes
+  .flex-#{$name} {
+    flex: 0 0 $size + px;
+  }
+  .cols-fit-#{$name} {
+    grid-template-columns: repeat(auto-fit, minmax($size + px, 1fr));
+  }
+  .cols-fill-#{$name} {
+    grid-template-columns: repeat(auto-fill, minmax($size + px, 1fr));
+  }
+  .auto-rows-#{$name} {
+    grid-auto-rows: $size + px;
+  }
+  .auto-cols-#{$name} {
+    grid-auto-columns: $size + px;
+  }
+}
+
+.w-auto {
+  width: auto !important;
+}
+.h-auto {
+  height: auto !important;
+}
+
+.w-fit {
+  width: 100% !important;
+}
+.maxw-fit {
+  max-width: 100% !important;
+}
+.minw-fit {
+  min-width: 100% !important;
+}
+.w-vw-fit {
+  width: 100vw !important;
+}
+.maxw-vw-fit {
+  max-width: 100vw !important;
+}
+.minw-vw-fit {
+  min-width: 100vw !important;
+}
+.w-vh-fit {
+  width: 100vh !important;
+}
+.maxw-vh-fit {
+  max-width: 100vh !important;
+}
+.minw-vh-fit {
+  min-width: 100vh !important;
+}
+.h-fit {
+  height: 100% !important;
+}
+.maxh-fit {
+  max-height: 100% !important;
+}
+.minh-fit {
+  min-height: 100% !important;
+}
+.h-vw-fit {
+  height: 100vw !important;
+}
+.maxh-vw-fit {
+  max-height: 100vw !important;
+}
+.minh-vw-fit {
+  min-height: 100vw !important;
+}
+.h-vh-fit {
+  height: 100vh !important;
+}
+.maxh-vh-fit {
+  max-height: 100vh !important;
+}
+.minh-vh-fit {
+  min-height: 100vh !important;
+}
+.maxw-auto {
+  max-width: initial;
+}
+.maxh-auto {
+  max-height: initial;
+}
+
+.fit {
+  width: 100% !important;
+  height: 100% !important;
+}
+.v-fit {
+  width: 100vw !important;
+  height: 100vh !important;
+}
+
+@for $i from 1 through 10 {
+  .w-vw-#{$i} {
+    width: ($i * 10) + vw;
+  }
+  .h-vh-#{$i} {
+    height: ($i * 10) + vh;
+  }
+  .minw-vw-#{$i} {
+    min-width: ($i * 10) + vw;
+  }
+  .minh-vh-#{$i} {
+    min-height: ($i * 10) + vh;
+  }
+  .maxw-vw-#{$i} {
+    max-width: ($i * 10) + vw;
+  }
+  .maxh-vh-#{$i} {
+    max-height: ($i * 10) + vh;
+  }
+}

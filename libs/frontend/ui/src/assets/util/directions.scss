@@ -1,0 +1,59 @@
+// Copyright (c) 2021 Pestras
+// 
+// This software is released under the MIT License.
+// https://opensource.org/licenses/MIT
+
+[dir="rtl"],
+.rtl {
+  .float-start {
+    float: right !important;
+  }
+  .float-end {
+    float: left !important;
+  }
+
+  .dir-opposite {
+    direction: ltr !important;
+  }
+}
+
+[dir="ltr"],
+.ltr {
+  .float-start {
+    float: left !important;
+  }
+  .float-end {
+    float: right !important;
+  }
+
+  .dir-opposite {
+    direction: rtl !important;
+  }
+}
+
+.rtl {
+  direction: rtl !important;
+}
+.ltr {
+  direction: ltr !important;
+}
+
+.align-center {
+  text-align: center !important;
+}
+.align-start {
+  text-align: start !important;
+}
+.align-end {
+  text-align: end !important;
+}
+
+.v-align-top {
+  vertical-align: top;
+}
+.v-align-middle {
+  vertical-align: middle;
+}
+.v-align-bottom {
+  vertical-align: bottom;
+}

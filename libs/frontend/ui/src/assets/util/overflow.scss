@@ -1,0 +1,91 @@
+// Copyright (c) 2021 Pestras
+// 
+// This software is released under the MIT License.
+// https://opensource.org/licenses/MIT
+
+.overflow-auto {
+  overflow: auto;
+}
+.overflow-none {
+  overflow: initial;
+}
+.overflow-visible {
+  overflow: visible;
+}
+.overflow-scroll {
+  overflow: scroll;
+}
+.overflow-hidden {
+  overflow: hidden;
+}
+.overflow-x-auto {
+  overflow-x: auto;
+}
+.overflow-x-none {
+  overflow-x: initial;
+}
+.overflow-x-visible {
+  overflow-x: visible;
+}
+.overflow-x-scroll {
+  overflow-x: scroll;
+}
+.overflow-x-hidden {
+  overflow-x: hidden;
+}
+.overflow-y-auto {
+  overflow-y: auto;
+}
+.overflow-y-none {
+  overflow-y: initial;
+}
+.overflow-y-visible {
+  overflow-y: visible;
+}
+.overflow-y-scroll {
+  overflow-y: scroll;
+}
+.overflow-y-hidden {
+  overflow-y: hidden;
+}
+
+@each $name, $size in $breakpoints {
+  @media only screen and (max-width: $size) {
+    .#{$name}-overflow-auto {
+      overflow: auto;
+    }
+    .#{$name}-overflow-none {
+      overflow: initial;
+    }
+    .#{$name}-overflow-scroll {
+      overflow: scroll;
+    }
+    .#{$name}-overflow-hidden {
+      overflow: hidden;
+    }
+    .#{$name}-overflow-x-auto {
+      overflow-x: auto;
+    }
+    .#{$name}-overflow-x-none {
+      overflow-x: initial;
+    }
+    .#{$name}-overflow-x-scroll {
+      overflow-x: scroll;
+    }
+    .#{$name}-overflow-x-hidden {
+      overflow-x: hidden;
+    }
+    .#{$name}-overflow-y-auto {
+      overflow-y: auto;
+    }
+    .#{$name}-overflow-y-none {
+      overflow-y: initial;
+    }
+    .#{$name}-overflow-y-scroll {
+      overflow-y: scroll;
+    }
+    .#{$name}-overflow-y-hidden {
+      overflow-y: hidden;
+    }
+  }
+}

@@ -1,0 +1,32 @@
+:host {
+  display: block;
+  width: 100%;
+  aspect-ratio: 4/1;
+  position: relative;
+
+  &.dark {
+    background-color: #000;
+  }
+
+  > .image {
+    position: absolute;
+    inset: 0 0 0 0;
+    height: 100%;
+    opacity: 0;
+    transition: opacity 900ms;
+    z-index: 1;
+
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-size: cover;
+
+    &.fading {
+      z-index: 2;
+    }
+
+    &.active {
+      opacity: 1;
+      z-index: 3;
+    }
+  }
+}

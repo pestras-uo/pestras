@@ -1,0 +1,85 @@
+.dropdown {
+  opacity: 0;
+  transform: scale(0);
+  overflow: hidden;
+  position: absolute;
+  z-index: 200;
+  inset-block-start: calc(100% + 8px);
+  inset-inline-start: 0;
+  border-radius: 8px;
+  background-color: var(--surface1);
+  transition: opacity 80ms linear 200ms, transform 100ms ease-out 200ms;
+  transform-origin: top right;
+  box-shadow: 0px 10px 20px -5px rgba(0,0,0,0.3);
+
+  [dir=ltr] & {
+    transform-origin: top left;
+  }
+
+  &.bottom-end {
+    inset-inline-start: auto;
+    inset-inline-end: 0;
+    transform-origin: top left;    
+
+    [dir=ltr] & {
+      transform-origin: top right;
+    }
+  }
+
+  &.top-start {
+    inset-block-start: auto;
+    inset-block-end: calc(100% + 8px);
+    transform-origin: bottom right;
+
+    [dir=ltr] & {
+      transform-origin: bottom left;
+    }
+  }
+
+  &.top-end {
+    inset-block-start: auto;
+    inset-block-end: calc(100% + 8px);
+    inset-inline-start: auto;
+    inset-inline-end: 0;
+    transform-origin: bottom left;
+
+    [dir=ltr] & {
+      transform-origin: bottom right;
+    }
+  }
+
+  &.side {
+    inset-block-start: 0;
+    inset-inline-start: calc(100% + 8px);
+
+    &.bottom-end {
+      inset-inline-start: auto;
+      inset-inline-end: calc(100% + 8px);
+    }
+
+    &.top-start {
+      inset-block-start: auto;
+      inset-block-end: 0;
+      inset-block-start: 0;
+      inset-inline-start: calc(100% + 8px);
+    }
+
+    &.top-end {
+      inset-block-start: auto;
+      inset-block-end: 0;
+      inset-inline-start: auto;
+      inset-inline-end: calc(100% + 8px);
+    }
+  }
+
+  &.fluid {
+    width: 100%;
+  }
+
+  *:hover > &,
+  &:hover {
+    opacity: 1;
+    transform: scale(1);
+    transition: opacity 80ms linear 0ms, transform 100ms ease-out 0ms;
+  }
+}

@@ -1,0 +1,9 @@
+.divider {
+  background-color: var(--border1);
+  background-clip: content-box;
+  height: 1px;
+
+  &.strong {
+    background-color: var(--border2);
+  }
+}

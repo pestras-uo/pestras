@@ -1,0 +1,317 @@
+// Copyright (c) 2021 Pestras
+// 
+// This software is released under the MIT License.
+// https://opensource.org/licenses/MIT
+
+button,
+.btn {
+  --btn-height: 40px;
+  --btn-inline-padding: 20px;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 8px;
+  height: var(--btn-height);
+  padding-inline-start: var(--btn-inline-padding);
+  padding-inline-end: var(--btn-inline-padding);
+  background-color: transparent;
+  transition: background-color 250ms;
+  border: none;
+  cursor: pointer;
+  text-decoration: none;
+  text-transform: uppercase;
+  font-weight: bold;
+  gap: 12px;
+
+  &.btn-round {
+    border-radius: calc(var(--btn-height) / 2);
+  }
+
+  &.btn-wide {
+    --btn-inline-padding: 48px;
+  }
+
+  &.btn-large {
+    --btn-height: 48px;
+    --btn-inline-padding: 32px;
+
+    font-size: 1.4rem;
+
+    &.btn-wide {
+      --btn-inline-padding: 80px;
+    }
+  }
+
+  &.btn-small {
+    --btn-height: 32px;
+    --btn-inline-padding: 12px;
+
+    font-size: 0.85rem;
+
+    &.btn-wide {
+      --btn-inline-padding: 32px; 
+    }
+  }
+
+  &.btn-tiny {
+    --btn-height: 24px;
+    --btn-inline-padding: 8px;
+
+    font-size: 0.8rem;
+
+    &.btn-wide {
+      --btn-inline-padding: 24px;
+    }
+  }
+
+  &.btn-block {
+    width: 100%;
+  }
+
+  &:hover {
+    background-color: var(--surface3);
+  }
+  &:active {
+    background-color: var(--surface4);
+  }
+  &.btn-surface1 {
+    background-color: var(--surface1);
+    
+    &:hover {
+      background-color: var(--surface3);
+    }
+    &:active {
+      background-color: var(--surface4);
+    }
+  }
+  &.btn-primary {
+    background-color: var(--primary);
+    color: #FFF;
+
+    .icon { background-color: #FFF; }
+    
+    &:hover {
+      background-color: var(--primary-hover);
+    }
+    &:active, &.active {
+      background-color: var(--primary-active);
+    }
+  }
+  &.btn-accent {
+    background-color: var(--accent);
+    color: var(--text1);
+
+    .icon { background-color: var(--text1); }
+    
+    &:hover {
+      background-color: var(--accent-hover);
+    }
+    &:active, &.active {
+      background-color: var(--accent-active);
+    }
+  }
+  &.btn-success {
+    background-color: var(--success);
+    color: #FFF;
+
+    .icon { background-color: #FFF; }
+
+    &:hover {
+      background-color: var(--success-hover);
+    }
+    &:active, &.active {
+      background-color: var(--success-active);
+    }
+  }
+  &.btn-warn {
+    background-color: var(--warn);
+    color: #FFF;
+
+    .icon { background-color: #FFF; }
+
+    &:hover {
+      background-color: var(--warn-hover);
+    }
+    &:active, &.active {
+      background-color: var(--warn-active);
+    }
+  }
+  &.btn-danger {
+    background-color: var(--danger);
+    color: #FFF;
+
+    .icon { background-color: #FFF; }
+
+    &:hover {
+      background-color: var(--danger-hover);
+    }
+    &:active, &.active {
+      background-color: var(--danger-active);
+    }
+  }
+
+  &.btn-outline {
+    border: 1px solid var(--border2);
+  }
+
+  &.btn-outline-primary {
+    border: 2px solid var(--primary);
+    background-color: transparent;
+    color: var(--primary);
+
+    .icon { background-color: var(--primary); }
+
+    &:hover {
+      background-color: var(--primary);
+      color: var(--surface1);;
+
+      .icon { background-color: var(--surface1);; }
+    }
+    &:active, &.active {
+      background-color: var(--primary-active);
+      color: var(--surface1);;
+
+      .icon { background-color: var(--surface1);; }
+    }
+  }
+  &.btn-outline-accent {
+    border: 1px solid var(--accent);
+    background-color: transparent;
+    color: var(--accent);
+
+    .icon { background-color: var(--accent); }
+
+    &:hover {
+      background-color: var(--accent);
+      color: vat(--text1);
+
+      .icon { background-color: vat(--text1); }
+    }
+    &:active, &.active {
+      background-color: var(--accent-active);
+      color: vat(--text1);
+
+      .icon { background-color: vat(--text1); }
+    }
+  }
+  &.btn-outline-success {
+    border: 1px solid var(--success);
+    background-color: transparent;
+    color: var(--success);
+
+    .icon { background-color: var(--success); }
+
+    &:hover {
+      background-color: var(--success);
+      color: var(--surface1);
+
+      .icon { background-color: var(--surface1); }
+    }
+    &:active, &.active {
+      background-color: var(--success-active);
+      color: var(--surface1);
+
+      .icon { background-color: var(--surface1); }
+    }
+  }
+  &.btn-outline-warn {
+    border: 1px solid var(--warn);
+    background-color: transparent;
+    color: var(--warn);
+
+    .icon { background-color: var(--warn); }
+
+    &:hover {
+      background-color: var(--warn);
+      color: var(--surface1);
+
+      .icon { background-color: var(--surface1); }
+    }
+    &:active, &.active {
+      background-color: var(--warn-active);
+      color: var(--surface1);
+
+      .icon { background-color: var(--surface1); }
+    }
+  }
+  &.btn-outline-danger {
+    border: 1px solid var(--danger);
+    background-color: transparent;
+    color: var(--danger);
+
+    .icon { background-color: var(--danger); }
+
+    &:hover {
+      background-color: var(--danger);
+      color: var(--surface1);
+
+      .icon { background-color: var(--surface1); }
+    }
+    &:active, &.active {
+      background-color: var(--danger-active);
+      color: var(--surface1);
+
+      .icon { background-color: var(--surface1); }
+    }
+  }
+
+  &.btn-icon {    
+    --btn-inline-padding: 0;
+
+    width: var(--btn-height);
+    flex: 0 0 var(--btn-height);
+  }
+
+  &.fab {
+    position: fixed;
+    z-index: 50;
+    inset-block-end: 16px;
+    inset-inline-end: 16px;
+  }
+}
+
+.btn-group {
+  display: flex;
+  gap: 2px;
+  align-items: center;
+
+  .btn {
+    border-radius: 0px;
+
+    &:first-child {
+      border-start-start-radius: 8px;
+      border-end-start-radius: 8px;
+    }
+    &:last-child {
+      border-start-end-radius: 8px;
+      border-end-end-radius: 8px;
+    }
+  }
+}
+
+
+
+.fab-start-start {
+  position: fixed;
+  inset-block-start: 32px;
+  inset-inline-start: 32px;
+}
+
+.fab-start-end {
+  position: fixed;
+  inset-block-start: 32px;
+  inset-inline-end: 32px;
+}
+
+.fab-end-start {
+  position: fixed;
+  inset-block-end: 32px;
+  inset-inline-start: 32px;
+}
+
+.fab-end-end {
+  position: fixed;
+  inset-block-end: 32px;
+  inset-inline-end: 32px;
+}

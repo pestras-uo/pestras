@@ -1,0 +1,54 @@
+// Copyright (c) 2021 Pestras
+// 
+// This software is released under the MIT License.
+// https://opensource.org/licenses/MIT
+
+.nav {
+  width: 180px;
+  flex: 0 0 180px;
+  border-radius: 4px;
+  overflow: hidden;
+  background-color: var(--surface1);
+
+  &.wide {
+    width: 240px;
+    flex: 0 0 240px;
+  }
+
+  &.narrow {
+    width: 120px;
+    flex: 0 0 120px;
+  }
+
+  .nav-item {
+    padding: 16px;
+    display: flex;
+    font-size: 0.9rem;
+    font-weight: bold;
+
+    &:hover {
+      background-color: var(--surface2);
+    }
+    
+    &.active {
+      background-color: var(--surface3);
+      border-inline-start: 2px solid var(--primary);
+    }
+
+    > * {
+      padding-inline-end: 8px;
+
+      &:last-child {
+        padding-inline-end: 0;
+      }
+    }
+  }
+
+  &.tight .nav-item {
+    padding: 8px;
+  }
+
+  &.spacious .nav-item {
+    padding: 24px;
+  }
+}

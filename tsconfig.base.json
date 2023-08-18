@@ -17,6 +17,13 @@
     "paths": {
       "@pestras/backend/models": ["libs/backend/models/src/index.ts"],
       "@pestras/backend/util": ["libs/backend/util/src/index.ts"],
+      "@pestras/frontend/ui": ["libs/frontend/ui/src/index.ts"],
+      "@pestras/frontend/util/contra": [
+        "libs/frontend/util/contra/src/index.ts"
+      ],
+      "@pestras/frontend/util/stator": [
+        "libs/frontend/util/stator/src/index.ts"
+      ],
       "@pestras/shared/data-model": ["libs/shared/data-model/src/index.ts"],
       "@pestras/shared/util": ["libs/shared/util/src/index.ts"]
     }

@@ -1,0 +1,31 @@
+<div class="fc-switch" [class.disabled]="disabled">
+  <p class="fc-switch-item" [class.active]="state === 0" (click)="setNull()">
+    <i size="small" [color]="state === 0 ? 'white' : 'text2'" puiIcon="location_off"></i>
+  </p>
+  <p class="fc-switch-item" [class.active]="state === 1" (click)="setCurrent()">
+    <i size="small" [color]="state === 1 ? 'white' : 'text2'" puiIcon="my_location"></i>
+  </p>
+  <p class="fc-switch-item" [class.active]="state === 2" (click)="openMap()">
+    <i size="small" [color]="state === 2 ? 'white' : 'text2'" puiIcon="location_on"></i>
+  </p>
+  <p class="fc-switch-item" [class.active]="state === 3" (click)="useUrl()">
+    <i size="small" [color]="state === 3 ? 'white' : 'text2'" puiIcon="link"></i>
+  </p>
+  <p class="fc-switch-item" [class.active]="state === 4" (click)="manual()">
+    <i size="small" [color]="state === 4 ? 'white' : 'text2'" puiIcon="data_object"></i>
+  </p>
+</div>
+
+<div class="fc mbs-2" *ngIf="state === 3">
+  <input type="text" placeholder="google map link" [formControl]="linkControl">
+</div>
+
+<div class="fc mbs-2" *ngIf="state === 4">
+  <input type="text" placeholder="latitude" [formControl]="latControl">
+  - 
+  <input type="text" placeholder="longitude" [formControl]="lngControl">
+</div>
+
+<div *ngIf="mapOpen" class="w-fit h-6 mbs-2 radius-4 overflow-hidden">
+  <pui-google-map mode="pick" [zoomControl]="false" (pick)="mapDismiss($event)"></pui-google-map>
+</div>

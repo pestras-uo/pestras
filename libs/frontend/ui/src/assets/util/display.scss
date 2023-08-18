@@ -1,0 +1,253 @@
+// Copyright (c) 2021 Pestras
+// 
+// This software is released under the MIT License.
+// https://opensource.org/licenses/MIT
+
+.hide {
+  display: none !important;
+}
+
+.hidden {
+  visibility: hidden !important;
+}
+
+.block {
+  display: block !important;
+}
+
+.inline {
+  display: inline !important;
+}
+
+.inline-block {
+  display: inline-block !important;
+}
+
+.table {
+  display: table !important;
+}
+
+.inline-table {
+  display: inline-table !important;
+}
+
+.grid {
+  display: grid !important;
+}
+
+.inline-grid {
+  display: inline-grid !important;
+}
+
+.flex {
+  display: flex !important;
+}
+
+.inline-flex {
+  display: inline-flex !important;
+}
+
+.flex-row {
+  flex-direction: row;
+}
+
+.flex-row-reverse {
+  flex-direction: row-reverse;
+}
+
+.flex-column {
+  flex-direction: column;
+}
+
+.flex-column-reverse {
+  flex-direction: column-reverse;
+}
+
+// flex wrap
+.flex-nowrap {
+  flex-wrap: nowrap;
+}
+
+.flex-wrap {
+  flex-wrap: wrap;
+}
+
+.flex-wrap-reverse {
+  flex-wrap: wrap-reverse;
+}
+
+// flex align itens
+.align-items-baseline {
+  align-items: baseline;
+}
+
+.align-items-center {
+  align-items: center;
+}
+
+.align-items-end {
+  align-items: flex-end;
+}
+
+.align-items-start {
+  align-items: flex-start;
+}
+
+.align-items-stretch {
+  align-items: stretch;
+}
+
+// flex align content
+.align-content-center {
+  align-content: center;
+}
+
+.align-content-end {
+  align-content: flex-end;
+}
+
+.align-content-start {
+  align-content: flex-start;
+}
+
+.align-content-space-around {
+  align-content: space-around;
+}
+
+.align-content-space-between {
+  align-content: space-between;
+}
+
+.align-content-stretch {
+  align-content: stretch;
+}
+
+// flex justify content
+.justify-content-baseline {
+  justify-content: baseline;
+}
+
+.justify-content-center {
+  justify-content: center;
+}
+
+.justify-content-end {
+  justify-content: flex-end;
+}
+
+.justify-content-start {
+  justify-content: flex-start;
+}
+
+.justify-content-stretch {
+  justify-content: stretch;
+}
+
+.justify-content-space-around {
+  justify-content: space-around;
+}
+
+.justify-content-space-between {
+  justify-content: space-between;
+}
+
+.justify-content-space-evenly {
+  justify-content: space-evenly;
+}
+
+// flex justify items
+.justify-items-baseline {
+  justify-items: baseline;
+}
+
+.justify-items-center {
+  justify-items: center;
+}
+
+.justify-items-end {
+  justify-items: flex-end;
+}
+
+.justify-items-start {
+  justify-items: flex-start;
+}
+
+.justify-items-stretch {
+  justify-items: stretch;
+}
+
+
+$flex-sizes: 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12;
+
+@each $size in $flex-sizes {
+  .grow-#{$size} {
+    flex-grow: $size;
+    width: 0;
+  }
+
+  .shrink-#{$size} {
+    flex-shrink: $size;
+  }
+
+  .order-#{$size} {
+    order: $size;
+  }
+}
+
+.grow {
+  flex-grow: 1;
+  width: 0;
+}
+
+.shrink {
+  flex-shrink: 1;
+  width: 0;
+}
+
+.basis-0 {
+  flex-basis: 0;
+}
+
+.basis-content {
+  flex-basis: content;
+}
+
+.basis-fit {
+  flex-basis: fit-content;
+}
+
+.basis-min {
+  flex-basis: min-content;
+}
+
+.basis-max {
+  flex-basis: max-content;
+}
+
+.relative {
+  position: relative !important;
+}
+
+.fixed {
+  position: fixed !important;
+}
+
+.absolute {
+  position: absolute !important;
+}
+
+.sticky {
+  position: sticky !important;
+}
+
+.static {
+  position: static !important;
+}
+
+$z-index: 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 20, 30, 40, 50, 100, 200, 300, 400, 500, 1000, 9999;
+
+@each $size in $z-index {
+ .zx-#{$size} {
+    z-index: $size;
+  }
+}

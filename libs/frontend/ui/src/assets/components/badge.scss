@@ -1,0 +1,68 @@
+// Copyright (c) 2021 Pestras
+// 
+// This software is released under the MIT License.
+// https://opensource.org/licenses/MIT
+
+.badge {
+  --height: 32px;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  font-size: 0.9rem;
+  padding-inline: 16px;
+  border-radius: 16px;
+  background-color: var(--surface4);
+  font-weight: bold;
+  height: var(--height);
+
+  &.badge-clear {
+    background: transparent;
+  }
+
+  &.badge-primary {
+    background-color: var(--primary-overlay);
+    color: var(--primary);
+  }
+  &.badge-accent {
+    background-color: var(--accent-overlay);
+    color: var(--accent);
+  }
+  &.badge-success {
+    background-color: var(--success-overlay);
+    color: var(--success);
+  }
+  &.badge-warn {
+    background-color: var(--warn-overlay);
+    color: var(--warn);
+  }
+  &.badge-danger {
+    background-color: var(--danger-overlay);
+    color: var(--danger);
+  }
+  &.badge-contrast {
+    background-color: var(--contrast);
+    color: var(--surface1);
+  }
+  &.badge-extream {
+    background-color: var(--extream);
+    color: var(--text1);
+  }
+
+  &.badge-small {
+    --height: 24px;
+    
+    font-size: 0.8rem;
+    padding-inline: 8px;
+    border-radius: 12px;
+  }
+
+  &.badge-large {
+    --height: 40px;
+    
+    padding-inline: 32px;
+    font-size: 1.1rem;
+    border-radius: 20px;
+  }
+}

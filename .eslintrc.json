@@ -22,7 +22,7 @@
               },
               {
                 "sourceTag": "scope:platform",
-                "onlyDependOnLibsWithTags": ["scope:shared"]
+                "onlyDependOnLibsWithTags": ["scope:shared", "scope:frontend"]
               },
               {
                 "sourceTag": "scope:backend",
@@ -31,6 +31,14 @@
               {
                 "sourceTag": "scope:backend-models",
                 "onlyDependOnLibsWithTags": ["scope:shared", "scope:backend-util"]
+              },
+              {
+                "sourceTag": "scope:frontend-util",
+                "onlyDependOnLibsWithTags": ["scope:shared"]
+              },
+              {
+                "sourceTag": "scope:frontend-ui",
+                "onlyDependOnLibsWithTags": ["scope:shared"]
               }
             ]
           }

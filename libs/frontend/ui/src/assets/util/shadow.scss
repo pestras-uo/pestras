@@ -1,0 +1,66 @@
+// Copyright (c) 2021 Pestras
+// 
+// This software is released under the MIT License.
+// https://opensource.org/licenses/MIT
+
+$shadow-sizes: (
+  1: 0.2,
+  2: 0.5,
+  3: 0.9,
+  4: 1.5,
+  5: 2,
+  6: 3
+);
+
+.shadow-0 {
+  box-shadow: none;
+}
+
+.text-shadow-0 {
+  text-shadow: none;
+}
+
+.cavity-0 {
+  box-shadow: none;
+}
+
+.rext-cavity-0 {
+  text-shadow: none;
+}
+
+@each $size,
+$value in $shadow-sizes {
+  .shadow-#{$size} {
+    box-shadow:
+      0 ($value * 0.8px) ($value * 0.6px) hsl(var(--surface-shadow) / calc(var(--shadow-strength) + (.05 * $value))),
+      0 ($value * 1.6px) ($value * 1.2px) hsl(var(--surface-shadow) / calc(var(--shadow-strength) + (.025 * $value))),
+      0 ($value * 3.2px) ($value * 2.4px) hsl(var(--surface-shadow) / calc(var(--shadow-strength) + (.05 * $value))),
+      0 ($value * 6.4px) ($value * 4.8px) hsl(var(--surface-shadow) / calc(var(--shadow-strength) + (.05 * $value))),
+      0 ($value * 12.8px) ($value * 9.6px) hsl(var(--surface-shadow) / calc(var(--shadow-strength) + (.07 * $value))),
+      0 ($value * 25.6px) ($value * 19.2px) hsl(var(--surface-shadow) / var(--shadow-strength));
+  }
+
+  .text-shadow-#{$size} {
+    text-shadow: 0px ($size * 2px) ($size * 3px) rgba(0, 0, 0, 0.05 * $size + 0.1);
+  }
+
+  .cavity-#{$size} {
+    box-shadow: 0px ($size * 2px) ($size * 3px) rgba(0, 0, 0, 0.12);
+  }
+
+  .text-cavity-#{$size} {
+    text-shadow: 0px ($size * 2px) ($size * 3px) rgba(0, 0, 0, 0.12);
+  }
+}
+
+@mixin boxShadow($size) {
+  $value: map-get($shadow-sizes, $size);
+  
+    box-shadow:
+      0 ($value * 0.8px) ($value * 0.6px) hsl(var(--surface-shadow) / calc(var(--shadow-strength) + (.05 * $value))),
+      0 ($value * 1.6px) ($value * 1.2px) hsl(var(--surface-shadow) / calc(var(--shadow-strength) + (.025 * $value))),
+      0 ($value * 3.2px) ($value * 2.4px) hsl(var(--surface-shadow) / calc(var(--shadow-strength) + (.05 * $value))),
+      0 ($value * 6.4px) ($value * 4.8px) hsl(var(--surface-shadow) / calc(var(--shadow-strength) + (.05 * $value))),
+      0 ($value * 12.8px) ($value * 9.6px) hsl(var(--surface-shadow) / calc(var(--shadow-strength) + (.07 * $value))),
+      0 ($value * 25.6px) ($value * 19.2px) hsl(var(--surface-shadow) / var(--shadow-strength));
+}

@@ -1,0 +1,17 @@
+@import '@angular/cdk/overlay-prebuilt.css';
+
+@import "variables";
+
+@import "reset";
+@import "util/util";
+@import "components/components";
+@import "animations/animations";
+
+
+// drop down element
+// -----------------------------------------------------------------------------------------------------------------------
+// *:hover > app-dropdown > .dropdown {
+//   opacity: 1;
+//   transform: scale(1);
+//   transition: opacity 80ms linear 0ms, transform 100ms ease-out 0ms;
+// }

@@ -1,0 +1,42 @@
+.note {
+  --padding: 8px;
+  --bg: var(--primary-overlay);
+  --color: var(--primary);
+
+  padding: var(--padding);
+  border-radius: 8px;
+  background-color: var(--bg);
+  border: 2px solid var(--color);
+
+  &.note-huge {
+    --padding: 32px;
+  }
+
+  &.note-large {
+    --padding: 16px;
+  }
+
+  &.note-small {
+    --padding: 4px;
+  }
+
+  &.note-accent {
+    --bg: var(--accent-overlay);
+    --color: var(--accent);
+  }
+
+  &.note-success {
+    --bg: var(--success-overlay);
+    --color: var(--success);
+  }
+
+  &.note-warn {
+    --bg: var(--warn-overlay);
+    --color: var(--warn);
+  }
+
+  &.note-danger {
+    --bg: var(--danger-overlay);
+    --color: var(--danger);
+  }
+}

@@ -1,0 +1,55 @@
+:host {
+  display: block;
+  position: relative;
+  width: 100%;
+  align-items: center;
+
+  section:first-child {
+    min-height: 40px;
+
+    .fc-large & {
+      min-height: 48px;
+    }
+
+    .fc-small & {
+      min-height: 32px;
+    }
+  }
+
+  &:has(section:nth-child(2)) {
+    padding-block-end: 8px;
+  }
+}
+
+.options-list {
+  background-color: var(--surface1);
+  position: relative;
+  width: 100%;
+  border-radius: 8px;
+  overflow-x: hidden;
+  overflow-y: auto;
+
+  >p {
+    padding: 6px 8px;
+    cursor: pointer;
+
+    &:hover {
+      background-color: var(--surface4);
+    }
+  }
+}
+
+// .fc:focus-within + .hints-list,
+// .hints-list:hover {
+//   display: block;
+// }
+
+// .fc {
+//   height: auto;
+// }
+
+.selection.disabled {
+  opacity: 0.5;
+  pointer-events: none;
+  cursor: not-allowed
+}
