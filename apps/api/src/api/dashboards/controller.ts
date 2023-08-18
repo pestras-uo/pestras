@@ -1,0 +1,152 @@
+import { contentModel, dashboardsModel, dataVizModel } from "../../models";
+import { DashboardsApi } from "./types";
+
+export const controller = {
+
+  // Read
+  // -------------------------------------------------------------------------------
+  async search(req: DashboardsApi.SearchReq, res: DashboardsApi.SearchRes) {
+    res.json(await dashboardsModel.search(req.body));
+  },
+
+  async getByTopic(req: DashboardsApi.GetByTopicReq, res: DashboardsApi.GetByTopicRes) {
+    res.json(await dashboardsModel.getByTopic(req.params.topic, res.locals.issuer));
+  },
+
+  async getBySerial(req: DashboardsApi.GetBySerialReq, res: DashboardsApi.GetBySerialRes) {
+    res.json(await dashboardsModel.getBySerial(req.params.serial));
+  },
+
+  // Create
+  // -------------------------------------------------------------------------------
+  async create(req: DashboardsApi.CreateReq, res: DashboardsApi.CreateRes) {
+    const db = await dashboardsModel.create(req.body, res.locals.issuer);
+    await contentModel.create(db.serial);
+
+    res.json(db);
+  },
+
+  // Update
+  // -------------------------------------------------------------------------------
+  async update(req: DashboardsApi.UpdateReq, res: DashboardsApi.UpdateRes) {
+    res.json(await dashboardsModel.update(req.params.serial, req.body, res.locals.issuer));
+  },
+
+
+  // Slides
+  // -------------------------------------------------------------------------------
+  async addSlide(req: DashboardsApi.AddSlideReq, res: DashboardsApi.AddSlideRes) {
+    res.json(await dashboardsModel.addSlide(req.params.serial, req.body, res.locals.issuer));
+  },
+
+  async updateSlidesOrder(req: DashboardsApi.UpdateSlidesOrderReq, res: DashboardsApi.UpdateSlidesOrderRes) {
+    res.json(await dashboardsModel.updateSlidesOrder(req.params.serial, req.body.slides, res.locals.issuer));
+  },
+
+  async updateSlide(req: DashboardsApi.UpdateSlideReq, res: DashboardsApi.UpdateSlideRes) {
+    res.json(await dashboardsModel.updateSlide(req.params.serial, req.params.slide, req.body, res.locals.issuer));
+  },
+
+  async removeSlide(req: DashboardsApi.RemoveSlideReq, res: DashboardsApi.RemoveSlideRes) {
+    const dashboard = await dashboardsModel.getBySerial(req.params.serial, { views: 1 });
+
+    res.json(await dashboardsModel.removeSlide(req.params.serial, req.params.slide, res.locals.issuer));
+
+    if (dashboard) {
+      const views = dashboard.views.filter(v => v.slide === req.params.slide);
+
+      dataVizModel.deleteManyDataViz(views.map(v => v.data_viz));
+    }
+  },
+
+  // Slides Views
+  // -------------------------------------------------------------------------------
+  async addView(req: DashboardsApi.AddViewReq, res: DashboardsApi.AddViewRes) {
+    res.json(await dashboardsModel.addView(
+      req.params.serial,
+      req.body,
+      res.locals.issuer
+    ));
+  },
+
+  async updateViewsOrder(req: DashboardsApi.UpdateViewsOrderReq, res: DashboardsApi.UpdateViewsOrderRes) {
+    res.json(await dashboardsModel.updateViewsOrder(req.params.serial, req.params.slide, req.body.views, res.locals.issuer));
+  },
+
+  async updateView(req: DashboardsApi.UpdateViewReq, res: DashboardsApi.UpdateViewRes) {
+    res.json(await dashboardsModel.updateView(
+      req.params.serial,
+      req.params.view,
+      req.body,
+      res.locals.issuer
+    ));
+  },
+
+  async updateViewDataViz(req: DashboardsApi.UpdateViewDataVizReq, res: DashboardsApi.UpdateViewDataVizRes) {
+    res.json(await dashboardsModel.updateViewDataViz(
+      req.params.serial,
+      req.params.view,
+      req.params.dataViz,
+      res.locals.issuer
+    ));
+  },
+
+  async removeView(req: DashboardsApi.RemoveViewReq, res: DashboardsApi.RemoveViewRes) {
+    const dashboard = await dashboardsModel.getBySerial(req.params.serial, { views: 1 });
+
+    res.json(await dashboardsModel.removeView(
+      req.params.serial,
+      req.params.view,
+      res.locals.issuer
+    ));
+
+    if (dashboard) {
+      const view = dashboard.views.find(v => v.serial === req.params.view);
+
+      if (view)
+        dataVizModel.delete(view.data_viz);
+    }
+  },
+
+
+  // access
+  // -----------------------------------------------------------------------------
+  async addOrgunit(req: DashboardsApi.AddOrgunitReq, res: DashboardsApi.AddOrgunitRes) {
+    res.json(await dashboardsModel.addAccessOrgunit(req.params.serial, req.params.orgunit, res.locals.issuer))
+  },
+
+  async removeOrgunit(req: DashboardsApi.RemoveOrgunitReq, res: DashboardsApi.RemoveOrgunitRes) {
+    res.json(await dashboardsModel.removeAccessOrgunit(req.params.serial, req.params.orgunit, res.locals.issuer))
+  },
+
+  async addUser(req: DashboardsApi.AddUserReq, res: DashboardsApi.AddUserRes) {
+    res.json(await dashboardsModel.addAccessUser(req.params.serial, req.params.user, res.locals.issuer))
+  },
+
+  async removeUser(req: DashboardsApi.RemoveUserReq, res: DashboardsApi.RemoveUserRes) {
+    res.json(await dashboardsModel.removeAccessUser(req.params.serial, req.params.user, res.locals.issuer))
+  },
+
+  async addGroup(req: DashboardsApi.AddGroupReq, res: DashboardsApi.AddGroupRes) {
+    res.json(await dashboardsModel.addAccessGroup(req.params.serial, req.params.group, res.locals.issuer))
+  },
+
+  async removeGroup(req: DashboardsApi.RemoveGroupReq, res: DashboardsApi.RemoveGroupRes) {
+    res.json(await dashboardsModel.removeAccessGroup(req.params.serial, req.params.group, res.locals.issuer))
+  },
+
+  // Delete
+  // -------------------------------------------------------------------------------
+  async delete(req: DashboardsApi.DeleteReq, res: DashboardsApi.DeleteRes) {
+    const dashboard = await dashboardsModel.getBySerial(req.params.serial, { banner: 1 });
+
+    if (!dashboard) {
+      res.json(true);
+      return;
+    }
+
+    res.json(await dashboardsModel.delete(req.params.serial, res.locals.issuer));
+
+    contentModel.delete(req.params.serial);
+  }
+}
