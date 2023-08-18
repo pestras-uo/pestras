@@ -1,7 +1,7 @@
 import { Inject, Injectable } from '@angular/core';
 import { UsersApi } from './users.api';
 import { HttpClient } from '@angular/common/http';
-import { injectURLPayload } from '@pestras/util';
+import { injectURLPayload } from '@pestras/shared/util';
 import { STATE_CONFIG, StateConfig } from '../config';
 
 @Injectable({ providedIn: 'root' })

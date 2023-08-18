@@ -1,0 +1,47 @@
+<form [formGroup]="form" *contra="let c">
+  <div class="toolbar">
+    <h4>{{c['fields']}}</h4>
+    <div class="grow"></div>
+    <button
+      *ngIf="fieldsList.length <= fields.length"
+      class="btn-icon btn-round"
+      (click)="addSort()"
+    >
+      <i puiIcon="add"></i>
+    </button>
+  </div>
+
+  <ng-container formArrayName="fields">
+    <fieldset
+      class="mbs-4"
+      *ngFor="let g of fieldsList.controls; let i = index"
+      [formGroup]="g"
+    >
+      <legend>
+        <p class="bold">{{i + 1}} - {{c['field']}}</p>
+        <button
+          *ngIf="fieldsList.length > 1"
+          class="btn-small btn-icon btn-round"
+          (click)="fieldsList.removeAt(i)"
+        >
+          <i puiIcon="delete" color="danger" size="small"></i>
+        </button>
+      </legend>
+
+      <label [for]="id + i + '_sort-field'">{{c['field']}}</label>
+      <div [class]="'fc mbe-4 ' + fcClass">
+        <pui-select-input
+          [labelRef]="id + i + '_sort-field'"
+          formControlName="field"
+          [list]="fields | arrayFilter : filterField | arrayMap : mapField"
+        ></pui-select-input>
+      </div>
+
+      <label [for]="id + '_sort-order'">{{c['order']}}</label>
+      <pui-switch-input
+        [list]="c['orderOptions']"
+        formControlName="order"
+      ></pui-switch-input>
+    </fieldset>
+  </ng-container>
+</form>

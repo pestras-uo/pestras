@@ -1,0 +1,15 @@
+<ng-container *contra="let c">
+  <div class="grow">
+    <label for="bp">{{c['blueprint']}}</label>
+    <div [class]="'fc ' + fcClass" [class.disabled]="disabled">
+      <pui-select-input *ngIf="bps$ | async as bps" labelRef="bp" [list]="bps" [formControl]="bp"></pui-select-input>
+    </div>
+  </div>
+  
+  <div class="grow">
+    <label for="ds">{{c['dataStore']}}</label>
+    <div [class]="'fc ' + fcClass" [class.disabled]="disabled">
+      <pui-select-input *ngIf="dss$ | async as dss" labelRef="ds" [list]="dss" [formControl]="ds"></pui-select-input>
+    </div>
+  </div>
+</ng-container>

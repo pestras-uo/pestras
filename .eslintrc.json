@@ -43,6 +43,14 @@
               {
                 "sourceTag": "scope:frontend-state",
                 "onlyDependOnLibsWithTags": ["scope:shared", "scope:frontend-util-stator"]
+              },
+              {
+                "sourceTag": "scope:frontend-widgets",
+                "onlyDependOnLibsWithTags": ["scope:shared", "scope:frontend-state", "scope:frontend-ui", "scope:frontend-util"]
+              },
+              {
+                "sourceTag": "scope:frontend-features",
+                "onlyDependOnLibsWithTags": ["scope:shared", "scope:frontend"]
               }
             ]
           }

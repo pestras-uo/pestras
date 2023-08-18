@@ -1,0 +1,47 @@
+<div class="card h-fit" *contra="let c">
+  <div *ngIf="image" class="card-hero">
+    <img [src]="image | docsPath" alt="image" />
+  </div>
+
+  <div class="card-body">
+    <h4 class="mbe-6" *ngIf="titleField">
+      <app-field-value
+        class="bold"
+        [value]="record[titleField.name]"
+        [field]="titleField"
+      ></app-field-value>
+    </h4>
+
+    <div
+      [class.mbe-4]="!last"
+      *ngFor="let field of detailsFields; let last = last"
+    >
+      <p class="f10 text3 bold mbe-1">{{field.display_name}}</p>
+
+      <app-field-value
+        class="bold"
+        [value]="record[field.name]"
+        [field]="field"
+      ></app-field-value>
+    </div>
+  </div>
+
+  <div class="card-footer" *ngIf="record.serial">
+    <p class="text3 f9 bold">{{record.create_date | date: 'dd/MM/yyyy'}}</p>
+    <div class="grow"></div>
+    <a
+      *ngIf="topic"
+      class="btn btn-round"
+      [routerLink]="['/main/records', topic, ds.serial, record.serial]"
+    >
+      {{c['continue']}}
+    </a>
+    <a
+      *ngIf="!topic"
+      class="btn btn-round"
+      [routerLink]="['/main/records', ds.serial, record.serial]"
+    >
+      {{c['continue']}}
+    </a>
+  </div>
+</div>

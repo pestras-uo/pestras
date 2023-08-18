@@ -1,0 +1,192 @@
+<form [formGroup]="form" *contra="let c">
+  <div class="flex gap-4 align-items-end mbe-6">
+    <div class="grow">
+      <label for="count-name">{{c['countFieldName']}}</label>
+      <div [class]="'fc ' + fcClass">
+        <input type="text" id="count-name" formControlName="count_name" />
+      </div>
+    </div>
+
+    <div class="grow">
+      <label for="count-display_name">{{c['countDisplayName']}}</label>
+      <div [class]="'fc ' + fcClass">
+        <input
+          type="text"
+          id="count-display_name"
+          formControlName="count_display_name"
+        />
+      </div>
+    </div>
+  </div>
+
+  <ng-container formArrayName="by">
+    <div class="toolbar mbe-6">
+      <h4>{{c['groupFields']}}</h4>
+      <div class="grow"></div>
+      <button
+        type="button"
+        class="btn-icon btn-small btn-round"
+        (click)="addGroup()"
+      >
+        <i size="small" puiIcon="add"></i>
+      </button>
+    </div>
+
+    <!-- by fields list -->
+    <div
+      *ngFor="let g of by.controls; let i = index; let last = last"
+      [class.mbe-6]="!last"
+      [formGroup]="g"
+    >
+      <div class="flex gap-4 align-items-end mbe-6">
+        <div class="grow">
+          <label [for]="serial + i + '-group-field'">{{c['fieldName']}}</label>
+          <div [class]="'fc ' + fcClass">
+            <pui-select-input
+              [labelRef]="serial + i + '-group-field'"
+              formControlName="name"
+              [list]="fields | arrayFilter: filterGroupFields | arrayMap: mapField"
+            ></pui-select-input>
+          </div>
+        </div>
+
+        <pui-check-input
+          [label]="c['logical']"
+          formControlName="logical"
+        ></pui-check-input>
+
+        <button
+          *ngIf="by.length > 1"
+          type="button"
+          class="btn-icon btn-outline"
+          (click)="by.removeAt(i)"
+        >
+          <i size="small" puiIcon="delete"></i>
+        </button>
+      </div>
+
+      <div
+        *ngIf="g.controls.logical.value"
+        class="flex gap-4 align-items-end mbs-6"
+      >
+        <div class="grow">
+          <label [for]="i + '-logical_name'">{{c['newName']}}</label>
+          <div [class]="'fc ' + fcClass">
+            <input
+              type="text"
+              [id]="i + '-logical_name'"
+              formControlName="logical_name"
+            />
+          </div>
+        </div>
+
+        <div class="grow">
+          <label [for]="i + '-display_name'">{{c['displayName']}}</label>
+          <div [class]="'fc ' + fcClass">
+            <input
+              type="text"
+              [id]="i + '-display_name'"
+              formControlName="logical_display_name"
+            />
+          </div>
+        </div>
+
+        <div class="grow">
+          <label [for]="i + '-true_value'">{{c['trueValue']}}</label>
+          <div [class]="'fc ' + fcClass">
+            <input
+              type="text"
+              [id]="i + '-true_value'"
+              formControlName="true_value"
+            />
+          </div>
+        </div>
+
+        <div class="grow">
+          <label [for]="i + '-false_value'">{{c['falseValue']}}</label>
+          <div [class]="'fc ' + fcClass">
+            <input
+              type="text"
+              [id]="i + '-false_value'"
+              formControlName="false_value"
+            />
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="divider mb-6"></div>
+
+    <div class="toolbar mbe-6">
+      <h4>{{c['calcFields']}}</h4>
+      <div class="grow"></div>
+      <button
+        type="button"
+        class="btn-icon btn-small btn-round"
+        (click)="addCalc()"
+      >
+        <i size="small" puiIcon="add"></i>
+      </button>
+    </div>
+
+    <div
+      class="flex gap-4 align-items-end"
+      *ngFor="let g of calc.controls; let i = index; let last = last"
+      [class.mbe-6]="!last"
+      [formGroup]="g"
+    >
+      <div class="grow">
+        <label [for]="serial + i + '-filter-field'">{{c['fieldName']}}</label>
+        <div [class]="'fc ' + fcClass">
+          <pui-select-input
+            [labelRef]="serial + i + '-filter-field'"
+            formControlName="field"
+            [list]="fields | arrayFilter: filterCalcFields | arrayMap: mapField"
+          ></pui-select-input>
+        </div>
+      </div>
+
+      <div class="grow">
+        <label [for]="serial + i + '-group-method'">{{c['groupMethod']}}</label>
+        <div [class]="'fc ' + fcClass">
+          <pui-select-input
+            [labelRef]="serial + i + '-group-method'"
+            formControlName="method"
+            [list]="c['statisticsMethods']"
+          ></pui-select-input>
+        </div>
+      </div>
+
+      <div class="grow">
+        <label [for]="i + '-new_name'">{{c['newName']}}</label>
+        <div [class]="'fc ' + fcClass">
+          <input
+            type="text"
+            [id]="i + '-new_name'"
+            formControlName="new_name"
+          />
+        </div>
+      </div>
+
+      <div class="grow">
+        <label [for]="i + '-display_name'">{{c['displayName']}}</label>
+        <div [class]="'fc ' + fcClass">
+          <input
+            type="text"
+            [id]="i + '-display_name'"
+            formControlName="display_name"
+          />
+        </div>
+      </div>
+
+      <button
+        *ngIf="calc.length > 1"
+        type="button"
+        class="btn-icon btn-outline"
+        (click)="calc.removeAt(i)"
+      >
+        <i size="small" puiIcon="delete"></i>
+      </button>
+    </div>
+  </ng-container>
+</form>

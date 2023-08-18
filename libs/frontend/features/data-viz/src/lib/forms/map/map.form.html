@@ -1,0 +1,226 @@
+<form [formGroup]="form" *contra="let c">
+  <div class="flex gap-4 align-items-center mbe-6">
+    <div class="grow" formGroupName="use_map">
+      <label for="map-region">
+        {{c['selectMap']}}
+        <div class="grow"></div>
+        <pui-check-input
+          [small]="true"
+          [label]="c['showInternalRegions']"
+          [small]="true"
+          formControlName="only_children"
+        ></pui-check-input>
+      </label>
+      <div [class]="'fc ' + fcClass">
+        <pui-select-input
+          labelRef="map-region"
+          formControlName="region"
+          [list]="'' | regions | async | arrayMap: mapRegion"
+        ></pui-select-input>
+      </div>
+    </div>
+
+    <div class="grow">
+      <label for="map-type">{{c['mapType']}}</label>
+      <div [class]="'fc ' + fcClass">
+        <pui-select-input
+          labelRef="map-type"
+          [formControl]="type"
+          [list]="c['mapTypesList']"
+        ></pui-select-input>
+      </div>
+    </div>
+  </div>
+
+  <div
+    class="flex gap-4 align-items-center mbe-6"
+    *ngIf="type.value === 'regions'"
+    formGroupName="regions"
+  >
+    <div class="grow">
+      <label for="region-field">{{c['regionField']}}</label>
+      <div [class]="'fc ' + fcClass">
+        <pui-select-input
+          labelRef="region-field"
+          formControlName="region_field"
+          [list]="dsFields | arrayFilter: filterRegionField | arrayMap: mapField"
+        ></pui-select-input>
+      </div>
+    </div>
+
+    <div class="grow">
+      <label for="value-field">{{c['valueField']}}</label>
+      <div [class]="'fc ' + fcClass">
+        <pui-select-input
+          labelRef="value-field"
+          formControlName="value_field"
+          [list]="dsFields | arrayFilter: filterValueField | arrayMap: mapField"
+        ></pui-select-input>
+      </div>
+    </div>
+
+    <!-- <ng-container formArrayName="color_range">
+
+      <div class="toolbar mbe-4">
+        <h4>{{c['colorsRange']}}</h4>
+        <div class="grow"></div>
+        <button class="btn-icon btn-small btn-round" (click)="addColor()">
+          <i size="small" puiIcon="add"></i>
+        </button>
+      </div>
+
+      <div class="flex gap-4 align-items-center">
+        <div class="grow" *ngFor="let color of colorRange.controls; let i = index; let last = last">
+          <label for=" + '-color">
+            {{c['color']}}
+            <div class="grow"></div>
+            <button class="btn-icon btn-tiny btn-round" (click)="colorRange.removeAt(i)">
+              <i size="tiny" color="danger" puiIcon="delete"></i>
+            </button>
+          </label>
+          <div [class]="'fc ' + fcClass">
+            <input type="color" id=" + '-color" [formControlName]="i">
+          </div>
+        </div>
+      </div>
+
+    </ng-container> -->
+  </div>
+
+  <ng-container *ngIf="type.value === 'scatter'" formGroupName="scatter">
+    <pui-check-input
+      class="mbe-6"
+      [label]="c['useGoogleMap']"
+      formControlName="google_map"
+    ></pui-check-input>
+
+    <div class="flex gap-4 align-items-center mbe-6">
+      <div class="grow">
+        <label for="value-field">{{c['valueField']}}</label>
+        <div [class]="'fc ' + fcClass">
+          <pui-select-input
+            labelRef="value-field"
+            formControlName="value_field"
+            [list]="dsFields | arrayFilter: filterValueField | arrayMap: mapField"
+          ></pui-select-input>
+        </div>
+      </div>
+      <div class="grow">
+        <label for="loc-field">{{c['locField']}}</label>
+        <div [class]="'fc ' + fcClass">
+          <pui-select-input
+            labelRef="loc-field"
+            formControlName="loc_field"
+            [list]="dsFields | arrayFilter: filterLocField | arrayMap: mapField"
+          ></pui-select-input>
+        </div>
+      </div>
+    </div>
+
+    <div class="flex gap-4 align-items-center mbe-6">
+      <div class="grow">
+        <label for="size-field">{{c['sizeField']}}</label>
+        <div [class]="'fc ' + fcClass">
+          <pui-select-input
+            labelRef="size-field"
+            formControlName="size_field"
+            [list]="dsFields | arrayFilter: filterValueField | arrayMap: mapField"
+          ></pui-select-input>
+        </div>
+      </div>
+
+      <div class="grow">
+        <label for="effect-value">{{c['effectStartValue']}}</label>
+        <div [class]="'fc ' + fcClass">
+          <input
+            type="number"
+            id="effect-value"
+            formControlName="effect_start_value"
+          />
+        </div>
+      </div>
+    </div>
+
+    <ng-container formGroupName="tooltip">
+      <h4 class="mbe-6">{{c['tooltipContent']}}</h4>
+
+      <div class="flex gap-4 align-items-center mbe-6">
+        <div class="grow">
+          <label for="tooltip-image">{{c['image']}}</label>
+          <div [class]="'fc ' + fcClass">
+            <pui-select-input
+              labelRef="tooltip-image"
+              formControlName="image"
+              [list]="dsFields | arrayFilter: filterTooltipField | arrayMap: mapField"
+            ></pui-select-input>
+          </div>
+        </div>
+
+        <div class="grow">
+          <label for="tooltip-heading">{{c['title']}}</label>
+          <div [class]="'fc ' + fcClass">
+            <pui-select-input
+              labelRef="tooltip-heading"
+              formControlName="heading"
+              [list]="dsFields | arrayFilter: filterTooltipField | arrayMap: mapField"
+            ></pui-select-input>
+          </div>
+        </div>
+      </div>
+
+      <label for="tooltip-body">{{c['desc']}}</label>
+      <div [class]="'fc ' + fcClass">
+        <pui-select-input
+          labelRef="tooltip-body"
+          formControlName="body"
+          [multi]="true"
+          [list]="dsFields | arrayFilter: filterTooltipBodyField | arrayMap: mapField"
+        ></pui-select-input>
+      </div>
+    </ng-container>
+  </ng-container>
+
+  <div
+    class="flex gap-4 align-items-end mbe-6"
+    *ngIf="type.value === 'pie'"
+    formGroupName="pie"
+  >
+    <div class="grow">
+      <label for="region-field">{{c['regionField']}}</label>
+      <div [class]="'fc ' + fcClass">
+        <pui-select-input
+          labelRef="region-field"
+          formControlName="category_field"
+          [list]="dsFields | arrayFilter: filterRegionField | arrayMap: mapField"
+        ></pui-select-input>
+      </div>
+    </div>
+
+    <div class="grow">
+      <label for="value-field">{{c['valueField']}}</label>
+      <div [class]="'fc ' + fcClass">
+        <pui-select-input
+          labelRef="value-field"
+          formControlName="value_field"
+          [list]="dsFields | arrayFilter: filterValueField | arrayMap: mapField"
+        ></pui-select-input>
+      </div>
+    </div>
+
+    <div class="grow">
+      <label for="region-field">{{c['regionField']}}</label>
+      <div [class]="'fc ' + fcClass">
+        <pui-select-input
+          labelRef="region-field"
+          formControlName="region_field"
+          [list]="dsFields | arrayFilter: filterValueField | arrayMap: mapField"
+        ></pui-select-input>
+      </div>
+    </div>
+
+    <pui-check-input
+      [label]="c['doughnut']"
+      formControlName="doughnut"
+    ></pui-check-input>
+  </div>
+</form>

@@ -1,0 +1,117 @@
+<div class="card w-30 h-fit card-clear" *contra="let c" [formGroup]="form">
+  <h3 class="card-header">{{c['addDataViz']}}</h3>
+
+  <div class="card-body overflow-auto">
+    <app-data-store-input
+      class="mbe-6"
+      [fcClass]="fcClass"
+      formControlName="data_store"
+    ></app-data-store-input>
+
+    <ng-container *ngIf="dataStore.value | dataStore | async as ds">
+      <ng-container *ngIf="ds.serial | records | async as records">
+        <app-aggr
+          class="mbe-6"
+          [dataStore]="ds"
+          [records]="records"
+          [fcClass]="fcClass"
+          formControlName="aggregate"
+          (fieldsChange)="fieldsChange($event)"
+        ></app-aggr>
+      </ng-container>
+
+      <h4 class="mbe-6">{{c['viewSettings']}}</h4>
+
+      <label for="type">{{c['type']}}</label>
+      <div [class]="'fc mbe-6 ' + fcClass">
+        <pui-select-input
+          labelRef="type"
+          formControlName="type"
+          [list]="c['chartTypes']"
+        ></pui-select-input>
+      </div>
+
+      <app-bar-chart-form
+        *ngIf="type.value === 'bar'"
+        [dsFields]="fields"
+        [fcClass]="fcClass"
+        formControlName="options"
+      ></app-bar-chart-form>
+      <app-boxplot-chart-form
+        *ngIf="type.value === 'boxplot'"
+        [dsFields]="fields"
+        [fcClass]="fcClass"
+        formControlName="options"
+      ></app-boxplot-chart-form>
+      <app-hierarchical-chart-form
+        *ngIf="type.value === 'hierarchical'"
+        [dsFields]="fields"
+        [fcClass]="fcClass"
+        formControlName="options"
+      ></app-hierarchical-chart-form>
+      <app-line-chart-form
+        *ngIf="type.value === 'line'"
+        [dsFields]="fields"
+        [fcClass]="fcClass"
+        formControlName="options"
+      ></app-line-chart-form>
+      <app-map-chart-form
+        *ngIf="type.value === 'map'"
+        [dsFields]="fields"
+        [fcClass]="fcClass"
+        formControlName="options"
+      ></app-map-chart-form>
+      <app-pie-chart-form
+        *ngIf="type.value === 'pie'"
+        [dsFields]="fields"
+        [fcClass]="fcClass"
+        formControlName="options"
+      ></app-pie-chart-form>
+      <app-polar-chart-form
+        *ngIf="type.value === 'polar'"
+        [dsFields]="fields"
+        [fcClass]="fcClass"
+        formControlName="options"
+      ></app-polar-chart-form>
+      <app-radar-chart-form
+        *ngIf="type.value === 'radar'"
+        [dsFields]="fields"
+        [fcClass]="fcClass"
+        formControlName="options"
+      ></app-radar-chart-form>
+      <app-scatter-chart-form
+        *ngIf="type.value === 'scatter'"
+        [dsFields]="fields"
+        [fcClass]="fcClass"
+        formControlName="options"
+      ></app-scatter-chart-form>
+      <app-table-form
+        *ngIf="type.value === 'table'"
+        [dsFields]="fields"
+        [fcClass]="fcClass"
+        formControlName="options"
+      ></app-table-form>
+      <app-timeline-chart-form
+        *ngIf="type.value === 'timeline'"
+        [dsFields]="fields"
+        [fcClass]="fcClass"
+        formControlName="options"
+      ></app-timeline-chart-form>
+    </ng-container>
+  </div>
+
+  <div class="card-footer">
+    <button class="btn-outline btn-round" (click)="cancel()">
+      {{c['cancel']}}
+    </button>
+    <button
+      class="btn-primary btn-round"
+      [disabled]="form.invalid"
+      (click)="submit(c)"
+    >
+      {{c['submit']}}
+    </button>
+  </div>
+
+  <pui-preloader *ngIf="preloader"></pui-preloader>
+</div>

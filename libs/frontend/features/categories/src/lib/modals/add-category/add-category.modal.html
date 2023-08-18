@@ -1,0 +1,31 @@
+<form *contra="let c" class="card minw-10 shadow-6" [formGroup]="form" (ngSubmit)="add(c)">
+
+  <div class="card-header">
+    <h3>{{c['addCategory']}}</h3>
+  </div>
+
+  <div class="card-body">
+    <pui-check-input class="mbe-4" *ngIf="!parent" [label]="c['ordinal']" formControlName="ordinal"></pui-check-input>
+
+    <label for="title">{{c['title']}}</label>
+    <div class="fc mbe-4">
+      <input id="title" type="text" autocomplete="off" formControlName="title">
+    </div>
+
+
+    <ng-container *ngIf="ordinal.value && parent">
+      <label for="value">{{c['value']}}</label>
+      <div class="fc mbe-4">
+        <input id="value" type="number" autocomplete="off" formControlName="value">
+      </div>
+    </ng-container>
+  </div>
+
+  <div class="card-footer">
+    <button class="btn-outline btn-round" type="reset" (click)="closes.emit(null)">{{c['cancel']}}</button>
+    <button class="btn-primary btn-round" type="submit" [disabled]="form.invalid">{{c['add']}}</button>
+  </div>
+
+  <pui-preloader *ngIf="preloader"></pui-preloader>
+
+</form>

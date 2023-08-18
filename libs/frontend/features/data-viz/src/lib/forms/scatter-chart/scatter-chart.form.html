@@ -1,0 +1,144 @@
+<form [formGroup]="form" *contra="let c">
+  <div class="toolbar mbe-6">
+    <h4>{{c['series']}}</h4>
+    <div class="grow"></div>
+    <button
+      *ngIf="!useCluster.value && !useRegression.value"
+      class="btn-icon btn-small btn-round"
+      (click)="addSerie()"
+    >
+      <i puiIcon="add" size="small"></i>
+    </button>
+  </div>
+
+  <ng-container formArrayName="series">
+    <fieldset
+      class="mbe-6"
+      *ngFor="let serie of series.controls; let i = index"
+      [formGroup]="serie"
+    >
+      <legend>
+        <p class="bold">{{c['serie']}} - {{i + 1}}</p>
+        <button
+          *ngIf="series.controls.length > 1"
+          class="btn-icon btn-small btn-round"
+          (click)="series.removeAt(i)"
+        >
+          <i puiIcon="delete" size="small"></i>
+        </button>
+      </legend>
+
+      <div class="flex gap-4 align-items-end mbe-6">
+        <div class="grow">
+          <label [for]="i + '-serie-name'">{{c['serieName']}}</label>
+          <div [class]="'fc mbe-6 ' + fcClass">
+            <input
+              type="text"
+              [id]="i + '-serie-name'"
+              formControlName="serie_name"
+            />
+          </div>
+        </div>
+
+        <div class="grow">
+          <label for="x-field">{{c['xField']}}</label>
+          <div [class]="'fc mbe-6 ' + fcClass">
+            <pui-select-input
+              labelRef="x-field"
+              formControlName="x"
+              [list]="dsFields | arrayFilter: filterCatField | arrayMap: mapField"
+            ></pui-select-input>
+          </div>
+        </div>
+
+        <div class="grow">
+          <label [for]="i + '-y-field'">{{c['yFields']}}</label>
+          <div [class]="'fc mbe-6 ' + fcClass">
+            <pui-select-input
+              [labelRef]="i + '-y-field'"
+              formControlName="y"
+              [list]="dsFields | arrayFilter: filterValueField | arrayMap: mapField"
+            ></pui-select-input>
+          </div>
+        </div>
+      </div>
+
+      <div class="flex gap-4 align-items-end mbe-6" formGroupName="size">
+        <div class="grow">
+          <label [for]="i + '-size-field'">{{c['sizeField']}}</label>
+          <div [class]="'fc ' + fcClass">
+            <pui-select-input
+              [labelRef]="i + '-size-field'"
+              formControlName="field"
+              [list]="dsFields | arrayFilter: filterValueField | arrayMap: mapField"
+            ></pui-select-input>
+          </div>
+        </div>
+
+        <div class="grow">
+          <label [for]="i + '-size-min'">{{c['minSize']}}</label>
+          <div [class]="'fc ' + fcClass">
+            <input type="number" [id]="i + '-size-min'" formControlName="min" />
+          </div>
+        </div>
+
+        <div class="grow">
+          <label [for]="i + '-size-max'">{{c['maxSize']}}</label>
+          <div [class]="'fc ' + fcClass">
+            <input type="number" [id]="i + '-size-max'" formControlName="max" />
+          </div>
+        </div>
+      </div>
+    </fieldset>
+  </ng-container>
+
+  <ng-container *ngIf="series.length <= 1 && !useCluster.value">
+    <pui-check-input
+      class="mbe-6"
+      [label]="c['useRegression']"
+      [formControl]="useRegression"
+    ></pui-check-input>
+
+    <div
+      class="flex gap-4 align-items-end mbe-6"
+      *ngIf="useRegression.value"
+      formGroupName="regression"
+    >
+      <div
+        class="grow-2"
+        [class.col-span-2]="regressionType.value === 'polynomial'"
+      >
+        <label for="reg-type">{{c['regressionType']}}</label>
+        <div [class]="'fc ' + fcClass">
+          <pui-select-input
+            labelRef="reg-type"
+            formControlName="type"
+            [list]="c['regressionTypes']"
+          ></pui-select-input>
+        </div>
+      </div>
+
+      <div class="grow" *ngIf="regressionType.value === 'polynomial'">
+        <label for="reg-order">{{c['polynomialOrder']}}</label>
+        <div [class]="'fc ' + fcClass">
+          <input type="number" id="reg-order" formControlName="order" />
+        </div>
+      </div>
+    </div>
+  </ng-container>
+
+  <ng-container *ngIf="series.length <= 1 && !useRegression.value">
+    <pui-check-input
+      class="mbe-6"
+      [label]="c['useCluster']"
+      [formControl]="useCluster"
+    ></pui-check-input>
+
+    <ng-container *ngIf="useCluster.value">
+      <label for="clusters-count">{{c['clusterCounts']}}</label>
+      <div [class]="'fc ' + fcClass">
+        <input type="number" id="clusters-count" formControlName="cluster" />
+      </div>
+    </ng-container>
+  </ng-container>
+</form>

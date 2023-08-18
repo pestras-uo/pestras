@@ -1,0 +1,11 @@
+.report-view {
+  position: relative;
+  margin-block-end: 32px;
+}
+
+.view-actions {
+  position: absolute;
+  background-color: var(--surface1);
+  border-radius: 18px;
+  inset-inline-start: calc(100% + 4px);
+}

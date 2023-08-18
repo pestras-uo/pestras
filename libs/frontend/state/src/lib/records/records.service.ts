@@ -1,7 +1,7 @@
 import { HttpClient } from "@angular/common/http";
 import { Inject, Injectable } from "@angular/core";
 import { RecordsApi } from "./records.api";
-import { injectURLPayload } from "@pestras/util";
+import { injectURLPayload } from "@pestras/shared/util";
 import { DataRecord } from "@pestras/shared/data-model";
 import { STATE_CONFIG, StateConfig } from "../config";
 

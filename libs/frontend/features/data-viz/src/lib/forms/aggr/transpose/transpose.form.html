@@ -1,0 +1,57 @@
+<form [formGroup]="form" *contra="let c">
+  <div class="flex gap-4 mbe-6">
+    <div class="grow">
+      <label for="transpose-field">{{c['fieldName']}}</label>
+      <div [class]="'fc ' + fcClass">
+        <pui-select-input
+          labelRef="transpose-field"
+          formControlName="name"
+          [list]="fields | arrayFilter: filterGroupFields | arrayMap: mapField"
+        ></pui-select-input>
+      </div>
+    </div>
+
+    <div class="grow">
+      <label for="target-field">{{c['valueField']}}</label>
+      <div [class]="'fc ' + fcClass">
+        <pui-select-input
+          labelRef="target-field"
+          formControlName="target"
+          [list]="fields | arrayFilter: filterGroupFields | arrayMap: mapField"
+        ></pui-select-input>
+      </div>
+    </div>
+
+    <div class="grow">
+      <label for="group-method">{{c['groupMethod']}}</label>
+      <div [class]="'fc ' + fcClass">
+        <pui-select-input
+          labelRef="group-method"
+          formControlName="method"
+          [list]="c['statisticsMethods']"
+        ></pui-select-input>
+      </div>
+    </div>
+  </div>
+
+  <pui-check-input
+    [label]="c['logical']"
+    formControlName="logical"
+  ></pui-check-input>
+
+  <div *ngIf="form.controls.logical.value" class="flex gap-4 mbs-6">
+    <div class="grow">
+      <label for="true_value">{{c['trueValue']}}</label>
+      <div [class]="'fc ' + fcClass">
+        <input type="text" id="true_value" formControlName="true_value" />
+      </div>
+    </div>
+
+    <div class="grow">
+      <label for="false_value">{{c['falseValue']}}</label>
+      <div [class]="'fc ' + fcClass">
+        <input type="text" id="false_value" formControlName="false_value" />
+      </div>
+    </div>
+  </div>
+</form>

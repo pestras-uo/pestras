@@ -1,0 +1,45 @@
+<form class="flex gap-4 align-items-center" [formGroup]="form" *contra="let c">
+  <div class="grow">
+    <label [for]="id + '_field'">{{c['field']}}</label>
+    <div [class]="'fc ' + fcClass">
+      <pui-select-input
+        [list]="fields | arrayFilter: filterField | arrayMap: mapField"
+        [labelRef]="id + '_field'"
+        formControlName="field"
+      ></pui-select-input>
+    </div>
+  </div>
+
+  <div class="grow-2">
+    <label [for]="id + '_year'">{{c['amount']}}</label>
+    <div [class]="'fc ' + fcClass">
+      <input
+        type="number"
+        [id]="id + '_year'"
+        formControlName="year"
+        [placeholder]="c['years']"
+      />
+      -
+      <input
+        type="number"
+        formControlName="month"
+        [placeholder]="c['months']"
+      />
+      -
+      <input type="number" formControlName="day" [placeholder]="c['days']" /> -
+      <input type="number" formControlName="hour" [placeholder]="c['hours']" />
+      -
+      <input
+        type="number"
+        formControlName="minute"
+        [placeholder]="c['minutes']"
+      />
+      -
+      <input
+        type="number"
+        formControlName="second"
+        [placeholder]="c['seconds']"
+      />
+    </div>
+  </div>
+</form>

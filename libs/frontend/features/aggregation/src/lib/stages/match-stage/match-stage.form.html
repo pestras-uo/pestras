@@ -1,0 +1,128 @@
+<form [formGroup]="form" *contra="let c">
+  <ng-container formArrayName="filters">
+    <div class="toolbar mbe-4">
+      <h4>{{c['filters']}}</h4>
+
+      <button class="btn-icon btn-round" (click)="addFilter()">
+        <i puiIcon="add" size="small"></i>
+      </button>
+    </div>
+
+    <fieldset
+      [class.mbe-6]="!last"
+      *ngFor="let g of filters.controls; let i = index; let last = last"
+      [formGroup]="g"
+    >
+      <legend>
+        <div [class]="'fc fc-small w-3 ' + fcClass">
+          <input
+            type="text"
+            formControlName="group"
+            [placeholder]="c['group']"
+          />
+        </div>
+
+        <button
+          *ngIf="filters.controls.length > 1"
+          class="btn-icon btn-small btn-round"
+          (click)="filters.removeAt(i)"
+        >
+          <i size="small" color="danger" puiIcon="delete"></i>
+        </button>
+      </legend>
+
+      <div class="grid cols-4 gap-4 mbe-6">
+        <div>
+          <label [for]="id + i + '_operation'">{{c['operation']}}</label>
+          <div [class]="'fc ' + fcClass">
+            <pui-select-input
+              [labelRef]="id + i + '_operation'"
+              [list]="c['filterOperators']"
+              formControlName="operator"
+              (change)="operatorChange(i)"
+            ></pui-select-input>
+          </div>
+        </div>
+
+        <div>
+          <label [for]="id + i + '_field'">{{c['field']}}</label>
+          <div [class]="'fc ' + fcClass">
+            <pui-select-input
+              [labelRef]="id + i + '_field'"
+              formControlName="field"
+              [list]="fields | arrayFilter: filterField | arrayMap : mapField"
+            ></pui-select-input>
+          </div>
+        </div>
+
+        <div class="cols-span-2">
+          <label [for]="id + i + '_modifiers'">{{c['modifiers']}}</label>
+          <div [class]="'fc ' + fcClass">
+            <pui-select-input
+              [labelRef]="id + i + '_modifiers'"
+              [list]="c['valueModifiers']"
+              [multi]="true"
+              formControlName="modifiers"
+            ></pui-select-input>
+          </div>
+        </div>
+      </div>
+
+      <h5 class="mbe-4">{{c['compareTo']}}</h5>
+
+      <div class="grid cols-2 gap-4">
+        <div>
+          <label [for]="id + i + '_value'">
+            {{c['value']}}
+            <div class="grow"></div>
+            <pui-check-input
+              *ngIf="filters.controls[i].controls.operator.value !== '$in' && filters.controls[i].controls.operator.value !== '$nin'"
+              [label]="c['selectField']"
+              formControlName="value_from_field"
+              [small]="true"
+            ></pui-check-input>
+          </label>
+          <div [class]="'fc mbe-4 ' + fcClass">
+            <!-- normal value case -->
+            <input
+              *ngIf="!filters.controls[i].controls.value_from_field.value"
+              type="text"
+              formControlName="value"
+              [id]="id + i + '_value'"
+            />
+
+            <!-- array value case -->
+            <pui-select-input
+              *ngIf="filters.controls[i].controls.operator.value === '$in' || filters.controls[i].controls.operator.value === '$nin'"
+              [labelRef]="id + i + '_value'"
+              formControlName="value"
+              [list]="[]"
+              [addNew]="true"
+              [multi]="true"
+            ></pui-select-input>
+
+            <!-- value from field case -->
+            <pui-select-input
+              *ngIf="filters.controls[i].controls.value_from_field.value"
+              [labelRef]="id + i + '_value'"
+              [list]="fields | arrayFilter: filterField | arrayMap : mapField"
+              formControlName="value"
+            ></pui-select-input>
+          </div>
+        </div>
+
+        <div>
+          <label [for]="id + i + '_modifiers'">{{c['modifiers']}}</label>
+          <div [class]="'fc ' + fcClass">
+            <pui-select-input
+              [labelRef]="id + i + '_modifiers'"
+              [list]="c['valueModifiers']"
+              [multi]="true"
+              formControlName="modifiers"
+            ></pui-select-input>
+          </div>
+        </div>
+      </div>
+    </fieldset>
+  </ng-container>
+</form>

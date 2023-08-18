@@ -1,0 +1,185 @@
+<form [formGroup]="form" *contra="let c">
+  <div formArrayName="stages" class="accordion mbe-2">
+    <div class="card">
+      <div class="card-header">
+        <h4>{{c['source']}}: {{from.name}}</h4>
+      </div>
+
+      <div class="card-footer flex-wrap justify-content-start">
+        <p class="bold w-fit">{{c['initialOutput']}}:</p>
+        <p
+          *ngFor="let entity of from.fields"
+          class="badge badge-small badge-primary"
+        >
+          <span>{{entity.name}}: {{c['fieldTypesMap'][entity.type]}}</span>
+        </p>
+        <div class="grow"></div>
+      </div>
+    </div>
+
+    <ng-container
+      *ngFor="let stage of stages.controls; let i = index; let last = last"
+    >
+      <div class="card mbs-4" #card>
+        <div
+          class="card-header"
+          *ngIf="c['aggrStages'] | getStage: stage.value.type as s"
+        >
+          <div>
+            <h4>{{i + 1}} - {{s.name}}</h4>
+            <p class="text3 f9">{{s.desc}}</p>
+          </div>
+          <div class="grow"></div>
+          <button
+            *ngIf="last"
+            class="btn-icon btn-small btn-round"
+            (click)="removeStage()"
+          >
+            <i size="small" color="danger" puiIcon="delete"></i>
+          </button>
+          <button
+            class="btn-icon btn-small btn-round"
+            (click)="card.classList.toggle('active')"
+          >
+            <i size="small" puiIcon="arrow_drop_down"></i>
+          </button>
+        </div>
+
+        <div class="card-body" [class.disabled]="!last || !editable">
+          <ng-container [ngSwitch]="[stage.value.type]">
+            <app-bucket-stage
+              *ngSwitchCase="'bucket'"
+              [formControl]="stage"
+              [fields]="inOutStates[i].inState"
+            ></app-bucket-stage>
+
+            <app-fill-stage
+              *ngSwitchCase="'fill'"
+              [formControl]="stage"
+              [fields]="inOutStates[i].inState"
+            ></app-fill-stage>
+
+            <app-group-stage
+              *ngSwitchCase="'group'"
+              [formControl]="stage"
+              [fields]="inOutStates[i].inState"
+            ></app-group-stage>
+
+            <app-join-stage
+              *ngSwitchCase="'join'"
+              [formControl]="stage"
+              [rootDataStore]="from.serial"
+              [selfDataStore]="dataStore.serial"
+              [fields]="inOutStates[i].inState"
+            ></app-join-stage>
+
+            <app-limit-stage
+              *ngSwitchCase="'limit'"
+              [formControl]="stage"
+              [fields]="inOutStates[i].inState"
+            ></app-limit-stage>
+
+            <app-match-stage
+              *ngSwitchCase="'match'"
+              [formControl]="stage"
+              [fields]="inOutStates[i].inState"
+            ></app-match-stage>
+
+            <app-sample-stage
+              *ngSwitchCase="'sample'"
+              [formControl]="stage"
+              [fields]="inOutStates[i].inState"
+            ></app-sample-stage>
+
+            <app-select-stage
+              *ngSwitchCase="'select'"
+              [formControl]="stage"
+              [fields]="inOutStates[i].inState"
+            ></app-select-stage>
+
+            <app-set-stage
+              *ngSwitchCase="'set'"
+              [formControl]="stage"
+              [fields]="inOutStates[i].inState"
+            ></app-set-stage>
+
+            <app-set-window-fields-stage
+              *ngSwitchCase="'setWindowFields'"
+              [formControl]="stage"
+              [fields]="inOutStates[i].inState"
+            ></app-set-window-fields-stage>
+
+            <app-skip-stage
+              *ngSwitchCase="'skip'"
+              [formControl]="stage"
+              [fields]="inOutStates[i].inState"
+            ></app-skip-stage>
+
+            <app-sort-stage
+              *ngSwitchCase="'sort'"
+              [formControl]="stage"
+              [fields]="inOutStates[i].inState"
+            ></app-sort-stage>
+
+            <app-union-stage
+              *ngSwitchCase="'union'"
+              [formControl]="stage"
+              [rootDataStore]="from.serial"
+              [selfDataStore]="dataStore.serial"
+              [fields]="inOutStates[i].inState"
+            ></app-union-stage>
+
+            <app-unset-stage
+              *ngSwitchCase="'unset'"
+              [formControl]="stage"
+              [fields]="inOutStates[i].inState"
+            ></app-unset-stage>
+          </ng-container>
+        </div>
+
+        <div class="card-footer flex-wrap justify-content-start">
+          <p class="bold w-fit">{{c['stageOutput']}}:</p>
+          <p
+            *ngFor="let entity of inOutStates[i].outState"
+            class="badge badge-small badge-primary"
+          >
+            <span>{{entity.name}}: {{c['fieldTypesMap'][entity.type]}}</span>
+          </p>
+          <div class="grow"></div>
+        </div>
+      </div>
+    </ng-container>
+  </div>
+
+  <div *ngIf="editable" class="card mbs-4 card-clear bordered">
+    <div class="card-header align-items-end">
+      <div class="grow">
+        <label for="new-stage">{{c['newStage']}}</label>
+        <div class="fc fc-surface1 fc-outline fc-round">
+          <pui-select-input
+            labelRef="new-stage"
+            [list]="c['aggrStages']"
+            [formControl]="addControl"
+          ></pui-select-input>
+        </div>
+      </div>
+
+      <button
+        class="btn-icon btn-round btn-primary"
+        (click)="addStage(addControl.value)"
+      >
+        <i puiIcon="add"></i>
+      </button>
+
+      <div class="grow"></div>
+
+      <button
+        class="btn-primary btn-round"
+        [disabled]="form.invalid"
+        (click)="done.emit(stages.value)"
+      >
+        {{c['save']}}
+      </button>
+    </div>
+  </div>
+</form>

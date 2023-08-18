@@ -1,0 +1,48 @@
+<ng-container *ngIf="list.length else none">
+  <div *ngFor="let item of list; let lst = last">
+    <fieldset #fieldset class="fieldset-closed" *ngIf="!isLast">
+      <legend>
+        <button
+          *ngIf="!isLast"
+          class="btn-tiny btn-round btn-icon"
+          (click)="subList.classList.toggle('hide'); fieldset.classList.toggle('fieldset-closed')"
+        >
+          <i puiIcon="add" size="tiny"></i>
+        </button>
+        <p *ngIf="!isLast || (!item.serial || !baseUrl)" [class.bold]="!isLast">
+          {{item.displayFieldValue}}
+        </p>
+      </legend>
+
+      <div #subList class="hide">
+        <tree-view-widget
+          *ngIf="!isLast"
+          [data]="data"
+          [dataStore]="dataStore"
+          [baseUrl]="baseUrl"
+          [levels]="levels"
+          [index]="index + 1"
+          [filter]="{ field: item.fieldName, value: item.value }"
+        ></tree-view-widget>
+      </div>
+    </fieldset>
+
+    <ng-container *ngIf="isLast">
+      <p *ngIf="!isLast || (!item.serial || !baseUrl)" [class.bold]="!isLast">
+        {{item.displayFieldValue}}
+      </p>
+      <a
+        *ngIf="isLast && item.serial && baseUrl"
+        class="badge badge-primary"
+        [class.mbe-2]="!lst"
+        [routerLink]="[baseUrl, item.serial]"
+      >
+        {{item.displayFieldValue}}
+      </a>
+    </ng-container>
+  </div>
+</ng-container>
+
+<ng-template #none>
+  <p *contra="let c">{{c['none']}}</p>
+</ng-template>

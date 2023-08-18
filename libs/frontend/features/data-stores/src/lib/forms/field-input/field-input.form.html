@@ -1,0 +1,106 @@
+<!-- boolean -->
+<pui-check-input
+  *ngIf="field.type === 'boolean'"
+  [label]="field.display_name"
+  [formControl]="control"
+></pui-check-input>
+
+<label *ngIf="field.type !== 'boolean'" [for]="field.name"
+  >{{field.display_name}} <span *ngIf="required">*</span></label
+>
+
+<!-- text fields -->
+<ng-container *ngIf="field.type === 'string'">
+  <div *ngIf="!isRich" class="fc">
+    <input type="text" [id]="field.name" [formControl]="control" />
+  </div>
+
+  <quill-editor *ngIf="isRich" [formControl]="control"></quill-editor>
+</ng-container>
+
+<!-- int & double -->
+<div class="fc" *ngIf="field.type === 'int' || field.type === 'double'">
+  <input type="number" [id]="field.name" [formControl]="control" />
+</div>
+
+<!-- date & datetime -->
+<div class="fc" *ngIf="field.type === 'date' || field.type === 'datetime'">
+  <input #dateInput type="date" [id]="field.name" [formControl]="control" />
+</div>
+
+<!-- category -->
+<div class="fc" *ngIf="field.type === 'category'">
+  <pui-select-input
+    [list]="field.ref_to | categoryBranches | arrayMap: mapCategoryBranch"
+    [id]="field.name"
+    [formControl]="control"
+    [multi]="multi"
+  ></pui-select-input>
+</div>
+
+<!-- region -->
+<div class="fc" *ngIf="field.type === 'region'">
+  <pui-select-input
+    [list]="'' | userRegions | async | arrayMap: mapRegion"
+    [id]="field.name"
+    [formControl]="control"
+    [multi]="multi"
+  ></pui-select-input>
+</div>
+
+<!-- location -->
+<pui-location-input
+  *ngIf="field.type === 'location'"
+  [formControl]="control"
+></pui-location-input>
+
+<!-- image -->
+<pui-image-input
+  *ngIf="field.type === 'image'"
+  accept=".jpg,.jpeg,.png,.webp"
+  [newWidth]="1280"
+  [formControl]="control"
+></pui-image-input>
+
+<!-- orgunit -->
+<div class="fc" *ngIf="field.type === 'serial' && field.ref_type === 'orgunit'">
+  <pui-select-input
+    [list]="'' | userOrgunits | async | arrayMap: mapOrgunit"
+    [id]="field.name"
+    [formControl]="control"
+    [multi]="multi"
+  ></pui-select-input>
+</div>
+
+<!-- user -->
+<div class="fc" *ngIf="field.type === 'serial' && field.ref_type === 'user'">
+  <pui-select-input
+    [list]="'' | userUsers | async | arrayMap: mapUser"
+    [id]="field.name"
+    [formControl]="control"
+    [multi]="multi"
+  ></pui-select-input>
+</div>
+
+<!-- data store -->
+<div
+  class="fc"
+  *ngIf="field.type === 'serial' && field.ref_type === 'data_store'"
+>
+  <pui-select-input
+    [list]="field.ref_to | selectRecord | async"
+    [formControl]="control"
+    [multi]="multi"
+  ></pui-select-input>
+</div>
+
+<!-- topic -->
+<div
+  class="fc"
+  *ngIf="field.type === 'serial' && field.ref_type === 'topic'"
+>
+  <pui-select-input
+    [list]="field.ref_to | topics | async"
+    [formControl]="control"
+  ></pui-select-input>
+</div>

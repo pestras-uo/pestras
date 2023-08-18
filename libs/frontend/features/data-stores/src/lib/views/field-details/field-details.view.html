@@ -1,0 +1,59 @@
+<main *contra="let c">
+  <div class="flex align-items-center gap-2 mbe-6">
+    <p *ngIf="field.required" class="badge badge-primary badge-small">
+      {{c['required']}}
+    </p>
+    <p *ngIf="field.unique" class="badge badge-primary badge-small">
+      {{c['unique']}}
+    </p>
+  </div>
+
+  <div class="flex gap-8 align-items-start">
+    <div>
+      <p class="bold mbe-1">{{c['name']}}</p>
+      <p class="text3 f9">{{field.name}}</p>
+    </div>
+
+    <div>
+      <p class="bold mbe-1">{{c['group']}}</p>
+      <p class="text3 f9">{{field.group}}</p>
+    </div>
+
+    <div>
+      <p class="bold mbe-1">{{c['type']}}</p>
+      <p class="text3 f9">
+        {{(c['fieldTypesList'] | arrayFind: findType: field)?.name}}
+      </p>
+    </div>
+
+    <div
+      *ngIf="!field.required && dataStore.type === 'table'"
+      class="list-item"
+    >
+      <p class="bold mbe-1">{{c['defaultValue']}}</p>
+      <p class="text3 f9">{{field.default | fieldValue: field | async}}</p>
+    </div>
+  </div>
+
+  <div class="divider mb-6"></div>
+
+  <ng-container *ngIf="dataStore.type === 'table'">
+    <app-field-constraints
+      *ngIf="dataStore.type === 'table'"
+      [dataStore]="dataStore.serial"
+      [field]="field"
+      [editable]="editable"
+    >
+    </app-field-constraints>
+
+    <div class="divider mb-6"></div>
+  </ng-container>
+
+  <div>
+    <h4 class="mbe-6 weight-8">{{c['desc']}}</h4>
+
+    <div *ngIf="field.desc" [innerHTML]="field.desc"></div>
+
+    <p *ngIf="!field.desc">{{c['noDataMsg']}}</p>
+  </div>
+</main>

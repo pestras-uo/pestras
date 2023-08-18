@@ -1,0 +1,117 @@
+<form [formGroup]="form" *contra="let c">
+  <pui-check-input
+    class="mbe-4"
+    [label]="c['partition']"
+    [formControl]="enablePartition"
+  ></pui-check-input>
+
+  <fieldset formGroupName="sortBy" class="mbe-4">
+    <legend>
+      <p class="bold">{{c['sort']}}</p>
+    </legend>
+
+    <label [for]="id + '_sort-field'">{{c['field']}}</label>
+    <div [class]="'fc mbe-4 ' + fcClass">
+      <pui-select-input
+        [labelRef]="id + '_sort-field'"
+        formControlName="field"
+        [list]="fields | arrayFilter : filterField | arrayMap : mapField"
+      ></pui-select-input>
+    </div>
+
+    <label [for]="id + '_sort-order'">{{c['order']}}</label>
+    <pui-switch-input
+      class="mbe-4"
+      [list]="c['orderOptions']"
+      formControlName="order"
+    ></pui-switch-input>
+  </fieldset>
+
+  <fieldset
+    *ngIf="enablePartition.value"
+    formGroupName="partitionBy"
+    class="mbe-4"
+  >
+    <legend>
+      <p class="bold">{{c['partition']}}</p>
+    </legend>
+
+    <label [for]="id + '_partition-field'">{{c['field']}}</label>
+    <div [class]="'fc mbe-4 ' + fcClass">
+      <pui-select-input
+        [labelRef]="id + '_partition-field'"
+        formControlName="field"
+        [list]="fields | arrayFilter : filterField | arrayMap : mapField"
+      ></pui-select-input>
+    </div>
+
+    <label [for]="id + '_partition-modifiers'">{{c['modifiers']}}</label>
+    <div [class]="'fc mbe-4 ' + fcClass">
+      <pui-select-input
+        [labelRef]="id + '_partition-modifiers'"
+        formControlName="modifiers"
+        [list]="c['valueModifiers']"
+      ></pui-select-input>
+    </div>
+  </fieldset>
+
+  <ng-container formArrayName="output">
+    <div class="toolbar">
+      <h4>{{c['output']}}</h4>
+      <div class="grow"></div>
+      <button
+        *ngIf="fields.length > output.controls.length"
+        class="btn-icon btn-small btn-round"
+        (click)="addOutput()"
+      >
+        <i size="small" puiIcon="add"></i>
+      </button>
+    </div>
+
+    <fieldset
+      *ngFor="let g of output.controls; let i = index"
+      class="mbs-4"
+      [formGroup]="g"
+    >
+      <legend>
+        <p class="bold">{{i + 1}} - {{c['field']}}</p>
+
+        <button
+          *ngIf="output.controls.length > 1"
+          class="btn-icon btn-round"
+          (click)="output.removeAt(i)"
+        >
+          <i puiIcon="delete" size="small"></i>
+        </button>
+      </legend>
+
+      <label [for]="id + i + '_output-field'">{{c['field']}}</label>
+      <div [class]="'fc mbe-4 ' + fcClass">
+        <pui-select-input
+          [placeholder]="c['field']"
+          formControlName="field"
+          [list]="fields | arrayFilter : filterField | arrayMap : mapField"
+        ></pui-select-input>
+      </div>
+
+      <label [for]="id + i + '_output-method'">{{c['operation']}}</label>
+      <pui-switch-input
+        [list]="c['fillOptions']"
+        formControlName="method"
+      ></pui-switch-input>
+
+      <ng-container *ngIf="g.controls.method.value === null">
+        <label class="mbs-4" [for]="id + i + '_output-value'"
+          >{{c['value']}}</label
+        >
+        <div [class]="'fc ' + fcClass">
+          <input
+            type="text"
+            formControlName="value"
+            [id]="id + i + '_output-value'"
+          />
+        </div>
+      </ng-container>
+    </fieldset>
+  </ng-container>
+</form>

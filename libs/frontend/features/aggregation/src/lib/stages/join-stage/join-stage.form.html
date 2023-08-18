@@ -1,0 +1,150 @@
+<form [formGroup]="form" *contra="let c">
+  <app-data-store-input
+    class="mbe-6"
+    [fcClass]="fcClass"
+    formControlName="dataStore"
+  ></app-data-store-input>
+
+  <ng-container formArrayName="on">
+    <div class="toolbar mbe-4">
+      <p class="bold">{{c['joinContraints']}}</p>
+      <div class="grow"></div>
+      <button class="btn-small btn-icon btn-round" (click)="addOnOptions()">
+        <i size="small" puiIcon="add"></i>
+      </button>
+    </div>
+
+    <fieldset
+      class="mbe-6"
+      *ngFor="let join of onOptions.controls; let i = index"
+      [formGroup]="join"
+    >
+      <legend>
+        <p class="bold">{{i + 1}} - {{c['field']}}</p>
+        <button
+          *ngIf="onOptions.length > 1"
+          class="btn-small btn-icon btn-round"
+          (click)="onOptions.removeAt(i)"
+        >
+          <i size="small" color="danger" puiIcon="delete"></i>
+        </button>
+      </legend>
+
+      <div class="flex gap-4" formGroupName="localField">
+        <div class="grow">
+          <label [for]="id + i + 'local-field-name'">{{c['leftField']}}</label>
+          <div [class]="'fc ' + fcClass">
+            <pui-select-input
+              [labelRef]="id + i + 'local-field-name'"
+              formControlName="name"
+              [list]="fields | arrayMap: mapField"
+            ></pui-select-input>
+          </div>
+        </div>
+
+        <div class="grow">
+          <label [for]="id + i + 'local-field-modifiers'"
+            >{{c['modifiers']}}</label
+          >
+          <div [class]="'fc ' + fcClass">
+            <pui-select-input
+              [labelRef]="id + i + 'local-field-modifiers'"
+              formControlName="modifiers"
+              [multi]="true"
+              [list]="c['valueModifiers']"
+            ></pui-select-input>
+          </div>
+        </div>
+      </div>
+
+      <div class="divider mb-6"></div>
+
+      <div
+        class="flex gap-4"
+        formGroupName="foreignField"
+        *ngIf="dataStore.value | dataStore | async as ds"
+      >
+        <div class="grow">
+          <label [for]="id + i + 'foreign-field-name'"
+            >{{c['rightField']}}</label
+          >
+          <div [class]="'fc ' + fcClass">
+            <pui-select-input
+              [labelRef]="id + i + 'foreign-field-name'"
+              formControlName="name"
+              [list]="ds.fields | arrayMap: mapField"
+            ></pui-select-input>
+          </div>
+        </div>
+
+        <div class="grow">
+          <label [for]="id + i + 'foreign-field-modifiers'"
+            >{{c['modifiers']}}</label
+          >
+          <div [class]="'fc ' + fcClass">
+            <pui-select-input
+              [labelRef]="id + i + 'foreign-field-modifiers'"
+              formControlName="modifiers"
+              [multi]="true"
+              [list]="c['valueModifiers']"
+            ></pui-select-input>
+          </div>
+        </div>
+      </div>
+    </fieldset>
+  </ng-container>
+
+  <ng-container
+    formArrayName="fields"
+    *ngIf="dataStore.value | dataStore | async as ds"
+  >
+    <div class="toolbar mbe-4">
+      <p class="bold">{{c['selectFields']}}</p>
+      <div class="grow"></div>
+      <button class="btn-small btn-icon btn-round" (click)="addField()">
+        <i size="small" puiIcon="add"></i>
+      </button>
+    </div>
+
+    <fieldset
+      [class.mbe-6]="!last"
+      *ngFor="let g of fieldsList.controls; let i = index; let last = last"
+      [formGroup]="g"
+    >
+      <legend>
+        <p class="bold">{{i + 1}} - {{c['field']}}</p>
+        <button
+          *ngIf="fieldsList.length > 1"
+          class="btn-small btn-icon btn-round"
+          (click)="fieldsList.removeAt(i)"
+        >
+          <i size="small" color="danger" puiIcon="delete"></i>
+        </button>
+      </legend>
+
+      <div class="flex gap-4">
+        <div class="grow">
+          <label [for]="id + i + 'select-field-name'">{{c['field']}}</label>
+          <div [class]="'fc ' + fcClass">
+            <pui-select-input
+              [labelRef]="id + i + 'select-field-name'"
+              formControlName="name"
+              [list]="ds.fields | arrayMap: mapField"
+            ></pui-select-input>
+          </div>
+        </div>
+
+        <div class="grow">
+          <label [for]="id + i + 'select-field-as'">{{c['newName']}}</label>
+          <div [class]="'fc ' + fcClass">
+            <input
+              type="text"
+              formControlName="as"
+              [id]="id + i + 'select-field-as'"
+            />
+          </div>
+        </div>
+      </div>
+    </fieldset>
+  </ng-container>
+</form>

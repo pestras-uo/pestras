@@ -6,7 +6,7 @@ import { tap, filter } from 'rxjs';
 import { StatorChannel, StatorObjectState } from '@pestras/frontend/util/stator';
 import { SessionApi, AccountApi } from './session.api';
 import { SSEActivity } from '../sse/sse.events';
-import { Serial } from '@pestras/util';
+import { Serial } from '@pestras/shared/util';
 
 const _roles = ['admin', 'data_engineer', 'reporter', 'author', 'guest'];
 

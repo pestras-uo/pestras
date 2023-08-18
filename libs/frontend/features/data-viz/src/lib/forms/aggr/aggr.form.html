@@ -1,0 +1,136 @@
+<ng-container *contra="let c">
+  <h4 class="mbe-6">{{c['modifyRecords']}}</h4>
+
+  <div class="flex gap-4 align-items-end mbe-6">
+    <div class="grow">
+      <label for="select-stage">{{c['selectOperation']}}</label>
+      <div [class]="'fc fc-round ' + fcClass">
+        <pui-select-input
+          labelRef="select-stage"
+          [formControl]="select"
+          [list]="c['dataVizStages']"
+        ></pui-select-input>
+      </div>
+    </div>
+    <button
+      class="btn-round btn-icon btn-primary"
+      [disabled]="select.invalid"
+      (click)="addStage()"
+    >
+      <i puiIcon="add"></i>
+    </button>
+  </div>
+
+  <div
+    class="card card-clear bordered"
+    [class.mbe-6]="!last"
+    *ngFor="let stage of stages; let last = last"
+  >
+    <!-- Filter -->
+    <div [class.dem]="!last" *ngIf="stage.control.value.type === 'filter'">
+      <div class="card-header">
+        <h4>{{c['filterRecords']}}</h4>
+
+        <button
+          *ngIf="last"
+          class="btn-small btn-icon btn-round"
+          (click)="popStage()"
+        >
+          <i puiIcon="delete"></i>
+        </button>
+      </div>
+
+      <div class="card-body">
+        <app-filter
+          [fields]="stage.input"
+          [formControl]="stage.control"
+        ></app-filter>
+      </div>
+    </div>
+
+    <!-- Group -->
+    <div [class.dem]="!last" *ngIf="stage.control.value.type === 'group'">
+      <div class="card-header">
+        <h4>{{c['groupBy']}}</h4>
+
+        <button
+          *ngIf="last"
+          class="btn-small btn-icon btn-round"
+          (click)="popStage()"
+        >
+          <i puiIcon="delete"></i>
+        </button>
+      </div>
+
+      <div class="card-body">
+        <app-group
+          [fields]="stage.input"
+          [formControl]="stage.control"
+        ></app-group>
+      </div>
+    </div>
+
+    <!-- Sort -->
+    <div [class.dem]="!last" *ngIf="stage.control.value.type === 'sort'">
+      <div class="card-header">
+        <h4>{{c['sortRecords']}}</h4>
+
+        <button
+          *ngIf="last"
+          class="btn-small btn-icon btn-round"
+          (click)="popStage()"
+        >
+          <i puiIcon="delete"></i>
+        </button>
+      </div>
+
+      <div class="card-body">
+        <app-sort
+          [fields]="stage.input"
+          [formControl]="stage.control"
+        ></app-sort>
+      </div>
+    </div>
+
+    <!-- Limit -->
+    <div [class.dem]="!last" *ngIf="stage.control.value.type === 'limit'">
+      <div class="card-header">
+        <h4>{{c['limitRecords']}}</h4>
+
+        <button
+          *ngIf="last"
+          class="btn-small btn-icon btn-round"
+          (click)="popStage()"
+        >
+          <i puiIcon="delete"></i>
+        </button>
+      </div>
+
+      <div class="card-body">
+        <app-limit [formControl]="stage.control"></app-limit>
+      </div>
+    </div>
+
+    <!-- Transpose -->
+    <div [class.dem]="!last" *ngIf="stage.control.value.type === 'transpose'">
+      <div class="card-header">
+        <h4>{{c['transposeFields']}}</h4>
+
+        <button
+          *ngIf="last"
+          class="btn-small btn-icon btn-round"
+          (click)="popStage()"
+        >
+          <i puiIcon="delete"></i>
+        </button>
+      </div>
+
+      <div class="card-body">
+        <app-transpose
+          [fields]="stage.input"
+          [formControl]="stage.control"
+        ></app-transpose>
+      </div>
+    </div>
+  </div>
+</ng-container>

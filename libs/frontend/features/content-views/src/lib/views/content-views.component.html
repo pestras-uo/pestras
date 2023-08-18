@@ -1,0 +1,174 @@
+<ng-container *contra="let c">
+  <ng-container *ngIf="content$ | async">
+    <div class="toolbar">
+      <h2>{{ c['desc'] }}</h2>
+
+      <div class="grow"></div>
+
+      <button
+        *ngIf="views.length"
+        class="btn-icon btn-small btn-round"
+        [class.btn-success]="editMode"
+        (click)="editMode = !editMode"
+      >
+        <i size="small" puiIcon="edit"></i>
+      </button>
+
+      <button
+        class="btn-icon btn-small btn-round"
+        (click)="openDialog(viewTmp)"
+      >
+        <i size="small" puiIcon="add"></i>
+      </button>
+    </div>
+
+    <div class="divider mbs-4 mbe-8"></div>
+
+    <div cdkDropList (cdkDropListDropped)="drop($event)">
+      <ng-container *ngIf="views.length; else noViews">
+        <div
+          [class.mbe-8]="last"
+          *ngFor="let view of views; let first = first; let last = last"
+          cdkDragBoundary=".views"
+          cdkDrag
+          [cdkDragDisabled]="!editMode"
+        >
+          <div class="toolbar pb-2" *ngIf="editMode">
+            <div class="grow"></div>
+
+            <button
+              class="btn-icon btn-small btn-round"
+              (click)="openDialog(viewTmp, view)"
+            >
+              <i size="small" puiIcon="edit"></i>
+            </button>
+
+            <button cdkDragHandle class="btn-icon btn-small btn-round">
+              <i size="small" puiIcon="drag"></i>
+            </button>
+          </div>
+
+          <div *ngIf="!first && view.title" class="divider mb-8"></div>
+
+          <h3 *ngIf="view.title" class="mbe-6" [class.mbe-2]="view.sub_title">
+            {{ view.title }}
+          </h3>
+          <h4 *ngIf="view.sub_title" class="text3 mbe-6">
+            {{ view.sub_title }}
+          </h4>
+
+          <ng-container *ngIf="view.content">
+            <p *ngIf="view.type === 'richText'" [innerHTML]="view.content"></p>
+
+            <img
+              class="radius-4"
+              *ngIf="view.type === 'image'"
+              [src]="view.content | docsPath"
+            />
+
+            <iframe
+              *ngIf="view.type === 'video'"
+              [src]="view.content"
+              title="YouTube video player"
+              frameborder="0"
+              allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+              allowfullscreen
+            >
+            </iframe>
+          </ng-container>
+        </div>
+
+        <div class="align-center mbs-8" *ngIf="editMode">
+          <button
+            class="btn-round btn-primary btn-icon"
+            (click)="openDialog(viewTmp)"
+          >
+            <i puiIcon="add"></i>
+          </button>
+        </div>
+      </ng-container>
+    </div>
+  </ng-container>
+
+  <ng-template #viewTmp let-view>
+    <form
+      class="card w-25"
+      [formGroup]="form"
+      (ngSubmit)="submitView(c, view?.serial)"
+    >
+      <h4 *ngIf="!view" class="card-header">{{ c['addView'] }}</h4>
+      <h4 *ngIf="view" class="card-header">{{ c['updateView'] }}</h4>
+
+      <div class="card-body">
+        <label for="view-title">{{ c['title'] }}</label>
+        <div class="fc mbe-6">
+          <input type="text" id="view-title" formControlName="title" />
+        </div>
+
+        <label for="view-subTitle">{{ c['subTitle'] }}</label>
+        <div class="fc mbe-6">
+          <input type="text" id="view-subTitle" formControlName="sub_title" />
+        </div>
+
+        <ng-container *ngIf="!view">
+          <label for="view-type">{{ c['type'] }}</label>
+          <div class="fc">
+            <pui-select-input
+              [list]="c['contentViewTypes']"
+              labelRef="view-type"
+              formControlName="type"
+            ></pui-select-input>
+          </div>
+        </ng-container>
+
+        <ng-container *ngIf="type.value === 'image'">
+          <label for="view-image">{{ c['image'] }}</label>
+          <pui-image-input
+            [placeholder]="c['uploadImage']"
+            [newWidth]="1096"
+            labelRef="view-image"
+            accept=".jpg,.jpeg,.webp,.png"
+            [formControl]="imageControl"
+          ></pui-image-input>
+        </ng-container>
+
+        <ng-container *ngIf="type.value === 'richText'">
+          <label for="view-text">{{ c['text'] }}</label>
+          <quill-editor
+            [placeholder]="c['desc']"
+            formControlName="content"
+          ></quill-editor>
+        </ng-container>
+
+        <ng-container *ngIf="type.value === 'video'">
+          <label for="view-video">{{ c['videoLink'] }}</label>
+          <div class="fc">
+            <input type="string" id="view-video" formControlName="content" />
+          </div>
+        </ng-container>
+      </div>
+
+      <div class="card-footer">
+        <button class="btn-outline btn-round" (click)="closeDialog()">
+          {{ c['cancel'] }}
+        </button>
+        <button
+          class="btn-outline btn-round btn-primary"
+          [disabled]="form.invalid"
+        >
+          {{ c['add'] }}
+        </button>
+      </div>
+
+      <pui-preloader *ngIf="preloader"></pui-preloader>
+    </form>
+  </ng-template>
+
+  <ng-template #noViews>
+    <no-data-placeholder-widget
+      [actionName]="c['addContent']"
+      (action)="openDialog(viewTmp)"
+      >{{ c['noDataMsg'] }}</no-data-placeholder-widget
+    >
+  </ng-template>
+</ng-container>

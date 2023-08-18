@@ -1,0 +1,68 @@
+<form [formGroup]="form" *contra="let c">
+  <div class="toolbar mbe-6">
+    <pui-check-input
+      [label]="c['anyCase']"
+      formControlName="any"
+    ></pui-check-input>
+    <div class="grow"></div>
+    <button
+      type="button"
+      class="btn-small btn-icon btn-round"
+      (click)="addFilter()"
+    >
+      <i size="small" puiIcon="add"></i>
+    </button>
+  </div>
+
+  <ng-container formArrayName="filters">
+    <div
+      class="flex gap-4 align-items-end"
+      [class.mbe-6]="!last"
+      *ngFor="let g of filters.controls; let i = index; let last = last"
+      [formGroup]="g"
+    >
+      <div class="grow">
+        <label [for]="serial + i + '-filter-field'">{{c['fieldName']}}</label>
+        <div [class]="'fc ' + fcClass">
+          <pui-select-input
+            [labelRef]="serial + i + '-filter-field'"
+            formControlName="field"
+            [list]="fields | arrayFilter: filterFields | arrayMap: mapField"
+          ></pui-select-input>
+        </div>
+      </div>
+
+      <div class="grow">
+        <label [for]="serial + i + '-filter-operator'"
+          >{{c['operation']}}</label
+        >
+        <div [class]="'fc ' + fcClass">
+          <pui-select-input
+            [labelRef]="serial + i + '-filter-operator'"
+            formControlName="operator"
+            [list]="c['dataVizFilterOperators']"
+          ></pui-select-input>
+        </div>
+      </div>
+
+      <div
+        class="grow"
+        *ngIf="[filters.controls[i].controls.field.value, fields] | fn : getField as selectedField"
+      >
+        <app-field-value-input
+          [field]="selectedField"
+          formControlName="value"
+        ></app-field-value-input>
+      </div>
+
+      <button
+        *ngIf="filters.length > 1"
+        type="button"
+        class="btn-icon btn-outline"
+        (click)="filters.removeAt(i)"
+      >
+        <i size="small" puiIcon="delete"></i>
+      </button>
+    </div>
+  </ng-container>
+</form>

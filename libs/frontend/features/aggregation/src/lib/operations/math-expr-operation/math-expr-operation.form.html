@@ -1,0 +1,25 @@
+<form [formGroup]="form" *contra="let c; let dir = dir">
+  <div class="flex gap-4">
+    <div class="grow">
+      <label [for]="id + '_math-unit'">{{c['unit']}}</label>
+      <div [class]="'fc ' + fcClass">
+        <input type="text" formControlName="unit" [id]="id + '_math-unit'" />
+      </div>
+    </div>
+
+    <div class="grow-2">
+      <label [for]="id + '_math-expr'">{{c['mathExpr']}}</label>
+      <div [class]="'fc ltr ' + fcClass" [class.align-right]="dir === 'rtl'">
+        <input type="text" formControlName="expr" [id]="id + '_math-expr'" />
+      </div>
+    </div>
+  </div>
+
+  <p
+    *ngIf="form.controls.expr.errors?.['mathExpr']"
+    class="note note-danger align-center mbs-4"
+  >
+    {{c['errors'].fieldNotFound}}:
+    <strong>{{form.controls.expr.errors?.['mathExpr']}}</strong>
+  </p>
+</form>

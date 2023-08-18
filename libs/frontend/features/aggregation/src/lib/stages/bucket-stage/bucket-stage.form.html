@@ -1,0 +1,95 @@
+<form [formGroup]="form" *contra="let c">
+  <fieldset class="mbe-4" formGroupName="groupBy">
+    <legend>
+      <p class="bold">{{c['groupBy']}}</p>
+    </legend>
+
+    <label [for]="id + '_group-by-field'">{{c['groupBy']}}</label>
+    <div [class]="'fc mbe-4 ' + fcClass">
+      <pui-select-input
+        [labelRef]="id + '_group-by-field'"
+        formControlName="field"
+        [list]="fields | arrayFilter : filterField | arrayMap : mapField"
+      ></pui-select-input>
+    </div>
+
+    <label [for]="id + '_group-by-modifiers'">{{c['modifiers']}}</label>
+    <div [class]="'fc mbe-4 ' + fcClass">
+      <pui-select-input
+        [labelRef]="id + '_group-by-modifiers'"
+        formControlName="modifiers"
+        [list]="c['valueModifiers']"
+      ></pui-select-input>
+    </div>
+  </fieldset>
+
+  <label [for]="id + '_buckets'">{{c['partitions']}}</label>
+  <div [class]="'fc mbe-4 ' + fcClass">
+    <input type="number" [id]="id + '_buckets'" formControlName="buckets" />
+  </div>
+
+  <ng-container formArrayName="cumulate">
+    <div class="toolbar mbe-4">
+      <h4 class="bold">{{c['cumulation']}}</h4>
+      <div class="grow"></div>
+      <button class="btn-icon btn-small btn-round" (click)="addCumulate()">
+        <i size="small" puiIcon="add"></i>
+      </button>
+    </div>
+
+    <fieldset
+      [class.mbe-6]="!last"
+      *ngFor="let g of cumulate.controls; let i = index; let last = last"
+      [formGroup]="g"
+    >
+      <legend>
+        <p class="bold">{{i + 1}} {{c['output']}}</p>
+        <button
+          *ngIf="cumulate.controls.length > 1"
+          class="btn-icon btn-small btn-round"
+          (click)="cumulate.removeAt(i)"
+        >
+          <i size="small" puiIcon="delete"></i>
+        </button>
+      </legend>
+
+      <label [for]="id + i + '_field'">{{c['output']}}</label>
+      <div [class]="'fc mbe-4 ' + fcClass">
+        <input type="string" [id]="id + i + '_field'" formControlName="field" />
+      </div>
+
+      <label [for]="id + i + '_method'">{{c['operation']}}</label>
+      <div [class]="'fc mbe-4 ' + fcClass">
+        <pui-select-input
+          [list]="c['cumulateOperations']"
+          [labelRef]="id + i + '_method'"
+          formControlName="method"
+        ></pui-select-input>
+      </div>
+
+      <label [for]="id + i + '_expr'">
+        {{c['input']}}
+        <div class="grow"></div>
+        <pui-check-input
+          #isField
+          [label]="c['selectField']"
+          [small]="true"
+        ></pui-check-input>
+      </label>
+      <div [class]="'fc mbe-4 ' + fcClass">
+        <input
+          *ngIf="!isField.value"
+          type="number"
+          [id]="id + i + '_expr'"
+          formControlName="expr"
+        />
+        <pui-select-input
+          *ngIf="isField.value"
+          [labelRef]="id + i + '_expr'"
+          formControlName="expr"
+          [list]="fields | arrayFilter : filterField | arrayMap : mapField"
+        ></pui-select-input>
+      </div>
+    </fieldset>
+  </ng-container>
+</form>

@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Inject, Injectable } from '@angular/core';
 import { AttachmentsApi } from './attachments.api';
-import { injectURLPayload } from '@pestras/util';
+import { injectURLPayload } from '@pestras/shared/util';
 import { STATE_CONFIG, StateConfig } from '../config';
 
 @Injectable({ providedIn: 'root' })

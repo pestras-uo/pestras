@@ -1,0 +1,114 @@
+<ng-container *contra="let c">
+
+  <div class="toolbar mbe-8">
+    <h2>{{c['attachments']}}</h2>
+  </div>
+
+  <main *ngIf="attachments$ | async as list">
+
+    <div class="card mbe-2" *ngIf="list | arrayFilter: filterImages as images">
+      <div class="card-header">
+        <h3>{{c['images']}}</h3>
+        <button *ngIf="canAdd && editable" class="btn-icon btn-round" (click)="openImageModal(addImageTmp)">
+          <i puiIcon="add"></i>
+        </button>
+      </div>
+
+      <div class="card-body" *ngIf="images.length else noData">
+        <pui-images-viewer [host]="host" [images]="images | arrayMap: mapImages" [canRemove]="editable"
+          (remove)="openModal(removeTmp, $event)"></pui-images-viewer>
+      </div>
+    </div>
+
+    <div class="card" *ngIf="list | arrayFilter: filterFiles as files">
+      <div class="card-header">
+        <h3>{{c['documents']}}</h3>
+        <button *ngIf="canAdd && editable" class="btn-icon btn-round" (click)="openModal(addAttachmentTmp)">
+          <i puiIcon="add"></i>
+        </button>
+      </div>
+
+      <div class="card-body flex flex-wrap gap-2" *ngIf="files.length else noData">
+
+        <p *ngFor="let file of files" href="" class="badge badge-primary">
+          <a [href]="file.path | docsPath" [download]="file.name" target="_blank">{{file.name}}</a>
+          <i *ngIf="editable" size="tiny" color="danger" puiIcon="delete" class="cursor-pointer"
+            (click)="openModal(removeTmp, file.serial); $event.stopPropagation()">
+          </i>
+        </p>
+
+      </div>
+
+    </div>
+
+    <ng-template #noData>
+      <no-data-placeholder-widget>{{c['noDataMsg']}}</no-data-placeholder-widget>
+    </ng-template>
+
+  </main>
+
+  <ng-template #addImageTmp>
+
+    <form class="card shadow-6 w-8" [formGroup]="form" (ngSubmit)="add(c)">
+
+      <h4 class="card-header">{{c['addImage']}}</h4>
+
+      <div class="card-body">
+        <label for="att-upload">{{c['image']}}</label>
+        <pui-image-input labelRef="att-upload" accept=".jpg,.jpeg,.png,.webp" formControlName="attachment"></pui-image-input>
+      </div>
+
+      <div class="card-footer">
+        <button class="btn-round btn-outline" type="button" (click)="closeModal()">{{c['cancel']}}</button>
+        <button class="btn-round btn-primary" [disabled]="form.invalid">{{c['add']}}</button>
+      </div>
+
+    </form>
+
+  </ng-template>
+
+  <ng-template #addAttachmentTmp>
+
+    <form class="card shadow-6 w-8" [formGroup]="form" (ngSubmit)="add(c)">
+
+      <h4 class="card-header">{{c['addAttachment']}}</h4>
+
+      <div class="card-body">
+
+        <label for="att-name">{{c['name']}}</label>
+        <div class="fc mbe-6">
+          <input type="text" formControlName="name" id="att-name">
+        </div>
+
+        <label for="att-upload">{{c['attachment']}}</label>
+        <div class="fc">
+          <pui-file-input labelRef="att-upload" formControlName="attachment"
+            [placeholder]="c['addAttachment']"></pui-file-input>
+        </div>
+      </div>
+
+      <div class="card-footer">
+        <button class="btn-round btn-outline" type="button" (click)="closeModal()">{{c['cancel']}}</button>
+        <button class="btn-round btn-primary" [disabled]="form.invalid">{{c['add']}}</button>
+      </div>
+
+    </form>
+
+  </ng-template>
+
+  <ng-template #removeTmp let-serial>
+
+    <div class="card shaow-6">
+      <h4 class="card-header">{{c['removeAttachment']}}</h4>
+
+      <p class="card-body">{{c['confirmRemoveAttachment']}}</p>
+
+      <div class="card-footer">
+        <button class="btn-round btn-outline" (click)="closeModal()">{{c['cancel']}}</button>
+        <button class="btn-round btn-primary" (click)="remove(c, serial)">{{c['delete']}}</button>
+      </div>
+    </div>
+
+  </ng-template>
+
+</ng-container>

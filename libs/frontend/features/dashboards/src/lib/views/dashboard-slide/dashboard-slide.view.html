@@ -1,0 +1,195 @@
+<ng-container *ngIf="slide">
+
+  <div #viewsElm [class.fullscreen]="fullscreen" *contra="let c">
+  
+    <div *ngIf="!headless" class="toolbar gap-2 mbe-6">
+      <h3>{{slide.title}}</h3>
+  
+      <div class="grow"></div>
+  
+      <app-workspace-toggle-slide
+        [input]="{ name: slide.title, slide: slide.serial, dashboard: dashboard.serial, scope: topic }"></app-workspace-toggle-slide>
+  
+      <button class="btn-icon btn-small btn-round" [disabled]="reorder" (click)="toggleFullScreen(viewsElm)">
+        <i size="small" [puiIcon]="fullscreen ? 'fullscreen_exit' : 'fullscreen'"></i>
+      </button>
+  
+      <ng-container *ngIf="editable">
+        <button class="btn-icon btn-small btn-round" [class.btn-success]="reorder" [disabled]="fullscreen"
+          (click)="reorder = !reorder">
+          <i size="small" puiIcon="reorder"></i>
+        </button>
+    
+        <button class="btn-icon btn-small btn-round" [disabled]="reorder || fullscreen" (click)="openDialog(addViewTmp)">
+          <i size="small" puiIcon="add"></i>
+        </button>
+      </ng-container>
+    </div>
+  
+    <main class="views" *ngIf="views.length else noData" cdkDropList (cdkDropListDropped)="drop($event)">
+  
+      <div class="card overflow-visible card-small" *ngFor="let view of views; trackBy: trackBySerial"
+        [class]="'x' + view.size.x + ' y' + view.size.y" cdkDragBoundary=".views" cdkDrag [cdkDragDisabled]="!reorder">
+  
+        <div class="card-header">
+          <button *ngIf="reorder" cdkDragHandle class="btn-icon btn-small btn-round">
+            <i size="small" puiIcon="drag"></i>
+          </button>
+          <h4>{{view.title}}</h4>
+          <div class="grow"></div>
+          <ng-container *ngIf="editable">
+            <button class="btn-icon btn-small btn-round" (click)="openDialog(updateViewTmp, view)">
+              <i size="small" puiIcon="edit"></i>
+            </button>
+            <button class="btn-icon btn-small btn-round" (click)="openDialog(removeViewTmp, view)">
+              <i size="small" color="danger" puiIcon="delete"></i>
+            </button>
+          </ng-container>
+        </div>
+  
+        <div class="card-body">
+          <app-chart *ngIf="view.data_viz; else noDataViz" [serial]="view.data_viz"></app-chart>
+  
+          <ng-template #noDataViz>
+            <div class="align-center">
+              <p class="mbe-6">{{c['noDataMsg']}}</p>
+              <button class="btn-outline-primary btn-round"
+                (click)="openSideDrawer(addDataViz, view.serial)">{{c['addDataViz']}}
+              </button>
+            </div>
+          </ng-template>
+        </div>
+  
+      </div>
+  
+    </main>
+  
+    <ng-template #noData>
+      <div>
+        <no-data-placeholder-widget>{{c['noDataMsg']}}</no-data-placeholder-widget>
+      </div>
+    </ng-template>
+  
+  
+    <!-- add view -->
+    <ng-template #addViewTmp>
+      <form class="card w-15 shadow-6" [formGroup]="form" (ngSubmit)="addView(c)">
+  
+        <h4 class="card-header">{{c['addView']}}</h4>
+  
+        <div class="card-body">
+  
+          <label for="view-title">{{c['title']}}</label>
+          <div class="fc mbe-6">
+            <input type="text" id="view-title" formControlName="title">
+          </div>
+  
+          <label for="view-sub-title">{{c['subTitle']}}</label>
+          <div class="fc mbe-6">
+            <input type="text" id="view-sub-title" formControlName="sub_title">
+          </div>
+  
+          <h4>{{c['viewSize']}}</h4>
+          <div class="flex gap-4 align-items center mbe-6" formGroupName="size">
+            <div class="grow">
+              <label for="view-width">{{c['width']}}</label>
+              <div class="fc mbe-6">
+                <pui-select-input labelRef="view-width" formControlName="x"
+                  [list]="c['viewWidthSizes']"></pui-select-input>
+              </div>
+            </div>
+            <div class="grow">
+              <label for="view-height">{{c['height']}}</label>
+              <div class="fc mbe-6">
+                <pui-select-input labelRef="view-height" formControlName="y"
+                  [list]="c['viewHeightSizes']"></pui-select-input>
+              </div>
+            </div>
+          </div>
+        </div>
+  
+        <div class="card-footer">
+          <button class="btn-outline btn-round" type="button" (click)="closeDialog()">{{c['cancel']}}</button>
+          <button class="btn-primary btn-round" [disabled]="form.invalid">{{c['add']}}</button>
+        </div>
+  
+        <pui-preloader *ngIf="preloader"></pui-preloader>
+  
+      </form>
+    </ng-template>
+  
+  
+    <!-- update view ui -->
+    <ng-template #updateViewTmp let-view>
+      <form class="card w-15 shadow-6" [formGroup]="form" (ngSubmit)="updateView(c, view.serial)">
+  
+        <h4 class="card-header">{{c['updateView']}}</h4>
+  
+        <div class="card-body">
+  
+          <label for="view-title">{{c['title']}}</label>
+          <div class="fc mbe-6">
+            <input type="text" id="view-title" formControlName="title">
+          </div>
+  
+          <label for="view-sub-title">{{c['subTitle']}}</label>
+          <div class="fc mbe-6">
+            <input type="text" id="view-sub-title" formControlName="sub_title">
+          </div>
+  
+          <h4>{{c['viewSize']}}</h4>
+          <div class="flex gap-4 align-items center mbe-6" formGroupName="size">
+            <div class="grow">
+              <label for="view-width">{{c['width']}}</label>
+              <div class="fc mbe-6">
+                <pui-select-input labelRef="view-width" formControlName="x"
+                  [list]="c['viewWidthSizes']"></pui-select-input>
+              </div>
+            </div>
+            <div class="grow">
+              <label for="view-height">{{c['height']}}</label>
+              <div class="fc mbe-6">
+                <pui-select-input labelRef="view-height" formControlName="y"
+                  [list]="c['viewHeightSizes']"></pui-select-input>
+              </div>
+            </div>
+          </div>
+        </div>
+  
+        <div class="card-footer">
+          <button class="btn-outline btn-round" type="button" (click)="closeDialog()">{{c['cancel']}}</button>
+          <button class="btn-primary btn-round" [disabled]="form.invalid">{{c['update']}}</button>
+        </div>
+  
+        <pui-preloader *ngIf="preloader"></pui-preloader>
+  
+      </form>
+    </ng-template>
+  
+  
+    <!-- remove view -->
+    <ng-template #removeViewTmp let-view>
+      <div class="card w-10 shadow-6">
+  
+        <h4 class="card-header">{{c['removeView']}}</h4>
+  
+        <p class="card-body">{{c['confirmOperation']}}</p>
+  
+        <div class="card-footer">
+          <button class="btn-outline btn-round" (click)="closeDialog()">{{c['cancel']}}</button>
+          <button class="btn-danger btn-round" (click)="removeView(c, view.serial)">{{c['remove']}}</button>
+        </div>
+  
+        <pui-preloader *ngIf="preloader"></pui-preloader>
+  
+      </div>
+    </ng-template>
+  
+  
+    <!-- set view data viz -->
+    <ng-template #addDataViz>
+      <app-chart-form (done)="closeDrawer(c, $event)"></app-chart-form>
+    </ng-template>
+  
+  </div>
+</ng-container>

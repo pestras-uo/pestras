@@ -90,3 +90,6 @@ export * from './lib/util-pipes/util-pipes.module';
 
 // xlsx
 export * from './lib/xlsx/xlsx.service';
+
+// reactive
+export * from './lib/reactive';

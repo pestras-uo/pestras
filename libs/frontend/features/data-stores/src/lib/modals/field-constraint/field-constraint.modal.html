@@ -1,0 +1,122 @@
+<form
+  class="card w-20 shadow-6"
+  *contra="let c"
+  [formGroup]="form"
+  (ngSubmit)="submit(c)"
+>
+  <h4 class="card-header">{{c['valueConstraint']}}</h4>
+
+  <div class="card-body">
+    <label for="modifiers">{{c['valueModifier']}}</label>
+    <div class="fc mbe-6">
+      <pui-select-input
+        [list]="c['valueModifiers']"
+        [multi]="true"
+        formControlName="modifiers"
+        labelRef="modifiers"
+      ></pui-select-input>
+    </div>
+
+    <ng-container *ngIf="type === 'int' || type === 'double'">
+      <label for="value-gte">{{c['range']}}</label>
+      <div *ngIf="values" class="flex gap-4">
+        <div class="fc grow">
+          <input
+            type="number"
+            [formControl]="values[0]"
+            id="value-gte"
+            [placeholder]="c['filterOperations'].gte"
+          />
+        </div>
+        <div class="fc grow">
+          <input
+            type="number"
+            [formControl]="values[1]"
+            id="value-gte"
+            [placeholder]="c['filterOperations'].lte"
+          />
+        </div>
+      </div>
+    </ng-container>
+
+    <ng-container *ngIf="type === 'date' || type === 'datetime'">
+      <label for="value-gte">{{c['range']}}</label>
+      <div *ngIf="values" class="flex gap-4">
+        <div class="fc grow">
+          <input
+            type="date"
+            [formControl]="values[0]"
+            id="date-gte"
+            [placeholder]="c['filterOperations'].gte"
+          />
+        </div>
+        <div class="fc grow">
+          <input
+            type="date"
+            [formControl]="values[1]"
+            id="date-gte"
+            [placeholder]="c['filterOperations'].lte"
+          />
+        </div>
+      </div>
+    </ng-container>
+
+    <ng-container *ngIf="type === 'string'">
+      <label for="string-match">{{c['filterOperations'].match}}</label>
+      <div *ngIf="values" class="flex gap-4 align-items-end">
+        <div class="fc grow">
+          <input type="string" [formControl]="values[0]" id="string-match" />
+        </div>
+        <pui-check-input [label]="c['ineverseOperation']"></pui-check-input>
+      </div>
+    </ng-container>
+
+    <ng-container *ngIf="type === 'boolean'">
+      <label for="string-match">{{c['filterOperations'].eq}}</label>
+      <div *ngIf="values" class="flex gap-4 align-items-end">
+        <pui-check-input
+          class="grow"
+          [label]="c['yes']"
+          [formControl]="values[0]"
+        ></pui-check-input>
+        <pui-check-input
+          class="grow"
+          [label]="c['ineverseOperation']"
+        ></pui-check-input>
+      </div>
+    </ng-container>
+
+    <ng-container
+      *ngIf="type === 'category' || type === 'region'"
+    >
+      <div *ngIf="values" class="flex gap-4 align-items-end">
+        <app-field-value-input
+          class="grow"
+          [field]="field"
+          [formControl]="values[0]"
+          [multi]="true"
+        ></app-field-value-input>
+        <pui-check-input
+          [label]="c['ineverseOperation']"
+        ></pui-check-input>
+      </div>
+    </ng-container>
+  </div>
+
+  <div class="card-footer">
+    <button class="btn-round" type="button" (click)="closes.emit()">
+      {{c['cancel']}}
+    </button>
+    <button
+      class="btn-round btn-outline-danger"
+      type="button"
+      (click)="clear(c)"
+    >
+      {{c['remove']}}
+    </button>
+    <div class="grow"></div>
+    <button class="btn-round btn-primary" type="button" (click)="submit(c)">
+      {{c['save']}}
+    </button>
+  </div>
+</form>

@@ -1,0 +1,77 @@
+<form [formGroup]="form" *contra="let c">
+  <div class="flex gap-4 mbe-6 align-items-center">
+    <div class="grow">
+      <label [for]="id + '_field'">{{c['fieldName']}}</label>
+      <div [class]="'fc ' + fcClass">
+        <input [id]="id + '_field'" type="text" formControlName="field" />
+      </div>
+    </div>
+
+    <div class="grow">
+      <label [for]="id + '_display'">{{c['displayName']}}</label>
+      <div [class]="'fc ' + fcClass">
+        <input
+          [id]="id + '_display'"
+          type="text"
+          formControlName="display_name"
+        />
+      </div>
+    </div>
+
+    <div class="grow">
+      <label [for]="id + '_operation'">{{c['operation']}}</label>
+      <div [class]="'fc ' + fcClass">
+        <pui-select-input
+          [labelRef]="id + '_operation'"
+          formControlName="operation"
+          [list]="c['setStageOperations']"
+        ></pui-select-input>
+      </div>
+    </div>
+  </div>
+
+  <ng-container [ngSwitch]="operation.value">
+    <app-convert-operation
+      *ngSwitchCase="'convert'"
+      [fields]="fields"
+      [fcClass]="fcClass"
+      formControlName="options"
+    ></app-convert-operation>
+    <app-date-add-operation
+      *ngSwitchCase="'dateAdd'"
+      [fields]="fields"
+      [fcClass]="fcClass"
+      formControlName="options"
+    ></app-date-add-operation>
+    <app-date-diff-operation
+      *ngSwitchCase="'dateDiff'"
+      [fields]="fields"
+      [fcClass]="fcClass"
+      formControlName="options"
+    ></app-date-diff-operation>
+    <app-math-expr-operation
+      *ngSwitchCase="'mathExpr'"
+      [fields]="fields"
+      [fcClass]="fcClass"
+      formControlName="options"
+    ></app-math-expr-operation>
+    <app-minmax-operation
+      *ngSwitchCase="'minmax'"
+      [fields]="fields"
+      [fcClass]="fcClass"
+      formControlName="options"
+    ></app-minmax-operation>
+    <app-modifiers-operation
+      *ngSwitchCase="'modifiers'"
+      [fields]="fields"
+      [fcClass]="fcClass"
+      formControlName="options"
+    ></app-modifiers-operation>
+    <app-round-operation
+      *ngSwitchCase="'round'"
+      [fields]="fields"
+      [fcClass]="fcClass"
+      formControlName="options"
+    ></app-round-operation>
+  </ng-container>
+</form>

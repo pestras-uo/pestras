@@ -1,0 +1,119 @@
+<div class="card w-20 h-fit card-clear" *contra="let c">
+  <h4 class="card-header">{{c['advancedSearch']}}</h4>
+
+  <div class="card-body overflow-auto">
+    <div
+      *ngFor="let field of fieldsList; let last = last"
+      [class.mbe-6]="!last"
+    >
+      <h5 class="mbe-2">{{field.field.display_name}}</h5>
+
+      <!-- int or double -->
+      <div
+        class="flex gap-4 align-items-end"
+        *ngIf="field.field.type === 'int' || field.field.type === 'double'"
+      >
+        <div class="fc grow">
+          <input
+            type="number"
+            [formControl]="field.controls[0]"
+            [placeholder]="c['filterOperations'].gte"
+          />
+        </div>
+        <div class="fc grow">
+          <input
+            type="number"
+            [formControl]="field.controls[1]"
+            [placeholder]="c['filterOperations'].lte"
+          />
+        </div>
+      </div>
+
+      <!-- date or datetime -->
+      <div
+        class="flex gap-4 align-items-end"
+        *ngIf="field.field.type === 'date' || field.field.type === 'datetime'"
+      >
+        <div class="fc grow">
+          <input
+            type="date"
+            [formControl]="field.controls[0]"
+            [placeholder]="c['filterOperations'].gte"
+          />
+        </div>
+        <div class="fc grow">
+          <input
+            type="date"
+            [formControl]="field.controls[1]"
+            [placeholder]="c['filterOperations'].lte"
+          />
+        </div>
+      </div>
+
+      <!-- string -->
+      <div
+        class="flex gap-4 align-items-end"
+        *ngIf="field.field.type === 'string'"
+      >
+        <div class="fc grow">
+          <input
+            class="grow"
+            type="text"
+            [formControl]="field.controls[0]"
+            [placeholder]="c['search']"
+          />
+        </div>
+        <pui-check-input
+          class="grow"
+          [label]="c['ineverseOperation']"
+          [formControl]="field.inverse!"
+        ></pui-check-input>
+      </div>
+
+      <!-- boolean -->
+      <div
+        class="flex gap-4 align-items-end"
+        *ngIf="field.field.type === 'boolean'"
+      >
+        <pui-check-input
+          class="grow"
+          [label]="c['yes']"
+          [formControl]="field.controls[0]"
+          [nullable]="true"
+        ></pui-check-input>
+      </div>
+
+      <!-- category, serial or region -->
+      <div
+        *ngIf="field.field.type === 'category' || field.field.type === 'serial' || field.field.type === 'region'"
+        class="flex gap-4 align-items-end"
+      >
+        <app-field-value-input
+          class="grow"
+          [field]="field.field"
+          [formControl]="field.controls[0]"
+          [multi]="true"
+        ></app-field-value-input>
+
+        <pui-check-input
+          class="grow"
+          [label]="c['ineverseOperation']"
+          [formControl]="field.inverse!"
+        ></pui-check-input>
+      </div>
+    </div>
+  </div>
+
+  <div class="card-footer">
+    <button class="btn-round btn-outline-danger" (click)="done.emit(false)">
+      {{c['cancel']}}
+    </button>
+    <button class="btn-round btn-outline" (click)="done.emit(null)">
+      {{c['reset']}}
+    </button>
+    <div class="grow"></div>
+    <button class="btn-round btn-primary" (click)="output()">
+      {{c['search']}}
+    </button>
+  </div>
+</div>

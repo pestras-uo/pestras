@@ -1,0 +1,45 @@
+<form [formGroup]="form" *contra="let c">
+  <div class="flex gap-4 align-items-center mbe-6">
+    <div class="grow">
+      <label [for]="id + '_field'">{{c['field']}}</label>
+      <div [class]="'fc ' + fcClass">
+        <pui-select-input
+          [list]="fields | arrayMap: mapField"
+          [labelRef]="id + '_field'"
+          formControlName="input"
+        ></pui-select-input>
+      </div>
+    </div>
+
+    <div class="grow">
+      <label [for]="id + '_type'">{{c['type']}}</label>
+      <div [class]="'fc ' + fcClass">
+        <pui-select-input
+          [list]="c['convertOptionTypes']"
+          [labelRef]="id + '_type'"
+          formControlName="to"
+        ></pui-select-input>
+      </div>
+    </div>
+  </div>
+
+  <div class="flex gap-4 align-items-center">
+    <div class="grow">
+      <label [for]="id + '_error-value'">{{c['onErrorValue']}}</label>
+      <div [class]="'fc ' + fcClass">
+        <input
+          type="text"
+          [id]="id + '_error-value'"
+          formControlName="onError"
+        />
+      </div>
+    </div>
+
+    <div class="grow">
+      <label [for]="id + '_null-value'">{{c['onNullValue']}}</label>
+      <div [class]="'fc ' + fcClass">
+        <input type="text" [id]="id + '_null-value'" formControlName="onNull" />
+      </div>
+    </div>
+  </div>
+</form>

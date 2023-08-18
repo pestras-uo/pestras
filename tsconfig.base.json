@@ -17,6 +17,60 @@
     "paths": {
       "@pestras/backend/models": ["libs/backend/models/src/index.ts"],
       "@pestras/backend/util": ["libs/backend/util/src/index.ts"],
+      "@pestras/frontend/features/aggregation": [
+        "libs/frontend/features/aggregation/src/index.ts"
+      ],
+      "@pestras/frontend/features/attachments": [
+        "libs/frontend/features/attachments/src/index.ts"
+      ],
+      "@pestras/frontend/features/blueprints": [
+        "libs/frontend/features/blueprints/src/index.ts"
+      ],
+      "@pestras/frontend/features/categories": [
+        "libs/frontend/features/categories/src/index.ts"
+      ],
+      "@pestras/frontend/features/clients-api": [
+        "libs/frontend/features/clients-api/src/index.ts"
+      ],
+      "@pestras/frontend/features/content-views": [
+        "libs/frontend/features/content-views/src/index.ts"
+      ],
+      "@pestras/frontend/features/dashboards": [
+        "libs/frontend/features/dashboards/src/index.ts"
+      ],
+      "@pestras/frontend/features/data-records": [
+        "libs/frontend/features/data-records/src/index.ts"
+      ],
+      "@pestras/frontend/features/data-stores": [
+        "libs/frontend/features/data-stores/src/index.ts"
+      ],
+      "@pestras/frontend/features/data-viz": [
+        "libs/frontend/features/data-viz/src/index.ts"
+      ],
+      "@pestras/frontend/features/orgunits": [
+        "libs/frontend/features/orgunits/src/index.ts"
+      ],
+      "@pestras/frontend/features/regions": [
+        "libs/frontend/features/regions/src/index.ts"
+      ],
+      "@pestras/frontend/features/reports": [
+        "libs/frontend/features/reports/src/index.ts"
+      ],
+      "@pestras/frontend/features/session": [
+        "libs/frontend/features/session/src/index.ts"
+      ],
+      "@pestras/frontend/features/topics": [
+        "libs/frontend/features/topics/src/index.ts"
+      ],
+      "@pestras/frontend/features/users": [
+        "libs/frontend/features/users/src/index.ts"
+      ],
+      "@pestras/frontend/features/users-groups": [
+        "libs/frontend/features/users-groups/src/index.ts"
+      ],
+      "@pestras/frontend/features/workspace": [
+        "libs/frontend/features/workspace/src/index.ts"
+      ],
       "@pestras/frontend/state": ["libs/frontend/state/src/index.ts"],
       "@pestras/frontend/ui": ["libs/frontend/ui/src/index.ts"],
       "@pestras/frontend/util/contra": [
@@ -24,6 +78,18 @@
       ],
       "@pestras/frontend/util/stator": [
         "libs/frontend/util/stator/src/index.ts"
+      ],
+      "@pestras/frontend/widgets/avatar": [
+        "libs/frontend/widgets/avatar/src/index.ts"
+      ],
+      "@pestras/frontend/widgets/no-data-placeholder": [
+        "libs/frontend/widgets/no-data-placeholder/src/index.ts"
+      ],
+      "@pestras/frontend/widgets/t-bg": [
+        "libs/frontend/widgets/t-bg/src/index.ts"
+      ],
+      "@pestras/frontend/widgets/tree-view": [
+        "libs/frontend/widgets/tree-view/src/index.ts"
       ],
       "@pestras/shared/data-model": ["libs/shared/data-model/src/index.ts"],
       "@pestras/shared/util": ["libs/shared/util/src/index.ts"]

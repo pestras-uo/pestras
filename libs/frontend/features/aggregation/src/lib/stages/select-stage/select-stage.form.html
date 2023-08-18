@@ -1,0 +1,47 @@
+<form [formGroup]="form" *contra="let c">
+  <div class="toolbar">
+    <h4>{{c['fields']}}</h4>
+    <div class="grow"></div>
+    <button
+      *ngIf="fieldsList.length < fields.length"
+      class="btn-icon btn-round"
+      (click)="addField()"
+    >
+      <i puiIcon="add"></i>
+    </button>
+  </div>
+
+  <ng-container formArrayName="fields">
+    <fieldset
+      *ngFor="let g of fieldsList.controls; let i = index"
+      [formGroup]="g"
+      class="mbs-6"
+    >
+      <legend>
+        <p class="bold">{{i + 1}} - {{c['field']}}</p>
+
+        <button
+          *ngIf="fieldsList.length > 1"
+          class="btn-small btn-icon btn-round"
+          (click)="fieldsList.removeAt(i)"
+        >
+          <i size="small" color="danger" puiIcon="delete"></i>
+        </button>
+      </legend>
+
+      <label [for]="id + i + '_select-field'">{{c['field']}}</label>
+      <div [class]="'fc mbe-4 ' + fcClass">
+        <pui-select-input
+          [labelRef]="id + '_select-field'"
+          formControlName="name"
+          [list]="fields | arrayMap : mapField"
+        ></pui-select-input>
+      </div>
+
+      <label [for]="id + i + '_select-as'">{{c['newName']}}</label>
+      <div [class]="'fc ' + fcClass">
+        <input type="text" [id]="id + '_select-as'" formControlName="as" />
+      </div>
+    </fieldset>
+  </ng-container>
+</form>

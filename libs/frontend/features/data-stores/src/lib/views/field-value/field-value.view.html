@@ -1,0 +1,25 @@
+<ng-container *contra="let c" [ngSwitch]="field.type">
+  <!-- string -->
+  <ng-container *ngSwitchCase="'string'">
+    <div *ngSwitchCase="'string'" [innerHTML]="value || c['none']"></div>
+  </ng-container>
+
+  <!-- location -->
+  <div *ngSwitchCase="'location'" class="h-8">
+    <pui-google-map
+      [position]="value"
+      [markers]="[{ position: value, label: '' }]"
+    ></pui-google-map>
+  </div>
+
+  <!-- image -->
+  <img
+    class="w-fit radius-4"
+    *ngSwitchCase="'image'"
+    [src]="value | docsPath"
+    alt="Image"
+  />
+
+  <!-- others -->
+  <p *ngSwitchDefault="">{{value | fieldValue: field | async}}</p>
+</ng-container>

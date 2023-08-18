@@ -1,0 +1,69 @@
+<ng-container *contra="let c">
+  <div class="toolbar">
+    <h2>{{c['dashboards']}}</h2>
+    <div class="grow"></div>
+    <button class="btn-round btn-icon" (click)="openDialog(addTmp)">
+      <i puiIcon="add"></i>
+    </button>
+  </div>
+
+  <div class="divider mbs-4 mbe-8"></div>
+
+  <ng-container *ngIf="dashboards$ | async as dashboards">
+    <div class="grid cols-3 gap-8 pi-0" *ngIf="dashboards.length; else noData">
+      <div class="card mbe-2" *ngFor="let dash of dashboards">
+        <div class="card-header">
+          <h4>{{dash.title}}</h4>
+        </div>
+        <div class="card-footer">
+          <a
+            [routerLink]="['/main/dashboards', dash.topic, dash.serial]"
+            class="btn btn-round"
+            >{{c['continue']}}</a
+          >
+        </div>
+      </div>
+    </div>
+  </ng-container>
+
+  <ng-template #noData>
+    <no-data-placeholder-widget
+      [actionName]="c['addNew']"
+      (action)="openDialog(addTmp)"
+      >{{c['noDataMsg']}}</no-data-placeholder-widget
+    >
+  </ng-template>
+
+  <ng-template #addTmp>
+    <div class="card w-15 shadow-6">
+      <h4 class="card-header">{{c['addNew']}}</h4>
+
+      <div class="card-body">
+        <label for="dash-title">{{c['title']}} *</label>
+        <div class="fc">
+          <input
+            autocomplete="off"
+            type="text"
+            id="dash-title"
+            [formControl]="title"
+          />
+        </div>
+      </div>
+
+      <div class="card-footer">
+        <button class="btn-round btn-outline" (click)="this.closeDialog()">
+          {{c['cancel']}}
+        </button>
+        <button
+          class="btn-primary btn-round"
+          [disabled]="title.invalid"
+          (click)="add(c)"
+        >
+          {{c['add']}}
+        </button>
+      </div>
+
+      <pui-preloader *ngIf="preloader"></pui-preloader>
+    </div>
+  </ng-template>
+</ng-container>

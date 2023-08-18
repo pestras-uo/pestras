@@ -1,0 +1,77 @@
+<form [formGroup]="form" *contra="let c">
+  <label [for]="id + '_value'">{{c['field']}}</label>
+  <div [class]="'fc mbe-4 ' + fcClass">
+    <pui-select-input
+      [labelRef]="id + '_value'"
+      formControlName="value"
+      [list]="fields | arrayFilter: filterInputField | arrayMap: mapField"
+    ></pui-select-input>
+  </div>
+
+  <div class="grid cols-2 gap-8">
+    <pui-check-input
+      #minimum
+      [label]="c['minimum']"
+      [class.disabled]="!maximum.value"
+      (change)="min.setValue(minimum.value ? 0 : null)"
+    ></pui-check-input>
+    <pui-check-input
+      #maximum
+      [label]="c['maximum']"
+      [class.disabled]="!minimum.value"
+      (change)="max.setValue(maximum.value ? 100 : null)"
+    ></pui-check-input>
+  </div>
+
+  <div class="flex gap-4 align-items-center">
+    <div class="grow" *ngIf="minimum.value">
+      <label class="gap-4" [for]="id + 'min'">
+        {{c['minimum']}}
+        <pui-check-input
+          #minimumField
+          [label]="c['chooseField']"
+          [small]="true"
+        ></pui-check-input>
+      </label>
+      <div [class]="'fc ' + fcClass">
+        <input
+          *ngIf="!minimumField.value"
+          type="number"
+          [id]="id + 'min'"
+          formControlName="min"
+        />
+        <pui-select-input
+          *ngIf="minimumField.value"
+          [labelRef]="id + 'min'"
+          formControlName="min"
+          [list]="fields | arrayFilter: filterLimitField | arrayMap: mapField"
+        ></pui-select-input>
+      </div>
+    </div>
+
+    <div class="grow" *ngIf="maximum.value">
+      <label class="gap-4" [for]="id + '_max'">
+        {{c['maximum']}}
+        <pui-check-input
+          #maximumField
+          [label]="c['chooseField']"
+          [small]="true"
+        ></pui-check-input>
+      </label>
+      <div [class]="'fc ' + fcClass">
+        <input
+          *ngIf="!maximumField.value"
+          type="number"
+          [id]="id + '_max'"
+          formControlName="min"
+        />
+        <pui-select-input
+          *ngIf="maximumField.value"
+          [labelRef]="id + '_max'"
+          formControlName="min"
+          [list]="fields | arrayFilter: filterLimitField | arrayMap: mapField"
+        ></pui-select-input>
+      </div>
+    </div>
+  </div>
+</form>

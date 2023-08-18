@@ -1,0 +1,56 @@
+<form [formGroup]="form" *contra="let c">
+  <div class="flex gap-4 align-items-end mbe-6">
+    <div class="grow">
+      <label [for]="id + 'name-field'">{{c['nameField']}}</label>
+      <div [class]="'fc mbe-6 ' + fcClass">
+        <pui-select-input
+          [labelRef]="id + 'name-field'"
+          formControlName="name_field"
+          [list]="dsFields | arrayFilter: filterNameField | arrayMap: mapField"
+        ></pui-select-input>
+      </div>
+    </div>
+
+    <div class="grow">
+      <label [for]="id + 'size-field'">{{c['sizeField']}}</label>
+      <div [class]="'fc mbe-6 ' + fcClass">
+        <pui-select-input
+          [labelRef]="id + 'size-field'"
+          formControlName="size_field"
+          [list]="dsFields | arrayFilter: filterValueField | arrayMap: mapField"
+        ></pui-select-input>
+      </div>
+    </div>
+  </div>
+
+  <ng-container formArrayName="color_range">
+    <div class="toolbar mbe-6">
+      <h4>{{c['colorsRange']}}</h4>
+      <div class="grow"></div>
+      <button class="btn-icon btn-small btn-round" (click)="addColor()">
+        <i size="small" puiIcon="add"></i>
+      </button>
+    </div>
+
+    <div class="flex gap-4 align-items-end">
+      <div
+        class="grow"
+        *ngFor="let color of colorRange.controls; let i = index; let last = last"
+      >
+        <label [for]="id + i + '-color'">
+          {{c['color']}}
+          <div class="grow"></div>
+          <button
+            class="btn-icon btn-tiny btn-round"
+            (click)="colorRange.removeAt(i)"
+          >
+            <i size="tiny" color="danger" puiIcon="delete"></i>
+          </button>
+        </label>
+        <div [class]="'fc mbe-6 ' + fcClass">
+          <input type="color" [id]="id + i + '-color'" [formControlName]="i" />
+        </div>
+      </div>
+    </div>
+  </ng-container>
+</form>

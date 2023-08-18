@@ -1,0 +1,157 @@
+<form [formGroup]="form" *contra="let c">
+  <ng-container formArrayName="outputs">
+    <div class="toolbar">
+      <h4 class="mbe-6">{{c['outputs']}}</h4>
+      <div class="grow"></div>
+      <button *ngIf="!single" class="btn-icon btn-round" (click)="addOutput()">
+        <i puiIcon="add"></i>
+      </button>
+    </div>
+
+    <fieldset
+      class="mbe-6"
+      *ngFor="let g of outputs.controls; let i = index"
+      [formGroup]="g"
+    >
+      <legend>
+        <p class="bold">{{i + 1}} - {{c['field']}}</p>
+
+        <button
+          *ngIf="outputs.length > 1"
+          class="btn-small btn-icon btn-round"
+          (click)="outputs.removeAt(i)"
+        >
+          <i size="small" color="danger" puiIcon="delete"></i>
+        </button>
+      </legend>
+
+      <label [for]="id + '_output-field'">{{c['fieldName']}}</label>
+      <div [class]="'fc mbe-6 ' + fcClass">
+        <input type="text" [id]="id + '_output-field'" formControlName="name" />
+      </div>
+
+      <label [for]="id + '_output-display'">{{c['displayName']}}</label>
+      <div [class]="'fc mbe-6 ' + fcClass">
+        <input
+          type="text"
+          [id]="id + '_output-display'"
+          formControlName="display_name"
+        />
+      </div>
+
+      <label [for]="id + 'sort-method'">{{c['operation']}}</label>
+      <div [class]="'fc mbe-6 ' + fcClass">
+        <pui-select-input
+          [labelRef]="id + '_win-method'"
+          formControlName="method"
+          [list]="c['cumulateOperations']"
+        ></pui-select-input>
+      </div>
+
+      <ng-container formGroupName="field">
+        <label [for]="id + '_input-field'">{{c['input']}}</label>
+        <div [class]="'fc mbe-6 ' + fcClass">
+          <pui-select-input
+            [labelRef]="id + '_input-field'"
+            formControlName="name"
+            [list]="fields | arrayFilter: filterField | arrayMap: mapField"
+          ></pui-select-input>
+        </div>
+
+        <label [for]="id + '_input-modifiers'">{{c['inputModifiers']}}</label>
+        <div [class]="'fc mbe-6 ' + fcClass">
+          <pui-select-input
+            [labelRef]="id + '_input-modifiers'"
+            [multi]="true"
+            formControlName="modifiers"
+            [list]="c['valueModifiers']"
+          ></pui-select-input>
+        </div>
+      </ng-container>
+    </fieldset>
+  </ng-container>
+
+  <ng-container formArrayName="sortBy">
+    <div class="toolbar mbe-6">
+      <h4>{{c['sort']}}</h4>
+      <div class="grow"></div>
+      <button
+        *ngIf="sortBy.length < fields.length"
+        class="btn-icon btn-round"
+        (click)="addSort()"
+      >
+        <i puiIcon="add"></i>
+      </button>
+    </div>
+
+    <fieldset
+      class="mbe-6"
+      *ngFor="let g of sortBy.controls; let i = index"
+      [formGroup]="g"
+    >
+      <legend>
+        <p class="bold">{{c['sort']}}</p>
+
+        <button
+          *ngIf="sortBy.length > 1"
+          class="btn-small btn-danger btn-icon btn-round"
+          (click)="sortBy.removeAt(i)"
+        >
+          <i size="small" puiIcon="delete"></i>
+        </button>
+      </legend>
+
+      <label [for]="id + i + '_sort-field'">{{c['field']}}</label>
+      <div [class]="'fc mbe-6 ' + fcClass">
+        <pui-select-input
+          [labelRef]="id + i + '_sort-field'"
+          formControlName="field"
+          [list]="fields | arrayFilter: filterGroupField | arrayMap: mapField"
+        ></pui-select-input>
+      </div>
+
+      <label [for]="id + i + '_sort-order'">{{c['order']}}</label>
+      <pui-switch-input
+        [class]="fcClass"
+        formControlName="order"
+        [list]="c['orderOptions']"
+      ></pui-switch-input>
+    </fieldset>
+  </ng-container>
+
+  <div class="toolbar mbe-6">
+    <h4>{{c['partitions']}}</h4>
+  </div>
+
+  <pui-check-input
+    class="mbe-6"
+    #partitionBy
+    [label]="c['activate']"
+    (change)="togglePartition(!!partitionBy.value)"
+  ></pui-check-input>
+
+  <ng-container
+    *ngIf="form.contains('partitionBy')"
+    formGroupName="partitionBy"
+  >
+    <label [for]="id + '_part-field'">{{c['fieldName']}}</label>
+    <div [class]="'fc mbe-6 ' + fcClass">
+      <pui-select-input
+        [labelRef]="id + '_part-field'"
+        formControlName="field"
+        [list]="fields | arrayFilter: filterGroupField | arrayMap: mapField"
+      ></pui-select-input>
+    </div>
+
+    <label [for]="id + '_part-modifiers'">{{c['modifiers']}}</label>
+    <div [class]="'fc ' + fcClass">
+      <pui-select-input
+        [labelRef]="id + '_part-modifiers'"
+        formControlName="modifiers"
+        [list]="c['valueModifiers']"
+      ></pui-select-input>
+    </div>
+  </ng-container>
+
+  <!-- TODO: cumulationBounds -->
+</form>

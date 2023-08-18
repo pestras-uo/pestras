@@ -1,0 +1,28 @@
+<form class="flex gap-4 align-items-end" [formGroup]="form" *contra="let c">
+  <div class="grow">
+    <label for="value-field">{{c['valueField']}}</label>
+    <div [class]="'fc ' + fcClass">
+      <pui-select-input
+        labelRef="value-field"
+        formControlName="value_field"
+        [list]="dsFields | arrayFilter: filterValueField | arrayMap: mapField"
+      ></pui-select-input>
+    </div>
+  </div>
+
+  <div class="grow">
+    <label for="category-field">{{c['categoryField']}}</label>
+    <div [class]="'fc ' + fcClass">
+      <pui-select-input
+        labelRef="category-field"
+        formControlName="category_field"
+        [list]="dsFields | arrayFilter: filterCatField | arrayMap: mapField"
+      ></pui-select-input>
+    </div>
+  </div>
+
+  <pui-check-input
+    [label]="c['doughnut']"
+    formControlName="doughnut"
+  ></pui-check-input>
+</form>

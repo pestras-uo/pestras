@@ -1,0 +1,11 @@
+<form [formGroup]="form" *contra="let c">
+  <label [for]="id + '_unset-fields'">{{c['fields']}}</label>
+  <div [class]="'fc mbe-4 ' + fcClass">
+    <pui-select-input
+      [labelRef]="id + '_unset-fields'"
+      [multi]="true"
+      formControlName="fields"
+      [list]="fields | arrayMap : mapField"
+    ></pui-select-input>
+  </div>
+</form>

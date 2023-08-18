@@ -1,0 +1,11 @@
+<form [formGroup]="form" *contra="let c">
+  <label for="value-field">{{c['valueFields']}}</label>
+  <div [class]="'fc mbe-6 ' + fcClass">
+    <pui-select-input
+      labelRef="value-field"
+      formControlName="value_fields"
+      [multi]="true"
+      [list]="dsFields | arrayFilter: filterValueField | arrayMap: mapField"
+    ></pui-select-input>
+  </div>
+</form>

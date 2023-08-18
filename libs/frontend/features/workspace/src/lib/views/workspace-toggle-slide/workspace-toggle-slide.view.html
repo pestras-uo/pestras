@@ -1,0 +1,11 @@
+<ng-container *ngIf="ws$ | async as ws">
+
+  <button *ngIf="!pinned" [class.disabled]="disabled" class="btn-small btn-icon btn-round" (click)="pin()">
+    <i puiIcon="pin" size="small"></i>
+  </button>
+
+  <button *ngIf="pinned" [class.disabled]="disabled" class="btn-small btn-success btn-icon btn-round" (click)="unpin()">
+    <i puiIcon="pin" size="small"></i>
+  </button>
+
+</ng-container>

@@ -1,0 +1,35 @@
+<form [formGroup]="form" *contra="let c">
+  <div class="toolbar">
+    <h4>{{c['fields']}}</h4>
+    <div class="grow"></div>
+    <button class="btn-icon btn-round" (click)="addField()">
+      <i puiIcon="add"></i>
+    </button>
+  </div>
+
+  <ng-container formArrayName="fields">
+    <fieldset
+      *ngFor="let control of list.controls; let i = index; let last = last"
+      class="mbs-4"
+    >
+      <legend>
+        <p class="bold">{{i + 1}} - {{c['field']}}</p>
+
+        <button
+          *ngIf="list.length > 1"
+          class="btn-small btn-icon btn-round"
+          (click)="list.removeAt(i)"
+        >
+          <i size="small" color="danger" puiIcon="delete"></i>
+        </button>
+      </legend>
+
+      <app-single-set-stage
+        [class.mbe-4]="!last"
+        [fields]="fields"
+        [fcClass]="fcClass"
+        [formControl]="control"
+      ></app-single-set-stage>
+    </fieldset>
+  </ng-container>
+</form>

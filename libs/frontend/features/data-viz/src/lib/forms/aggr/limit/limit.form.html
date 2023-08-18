@@ -1,0 +1,17 @@
+<form [formGroup]="form" *contra="let c">
+  <div class="flex gap-4 align-items-end">
+    <label [for]="serial + '-limit-count'">{{c['count']}}</label>
+    <div [class]="'fc ' + fcClass">
+      <input
+        type="number"
+        formControlName="count"
+        [id]="serial + '-limit-count'"
+      />
+    </div>
+
+    <pui-check-input
+      [label]="c['formEnd']"
+      formControlName="end"
+    ></pui-check-input>
+  </div>
+</form>

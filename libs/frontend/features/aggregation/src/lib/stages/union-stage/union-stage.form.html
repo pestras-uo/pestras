@@ -1,0 +1,55 @@
+<form [formGroup]="form" *contra="let c">
+  <app-data-store-input
+    class="mbe-6"
+    formControlName="dataStore"
+  ></app-data-store-input>
+
+  <fieldset
+    formArrayName="mapFields"
+    *ngIf="dataStore.value | dataStore | async as ds"
+  >
+    <legend>
+      <p class="bold">{{c['mapFields']}}</p>
+      <button class="btn-small btn-icon btn-round" (click)="addMap()">
+        <i size="small" puiIcon="add"></i>
+      </button>
+    </legend>
+
+    <div
+      class="flex gap-4 align-items-end"
+      [class.mbe-6]="!last"
+      *ngFor="let g of mapFields.controls; let i = index; let last = last"
+      [formGroup]="g"
+    >
+      <div>
+        <label [for]="id + i + '-dest-field'">{{c['leftField']}}</label>
+        <div [class]="'fc mbe-6 ' + fcClass">
+          <pui-select-input
+            [labelRef]="id + '-dest-field'"
+            formControlName="dest"
+            [list]="fields | arrayMap: mapField"
+          ></pui-select-input>
+        </div>
+      </div>
+
+      <div>
+        <label [for]="id + i + '-src-field'">{{c['rightField']}}</label>
+        <div [class]="'fc mbe-6 ' + fcClass">
+          <pui-select-input
+            [labelRef]="id + '-src-field'"
+            formControlName="src"
+            [list]="ds.fields | arrayMap: mapField"
+          ></pui-select-input>
+        </div>
+      </div>
+
+      <button
+        *ngIf="mapFields.length > 1"
+        class="btn-icon btn-small btn-danger"
+        (click)="mapFields.removeAt(i)"
+      >
+        <i size="small" puiIcon="delete"></i>
+      </button>
+    </div>
+  </fieldset>
+</form>

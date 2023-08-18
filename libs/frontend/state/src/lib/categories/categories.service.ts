@@ -1,6 +1,6 @@
 import { HttpClient } from "@angular/common/http";
 import { Inject, Injectable } from "@angular/core";
-import { injectURLPayload } from "@pestras/util";
+import { injectURLPayload } from "@pestras/shared/util";
 import { CategoriesApi } from "./categories.api";
 import { STATE_CONFIG, StateConfig } from "../config";
 

@@ -1,0 +1,90 @@
+<ng-container *contra="let c">
+  <div class="toolbar">
+    <h2>{{title || c['list']}}</h2>
+    <div class="grow"></div>
+    <button
+      *ngIf="editable"
+      class="btn-round btn-icon"
+      (click)="openDialog(addTmp)"
+    >
+      <i puiIcon="add"></i>
+    </button>
+  </div>
+
+  <div class="divider mbs-4 mbe-8"></div>
+
+  <ng-container *ngIf="datastores$ | async as datastores">
+    <div class="grid cols-3 gap-8" *ngIf="datastores.length; else noData">
+      <div class="card mbe-2" *ngFor="let ds of datastores">
+        <div class="card-body">
+          <h3>{{ds.name}}</h3>
+          <p>{{ds.create_date | date: 'dd/MM/YYYY'}}</p>
+        </div>
+        <div class="card-footer">
+          <a
+            [routerLink]="['/main/data-stores', ds.blueprint, ds.serial]"
+            class="btn btn-outline btn-round"
+            >{{c['continue']}}</a
+          >
+        </div>
+      </div>
+    </div>
+  </ng-container>
+
+  <ng-template #noData>
+    <no-data-placeholder-widget
+      [showAction]="editable"
+      [actionName]="c['add']"
+      (action)="openDialog(addTmp)"
+      >{{c['noDataMsg']}}</no-data-placeholder-widget
+    >
+  </ng-template>
+
+  <ng-template #addTmp>
+    <form class="card w-15 shadow-6" [formGroup]="form" (ngSubmit)="add(c)">
+      <h4 class="card-header">{{c['addNew']}}</h4>
+
+      <div class="card-body">
+        <ng-container *ngIf="!type">
+          <label for="ds-type">{{c['type']}} *</label>
+          <div class="fc mbe-6">
+            <pui-select-input
+              [list]="c['dataStoresTypes']"
+              labelRef="ds-type"
+              formControlName="type"
+            ></pui-select-input>
+          </div>
+        </ng-container>
+
+        <label for="ds-name">{{c['name']}} *</label>
+        <div class="fc mbe-6">
+          <input
+            autocomplete="off"
+            type="text"
+            id="ds-name"
+            formControlName="name"
+          />
+        </div>
+      </div>
+
+      <div class="card-footer">
+        <button
+          class="btn-round btn-outline"
+          type="reset"
+          (click)="closeDialog()"
+        >
+          {{c['cancel']}}
+        </button>
+        <button
+          class="btn-primary btn-round"
+          type="submit"
+          [disabled]="form.invalid"
+        >
+          {{c['add']}}
+        </button>
+      </div>
+
+      <pui-preloader *ngIf="preloader"></pui-preloader>
+    </form>
+  </ng-template>
+</ng-container>

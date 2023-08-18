@@ -6,7 +6,7 @@ import { SessionEnd, SessionStart } from '../session/session.events';
 import { CategoriesApi } from './categories.api';
 import { tap, map, filter } from 'rxjs';
 import { SSEActivity } from '../sse/sse.events';
-import { Serial } from '@pestras/util';
+import { Serial } from '@pestras/shared/util';
 
 @Injectable({ providedIn: 'root' })
 export class CategoriesState extends StatorCollectionState<Category> {

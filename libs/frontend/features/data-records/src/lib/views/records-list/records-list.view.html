@@ -1,0 +1,133 @@
+<div class="container" *contra="let c">
+  <div class="toolbar">
+    <h2>{{c['records']}}</h2>
+
+    <div class="grow"></div>
+
+    <ng-container *ngIf="!isTable">
+      <ng-container [ngTemplateOutlet]="actionsTmp"></ng-container>
+    </ng-container>
+  </div>
+
+  <ng-container *ngIf="!isTable">
+    <div class="divider mbs-4 mbe-8"></div>
+
+    <ng-container [ngTemplateOutlet]="recordsTmp"></ng-container>
+  </ng-container>
+
+  <div class="card card-clear mbs-6" *ngIf="isTable">
+    <div class="card-tabs">
+      <h5
+        class="tab"
+        [class.active]="tab === workflow.APPROVED"
+        (click)="setTab(workflow.APPROVED)"
+      >
+        {{c['public']}}
+      </h5>
+      <h5
+        class="tab"
+        [class.active]="tab === workflow.DRAFT"
+        (click)="setTab(workflow.DRAFT)"
+      >
+        {{c['draft']}}
+      </h5>
+      <h5
+        class="tab"
+        [class.active]="tab === workflow.PENDING"
+        (click)="setTab(workflow.PENDING)"
+      >
+        {{c['pending']}}
+      </h5>
+
+      <div class="grow"></div>
+
+      <ng-container [ngTemplateOutlet]="actionsTmp"></ng-container>
+    </div>
+
+    <div class="card-body pi-0">
+      <ng-container [ngTemplateOutlet]="recordsTmp"></ng-container>
+    </div>
+  </div>
+
+  <ng-template #recordsTmp>
+    <app-records-cards-view
+      *ngIf="view === 'cards'"
+      [topic]="topic"
+      [dataStore]="dataStore"
+      [search]="query"
+    ></app-records-cards-view>
+    <app-records-table-view
+      *ngIf="view === 'table'"
+      [topic]="topic"
+      [dataStore]="dataStore"
+      [search]="query"
+    ></app-records-table-view>
+    <app-records-tree-view
+      *ngIf="view === 'tree'"
+      [topic]="topic"
+      [dataStore]="dataStore"
+      [search]="query"
+    ></app-records-tree-view>
+  </ng-template>
+
+  <ng-template #actionsTmp>
+    <button
+      class="btn-icon btn-small btn-round mie-1"
+      (click)="openSideDrawer(advancedSearch)"
+    >
+      <i puiIcon="filter" size="small"></i>
+    </button>
+
+    <button
+      class="btn-icon btn-small btn-round mie-1"
+      [class.disabled]="exporting"
+      (click)="exportData()"
+    >
+      <i puiIcon="export" size="small"></i>
+    </button>
+
+    <ng-container *ngIf="hasCardsView || hasTreeView">
+      <button
+        class="btn-icon btn-small btn-round mie-1"
+        [class.btn-success]="view === 'table'"
+        (click)="view = 'table'"
+      >
+        <i puiIcon="table" size="small"></i>
+      </button>
+
+      <button
+        *ngIf="hasCardsView"
+        class="btn-icon btn-small btn-round mie-1"
+        [class.btn-success]="view === 'cards'"
+        (click)="view = 'cards'"
+      >
+        <i puiIcon="cards" size="small"></i>
+      </button>
+
+      <button
+        *ngIf="hasTreeView"
+        class="btn-icon btn-small btn-round mie-1"
+        [class.btn-success]="view === 'tree'"
+        (click)="view = 'tree'"
+      >
+        <i puiIcon="tree_view" size="small"></i>
+      </button>
+    </ng-container>
+
+    <a
+      *ngIf="canAdd || ((dataStore.blueprint | blueprint | async)?.owner | sessionIs)"
+      class="btn btn-icon btn-small -btn-round"
+      [routerLink]="['/main/records', topic, dataStore.serial, 'add']"
+    >
+      <i puiIcon="add" size="small"></i>
+    </a>
+  </ng-template>
+
+  <ng-template #advancedSearch>
+    <app-advanced-search-modal
+      [fields]="dataStore.fields"
+      [filters]="filters"
+      (done)="closeSlideDrawer($event)"
+    ></app-advanced-search-modal>
+  </ng-template>
+</div>

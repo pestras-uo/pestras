@@ -1,0 +1,39 @@
+<form
+  *contra="let c"
+  class="card w-16 shadow-6"
+  [formGroup]="form"
+  (ngSubmit)="addTopic(c)"
+>
+  <h4 class="card-header">{{c['addTopic']}}</h4>
+
+  <div class="card-body">
+    <label for="topic-bp">{{c['blueprint']}}</label>
+    <div class="fc mbe-6">
+      <pui-select-input
+        labelRef="topic-bp"
+        formControlName="blueprint"
+        [list]="'' | blueprints | async | arrayMap: mapBp"
+      ></pui-select-input>
+    </div>
+
+    <label for="topic-name">{{c['title']}}</label>
+    <div class="fc">
+      <input type="text" formControlName="name" id="topic-name" />
+    </div>
+  </div>
+
+  <div class="card-footer">
+    <button class="btn-outline btn-round" type="reset" (click)="closes.emit()">
+      {{c['cancel']}}
+    </button>
+    <button
+      class="btn-primary btn-round"
+      type="submit"
+      [disabled]="form.invalid"
+    >
+      {{c['add']}}
+    </button>
+  </div>
+
+  <pui-preloader *ngIf="preloader"></pui-preloader>
+</form>

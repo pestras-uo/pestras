@@ -1,0 +1,85 @@
+<ng-container *contra="let c">
+  <div class="toolbar">
+    <h4 class="mbe-4 weight-8">{{c['fieldConstraint']}}</h4>
+
+    <div class="grow"></div>
+
+    <button
+      *ngIf="editable && supportConstraints"
+      class="btn-tiny btn-icon btn-round"
+      (click)="openDialog(constraintTmp)"
+    >
+      <i puiIcon="edit" size="tiny"></i>
+    </button>
+  </div>
+
+  <div class="flex gap-6" *ngIf="field.constraint else noData">
+    <ng-container *ngIf="type === 'int' || type === 'double'">
+      <div>
+        <p class="text3 bold mbe-1">{{c['filterOperations'].gte}}</p>
+        <p class="bold">{{field.constraint.values[0] ?? null}}</p>
+      </div>
+
+      <div>
+        <p class="text3 bold mbe-1">{{c['filterOperations'].lte}}</p>
+        <p class="bold">{{field.constraint.values[1] ?? null}}</p>
+      </div>
+    </ng-container>
+
+    <ng-container *ngIf="type === 'date' || type === 'datetime'">
+      <div>
+        <p class="text3 bold mbe-1">{{c['filterOperations'].gte}}</p>
+        <p class="bold">
+          {{(field.constraint.values[0] | date: 'dd-MM-yyyy') ?? null}}
+        </p>
+      </div>
+
+      <div>
+        <p class="text3 bold mbe-1">{{c['filterOperations'].lte}}</p>
+        <p class="bold">
+          {{(field.constraint.values[1] | date: 'dd-MM-yyyy') ?? null}}
+        </p>
+      </div>
+    </ng-container>
+
+    <div *ngIf="type === 'boolean'">
+      <p class="text3 bold mbe-1">{{c['value']}}</p>
+      <p class="bold">{{!!field.constraint.values[0]}}</p>
+    </div>
+
+    <div *ngIf="type === 'string'">
+      <p class="text3 bold mbe-1">
+        {{field.constraint.inverse ? c['filterOperations'].unmatch :
+        c['filterOperations'].match}}
+      </p>
+      <p class="bold">{{field.constraint.values[0] ?? null}}</p>
+    </div>
+
+    <div *ngIf="type === 'region' || type === 'category'">
+      <p class="text3 bold mbe-1">
+        {{field.constraint.inverse ? c['filterOperations'].nin :
+        c['filterOperations'].in}}
+      </p>
+      <div class="flex gap-1">
+        <p
+          *ngFor="let v of field.constraint.values[0]"
+          class="badge badge-small badge-primary"
+        >
+          <app-field-value [field]="field" [value]="v"></app-field-value>
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <ng-template #noData>
+    <p>{{c['none']}}</p>
+  </ng-template>
+
+  <ng-template #constraintTmp>
+    <app-field-constraint
+      [dataStore]="dataStore"
+      [field]="field"
+      (close)="closeDialog()"
+    ></app-field-constraint>
+  </ng-template>
+</ng-container>

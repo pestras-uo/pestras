@@ -1,0 +1,27 @@
+<ng-container *contra="let c; let dir=dir">
+
+  <ng-container *ngIf="bp | bpCategories as categories">
+    <div class="grid cols-3 gap-8" *ngIf="categories.length; else noData">
+
+      <div class="card" *ngFor="let cat of categories">
+        <h3 class="card-header">{{cat.title}}</h3>
+        <div class="card-body">
+          <p *ngIf="cat.ordinal" class="f9 text3">{{c['ordinal']}}</p>
+          <p *ngIf="!cat.ordinal" class="f9 text3">{{c['_category']}}</p>
+          <p class="f10 bold text-3">{{cat.create_date | date: 'dd/MM/YYYY'}}</p>
+        </div>
+        <div class="card-footer">
+          <button class="btn-round btn-outline" (click)="selects.emit(cat)">{{c['continue']}}</button>
+        </div>
+      </div>
+
+    </div>
+  </ng-container>
+
+
+  <ng-template #noData>
+    <no-data-placeholder-widget [showAction]="editable" [actionName]="c['addNew']"
+      (action)="add.emit()">{{c['noDataMsg']}}</no-data-placeholder-widget>
+  </ng-template>
+
+</ng-container>

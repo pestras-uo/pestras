@@ -1,0 +1,41 @@
+<form class="flex gap-4 align-items-center" [formGroup]="form" *contra="let c">
+  <div class="grow">
+    <label [for]="id + '_unit'">{{c['unit']}}</label>
+    <div [class]="'fc ' + fcClass">
+      <pui-select-input
+        [list]="c['dateUnitsList']"
+        [labelRef]="id + '_unit'"
+        formControlName="unit"
+      ></pui-select-input>
+    </div>
+  </div>
+
+  <div class="grow">
+    <label [for]="id + '_startDate'">{{c['startDate']}}</label>
+    <div [class]="'fc ' + fcClass">
+      <pui-select-input
+        [list]="fields | arrayFilter: filterField | arrayMap: mapField"
+        [labelRef]="id + '_startDate'"
+        formControlName="from"
+      ></pui-select-input>
+    </div>
+  </div>
+
+  <div class="grow">
+    <label [for]="id + '_endDate'">{{c['endDate']}}</label>
+    <div [class]="'fc ' + fcClass">
+      <pui-select-input
+        [list]="fields | arrayFilter: filterField | arrayMap: mapField"
+        [labelRef]="id + '_endDate'"
+        formControlName="to"
+      ></pui-select-input>
+    </div>
+  </div>
+
+  <div class="grow">
+    <label [for]="id + '_unitName'">{{c['unitName']}}</label>
+    <div [class]="'fc ' + fcClass">
+      <input type="text" [id]="id + '_unitName'" formControlName="unit_name" />
+    </div>
+  </div>
+</form>

@@ -1,0 +1,32 @@
+<ng-container *contra="let c">
+
+  <ng-container *ngIf="ws$ | async as ws">
+
+    <button *ngIf="!pinned" class="btn-small btn-icon btn-round" (click)="openDialog(pinTmp)">
+      <i puiIcon="pin" size="small"></i>
+    </button>
+
+    <button *ngIf="pinned" [class.disabled]="disabled" class="btn-small btn-success btn-icon btn-round" (click)="unpin()">
+      <i puiIcon="pin" size="small"></i>
+    </button>
+
+    <ng-template #pinTmp>
+      <div class="card w-15 shadow-6">
+        <h4 class="card-header">{{c['group']}}</h4>
+        <div class="card-body">
+          <div class="fc">
+            <pui-select-input [list]="ws.groups | arrayMap: mapGroup" [formControl]="group"></pui-select-input>
+          </div>
+        </div>
+        <div class="card-footer">
+          <button class="btn-round btn-outline" (click)="closeDialog()">{{c['cancel']}}</button>
+          <button class="btn-round btn-primary" [disabled]="group.invalid"
+            (click)="pin(group.value)">{{c['add']}}</button>
+        </div>
+      </div>
+    </ng-template>
+
+  </ng-container>
+
+
+</ng-container>

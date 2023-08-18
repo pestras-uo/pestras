@@ -1,0 +1,42 @@
+<form [formGroup]="form" *contra="let c">
+  <ng-container class="mbe-6" formArrayName="fields">
+    <div
+      class="flex gap-4 align-items-end mbe-6"
+      *ngFor="let g of sortFields.controls; let i = index"
+      [formGroup]="g"
+    >
+      <div class="grow">
+        <label [for]="serial + i + '-sort-field'">{{c['fieldName']}}</label>
+        <div [class]="'fc ' + fcClass">
+          <pui-select-input
+            [labelRef]="serial + i + '-sort-field'"
+            formControlName="name"
+            [list]="fields | arrayFilter: filterFields | arrayMap: mapField"
+          ></pui-select-input>
+        </div>
+      </div>
+
+      <pui-check-input
+        [label]="c['descending']"
+        formControlName="desc"
+      ></pui-check-input>
+
+      <button
+        *ngIf="sortFields.controls.length > 1"
+        type="button"
+        class="btn-icon btn-outline"
+        (click)="sortFields.removeAt(i)"
+      >
+        <i size="small" puiIcon="delete"></i>
+      </button>
+    </div>
+
+    <button
+      type="button"
+      class="btn-block btn-icon btn-round"
+      (click)="addSort()"
+    >
+      <i size="small" puiIcon="add"></i>
+    </button>
+  </ng-container>
+</form>

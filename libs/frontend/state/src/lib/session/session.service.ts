@@ -1,5 +1,5 @@
 import { Inject, Injectable } from "@angular/core";
-import { injectURLPayload } from "@pestras/util";
+import { injectURLPayload } from "@pestras/shared/util";
 import { SessionApi, AccountApi } from "./session.api";
 import { HttpClient } from '@angular/common/http';
 import { catchError, of } from "rxjs";

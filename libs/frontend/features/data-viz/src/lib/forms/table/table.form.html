@@ -1,0 +1,55 @@
+<form [formGroup]="form" *contra="let c">
+  <label for="pagination">{{c['recordsPerPage']}}</label>
+  <div [class]="'fc mbe-6 ' + fcClass">
+    <input type="number" formControlName="pagination" id="pagination" />
+  </div>
+
+  <pui-check-input
+    class="mbe-6"
+    [label]="c['showIndicator']"
+    [formControl]="indicator"
+  ></pui-check-input>
+
+  <div
+    *ngIf="indicator.value"
+    class="flex gap-4 align-items-center"
+    formGroupName="indicator"
+  >
+    <div class="grow">
+      <label for="indicator-field">{{c['indicatorField']}}</label>
+      <div [class]="'fc ' + fcClass">
+        <pui-select-input
+          labelRef="indicator-field"
+          formControlName="field"
+          [list]="dsFields | arrayFilter: filterValueField | arrayMap: mapField"
+        ></pui-select-input>
+      </div>
+    </div>
+
+    <div class="grow-3" formGroupName="levels">
+      <label for="orange">{{c['indicator']}}</label>
+      <div [class]="'fc ' + fcClass">
+        <input
+          class="grow align-center"
+          type="number"
+          [placeholder]="c['orangeStartLevel']"
+          formControlName="orange"
+        />
+        -
+        <input
+          class="grow align-center"
+          type="number"
+          [placeholder]="c['redStartLevel']"
+          formControlName="red"
+        />
+        -
+        <input
+          class="grow align-center"
+          type="number"
+          [placeholder]="c['blinkStartLevel']"
+          formControlName="blink"
+        />
+      </div>
+    </div>
+  </div>
+</form>

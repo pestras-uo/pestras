@@ -1,0 +1,71 @@
+<ng-container *contra="let c">
+  <div class="toolbar">
+    <h2>{{c['exportData']}}</h2>
+    <div class="grow"></div>
+    <button
+      *ngIf="editable"
+      class="btn-small btn-round btn-icon"
+      (click)="openDialog(addTmp)"
+    >
+      <i puiIcon="add" size="small"></i>
+    </button>
+  </div>
+
+  <div class="divider mbs-4 mbe-8"></div>
+
+  <ng-container *ngIf="list$ | async as list">
+    <div *ngIf="list.length else noData" class="grid cols-3 gap-8">
+      <div class="card" *ngFor="let item of list">
+        <div class="card-body">
+          <h4 class="mbe-1">{{item.client_name}}</h4>
+          <span class="text3 f10 bold"
+            >{{item.create_date | date: 'dd/MM/yyyy'}}</span
+          >
+        </div>
+
+        <div class="card-footer">
+          <a
+            class="btn btn-round btn-outline"
+            [routerLink]="['/main/clients-api', blueprint, item.serial]"
+            >{{c['continue']}}</a
+          >
+        </div>
+      </div>
+    </div>
+  </ng-container>
+
+  <ng-template #noData>
+    <no-data-placeholder-widget
+      [showAction]="editable"
+      [actionName]="c['add']"
+      (action)="openDialog(addTmp)"
+      >{{c['noDataMsg']}}</no-data-placeholder-widget
+    >
+  </ng-template>
+
+  <ng-template #addTmp>
+    <div class="card w-15 shadow-6">
+      <div class="card-header">{{c['addClientApi']}}</div>
+
+      <div class="card-body">
+        <label for="client-name">{{c['clientName']}}</label>
+        <input #cnInput type="text" id="client-name" />
+      </div>
+
+      <div class="card-footer">
+        <button class="btn-round btn-outline" (click)="closeDialog()">
+          {{c['cancel']}}
+        </button>
+        <button
+          class="btn-round btn-primary"
+          [disabled]="!cnInput.value"
+          (click)="add(c, cnInput.value)"
+        >
+          {{c['add']}}
+        </button>
+      </div>
+
+      <pui-preloader *ngIf="preloader"></pui-preloader>
+    </div>
+  </ng-template>
+</ng-container>
