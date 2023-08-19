@@ -1,12 +1,11 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { RecordsRouter } from './records.router';
-import { DataRecord, DataStore } from '@pestras-uo/types';
-import { DataStoreResolver } from '../../../state/data-stores/data-store.resolver';
+import { DataRecord, DataStore } from '@pestras/shared/data-model';
+import { DataStoreResolver, RecordResolver } from '@pestras/frontend/state';
 import { DetailsPage } from './details/details.page';
 import { AddFormPage } from './add-form/add-form.page';
 import { UpdateFormPage } from './update-form/update-form.page';
-import { RecordResolver } from '../../../state/records/record.resolver';
 
 
 const routes: Routes = [{

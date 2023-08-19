@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { EntityTypes, Role, User } from '@pestras/shared/data-model';
 import { SessionStart, SessionEnd, SessionChange } from './session.events';
 import { SessionService } from './session.service';
-import { tap, filter } from 'rxjs';
+import { tap, filter, map } from 'rxjs';
 import { StatorChannel, StatorObjectState } from '@pestras/frontend/util/stator';
 import { SessionApi, AccountApi } from './session.api';
 import { SSEActivity } from '../sse/sse.events';
@@ -41,9 +41,17 @@ export class SessionState extends StatorObjectState<User> {
     return !!this.get();
   }
 
+  get isLoggedIn$() {
+    return this.loading$.pipe(
+      filter(loading => !loading),
+      map(() => !!this.get())
+    );
+  }
+
   verifySession() {
     return this.service.verifySession()
       .pipe(tap(user => {
+        
         if (user) {
           this._set(user);
           this.channel.dispatch(new SessionStart(user));

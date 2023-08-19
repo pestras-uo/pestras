@@ -7,7 +7,7 @@ import { EnvModule } from '@pestras/frontend/env';
 import { ContraModule } from '@pestras/frontend/util/contra';
 import { StatorModule } from '@pestras/frontend/util/stator';
 import { SessionState, StateModule } from '@pestras/frontend/state';
-import { PuiGoogleMapModule, PuiIcon, PuiPreloaderModule, PuiSideDrawerModule, PuiToastModule, PuiUtilPipesModule } from '@pestras/frontend/ui';
+import { PubSubModule, PuiGoogleMapModule, PuiIcon, PuiPreloaderModule, PuiSideDrawerModule, PuiToastModule, PuiUtilPipesModule } from '@pestras/frontend/ui';
 import { QuillModule } from 'ngx-quill';
 import { environment } from '../environments/environment';
 import { initApp } from './app.initializer';
@@ -40,6 +40,7 @@ import { NgxEchartsModule } from 'ngx-echarts';
     NgxEchartsModule.forRoot({
       echarts: () => import('echarts')
     }),
+    PubSubModule.forRoot(),
     PuiIcon.forRoot('assets/svg'),
     PuiPreloaderModule,
     PuiToastModule.forRoot(),

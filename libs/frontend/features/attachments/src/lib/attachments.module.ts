@@ -7,6 +7,7 @@ import { PuiFileInput, PuiIcon, PuiImageInput, PuiImagesViewerModule, PuiPreload
 import { NoDataPlaceholderWidget } from '@pestras/frontend/widgets/no-data-placeholder';
 import { AttachmentsListView } from './views/attachments-list/attachments-list.view';
 import { StateModule } from '@pestras/frontend/state';
+import { EnvModule } from '@pestras/frontend/env';
 
 
 
@@ -23,6 +24,7 @@ import { StateModule } from '@pestras/frontend/state';
     // Util
     DialogModule,
     ContraModule,
+    EnvModule,
     // Pui
     PuiPreloaderModule,
     PuiIcon,

@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { DataStoresRouter } from './data-stores.router';
 import { DataStoreDetailsPage } from './details/details.page';
-import { BlueprintResolver } from '../../../state/blueprints/blueprints.resolver';
+import { BlueprintResolver } from '@pestras/frontend/state';
 
 const routes: Routes = [{
   path: '', component: DataStoresRouter, children: [

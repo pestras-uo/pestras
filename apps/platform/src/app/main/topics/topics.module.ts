@@ -12,7 +12,7 @@ import { DataStoresRecordsView } from './views/data-stores-records/data-stores-r
 import { AccessView } from './views/access/access.view';
 import { MainPage } from './main/main.page';
 import { ContraModule } from '@pestras/frontend/util/contra';
-import { PuiIcon, PuiInfiniteScroll, PuiPreloaderModule, PuiSelectInput, PuiUtilPipesModule } from '@pestras/frontend/ui';
+import { PubSubModule, PuiIcon, PuiInfiniteScroll, PuiPreloaderModule, PuiSelectInput, PuiUtilPipesModule } from '@pestras/frontend/ui';
 import { ContentViewsFeatureModule } from '@pestras/frontend/features/content-views';
 import { NoDataPlaceholderWidget } from '@pestras/frontend/widgets/no-data-placeholder';
 import { TBgWidget } from '@pestras/frontend/widgets/t-bg';
@@ -47,6 +47,7 @@ import { UsersGroupsFeatureModule } from '@pestras/frontend/features/users-group
     // Util
     ContraModule,
     DialogModule,
+    PubSubModule,
     // PUI
     PuiPreloaderModule,
     PuiIcon,

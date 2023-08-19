@@ -15,17 +15,17 @@ import { Role } from '@pestras/shared/data-model';
     :host {
       height: 100vh;
 
-      >main {
+      > main {
         position: relative;
         z-index: 1;
         display: grid;
         grid-template-rows: var(--header-height) 1fr;
-
-        main-header {
-          position: relative;
-          z-index: 2;
-        }
       }
+    }
+
+    main-header {
+      position: relative;
+      z-index: 2;
     }
 
     main-drawer {

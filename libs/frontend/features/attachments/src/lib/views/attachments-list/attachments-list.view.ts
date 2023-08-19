@@ -8,15 +8,14 @@ import { Attachment, DataStore, TableDataRecord } from '@pestras/shared/data-mod
 import { ToastService } from '@pestras/frontend/ui';
 import { AttachmentsState } from '@pestras/frontend/state';
 import { Observable, tap } from 'rxjs';
+import { EnvService } from '@pestras/frontend/env';
 
 @Component({
   selector: 'app-attachments-list',
-  templateUrl: './attachments-list.view.html',
-  styles: [
-  ]
+  templateUrl: './attachments-list.view.html'
 })
 export class AttachmentsListView implements OnInit {
-  host = process.env['docs'];
+  host = this.envServ.env.docs;
 
   attachments$!: Observable<Attachment[]>;
   dialogRef: DialogRef | null = null;
@@ -39,7 +38,8 @@ export class AttachmentsListView implements OnInit {
     private state: AttachmentsState,
     private fb: FormBuilder,
     private dialog: Dialog,
-    private toast: ToastService
+    private toast: ToastService,
+    private envServ: EnvService
   ) { }
 
   ngOnInit(): void {

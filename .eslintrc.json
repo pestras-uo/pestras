@@ -25,7 +25,7 @@
                 "onlyDependOnLibsWithTags": ["scope:shared", "scope:frontend"]
               },
               {
-                "sourceTag": "scope:backend",
+                "sourceTag": "scope:backend-util",
                 "onlyDependOnLibsWithTags": ["scope:shared"]
               },
               {

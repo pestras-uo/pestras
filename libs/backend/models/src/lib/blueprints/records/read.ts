@@ -9,12 +9,12 @@ export async function search(
   query: ApiQuery<DataRecord>
 ) {
   const col = this.db.collection<DataRecord>(dataStoreSerial);
-  const count = await col.countDocuments(query.search as Filter<any>);
+  const count = await col.countDocuments(query.search ?? {} as Filter<any>);
 
   if (!count)
     return { count, results: [] };
-
-  const results = await col.find(query.search as any, {
+  
+  const results = await col.find(query.search as any ?? {}, {
     sort: query.sort as any ?? { _id: 1 },
     skip: query.skip ?? 0,
     limit: query.limit ?? 10,
