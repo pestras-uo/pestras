@@ -1,0 +1,25 @@
+<ng-container *contra="let c">
+
+  <!-- goups list -->
+  <app-list [selected]="selected" (selects)="selected = $event" (add)="openDialog(addTmp)"></app-list>
+
+  <!-- group details -->
+  <app-details [serial]="selected"></app-details>
+
+  <ng-template #addTmp>
+    <div class="card shadow-6 w-15">
+      <h4 class="card-header">{{c['addGroup']}}</h4>
+      <div class="card-body">
+        <label for="group-name">{{c['name']}}</label>
+        <div class="fc">
+          <input type="text" id="group-name" [formControl]="name">
+        </div>
+      </div>
+      <div class="card-footer">
+        <button class="btn-round btn-outline" (click)="closeDialog()">{{c['cancel']}}</button>
+        <button class="btn-primary btn-round"[disabled]="name.invalid" (click)="add(c)">{{c['add']}}</button>
+      </div>
+    </div>
+  </ng-template>
+
+</ng-container>

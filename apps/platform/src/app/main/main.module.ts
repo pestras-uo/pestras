@@ -8,6 +8,7 @@ import { PuiDropdown, PuiIcon, PuiPreloaderModule } from '@pestras/frontend/ui';
 import { SessionFeatureModule } from '@pestras/frontend/features/session';
 import { ContraModule } from '@pestras/frontend/util/contra';
 import { TopicsFeatureModule } from '@pestras/frontend/features/topics';
+import { ProfileModule } from './profile/profile.module';
 
 
 @NgModule({
@@ -24,7 +25,8 @@ import { TopicsFeatureModule } from '@pestras/frontend/features/topics';
     PuiDropdown,
     PuiPreloaderModule,
     SessionFeatureModule,
-    TopicsFeatureModule
+    TopicsFeatureModule,
+    ProfileModule
   ]
 })
 export class MainModule { }

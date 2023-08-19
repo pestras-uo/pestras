@@ -63,7 +63,8 @@ import { RecordsListView } from './views/records-list/records-list.view';
     RecordPipe,
     RecordsPipe,
     QueryRecordsPipe,
-    RecordCardView
+    RecordCardView,
+    RecordsListView
   ]
 })
 export class RecordsFeatureModule { }

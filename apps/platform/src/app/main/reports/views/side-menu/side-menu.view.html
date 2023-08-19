@@ -1,0 +1,185 @@
+<ng-container *contra="let c; let dir = dir">
+  <header class="pi-7 pb-4 flex gap-2 align-items-center">
+    <button class="btn-small btn-round btn-icon" (click)="loc.back()">
+      <i
+        size="small"
+        color="primary"
+        [class.rotate-180]="dir === 'ltr'"
+        puiIcon="trending_flat"
+      ></i>
+    </button>
+    <p class="f9 bold">{{c['list']}}</p>
+  </header>
+
+  <main>
+    <div class="list">
+      <div class="list-item" [class.active]="view === 'details'">
+        <div class="flex gap-2">
+          <i size="small" puiIcon="description"></i>
+          <div>
+            <h4 class="mbe-1">{{c['desc']}}</h4>
+            <p class="text3 f9">{{c['dashboardDetails']}}</p>
+          </div>
+        </div>
+
+        <div class="grow"></div>
+
+        <button
+          class="btn-icon btn-round btn-small"
+          (click)="selects.emit('details')"
+        >
+          <i
+            size="small"
+            [puiIcon]="dir === 'rtl' ? 'navigate_before' : 'navigate_next'"
+          ></i>
+        </button>
+      </div>
+
+      <div
+        *ngIf="report.owner | sessionIs"
+        class="list-item"
+        [class.active]="view === 'access'"
+      >
+        <div class="flex gap-2">
+          <i size="small" puiIcon="access"></i>
+          <div>
+            <h4 class="mbe-1">{{c['access']}}</h4>
+            <p class="text3 f9">{{c['accessDetails']}}</p>
+          </div>
+        </div>
+
+        <div class="grow"></div>
+
+        <button
+          class="btn-icon btn-round btn-small"
+          (click)="selects.emit('access')"
+        >
+          <i
+            size="small"
+            [puiIcon]="dir === 'rtl' ? 'navigate_before' : 'navigate_next'"
+          ></i>
+        </button>
+      </div>
+    </div>
+
+    <div class="toolbar pb-4 pi-7">
+      <h3>{{c['slides']}}</h3>
+      <div class="grow"></div>
+      <ng-container
+        *ngIf="(report.owner | sessionIs) || (report.collaborators | sessionIs)"
+      >
+        <button
+          class="btn-icon btn-round btn-small"
+          [disabled]="reorder"
+          (click)="openDialog(slideForm)"
+        >
+          <i size="small" puiIcon="add"></i>
+        </button>
+        <button
+          class="btn-icon btn-round btn-small"
+          [class.btn-success]="reorder"
+          (click)="reorder = !reorder"
+        >
+          <i size="small" puiIcon="reorder"></i>
+        </button>
+      </ng-container>
+    </div>
+
+    <div
+      class="list list-actions boards"
+      cdkDropList
+      (cdkDropListDropped)="drop($event)"
+    >
+      <div
+        class="list-item"
+        *ngFor="let slide of slides"
+        [class.active]="view === slide.serial"
+        cdkDragBoundary=".boards"
+        cdkDrag
+        [cdkDragDisabled]="!reorder"
+        (click)="selects.emit(slide.serial)"
+      >
+        <button
+          class="btn-small btn-icon btn-round"
+          cdkDragHandle
+          *ngIf="reorder"
+        >
+          <i size="small" puiIcon="drag"></i>
+        </button>
+
+        <h4 class="mbe-1">{{slide.title}}</h4>
+
+        <div class="grow"></div>
+
+        <button
+          class="btn-icon btn-round btn-small"
+          (click)="openDialog(slideForm, slide)"
+        >
+          <i size="small" puiIcon="edit"></i>
+        </button>
+
+        <button
+          class="btn-icon btn-round btn-small"
+          (click)="openDialog(removeSlideTmp, slide)"
+        >
+          <i size="small" color="danger" puiIcon="delete"></i>
+        </button>
+      </div>
+    </div>
+  </main>
+
+  <ng-template #slideForm let-slide>
+    <form
+      class="card w-10 shadow-6"
+      [formGroup]="form"
+      (ngSubmit)="submit(c, slide?.serial)"
+    >
+      <h4 *ngIf="!slide" class="card-header">{{c['addSlide']}}</h4>
+      <h4 *ngIf="slide" class="card-header">{{c['updateSlide']}}</h4>
+
+      <div class="card-body">
+        <label for="board-title">{{c['title']}}</label>
+        <div class="fc mbe-6">
+          <input type="text" id="board-title" formControlName="title" />
+        </div>
+      </div>
+
+      <div class="card-footer">
+        <button
+          type="button"
+          class="btn-outline btn-round"
+          (click)="closeDialog()"
+        >
+          {{c['cancel']}}
+        </button>
+        <button class="btn-primary btn-round" [disabled]="form.invalid">
+          {{c['submit']}}
+        </button>
+      </div>
+    </form>
+  </ng-template>
+
+  <ng-template #removeSlideTmp let-slide>
+    <div class="card w-10 shadow-6">
+      <h4 *ngIf="!slide" class="card-header">{{c['removeSlide']}}</h4>
+
+      <p class="card-body">{{c['confirmOperation']}}</p>
+
+      <div class="card-footer">
+        <button
+          type="button"
+          class="btn-outline btn-round"
+          (click)="closeDialog()"
+        >
+          {{c['cancel']}}
+        </button>
+        <button
+          class="btn-primary btn-round"
+          (click)="removeSlide(c, slide.erial)"
+        >
+          {{c['remove']}}
+        </button>
+      </div>
+    </div>
+  </ng-template>
+</ng-container>

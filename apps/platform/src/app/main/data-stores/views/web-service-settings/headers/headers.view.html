@@ -1,0 +1,82 @@
+<ng-container [class.disabled]="!editable" *contra="let c">
+  <div class="card mbe-6" *ngIf="headers.length" [class.disabled]="!editable">
+    <div class="card-body">
+      <div
+        [class.mbe-6]="!last"
+        *ngFor="let header of headers; let i = index; let last = last"
+        class="flex gap-4 align-items-end"
+      >
+        <div class="grow">
+          <label [for]="i + '-key'">{{c['name']}}</label>
+          <div class="fc">
+            <input
+              #key
+              type="text"
+              [id]="i + '-key'"
+              [value]="header.key"
+              required
+            />
+          </div>
+        </div>
+
+        <div class="grow">
+          <label [for]="i + '-value'">{{c['value']}}</label>
+          <div class="fc">
+            <input
+              #value
+              type="text"
+              [id]="i + '-value'"
+              [value]="header.value"
+              required
+            />
+          </div>
+        </div>
+
+        <button
+          class="btn-icon hover hover-surface1"
+          (click)="update(c, key.value, value.value)"
+        >
+          <i size="small" puiIcon="check"></i>
+        </button>
+
+        <button
+          class="btn-icon hover hover-surface1"
+          (click)="remove(c, key.value)"
+        >
+          <i size="small" color="danger" puiIcon="delete"></i>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <form
+    *ngIf="editable"
+    [formGroup]="form"
+    (ngSubmit)="add(c)"
+    class="card new-pair"
+  >
+    <h4 class="card-header">{{c['newheader']}}</h4>
+
+    <div class="card-body flex gap-4">
+      <div class="grow">
+        <label for="key">{{c['name']}}</label>
+        <div class="fc">
+          <input type="text" id="key" formControlName="key" />
+        </div>
+      </div>
+
+      <div class="grow">
+        <label for="value">{{c['value']}}</label>
+        <div class="fc">
+          <input type="text" id="value" formControlName="value" />
+        </div>
+      </div>
+    </div>
+
+    <div class="card-footer">
+      <button class="btn-primary btn-round" [disabled]="form.invalid">
+        {{c['add']}}
+      </button>
+    </div>
+  </form>
+</ng-container>

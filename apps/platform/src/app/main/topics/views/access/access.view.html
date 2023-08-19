@@ -1,0 +1,172 @@
+<ng-container *contra="let c">
+  <div class="toolbar">
+    <h2>{{c['access']}}</h2>
+  </div>
+
+  <div class="divider mbs-4 mbe-8"></div>
+
+  <div class="grid cols-3 gap-8">
+    <!--  orgunits -->
+    <div class="card">
+      <div class="card-header">
+        <h3>{{c['orgunits']}}</h3>
+
+        <button
+          class="btn-icon btn-small btn-round"
+          (click)="openDialog(addTmp, 'orgunit')"
+        >
+          <i puiIcon="add" size="small"></i>
+        </button>
+      </div>
+
+      <div
+        class="card-body"
+        *ngIf="'' | orgunits | async | arrayFilter: filterEntity: topic.access.orgunits as orgunits"
+      >
+        <ng-container *ngIf="orgunits.length else noData">
+          <div
+            class="toolbar"
+            [class.mbe-2]="!last"
+            *ngFor="let org of orgunits; let last = last"
+          >
+            <p class="bold">{{org.name}}</p>
+            <div class="grow"></div>
+            <button
+              class="btn-icon btn-tiny btn-round"
+              (click)="remove(c, 'orgunit', org.serial)"
+            >
+              <i puiIcon="delete" size="tiny"></i>
+            </button>
+          </div>
+        </ng-container>
+      </div>
+    </div>
+
+    <!--  users -->
+    <div class="card">
+      <div class="card-header">
+        <h3>{{c['users']}}</h3>
+
+        <button
+          class="btn-icon btn-small btn-round"
+          (click)="openDialog(addTmp, 'user')"
+        >
+          <i puiIcon="add" size="small"></i>
+        </button>
+      </div>
+
+      <div
+        class="card-body"
+        *ngIf="'' | users | async | arrayFilter: filterEntity: topic.access.users as users"
+      >
+        <ng-container *ngIf="users.length else noData">
+          <div
+            class="toolbar"
+            [class.mbe-2]="!last"
+            *ngFor="let u of users; let last = last"
+          >
+            <p class="bold">{{u.fullname}}</p>
+            <div class="grow"></div>
+            <button
+              class="btn-icon btn-tiny btn-round"
+              (click)="remove(c, 'user', u.serial)"
+            >
+              <i puiIcon="delete" size="tiny"></i>
+            </button>
+          </div>
+        </ng-container>
+      </div>
+    </div>
+
+    <!--  groups -->
+    <div class="card">
+      <div class="card-header">
+        <h3>{{c['groups']}}</h3>
+
+        <button
+          class="btn-icon btn-small btn-round"
+          (click)="openDialog(addTmp, 'group')"
+        >
+          <i puiIcon="add" size="small"></i>
+        </button>
+      </div>
+
+      <div
+        class="card-body"
+        *ngIf="'' | usersGroups | async | arrayFilter: filterEntity: topic.access.groups as groups"
+      >
+        <ng-container *ngIf="groups.length else noData">
+          <div
+            class="toolbar"
+            [class.mbe-2]="!last"
+            *ngFor="let g of groups; let last = last"
+          >
+            <p class="bold">{{g.name}}</p>
+            <div class="grow"></div>
+            <button
+              class="btn-icon btn-tiny btn-round"
+              (click)="remove(c, 'group', g.serial)"
+            >
+              <i puiIcon="delete" size="tiny"></i>
+            </button>
+          </div>
+        </ng-container>
+      </div>
+    </div>
+
+    <!--  no data template -->
+    <ng-template #noData>
+      <no-data-placeholder-widget [small]="true"
+        >{{c['noDataMsg']}}</no-data-placeholder-widget
+      >
+    </ng-template>
+
+    <!-- add modal -->
+    <ng-template #addTmp let-type>
+      <div class="card w-15 shadow-6">
+        <h4 class="card-header">{{c['add']}}</h4>
+
+        <div class="card-body">
+          <label for="add-new">{{c[type]}}</label>
+          <div class="fc" *ngIf="type === 'orgunit'">
+            <pui-select-input
+              *ngIf="'' | orgunits | async | arrayFilter: filterEntity: topic.access.orgunits: true | arrayMap: mapEntity as orgunits"
+              [list]="orgunits"
+              labelRef="add-new"
+              [formControl]="control"
+            >
+            </pui-select-input>
+          </div>
+          <div class="fc" *ngIf="type === 'user'">
+            <pui-select-input
+              *ngIf="'' | users | async | arrayFilter: filterEntity: topic.access.users: true | arrayMap: mapEntity as users"
+              [list]="users"
+              labelRef="add-new"
+              [formControl]="control"
+            >
+            </pui-select-input>
+          </div>
+          <div class="fc" *ngIf="type === 'group'">
+            <pui-select-input
+              *ngIf="'' | usersGroups | async | arrayFilter: filterEntity: topic.access.groups: true | arrayMap: mapEntity as groups"
+              [list]="groups"
+              labelRef="add-new"
+              [formControl]="control"
+            >
+            </pui-select-input>
+          </div>
+        </div>
+
+        <div class="card-footer">
+          <button class="btn-round btn-outline" (click)="closeDialog()">
+            {{c['cancel']}}
+          </button>
+          <button class="btn-round btn-primary" (click)="add(c, type)">
+            {{c['add']}}
+          </button>
+        </div>
+      </div>
+    </ng-template>
+  </div>
+  
+</ng-container>

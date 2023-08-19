@@ -1,0 +1,138 @@
+<ng-container *ngIf="dataStore$ | async as ds">
+  <app-side-menu
+    [dataStore]="ds"
+    [view]="view"
+    (selects)="this.view = $event"
+  ></app-side-menu>
+
+  <main puiInfiniteScroll (reached)="pageBottomReached()" *contra="let c">
+    <header class="bg-surface1 pb-10 pi-8 border-be">
+      <div class="container">
+        <p class="text-3 bold f9">
+          {{(c['dataStoresTypes'] | arrayFind: findType : ds.type)?.name}}
+        </p>
+        <div class="toolbar gap-2">
+          <h1 class="f2 weight-8">{{ds.name}}</h1>
+
+          <div class="grow"></div>
+
+          <button
+            *ngIf="canBuild && (blueprint.owner | sessionIs)"
+            class="color-scheme-dark btn-surface1 btn-round"
+            (click)="openDialog(buildTmp)"
+          >
+            <i color="white" size="small" puiIcon="build"></i>
+            {{c['build']}}
+          </button>
+
+          <button
+            *ngIf="(blueprint.owner | sessionIs) || (blueprint.collaborators | sessionIs)"
+            class="btn-primary btn-round"
+            (click)="openDialog(updateTmp)"
+          >
+            <i size="small" puiIcon="edit"></i>
+            {{c['update']}}
+          </button>
+        </div>
+      </div>
+    </header>
+
+    <div class="p-10">
+      <div class="container">
+        <app-content-views
+          *ngIf="view === 'details'"
+          [entity]="serial"
+          [editable]="(blueprint.owner | sessionIs) || (blueprint.collaborators | sessionIs)"
+        ></app-content-views>
+
+        <app-records
+          *ngIf="view === 'data'"
+          [dataStore]="ds"
+          [editable]="(blueprint.owner | sessionIs) || (blueprint.collaborators | sessionIs)"
+        ></app-records>
+
+        <app-table-settings
+          *ngIf="view === 'settings'"
+          [dataStore]="ds"
+          [editable]="(blueprint.owner | sessionIs) || (blueprint.collaborators | sessionIs)"
+        ></app-table-settings>
+
+        <app-aggregation-settings
+          *ngIf="view === 'aggregation'"
+          [dataStore]="ds"
+          [editable]="(blueprint.owner | sessionIs) || (blueprint.collaborators | sessionIs)"
+        ></app-aggregation-settings>
+
+        <app-web-service-settings
+          *ngIf="view === 'webService'"
+          [dataStore]="ds"
+          [editable]="(blueprint.owner | sessionIs) || (blueprint.collaborators | sessionIs)"
+        ></app-web-service-settings>
+
+        <app-data-store-fields-list
+          *ngIf="view === 'fields'"
+          [dataStore]="ds"
+          [editable]="(blueprint.owner | sessionIs) || (blueprint.collaborators | sessionIs)"
+        ></app-data-store-fields-list>
+
+        <app-collaborators
+          *ngIf="view === 'collaborators'"
+          [dataStore]="ds"
+          [editable]="blueprint.owner | sessionIs"
+        ></app-collaborators>
+      </div>
+    </div>
+
+    <ng-template #updateTmp>
+      <div class="card w-15 shadow-6">
+        <h4 class="card-header">{{c['updateDataStore']}}</h4>
+
+        <div class="card-body">
+          <label for="dash-title">{{c['title']}} *</label>
+          <div class="fc mbe-6">
+            <input
+              autocomplete="off"
+              type="text"
+              id="dash-title"
+              [formControl]="title"
+            />
+          </div>
+        </div>
+
+        <div class="card-footer">
+          <button class="btn-round btn-outline" (click)="this.closeDialog()">
+            {{c['cancel']}}
+          </button>
+          <button
+            class="btn-primary btn-round"
+            [disabled]="title.invalid"
+            (click)="update(c)"
+          >
+            {{c['update']}}
+          </button>
+        </div>
+
+        <pui-preloader *ngIf="preloader"></pui-preloader>
+      </div>
+    </ng-template>
+
+    <ng-template #buildTmp>
+      <div class="card w-15 shadow-6">
+        <h4 class="card-header">{{c['build']}}</h4>
+
+        <p class="card-body">{{c['confirmOperation']}}</p>
+
+        <div class="card-footer">
+          <button class="btn-round btn-outline" (click)="this.closeDialog()">
+            {{c['cancel']}}
+          </button>
+          <button class="btn-primary btn-round" (click)="build(c)">
+            {{c['build']}}
+          </button>
+        </div>
+
+        <pui-preloader *ngIf="preloader"></pui-preloader>
+      </div>
+    </ng-template>
+  </main>
+</ng-container>

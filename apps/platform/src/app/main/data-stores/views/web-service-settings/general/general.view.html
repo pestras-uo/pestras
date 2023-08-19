@@ -1,0 +1,57 @@
+<form class="relative" [class.disabled]="editable" [formGroup]="form" (ngSubmit)="update(c)" *contra="let c">
+
+  <label for="resource-uri">{{c['resourceUri']}}</label>
+  <div class="fc fc-surface1 fc-outline mbe-6">
+    <input type="text" id="resource-uri" formControlName="resource_uri">
+  </div>
+
+  <label for="method">{{c['httpMethod']}}</label>
+  <div class="fc fc-surface1 fc-outline mbe-6">
+    <pui-select-input labelRef="method" [list]="c['httpMethods']" formControlName="method"></pui-select-input>
+  </div>
+
+  <div class="fc-checkbox mbe-6">
+    <input type="checkbox" id="init-request" formControlName="make_init_request">
+    <label for="init-request">{{c['makeInitRequest']}}</label>
+  </div>
+
+  <div class="fc-checkbox mbe-6">
+    <input type="checkbox" id="replace" formControlName="replace_existing">
+    <label for="replace">{{c['replaceData']}}</label>
+  </div>
+
+  <label for="content">{{c['contentType']}}</label>
+  <div class="fc fc-surface1 fc-outline mbe-6">
+    <pui-select-input labelRef="content" [list]="c['httpContentTypes']"
+      formControlName="content_type"></pui-select-input>
+  </div>
+
+  <label for="accept">{{c['acceptContent']}}</label>
+  <div class="fc fc-surface1 fc-outline mbe-6">
+    <pui-select-input labelRef="accept" [list]="c['acceptContentTypes']" formControlName="accept"></pui-select-input>
+  </div>
+
+  <label for="data-path">{{c['dataPath']}}</label>
+  <div class="fc fc-surface1 fc-outline mbe-6">
+    <input type="text" id="data-path" formControlName="data_path">
+  </div>
+
+  <label for="intervals">{{c['intervals']}}</label>
+  <div class="fc fc-surface1 fc-outline mbe-6">
+    <pui-select-input labelRef="intervals" [list]="c['intervalsList']" formControlName="intervals"></pui-select-input>
+  </div>
+
+  <label for="fetch-day">{{c['fetchDay']}}</label>
+  <div class="fc fc-surface1 fc-outline">
+    <input type="text" id="fetch-day" formControlName="fetch_day">
+  </div>
+
+  <div class="divider mb-6"></div>
+
+  <div class="align-end">
+    <button class="btn-round btn-primary" [disabled]="form.invalid">{{c['save']}}</button>
+  </div>
+
+  <pui-preloader *ngIf="preloader"></pui-preloader>
+
+</form>

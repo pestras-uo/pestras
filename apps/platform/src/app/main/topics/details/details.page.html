@@ -1,0 +1,97 @@
+<ng-container *ngIf="topic$ | async as t">
+  <!-- side menu -->
+  <app-side-menu
+    [topic]="t"
+    [view]="view"
+    (selects)="view = $event"
+    (selectDataStore)="view = 'datastores'; dataStore = $event"
+  ></app-side-menu>
+
+  <main puiInfiniteScroll (reached)="pageBottomReached()" *contra="let c">
+    <header class="bg-surface1 pb-10 pi-8 border-be">
+      <div class="container">
+        <p class="bold text-3 f9">{{c['topic']}}</p>
+        <div class="toolbar gap-2">
+          <h1 class="f2 weight-8">{{t.name}}</h1>
+
+          <app-workspace-toggle-pin
+            [input]="{ name: t.name, serial: t.serial, scope: theme, type: wsType }"
+          ></app-workspace-toggle-pin>
+
+          <div class="grow"></div>
+
+          <button
+            *ngIf="t.owner | sessionIs"
+            class="btn-primary btn-round"
+            (click)="openDialog(updateTmp)"
+          >
+            <i size="small" puiIcon="edit"></i>
+            {{c['update']}}
+          </button>
+        </div>
+        <p class="text-3 bold f9">{{t.create_date | date: 'dd/MM/YYYY'}}</p>
+      </div>
+    </header>
+
+    <div class="pb-10 pi-8">
+      <div class="container">
+        <app-content-views
+          *ngIf="view === 'details'"
+          [entity]="t.serial"
+          [editable]="t.owner | sessionIs"
+        ></app-content-views>
+
+        <app-access *ngIf="view === 'access'" [topic]="t"></app-access>
+
+        <app-records-list
+          *ngIf="view === 'datastores'"
+          [topic]="t.serial"
+          [dataStore]="dataStore"
+        ></app-records-list>
+
+        <app-dashboards-list
+          *ngIf="view === 'dashboards'"
+          [topic]="t.serial"
+        ></app-dashboards-list>
+
+        <app-reports-list
+          *ngIf="view === 'reports'"
+          [topic]="t.serial"
+        ></app-reports-list>
+      </div>
+    </div>
+
+    <ng-template #updateTmp>
+      <div class="card w-15 shadow-6">
+        <h4 class="card-header">{{c['updateTopic']}}</h4>
+
+        <div class="card-body">
+          <label for="dash-title">{{c['title']}} *</label>
+          <div class="fc mbe-6">
+            <input
+              autocomplete="off"
+              type="text"
+              id="dash-title"
+              [formControl]="title"
+            />
+          </div>
+        </div>
+
+        <div class="card-footer">
+          <button class="btn-round btn-outline" (click)="this.closeDialog()">
+            {{c['cancel']}}
+          </button>
+          <button
+            class="btn-primary btn-round"
+            [disabled]="title.invalid"
+            (click)="update(c)"
+          >
+            {{c['update']}}
+          </button>
+        </div>
+
+        <pui-preloader *ngIf="preloader"></pui-preloader>
+      </div>
+    </ng-template>
+  </main>
+</ng-container>

@@ -1,0 +1,19 @@
+:host {
+  height: var(--main-height);
+  overflow-y: auto;
+}
+
+header {
+  padding-block: 48px;
+  border-block-end: 1px solid var(--border1);
+}
+
+main {
+  padding-block: 32px;
+}
+
+.activity {
+  grid-column-end: span 2;
+}
+
+.badge.i { cursor: pointer; }

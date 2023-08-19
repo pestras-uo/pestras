@@ -1,0 +1,11 @@
+:host {
+  height: var(--main-height);
+  overflow-y: auto;
+  display: grid;
+  grid-template-rows: auto 1fr;
+}
+
+header {
+  padding-block: 48px;
+  border-block-end: 1px solid var(--border1);
+}

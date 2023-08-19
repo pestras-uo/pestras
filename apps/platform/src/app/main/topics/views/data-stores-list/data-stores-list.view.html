@@ -1,0 +1,23 @@
+<ng-container *contra="let c; let dir = dir">
+
+  <header class="toolbar gap-2">
+    <i size="small" puiIcon="database"></i>
+    <h4>{{c['data']}}</h4>
+  </header>
+
+  <main class="list" *ngIf="datastores$ | async as datastores">
+
+    <div class="list-item" [class.active]="selected === datastore.serial" *ngFor="let datastore of datastores">
+
+      <h5>{{datastore.name}}</h5>
+
+      <div class="grow"></div>
+
+      <button class="btn-icon btn-round btn-small" (click)="selectDs(datastore)">
+        <i size="small" [puiIcon]="dir === 'rtl' ? 'navigate_before' : 'navigate_next'"></i>
+      </button>
+    </div>
+
+  </main>
+
+</ng-container>

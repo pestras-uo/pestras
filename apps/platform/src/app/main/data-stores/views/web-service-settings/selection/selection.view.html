@@ -1,0 +1,108 @@
+<ng-container *contra="let c">
+
+  <div class="accordion">
+
+    <div #card [class.mbe-2]="!last" *ngFor="let s of selection; let i = index; let last = last" class="card">
+
+      <div class="card-header">
+        <h4>{{s.field}}</h4>
+        <div class="grow"></div>
+        <button *ngIf="editable" class="btn-icon btn-small btn-round" (click)="remove(c, s.field)">
+          <i size="small" color="danger" puiIcon="delete"></i>
+        </button>
+        <button class="btn-icon btn-small btn-round" (click)="card.classList.toggle('active')">
+          <i size="small" color="danger" puiIcon="arrow_drop_down"></i>
+        </button>
+      </div>
+
+      <div class="card-body flex gap-8">
+        <div class="grow">
+          <p class="f9">{{c['newName']}}</p>
+          <p class="bold">{{s.as}}</p>
+        </div>
+        <div class="grow">
+          <p class="f9">{{c['type']}}</p>
+          <p class="bold">{{(c['convertOptionTypes'] | arrayFind: findType:s.type)?.name}}</p>
+        </div>
+        <div class="grow">
+          <p class="f9">{{c['onErrorValue']}}</p>
+          <p class="bold">{{s.onError}}</p>
+        </div>
+        <div class="grow">
+          <p class="f9">{{c['onNullValue']}}</p>
+          <p class="bold">{{s.onNull}}</p>
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+
+
+  <div *ngIf="selection.length" class="divider mb-6"></div>
+
+
+  <form *ngIf="editable" class="card" [formGroup]="form" (ngSubmit)="add(c)">
+
+    <h4 class="card-header">{{c['defineFields']}}</h4>
+    
+    <div class="card-body">
+
+      <div class="grid cols-3 gap-4 mbe-6">
+        <div>
+          <label for="select-field">{{c['field']}}</label>
+          <div class="fc">
+            <input type="text" id="select-field" formControlName="field">
+          </div>
+        </div>
+
+        <div>
+          <label for="select-as">{{c['newName']}}</label>
+          <div class="fc">
+            <input type="text" id="select-as" formControlName="as">
+          </div>
+        </div>
+
+        <div>
+          <label for="select-display_name">{{c['displayName']}}</label>
+          <div class="fc">
+            <input type="text" id="select-display_name" formControlName="display_name">
+          </div>
+        </div>
+      </div>
+
+      <div class="grid cols-3 gap-4">
+        <div>
+          <label for="type">{{c['type']}}</label>
+          <div class="fc">
+            <pui-select-input [list]="c['convertOptionTypes']" labelRef="type"
+              formControlName="type"></pui-select-input>
+          </div>
+        </div>
+
+        <div>
+          <label for="error-value">{{c['onErrorValue']}}</label>
+          <div class="fc">
+            <input type="text" id="error-value" formControlName="onError">
+          </div>
+        </div>
+
+        <div>
+          <label for="null-value">{{c['onNullValue']}}</label>
+          <div class="fc">
+            <input type="text" id="null-value" formControlName="onNull">
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="card-footer">
+      <button class="btn-round btn-primary" [disabled]="form.invalid">{{c['add']}}</button>
+    </div>
+
+    <pui-preloader *ngIf="preloader"></pui-preloader>
+
+  </form>
+
+</ng-container>

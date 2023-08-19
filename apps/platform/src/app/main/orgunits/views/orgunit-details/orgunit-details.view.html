@@ -1,0 +1,161 @@
+<ng-container *contra="let c">
+  <ng-container *ngIf="orgunit$ | async as orgunit">
+    <header class="bg-surface1 pi-8 border-be">
+      <div class="container">
+        <div class="toolbar gap-4">
+          <div
+            class="avatar avatar-large"
+            [style.background-color]="10 | randomColor"
+          >
+            <img
+              *ngIf="orgunit.logo"
+              [src]="orgunit.logo | docsPath"
+              alt="orgunit logo"
+              class="org-logo"
+            />
+            <i *ngIf="!orgunit.logo" color="white" puiIcon="lan"></i>
+          </div>
+          <div>
+            <p class="primary bold">{{orgunit.class}}</p>
+            <h1 class="weight-8">{{orgunit.name}}</h1>
+          </div>
+
+          <div class="grow"></div>
+
+          <button
+            class="color-scheme-dark btn-surface1 btn-round"
+            (click)="openModal(updateLogoModal)"
+          >
+            <i color="white" size="small" puiIcon="imagesmode"></i>
+            {{c['updateLogo']}}
+          </button>
+
+          <button
+            class="btn-primary btn-round"
+            (click)="openModal(updateModal)"
+          >
+            <i color="white" size="small" puiIcon="edit_fill"></i>
+            {{c['update']}}
+          </button>
+        </div>
+      </div>
+    </header>
+
+    <main class="pi-8">
+      <div class="container" *ngIf="branches$ | async as branches">
+        <div class="toolbar mbe-6">
+          <h2 mbe>{{c['branchesOrgunits']}}</h2>
+        </div>
+
+        <div class="content">
+          <section class="col-span-3 row-span-3">
+            <pui-table
+              class="h-fit"
+              [config]="tableConfig"
+              (rowClick)="selects.emit($event.serial)"
+              [list]="branches"
+              [templates]="{ name: nameTemp }"
+              [searchPlaceholder]="c['search']"
+            >
+              <button
+                class="action btn-icon btn-small"
+                (click)="add.emit(orgunit.serial)"
+              >
+                <i size="small" puiIcon="add"></i>
+              </button>
+
+              <no-data-placeholder-widget
+                [actionName]="c['addNew']"
+                (action)="add.emit(orgunit.serial)"
+                >{{c['noDataMsg']}}</no-data-placeholder-widget
+              >
+            </pui-table>
+          </section>
+
+          <section class="card col-4 row-1 minw-6">
+            <div
+              class="card-body flex align-items-cetner justify-content-center align-center"
+            >
+              <div>
+                <p class="f0 weight-8 primary">{{branches.length}}</p>
+                <p class="bold primary">{{c['orgunits']}}</p>
+              </div>
+            </div>
+          </section>
+
+          <section class="card col-4 row-2 minw-6">
+            <div
+              class="card-body flex align-items-cetner justify-content-center align-center"
+            >
+              <div>
+                <p class="f0 weight-8 danger">
+                  {{('' | users: orgunit.serial | async)?.length ?? 0}}
+                </p>
+                <p class="bold danger">{{c['users']}}</p>
+              </div>
+            </div>
+          </section>
+
+          <section class="card col-4 row-3 minw-6">
+            <div
+              class="card-body flex align-items-cetner justify-content-center align-center"
+            >
+              <div>
+                <p class="f0 weight-8 success">
+                  {{orgunit.regions.length || ('' | regions | async)?.length ??
+                  0}}
+                </p>
+                <p class="bold success">{{c['regions']}}</p>
+              </div>
+            </div>
+          </section>
+        </div>
+
+        <div class="card overflow-hidden" *ngIf="branches.length > 0">
+          <div class="card-header">
+            <i puiIcon="donut_small"></i>
+            <h4>{{c['orgunitStructure']}}</h4>
+            <div class="grow"></div>
+          </div>
+          <div class="card-body h-20">
+            <app-hierarchy [root]="orgunit.serial"></app-hierarchy>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <ng-template #nameTemp let-item="item">
+      <div class="flex gap-4 align-items-center">
+        <div class="avatar" [style.background-color]="10 | randomColor">
+          <img
+            *ngIf="item.logo"
+            [src]="item.logo | docsPath"
+            alt="orgunit logo"
+            class="org-logo"
+          />
+          <i
+            *ngIf="!item.logo"
+            color="white"
+            size="small"
+            puiIcon="family_history"
+          ></i>
+        </div>
+        <p class="bold">{{item.name}}</p>
+      </div>
+    </ng-template>
+
+    <ng-template #updateModal>
+      <app-update-orgunit
+        [orgunit]="orgunit"
+        (closes)="closeModal()"
+      ></app-update-orgunit>
+    </ng-template>
+
+    <ng-template #updateLogoModal>
+      <app-update-orgunit-logo
+        [orgunit]="orgunit"
+        (closes)="closeModal()"
+      ></app-update-orgunit-logo>
+    </ng-template>
+  </ng-container>
+</ng-container>

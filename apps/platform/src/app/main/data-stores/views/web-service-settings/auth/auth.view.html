@@ -1,0 +1,22 @@
+<form class="relative" [class.disabled]="editable" [formGroup]="form" (ngSubmit)="update(c)" *contra="let c">
+
+  <label for="username">{{c['username']}}</label>
+  <div class="fc fc-surface1 fc-outline mbe-6">
+    <input type="text" id="username" formControlName="username">
+  </div>
+
+  <label for="password">{{c['password']}}</label>
+  <div class="fc fc-surface1 fc-outline">
+    <input type="password" id="password" formControlName="password">
+  </div>
+
+  <div class="divider mb-6"></div>
+
+  <div class="align-end">
+    <button *ngIf="hasAuth" class="btn-round btn-danger mie-2" type="button" (click)="clear(c)">{{c['delete']}}</button>
+    <button class="btn-round btn-primary" [disabled]="form.invalid">{{c['save']}}</button>
+  </div>
+
+  <pui-preloader *ngIf="preloader"></pui-preloader>
+
+</form>

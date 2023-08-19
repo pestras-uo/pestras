@@ -1,0 +1,3 @@
+<ng-container *ngIf="subDataStore$ | async as sds">
+  <app-records-list [dataStore]="sds" [search]="search"></app-records-list>
+</ng-container>

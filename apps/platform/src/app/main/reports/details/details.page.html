@@ -1,0 +1,86 @@
+<ng-container *ngIf="report$ | async as d">
+  <!--  menu -->
+  <app-side-menu
+    [report]="d"
+    [view]="view"
+    (selects)="this.view = $event"
+  ></app-side-menu>
+
+  <main *contra="let c">
+    <header class="bg-surface1 pb-10 pi-8 border-be">
+      <div class="container tight">
+        <p class="text-3 bold f9">{{d.create_date | date: 'dd/MM/YYYY'}}</p>
+        <div class="toolbar mbe-2 gap-2">
+          <h1 class="f2 weight-8">{{d.title}}</h1>
+
+          <app-workspace-toggle-pin
+            [input]="{ name: d.title, serial: d.serial, scope: topic, type: wsType }"
+          ></app-workspace-toggle-pin>
+
+          <div class="grow"></div>
+
+          <button
+            *ngIf="(d.owner | sessionIs) || (d.collaborators | sessionIs)"
+            class="btn-primary btn-round"
+            (click)="openDialog(updateTmp)"
+          >
+            <i size="small" puiIcon="edit"></i>
+            {{c['update']}}
+          </button>
+        </div>
+      </div>
+    </header>
+
+    <div class="pb-10 pi-8">
+      <div class="container tight">
+        <!-- desc -->
+        <app-content-views
+          *ngIf="view === 'details'"
+          [entity]="d.serial"
+          [editable]="(d.owner | sessionIs) || (d.collaborators | sessionIs)"
+        ></app-content-views>
+
+        <app-access *ngIf="view === 'access'" [report]="d"></app-access>
+
+        <app-report-slide
+          *ngIf="view !== 'details' && view !== 'access'"
+          [report]="d"
+          [slideSerial]="view"
+        ></app-report-slide>
+      </div>
+    </div>
+
+    <ng-template #updateTmp>
+      <div class="card w-15 shadow-6">
+        <h4 class="card-header">{{c['updateReport']}}</h4>
+
+        <div class="card-body">
+          <label for="dash-title">{{c['title']}} *</label>
+          <div class="fc mbe-6">
+            <input
+              autocomplete="off"
+              type="text"
+              id="dash-title"
+              [formControl]="title"
+            />
+          </div>
+        </div>
+
+        <div class="card-footer">
+          <button class="btn-round btn-outline" (click)="this.closeDialog()">
+            {{c['cancel']}}
+          </button>
+          <button
+            class="btn-primary btn-round"
+            [disabled]="title.invalid"
+            (click)="update(c, d.serial)"
+          >
+            {{c['add']}}
+          </button>
+        </div>
+
+        <pui-preloader *ngIf="preloader"></pui-preloader>
+      </div>
+    </ng-template>
+  </main>
+</ng-container>

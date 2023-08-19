@@ -1,0 +1,108 @@
+<ng-container *contra="let c; let dir = dir">
+  <header class="pi-7 pb-4 flex gap-2 align-items-center">
+    <button class="btn-small btn-round btn-icon" (click)="loc.back()">
+      <i
+        size="small"
+        color="primary"
+        [class.rotate-180]="dir === 'ltr'"
+        puiIcon="trending_flat"
+      ></i>
+    </button>
+    <p class="f9 bold">{{c['list']}}</p>
+  </header>
+
+  <main class="list">
+    <div class="list-item" [class.active]="view === 'details'">
+      <div class="flex gap-2">
+        <i size="small" puiIcon="description"></i>
+        <div>
+          <h4 class="mbe-1">{{c['desc']}}</h4>
+          <p class="text3 f9">{{c['topicDetails']}}</p>
+        </div>
+      </div>
+
+      <div class="grow"></div>
+
+      <button
+        class="btn-icon btn-round btn-small"
+        (click)="selects.emit('details')"
+      >
+        <i
+          size="small"
+          [puiIcon]="dir === 'rtl' ? 'navigate_before' : 'navigate_next'"
+        ></i>
+      </button>
+    </div>
+
+    <div *ngIf="topic.owner | sessionIs" class="list-item" [class.active]="view === 'access'">
+      <div class="flex gap-2">
+        <i size="small" puiIcon="access"></i>
+        <div>
+          <h4 class="mbe-1">{{c['access']}}</h4>
+          <p class="text3 f9">{{c['accessDesc']}}</p>
+        </div>
+      </div>
+
+      <div class="grow"></div>
+
+      <button
+        class="btn-icon btn-round btn-small"
+        (click)="selects.emit('access')"
+      >
+        <i
+          size="small"
+          [puiIcon]="dir === 'rtl' ? 'navigate_before' : 'navigate_next'"
+        ></i>
+      </button>
+    </div>
+
+    <div class="list-item" [class.active]="view === 'dashboards'">
+      <div class="flex gap-2">
+        <i size="small" puiIcon="dashboard"></i>
+        <div>
+          <h4 class="mbe-1">{{c['dashboards']}}</h4>
+          <p class="text3 f9">{{c['dashboardsDesc']}}</p>
+        </div>
+      </div>
+
+      <div class="grow"></div>
+
+      <button
+        class="btn-icon btn-round btn-small"
+        (click)="selects.emit('dashboards')"
+      >
+        <i
+          size="small"
+          [puiIcon]="dir === 'rtl' ? 'navigate_before' : 'navigate_next'"
+        ></i>
+      </button>
+    </div>
+
+    <div class="list-item" [class.active]="view === 'reports'">
+      <div class="flex gap-2">
+        <i size="small" puiIcon="report"></i>
+        <div>
+          <h4 class="mbe-1">{{c['reports']}}</h4>
+          <p class="text3 f9">{{c['reportsDesc']}}</p>
+        </div>
+      </div>
+
+      <div class="grow"></div>
+
+      <button
+        class="btn-icon btn-round btn-small"
+        (click)="selects.emit('reports')"
+      >
+        <i
+          size="small"
+          [puiIcon]="dir === 'rtl' ? 'navigate_before' : 'navigate_next'"
+        ></i>
+      </button>
+    </div>
+
+    <app-data-stores-list-menu
+      [topic]="topic"
+      (selects)="selectDataStore.emit($event)"
+    ></app-data-stores-list-menu>
+  </main>
+</ng-container>

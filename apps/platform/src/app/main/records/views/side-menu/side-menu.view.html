@@ -1,0 +1,146 @@
+<ng-container *contra="let c; let dir = dir">
+  <header class="pi-7 pb-4 flex gap-2 align-items-center">
+    <button class="btn-small btn-round btn-icon" (click)="loc.back()">
+      <i
+        size="small"
+        color="primary"
+        [class.rotate-180]="dir === 'ltr'"
+        puiIcon="trending_flat"
+      ></i>
+    </button>
+    <p class="f9 bold">{{c['list']}}</p>
+  </header>
+
+  <main class="list">
+    <div class="list-item" [class.active]="view.name === 'details'">
+      <div class="flex gap-2">
+        <i size="small" puiIcon="description"></i>
+        <div>
+          <h4 class="mbe-1">{{c['desc']}}</h4>
+          <p class="text3 f9">{{c['topicDetails']}}</p>
+        </div>
+      </div>
+
+      <div class="grow"></div>
+
+      <button
+        class="btn-icon btn-round btn-small"
+        (click)="selects.emit({ name: 'details' })"
+      >
+        <i
+          size="small"
+          [puiIcon]="dir === 'rtl' ? 'navigate_before' : 'navigate_next'"
+        ></i>
+      </button>
+    </div>
+
+    <div
+      *ngIf="isTable"
+      class="list-item"
+      [class.active]="view.name === 'attachments'"
+    >
+      <div class="flex gap-2">
+        <i size="small" puiIcon="attachments"></i>
+        <div>
+          <h4 class="mbe-1">{{c['attachments']}}</h4>
+          <p class="text3 f9">{{c['attachmentsInfo']}}</p>
+        </div>
+      </div>
+
+      <div class="grow"></div>
+
+      <button
+        class="btn-icon btn-round btn-small"
+        (click)="selects.emit({ name: 'attachments' })"
+      >
+        <i
+          size="small"
+          [puiIcon]="dir === 'rtl' ? 'navigate_before' : 'navigate_next'"
+        ></i>
+      </button>
+    </div>
+
+    <div
+      *ngIf="isTable"
+      class="list-item disabled"
+      [class.active]="view.name === 'history'"
+    >
+      <div class="flex gap-2">
+        <i size="small" puiIcon="history"></i>
+        <div>
+          <h4 class="mbe-1">{{c['history']}}</h4>
+          <p class="text3 f9">{{c['historyInfo']}}</p>
+        </div>
+      </div>
+
+      <div class="grow"></div>
+
+      <button
+        class="btn-icon btn-round btn-small"
+        (click)="selects.emit({ name: 'history' })"
+      >
+        <i
+          size="small"
+          [puiIcon]="dir === 'rtl' ? 'navigate_before' : 'navigate_next'"
+        ></i>
+      </button>
+    </div>
+
+    <div
+      *ngIf="isTable"
+      class="list-item disabled"
+      [class.active]="view.name === 'comments'"
+    >
+      <div class="flex gap-2">
+        <i size="small" puiIcon="comments"></i>
+        <div>
+          <h4 class="mbe-1">{{c['comments']}}</h4>
+          <p class="text3 f9">{{c['commentsInfo']}}</p>
+        </div>
+      </div>
+
+      <div class="grow"></div>
+
+      <button
+        class="btn-icon btn-round btn-small"
+        (click)="selects.emit({ name: 'comments' })"
+      >
+        <i
+          size="small"
+          [puiIcon]="dir === 'rtl' ? 'navigate_before' : 'navigate_next'"
+        ></i>
+      </button>
+    </div>
+
+    <ng-container *ngIf="subDataStores.length">
+      <div class="pi-7 pb-4 bg-surface2 border-be">
+        <h4>{{c['branches']}}</h4>
+      </div>
+
+      <div
+        *ngFor="let ds of subDataStores"
+        class="list-item"
+        [class.active]="view.name === 'subDataStores'"
+      >
+        <div class="flex gap-2">
+          <i size="small" puiIcon="database"></i>
+          <div>
+            <h4 class="mbe-1">{{ds.name}}</h4>
+          </div>
+        </div>
+
+        <div class="grow"></div>
+
+        <button
+          class="btn-icon btn-round btn-small"
+          (click)="selects.emit({ name: 'subDataStores', payload: ds })"
+        >
+          <i
+            size="small"
+            [puiIcon]="dir === 'rtl' ? 'navigate_before' : 'navigate_next'"
+          ></i>
+        </button>
+      </div>
+    </ng-container>
+  </main>
+</ng-container>

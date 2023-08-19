@@ -1,0 +1,275 @@
+<main *contra="let c">
+  <div class="toolbar">
+    <h2>{{c['tableSettings']}}</h2>
+  </div>
+
+  <div class="divider mbs-4 mbe-8"></div>
+
+  <form
+    class="relative"
+    [class.disabled]="!editable"
+    [formGroup]="form"
+    (ngSubmit)="set(c)"
+  >
+    <h4 class="mbe-6">{{c['data']}}</h4>
+
+    <label for="interface-field">{{c['interfaceField']}}</label>
+    <div class="fc fc-surface1 fc-outline mbe-6">
+      <pui-select-input
+        [list]="dataStore.fields | arrayMap: mapField"
+        labelRef="interface-field"
+        formControlName="interface_field"
+      ></pui-select-input>
+    </div>
+
+    <!-- Table Type only Settings -->
+    <ng-container *ngIf="dataStore.type === 'table'">
+      <!-- Static Table -->
+      <pui-check-input
+        class="mbe-6"
+        [label]="c['staticTable']"
+        formControlName="static"
+      ></pui-check-input>
+
+      <!-- History -->
+      <pui-check-input
+        class="mbe-6"
+        [label]="c['saveHistory']"
+        formControlName="history"
+      ></pui-check-input>
+
+      <!-- Workflow -->
+      <pui-check-input
+        [label]="c['enableWorkflow']"
+        formControlName="workflow"
+      ></pui-check-input>
+
+      <div class="divider mb-8"></div>
+
+      <!-- Attachments -->
+      <h4 class="mbe-6">{{c['attachments']}}</h4>
+
+      <div class="flex gap-4">
+        <label for="max-attachments">{{c['maxAttachmentsCount']}}</label>
+        <div class="fc fc-surface1 fc-outline w-2">
+          <input
+            type="number"
+            id="max-attachments"
+            formControlName="max_attachments_count"
+          />
+        </div>
+      </div>
+    </ng-container>
+
+    <div class="divider mb-8"></div>
+
+    <!-- Sub Data Stores Settings -->
+    <pui-check-input
+      class="mbe-6"
+      [label]="c['branches']"
+      [formControl]="subDataStores"
+    ></pui-check-input>
+
+    <ng-container *ngIf="subDataStores.value" formArrayName="sub_data_stores">
+      <div class="toolbar mbe-6">
+        <h4>{{c['dataStores']}}</h4>
+        <div class="grow"></div>
+        <button
+          type="button"
+          class="btn-icon btn-small btn-round"
+          (click)="addSubDataStore()"
+        >
+          <i puiIcon="add" size="small"></i>
+        </button>
+      </div>
+
+      <fieldset
+        [class.mbe-6]="!last"
+        *ngFor="let g of form.controls.sub_data_stores.controls; let i = index; let last = last"
+        [formGroup]="g"
+      >
+        <legend>
+          <h5>{{c['dataStore']}} - {{i + 1}}</h5>
+          <div class="grow"></div>
+          <button
+            type="button"
+            class="btn-icon btn-tiny btn-round"
+            (click)="form.controls.sub_data_stores.removeAt(i)"
+          >
+            <i puiIcon="delete" size="tiny"></i>
+          </button>
+        </legend>
+
+        <div class="flex gap-4 mbe-6">
+          <div class="grow">
+            <label [for]="i + '-sub-ds'">{{c['dataStore']}}</label>
+            <div class="fc fc-surface1 fc-outline">
+              <pui-select-input
+                [list]="dataStore.blueprint | blueprintDataStores | async | arrayMap: mapDataStore"
+                [labelRef]="i + '-sub-ds'"
+                formControlName="data_store"
+              ></pui-select-input>
+            </div>
+          </div>
+          <div class="grow">
+            <label [for]="i + '-sub-ds-name'">{{c['name']}}</label>
+            <div class="fc fc-surface1 fc-outline">
+              <input
+                type="text"
+                [id]="i + '-sub-ds-name'"
+                formControlName="name"
+              />
+            </div>
+          </div>
+        </div>
+
+        <h5 class="mbe-6">{{c['join']}}</h5>
+
+        <div
+          class="flex gap-4 align-items-end"
+          [class.disabled]="!g.controls.data_store.value"
+          formGroupName="on"
+        >
+          <div class="grow">
+            <label [for]="i + '-local-field'">{{c['localField']}}</label>
+            <div class="fc fc-surface1 fc-outline">
+              <pui-select-input
+                [list]="dataStore.fields | arrayMap: mapField"
+                [labelRef]="i + '-local-field'"
+                formControlName="local_field"
+              ></pui-select-input>
+            </div>
+          </div>
+          <p class="f7 bold" style="height: 48px; line-height: 48px">=</p>
+          <div class="grow">
+            <label [for]="i + '-foreign-field'">{{c['foreignField']}}</label>
+            <div class="fc fc-surface1 fc-outline">
+              <pui-select-input
+                [list]="g.controls.data_store.value | dataStoreFields | async | arrayMap: mapField"
+                [labelRef]="i + '-foreign-field'"
+                formControlName="foreign_field"
+              ></pui-select-input>
+            </div>
+          </div>
+        </div>
+      </fieldset>
+    </ng-container>
+
+    <div class="divider mb-8"></div>
+
+    <h3 class="mbe-6">{{c['recordViewSettings']}}</h3>
+
+    <!-- Card View Settings -->
+    <pui-check-input
+      class="mbe-6"
+      [label]="c['cardView']"
+      [formControl]="cardView"
+    ></pui-check-input>
+
+    <ng-container *ngIf="cardView.value" formGroupName="card_view">
+      <div class="flex gap-6 mbe-6">
+        <div class="grow">
+          <label for="card-title">{{c['title']}}</label>
+          <div class="fc fc-surface1 fc-outline">
+            <pui-select-input
+              [list]="dataStore.fields | arrayMap: mapField"
+              formControlName="title"
+              labelRef="card-title"
+            ></pui-select-input>
+          </div>
+        </div>
+        <div class="grow">
+          <label for="card-image">{{c['image']}}</label>
+          <div class="fc fc-surface1 fc-outline">
+            <pui-select-input
+              [list]="dataStore.fields | arrayFilter: imageFields | arrayMap: mapField"
+              formControlName="image"
+              labelRef="card-image"
+            ></pui-select-input>
+          </div>
+        </div>
+      </div>
+
+      <label for="card-details">{{c['details']}}</label>
+      <div class="fc fc-surface1 fc-outline mbe-6">
+        <pui-select-input
+          [list]="dataStore.fields | arrayMap: mapField"
+          formControlName="details"
+          labelRef="card-details"
+          [multi]="true"
+        ></pui-select-input>
+      </div>
+    </ng-container>
+
+    <div class="divider mb-8"></div>
+
+    <!-- Tree View Settings -->
+    <pui-check-input
+      class="mbe-6"
+      [label]="c['treeView']"
+      [formControl]="treeView"
+    ></pui-check-input>
+
+    <ng-container *ngIf="treeView.value && form.controls.tree_view" formArrayName="tree_view">
+      <div
+        class="flex align-items-end gap-2 mbe-6"
+        *ngFor="let g of form.controls.tree_view.controls; let i = index"
+        [formGroup]="g"
+      >
+        <div class="grow">
+          <label [for]="i + '-tree-field'">{{c['field']}}</label>
+          <div class="fc fc-surface1 fc-outline">
+            <pui-select-input
+              [list]="dataStore.fields | arrayMap: mapField"
+              formControlName="field"
+              [labelRef]="i + '-tree-field'"
+            ></pui-select-input>
+          </div>
+        </div>
+
+        <div class="grow">
+          <label [for]="i + '-tree-display-field'"
+            >{{c['display_field']}}</label
+          >
+          <div class="fc fc-surface1 fc-outline">
+            <pui-select-input
+              [list]="dataStore.fields | arrayFilter: filterTreeDisplayField | arrayMap: mapField"
+              formControlName="display_field"
+              [labelRef]="i + '-tree-display-field'"
+            ></pui-select-input>
+          </div>
+        </div>
+
+        <button
+          *ngIf="form.controls.tree_view.controls.length > 1"
+          class="btn-icon btn-round"
+          (click)="form.controls.tree_view.removeAt(i)"
+        >
+          <i puiIcon="delete" color="danger"></i>
+        </button>
+      </div>
+
+      <div class="flex justify-content-center">
+        <button
+          type="button"
+          class="btn-icon btn-round btn-small btn-outline"
+          (click)="addTreeViewItem()"
+        >
+          <i puiIcon="add" size="small"></i>
+        </button>
+      </div>
+    </ng-container>
+
+    <div class="divider mb-8"></div>
+
+    <button
+      class="btn-primary btn-round"
+      type="submit"
+      [disabled]="form.invalid"
+    >
+      {{c['save']}}
+    </button>
+
+    <pui-preloader *ngIf="preloader" bg="bg-surface3"></pui-preloader>
+  </form>
+</main>

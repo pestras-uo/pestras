@@ -1,0 +1,130 @@
+<ng-container *contra="let c">
+
+  <div class="card-header">
+    <h3>{{c['dataStores']}}</h3>
+    <button *ngIf="editable" class="btn-icon btn-round btn-small">
+      <i puiIcon="add" size="small" (click)="openDialog(addTmp)"></i>
+    </button>
+  </div>
+
+  <div class="card-body">
+
+    <div class="card card-clear bordered" [class.mbe-6]="!last" *ngFor="let ds of client.data_stores; let last = last">
+
+      <ng-container *ngIf="ds.serial | dataStore | async as dataStore">
+
+        <div class="card-header">
+          <h4>{{dataStore.name}}</h4>
+          <div class="grow"></div>
+          <button *ngIf="editable" class="btn-icon btn-small btn-round">
+            <i puiIcon="edit" size="small" (click)="openDialog(updateTmp, ds)"></i>
+          </button>
+          <button *ngIf="editable" class="btn-icon btn-small btn-round">
+            <i puiIcon="delete" size="small" (click)="openDialog(removeTmp, ds)"></i>
+          </button>
+        </div>
+
+        <div class="card-body">
+          <div class="flex gap-4 align-items-center mbe-6">
+            <div class="grow">
+              <p class="f9 text3 bold">{{c['maxRecordsCount']}}</p>
+              <p>{{ds.max}}</p>
+            </div>
+            <div class="grow">
+              <p class="f9 text3 bold">{{c['httpMethod']}}</p>
+              <p>{{ds.method}}</p>
+            </div>
+          </div>
+
+          <app-params [editable]="editable" [client]="client" [options]="ds" [dataStore]="dataStore"></app-params>
+        </div>
+
+      </ng-container>
+
+
+    </div>
+
+  </div>
+
+  <ng-template #addTmp>
+    <form class="card w-15 shadow-6" [formGroup]="form" (ngSubmit)="add(c)">
+      <h4 class="card-header">{{c['addDataStore']}}</h4>
+
+      <div class="card-body">
+        <label for="data-store">{{c['dataStore']}}</label>
+        <div class="fc mbe-6">
+          <pui-select-input labelRef="data-store" [formControl]="dsControl"
+            [list]="blueprint | blueprintDataStores | async | arrayMap: mapDataStore"></pui-select-input>
+        </div>
+
+        <div class="flex gap-4">
+          <div class="grow">
+            <label for="max">{{c['maxRecordsCount']}}</label>
+            <div class="fc">
+              <input type="number" id="max" formControlName="max">
+            </div>
+          </div>
+
+          <div class="grow">
+            <label for="method">{{c['httpMethod']}}</label>
+            <div class="fc">
+              <pui-select-input [list]="methods" labelRef="method" formControlName="method"></pui-select-input>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="card-footer">
+        <button class="btn-round btn-outline" type="reset" (click)="closeDialog()">{{c['cancel']}}</button>
+        <button class="btn-round btn-primary" [disabled]="form.invalid">{{c['add']}}</button>
+      </div>
+
+      <pui-preloader *ngIf="preloader"></pui-preloader>
+
+    </form>
+  </ng-template>
+
+  <ng-template #updateTmp let-ds>
+    <form class="card w-15 shadow-6" [formGroup]="form" (ngSubmit)="update(c, ds.serial)">
+      <h4 class="card-header">{{c['updateDataStore']}}</h4>
+
+      <div class="card-body">
+        <label for="max">{{c['maxRecordsCount']}}</label>
+        <div class="fc mbe-6">
+          <input type="number" id="max" formControlName="max">
+        </div>
+
+        <label for="method">{{c['httpMethod']}}</label>
+        <div class="fc">
+          <pui-select-input [list]="methods" labelRef="method" formControlName="method"></pui-select-input>
+        </div>
+      </div>
+
+      <div class="card-footer">
+        <button class="btn-round btn-outline" type="reset" (click)="closeDialog()">{{c['cancel']}}</button>
+        <button class="btn-round btn-primary" [disabled]="form.invalid">{{c['update']}}</button>
+      </div>
+
+      <pui-preloader *ngIf="preloader"></pui-preloader>
+
+    </form>
+  </ng-template>
+
+  <ng-template #removeTmp let-ds>
+    <div class="card w-15 shadow-6">
+      <h4 class="card-header">{{c['removeDataStore']}}</h4>
+
+      <div class="card-body">{{c['confirmOperation']}}</div>
+
+      <div class="card-footer">
+        <button class="btn-round btn-outline" (click)="closeDialog()">{{c['cancel']}}</button>
+        <button class="btn-round btn-primary" (click)="remove(c, ds.serial)">{{c['remove']}}</button>
+      </div>
+
+      <pui-preloader *ngIf="preloader"></pui-preloader>
+
+    </div>
+  </ng-template>
+
+</ng-container>

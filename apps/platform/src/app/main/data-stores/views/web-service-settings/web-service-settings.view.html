@@ -1,0 +1,37 @@
+<main class="p-10" *contra="let c">
+
+  <div class="container tight">
+
+    <div class="toolbar mbe-8">
+      <h2>{{c['aggregationSettings']}}</h2>
+      <div class="grow"></div>
+      
+    </div>
+
+    <div class="card card-clear">
+
+      <div class="card-tabs">
+
+        <div class="tab" [class.active]="tab === 1" (click)="tab = 1">{{c['general']}}</div>
+        <div class="tab" [class.active]="tab === 2" (click)="tab = 2">{{c['auth']}}</div>
+        <div class="tab" [class.active]="tab === 3" (click)="tab = 3">{{c['headers']}}</div>
+        <div class="tab" [class.active]="tab === 4" (click)="tab = 4">{{c['params']}}</div>
+        <div class="tab" [class.active]="tab === 5" (click)="tab = 5">{{c['cleansing']}}</div>
+
+      </div>
+
+      <div class="card-body pi-0">
+        
+        <app-general *ngIf="tab === 1" [editable]="editable" [dataStore]="dataStore"></app-general>
+        <app-auth *ngIf="tab === 2" [editable]="editable" [dataStore]="dataStore"></app-auth>
+        <app-headers *ngIf="tab === 3" [editable]="editable" [dataStore]="dataStore"></app-headers>
+        <app-params *ngIf="tab === 4" [editable]="editable" [dataStore]="dataStore"></app-params>
+        <app-selection *ngIf="tab === 5" [editable]="editable" [dataStore]="dataStore"></app-selection>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</main>

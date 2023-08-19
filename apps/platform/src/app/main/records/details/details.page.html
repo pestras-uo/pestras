@@ -1,0 +1,52 @@
+<app-side-menu
+  [view]="view"
+  (selects)="view = $event"
+  [topic]="topic"
+  [dataStore]="dataStore"
+></app-side-menu>
+
+<main *ngIf="record$ | async as record">
+  <header *ngIf="mainField" class="bg-surface1 pb-10 pi-8 border-be">
+    <div class="container">
+      <p class="text-3 bold f9">{{dataStore.name}}</p>
+      <h1 class="f2 weight-8">
+        <app-field-value
+          [value]="record[mainField.name]"
+          [field]="mainField"
+        ></app-field-value>
+      </h1>
+      <p class="text-3 bold f9">{{record.create_date | date: 'dd/MM/YYYY'}}</p>
+    </div>
+  </header>
+
+  <div class="pb-10 pi-8">
+    <div class="container">
+      <!-- data -->
+      <app-desc
+        *ngIf="view.name === 'details'"
+        [dataStore]="dataStore"
+        [record]="record"
+      ></app-desc>
+
+      <!-- attachments -->
+      <app-attachments-list
+        *ngIf="view.name === 'attachments'"
+        [dataStore]="dataStore"
+        [record]="record"
+        [editable]="(record['owner'] | sessionIs) || ((dataStore.blueprint | blueprint | async)?.owner | sessionIs)"
+      ></app-attachments-list>
+
+      <!-- history -->
+
+      <!-- comments -->
+
+      <!-- sub data store -->
+      <app-sub-data-stores-records
+        *ngIf="view.name === 'subDataStores'"
+        [dataStore]="dataStore"
+        [options]="view.payload"
+        [record]="record"
+      ></app-sub-data-stores-records>
+    </div>
+  </div>
+</main>

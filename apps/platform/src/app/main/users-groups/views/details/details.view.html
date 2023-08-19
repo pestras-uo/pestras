@@ -1,0 +1,120 @@
+<ng-container *contra="let c">
+  <ng-container *ngIf="group$ | async as group">
+    <header class="bg-surface1 pi-8 border-be">
+      <div class="container">
+        <div class="toolbar gap-4">
+          <h1 class="weight-8">{{group.name}}</h1>
+
+          <div class="grow"></div>
+
+          <button class="btn-primary btn-round" (click)="openDialog(updateTmp)">
+            <i color="white" size="small" puiIcon="edit_fill"></i>
+            {{c['update']}}
+          </button>
+        </div>
+      </div>
+    </header>
+
+    <main class="pi-8">
+      <div class="container">
+        <div class="toolbar">
+          <h2>{{c['users']}}</h2>
+          <div class="grow"></div>
+          <button
+            class="btn-icon-btn-small btn-round"
+            (click)="openDialog(addUserTmp)"
+          >
+            <i puiIcon="add" size="small"></i>
+          </button>
+        </div>
+
+        <div class="divider mbs-4 mbe-8"></div>
+
+        <ng-container
+          *ngIf="'' | users | async | arrayFilter: filterUsers as users else noData"
+        >
+          <div class="grid cols-4 gap-8" *ngIf="users.length else noData">
+            <div class="card" *ngFor="let u of users">
+              <div class="card-header">
+                <app-avatar [serial]="u.serial"></app-avatar>
+
+                <button
+                  class="btn-icon btn-small btn-round"
+                  (click)="removeUser(c)"
+                >
+                  <i puiIcon="delete" size="small"></i>
+                </button>
+              </div>
+            </div>
+          </div>
+        </ng-container>
+
+        <ng-template #noData>
+          <no-data-placeholder-widget
+            [actionName]="c['addUser']"
+            [small]="true"
+            (action)="openDialog(addUserTmp)"
+            >{{c['noDataMsg']}}</no-data-placeholder-widget
+          >
+        </ng-template>
+      </div>
+    </main>
+
+    <!-- update Modal -->
+    <ng-template #updateTmp>
+      <div class="card shadow-6 w-15">
+        <h4 class="card-header">{{c['updateGroup']}}</h4>
+        <div class="card-body">
+          <label for="group-name">{{c['name']}}</label>
+          <div class="fc">
+            <input type="text" id="group-name" [formControl]="name" />
+          </div>
+        </div>
+        <div class="card-footer">
+          <button class="btn-round btn-outline" (click)="closeDialog()">
+            {{c['cancel']}}
+          </button>
+          <button
+            class="btn-primary btn-round"
+            [disabled]="name.invalid"
+            (click)="update(c)"
+          >
+            {{c['update']}}
+          </button>
+        </div>
+      </div>
+    </ng-template>
+
+    <!-- add user Modal -->
+    <ng-template #addUserTmp>
+      <div class="card shadow-6 w-15">
+        <h4 class="card-header">{{c['addUser']}}</h4>
+        <div class="card-body">
+          <label for="group-user">{{c['user']}}</label>
+          <div
+            *ngIf="'' | users | async | arrayFilter: filterSelectUsers | arrayMap: mapUserSelect as sUsers"
+            class="fc"
+          >
+            <pui-select-input
+              [list]="sUsers"
+              labelRef="group-user"
+              [formControl]="user"
+            ></pui-select-input>
+          </div>
+        </div>
+        <div class="card-footer">
+          <button class="btn-round btn-outline" (click)="closeDialog()">
+            {{c['cancel']}}
+          </button>
+          <button
+            class="btn-primary btn-round"
+            [disabled]="name.invalid"
+            (click)="addUser(c)"
+          >
+            {{c['update']}}
+          </button>
+        </div>
+      </div>
+    </ng-template>
+  </ng-container>
+</ng-container>

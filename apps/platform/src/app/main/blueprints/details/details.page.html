@@ -1,0 +1,124 @@
+<ng-container *ngIf="bp$ | async as bp">
+  <app-side-menu
+    [blueprint]="bp"
+    [view]="view"
+    (selects)="view = $event"
+  ></app-side-menu>
+
+  <main *contra="let c">
+    <header class="bg-surface1 pb-10 pi-8 border-be">
+      <div class="container">
+        <p class="text-3 bold f9">{{c['blueprint']}}</p>
+        <div class="toolbar gap-2">
+          <h1 class="f2 weight-8">{{bp.name}}</h1>
+
+          <app-workspace-toggle-pin
+            [input]="{ name: bp.name, serial: bp.serial, scope: null, type: wsType }"
+          ></app-workspace-toggle-pin>
+
+          <div class="grow"></div>
+
+          <button
+            *ngIf="([bp.owner] | sessionIs) || (bp.collaborators | sessionIs)"
+            class="btn-primary btn-round"
+            (click)="openDialog(updateTmp)"
+          >
+            <i size="small" puiIcon="edit"></i>
+            {{c['update']}}
+          </button>
+        </div>
+        <p class="text-3 bold f9">{{bp.create_date | date: 'dd/MM/YYYY'}}</p>
+      </div>
+    </header>
+
+    <div class="pb-10 pi-8">
+      <div class="container">
+        <!-- details -->
+        <app-content-views
+          *ngIf="view === 'details'"
+          [entity]="serial"
+          [editable]="([bp.owner] | sessionIs) || (bp.collaborators | sessionIs)"
+        ></app-content-views>
+
+        <!-- categories -->
+        <app-categories
+          *ngIf="view === 'categories'"
+          [bp]="serial"
+          [editable]="([bp.owner] | sessionIs) || (bp.collaborators | sessionIs)"
+        ></app-categories>
+
+        <!-- tables -->
+        <app-data-stores-list
+          *ngIf="view === 'tables'"
+          [title]="c['tables']"
+          [blueprint]="serial"
+          [type]="dsType.TABLE"
+          [static]="true"
+          [editable]="([bp.owner] | sessionIs) || (bp.collaborators | sessionIs)"
+        ></app-data-stores-list>
+
+        <!-- aggr -->
+        <app-data-stores-list
+          *ngIf="view === 'aggr'"
+          [title]="c['aggr']"
+          [blueprint]="serial"
+          [type]="dsType.AGGREGATIONAL"
+          [editable]="([bp.owner] | sessionIs) || (bp.collaborators | sessionIs)"
+        ></app-data-stores-list>
+
+        <!-- web services -->
+        <app-data-stores-list
+          *ngIf="view === 'import'"
+          [title]="c['importData']"
+          [blueprint]="serial"
+          [type]="dsType.WEB_SERVICE"
+          [editable]="([bp.owner] | sessionIs) || (bp.collaborators | sessionIs)"
+        ></app-data-stores-list>
+
+        <!-- client api -->
+        <app-clients-api-list
+          *ngIf="view === 'export'"
+          [blueprint]="serial"
+          [editable]="([bp.owner] | sessionIs) || (bp.collaborators | sessionIs)"
+        ></app-clients-api-list>
+
+        <!-- actions -->
+        <!-- workflow -->
+        <!-- settings -->
+      </div>
+    </div>
+
+    <ng-template #updateTmp>
+      <div class="card w-15 shadow-6">
+        <h4 class="card-header">{{c['updateBlueprint']}}</h4>
+
+        <div class="card-body">
+          <label for="dash-title">{{c['title']}} *</label>
+          <div class="fc mbe-6">
+            <input
+              autocomplete="off"
+              type="text"
+              id="dash-title"
+              [formControl]="title"
+            />
+          </div>
+        </div>
+
+        <div class="card-footer">
+          <button class="btn-round btn-outline" (click)="this.closeDialog()">
+            {{c['cancel']}}
+          </button>
+          <button
+            class="btn-primary btn-round"
+            [disabled]="title.invalid"
+            (click)="update(c)"
+          >
+            {{c['update']}}
+          </button>
+        </div>
+
+        <pui-preloader *ngIf="preloader"></pui-preloader>
+      </div>
+    </ng-template>
+  </main>
+</ng-container>

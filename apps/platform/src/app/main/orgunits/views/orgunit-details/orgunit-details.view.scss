@@ -1,0 +1,21 @@
+:host {
+  height: var(--main-height);
+  overflow-y: auto;
+}
+
+header {
+  padding-block: 48px;
+  border-block-end: 1px solid var(--border1);
+}
+
+main {
+  padding-block: 32px;
+
+  .content {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-rows: auto auto auto;
+    gap: 28px;
+    margin-block-end: 28px;
+  }
+}

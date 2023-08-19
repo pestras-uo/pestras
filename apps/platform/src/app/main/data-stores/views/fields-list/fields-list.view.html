@@ -1,0 +1,124 @@
+<div class="container tight" *contra="let c">
+  <div class="toolbar gap-4 mbe-6">
+    <div>
+      <h2 class="mbe-1">{{c['fields']}}</h2>
+      <p class="text3 f9">{{c['fieldsDeffinition']}}</p>
+    </div>
+
+    <div class="grow"></div>
+
+    <div [class.hide]="dataStore.type !== 'table'" class="fc-checkbox">
+      <input type="checkbox" id="sys-fields" [formControl]="system" />
+      <label for="sys-fields">{{c['systemFields']}}</label>
+    </div>
+
+    <button
+      *ngIf="dataStore.type === 'table' && editable"
+      class="btn-outline-primary btn-round"
+      (click)="form = true"
+    >
+      <i size="small" puiIcon="add"></i>
+      {{c['addField']}}
+    </button>
+  </div>
+
+  <ng-container *ngIf="!form">
+    <ng-container
+      *ngIf="dataStore.fields | arrayFilter: filterFields : system.value as fields"
+    >
+      <div class="accordion" *ngIf="fields.length > 0 else noData">
+        <div #card class="card mbe-2" *ngFor="let field of fields">
+          <div class="card-header">
+            <div>
+              <h3 *ngIf="field.system">{{c[field.display_name]}}</h3>
+              <h3 *ngIf="!field.system">{{field.display_name}}</h3>
+              <p class="text3 f9">{{field.name}}</p>
+            </div>
+            <div class="grow"></div>
+            <button
+              class="btn-icon btn-small btn-round"
+              (click)="card.classList.toggle('active')"
+            >
+              <i size="small" puiIcon="arrow_drop_down"></i>
+            </button>
+          </div>
+
+          <div class="card-body pbs-0">
+            <app-field-details
+              [dataStore]="dataStore"
+              [field]="field"
+              [editable]="dataStore.type === 'table' && editable"
+            ></app-field-details>
+          </div>
+
+          <div *ngIf="!field.system && isBuild" class="card-footer">
+            <button
+              *ngIf="dataStore.type === 'table' && editable"
+              class="btn-round"
+              (click)="remove(c, field.name)"
+            >
+              {{c['delete']}}
+            </button>
+            <button
+              *ngIf="editable"
+              class="btn-round btn-outline"
+              (click)="editForm(updateFieldModal, field)"
+            >
+              {{c['update']}}
+            </button>
+          </div>
+        </div>
+      </div>
+    </ng-container>
+
+    <ng-template #noData>
+      <no-data-placeholder-widget>{{c['noDataMsg']}}</no-data-placeholder-widget>
+    </ng-template>
+  </ng-container>
+
+  <app-field-form
+    *ngIf="form"
+    [dataStore]="dataStore"
+    [field]="activeField"
+    (done)="activeField = null; form = false"
+  ></app-field-form>
+
+  <ng-template #updateFieldModal let-field>
+    <form
+      class="card w-20"
+      [formGroup]="updateForm"
+      (ngSubmit)="update(c, field.name)"
+    >
+      <h4 class="card-header">{{c['updateField']}}</h4>
+
+      <div class="card-body">
+        <label for="display-name">{{c['displayName']}}</label>
+        <div class="fc mbe-6">
+          <input type="text" id="display-name" formControlName="display_name" />
+        </div>
+
+        <label for="group">{{c['group']}}</label>
+        <div class="fc mbe-6">
+          <input type="text" id="group" formControlName="group" />
+        </div>
+
+        <label for="desc">{{c['desc']}}</label>
+        <quill-editor
+          [placeholder]="c['desc']"
+          formControlName="desc"
+        ></quill-editor>
+      </div>
+
+      <div class="card-footer">
+        <button class="btn-outline btn-round" (click)="closeForm()">
+          {{c['cancel']}}
+        </button>
+        <button class="btn-primary btn-round" [disabled]="updateForm.invalid">
+          {{c['update']}}
+        </button>
+      </div>
+
+      <pui-preloader *ngIf="preloader"></pui-preloader>
+    </form>
+  </ng-template>
+</div>

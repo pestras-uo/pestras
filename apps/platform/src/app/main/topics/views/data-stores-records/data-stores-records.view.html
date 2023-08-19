@@ -1,0 +1,42 @@
+<div class="container" *contra="let c">
+  <h2 class="mbe-6">{{c['records']}}</h2>
+
+  <div class="card card-clear">
+    <div class="card-tabs">
+      <h5
+        class="tab"
+        [class.active]="tab === workflow.APPROVED"
+        (click)="setTab(workflow.APPROVED)"
+      >
+        {{c['public']}}
+      </h5>
+      <h5
+        class="tab"
+        [class.active]="tab === workflow.DRAFT"
+        (click)="setTab(workflow.DRAFT)"
+      >
+        {{c['draft']}}
+      </h5>
+      <h5
+        class="tab"
+        [class.active]="tab === workflow.PENDING"
+        (click)="setTab(workflow.PENDING)"
+      >
+        {{c['pending']}}
+      </h5>
+
+      <div class="grow"></div>
+
+      <a
+        *ngIf="canAdd || ((dataStore.blueprint | blueprint | async)?.owner | sessionIs)"
+        class="btn btn-icon btn-small -btn-round"
+        [routerLink]="['/main/records', topic, dataStore.serial, 'add']"
+      >
+        <i puiIcon="add" size="small"></i>
+      </a>
+    </div>
+
+    <div class="card-body pi-0">
+    </div>
+  </div>
+</div>

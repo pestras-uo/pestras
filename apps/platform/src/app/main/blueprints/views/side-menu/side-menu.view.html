@@ -1,0 +1,213 @@
+<ng-container *contra="let c; let dir = dir">
+  <header class="pi-7 pb-4 flex gap-2 align-items-center">
+    <button class="btn-small btn-round btn-icon" (click)="loc.back()">
+      <i
+        size="small"
+        color="primary"
+        [class.rotate-180]="dir === 'ltr'"
+        puiIcon="trending_flat"
+      ></i>
+    </button>
+    <p class="f9 bold">{{c['list']}}</p>
+  </header>
+
+  <main class="list">
+    <div class="list-item" [class.active]="view === 'details'">
+      <div class="flex gap-2">
+        <i size="small" puiIcon="description"></i>
+        <div>
+          <h4 class="mbe-1">{{c['desc']}}</h4>
+          <p class="text3 f9">{{c['themeDetails']}}</p>
+        </div>
+      </div>
+
+      <div class="grow"></div>
+
+      <button
+        class="btn-icon btn-round btn-small"
+        (click)="selects.emit('details')"
+      >
+        <i
+          size="small"
+          [puiIcon]="dir === 'rtl' ? 'navigate_before' : 'navigate_next'"
+        ></i>
+      </button>
+    </div>
+
+    <div class="list-item" [class.active]="view === 'categories'">
+      <div class="flex gap-2">
+        <i size="small" puiIcon="category"></i>
+        <div>
+          <h4 class="mbe-1">{{c['categories']}}</h4>
+          <p class="text3 f9">{{c['categoriesListDesc']}}</p>
+        </div>
+      </div>
+
+      <div class="grow"></div>
+
+      <button
+        class="btn-icon btn-round btn-small"
+        (click)="selects.emit('categories')"
+      >
+        <i
+          size="small"
+          [puiIcon]="dir === 'rtl' ? 'navigate_before' : 'navigate_next'"
+        ></i>
+      </button>
+    </div>
+
+    <div class="list-item" [class.active]="view === 'tables'">
+      <div class="flex gap-2">
+        <i size="small" puiIcon="tables"></i>
+        <div>
+          <h4 class="mbe-1">{{c['tables']}}</h4>
+          <p class="text3 f9">{{c['tablesListDesc']}}</p>
+        </div>
+      </div>
+
+      <div class="grow"></div>
+
+      <button
+        class="btn-icon btn-round btn-small"
+        (click)="selects.emit('tables')"
+      >
+        <i
+          size="small"
+          [puiIcon]="dir === 'rtl' ? 'navigate_before' : 'navigate_next'"
+        ></i>
+      </button>
+    </div>
+
+    <div class="list-item" [class.active]="view === 'aggr'">
+      <div class="flex gap-2">
+        <i size="small" puiIcon="lan"></i>
+        <div>
+          <h4 class="mbe-1">{{c['aggr']}}</h4>
+          <p class="text3 f9">{{c['aggrListDesc']}}</p>
+        </div>
+      </div>
+
+      <div class="grow"></div>
+
+      <button
+        class="btn-icon btn-round btn-small"
+        (click)="selects.emit('aggr')"
+      >
+        <i
+          size="small"
+          [puiIcon]="dir === 'rtl' ? 'navigate_before' : 'navigate_next'"
+        ></i>
+      </button>
+    </div>
+
+    <div class="list-item" [class.active]="view === 'import'">
+      <div class="flex gap-2">
+        <i size="small" puiIcon="import"></i>
+        <div>
+          <h4 class="mbe-1">{{c['importData']}}</h4>
+          <p class="text3 f9">{{c['importListDesc']}}</p>
+        </div>
+      </div>
+
+      <div class="grow"></div>
+
+      <button
+        class="btn-icon btn-round btn-small"
+        (click)="selects.emit('import')"
+      >
+        <i
+          size="small"
+          [puiIcon]="dir === 'rtl' ? 'navigate_before' : 'navigate_next'"
+        ></i>
+      </button>
+    </div>
+
+    <div class="list-item" [class.active]="view === 'export'">
+      <div class="flex gap-2">
+        <i size="small" puiIcon="export"></i>
+        <div>
+          <h4 class="mbe-1">{{c['exportData']}}</h4>
+          <p class="text3 f9">{{c['exportDataDesc']}}</p>
+        </div>
+      </div>
+
+      <div class="grow"></div>
+
+      <button
+        class="btn-icon btn-round btn-small"
+        (click)="selects.emit('export')"
+      >
+        <i
+          size="small"
+          [puiIcon]="dir === 'rtl' ? 'navigate_before' : 'navigate_next'"
+        ></i>
+      </button>
+    </div>
+
+    <div class="list-item disabled" [class.active]="view === 'actions'">
+      <div class="flex gap-2">
+        <i size="small" puiIcon="insights"></i>
+        <div>
+          <h4 class="mbe-1">{{c['actions']}}</h4>
+          <p class="text3 f9">{{c['actionsListDesc']}}</p>
+        </div>
+      </div>
+
+      <div class="grow"></div>
+
+      <button
+        class="btn-icon btn-round btn-small"
+        (click)="selects.emit('actions')"
+      >
+        <i
+          size="small"
+          [puiIcon]="dir === 'rtl' ? 'navigate_before' : 'navigate_next'"
+        ></i>
+      </button>
+    </div>
+
+    <div class="list-item disabled" [class.active]="view === 'workflow'">
+      <div class="flex gap-2">
+        <i size="small" puiIcon="workflow"></i>
+        <div>
+          <h4 class="mbe-1">{{c['workflow']}}</h4>
+          <p class="text3 f9">{{c['workflowListDesc']}}</p>
+        </div>
+      </div>
+
+      <div class="grow"></div>
+
+      <button
+        class="btn-icon btn-round btn-small"
+        (click)="selects.emit('workflow')"
+      >
+        <i
+          size="small"
+          [puiIcon]="dir === 'rtl' ? 'navigate_before' : 'navigate_next'"
+        ></i>
+      </button>
+    </div>
+
+    <div class="list-item disabled" [class.active]="view === 'settings'">
+      <div class="flex gap-2">
+        <i size="small" puiIcon="settings"></i>
+        <div>
+          <h4 class="mbe-1">{{c['settings']}}</h4>
+          <p class="text3 f9">{{c['settingsListDesc']}}</p>
+        </div>
+      </div>
+
+      <div class="grow"></div>
+
+      <button
+        class="btn-icon btn-round btn-small"
+        (click)="selects.emit('settings')"
+      >
+        <i
+          size="small"
+          [puiIcon]="dir === 'rtl' ? 'navigate_before' : 'navigate_next'"
+        ></i>
+      </button>
+    </div>
+  </main>
+</ng-container>

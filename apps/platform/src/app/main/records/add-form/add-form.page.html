@@ -1,0 +1,52 @@
+<div class="container tight" *contra="let c; let dir = dir">
+
+  <header class="mbs-16 mbe-10">
+    <a class="flex gap-4 mbe-6" routerLink="..">
+      <i color="primary" [class.rotate-180]="dir === 'ltr'" puiIcon="trending_flat"></i>
+      <span class="bold">{{c['backTo']}} {{c['topics']}}</span>
+    </a>
+
+    <h1 class="weight-8 f2">
+      <span>{{c['add']}}</span>
+      {{dataStore.name}}
+    </h1>
+  </header>
+
+  <form class="mbe-10" [formGroup]="form" (ngSubmit)="add(c)">
+
+    <!-- user defined field group -->
+    <div class="card" [class.mbe-2]="!last" *ngFor="let group of groups; let last = last">
+      <h4 class="card-header">{{group.group}}</h4>
+
+      <div class="card-body">
+
+        <div *ngFor="let field of group.fields; let last = last" [class.mbe-6]="!last">
+          <app-field-value-input [field]="field" [formControlName]="field.name"></app-field-value-input>
+        </div>
+
+      </div>
+
+    </div>
+
+    <!-- undifined field group -->
+    <div *ngIf="others.length > 0" class="card mbs-2">
+      <h4 class="card-header">{{c['others']}}</h4>
+
+      <div class="card-body">
+        <div *ngFor="let field of others; let last = last" [class.mbe-6]="!last">
+          <app-field-value-input [field]="field" [formControlName]="field.name"></app-field-value-input>
+        </div>
+      </div>
+    </div>
+
+    <div class="divier mb-8"></div>
+
+    <div class="align-end">
+      <button class="btn-primary btn-round" [disabled]="form.invalid">{{c['submit']}}</button>
+    </div>
+
+    <pui-preloader *ngIf="preloader"></pui-preloader>
+
+  </form>
+
+</div>

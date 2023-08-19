@@ -94,3 +94,6 @@ export * from './lib/xlsx/xlsx.service';
 
 // reactive
 export * from './lib/reactive';
+
+// forms utilty
+export * from './lib/form-validators';

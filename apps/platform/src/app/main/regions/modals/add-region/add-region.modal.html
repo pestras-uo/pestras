@@ -1,0 +1,83 @@
+<form
+  *contra="let c"
+  class="card w-15 shadow-6"
+  [formGroup]="form"
+  (ngSubmit)="add(c)"
+>
+  <div class="card-header">
+    <h3>{{c['addRegion']}}</h3>
+  </div>
+
+  <div class="card-body">
+    <label for="name">{{c['name']}}</label>
+    <div
+      class="fc mbe-6"
+      [class.invalid]="form.controls['name'].invalid && (form.controls['name'].dirty || form.controls['name'].touched)"
+    >
+      <input id="name" type="text" autocomplete="off" formControlName="name" />
+    </div>
+
+    <label for="region-type">{{c['type']}}</label>
+    <div class="fc mbe-6">
+      <pui-select-input
+        [list]="'' | userRegions | async | arrayDistinct: 'type' | arrayMap: mapType"
+        labelRef="region-type"
+        formControlName="type"
+        [addNew]="true"
+      ></pui-select-input>
+    </div>
+
+    <label for="region-parent">{{c['parent']}}</label>
+    <div class="fc mbe-6">
+      <pui-select-input
+        *ngIf="'' | userRegions | async | arrayMap: mapRegion as parents"
+        [list]="parents"
+        labelRef="region-parent"
+        formControlName="parent"
+        [class.disabled]="parents.length === 0"
+      ></pui-select-input>
+    </div>
+
+    <label for="board-play-time"
+      >{{c['zoomLevel']}}: {{form.controls.zoom.value}}</label
+    >
+    <div class="fc mbe-6">
+      <input
+        type="range"
+        min="1"
+        max="22"
+        step="1"
+        id="board-play-time"
+        formControlName="zoom"
+      />
+    </div>
+
+    <label for="location">{{c['location']}}</label>
+    <pui-location-input
+      class="mbe-4"
+      formControlName="location"
+    ></pui-location-input>
+
+    <p
+      *ngIf="form.controls['name'].invalid && (form.controls['name'].dirty || form.controls['name'].touched)"
+      class="note note-danger f10 mbs-4"
+    >
+      {{c['errors'].nameRequired}}
+    </p>
+  </div>
+
+  <div class="card-footer">
+    <button class="btn-outline btn-round" type="reset" (click)="closes.emit()">
+      {{c['cancel']}}
+    </button>
+    <button
+      class="btn-primary btn-round"
+      type="submit"
+      [disabled]="form.invalid"
+    >
+      {{c['add']}}
+    </button>
+  </div>
+
+  <pui-preloader *ngIf="preloader"></pui-preloader>
+</form>

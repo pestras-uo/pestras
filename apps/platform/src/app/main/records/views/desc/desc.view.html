@@ -1,0 +1,75 @@
+<ng-container *contra="let c">
+  <div class="toolbar mbe-8" *ngIf="record['owner']">
+    <app-avatar [serial]="record['owner']"></app-avatar>
+    <div class="grow"></div>
+    <ng-container *ngIf="record['workflow']">
+      <button
+        *ngIf="record['workflow'] === 'draft'"
+        class="btn-round btn-primary"
+      >
+        {{c['publish']}}
+      </button>
+      <p *ngIf="record['workflow'] === 'pending'" class="badge">
+        {{c['pending']}}
+      </p>
+      <p *ngIf="record['workflow'] === 'approved'" class="badge badge-success">
+        {{c['approved']}}
+      </p>
+    </ng-container>
+  </div>
+
+  <div
+    class="card"
+    [class.mbe-2]="!last"
+    *ngFor="let group of groups; let last = last"
+  >
+    <div class="card-header">
+      <h3>{{group.group}}</h3>
+      <div class="grow"></div>
+      <a
+        *ngIf="isTable && (record['owner'] | sessionIs) && ((dataStore.blueprint | blueprint | async)?.owner | sessionIs)"
+        class="btn-small btn-icon btn-round"
+        routerLink="update"
+        [queryParams]="{ group: group.group }"
+      >
+        <i puiIcon="edit" size="small"></i>
+      </a>
+    </div>
+
+    <div class="card-body">
+      <div
+        *ngFor="let field of group.fields; let last = last"
+        [class.mbe-6]="!last"
+      >
+        <p class="bold f9 mbe-1">{{field.display_name}}</p>
+        <app-field-value
+          [value]="record[field.name]"
+          [field]="field"
+        ></app-field-value>
+      </div>
+    </div>
+  </div>
+
+  <div class="card mbs-2" *ngIf="others.length > 0">
+    <div class="card-header">
+      <h3>{{c['others']}}</h3>
+      <div class="grow"></div>
+      <button
+        *ngIf="isTable && (record['owner'] | sessionIs) && ((dataStore.blueprint | blueprint | async)?.owner | sessionIs)"
+        class="btn-small btn-icon btn-round"
+      >
+        <i puiIcon="edit" size="small"></i>
+      </button>
+    </div>
+
+    <div class="card-body">
+      <div *ngFor="let field of others; let last = last" [class.mbe-6]="!last">
+        <p class="bold f9 mbe-1">{{field.display_name}}</p>
+        <app-field-value
+          [value]="record[field.name]"
+          [field]="field"
+        ></app-field-value>
+      </div>
+    </div>
+  </div>
+</ng-container>

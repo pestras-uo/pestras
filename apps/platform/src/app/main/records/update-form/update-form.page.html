@@ -1,0 +1,38 @@
+<div class="container tight" *contra="let c; let dir = dir">
+  <header class="mbs-16 mbe-10">
+    <a class="flex gap-4 mbe-6" routerLink="..">
+      <i
+        color="primary"
+        [class.rotate-180]="dir === 'ltr'"
+        puiIcon="trending_flat"
+      ></i>
+      <span class="bold">{{c['backTo']}} {{c['record']}}</span>
+    </a>
+
+    <h1 class="weight-8 f2">
+      <span>{{c['update']}}</span>
+      {{dataStore.name}}
+    </h1>
+  </header>
+
+  <form class="card mbe-10" [formGroup]="form" (ngSubmit)="update(c)">
+    <h4 class="card-header">{{group}}</h4>
+
+    <div class="card-body">
+      <div *ngFor="let field of fields; let last = last" [class.mbe-6]="!last">
+        <app-field-value-input
+          [field]="field"
+          [formControlName]="field.name"
+        ></app-field-value-input>
+      </div>
+    </div>
+
+    <div class="card-footer">
+      <button class="btn-primary btn-round" [disabled]="form.invalid">
+        {{c['submit']}}
+      </button>
+    </div>
+
+    <pui-preloader *ngIf="preloader"></pui-preloader>
+  </form>
+</div>

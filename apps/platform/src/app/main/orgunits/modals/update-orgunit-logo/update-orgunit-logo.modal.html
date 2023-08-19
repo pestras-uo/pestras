@@ -1,0 +1,36 @@
+<div *contra="let c" class="card shadow-6 minw-8">
+  <div class="card-header">
+    <h3>{{c['updateOrgunitLogo']}}</h3>
+  </div>
+
+  <div class="card-body">
+    <label for="org-logo" class="block">{{c['logo']}}</label>
+    <pui-image-input
+      class="mbe-2"
+      [formControl]="logoControl"
+      labelRef="org-logo"
+      [newWidth]="256"
+      accept=".jpeg,.jpg,.webp,.png"
+      (invalidList)="errors = $event"
+    ></pui-image-input>
+
+    <p class="note note-warn f10 mbe-2" *ngFor="let error of errors">
+      <span class="pie-1">{{c['errors'][error.msg]}}</span>,
+      <span class="pie-1" *ngIf="error.file">{{error.file}},</span>
+      <span class="pie-1">{{c['limit']}}: <strong>{{error.limit}}</strong></span
+      >,
+      <span>{{c['input']}}: <strong>{{error.input}}</strong></span>
+    </p>
+  </div>
+
+  <div class="card-footer">
+    <button class="btn-outline btn-round" type="reset" (click)="closes.emit()">
+      {{c['cancel']}}
+    </button>
+    <button class="btn-primary btn-round" (click)="upload(c)">
+      {{c['edit']}}
+    </button>
+  </div>
+
+  <pui-preloader *ngIf="preloader"></pui-preloader>
+</div>

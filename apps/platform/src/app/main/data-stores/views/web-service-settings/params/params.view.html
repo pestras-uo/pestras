@@ -1,0 +1,161 @@
+<ng-container *contra="let c">
+
+  <div class="accordion">
+
+    <div #card [class.mbe-2]="!last" *ngFor="let param of params; let i = index; let last = last" class="card">
+
+      <div class="card-header">
+        <h4>{{param.key}}</h4>
+        <div class="grow"></div>
+        <button *ngIf="editable" class="btn-icon btn-small btn-round" (click)="remove(c, param.serial)">
+          <i size="small" color="danger" puiIcon="delete"></i>
+        </button>
+        <button class="btn-icon btn-small btn-round" (click)="card.classList.toggle('active')">
+          <i size="small" color="danger" puiIcon="arrow_drop_down"></i>
+        </button>
+      </div>
+
+      <div class="card-body flex gap-8">
+
+        <div class="grow">
+          <p class="f9">{{c['value']}}</p>
+          <p *ngIf="param.value === '$$NOW'" class="bold">{{c['callDate']}}</p>
+          <p *ngIf="param.value !== '$$NOW'" class="bold">{{param.value}}</p>
+        </div>
+
+        <ng-container *ngIf="param.value === '$$NOW'">
+
+          <div class="grow">
+            <p class="f9">{{c['dateFormat']}}</p>
+            <p class="bold ltr">{{param.date_format}}</p>
+          </div>
+
+          <div class="grow">
+            <p class="f9">{{c['modifyDate']}}</p>
+            <p class="bold">
+              {{c['dateUnits']['year']}}: {{(param.add_to_date | arrayFind: findDataUnit:'year')?.amount || 0}}
+            </p>
+            <p class="bold">
+              {{c['dateUnits']['month']}}: {{(param.add_to_date | arrayFind: findDataUnit:'month')?.amount ||
+              0}}
+            </p>
+            <p class="bold">
+              {{c['dateUnits']['dayOfMonth']}}: {{(param.add_to_date | arrayFind:
+              findDataUnit:'dayOfMonth')?.amount || 0}}
+            </p>
+          </div>
+
+        </ng-container>
+
+        <div class="grow">
+          <p class="f9">{{c['usage']}}</p>
+          <p class="bold">{{(c['usages'] | arrayFind: findUsage:param.use)?.name}}</p>
+        </div>
+
+        <div class="grow">
+          <p class="f9">{{c['queryDest']}}</p>
+          <p class="bold">{{(c['queryDests'] | arrayFind: findDest:param.dest)?.name}}</p>
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+
+
+  <div *ngIf="params.length" class="divider mb-6"></div>
+
+
+  <form *ngIf="editable" class="card" [formGroup]="form" (ngSubmit)="add(c)">
+
+    <h4 class="card-header">{{c['addQueryOption']}}</h4>
+
+    <div class="card-body">
+
+      <div class="grid cols-2 gap-4 mbe-6">
+
+        <div>
+          <label for="key">{{c['name']}}</label>
+          <div class="fc">
+            <input type="text" id="key" formControlName="key">
+          </div>
+        </div>
+
+        <div>
+          <label for="value">
+            {{c['value']}}
+            <div class="grow"></div>
+            <div class="fc-checkbox fc-small">
+              <input type="checkbox" id="call-date" [formControl]="callDate" (change)="callDateChange()">
+              <label for="call-date">{{c['callDate']}}</label>
+            </div>
+          </label>
+          <div class="fc" [class.disabled]="callDate.value">
+            <input type="text" id="value" formControlName="value">
+          </div>
+        </div>
+
+      </div>
+
+      <div class="grid cols-2 gap-4 mbe-6" *ngIf="callDate.value">
+
+        <div>
+          <label for="date-format">
+            {{c['dateFormat']}}
+            <pui-hint>
+              <div class="card card-small">
+                <div class="card-body ltr">
+                  <p>%Y  = {{c['year']}}</p>
+                  <p>%m  = {{c['month']}}</p>
+                  <p class="mbe-2">%d  = {{c['day']}}</p>
+                  <p class="bold">%Y/%m/%d = 2023/6/1</p>
+                </div>
+              </div>
+            </pui-hint>
+          </label>
+          <div class="fc">
+            <input class="ltr" type="text" id="date-format" formControlName="date_format">
+          </div>
+        </div>
+
+        <div formArrayName="add_to_date">
+          <label for="modify-date">{{c['modifyDate']}} ({{c['_year']}} - {{c['_month']}} - {{c['_day']}})</label>
+          <div class="fc">
+            <ng-container *ngFor="let g of add_to_date.controls; let last = last" [formGroup]="g">
+              <input class="align-center ltr" type="number" [placeholder]="c['dateUnits'][g.controls.unit.value]" formControlName="amount">
+              <span *ngIf="!last">-</span>
+            </ng-container>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="grid cols-2 gap-4">
+
+        <div>
+          <label for="dest">{{c['queryDest']}}</label>
+          <div class="fc">
+            <pui-select-input labelRef="dest" [list]="c['queryDests']" formControlName="dest"></pui-select-input>
+          </div>
+        </div>
+
+        <div>
+          <label for="usage">{{c['usage']}}</label>
+          <div class="fc">
+            <pui-select-input labelRef="usage" [list]="c['usages']" formControlName="use"></pui-select-input>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+
+    <div class="card-footer">
+      <button class="btn-round btn-primary" [disabled]="form.invalid">{{c['add']}}</button>
+    </div>
+
+    <pui-preloader *ngIf="preloader"></pui-preloader>
+
+  </form>
+
+</ng-container>
