@@ -1,0 +1,39 @@
+<ng-container *contra="let c">
+
+  <div class="toolbar gap-1 mbe-8">
+    <h3>{{c['slides']}}</h3>
+    <div class="grow"></div>
+    <ng-container *ngIf="slides.length">
+      <button class="btn-icon btn-round btn-small rtl-x-flip" [class.btn-success]="playing" (click)="togglePlay()">
+        <i size="small" [puiIcon]="playing ? 'pause' : 'play'"></i>
+      </button>
+      <button class="btn-icon btn-small btn-round" (click)="openDialog(removeTmp, active!.slide)">
+        <i size="small" puiIcon="delete"></i>
+      </button>
+      <div class="fc fc-surface1 fc-outline fc-round">
+        <pui-select-input [list]="slides" [formControl]="select"></pui-select-input>
+      </div>
+    </ng-container>
+  </div>
+
+  <ng-container *ngIf="active else noData">
+    <app-dashboard-slide *ngIf="active.dashboard | dashboard | async as d" [dashboard]="d" [topic]="active.scope" [slideSerial]="active.slide"
+      [headless]="true"></app-dashboard-slide>
+  </ng-container>
+
+  <ng-template #noData>
+    <no-data-placeholder-widget>{{c['noDataMsg']}}</no-data-placeholder-widget>
+  </ng-template>
+
+  <ng-template #removeTmp let-serial>
+    <div class="card w-15 shadow-6">
+      <h4 class="card-header">{{c['removeSlide']}}</h4>
+      <p class="card-body">{{c['confirmOperation']}}</p>
+      <div class="card-footer">
+        <button class="btn-round btn-outline" (click)="closeDialog()">{{c['cancel']}}</button>
+        <button class="btn-round btn-primary" (click)="removeSlide(serial)">{{c['remove']}}</button>
+      </div>
+    </div>
+  </ng-template>
+
+</ng-container>

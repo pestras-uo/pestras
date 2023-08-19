@@ -1,0 +1,137 @@
+<aside *contra="let c">
+  <header class="align-center">
+    <div class="toolbar pi-2 h-2 mbe-4">
+      <img class="p-logo" src="assets/imgs/logo.png" alt="" />
+      <div class="grow"></div>
+
+      <ng-container *session="let user">
+        <button #profile class="btn-icon btn-round" (click)="dropdown.show()">
+          <i puiIcon="account_circle"></i>
+        </button>
+
+        <pui-dropdown #dropdown [origin]="profile">
+          <div class="card card-small w-6 shadow-4">
+            <div class="card-header bordered">
+              <div>
+                <h5>{{user.fullname}}</h5>
+                <p class="text3 f9">{{user.email}}</p>
+              </div>
+            </div>
+
+            <div class="card-body list list-actions list-clean">
+              <div class="list-item" routerLink="profile">
+                <i puiIcon="account_circle"></i>
+                <p>{{c['account']}}</p>
+              </div>
+              <div class="list-item" routerLink="profile">
+                <i puiIcon="settings"></i>
+                <p>{{c['settings']}}</p>
+              </div>
+            </div>
+
+            <div
+              class="card-footer hover hover-surface3 p-4 cursor-pointer"
+              (click)="this.openModal(signout)"
+            >
+              <i size="small" puiIcon="logout"></i>
+              <p>{{c['signout']}}</p>
+              <div class="grow"></div>
+            </div>
+          </div>
+        </pui-dropdown>
+      </ng-container>
+    </div>
+
+    <img
+      class="inline-block w-3 mbe-2 radius-4"
+      src="assets/imgs/gam-logo.jpg"
+    />
+    <h3 class="mbe-2">{{c['appName']}}</h3>
+    <p class="text3">{{c['ownerName']}}</p>
+  </header>
+
+  <nav>
+    <h4 class="primary weight-8 pi-2">{{c['dataManagement']}}</h4>
+    <p class="f10 pi-2 text3 mbe-4">{{c['dataMenuDesc']}}</p>
+
+    <div class="mbe-10">
+      <a class="hover" routerLink="/main/workspace" routerLinkActive="active">
+        <i puiIcon="home"></i>
+        <p>{{c['workspace']}}</p>
+      </a>
+
+      <a class="hover" routerLink="/main/topics" routerLinkActive="active">
+        <i puiIcon="topics"></i>
+        <p>{{c['topics']}}</p>
+      </a>
+    </div>
+
+    <ng-container *ngIf="([roles.ADMIN, roles.DATA_ENG] | hasRoles)">
+      <h4 class="primary weight-8 pi-2">{{c['blueprintsManagment']}}</h4>
+      <p class="f10 pi-2 text3 mbe-4">{{c['blueprintsManagementDesc']}}</p>
+
+      <div class="mbe-10">
+        <a
+          class="hover"
+          routerLink="/main/blueprints"
+          routerLinkActive="active"
+        >
+          <i puiIcon="blueprint"></i>
+          <p>{{c['blueprints']}}</p>
+        </a>
+      </div>
+    </ng-container>
+
+    <ng-container *ngIf="(roles.ADMIN | hasRoles)">
+      <h4 class="primary weight-8 pi-2">{{c['system_administration']}}</h4>
+      <p class="f10 pi-2 text3 mbe-4">{{c['adminMenuDesc']}}</p>
+
+      <div [class.hide]="collapse.has(3)">
+        <a class="hover" routerLink="/main/regions" routerLinkActive="active">
+          <i puiIcon="travel_explore"></i>
+          <p>{{c['regions']}}</p>
+        </a>
+        <a class="hover" routerLink="/main/orgunits" routerLinkActive="active">
+          <i puiIcon="lan"></i>
+          <p>{{c['orgunits']}}</p>
+        </a>
+        <a
+          *ngIf="'root' | inOrgunit"
+          class="hover"
+          routerLink="/main/groups"
+          routerLinkActive="active"
+        >
+          <i puiIcon="military_tech"></i>
+          <p>{{c['groups']}}</p>
+        </a>
+        <a class="hover" routerLink="/main/users" routerLinkActive="active">
+          <i puiIcon="group"></i>
+          <p>{{c['users']}}</p>
+        </a>
+      </div>
+    </ng-container>
+  </nav>
+
+  <footer>
+    <p class="align-center f10 pi-2 text3 en">{{c['rights']}}</p>
+  </footer>
+
+  <ng-template #signout>
+    <div class="card w-10 shadow-6">
+      <h4 class="card-header">{{c['signout']}}</h4>
+
+      <p class="card-body">{{c['confirmSignout']}}</p>
+
+      <div class="card-footer">
+        <button class="btn-outline btn-round" (click)="closeModal()">
+          {{c['cancel']}}
+        </button>
+        <button class="btn-danger btn-round" (click)="logout()">
+          {{c['yes']}}
+        </button>
+      </div>
+
+      <pui-preloader *ngIf="preloader"></pui-preloader>
+    </div>
+  </ng-template>
+</aside>

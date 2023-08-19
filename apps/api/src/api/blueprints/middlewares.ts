@@ -16,6 +16,6 @@ export function checkOwner(withCollaborators = false) {
     if (bp.owner === session.serial || (withCollaborators && bp.collaborators.includes(session.serial)))
       return next();
 
-    throw new HttpError(HttpCode.UNAUTHORIZED, 'unauthorized');
+    next(new HttpError(HttpCode.UNAUTHORIZED, 'unauthorized'));
   }
 }

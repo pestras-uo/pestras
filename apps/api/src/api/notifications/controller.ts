@@ -1,16 +1,32 @@
 import { notificationsModel } from "../../models";
 import { NotificationsApi } from "./types";
+import { NextFunction } from 'express';
 
 export const controller = {
-  async getAll(_: NotificationsApi.GetReq, res: NotificationsApi.GetRes) {
-    res.json(await notificationsModel.getAll(res.locals.issuer.serial));
+  async getAll(_: NotificationsApi.GetReq, res: NotificationsApi.GetRes, next: NextFunction) {
+    try {
+      res.json(await notificationsModel.getAll(res.locals.issuer.serial));
+      
+    } catch (error) {
+      next(error);
+    }
   },
 
-  async get(req: NotificationsApi.GetByIdReq, res: NotificationsApi.GetByIdRes) {
-    res.json(await notificationsModel.getBySerial(req.params.serial));
+  async get(req: NotificationsApi.GetByIdReq, res: NotificationsApi.GetByIdRes, next: NextFunction) {
+    try {
+      res.json(await notificationsModel.getBySerial(req.params.serial));
+      
+    } catch (error) {
+      next(error);
+    }
   },
 
-  async setSeen(req: NotificationsApi.SetSeenReq, res: NotificationsApi.SetSeenRes) {
-    res.json(await notificationsModel.setSeen(req.params.serial));
+  async setSeen(req: NotificationsApi.SetSeenReq, res: NotificationsApi.SetSeenRes, next: NextFunction) {
+    try {
+      res.json(await notificationsModel.setSeen(req.params.serial));
+      
+    } catch (error) {
+      next(error);
+    }
   },
 }

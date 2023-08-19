@@ -1,0 +1,53 @@
+<div class="toolbar h-fit gap-2" *contra="let c, let dir = dir">
+  <button
+    *ngIf="[roles.ADMIN, roles.DATA_ENG] | hasRoles"
+    class="btn-icon"
+    (click)="openDrawerHandler($event)"
+  >
+    <i puiIcon="menu"></i>
+  </button>
+
+  <div class="grow"></div>
+
+  <button
+    *ngIf="roles.ADMIN | hasRoles"
+    class="btn-round btn-success"
+    (click)="openDialog(addTopicTmp)"
+  >
+    {{c['newtopic']}}
+  </button>
+
+  <!-- <button class="btn-icon btn-round">
+    <i size="small" puiIcon="notifications"></i>
+  </button>
+
+  <button class="btn-icon btn-round">
+    <i size="small" puiIcon="inbox"></i>
+  </button> -->
+
+  <ng-container *ngIf="null | contraLang | async as lang">
+    <button #langBtn class="btn-icon btn-round" (click)="langDD.show()">
+      <i size="small" puiIcon="language"></i>
+    </button>
+
+    <pui-dropdown #langDD [origin]="langBtn">
+      <div class="card card-small w-5 shadow-4" contraLang #contra="contra">
+        <h4 class="card-header">{{c['language']}}</h4>
+        <div class="card-body list list-actions list-clean">
+          <div
+            class="list-item pi-2"
+            *ngFor="let language of (null | contraLanguages)"
+            (click)="contra.setLang(language.key)"
+          >
+            <i *ngIf="lang === language.key" size="small" puiIcon="check"></i>
+            <p [class.pi-10]="lang !== 'ar'">{{language.name}}</p>
+          </div>
+        </div>
+      </div>
+    </pui-dropdown>
+  </ng-container>
+
+  <ng-template #addTopicTmp>
+    <app-add-topic [parent]="null" (closes)="closeDialog()"></app-add-topic>
+  </ng-template>
+</div>

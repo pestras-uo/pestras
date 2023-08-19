@@ -17,6 +17,7 @@
     "paths": {
       "@pestras/backend/models": ["libs/backend/models/src/index.ts"],
       "@pestras/backend/util": ["libs/backend/util/src/index.ts"],
+      "@pestras/frontend/env": ["libs/frontend/env/src/index.ts"],
       "@pestras/frontend/features/aggregation": [
         "libs/frontend/features/aggregation/src/index.ts"
       ],

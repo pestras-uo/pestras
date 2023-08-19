@@ -13,7 +13,7 @@ import { RecordsEntitiesState } from "./records/records-entities.state";
 import { RecordResolver } from "./records/record.resolver";
 import { RegionsState } from "./regions/regions.state";
 import { SessionState } from "./session/session.state";
-import { SseService } from "./sse/sse.service";
+import { SSEService } from "./sse/sse.service";
 import { TopicsState } from "./topics/topics.state";
 import { UsersGroupsState } from "./users-groups/users.groups.state";
 import { WorkflowState } from "./workflow/workflow.state";
@@ -22,17 +22,18 @@ import { WorkspaceState } from "./workspaces/workspace.state";
 import { DataVizState } from "./data_viz/data-viz.state";
 import { DataStoreResolver } from "./data-stores/data-store.resolver";
 import { DataStoresState } from "./data-stores/data-stores.state";
-import { STATE_CONFIG, StateConfig } from "./config";
+import { EnvModule } from "@pestras/frontend/env";
 
-@NgModule()
+@NgModule({
+  imports: [EnvModule]
+})
 export class StateModule {
 
-  static forRoot(config: StateConfig): ModuleWithProviders<StateModule> {
+  static forRoot(): ModuleWithProviders<StateModule> {
 
     return {
       ngModule: StateModule,
       providers: [
-        { provide: STATE_CONFIG, useValue: config },
         AttachmentsState,
         BlueprintsState,
         BlueprintResolver,
@@ -47,7 +48,7 @@ export class StateModule {
         RecordResolver,
         RegionsState,
         SessionState,
-        SseService,
+        SSEService,
         TopicsState,
         UsersState,
         UsersGroupsState,

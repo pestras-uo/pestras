@@ -10,8 +10,6 @@ import cookieParser from 'cookie-parser';
 
 // misc
 import http from 'http';
-// import https from 'https';
-// import fs from 'fs';
 import path from 'path';
 import { HttpError, HttpCode } from "@pestras/backend/util";
 
@@ -71,7 +69,7 @@ import { requestLogger } from './middlewares/request-log';
 
     const code = err.code && err.code > 99 && err.code < 599 ? err.code : HttpCode.UNKNOWN_ERROR;
 
-    res
+    res.headersSent || res
       .status(code)
       .send(config.prod ? HttpCode[err.code] || "unknwonError" : err.message);
   });

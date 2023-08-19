@@ -41,6 +41,7 @@ import { DataStoresFeatureModule } from '@pestras/frontend/features/data-stores'
 import { RegionsFeatureModule } from '@pestras/frontend/features/regions';
 import { RecordsFeatureModule } from '@pestras/frontend/features/data-records';
 import { CategoriesFeatureModule } from '@pestras/frontend/features/categories';
+import { EnvModule } from '@pestras/frontend/env';
 
 
 
@@ -85,6 +86,7 @@ import { CategoriesFeatureModule } from '@pestras/frontend/features/categories';
     CommonModule,
     ReactiveFormsModule,
     // Util
+    EnvModule,
     ContraModule,
     // Pui
     PuiPreloaderModule,
@@ -117,4 +119,4 @@ import { CategoriesFeatureModule } from '@pestras/frontend/features/categories';
     ChartView
   ]
 })
-export class DataVizFeatureModule { }
+export class DataVizFeatureModule {}

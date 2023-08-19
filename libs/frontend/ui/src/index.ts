@@ -72,6 +72,7 @@ export * from './lib/table/table.module';
 // toast
 export * from './lib/toast/toast.service';
 export * from './lib/toast/toast.component';
+export * from './lib/toast/toast.module';
 
 // util pipes
 export * from './lib/util-pipes/array-distinct.pipe';

@@ -1,0 +1,68 @@
+<ng-container *contra="let c">
+
+  <div class="box shadow-1">
+
+    <div class="card card-clear card-huge overflow-hidden">
+
+      <pui-preloader *ngIf="isLoading"></pui-preloader>
+
+      <div class="card-body">
+
+        <div class="flex align-items-center gap-4">
+          <img src="assets/imgs/gam-logo.jpg" class="logo">
+          <div>
+            <h3 class="mbe-1">{{c['appName']}}</h3>
+            <p class="text3 f10">{{c['ownerName']}}</p>
+          </div>
+        </div>
+
+        <h1 class="primary text-upper mb-8 align-center">{{c['sign']}}</h1>
+
+        <form [formGroup]="form" (ngSubmit)="login(c)">
+
+          <label for="username">{{c['username']}}</label>
+          <div class="fc mbe-4" [class.invalid]="form.get('username')?.invalid">
+            <i puiIcon="person_fill" size="small" color="primary"></i>
+            <input autocomplete="off" id="username" type="username" formControlName="username">
+          </div>
+
+          <label for="password">{{c['password']}}</label>
+          <div class="fc mbe-4" [class.invalid]="form.get('password')?.invalid">
+            <i puiIcon="vpn_key_fill" size="small" color="primary"></i>
+            <input id="password" type="password" formControlName="password">
+          </div>
+
+          <pui-check-input class="mbe-4" [label]="c['remember_me']" formControlName="remember"></pui-check-input>
+
+          <button class="btn btn-primary btn-round btn-block" [disabled]="form.invalid">{{c['signin']}}</button>
+
+        </form>
+      </div>
+
+      <div class="card-footer justify-content-center">
+        <p class="align-center f10 text3">{{c['rights']}}</p>
+      </div>
+
+    </div>
+
+    <div class="banner color-scheme-dark p-16 flex align-items-center">
+
+      <div>
+        <div class="flex gap-8 mbe-8 align-items-center">
+          <img class="p-logo" src="assets/imgs/logo.png" alt="">
+          <h1 class="f2 weight-8">
+            {{c['welcome']}}
+            <br>
+            {{c['pestras']}}
+          </h1>
+        </div>
+  
+        <p class="f8 text3 mbe-20">{{c['welcomeMsg']}}</p>
+
+      </div>
+
+      <img class="bg" src="assets/imgs/login-urban.png">
+    </div>
+  </div>
+
+</ng-container>

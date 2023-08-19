@@ -1,4 +1,4 @@
-import { SessionState } from "@pestras/state";
+import { SessionState } from "@pestras/frontend/state";
 
 export function initApp(session: SessionState) {
   return () => {

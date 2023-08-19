@@ -3,15 +3,19 @@ import { BrowserModule } from '@angular/platform-browser';
 import { RouterModule } from '@angular/router';
 import { AppComponent } from './app.component';
 import { appRoutes } from './app.routes';
+import { EnvModule } from '@pestras/frontend/env';
 import { ContraModule } from '@pestras/frontend/util/contra';
 import { StatorModule } from '@pestras/frontend/util/stator';
 import { SessionState, StateModule } from '@pestras/frontend/state';
-import { PuiGoogleMapModule, PuiIcon, PuiPreloaderModule, PuiSideDrawerModule, PuiToast, PuiUtilPipesModule } from '@pestras/frontend/ui';
+import { PuiGoogleMapModule, PuiIcon, PuiPreloaderModule, PuiSideDrawerModule, PuiToastModule, PuiUtilPipesModule } from '@pestras/frontend/ui';
 import { QuillModule } from 'ngx-quill';
 import { environment } from '../environments/environment';
 import { initApp } from './app.initializer';
 import { AppInterceptor } from './app.interceptor';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
+import { SigninPage } from './signin/signin.page';
+import { MainModule } from './main/main.module';
+import { NgxEchartsModule } from 'ngx-echarts';
 
 @NgModule({
   declarations: [AppComponent],
@@ -30,11 +34,15 @@ import { HTTP_INTERCEPTORS } from '@angular/common/http';
         { name: 'content', path: '/assets/content', expireMS: 1000 * 60 * 60 }
       ]
     }),
+    EnvModule.forRoot(environment),
     StatorModule.forRoot({ development: !environment.production }),
-    StateModule.forRoot({ api: environment.api }),
+    StateModule.forRoot(),
+    NgxEchartsModule.forRoot({
+      echarts: () => import('echarts')
+    }),
     PuiIcon.forRoot('assets/svg'),
     PuiPreloaderModule,
-    PuiToast.forRoot(),
+    PuiToastModule.forRoot(),
     PuiUtilPipesModule.forRoot({ docsPath: environment.docs }),
     PuiGoogleMapModule.forRoot('AIzaSyB0HpChbfkOcdI_3CZy3fS5YCKn7I7g0iY'),
     PuiSideDrawerModule.forRoot(),
@@ -50,7 +58,9 @@ import { HTTP_INTERCEPTORS } from '@angular/common/http';
           ['clean'],
         ]
       }
-    })
+    }),
+    SigninPage,
+    MainModule
   ],
   providers: [
     { provide: APP_INITIALIZER, useFactory: initApp, deps: [SessionState], multi: true },

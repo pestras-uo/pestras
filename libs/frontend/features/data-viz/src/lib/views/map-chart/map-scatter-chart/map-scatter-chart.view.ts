@@ -10,6 +10,7 @@ import { mapStyle } from '@pestras/frontend/ui';
 import 'echarts-extension-gmap';
 import { ContraService } from '@pestras/frontend/util/contra';
 import { Serial } from '@pestras/shared/util';
+import { EnvService } from '@pestras/frontend/env';
 
 @Component({
   selector: 'app-map-scatter-chart',
@@ -31,7 +32,10 @@ export class MapScatterChartView implements OnChanges {
   @Input({ required: true })
   payload!: MapChartDataLoad;
 
-  constructor(private contra: ContraService) { }
+  constructor(
+    private contra: ContraService,
+    private envServ: EnvService
+  ) { }
 
   ngOnChanges() {
     if (this.payload.regions.length) {
@@ -144,6 +148,7 @@ export class MapScatterChartView implements OnChanges {
       })
     }
 
+    const docsPath = this.envServ.env.docs;
 
     this.chartOptions = {
       textStyle: {
@@ -166,7 +171,7 @@ export class MapScatterChartView implements OnChanges {
             const record = serial ? payload.records.find(r => r['serial'] === serial || r['_id'] === serial) : null;
 
             if (record)
-              return recordToolTip(payload.fields, options.tooltip, record);
+              return recordToolTip(payload.fields, options.tooltip, record, docsPath);
           }
 
           return `${param.marker}\t<strong>${param.value[2]}</strong>`;

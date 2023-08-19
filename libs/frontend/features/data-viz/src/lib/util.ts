@@ -95,7 +95,7 @@ export function groupRecords2D<T extends Record<string, any>>(data: T[], by: [st
   return output;
 }
 
-export function recordToolTip(fields: Field[], options: MapScatterTooltopOptions, record: DataRecord) {
+export function recordToolTip(fields: Field[], options: MapScatterTooltopOptions, record: DataRecord, docsPath: string) {
   const banner = options.image ? fields.find(f => f.name === options.image) : null;
   const title = options.heading ? fields.find(f => f.name === options.heading) : null;
   const customFields = fields.filter(f => !f.system);
@@ -112,7 +112,7 @@ export function recordToolTip(fields: Field[], options: MapScatterTooltopOptions
   if (banner && record[banner.name])
     view += `
       <div class="card-hero">
-        <img src="${process.env['docs']}${record[banner.name]}" alt="${banner.name}">
+        <img src="${docsPath}${record[banner.name]}" alt="${banner.name}">
       </div>
     `;
 

@@ -1,19 +1,17 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { Inject, Injectable } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { StatorChannel } from '@pestras/frontend/util/stator';
 import { SessionEnd, SessionStart } from '../session/session.events';
 import { Activity } from '@pestras/shared/data-model';
 import { SSEActivity } from './sse.events';
-import { STATE_CONFIG, StateConfig } from '../config';
+import { EnvService } from '@pestras/frontend/env';
 
-@Injectable({
-  providedIn: 'root'
-})
-export class SseService {
+@Injectable()
+export class SSEService {
   private es: EventSource | null = null;
 
   constructor(
-    @Inject(STATE_CONFIG) private config: StateConfig,
+    private envServ: EnvService,
     private channel: StatorChannel
   ) {
     this.channel.select(SessionStart)
@@ -24,7 +22,7 @@ export class SseService {
   }
 
   protected init() {
-    this.es = new EventSource(this.config.api + '/events', { withCredentials: true });
+    this.es = new EventSource(this.envServ.env.api + '/events', { withCredentials: true });
 
     this.es.addEventListener('activity', (e: MessageEvent<string>) => {
       console.log('sse:');

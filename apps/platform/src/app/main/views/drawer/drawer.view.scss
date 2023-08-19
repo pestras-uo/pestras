@@ -1,0 +1,111 @@
+:host {
+  width: 0;
+  height: 100vh;
+  overflow: auto;
+  transition: width 300ms ease-out 100ms;
+
+  aside {
+    min-height: 100vh;
+    display: grid;
+    opacity: 0;
+    gap: 64px;
+    grid-template-rows: auto 1fr auto;
+    padding: 0 16px 16px 16px;
+    transition: opacity 200ms;
+  }
+
+  &.open {
+    transition: width 300ms ease-out;
+    width: var(--drawer-width);
+
+    aside {
+      transition: opacity 200ms 200ms;
+      opacity: 1;
+    }
+  }
+}
+
+.p-logo {
+  width: 24px;
+}
+
+nav {
+
+  a {
+    display: flex;
+    position: relative;
+    padding-block: 8px;
+    padding-inline: 8px;
+    margin-block-end: 4px;
+    border-radius: 8px;
+    display: flex;
+    gap: 16px;
+    align-items: center;
+    color: var(--text2);
+    transition: background-color 250ms;
+    font-weight: 700;
+
+    i {
+      background-color: var(--text2);
+    }
+
+    p {
+      position: relative;
+    }
+
+    &:hover {
+      background-color: var(--surface3);
+      
+      p {
+        color: var(--text1);
+      }
+
+      .icon {
+        background-color: var(--text1);
+      }
+    }
+
+    &.active {
+      background-color: var(--surface3);
+
+      p {
+        color: var(--text1);
+      }
+
+      .icon {
+        background-color: var(--text1);
+      }
+    }
+
+    &.open {
+      p {
+        color: var(--text1);
+      }
+
+      .icon {
+        background-color: var(--text1);
+      }
+
+      +.sub-nav {
+        height: fit-content;
+        opacity: 1;
+        transition: height 200ms ease-out, opacity 200ms 100ms;
+      }
+    }
+
+    &.dimmed {
+      opacity: 0.5;
+      pointer-events: none;
+    }
+  }
+
+  .sub-nav {
+    height: 0;
+    opacity: 0;
+    transition: height 200ms ease-out 100ms, opacity 200ms;
+
+    a {
+      padding-inline-start: 52px;
+    }
+  }
+}

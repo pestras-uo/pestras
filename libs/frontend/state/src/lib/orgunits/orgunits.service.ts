@@ -1,43 +1,43 @@
 import { HttpClient } from "@angular/common/http";
-import { Inject, Injectable } from "@angular/core";
+import { Injectable } from "@angular/core";
 import { injectURLPayload } from "@pestras/shared/util";
 import { OrgunitsApi } from "./orgunits.api";
-import { STATE_CONFIG, StateConfig } from "../config";
+import { EnvService } from "@pestras/frontend/env";
 
 @Injectable({ providedIn: 'root' })
 export class OrgunitsService {
 
   constructor(
-    @Inject(STATE_CONFIG) private config: StateConfig,
+    private envServ: EnvService,
     private readonly http: HttpClient
   ) { }
 
   getAll() {
-    const path = injectURLPayload(this.config.api + OrgunitsApi.GetAll.path);
+    const path = injectURLPayload(this.envServ.env.api + OrgunitsApi.GetAll.path);
     
     return this.http.get<OrgunitsApi.GetAll.Response>(path);
   }
 
   getBySerial(params: OrgunitsApi.GetBySerial.Params) {
-    const path = injectURLPayload(this.config.api + OrgunitsApi.GetBySerial.path, params);
+    const path = injectURLPayload(this.envServ.env.api + OrgunitsApi.GetBySerial.path, params);
 
     return this.http.get<OrgunitsApi.GetBySerial.Response>(path);
   }
 
   create(data: OrgunitsApi.Create.Body) {
-    const path = injectURLPayload(this.config.api + OrgunitsApi.Create.path);
+    const path = injectURLPayload(this.envServ.env.api + OrgunitsApi.Create.path);
 
     return this.http.post<OrgunitsApi.Create.Response>(path, data);
   }
 
   update(params: OrgunitsApi.Update.Params, data: OrgunitsApi.Update.Body) {
-    const path = injectURLPayload(this.config.api + OrgunitsApi.Update.path, params);
+    const path = injectURLPayload(this.envServ.env.api + OrgunitsApi.Update.path, params);
 
     return this.http.put<OrgunitsApi.Update.Response>(path, data);
   }
 
   updateLogo(params: OrgunitsApi.UpdateLogo.Params, data: OrgunitsApi.UpdateLogo.Body) {
-    const path = injectURLPayload(this.config.api + OrgunitsApi.UpdateLogo.path, params);
+    const path = injectURLPayload(this.envServ.env.api + OrgunitsApi.UpdateLogo.path, params);
 
     const form = new FormData();
     form.append('logo', data.logo);
@@ -46,7 +46,7 @@ export class OrgunitsService {
   }
 
   removeLogo(params: OrgunitsApi.RemoveLogo.Params) {
-    const path = injectURLPayload(this.config.api + OrgunitsApi.RemoveLogo.path, params);
+    const path = injectURLPayload(this.envServ.env.api + OrgunitsApi.RemoveLogo.path, params);
 
     return this.http.delete<OrgunitsApi.RemoveLogo.Response>(path);
   }

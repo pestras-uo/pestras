@@ -2,7 +2,10 @@
   "name": "@pestras/source",
   "version": "0.0.0",
   "license": "MIT",
-  "scripts": {},
+  "scripts": {
+    "start:api": "nx serve api",
+    "start:platform": "nx serve platform"
+  },
   "private": true,
   "devDependencies": {
     "@angular-devkit/build-angular": "~16.2.0",

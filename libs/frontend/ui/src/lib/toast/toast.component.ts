@@ -2,9 +2,7 @@
 /* eslint-disable @angular-eslint/component-selector */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { ChangeDetectionStrategy, Component, Input, HostBinding, OnInit, OnDestroy, ModuleWithProviders } from '@angular/core';
-import { CommonModule } from '@angular/common';
 import { BehaviorSubject, Subject, Subscription } from 'rxjs';
-import { PuiIcon } from '../icon/icon.directive';
 import { ToastService } from './toast.service';
 
 export interface PuiToastOptions {
@@ -22,8 +20,6 @@ interface PuiToastInternalOptions extends PuiToastOptions {
 
 @Component({
   selector: 'pui-toast',
-  standalone: true,
-  imports: [CommonModule, PuiIcon],
   templateUrl: './toast.component.html',
   styleUrls: ['./toast.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush

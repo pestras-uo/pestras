@@ -42,11 +42,11 @@
               },
               {
                 "sourceTag": "scope:frontend-state",
-                "onlyDependOnLibsWithTags": ["scope:shared", "scope:frontend-util-stator"]
+                "onlyDependOnLibsWithTags": ["scope:shared", "scope:frontend-util-stator", "scope:frontend-env"]
               },
               {
                 "sourceTag": "scope:frontend-widgets",
-                "onlyDependOnLibsWithTags": ["scope:shared", "scope:frontend-state", "scope:frontend-ui", "scope:frontend-util"]
+                "onlyDependOnLibsWithTags": ["scope:shared", "scope:frontend-state", "scope:frontend-ui", "scope:frontend-util", "scope:frontend-env"]
               },
               {
                 "sourceTag": "scope:frontend-features",

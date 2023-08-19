@@ -5,8 +5,6 @@ export function xsrfCheck(req: Request, res: Response, next: NextFunction) {
   const xsrf = req.cookies['xsrf'];
   const header = req.headers['x-xsrf-token'];
 
-  console.log(xsrf, header);
-
   if (!xsrf)
     return next();
 

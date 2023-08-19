@@ -28,10 +28,12 @@ export { RegionsState } from './lib/regions/regions.state';
 export { ReportsState } from './lib/reports/reports.state';
 export { ReportResolver } from './lib/reports/report.resolver';
 
+export { sessionGuard } from './lib/session/session.guard';
 export { SessionState } from './lib/session/session.state';
 export { SessionChange, SessionEnd, SessionStart } from './lib/session/session.events';
 
 export { SSEActivity } from './lib/sse/sse.events';
+export { SSEService } from './lib/sse/sse.service';
 
 export { TopicsState } from './lib/topics/topics.state';
 
