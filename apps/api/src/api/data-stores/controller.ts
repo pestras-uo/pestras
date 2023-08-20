@@ -43,7 +43,7 @@ export const controller = {
   // --------------------------------------------------------------------------------------
   async update(req: DataStoreApi.UpdateReq, res: DataStoreApi.UpdateRes, next: NextFunction) {
     try {
-      res.json(await dataStoresModel.update(req.params.serial, req.body.title, res.locals.issuer));
+      res.json(await dataStoresModel.update(req.params.serial, req.body.name, res.locals.issuer));
       
     } catch (error) {
       next(error);

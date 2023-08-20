@@ -33,7 +33,7 @@ export class TopicsService {
   update(params: TopicsApi.Update.Params, body: TopicsApi.Update.Body) {
     const path = injectURLPayload(this.envServ.env.api + TopicsApi.Update.REQ_PATH, params);
 
-    return this.http.post<TopicsApi.Update.Response>(path, body);
+    return this.http.put<TopicsApi.Update.Response>(path, body);
   }
 
   // access

@@ -36,7 +36,7 @@ export namespace DataStoreApi {
   // update
   // --------------------------------------------------------------------------------------
   export const UPDATE_REQ_PATH = '/:serial';
-  export type UpdateReq = Request<{ serial: string; }, any, { title: string; }>;
+  export type UpdateReq = Request<{ serial: string; }, any, { name: string; }>;
   export type UpdateRes = Response<Date, UserSession>;
 
   export const UPDATE_STATE_REQ_PATH = '/:serial/state';

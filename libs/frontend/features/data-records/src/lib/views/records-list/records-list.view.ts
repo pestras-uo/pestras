@@ -6,6 +6,7 @@ import { DataStore, DataStoreType, Role, WorkflowState } from '@pestras/shared/d
 import { SessionState, OrgunitsState, RecordsState } from '@pestras/frontend/state';
 import { PuiXlsxService, PuiSideDrawer } from '@pestras/frontend/ui';
 import { AdvancedSearchModelItem, filterToQuery } from '../../modals/advanced-search/advanced-search.model';
+import { objUtil } from '@pestras/shared/util';
 
 @Component({
   selector: 'app-records-list',
@@ -72,9 +73,10 @@ export class RecordsListView implements OnChanges {
   closeSlideDrawer(filters: AdvancedSearchModelItem[] | null | false = null) {
     this.sideDrawer.close();
 
-    if (filters !== false)
-      this.filters = filters;
+    if (filters === false || objUtil.equals(this.filters, filters))
+      return;
 
+    this.filters = filters;
     this.query = this.prepareQuery();
   }
 

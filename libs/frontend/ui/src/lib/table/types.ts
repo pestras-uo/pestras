@@ -20,6 +20,7 @@ export enum PuiTableFooterColumnType {
 export interface PuiColumnConfig<T = any> {
   key: string;
   format?: string;
+  isAmount?: boolean;
   default?: string;
   srcArray?: any[];
   srcKeyValueArray?: { key: string; value: any; }[];

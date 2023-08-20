@@ -38,7 +38,6 @@ const defaultField: Field = Object.assign({}, createTypedEntity({}), {
   constant: false,
   automated: false,
   initial: false,
-  implicit: false,
 
   constraint: null
 });

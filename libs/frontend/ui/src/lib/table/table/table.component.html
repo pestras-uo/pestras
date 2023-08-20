@@ -127,7 +127,12 @@
 
                     <!-- Number Type -->
                     <span *ngSwitchCase="1" class="primary bold">
-                      {{ item | numberFieldValue : column | number : "1.0-2" }}
+                      <ng-container *ngIf="column.isAmount">
+                        {{ item | numberFieldValue : column | number : "1.0-2" }}
+                      </ng-container>
+                      <ng-container *ngIf="!column.isAmount">
+                        {{ item | numberFieldValue : column }}
+                      </ng-container>
                     </span>
 
                     <!-- template Type -->
