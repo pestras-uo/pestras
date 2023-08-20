@@ -15,7 +15,7 @@ export function selectionsToPipeline(selections: WebServiceSelection[]) {
   const stages: Array<AggrPiplineStage> = [];
 
   // select fields
-  stages.push(new SelectStage({ fields: selections.map(s => ({ name: s.as || s.field, state: '$' + s.field })) }));
+  stages.push(new SelectStage({ fields: selections.map(s => ({ name: s.field, state: s.as || s.field })) }));
 
   // cast fields types
   stages.push(new SetStage({

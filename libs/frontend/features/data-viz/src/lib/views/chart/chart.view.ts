@@ -37,31 +37,34 @@ export class ChartView implements OnChanges {
       .pipe(
         filter(Boolean),
         tap(opt => setTimeout(() => this.ltr = opt.type !== DataVizTypes.TABLE)),
-        switchMap(options => forkJoin([
-          this.dsState.select(options.data_store).pipe(filter(Boolean), take(1)),
-          this.recordsState.select(options.data_store)
-            .pipe(
-              filter(Boolean),
-              map(res => res.results),
-              take(1)
-            )
-        ]).pipe(
-          map(data => {
-            const { data: records, fields } = aggrRecords(data[0].fields, data[1], options.aggregate);
-            return [fields, records] as [TypedEntity[], DataRecord[]];
-          }),
-          map(data => {
-            const regionFields = data[0].filter(f => f.type === 'region');
+        switchMap(options => {
+          return forkJoin([
+            this.dsState.select(options.data_store).pipe(filter(Boolean), take(1)),
+            this.recordsState.select(options.data_store)
+              .pipe(
+                filter(Boolean),
+                map(res => res.results),
+                take(1)
+              )
+          ]).pipe(
+            map(data => {
+              const { data: records, fields } = aggrRecords(data[0].fields, data[1], options.aggregate);
+              
+              return [fields, records] as [TypedEntity[], DataRecord[]];
+            }),
+            map(data => {
+              const regionFields = data[0].filter(f => f.type === 'region');
 
-            if (regionFields.length)
-              for (const r of data[1])
-                for (const field of regionFields)
-                  r[field.name] = this.regionsState.get(r[field.name] as string)?.name;
+              if (regionFields.length)
+                for (const r of data[1])
+                  for (const field of regionFields)
+                    r[field.name] = this.regionsState.get(r[field.name] as string)?.name;
 
-            return data;
-          }),
-          map(data => ({ fields: data[0].map(t => createField(t)), records: data[1] })),
-        ))
+              return data;
+            }),
+            map(data => ({ fields: data[0].map(t => createField(t)), records: data[1] })),
+          )
+        })
       );
   }
 }

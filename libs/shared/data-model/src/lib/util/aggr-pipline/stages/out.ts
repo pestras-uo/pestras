@@ -3,7 +3,7 @@ import { TypedEntity } from "../../data-types";
 
 export interface OutStageOptions { 
   db: string | null; 
-  col: string; 
+  coll: string; 
 };
 
 export class OutStage extends AggrPiplineStage<OutStageOptions> {
@@ -16,7 +16,7 @@ export class OutStage extends AggrPiplineStage<OutStageOptions> {
 
   compile() {
     return {
-      $out: this.options
+      $out: this.options.db ?  this.options : this.options.coll
     };
   }
 }

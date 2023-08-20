@@ -14,7 +14,7 @@ export * from './transpose';
 
 export type DataVizAggrStage = DataVizFilters | DataVizGroup | DataVizLimit | DataVizSort | DataVizTranspose;
 
-export function aggrRecords<T extends Record<string, any>>(fields: TypedEntity[], data: T[], pipeline: DataVizAggrStage[]): { fields: TypedEntity[] , data: T[] } {
+export function aggrRecords<T extends Record<string, any>>(fields: TypedEntity[], data: T[], pipeline: DataVizAggrStage[]): { fields: TypedEntity[], data: T[] } {
   let outputFields: TypedEntity[] = fields;
 
   const outputData = pipeline.reduce((result: any[], curr: DataVizAggrStage) => {

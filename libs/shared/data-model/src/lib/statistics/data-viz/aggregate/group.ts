@@ -127,7 +127,11 @@ export function groupRecordsFields(fields: TypedEntity[], options: DataVizGroup)
         unit: calc.method
       }));
     else
-      output.push(field);
+      output.push(createTypedEntity({
+        ...field,
+        name: calc.new_name,
+        display_name: calc.display_name ?? field.display_name
+      }));
   }
 
   return output;
