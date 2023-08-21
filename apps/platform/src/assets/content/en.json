@@ -231,6 +231,7 @@
   "removeView": "Remove View",
   "updateView": "Update View",
   "addView": "Add View",
+  "deleteView": "Delete View",
   "viewSize": "View Size",
   "width": "Width",
   "viewWidthSizes": [

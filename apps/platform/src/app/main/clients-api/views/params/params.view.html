@@ -24,7 +24,7 @@
     <tbody>
       <tr *ngFor="let param of options.params; let i = index">
         <td>{{i + 1}}</td>
-        <td>{{[param.field, dataStore.fields] | fn: findField}}</td>
+        <td>{{param.field | fn: findField: dataStore.fields}}</td>
         <td>{{param.alias || c['none']}}</td>
         <td>{{[param.operator, c] | fn : findOperator}}</td>
         <td>

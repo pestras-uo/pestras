@@ -46,6 +46,7 @@
           *ngIf="view !== 'details' && view !== 'access'"
           [report]="d"
           [slideSerial]="view"
+          [editable]="(d.owner | sessionIs) || (d.collaborators | sessionIs)"
         ></app-report-slide>
       </div>
     </div>

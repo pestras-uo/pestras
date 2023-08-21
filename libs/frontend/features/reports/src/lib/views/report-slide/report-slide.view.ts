@@ -210,4 +210,24 @@ export class ReportSlideView implements OnChanges {
         }
       })
   }
+
+  deleteView(c: Record<string, any>, serial: string) {
+    this.preloader = true;
+
+    this.state.removeView(this.report.serial, serial)
+      .subscribe({
+        next: () => {
+          this.toast.msg(c['success'].default, { type: 'success' });
+          this.closeDialog();
+          this.preloader = false;
+        },
+        error: e => {
+          console.error(e);
+
+          this.toast.msg(c['errors'][e?.error] || c['errors'].default, { type: 'error' });
+          this.closeDialog();
+          this.preloader = false;
+        }
+      });
+  }
 }

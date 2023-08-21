@@ -25,6 +25,7 @@ import { UsersFeatureModule } from '@pestras/frontend/features/users';
 import { TopicsFeatureModule } from '@pestras/frontend/features/topics';
 import { FieldConstraintModal } from './modals/field-constraint/field-constraint.modal';
 import { FieldConstraintsView } from './views/field-constraints/field-constraints.view';
+import { GoogleMapLinkPipe } from './pipes/googleMapLink.pipe';
 
 
 
@@ -46,7 +47,8 @@ import { FieldConstraintsView } from './views/field-constraints/field-constraint
     BlueprintDataStoresPipe,
     DataStoreFieldsPipe,
     fieldValuePipe,
-    SelectRecordPipe
+    SelectRecordPipe,
+    GoogleMapLinkPipe
   ],
   imports: [
     // Angular

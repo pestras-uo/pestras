@@ -164,7 +164,7 @@ export namespace ReportsApi {
 
   // DELETE
   export namespace RemoveView {
-    export const REQ_PATH = basePath + '/:serialviews/:view';
+    export const REQ_PATH = basePath + '/:serial/views/:view';
 
     export interface Params { serial: string; view: string; }
 

@@ -90,6 +90,10 @@ table {
         width: 40px;
         font-weight: bold;
       }
+
+      &.bool:not(td.bool:last-child) {
+        text-align: center;
+      }
     }
 
   }

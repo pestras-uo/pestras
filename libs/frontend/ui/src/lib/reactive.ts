@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { DestroyRef, inject } from "@angular/core";
-import { Subject, takeUntil } from "rxjs";
+import { Observable, Subject, takeUntil } from "rxjs";
 
 export function Unsubscriber(constructor: any) {
   // get reference to the original ngOnDestory method

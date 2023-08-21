@@ -50,7 +50,7 @@ function singleGroup(data: any[], options: DataVizGroup, index: number) {
 
       r[key] = value;
 
-      if (!g)
+      if (g === undefined)
         map.set(value, []);
       else
         g.push(r);
@@ -59,7 +59,8 @@ function singleGroup(data: any[], options: DataVizGroup, index: number) {
   } else {
     for (const r of data) {
       const g = map.get(r[by.name]);
-      if (!g)
+
+      if (g === undefined)
         map.set(r[by.name], []);
       else
         g.push(r);

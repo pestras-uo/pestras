@@ -64,9 +64,8 @@ export * from './lib/slide-show/slide-show.component';
 export * from './lib/switch-input/switch-input.component';
 
 // table
-export * from './lib/table/types';
-export * from './lib/table/table/table.component';
-export * from './lib/table/table-dynamic/table-dynamic.component';
+export * from './lib/table/pagination/pui-pagination.component';
+export * from './lib/table/th/pui-table-th.component';
 export * from './lib/table/table.module';
 
 // toast

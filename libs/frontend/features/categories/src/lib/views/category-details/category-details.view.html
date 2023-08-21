@@ -16,46 +16,94 @@
   </header>
 
   <main>
-    <div class="mbe-6">
-      <h3 class="mbe-4">{{c['branches']}}</h3>
-    </div>
-
-    <pui-table
-      [config]="tableConfig"
-      (actionClick)="openDialog(updateModal, $event.row)"
-      [list]="selected.serial | categoryBranches"
-      [searchPlaceholder]="c['search']"
+    <div
+      class="card"
+      *ngIf="selected.serial | categoryBranches | arrayFilter: filterBranches: search.value | fn: sliceBranches: page$.value as branches"
     >
-      <button
-        *ngIf="editable"
-        class="action btn-icon btn-small btn-outline btn-round"
-        (click)="openDialog(addModal)"
-      >
-        <i size="small" puiIcon="add"></i>
-      </button>
+      <div class="card-header">
+        <h4>{{c['branches']}}</h4>
+        <div class="grow"></div>
+        <div class="fc fc-round w-6">
+          <input
+            type="search"
+            [placeholder]="c['search']"
+            [formControl]="search"
+          />
+          <i puiIcon="search" size="small"></i>
+        </div>
+      </div>
 
-      <no-data-placeholder-widget
-        [small]="true"
-        [showAction]="editable"
-        [actionName]="c['addNew']"
-        (action)="openDialog(addModal)"
-        >{{c['noDataMsg']}}</no-data-placeholder-widget
-      >
-    </pui-table>
+      <div class="card-body">
+        <table *ngIf="branches.length else noData">
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>{{c['title']}}</th>
+              <th>{{c['ordinal']}}</th>
+              <th *ngIf="selected.ordinal">{{c['value']}}</th>
+              <th *ngIf="editable">{{c['edit']}}</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let item of branches let i = index">
+              <td class="w-1">{{skip + i + 1}}</td>
+              <td>{{item.title}}</td>
+              <td class="w-2">
+                <i
+                  [puiIcon]="item.ordinal ? 'check' : 'close'"
+                  size="small"
+                ></i>
+              </td>
+              <td *ngIf="selected.ordinal" class="bold primary w-2">
+                {{item.value}}
+              </td>
+              <td *ngIf="editable" class="w-2">
+                <button
+                  class="btn-icon btn-small btn-round"
+                  (click)="openDialog(updateModal, item)"
+                >
+                  <i puiIcon="edit" size="small"></i>
+                </button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+
+        <ng-template #noData>
+          <no-data-placeholder-widget
+            [small]="true"
+            [showAction]="editable"
+            [actionName]="c['addNew']"
+            (action)="openDialog(addModal)"
+            >{{c['noDataMsg']}}</no-data-placeholder-widget
+          >
+        </ng-template>
+      </div>
+
+      <div *ngIf="branches.length" class="card-footer">
+        <div class="grow"></div>
+        <pui-table-pagination
+          [count]="count"
+          [pageSize]="pageSize"
+          (selects)="page$.next($event)"
+        ></pui-table-pagination>
+        <div class="grow"></div>
+      </div>
+    </div>
   </main>
 
   <ng-template #addModal>
     <app-add-category
       [bp]="bp"
       [parent]="selected"
-      (close)="closeDialog()"
+      (closes)="closeDialog()"
     ></app-add-category>
   </ng-template>
 
   <ng-template #updateModal>
     <app-update-category
       [category]="selected"
-      (close)="closeDialog()"
+      (closes)="closeDialog()"
     ></app-update-category>
   </ng-template>
 </ng-container>

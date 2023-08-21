@@ -44,7 +44,7 @@ export class fieldValuePipe implements PipeTransform {
       return this.usersState.select(value as string).pipe(map(c => c?.fullname || c?.username || null));
 
     if (entity.type === 'category')
-      return this.catsState.select(value).pipe(map(c => c?.title ?? value));
+      return this.catsState.select(c => c.value === value).pipe(map(c => c?.title ?? value));
 
     if (entity.type === 'serial' && entity.ref_type === 'data_store' && entity.ref_to)
       return this.recordsEntitiesState.select(value, entity.ref_to)

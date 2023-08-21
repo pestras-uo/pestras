@@ -47,7 +47,7 @@
 
       <div
         class="grow"
-        *ngIf="[filters.controls[i].controls.field.value, fields] | fn : getField as selectedField"
+        *ngIf="filters.controls[i].controls.field.value | fn : getField: fields as selectedField"
       >
         <app-field-value-input
           [field]="selectedField"

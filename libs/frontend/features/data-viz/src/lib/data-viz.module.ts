@@ -42,6 +42,7 @@ import { RegionsFeatureModule } from '@pestras/frontend/features/regions';
 import { RecordsFeatureModule } from '@pestras/frontend/features/data-records';
 import { CategoriesFeatureModule } from '@pestras/frontend/features/categories';
 import { EnvModule } from '@pestras/frontend/env';
+import { NoDataPlaceholderWidget } from '@pestras/frontend/widgets/no-data-placeholder';
 
 
 
@@ -101,7 +102,9 @@ import { EnvModule } from '@pestras/frontend/env';
     NgxEchartsModule,
     RegionsFeatureModule,
     RecordsFeatureModule,
-    CategoriesFeatureModule
+    CategoriesFeatureModule,
+    // widgets
+    NoDataPlaceholderWidget
   ],
   exports: [
     BarChartView,

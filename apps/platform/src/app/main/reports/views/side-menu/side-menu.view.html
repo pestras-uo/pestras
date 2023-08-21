@@ -161,7 +161,7 @@
 
   <ng-template #removeSlideTmp let-slide>
     <div class="card w-10 shadow-6">
-      <h4 *ngIf="!slide" class="card-header">{{c['removeSlide']}}</h4>
+      <h4 class="card-header">{{c['removeSlide']}}</h4>
 
       <p class="card-body">{{c['confirmOperation']}}</p>
 
@@ -174,8 +174,8 @@
           {{c['cancel']}}
         </button>
         <button
-          class="btn-primary btn-round"
-          (click)="removeSlide(c, slide.erial)"
+          class="btn-danger btn-round"
+          (click)="removeSlide(c, slide.serial)"
         >
           {{c['remove']}}
         </button>

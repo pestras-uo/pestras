@@ -4,7 +4,14 @@ import { CommonModule } from '@angular/common';
 import { OrgunitsRoutingModule } from './orgunits-routing.module';
 import { OrgunitsPage } from './orgunits.page';
 import { OrgunitsListView } from './views/orgunits-list/orgunits-list.view';
-import { PuiIcon, PuiImageInput, PuiPreloaderModule, PuiSelectInput, PuiTableModule, PuiUtilPipesModule } from '@pestras/frontend/ui';
+import {
+  PuiIcon,
+  PuiImageInput,
+  PuiTableModule,
+  PuiPreloaderModule,
+  PuiSelectInput,
+  PuiUtilPipesModule,
+} from '@pestras/frontend/ui';
 import { ContraModule } from '@pestras/frontend/util/contra';
 import { OrgunitDetailsView } from './views/orgunit-details/orgunit-details.view';
 import { ReactiveFormsModule } from '@angular/forms';
@@ -18,7 +25,7 @@ import { DialogModule } from '@angular/cdk/dialog';
 import { RegionsFeatureModule } from '@pestras/frontend/features/regions';
 import { OrgunitsFeatureModule } from '@pestras/frontend/features/orgunits';
 import { UsersFeatureModule } from '@pestras/frontend/features/users';
-
+import { OrgunitsTableView } from './views/orgunits-table/orgunits-table.view';
 
 @NgModule({
   declarations: [
@@ -28,7 +35,8 @@ import { UsersFeatureModule } from '@pestras/frontend/features/users';
     CreateOrgunitModal,
     HierarchyChart,
     UpdateOrgunitModal,
-    UpdateOrgunitLogoModal
+    UpdateOrgunitLogoModal,
+    OrgunitsTableView,
   ],
   imports: [
     // Angular
@@ -40,18 +48,18 @@ import { UsersFeatureModule } from '@pestras/frontend/features/users';
     DialogModule,
     // Pui
     PuiIcon,
-    PuiTableModule,
     PuiSelectInput,
     PuiPreloaderModule,
     PuiImageInput,
     PuiUtilPipesModule,
+    PuiTableModule,
     // Widgets
     NgxEchartsModule,
     NoDataPlaceholderWidget,
     // features
     RegionsFeatureModule,
     OrgunitsFeatureModule,
-    UsersFeatureModule
-  ]
+    UsersFeatureModule,
+  ],
 })
-export class OrgunitsModule { }
+export class OrgunitsModule {}

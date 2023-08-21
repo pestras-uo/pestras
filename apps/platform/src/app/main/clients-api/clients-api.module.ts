@@ -22,18 +22,22 @@ import { SessionFeatureModule } from '@pestras/frontend/features/session';
     ParamsView
   ],
   imports: [
+    // Angular
     CommonModule,
     ClientsApiRoutingModule,
     ReactiveFormsModule,
+    // Util
     ContraModule,
     DialogModule,
+    // Pui
     PuiIcon,
     PuiSelectInput,
     PuiPreloaderModule,
-    NoDataPlaceholderWidget,
-    DataStoresFeatureModule,
     PuiCheckInput,
     PuiUtilPipesModule,
+    // Widgets
+    NoDataPlaceholderWidget,
+    // features
     DataStoresFeatureModule,
     BlueprintsFeatureModule,
     SessionFeatureModule

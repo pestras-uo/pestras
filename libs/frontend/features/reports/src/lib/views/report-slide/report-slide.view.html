@@ -27,7 +27,12 @@
       </ng-container>
     </div>
 
-    <div class="views" cdkDropList (cdkDropListDropped)="drop($event)">
+    <div
+      *ngIf="views.length else noData"
+      class="views"
+      cdkDropList
+      (cdkDropListDropped)="drop($event)"
+    >
       <div
         class="report-view"
         [class.mbe-8]="last"
@@ -37,49 +42,55 @@
         cdkDrag
         [cdkDragDisabled]="!reorder"
       >
-        <div class="view-actions shadow-1" *ngIf="editMode">
+        <div class="view-actions shadow-1 p-1" *ngIf="editMode">
           <button
             class="mbe-2"
             *ngIf="reorder"
             cdkDragHandle
-            class="btn-icon btn-small btn-round"
+            class="btn-icon btn-tiny btn-round"
           >
-            <i size="small" puiIcon="drag"></i>
+            <i size="tiny" puiIcon="drag"></i>
           </button>
           <button
-            class="btn-icon btn-small btn-round"
+            class="btn-icon btn-tiny btn-round"
             (click)="openDialog(viewTmp, view)"
           >
-            <i size="small" puiIcon="edit"></i>
+            <i size="tiny" puiIcon="edit"></i>
           </button>
           <ng-container *ngIf="view.content">
             <button
               *ngIf="view.type === 'richText'"
-              class="btn-icon btn-small btn-round"
+              class="btn-icon btn-tiny btn-round"
               (click)="openDialog(addTextTmp, view)"
             >
-              <i size="small" puiIcon="edit_square"></i>
+              <i size="tiny" puiIcon="edit_square"></i>
             </button>
             <button
               *ngIf="view.type === 'image'"
-              class="btn-icon btn-small btn-round"
+              class="btn-icon btn-tiny btn-round"
               (click)="openDialog(addImageTmp, view)"
             >
-              <i size="small" puiIcon="edit_square"></i>
+              <i size="tiny" puiIcon="edit_square"></i>
             </button>
             <button
               *ngIf="view.type === 'video'"
-              class="btn-icon btn-small btn-round"
+              class="btn-icon btn-tiny btn-round"
               (click)="openDialog(addVideoTmp, view)"
             >
-              <i size="small" puiIcon="edit_square"></i>
+              <i size="tiny" puiIcon="edit_square"></i>
             </button>
             <button
               *ngIf="view.type === 'dataViz'"
-              class="btn-icon btn-small btn-round"
+              class="btn-icon btn-tiny btn-round"
               (click)="openSideDrawer(addDataVizTmp, view.serial)"
             >
-              <i size="small" puiIcon="edit_square"></i>
+              <i size="tiny" puiIcon="edit_square"></i>
+            </button>
+            <button
+              class="btn-icon btn-tiny btn-round"
+              (click)="openDialog(delView, view)"
+            >
+              <i size="tiny" puiIcon="delete"></i>
             </button>
           </ng-container>
         </div>
@@ -158,60 +169,6 @@
           </div>
         </ng-template>
       </div>
-
-      <ng-template #viewTmp let-view>
-        <form
-          class="card w-10"
-          [formGroup]="form"
-          (ngSubmit)="submitView(c, view?.serial)"
-        >
-          <h4 *ngIf="!view" class="card-header">{{c['addView']}}</h4>
-          <h4 *ngIf="view" class="card-header">{{c['updateView']}}</h4>
-
-          <div class="card-body">
-            <label for="view-title">{{c['title']}}</label>
-            <div class="fc mbe-6">
-              <input type="text" id="view-title" formControlName="title" />
-            </div>
-
-            <label for="view-subTitle">{{c['subTitle']}}</label>
-            <div class="fc mbe-6">
-              <input
-                type="text"
-                id="view-subTitle"
-                formControlName="sub_title"
-              />
-            </div>
-
-            <ng-container *ngIf="!view">
-              <label for="view-type">{{c['type']}}</label>
-              <div class="fc">
-                <pui-select-input
-                  [list]="c['reportViewTypes']"
-                  labelRef="view-type"
-                  formControlName="type"
-                ></pui-select-input>
-              </div>
-            </ng-container>
-          </div>
-
-          <div class="card-footer">
-            <button
-              class="btn-outline btn-round"
-              type="reset"
-              (click)="closeDialog()"
-            >
-              {{c['cancel']}}
-            </button>
-            <button
-              class="btn-outline btn-round btn-primary"
-              [disabled]="form.invalid"
-            >
-              {{c['submit']}}
-            </button>
-          </div>
-        </form>
-      </ng-template>
 
       <ng-template #addTextTmp let-view>
         <div class="card w-25">
@@ -307,5 +264,85 @@
         <app-chart-form (done)="closeDrawer(c, $event)"></app-chart-form>
       </ng-template>
     </div>
+
+    <ng-template #noData>
+      <no-data-placeholder-widget
+        >{{c['noDataMsg']}}</no-data-placeholder-widget
+      >
+    </ng-template>
+
+    <ng-template #viewTmp let-view>
+      <form
+        class="card w-10"
+        [formGroup]="form"
+        (ngSubmit)="submitView(c, view?.serial)"
+      >
+        <h4 *ngIf="!view" class="card-header">{{c['addView']}}</h4>
+        <h4 *ngIf="view" class="card-header">{{c['updateView']}}</h4>
+
+        <div class="card-body">
+          <label for="view-title">{{c['title']}}</label>
+          <div class="fc mbe-6">
+            <input type="text" id="view-title" formControlName="title" />
+          </div>
+
+          <label for="view-subTitle">{{c['subTitle']}}</label>
+          <div class="fc mbe-6">
+            <input type="text" id="view-subTitle" formControlName="sub_title" />
+          </div>
+
+          <ng-container *ngIf="!view">
+            <label for="view-type">{{c['type']}}</label>
+            <div class="fc">
+              <pui-select-input
+                [list]="c['reportViewTypes']"
+                labelRef="view-type"
+                formControlName="type"
+              ></pui-select-input>
+            </div>
+          </ng-container>
+        </div>
+
+        <div class="card-footer">
+          <button
+            class="btn-outline btn-round"
+            type="reset"
+            (click)="closeDialog()"
+          >
+            {{c['cancel']}}
+          </button>
+          <button
+            class="btn-outline btn-round btn-primary"
+            [disabled]="form.invalid"
+          >
+            {{c['submit']}}
+          </button>
+        </div>
+      </form>
+    </ng-template>
+
+    <ng-template #delView let-view>
+      <div class="card w-10 shadow-6">
+        <h4 class="card-header">{{c['deleteView']}}</h4>
+        <p class="card-body">{{c['confirmOperation']}}</p>
+        <div class="card-footer">
+          <button
+            class="btn-outline btn-round"
+            type="reset"
+            (click)="closeDialog()"
+          >
+            {{c['cancel']}}
+          </button>
+          <button
+            class="btn-outline btn-round btn-danger"
+            (click)="deleteView(c, view.serial)"
+          >
+            {{c['delete']}}
+          </button>
+        </div>
+
+        <pui-preloader *ngIf="preloader"></pui-preloader>
+      </div>
+    </ng-template>
   </ng-container>
 </ng-container>

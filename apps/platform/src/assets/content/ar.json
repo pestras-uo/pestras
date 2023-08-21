@@ -304,6 +304,7 @@
   "removeView": "إزالة النافذة",
   "updateView": "تعديل النافذة",
   "addView": "نافذة جديدة",
+  "deleteView": "حذف نافذة",
   "viewSize": "حجم النافذة",
   "width": "العرض",
   "viewWidthSizes": [
@@ -386,7 +387,7 @@
       "value": "timeline"
     }
   ],
-  "removeSlide": "إزالة شاشة",
+  "removeSlide": "إزالة الشاشة",
   "playTime": "مدة العرض",
   "updateSlide": "تعديل شاشة",
   "addSlide": "شاشة جديدة",

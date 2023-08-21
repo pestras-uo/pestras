@@ -1,0 +1,43 @@
+<div class="card card-clear" *contra="let c">
+  
+  <div class="card-body overflow-x-auto" *ngIf="list | fn: sliceList: page$.value as pageList">
+    <table *ngIf="list.length else noData">
+      <thead>
+        <tr>
+          <th>#</th>
+          <th *ngFor="let f of fields">{{f.display_name}}</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let item of pageList; let i = index">
+          <td>{{skip + i + 1}}</td>
+          <td *ngFor="let f of fields">
+            <app-field-value
+              [class.success]="f.type === 'datetime' || f.type === 'date'"
+              [class.primary]="f.type === 'int' || f.type === 'double'"
+              [field]="f"
+              [value]="item[f.name]"
+              locationAsLink
+            ></app-field-value>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
+    <ng-template #noData>
+      <no-data-placeholder-widget
+        >{{c['noDataMsg']}}</no-data-placeholder-widget
+      >
+    </ng-template>
+  </div>
+
+  <div *ngIf="list.length" class="card-footer">
+    <div class="grow"></div>
+    <pui-table-pagination
+      [count]="count"
+      [pageSize]="pageSize"
+      (selects)="page$.next($event)"
+    ></pui-table-pagination>
+    <div class="grow"></div>
+  </div>
+</div>

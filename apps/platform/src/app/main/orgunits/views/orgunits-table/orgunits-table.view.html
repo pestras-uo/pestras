@@ -1,0 +1,70 @@
+<ng-container *contra="let c">
+  <div class="card-header">
+    <i puiIcon="lan"></i>
+    <h4>{{c['branchesOrgunits']}}</h4>
+    <div class="grow"></div>
+    <div class="fc fc-round w-6">
+      <input type="search" [placeholder]="c['search']" [formControl]="search" />
+      <i puiIcon="search" size="small"></i>
+    </div>
+  </div>
+  <ng-container *ngIf="list$ | async as branches">
+    <div class="card-body">
+      <table *ngIf="branches.length else noData">
+        <thead>
+          <tr>
+            <th>{{c['name']}}</th>
+            <th>{{c['class']}}</th>
+            <th class="w-3">{{c['lastModified']}}</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let b of branches" class="hover cursor-pointer">
+            <td>
+              <div class="flex gap-4 align-items-center">
+                <div
+                  class="avatar avatar-small"
+                  [style.background-color]="10 | randomColor"
+                >
+                  <img
+                    *ngIf="b.logo"
+                    [src]="b.logo | docsPath"
+                    alt="orgunit logo"
+                    class="org-logo"
+                  />
+                  <i
+                    *ngIf="!b.logo"
+                    color="white"
+                    size="small"
+                    puiIcon="lan"
+                  ></i>
+                </div>
+                <p class="bold">{{b.name}}</p>
+              </div>
+            </td>
+            <td>{{b.class}}</td>
+            <td class="success bold w-3">
+              {{b.last_modified | date: 'dd-MM-yyyy'}}
+            </td>
+          </tr>
+        </tbody>
+      </table>
+
+      <ng-template #noData>
+        <no-data-placeholder-widget #noData [small]="true"
+          >{{c['noDataMsg']}}</no-data-placeholder-widget
+        >
+      </ng-template>
+    </div>
+
+    <div *ngIf="branches.length" class="card-footer">
+      <div class="grow"></div>
+      <pui-table-pagination
+        [count]="count"
+        [pageSize]="pageSize"
+        (selects)="page$.next($event)"
+      ></pui-table-pagination>
+      <div class="grow"></div>
+    </div>
+  </ng-container>
+</ng-container>

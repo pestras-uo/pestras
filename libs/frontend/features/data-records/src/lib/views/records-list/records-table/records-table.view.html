@@ -1,0 +1,44 @@
+<div class="card" *contra="let c">
+  <ng-container *ngIf="records$ | async as records">
+    <div class="card-body overflow-x-auto">
+      <table *ngIf="records.length else noData">
+        <thead>
+          <tr>
+            <th class="w-2">#</th>
+            <th *ngFor="let field of fields">{{field.display_name}}</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let item of records; let i = index">
+            <td>{{skip + i + 1}}</td>
+            <td *ngFor="let field of fields">
+              <app-field-value
+                [class.success]="field.type === 'datetime' || field.type === 'date'"
+                [class.primary]="field.type === 'int' || field.type === 'double'"
+                [field]="field"
+                [value]="item[field.name]"
+                locationAsLink
+              ></app-field-value>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+
+      <ng-template #noData>
+        <no-data-placeholder-widget [small]="true">
+          {{c['noDataMsg']}}
+        </no-data-placeholder-widget>
+      </ng-template>
+    </div>
+
+    <div *ngIf="records.length" class="card-footer">
+      <div class="grow"></div>
+      <pui-table-pagination
+        [count]="count"
+        [pageSize]="pageSize"
+        (selects)="page$.next($event)"
+      ></pui-table-pagination>
+      <div class="grow"></div>
+    </div>
+  </ng-container>
+</div>

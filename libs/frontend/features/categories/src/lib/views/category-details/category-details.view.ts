@@ -1,21 +1,26 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @angular-eslint/component-class-suffix */
 /* eslint-disable @angular-eslint/component-selector */
-import { Component, Input, OnInit, TemplateRef } from '@angular/core';
+import { Component, Input, TemplateRef } from '@angular/core';
 import { Category } from '@pestras/shared/data-model';
-import { ContraService } from '@pestras/frontend/util/contra';
-import { PuiTableColumnType, PuiTableConfig } from '@pestras/frontend/ui';
 import { Dialog, DialogRef } from '@angular/cdk/dialog';
+import { FormControl } from '@angular/forms';
+import { BehaviorSubject } from 'rxjs';
 
 @Component({
   selector: 'app-category-details',
   templateUrl: './category-details.view.html'
 })
-export class CategoryDetailsView implements OnInit {
+export class CategoryDetailsView {
 
   private dialogRef: DialogRef | null = null;
 
-  tableConfig!: PuiTableConfig<Category>;
+  readonly search = new FormControl<string>('', { nonNullable: true });
+  readonly page$ = new BehaviorSubject<number>(1);
+
+  count = 0;
+  skip = 0;
+  pageSize = 10;
 
   @Input({ required: true })
   bp!: string;
@@ -25,32 +30,8 @@ export class CategoryDetailsView implements OnInit {
   editable = false;
 
   constructor(
-    private readonly contra: ContraService,
     private readonly dialog: Dialog
   ) { }
-
-  ngOnInit(): void {
-
-    const c = this.contra.content();
-
-    this.tableConfig = {
-      indexing: true,
-      pagination: 10,
-      search: true,
-      sort: ['title'],
-      columns: [
-        { key: 'title', header: c['title'] },
-        { key: 'ordinal', header: c['ordinal'], type: PuiTableColumnType.BOOL }
-      ]
-    };
-
-    if (this.selected.ordinal)
-      this.tableConfig.columns.push({ key: 'value', header: c['value'] });
-
-
-    if (this.editable)
-      this.tableConfig.columns.push({ key: 'edit', header: c['edit'], icon: 'edit', type: PuiTableColumnType.ACTION });
-  }
 
   openDialog(ref: TemplateRef<any>, data?: any) {
     this.dialogRef = this.dialog.open(ref, { data });
@@ -61,5 +42,15 @@ export class CategoryDetailsView implements OnInit {
       this.dialogRef.close();
       this.dialogRef = null;
     }
+  }
+
+  filterBranches = (row: Category, search: string) => {
+    return search ? row.title.includes(search) : true
+  }
+
+  sliceBranches = (branches: Category[], page: number) => {
+    this.count = branches.length;
+    this.skip = (page - 1) * this.pageSize
+    return branches.slice(this.skip, this.skip + this.pageSize);
   }
 }

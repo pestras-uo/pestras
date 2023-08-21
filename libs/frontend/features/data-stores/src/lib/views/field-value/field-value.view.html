@@ -5,12 +5,24 @@
   </ng-container>
 
   <!-- location -->
-  <div *ngSwitchCase="'location'" class="h-8">
-    <pui-google-map
-      [position]="value"
-      [markers]="[{ position: value, label: '' }]"
-    ></pui-google-map>
-  </div>
+  <ng-container *ngSwitchCase="'location'">
+    <a
+      *ngIf="locationAsLink else locMap"
+      class="btn btn-primary btn-small btn-icon btn-round"
+      [href]="value | googleMapLink"
+      target="_blank"
+    >
+      <i size="small" puiIcon="location_on"></i>
+    </a>
+    <ng-template #locMap>
+      <div class="h-8">
+        <pui-google-map
+          [position]="value"
+          [markers]="[{ position: value, label: '' }]"
+        ></pui-google-map>
+      </div>
+    </ng-template>
+  </ng-container>
 
   <!-- image -->
   <img
@@ -21,5 +33,7 @@
   />
 
   <!-- others -->
-  <p *ngSwitchDefault="">{{value | fieldValue: field | async}}</p>
+  <ng-container *ngSwitchDefault
+    >{{value | fieldValue: field | async}}</ng-container
+  >
 </ng-container>

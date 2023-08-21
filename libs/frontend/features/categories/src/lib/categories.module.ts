@@ -6,7 +6,7 @@ import { BpCategoriesPipe } from './pipes/bp-categories.pipe';
 import { AddCategoryModal } from './modals/add-category/add-category.modal';
 import { UpdateCategoryModal } from './modals/update-category/update-category.modal';
 import { ReactiveFormsModule } from '@angular/forms';
-import { PuiCheckInput, PuiIcon, PuiPreloaderModule, PuiTableModule } from '@pestras/frontend/ui';
+import { PuiCheckInput, PuiIcon, PuiPreloaderModule, PuiTableModule, PuiUtilPipesModule } from '@pestras/frontend/ui';
 import { ContraModule } from '@pestras/frontend/util/contra';
 import { CategoriesListView } from './views/categories-list/categories-list.view';
 import { CategoryDetailsView } from './views/category-details/category-details.view';
@@ -39,6 +39,7 @@ import { StateModule } from '@pestras/frontend/state';
     PuiPreloaderModule,
     PuiIcon,
     PuiTableModule,
+    PuiUtilPipesModule,
     // Util
     ContraModule,
     // Widgets

@@ -43,33 +43,15 @@
 
     <main class="pi-8">
       <div class="container" *ngIf="branches$ | async as branches">
-        <div class="toolbar mbe-6">
+        <!-- <div class="toolbar mbe-6">
           <h2 mbe>{{c['branchesOrgunits']}}</h2>
-        </div>
+        </div> -->
 
         <div class="content">
           <section class="col-span-3 row-span-3">
-            <pui-table
-              class="h-fit"
-              [config]="tableConfig"
-              (rowClick)="selects.emit($event.serial)"
-              [list]="branches"
-              [templates]="{ name: nameTemp }"
-              [searchPlaceholder]="c['search']"
-            >
-              <button
-                class="action btn-icon btn-small"
-                (click)="add.emit(orgunit.serial)"
-              >
-                <i size="small" puiIcon="add"></i>
-              </button>
-
-              <no-data-placeholder-widget
-                [actionName]="c['addNew']"
-                (action)="add.emit(orgunit.serial)"
-                >{{c['noDataMsg']}}</no-data-placeholder-widget
-              >
-            </pui-table>
+            <pestras-orgunits-table
+              [parent]="orgunit.serial"
+            ></pestras-orgunits-table>
           </section>
 
           <section class="card col-4 row-1 minw-6">
