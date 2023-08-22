@@ -1,27 +1,37 @@
 <main class="p-10 relative" *contra="let c">
-
   <div class="container tight">
-
     <div class="toolbar mbe-8">
       <h2>{{c['aggregationSettings']}}</h2>
     </div>
 
     <div class="card" *ngIf="editFrom && editable; else pipe">
       <div class="card-body">
-        <app-data-store-input [formControl]="formControl"></app-data-store-input>
+        <app-data-store-input
+          [formControl]="formControl"
+        ></app-data-store-input>
       </div>
       <div class="card-footer">
-        <button class="btn-primary btn-round" (click)="save(c, formControl.value)">{{c['add']}}</button>
+        <button
+          class="btn-primary btn-round"
+          (click)="save(c, formControl.value)"
+        >
+          {{c['add']}}
+        </button>
       </div>
     </div>
 
     <ng-template #pipe>
-      <app-aggr-pipeline *ngIf="from$ | async as from" class="mbe-6" [from]="from" [dataStore]="dataStore"
-        [formControl]="pipeline" (done)="save(c, from.serial)"></app-aggr-pipeline>
+      <app-aggr-pipeline
+        *ngIf="from$ | async as from"
+        class="mbe-6"
+        [from]="from"
+        [dataStore]="dataStore"
+        [formControl]="pipeline"
+        [editable]="editable"
+        (done)="save(c, from.serial)"
+      ></app-aggr-pipeline>
     </ng-template>
 
     <pui-preloader *ngIf="preloader" bg="bg-surface3"></pui-preloader>
-
   </div>
-
 </main>

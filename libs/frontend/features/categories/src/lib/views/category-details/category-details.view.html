@@ -9,7 +9,7 @@
     <button
       *ngIf="editable"
       class="btn-icon btn-round"
-      (click)="openDialog(updateModal)"
+      (click)="openDialog(updateModal, selected)"
     >
       <i class="bg-white" size="small" puiIcon="edit_fill"></i>
     </button>
@@ -31,6 +31,9 @@
           />
           <i puiIcon="search" size="small"></i>
         </div>
+        <button class="btn-icon btn-round" (click)="openDialog(addModal)">
+          <i puiIcon="add"></i>
+        </button>
       </div>
 
       <div class="card-body">
@@ -100,9 +103,9 @@
     ></app-add-category>
   </ng-template>
 
-  <ng-template #updateModal>
+  <ng-template #updateModal let-data>
     <app-update-category
-      [category]="selected"
+      [category]="data"
       (closes)="closeDialog()"
     ></app-update-category>
   </ng-template>

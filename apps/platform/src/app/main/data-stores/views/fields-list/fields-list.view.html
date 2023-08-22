@@ -51,16 +51,15 @@
             ></app-field-details>
           </div>
 
-          <div *ngIf="!field.system && isBuild" class="card-footer">
+          <div *ngIf="!field.system && editable" class="card-footer">
             <button
-              *ngIf="dataStore.type === 'table' && editable"
+              *ngIf="dataStore.type === 'table' && isBuild"
               class="btn-round"
               (click)="remove(c, field.name)"
             >
               {{c['delete']}}
             </button>
             <button
-              *ngIf="editable"
               class="btn-round btn-outline"
               (click)="editForm(updateFieldModal, field)"
             >
@@ -72,7 +71,9 @@
     </ng-container>
 
     <ng-template #noData>
-      <no-data-placeholder-widget>{{c['noDataMsg']}}</no-data-placeholder-widget>
+      <no-data-placeholder-widget
+        >{{c['noDataMsg']}}</no-data-placeholder-widget
+      >
     </ng-template>
   </ng-container>
 
