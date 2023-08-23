@@ -2,15 +2,15 @@ import { Attachment } from "@pestras/shared/data-model";
 import { Serial } from '@pestras/shared/util';
 import { AttachmentsModel } from ".";
 
-export type CreateAttachmentInput = { entity: string; name: string; path: string; };
+export type CreateAttachmentInput = Pick<Attachment, 'entity' | 'parent' | 'name' | 'path'>;
 
 export async function create(
   this: AttachmentsModel,
   input: CreateAttachmentInput
 ) {
   const attachment: Attachment = {
-    serial: Serial.gen("ACH"),
     ...input,
+    serial: Serial.gen("ACH"),
     upload_date: new Date()
   }
 

@@ -23,8 +23,6 @@ export class BarChartView implements OnChanges {
   data!: ChartDataLoad;
 
   ngOnChanges() {
-    console.log(this.conf);
-    console.log(this.data);
     const { categories, series, valueFields } = this.init(this.conf.options);
 
     this.render(this.conf.options, categories as string[], series, valueFields as Field[]);

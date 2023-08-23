@@ -26,8 +26,8 @@ export class AttachmentsState extends StatorGroupState<Attachment> {
     return this.service.getBySerial({ serial });
   }
 
-  create(entity: string, name: string, file: File) {
-    return this.service.create({ entity, name, attachment: file })
+  create(entity: string, name: string, parent: string, file: File) {
+    return this.service.create({ entity, name, parent, attachment: file })
       .pipe(tap(res => this._insert(res)));
   }
 

@@ -9,9 +9,14 @@ import { Serial } from '@pestras/shared/util';
 
 const attachmentsStorage = multer.diskStorage({
   destination: function (req: Request, __, cb) {
-    const dir = path.join(config.uploadsDir, 'attachments', req.body.entity);
-    fs.mkdirSync(dir, { recursive: true });
-    cb(null, dir);
+    try {
+      const dir = path.join(config.uploadsDir, 'attachments', req.body.parent, req.body.entity);
+      fs.mkdirSync(dir, { recursive: true });
+      cb(null, dir);
+      
+    } catch (error) {
+      cb(error, null);
+    }
   },
   filename: function (_, file, cb) {
     cb(null, Serial.gen("DOC") + "." + (extension(file.mimetype) || 'txt'));

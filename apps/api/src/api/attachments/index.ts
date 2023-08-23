@@ -36,7 +36,7 @@ export const attachmentsRoutes = Router()
     controller.remove
   )
   .delete(
-    '/entity/:entity',
+    '/:parent/:entity',
     apiAuth([Role.AUTHOR, Role.REPORTER]),
     controller.removeByEntity
   )

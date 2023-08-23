@@ -28,7 +28,7 @@ export const controller = {
 
   async create(req: AttachmentsApi.CreateReq, res: AttachmentsApi.CreateRes, next: NextFunction) {
     try {
-      const file = req.file ? '/uploads/attachments/' + req.body.entity + '/' + req.file.filename : null;
+      const file = req.file ? '/uploads/attachments/' + req.body.parent + '/' + req.body.entity + '/' + req.file.filename : null;
   
       if (!file)
         throw new HttpError(HttpCode.NOT_FOUND, 'attachmentNotFound');
@@ -36,6 +36,7 @@ export const controller = {
       res.json(await attachmentsModel.create({
         entity: req.body.entity,
         name: req.body.name,
+        parent: req.body.parent,
         path: file
       }));
       
@@ -61,7 +62,7 @@ export const controller = {
         return res.json(true);
   
       const filename = attachment.path.slice(attachment.path.lastIndexOf('/') + 1);
-      fs.unlinkSync(path.join(config.uploadsDir, 'attachments', attachment.entity, filename));
+      fs.unlinkSync(path.join(config.uploadsDir, 'attachments', attachment.parent, attachment.entity, filename));
   
       res.json(await attachmentsModel.remove(attachment.serial));
       
@@ -74,7 +75,7 @@ export const controller = {
     try {
       res.json(await attachmentsModel.removeByEntity(req.params.entity));
       
-      fs.unlinkSync(path.join(config.uploadsDir, 'attachments', req.params.entity));
+      fs.unlinkSync(path.join(config.uploadsDir, 'attachments', req.params.parent, req.params.entity));
     } catch (error) {
       next(error);
     }

@@ -29,7 +29,7 @@ export namespace AttachmentsApi {
   export namespace Create {
     export const REQ_PATH = basePath + '';
 
-    export type Body = Pick<Attachment, 'entity' | 'name'> & { attachment: File }
+    export type Body = Pick<Attachment, 'entity' | 'name' | 'parent'> & { attachment: File }
 
     export type Response = Attachment;
   }

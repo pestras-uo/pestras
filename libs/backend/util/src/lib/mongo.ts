@@ -25,9 +25,7 @@ class DB extends Core {
     this.pubSub.emit('uo-db-connected', conn.db(config.dbUoName));
     this.pubSub.emit('data-db-connected', conn.db(config.dbUoDataName));
   
-    process
-      .once('SIGTERM', () => this.closeConn(conn))
-      .once('SIGINT', () => this.closeConn(conn));
+    process.once('exit', () => this.closeConn(conn));
   }
   
   closeConn(conn: MongoClient) {

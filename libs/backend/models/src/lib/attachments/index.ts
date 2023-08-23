@@ -5,6 +5,8 @@ import { create } from "./create";
 import { remove, removeByEntity } from "./remove";
 import { updateName } from "./update";
 
+export { CreateAttachmentInput } from './create';
+
 export class AttachmentsModel extends Model<Attachment> {
 
   getBySerial = getBySerial.bind(this);

@@ -3,6 +3,7 @@
 import { Attachment } from "@pestras/shared/data-model";
 import { Request, Response } from "express";
 import { UserSession } from "../../auth";
+import { CreateAttachmentInput } from "@pestras/backend/models";
 
 export namespace AttachmentsApi {
 
@@ -12,7 +13,7 @@ export namespace AttachmentsApi {
   export type GetByEntityReq = Request<{ entity: string; }>;
   export type GetByEntityRes = Response<Attachment[], UserSession>; 
 
-  export type CreateReq = Request<any, any, { entity: string; name: string; attachment: any; }>;
+  export type CreateReq = Request<any, any, CreateAttachmentInput>;
   export type CreateRes = Response<Attachment, UserSession>; 
 
   export type UpdateNameReq = Request<{ serial: string; }, any, { name: string; }>;
@@ -21,6 +22,6 @@ export namespace AttachmentsApi {
   export type RemoveReq = Request<{ serial: string; }>;
   export type RemoveRes = Response<boolean, UserSession>; 
 
-  export type RemoveByEntityReq = Request<{ entity: string; }>;
-  export type RemoveByEntityRes = Response<boolean, UserSession>; 
+  export type RemoveByEntityReq = Request<{ parent: string; entity: string; }>;
+  export type RemoveByEntityRes = Response<boolean, UserSession>;
 }

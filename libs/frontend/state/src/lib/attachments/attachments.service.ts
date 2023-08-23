@@ -30,6 +30,7 @@ export class AttachmentService {
 
     data.set('name', body.name);
     data.set('entity', body.entity);
+    data.set('parent', body.parent);
     data.set('attachment', body.attachment);
 
     return this.http.post<AttachmentsApi.Create.Response>(path, data);

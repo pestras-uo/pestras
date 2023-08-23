@@ -129,7 +129,7 @@ export const controller = {
       }
   
       // delete attachments
-      fs.unlinkSync(path.join(config.uploadsDir, 'attachments', req.params.record));
+      fs.unlinkSync(path.join(config.uploadsDir, 'attachments', req.params.serial, req.params.record));
       
     } catch (error) {
       next(error);

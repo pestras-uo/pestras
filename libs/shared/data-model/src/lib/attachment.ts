@@ -4,4 +4,5 @@ export interface Attachment {
   path: string;
   name: string;
   upload_date: Date;
+  parent: string;
 }

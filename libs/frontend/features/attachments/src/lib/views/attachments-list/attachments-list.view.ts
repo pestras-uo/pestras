@@ -82,7 +82,7 @@ export class AttachmentsListView implements OnInit {
 
     const data = this.form.getRawValue();
 
-    this.state.create(this.record['serial'], data.name, data.attachment)
+    this.state.create(this.record['serial'], data.name, this.dataStore.serial, data.attachment)
       .subscribe({
         next: () => {
           this.toast.msg(c['success'].default, { type: 'success' });

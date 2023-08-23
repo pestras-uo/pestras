@@ -7,7 +7,8 @@ export enum attachmentsValidators {
 
 new Validall(attachmentsValidators.CREATE, {
   entity: { $type: 'string' },
-  name: { $type: 'string' }
+  name: { $type: 'string' },
+  parent: { $type: 'string' }
 });
 
 new Validall(attachmentsValidators.UPDATE_NAME, {
