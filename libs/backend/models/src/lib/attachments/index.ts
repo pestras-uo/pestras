@@ -1,7 +1,7 @@
 import { Attachment } from "@pestras/shared/data-model";
 import { Model } from "../model";
 import { getByEntity, getBySerial } from "./read";
-import { create } from "./create";
+import { create, createMany } from "./create";
 import { remove, removeByEntity } from "./remove";
 import { updateName } from "./update";
 
@@ -13,6 +13,7 @@ export class AttachmentsModel extends Model<Attachment> {
   getByEntity = getByEntity.bind(this);
 
   create = create.bind(this);
+  createMany = createMany.bind(this);
 
   updateName = updateName.bind(this);
 

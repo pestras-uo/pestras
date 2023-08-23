@@ -13,7 +13,7 @@ const attachmentsStorage = multer.diskStorage({
       const dir = path.join(config.uploadsDir, 'attachments', req.body.parent, req.body.entity);
       fs.mkdirSync(dir, { recursive: true });
       cb(null, dir);
-      
+
     } catch (error) {
       cb(error, null);
     }
@@ -44,7 +44,7 @@ const logoStorage = multer.diskStorage({
     cb(null, dir);
   },
   filename: function (_, file, cb) {
-    console.log({file});
+    console.log({ file });
     if (['jpeg', 'jpg', 'png', 'webp'].includes(extension(file.mimetype) as string))
       cb(null, Serial.gen("LGO") + "." + (extension(file.mimetype)));
     else
@@ -63,13 +63,38 @@ const imagesStorage = multer.diskStorage({
     if (['jpeg', 'jpg', 'png', 'webp'].includes(extension(file.mimetype) as string))
       cb(null, Serial.gen("IMG") + "." + (extension(file.mimetype)));
     else
-      cb(new HttpError(HttpCode.BAD_REQUEST, 'invalidFileType'), '')
+      cb(new HttpError(HttpCode.BAD_REQUEST, 'invalidFileType'), '');
   }
 });
 
-const attachmentsUpload = multer({ storage: attachmentsStorage, limits: { fileSize: config.maxDocumentUploadSize } });
-const avatarUpload = multer({ storage: avatarStorage, limits: { fileSize: config.maxAvatarUploadSize } });
-const logoUpload = multer({ storage: logoStorage, limits: { fileSize: config.maxAvatarUploadSize } });
-const imagesUpload = multer({ storage: imagesStorage, limits: { fileSize: config.maxImageUploadSize } });
+const contentStorage = multer.diskStorage({
+  destination: function (req, __, cb) {
+    const dir = path.join(config.uploadsDir, 'images', req.params.entity, 'tmp');
+    fs.mkdirSync(dir, { recursive: true });
+    cb(null, dir);
+  },
+  filename: function (_, file, cb) {
+    if (['jpeg', 'jpg', 'png', 'webp'].includes(extension(file.mimetype) as string))
+      cb(null, Serial.gen("IMG") + "." + (extension(file.mimetype)));
+    else
+      cb(new HttpError(HttpCode.BAD_REQUEST, 'invalidFileType'), '');
+  }
+});
 
-export { attachmentsUpload, avatarUpload, logoUpload, imagesUpload };
+const tmpStorage = multer.diskStorage({
+  destination: function (req, __, cb) {
+    const dir = path.join(config.uploadsDir, 'tmp');
+    fs.mkdirSync(dir, { recursive: true });
+    cb(null, dir);
+  },
+  filename: function (_, file, cb) {
+    cb(null, Serial.gen("DOC") + "." + (extension(file.mimetype) || 'txt'));
+  }
+});
+
+export const attachmentsUpload = multer({ storage: attachmentsStorage, limits: { fileSize: config.maxDocumentUploadSize } });
+export const tmpUpload = multer({ storage: tmpStorage, limits: { fileSize: config.maxDocumentUploadSize } });
+export const avatarUpload = multer({ storage: avatarStorage, limits: { fileSize: config.maxAvatarUploadSize } });
+export const logoUpload = multer({ storage: logoStorage, limits: { fileSize: config.maxAvatarUploadSize } });
+export const imagesUpload = multer({ storage: imagesStorage, limits: { fileSize: config.maxImageUploadSize } });
+export const contentUpload = multer({ storage: contentStorage, limits: { fileSize: config.maxImageUploadSize } });

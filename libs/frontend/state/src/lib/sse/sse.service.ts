@@ -9,6 +9,7 @@ import { EnvService } from '@pestras/frontend/env';
 @Injectable()
 export class SSEService {
   private es: EventSource | null = null;
+  private reconnect = false;
 
   constructor(
     private envServ: EnvService,
@@ -22,6 +23,7 @@ export class SSEService {
   }
 
   protected init() {
+    this.reconnect = true;
     this.es = new EventSource(this.envServ.env.api + '/events', { withCredentials: true });
 
     this.es.addEventListener('activity', (e: MessageEvent<string>) => {
@@ -35,9 +37,16 @@ export class SSEService {
         console.error(e.data);
       }
     });
+
+    this.es.addEventListener('error', e => {
+      console.warn(e.type);
+      if (this.reconnect)
+        setTimeout(() => this.reconnect && this.init(), 5000);
+    });
   }
 
   protected end() {
+    this.reconnect = false;
     if (this.es) {
       this.es.close();
       this.es = null;

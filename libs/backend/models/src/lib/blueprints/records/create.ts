@@ -1,12 +1,12 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { DataStore, DataStoreState, DataStoreType, EntityTypes, parseValue, validateConstraint, validateValueType, WorkflowState, User } from "@pestras/shared/data-model";
-import { Serial } from '@pestras/shared/util';
 import { DataRecordsModel } from ".";
 import { HttpError, HttpCode } from "@pestras/backend/util";
 
 export async function create(
   this: DataRecordsModel,
   ds: DataStore,
+  recSerial: string,
   data: any,
   issuer: User
 ) {
@@ -57,7 +57,7 @@ export async function create(
 
   // add system fields
   const date = new Date();
-  entry.serial = Serial.gen('RCD');
+  entry.serial = recSerial;
   entry.topic = data.topic ?? null;
   entry.workflow = WorkflowState.DRAFT;
   entry.owner = issuer.serial;

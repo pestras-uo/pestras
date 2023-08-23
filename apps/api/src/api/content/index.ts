@@ -1,7 +1,7 @@
 import { Router } from "express";
 import { apiAuth } from "../../middlewares/auth";
 import { controller } from "./controller";
-import { imagesUpload } from "../../middlewares/upload";
+import { contentUpload } from "../../middlewares/upload";
 import { validate } from "../../middlewares/validate";
 import { ContentValidators } from "./validators";
 
@@ -14,7 +14,7 @@ export const contentViewsRoutes = Router()
   .post(
     '/:entity/views',
     apiAuth(),
-    imagesUpload.single('image'),
+    contentUpload.single('image'),
     validate(ContentValidators.ADD_VIEW),
     controller.addView
   )
@@ -33,7 +33,7 @@ export const contentViewsRoutes = Router()
   .put(
     '/:entity/views/:view/content',
     apiAuth(),
-    imagesUpload.single('image'),
+    contentUpload.single('image'),
     validate(ContentValidators.UPDATE_VIEW_CONTENT),
     controller.updateViewContent
   )

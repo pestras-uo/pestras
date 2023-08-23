@@ -18,3 +18,18 @@ export async function create(
 
   return attachment;
 }
+
+export async function createMany(
+  this: AttachmentsModel,
+  inputs: CreateAttachmentInput[]
+) {
+  const attachments: Attachment[] = inputs.map(i => ({
+    ...i,
+    serial: Serial.gen("ACH"),
+    upload_date: new Date()
+  }))
+
+  await this.col.insertMany(attachments);
+
+  return true;
+}

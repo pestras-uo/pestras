@@ -1,7 +1,7 @@
 import { Role } from "@pestras/shared/data-model";
 import { Router } from "express";
 import { apiAuth } from "../../../middlewares/auth";
-import { imagesUpload } from "../../../middlewares/upload";
+import { tmpUpload } from "../../../middlewares/upload";
 import { validate } from "../../../middlewares/validate";
 import { controller } from "./controller";
 import { RecordsValidators } from "./validators";
@@ -25,14 +25,14 @@ export const recordsRoutes = Router({ mergeParams: true })
   .post(
     '/',
     apiAuth([Role.AUTHOR, Role.AUTHOR]),
-    imagesUpload.any(),
+    tmpUpload.any(),
     validate(RecordsValidators.CREATE),
     controller.create
   )
   .put(
     '/:record',
     apiAuth([Role.AUTHOR, Role.AUTHOR]),
-    imagesUpload.any(),
+    tmpUpload.any(),
     validate(RecordsValidators.UPDATE),
     controller.update
   )

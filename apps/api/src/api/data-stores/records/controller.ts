@@ -1,11 +1,12 @@
 import { dataRecordsModel, dataStoresModel } from "../../../models";
-import fs from 'fs';
+import fs from 'fs-extra';
 import path from 'path';
 import config from "../../../config";
 import { RecordsApi } from "./types";
 import { HttpError, HttpCode } from "@pestras/backend/util";
 import { DataStore } from "@pestras/shared/data-model";
 import { NextFunction } from 'express';
+import { Serial } from "@pestras/shared/util";
 
 export const controller = {
 
@@ -46,14 +47,26 @@ export const controller = {
       
       if (!ds)
         throw new HttpError(HttpCode.NOT_FOUND, 'dataStoreNotFound');
-  
+
+      const serial = Serial.gen("RCD");
       const files = req.files as Express.Multer.File[] | undefined;
   
-      if (files)
-        for (const file of files)
-          req.body[file.fieldname] = `/uploads/images/${req.params.serial}/${file.filename}`;
+      if (files && files.length) {
+        const paths: Record<string, string> = {};
+
+        for (const file of files) {
+          const tmpPath = path.join(config.uploadsDir, 'tmp', file.filename);
+          const destPath = path.join(config.uploadsDir, 'fields', req.params.serial, serial)
+
+          await fs.copy(tmpPath, destPath);
+
+          paths[file.fieldname] = `/uploads/fields/${req.params.serial}/${serial}/${file.filename}`;
+        }
+
+        Object.assign(req.body, paths);
+      }
   
-      res.json(await dataRecordsModel.create(ds, req.body, res.locals.issuer));
+      res.json(await dataRecordsModel.create(ds, serial, req.body, res.locals.issuer));
 
     } catch (error) {
       next(error);
@@ -78,10 +91,19 @@ export const controller = {
       const files = req.files as Express.Multer.File[] | undefined;
   
       if (files) {
+        const paths: Record<string, string> = {};
+
         for (const file of files) {
+          const tmpPath = path.join(config.uploadsDir, 'tmp', file.filename);
+          const destPath = path.join(config.uploadsDir, 'fields', req.params.serial, req.params.record);
+          
+          await fs.copy(tmpPath, destPath);
+          paths[file.fieldname] = `/uploads/fields/${req.params.serial}/${req.params.record}/${file.filename}`;
+          
           imgsToRemove.push(file.fieldname);
-          req.body.data[file.fieldname] = `/uploads/images/${req.params.serial}/${file.filename}`;
         }
+
+        Object.assign(req.body, paths);
       }
   
       res.json(await dataRecordsModel.update(ds, req.params.record, req.body, res.locals.issuer.serial));
@@ -91,9 +113,8 @@ export const controller = {
   
         if (image) {
           const filename = image.slice(image.lastIndexOf('/') + 1);
-          fs.unlinkSync(path.join(config.uploadsDir, 'images', filename));
+          await fs.unlink(path.join(config.uploadsDir, 'fields', req.params.serial, req.params.record, filename));
         }
-  
       }
 
     } catch (error) {
@@ -124,7 +145,7 @@ export const controller = {
   
         if (image) {
           const filename = image.slice(image.lastIndexOf('/') + 1);
-          fs.unlinkSync(path.join(config.uploadsDir, 'images', req.params.serial, filename));
+          await fs.remove(path.join(config.uploadsDir, 'fields', req.params.serial, filename));
         }
       }
   

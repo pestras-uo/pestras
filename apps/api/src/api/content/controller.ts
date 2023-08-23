@@ -20,7 +20,7 @@ export const controller = {
 
   async addView(req: ContentViewsApi.AddViewReq, res: ContentViewsApi.AddViewRes, next: NextFunction) {
     try {
-      const file = req.file ? `/uploads/images/${req.file.filename}` : null;
+      const file = req.file ? `/uploads/images/${req.params.entity}/${req.file.filename}` : null;
 
       if (file)
         req.body.content = file;
@@ -62,7 +62,7 @@ export const controller = {
       if (!view)
         throw new HttpError(HttpCode.NOT_FOUND, 'viewNotFound');
 
-      const file = req.file ? `/uploads/images/${req.file.filename}` : null;
+      const file = req.file ? `/uploads/images/${req.params.entity}/${req.file.filename}` : null;
 
       if (file)
         req.body.content = file;
@@ -73,7 +73,7 @@ export const controller = {
 
       if (view.type === ContentViewType.IMAGE && view.content) {
         const filename = view.content.slice(view.content.lastIndexOf('/') + 1);
-        fs.unlinkSync(path.join(config.uploadsDir, 'images', filename));
+        fs.unlinkSync(path.join(config.uploadsDir, 'images', req.params.entity, filename));
       }
 
     } catch (error) {
@@ -93,7 +93,7 @@ export const controller = {
 
       if (view.type === ContentViewType.IMAGE && view.content) {
         const filename = view.content.slice(view.content.lastIndexOf('/') + 1);
-        fs.unlinkSync(path.join(config.uploadsDir, 'images', filename));
+        fs.unlinkSync(path.join(config.uploadsDir, 'images', req.params.entity, filename));
       }
 
     } catch (error) {
