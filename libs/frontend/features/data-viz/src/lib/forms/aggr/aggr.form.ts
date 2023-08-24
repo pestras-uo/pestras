@@ -5,7 +5,6 @@
 import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
 import { AbstractControl, ControlValueAccessor, FormBuilder, FormControl, NG_VALIDATORS, NG_VALUE_ACCESSOR, ValidationErrors, Validators } from '@angular/forms';
 import { DataRecord, DataStore, DataVizAggrStage, Field, aggrRecords, createField } from '@pestras/shared/data-model';
-import { RegionsState } from '@pestras/frontend/state';
 import { objUtil } from '@pestras/shared/util';
 import { untilDestroyed } from '@pestras/frontend/ui'; 
 
@@ -51,8 +50,7 @@ export class AggrForm implements ControlValueAccessor, OnInit, OnChanges {
   fieldsChange = new EventEmitter<Field[]>();
 
   constructor(
-    private fb: FormBuilder,
-    private regionsState: RegionsState
+    private fb: FormBuilder
   ) { }
 
   ngOnChanges(changes: SimpleChanges): void {
@@ -60,21 +58,6 @@ export class AggrForm implements ControlValueAccessor, OnInit, OnChanges {
       this.stages = [];
       setTimeout(() => this.fieldsChange.emit(this.dataStore.fields));
     }
-
-    // const regionFields = this.dataStore.fields.filter(f => f.type.name === 'reference' && f.type.refType === 'region');
-
-    // if (regionFields.length) {
-    //   this.recordsList = this.records.map(r => {
-    //     const record = { ...r };
-
-    //     for (const field of regionFields)
-    //       record[field.name] = this.regionsState.get(r[field.name])?.name;
-
-    //     return record;
-    //   });
-    // } else {
-    //   this.recordsList = this.records;
-    // }
 
     this.recordsList = this.records;
   }

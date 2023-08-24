@@ -5,7 +5,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { AbstractControl, ControlValueAccessor, FormBuilder, NG_VALIDATORS, NG_VALUE_ACCESSOR, ValidationErrors, Validators } from '@angular/forms';
 import { Field, MapDataVizOptions, Region, TypeKind } from '@pestras/shared/data-model';
-import { DataStoresState } from '@pestras/frontend/state';
 import { objUtil } from '@pestras/shared/util';
 import { untilDestroyed } from '@pestras/frontend/ui';
 
@@ -73,7 +72,6 @@ export class MapForm implements OnInit, ControlValueAccessor {
   fcClass = '';
 
   constructor(
-    private dsState: DataStoresState,
     private fb: FormBuilder
   ) { }
 

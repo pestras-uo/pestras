@@ -15,19 +15,22 @@ class DB extends Core {
 
     if (!config.dbUrl)
       throw new Error('database url not provided!');
-  
+
     const client = new MongoClient(config.dbUrl, { serverApi: ServerApiVersion.v1 });
     const conn = await client.connect();
-  
+
     console.log("connected to database successfully");
-  
+
     this.pubSub.emit('ad-db-connected', conn.db(config.dbUoAdName));
     this.pubSub.emit('uo-db-connected', conn.db(config.dbUoName));
     this.pubSub.emit('data-db-connected', conn.db(config.dbUoDataName));
-  
-    process.once('exit', () => this.closeConn(conn));
+
+    process
+      .once('exit', () => this.closeConn(conn))
+      .once('SIGTERM', () => this.closeConn(conn))
+      .once('SIGINT', () => this.closeConn(conn));
   }
-  
+
   closeConn(conn: MongoClient) {
     if (conn) {
       console.log('closing db connection');

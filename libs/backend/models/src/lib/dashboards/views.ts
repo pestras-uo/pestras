@@ -88,7 +88,6 @@ export async function updateView(
   await this.col.updateOne({ serial, 'views.serial': view }, {
     $set: {
       'views.$.title': input.title,
-      'views.$.sub_title': input.sub_title,
       'views.$.size': input.size,
       'views.$.mode': input.mode,
       last_modified: date
@@ -121,7 +120,7 @@ export async function updateViewDataViz(
 
   await this.col.updateOne({ serial, 'views.serial': view }, {
     $set: {
-      'view.$.data_viz': dataViz,
+      'views.$.data_viz': dataViz,
       last_modified: date
     }
   });

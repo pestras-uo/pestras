@@ -38,7 +38,6 @@ new Validall(dashboardsValidators.UPDATE_SLIDE, {
 new Validall(dashboardsValidators.ADD_VIEW, {
   title: { $type: 'string' },
   slide: { $type: 'string' },
-  sub_title: { $type: 'string', $default: '' },
   mode: { $enum: ['light', 'dark'], $default: 'light' },
   size: {
     x: { $enum: [3,4,6,8,9,12] },
@@ -52,7 +51,6 @@ new Validall(dashboardsValidators.ORDER_VIEWS, {
 
 new Validall(dashboardsValidators.UPDATE_VIEW, {
   title: { $type: 'string' },
-  sub_title: { $type: 'string', $default: '' },
   mode: { $enum: ['light', 'dark'], $default: 'light' },
   size: {
     x: { $enum: [3,4,6,8,9,12] },

@@ -18,7 +18,6 @@ export class DashboardSlideComponent implements OnChanges {
   readonly form = this.fb.nonNullable.group({
     title: ['', Validators.required],
     slide:'',
-    sub_title: '',
     data_viz: '',
     size: this.fb.nonNullable.group({
       x: this.fb.nonNullable.control<DashboardViewSize['x']>(4),
@@ -83,7 +82,6 @@ export class DashboardSlideComponent implements OnChanges {
   openDialog(tmp: TemplateRef<any>, view?: DashboardSlideView) {
     if (view) {
       this.form.controls.title.setValue(view.title);
-      this.form.controls.sub_title.setValue(view.sub_title || '');
       this.form.controls.size.setValue(view.size);
       this.form.controls.mode.setValue(view.mode);
     }
@@ -160,7 +158,6 @@ export class DashboardSlideComponent implements OnChanges {
 
     this.state.updateView(this.dashboard.serial, serial, {
       title: data.title,
-      sub_title: data.sub_title,
       size: data.size,
       mode: data.mode
     })

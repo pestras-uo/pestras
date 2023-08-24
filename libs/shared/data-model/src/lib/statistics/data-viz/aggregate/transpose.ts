@@ -22,7 +22,7 @@ export function transposeRecords<T extends Record<string, any>>(data: T[], opt: 
       const g = tMap.get(value)
 
       if (!g)
-        tMap.set(value, []);
+        tMap.set(value, [r]);
       else
         g.push(r);
     }
@@ -33,7 +33,7 @@ export function transposeRecords<T extends Record<string, any>>(data: T[], opt: 
       const g = tMap.get(value);
 
       if (!g)
-        tMap.set(value, []);
+        tMap.set(value, [r]);
       else
         g.push(r);
     }
