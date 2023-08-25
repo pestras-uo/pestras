@@ -26,7 +26,7 @@ import { DataStoresFeatureModule } from '@pestras/frontend/features/data-stores'
 import { RecordsFeatureModule } from '@pestras/frontend/features/data-records';
 import { SessionFeatureModule } from '@pestras/frontend/features/session';
 import { ContraModule } from '@pestras/frontend/util/contra';
-import { PuiCheckInput, PuiHint, PuiIcon, PuiInfiniteScroll, PuiPreloaderModule, PuiSelectInput, PuiTableModule, PuiUtilPipesModule } from '@pestras/frontend/ui';
+import { PuiCheckInput, PuiHint, PuiIcon, PuiInfiniteScroll, PuiMultiSelectInput, PuiPreloaderModule, PuiSelectInput, PuiTableModule, PuiUtilPipesModule } from '@pestras/frontend/ui';
 import { TBgWidget } from '@pestras/frontend/widgets/t-bg';
 import { NoDataPlaceholderWidget } from '@pestras/frontend/widgets/no-data-placeholder';
 import { AvatarWidget } from '@pestras/frontend/widgets/avatar';
@@ -69,6 +69,7 @@ import { AvatarWidget } from '@pestras/frontend/widgets/avatar';
     PuiIcon,
     PuiPreloaderModule,
     PuiSelectInput,
+    PuiMultiSelectInput,
     PuiUtilPipesModule,
     PuiHint,
     PuiCheckInput,

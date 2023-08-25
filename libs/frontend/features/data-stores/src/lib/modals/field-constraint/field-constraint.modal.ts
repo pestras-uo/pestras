@@ -23,7 +23,7 @@ export class FieldConstraintModal implements OnInit {
 
   readonly form = new FormGroup<ConstraintFormModal>({
     values: new FormControl([], { nonNullable: true }),
-    modifiers: new FormControl([], { nonNullable: true }),
+    modifiers: new FormControl(['int', 'string', 'double'], { nonNullable: true }),
     inverse: new FormControl(false, { nonNullable: true })
   });
 
@@ -58,7 +58,6 @@ export class FieldConstraintModal implements OnInit {
     this.form.controls.modifiers.valueChanges
       .pipe(this.ud())
       .subscribe(modifiers => {
-        console.log(modifiers, modifiers.slice(-1)[0]);
         this.type = modifiers.length ? modifiersOutoutTypeMap[modifiers.slice(-1)[0]] : this.field.type;
         this.resetValues();
       });

@@ -1,29 +1,51 @@
-<form *contra="let c" class="card maxw-20 minw-15 shadow-6" [formGroup]="form" (ngSubmit)="add(c)">
-
+<form
+  *contra="let c"
+  class="card maxw-20 minw-15 shadow-6"
+  [formGroup]="form"
+  (ngSubmit)="add(c)"
+>
   <h3 class="card-header">{{c['addUser']}}</h3>
 
   <div class="card-body">
-
     <label for="user-orgunit">{{c['orgunit']}}</label>
     <div class="fc mbe-4">
-      <pui-select-input [list]="orgs$ | async" labelRef="user-orgunit" valueField="serial"
-        formControlName="orgunit"></pui-select-input>
+      <pui-select-input
+        *ngIf="orgs$ | async as orgs"
+        [list]="orgs"
+        labelRef="user-orgunit"
+        valueField="serial"
+        formControlName="orgunit"
+      ></pui-select-input>
     </div>
 
     <div class="flex gap-4 mbe-4">
       <div class="grow">
         <label for="username">{{c['username']}} <b>*</b></label>
-        <div class="fc"
-          [class.invalid]="form.controls['username'].invalid && (form.controls['username'].dirty || form.controls['username'].touched)">
-          <input type="text" id="username" autocomplete="off" formControlName="username">
+        <div
+          class="fc"
+          [class.invalid]="form.controls['username'].invalid && (form.controls['username'].dirty || form.controls['username'].touched)"
+        >
+          <input
+            type="text"
+            id="username"
+            autocomplete="off"
+            formControlName="username"
+          />
         </div>
       </div>
 
       <div class="grow">
         <label for="password">{{c['password']}} <b>*</b></label>
-        <div class="fc"
-          [class.invalid]="form.controls['password'].invalid && (form.controls['password'].dirty || form.controls['password'].touched)">
-          <input type="password" id="password" autocomplete="off" formControlName="password">
+        <div
+          class="fc"
+          [class.invalid]="form.controls['password'].invalid && (form.controls['password'].dirty || form.controls['password'].touched)"
+        >
+          <input
+            type="password"
+            id="password"
+            autocomplete="off"
+            formControlName="password"
+          />
         </div>
       </div>
     </div>
@@ -32,62 +54,97 @@
       <div class="grow">
         <label for="user-roles">{{c['roles']}}</label>
         <div class="fc mbe-4">
-          <pui-select-input labelRef="user-roles" [list]="roles" [multi]="true"
-            formControlName="roles"></pui-select-input>
+          <pui-multi-select-input
+            labelRef="user-roles"
+            [list]="roles"
+            formControlName="roles"
+          ></pui-multi-select-input>
         </div>
       </div>
 
       <div class="grow" *ngIf="enableIsSuper">
-        <pui-check-input [label]="c['superAdmin']" formControlName="is_super"></pui-check-input>
+        <pui-check-input
+          [label]="c['superAdmin']"
+          formControlName="is_super"
+        ></pui-check-input>
       </div>
     </div>
 
     <div class="grid cols-3 gap-2 mbe-4">
       <div>
         <label for="fullname">{{c['fullname']}} <b>*</b></label>
-        <div class="fc"
-          [class.invalid]="form.controls['fullname'].invalid && (form.controls['fullname'].dirty || form.controls['fullname'].touched)">
-          <input type="text" id="fullname" autocomplete="off" formControlName="fullname">
+        <div
+          class="fc"
+          [class.invalid]="form.controls['fullname'].invalid && (form.controls['fullname'].dirty || form.controls['fullname'].touched)"
+        >
+          <input
+            type="text"
+            id="fullname"
+            autocomplete="off"
+            formControlName="fullname"
+          />
         </div>
       </div>
 
       <div>
         <label for="email">{{c['email']}}</label>
         <div class="fc">
-          <input type="email" autocomplete="off" id="email" formControlName="email">
+          <input
+            type="email"
+            autocomplete="off"
+            id="email"
+            formControlName="email"
+          />
         </div>
       </div>
 
       <div>
         <label for="mobile">{{c['mobile']}}</label>
         <div class="fc">
-          <input type="tel" autocomplete="off" id="mobile" formControlName="mobile">
+          <input
+            type="tel"
+            autocomplete="off"
+            id="mobile"
+            formControlName="mobile"
+          />
         </div>
       </div>
     </div>
 
-    <p *ngIf="form.controls['username'].invalid && (form.controls['username'].dirty || form.controls['username'].touched)"
-      class="note note-danger f10 mbe-4">
+    <p
+      *ngIf="form.controls['username'].invalid && (form.controls['username'].dirty || form.controls['username'].touched)"
+      class="note note-danger f10 mbe-4"
+    >
       {{c['errors'].username}}
     </p>
 
-    <p *ngIf="form.controls['password'].invalid && (form.controls['password'].dirty || form.controls['password'].touched)"
-      class="note note-danger f10 mbe-4">
+    <p
+      *ngIf="form.controls['password'].invalid && (form.controls['password'].dirty || form.controls['password'].touched)"
+      class="note note-danger f10 mbe-4"
+    >
       {{c['errors'].password}}
     </p>
 
-    <p *ngIf="form.controls['fullname'].invalid && (form.controls['fullname'].dirty || form.controls['fullname'].touched)"
-      class="note note-danger f10">
+    <p
+      *ngIf="form.controls['fullname'].invalid && (form.controls['fullname'].dirty || form.controls['fullname'].touched)"
+      class="note note-danger f10"
+    >
       {{c['errors'].fullnameRequired}}
     </p>
-
   </div>
 
   <div class="card-footer">
-    <button class="btn-outline btn-round" type="reset" (click)="closes.emit()">{{c['cancel']}}</button>
-    <button class="btn-primary btn-round" type="submit" [disabled]="form.invalid">{{c['add']}}</button>
+    <button class="btn-outline btn-round" type="reset" (click)="closes.emit()">
+      {{c['cancel']}}
+    </button>
+    <button
+      class="btn-primary btn-round"
+      type="submit"
+      [disabled]="form.invalid"
+    >
+      {{c['add']}}
+    </button>
   </div>
 
   <pui-preloader *ngIf="preloader"></pui-preloader>
-
 </form>

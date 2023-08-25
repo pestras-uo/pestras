@@ -13,12 +13,11 @@
   <div class="grow-2">
     <label [for]="id + '_modifiers'">{{c['modifiers']}}</label>
     <div [class]="'fc ' + fcClass">
-      <pui-select-input
+      <pui-multi-select-input
         [labelRef]="id + '_modifiers'"
-        [multi]="true"
         formControlName="modifiers"
         [list]="c['valueModifiers']"
-      ></pui-select-input>
+      ></pui-multi-select-input>
     </div>
   </div>
 </form>

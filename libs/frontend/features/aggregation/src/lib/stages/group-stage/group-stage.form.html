@@ -20,12 +20,11 @@
 
     <label [for]="id + '_group-by-modifiers'">{{c['modifiers']}}</label>
     <div [class]="'fc mbe-4 ' + fcClass">
-      <pui-select-input
+      <pui-multi-select-input
         [labelRef]="id + '_group-by-modifiers'"
-        [multi]="true"
         formControlName="modifiers"
         [list]="c['valueModifiers']"
-      ></pui-select-input>
+      ></pui-multi-select-input>
     </div>
   </fieldset>
 

@@ -2,33 +2,39 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @angular-eslint/component-class-suffix */
 /* eslint-disable @angular-eslint/component-selector */
-import { Component, Input, Output, EventEmitter, OnDestroy, ViewChild, ElementRef, HostListener, SimpleChanges, OnChanges, booleanAttribute } from '@angular/core';
+import { Component, Input, Output, EventEmitter, ViewChild, ElementRef, HostListener, SimpleChanges, OnChanges, OnInit, booleanAttribute } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { Subscription, take } from 'rxjs';
-import { AbstractControl, ControlValueAccessor, FormControl, NG_VALIDATORS, NG_VALUE_ACCESSOR, ReactiveFormsModule, ValidationErrors } from '@angular/forms';
+import { startWith, take, tap } from 'rxjs';
+import { AbstractControl, ControlValueAccessor, FormArray, FormControl, NG_VALIDATORS, NG_VALUE_ACCESSOR, ReactiveFormsModule, ValidationErrors } from '@angular/forms';
 import { PuiIcon } from '../icon/icon.directive';
 import { OverlayModule, Overlay, OverlayRef } from '@angular/cdk/overlay';
 import { PortalModule, CdkPortal } from '@angular/cdk/portal';
 import { getOverlayConfig } from './util';
 import { PuiUtilPipesModule } from '../util-pipes/util-pipes.module';
+import { untilDestroyed } from '../reactive';
 
 @Component({
-  selector: 'pui-select-input',
+  selector: 'pui-multi-select-input',
   standalone: true,
   imports: [CommonModule, ReactiveFormsModule, PuiIcon, PortalModule, OverlayModule, PuiUtilPipesModule],
-  templateUrl: './select-input.component.html',
-  styleUrls: ['./select-input.component.scss'],
+  templateUrl: './multi-select-input.component.html',
+  styleUrls: ['./multi-select-input.component.scss'],
   providers: [
-    { provide: NG_VALUE_ACCESSOR, multi: true, useExisting: PuiSelectInput },
-    { provide: NG_VALIDATORS, multi: true, useExisting: PuiSelectInput }
+    { provide: NG_VALUE_ACCESSOR, multi: true, useExisting: PuiMultiSelectInput },
+    { provide: NG_VALIDATORS, multi: true, useExisting: PuiMultiSelectInput }
   ]
 })
-export class PuiSelectInput implements OnChanges, ControlValueAccessor {
+export class PuiMultiSelectInput implements OnChanges, OnInit, ControlValueAccessor {
   private overlayRef!: OverlayRef;
+  private ud = untilDestroyed();
+
+  id = `msi-${Math.ceil(Math.random() * 1000000)}`
+
+  arrayCtrl = new FormArray<FormControl<boolean>>([]);
 
   newOptions: any[] = [];
   optionsList: any[] = [];
-  value: any = null;
+  value: any[] = [];
   disabled = false;
   touched = false;
   searchControl = new FormControl("", { nonNullable: true });
@@ -39,13 +45,11 @@ export class PuiSelectInput implements OnChanges, ControlValueAccessor {
   }
 
   @Input({ required: true })
-  list!: any[];
+  list: any[] = [];
   @Input()
   labelRef: number | string = '';
   @Input({ transform: booleanAttribute })
   addNew = false;
-  @Input({ transform: booleanAttribute })
-  nullable = false;
   @Input()
   placeholder = '';
 
@@ -63,8 +67,27 @@ export class PuiSelectInput implements OnChanges, ControlValueAccessor {
   ) { }
 
   ngOnChanges(changes: SimpleChanges) {
-    if (changes['list'] && this.list)
+    if (changes['list'] && this.list) {
       this.optionsList = [...this.list, ...this.newOptions];
+      const checked = this.optionsList?.map(v => this.value.includes(v.value));
+      this.arrayCtrl.reset();
+      checked
+        .forEach(c => this.arrayCtrl.push(new FormControl(c, { nonNullable: true }), { emitEvent: false }));
+    }
+  }
+
+  ngOnInit(): void {
+    this.arrayCtrl.valueChanges
+      .pipe(
+        this.ud(),
+        startWith(this.arrayCtrl.value),
+      )
+      .subscribe(bools => {
+        this.value = this.optionsList.filter((_, i) => bools[i]).map(v => v.value);
+        this.onChange(this.value);
+        this.changes.emit(this.value);
+        this.touched || ((this.touched = true) && this.onTouched());
+      })
   }
 
   show() {
@@ -75,9 +98,9 @@ export class PuiSelectInput implements OnChanges, ControlValueAccessor {
   }
 
   private syncWidth(): void {
-    if (!this.overlayRef) {
+    if (!this.overlayRef)
       return;
-    }
+
     const refRectWidth = this.origin.nativeElement.getBoundingClientRect().width;
     this.overlayRef.updateSize({ width: refRectWidth });
   }
@@ -95,9 +118,6 @@ export class PuiSelectInput implements OnChanges, ControlValueAccessor {
   }
 
   filterOptions(option: any, value: any[], search: string) {
-    if (value === option['value'])
-      return false;
-
     if (search && !option['name'].toLowerCase().includes(search.toLowerCase()))
       return false;
 
@@ -105,10 +125,8 @@ export class PuiSelectInput implements OnChanges, ControlValueAccessor {
   }
 
   tryAddNewValue(e: any, value: string) {
-
     if (e.key === 'Enter') {
       this.addNewValue(value);
-
       e.preventDefault();
     }
   }
@@ -118,35 +136,11 @@ export class PuiSelectInput implements OnChanges, ControlValueAccessor {
       return;
 
     const newValue = { name: value, value: value };
-    
+
     this.newOptions.push(newValue);
-    this.optionsList = [newValue, ...this.optionsList];
-    this.add(newValue.value);
-  }
-
-  add(val: any) {
-    this.hide();
-
-    if (!this.disabled) {
-      this.touched || ((this.touched = true) || this.onTouched());
-      this.value = val;
-      this.searchControl.reset('', { emitEvent: false });
-      this.onChange(this.value);
-      this.changes.emit(this.value);
-    }
-  }
-
-  remove() {
-    if (!this.disabled) {
-      this.touched || ((this.touched = true) || this.onTouched());
-      this.value = null;
-      this.onChange(this.value);
-      this.changes.emit(this.value);
-    }
-  }
-
-  getValueName(val: any, options: any[]) {
-    return options.find(o => o.value === val)?.name ?? '';
+    this.optionsList = [...this.optionsList, newValue];
+    this.arrayCtrl.push(new FormControl(true, { nonNullable: true }));
+    this.searchControl.reset();
   }
 
 
@@ -159,8 +153,12 @@ export class PuiSelectInput implements OnChanges, ControlValueAccessor {
     //
   };
 
-  writeValue(item: any) {
-    this.value = item;
+  writeValue(items: any[]) {
+    this.value = items;
+    const checked = this.optionsList?.map(v => this.value.includes(v.value));
+    if (this.optionsList.length)
+      this.arrayCtrl.controls
+        .forEach((c, i) => c.setValue(checked[i], { emitEvent: false }));
   }
 
   registerOnChange(onChange: any) {

@@ -9,12 +9,11 @@
   <div class="card-body">
     <label for="modifiers">{{c['valueModifier']}}</label>
     <div class="fc mbe-6">
-      <pui-select-input
+      <pui-multi-select-input
         [list]="c['valueModifiers']"
-        [multi]="true"
         formControlName="modifiers"
         labelRef="modifiers"
-      ></pui-select-input>
+      ></pui-multi-select-input>
     </div>
 
     <ng-container *ngIf="type === 'int' || type === 'double'">

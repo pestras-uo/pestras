@@ -60,12 +60,11 @@
 
         <label [for]="id + '_input-modifiers'">{{c['inputModifiers']}}</label>
         <div [class]="'fc mbe-6 ' + fcClass">
-          <pui-select-input
+          <pui-multi-select-input
             [labelRef]="id + '_input-modifiers'"
-            [multi]="true"
             formControlName="modifiers"
             [list]="c['valueModifiers']"
-          ></pui-select-input>
+          ></pui-multi-select-input>
         </div>
       </ng-container>
     </fieldset>

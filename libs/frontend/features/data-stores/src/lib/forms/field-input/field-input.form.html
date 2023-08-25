@@ -31,21 +31,33 @@
 <!-- category -->
 <div class="fc" *ngIf="field.type === 'category'">
   <pui-select-input
+    *ngIf="!multi"
     [list]="field.ref_to | categoryBranches | arrayMap: mapCategoryBranch"
     [id]="field.name"
     [formControl]="control"
-    [multi]="multi"
   ></pui-select-input>
+  <pui-multi-select-input
+    *ngIf="multi"
+    [list]="field.ref_to | categoryBranches | arrayMap: mapCategoryBranch"
+    [id]="field.name"
+    [formControl]="control"
+  ></pui-multi-select-input>
 </div>
 
 <!-- region -->
 <div class="fc" *ngIf="field.type === 'region'">
   <pui-select-input
+    *ngIf="!multi"
     [list]="'' | userRegions | async | arrayMap: mapRegion"
     [id]="field.name"
     [formControl]="control"
-    [multi]="multi"
   ></pui-select-input>
+  <pui-multi-select-input
+    *ngIf="multi"
+    [list]="'' | userRegions | async | arrayMap: mapRegion"
+    [id]="field.name"
+    [formControl]="control"
+  ></pui-multi-select-input>
 </div>
 
 <!-- location -->
@@ -65,21 +77,31 @@
 <!-- orgunit -->
 <div class="fc" *ngIf="field.type === 'serial' && field.ref_type === 'orgunit'">
   <pui-select-input
+    *ngIf="!multi"
     [list]="'' | userOrgunits | async | arrayMap: mapOrgunit"
     [id]="field.name"
     [formControl]="control"
-    [multi]="multi"
   ></pui-select-input>
+  <pui-multi-select-input
+    [list]="'' | userOrgunits | async | arrayMap: mapOrgunit"
+    [id]="field.name"
+    [formControl]="control"
+  ></pui-multi-select-input>
 </div>
 
 <!-- user -->
 <div class="fc" *ngIf="field.type === 'serial' && field.ref_type === 'user'">
   <pui-select-input
+    *ngIf="!multi"
     [list]="'' | userUsers | async | arrayMap: mapUser"
     [id]="field.name"
     [formControl]="control"
-    [multi]="multi"
   ></pui-select-input>
+  <pui-multi-select-input
+    [list]="'' | userUsers | async | arrayMap: mapUser"
+    [id]="field.name"
+    [formControl]="control"
+  ></pui-multi-select-input>
 </div>
 
 <!-- data store -->
@@ -88,19 +110,22 @@
   *ngIf="field.type === 'serial' && field.ref_type === 'data_store'"
 >
   <pui-select-input
-    [list]="field.ref_to | selectRecord | async"
+    *ngIf="!multi && (field.ref_to | selectRecord | async) as refs"
+    [list]="refs"
     [formControl]="control"
-    [multi]="multi"
   ></pui-select-input>
+  <pui-multi-select-input
+    *ngIf="field.ref_to | selectRecord | async as records"
+    [list]="records"
+    [formControl]="control"
+  ></pui-multi-select-input>
 </div>
 
 <!-- topic -->
-<div
-  class="fc"
-  *ngIf="field.type === 'serial' && field.ref_type === 'topic'"
->
+<div class="fc" *ngIf="field.type === 'serial' && field.ref_type === 'topic'">
   <pui-select-input
-    [list]="field.ref_to | topics | async"
+    *ngIf="field.ref_to | topics | async as refs"
+    [list]="refs"
     [formControl]="control"
   ></pui-select-input>
 </div>

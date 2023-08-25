@@ -1,0 +1,42 @@
+<section class="flex flex-wrap align-items-center gap-2">
+
+  <ng-container *ngIf="value | arrayMap: mapValues: optionsList | arrayFilter: filterNull as selected">
+
+    <ng-container *ngIf="selected.length">
+
+      <p class="badge badge-small badge-primary bold nowrap">
+        {{selected.length}} selected
+      </p>
+      
+    </ng-container>
+
+  </ng-container>
+
+
+  <input class="grow" [id]="labelRef" [placeholder]="placeholder" type="text" name="select-filter" autocomplete="off"
+    [formControl]="searchControl" (keypress)="tryAddNewValue($event, searchControl.value)" (focus)="show()">
+
+  <button *ngIf="addNew" type="button" [disabled]="searchControl.value === ''" class="btn-tiny btn-icon btn-primary"
+    (click)="addNewValue(searchControl.value)">
+    <i size="tiny" puiIcon="add"></i>
+  </button>
+
+</section>
+
+<ng-template cdk-portal>
+
+  <ng-container *ngIf="optionsList | arrayFilter: filterOptions: value : searchControl.value as list">
+
+    <section class="options-list maxh-6 overflow-y-auto p-2 shadow-3" *ngIf="optionsList.length">
+  
+      <div *ngFor="let item of list; let i = index" class="fc-checkbox fc-primary">
+        <input [id]="id + i" type="checkbox" [formControl]="arrayCtrl.controls[i]">
+        <label [for]="id + i">{{item.name}}</label>
+      </div>
+  
+    </section>
+
+  </ng-container>
+
+
+</ng-template>

@@ -3,7 +3,7 @@ import { CommonModule, DatePipe } from '@angular/common';
 import { DataStoreInput } from './forms/data-store-input/data-store.input';
 import { ReactiveFormsModule } from '@angular/forms';
 import { DataStorePipe } from './pipes/data-store.pipe';
-import { PuiCheckInput, PuiGoogleMapModule, PuiIcon, PuiImageInput, PuiPreloaderModule, PuiSelectInput, PuiSwitchInput, PuiUtilPipesModule } from '@pestras/frontend/ui';
+import { PuiCheckInput, PuiGoogleMapModule, PuiIcon, PuiImageInput, PuiMultiSelectInput, PuiPreloaderModule, PuiSelectInput, PuiSwitchInput, PuiUtilPipesModule } from '@pestras/frontend/ui';
 import { ContraModule } from '@pestras/frontend/util/contra';
 import { DataStoresListView } from './views/data-stores-list/data-stores-list.view';
 import { DialogModule } from '@angular/cdk/dialog';
@@ -60,6 +60,7 @@ import { GoogleMapLinkPipe } from './pipes/googleMapLink.pipe';
     DialogModule,
     // Pui
     PuiSelectInput,
+    PuiMultiSelectInput,
     PuiPreloaderModule,
     PuiUtilPipesModule,
     PuiIcon,

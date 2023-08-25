@@ -58,12 +58,11 @@
         <div class="cols-span-2">
           <label [for]="id + i + '_modifiers'">{{c['modifiers']}}</label>
           <div [class]="'fc ' + fcClass">
-            <pui-select-input
+            <pui-multi-select-input
               [labelRef]="id + i + '_modifiers'"
               [list]="c['valueModifiers']"
-              [multi]="true"
               formControlName="modifiers"
-            ></pui-select-input>
+            ></pui-multi-select-input>
           </div>
         </div>
       </div>
@@ -92,14 +91,13 @@
             />
 
             <!-- array value case -->
-            <pui-select-input
+            <pui-multi-select-input
               *ngIf="filters.controls[i].controls.operator.value === '$in' || filters.controls[i].controls.operator.value === '$nin'"
               [labelRef]="id + i + '_value'"
               formControlName="value"
               [list]="[]"
               [addNew]="true"
-              [multi]="true"
-            ></pui-select-input>
+            ></pui-multi-select-input>
 
             <!-- value from field case -->
             <pui-select-input
@@ -114,12 +112,11 @@
         <div>
           <label [for]="id + i + '_modifiers'">{{c['modifiers']}}</label>
           <div [class]="'fc ' + fcClass">
-            <pui-select-input
+            <pui-multi-select-input
               [labelRef]="id + i + '_modifiers'"
               [list]="c['valueModifiers']"
-              [multi]="true"
               formControlName="modifiers"
-            ></pui-select-input>
+            ></pui-multi-select-input>
           </div>
         </div>
       </div>

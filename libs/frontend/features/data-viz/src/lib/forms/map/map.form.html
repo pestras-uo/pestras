@@ -170,12 +170,11 @@
 
       <label for="tooltip-body">{{c['desc']}}</label>
       <div [class]="'fc ' + fcClass">
-        <pui-select-input
+        <pui-multi-select-input
           labelRef="tooltip-body"
           formControlName="body"
-          [multi]="true"
           [list]="dsFields | arrayFilter: filterTooltipBodyField | arrayMap: mapField"
-        ></pui-select-input>
+        ></pui-multi-select-input>
       </div>
     </ng-container>
   </ng-container>

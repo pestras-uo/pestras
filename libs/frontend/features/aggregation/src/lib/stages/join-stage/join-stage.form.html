@@ -47,12 +47,11 @@
             >{{c['modifiers']}}</label
           >
           <div [class]="'fc ' + fcClass">
-            <pui-select-input
+            <pui-multi-select-input
               [labelRef]="id + i + 'local-field-modifiers'"
               formControlName="modifiers"
-              [multi]="true"
               [list]="c['valueModifiers']"
-            ></pui-select-input>
+            ></pui-multi-select-input>
           </div>
         </div>
       </div>
@@ -82,12 +81,11 @@
             >{{c['modifiers']}}</label
           >
           <div [class]="'fc ' + fcClass">
-            <pui-select-input
+            <pui-multi-select-input
               [labelRef]="id + i + 'foreign-field-modifiers'"
               formControlName="modifiers"
-              [multi]="true"
               [list]="c['valueModifiers']"
-            ></pui-select-input>
+            ></pui-multi-select-input>
           </div>
         </div>
       </div>

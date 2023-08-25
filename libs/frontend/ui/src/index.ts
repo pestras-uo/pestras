@@ -37,6 +37,9 @@ export * from './lib/images-viewer/images-viewer.module';
 // indicator
 export * from './lib/indicator/indicator.component';
 
+// multi-select
+export * from './lib/multi-select-input/multi-select-input.component';
+
 // infinite-scroll input
 export * from './lib/infinite-scroll/infinite-scroll.directive';
 

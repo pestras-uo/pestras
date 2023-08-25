@@ -1,41 +1,70 @@
-<form class="card shadow-6 w-15" *contra="let c" [formGroup]="form" (ngSubmit)="add(c)">
-
+<form
+  class="card shadow-6 w-15"
+  *contra="let c"
+  [formGroup]="form"
+  (ngSubmit)="add(c)"
+>
   <div class="card-header">
     <h3>{{c['addOrgunit']}}</h3>
   </div>
 
   <div class="card-body">
-
     <label for="orgunit-name">{{c['name']}}</label>
-    <div class="fc mbe-4"
-      [class.invalid]="form.controls['name'].invalid && (form.controls['name'].dirty || form.controls['name'].touched)">
-      <input id="orgunit-name" type="text" autocomplete="off" formControlName="name">
+    <div
+      class="fc mbe-4"
+      [class.invalid]="form.controls['name'].invalid && (form.controls['name'].dirty || form.controls['name'].touched)"
+    >
+      <input
+        id="orgunit-name"
+        type="text"
+        autocomplete="off"
+        formControlName="name"
+      />
     </div>
 
     <label for="orgunit-class">{{c['class']}}</label>
     <div class="fc mbe-4">
-      <pui-select-input labelRef="orgunit-class" [addNew]="true" [list]="classes$ | async"
-        formControlName="class"></pui-select-input>
+      <pui-select-input
+        *ngIf="classes$ | async as clesses"
+        labelRef="orgunit-class"
+        [addNew]="true"
+        [list]="clesses"
+        formControlName="class"
+      ></pui-select-input>
     </div>
 
     <label for="org-parent">{{c['parent']}}</label>
     <div class="fc mbe-4">
-      <pui-select-input labelRef="org-parent" [list]="parents$ | async" formControlName="parent"></pui-select-input>
+      <pui-select-input
+        *ngIf="parents$ | async as parensts"
+        labelRef="org-parent"
+        [list]="parensts"
+        formControlName="parent"
+      ></pui-select-input>
     </div>
 
     <label for="org-region">{{c['regions']}}</label>
     <div class="fc">
-      <pui-select-input labelRef="org-region" [list]="'' | userRegions | async | arrayMap: mapRegion" formControlName="regions"
-        [multi]="true"></pui-select-input>
+      <pui-multi-select-input
+        labelRef="org-region"
+        [list]="'' | userRegions | async | arrayMap: mapRegion"
+        formControlName="regions"
+      ></pui-multi-select-input>
     </div>
-
   </div>
 
   <div class="card-footer">
-    <button class="btn-round btn-outline" type="reset" (click)="closes.emit()">{{c['cancel']}}</button>
-    <button class="btn-primary btn-round" type="submit" [disabled]="form.invalid">{{c['add']}}</button>
+    <button class="btn-round btn-outline" type="reset" (click)="closes.emit()">
+      {{c['cancel']}}
+    </button>
+    <button
+      class="btn-primary btn-round"
+      type="submit"
+      [disabled]="form.invalid"
+    >
+      {{c['add']}}
+    </button>
   </div>
 
   <pui-preloader *ngIf="preloader"></pui-preloader>
-
 </form>

@@ -1,11 +1,14 @@
 <main *contra="let c">
-
   <div class="toolbar">
     <div>
       <h2 class="mbe-1">{{c['collaborators']}}</h2>
     </div>
     <div class="grow"></div>
-    <button *ngIf="editable" class="btn-icon btn-round btn-small" (click)="openModal(addUserModal)">
+    <button
+      *ngIf="editable"
+      class="btn-icon btn-round btn-small"
+      (click)="openModal(addUserModal)"
+    >
       <i puiIcon="add" size="small"></i>
     </button>
   </div>
@@ -13,27 +16,27 @@
   <div class="divider mbs-4 mbe-8"></div>
 
   <div class="users-list" *ngIf="collaborators?.length; else noData">
-
     <div class="card" *ngFor="let user of collaborators">
-
       <div class="card-header">
-
         <app-avatar [serial]="user"></app-avatar>
 
-        <button *ngIf="editable" class="btn-small btn-icon btn-round"
-          (click)="userToRemove = user; openModal(removeUserModal)">
+        <button
+          *ngIf="editable"
+          class="btn-small btn-icon btn-round"
+          (click)="userToRemove = user; openModal(removeUserModal)"
+        >
           <i size="small" color="danger" puiIcon="delete"></i>
         </button>
-
       </div>
-
     </div>
-
   </div>
 
   <ng-template #noData>
-    <no-data-placeholder-widget [actionName]="c['add']"
-      (action)="openModal(addUserModal)">{{c['noDataMsg']}}</no-data-placeholder-widget>
+    <no-data-placeholder-widget
+      [actionName]="c['add']"
+      (action)="openModal(addUserModal)"
+      >{{c['noDataMsg']}}</no-data-placeholder-widget
+    >
   </ng-template>
 
   <ng-template #addUserModal>
@@ -43,13 +46,26 @@
       <div class="card-body">
         <label for="contributor">{{c['user']}}</label>
         <div class="fc">
-          <pui-select-input labelRef="contributor" [formControl]="userToAdd" [list]="users$ | async"></pui-select-input>
+          <pui-select-input
+            *ngIf="users$ | async as users"
+            labelRef="contributor"
+            [formControl]="userToAdd"
+            [list]="users"
+          ></pui-select-input>
         </div>
       </div>
 
       <div class="card-footer">
-        <button class="btn-round" (click)="closeModal()">{{c['cancel']}}</button>
-        <button class="btn-round btn-primary" [disabled]="userToAdd.invalid" (click)="addUser(c)">{{c['yes']}}</button>
+        <button class="btn-round" (click)="closeModal()">
+          {{c['cancel']}}
+        </button>
+        <button
+          class="btn-round btn-primary"
+          [disabled]="userToAdd.invalid"
+          (click)="addUser(c)"
+        >
+          {{c['yes']}}
+        </button>
       </div>
 
       <pui-preloader *ngIf="preloader"></pui-preloader>
@@ -61,12 +77,15 @@
       <h4 class="card-header">{{c['removeUser']}}</h4>
       <p class="card-body">{{c['confirmOperation']}}</p>
       <div class="card-footer">
-        <button class="btn-round" (click)="closeModal()">{{c['cancel']}}</button>
-        <button class="btn-round btn-primary" (click)="removeUser(c)">{{c['yes']}}</button>
+        <button class="btn-round" (click)="closeModal()">
+          {{c['cancel']}}
+        </button>
+        <button class="btn-round btn-primary" (click)="removeUser(c)">
+          {{c['yes']}}
+        </button>
       </div>
 
       <pui-preloader *ngIf="preloader"></pui-preloader>
     </div>
   </ng-template>
-
 </main>

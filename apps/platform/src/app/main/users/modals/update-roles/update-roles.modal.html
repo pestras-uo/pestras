@@ -1,5 +1,9 @@
-<form *contra="let c" class="card w-15 shadow-6" [formGroup]="form" (ngSubmit)="update(c)">
-
+<form
+  *contra="let c"
+  class="card w-15 shadow-6"
+  [formGroup]="form"
+  (ngSubmit)="update(c)"
+>
   <div class="card-header bordered">
     <h3>{{c['updateRoles']}}</h3>
   </div>
@@ -7,19 +11,33 @@
   <div class="card-body">
     <label for="user-role">{{c['roles']}}</label>
     <div class="fc">
-      <pui-select-input labelRef="user-role" [list]="roles" [multi]="true" formControlName="roles"></pui-select-input>
+      <pui-multi-select-input
+        labelRef="user-role"
+        [list]="roles"
+        formControlName="roles"
+      ></pui-multi-select-input>
     </div>
 
     <div class="mbs-6" *ngIf="enableIsSuper">
-      <pui-check-input [label]="c['superAdmin']" formControlName="is_super"></pui-check-input>
+      <pui-check-input
+        [label]="c['superAdmin']"
+        formControlName="is_super"
+      ></pui-check-input>
     </div>
   </div>
 
   <div class="card-footer bordered">
-    <button class="btn-outline btn-round" type="reset" (click)="closes.emit()">{{c['cancel']}}</button>
-    <button class="btn-primary btn-round" type="submit" [disabled]="form.invalid">{{c['update']}}</button>
+    <button class="btn-outline btn-round" type="reset" (click)="closes.emit()">
+      {{c['cancel']}}
+    </button>
+    <button
+      class="btn-primary btn-round"
+      type="submit"
+      [disabled]="form.invalid"
+    >
+      {{c['update']}}
+    </button>
   </div>
 
   <pui-preloader *ngIf="preloader"></pui-preloader>
-
 </form>

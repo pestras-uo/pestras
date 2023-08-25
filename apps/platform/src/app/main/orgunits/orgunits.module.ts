@@ -11,6 +11,7 @@ import {
   PuiPreloaderModule,
   PuiSelectInput,
   PuiUtilPipesModule,
+  PuiMultiSelectInput,
 } from '@pestras/frontend/ui';
 import { ContraModule } from '@pestras/frontend/util/contra';
 import { OrgunitDetailsView } from './views/orgunit-details/orgunit-details.view';
@@ -49,6 +50,7 @@ import { OrgunitsTableView } from './views/orgunits-table/orgunits-table.view';
     // Pui
     PuiIcon,
     PuiSelectInput,
+    PuiMultiSelectInput,
     PuiPreloaderModule,
     PuiImageInput,
     PuiUtilPipesModule,

@@ -6,7 +6,7 @@ import { UsersPage } from './users.page';
 
 import { ContraModule } from '@pestras/frontend/util/contra';
 import { ReactiveFormsModule } from '@angular/forms';
-import { PuiCheckInput, PuiIcon, PuiPreloaderModule, PuiSelectInput, PuiUtilPipesModule } from '@pestras/frontend/ui';
+import { PuiCheckInput, PuiIcon, PuiMultiSelectInput, PuiPreloaderModule, PuiSelectInput, PuiUtilPipesModule } from '@pestras/frontend/ui';
 import { UsersListView } from './views/users-list/users-list.view';
 import { UserDetailsView } from './views/user-details/user-details.view';
 import { AvatarWidget } from '@pestras/frontend/widgets/avatar';
@@ -38,6 +38,7 @@ import { NoDataPlaceholderWidget } from '@pestras/frontend/widgets/no-data-place
     // Pui
     PuiIcon,
     PuiSelectInput,
+    PuiMultiSelectInput,
     PuiPreloaderModule,
     PuiUtilPipesModule,
     PuiCheckInput,

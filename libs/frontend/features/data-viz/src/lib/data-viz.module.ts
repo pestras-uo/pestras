@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule } from '@angular/forms';
 import { ContraModule } from '@pestras/frontend/util/contra';
-import { PuiCheckInput, PuiGoogleMapModule, PuiIcon, PuiPreloaderModule, PuiSelectInput, PuiTableModule, PuiUtilPipesModule } from '@pestras/frontend/ui';
+import { PuiCheckInput, PuiGoogleMapModule, PuiIcon, PuiMultiSelectInput, PuiPreloaderModule, PuiSelectInput, PuiTableModule, PuiUtilPipesModule } from '@pestras/frontend/ui';
 import { HierarchicalForm } from './forms/hierarchical/hierarchical.form';
 import { MapForm } from './forms/map/map.form';
 import { RadarForm } from './forms/radar/radar.form';
@@ -93,6 +93,7 @@ import { NoDataPlaceholderWidget } from '@pestras/frontend/widgets/no-data-place
     PuiPreloaderModule,
     PuiIcon,
     PuiSelectInput,
+    PuiMultiSelectInput,
     PuiUtilPipesModule,
     PuiGoogleMapModule,
     PuiCheckInput,

@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule } from '@angular/forms';
 import { ContraModule } from '@pestras/frontend/util/contra';
-import { PuiCheckInput, PuiIcon, PuiSelectInput, PuiSwitchInput, PuiUtilPipesModule } from '@pestras/frontend/ui';
+import { PuiCheckInput, PuiIcon, PuiMultiSelectInput, PuiSelectInput, PuiSwitchInput, PuiUtilPipesModule } from '@pestras/frontend/ui';
 
 // operations
 import { ConvertOperationForm } from './operations/convert-operation/convert-operation.form';
@@ -76,6 +76,7 @@ import { StateModule } from '@pestras/frontend/state';
     // PUI
     PuiIcon,
     PuiSelectInput,
+    PuiMultiSelectInput,
     PuiSwitchInput,
     PuiUtilPipesModule,
     PuiCheckInput,

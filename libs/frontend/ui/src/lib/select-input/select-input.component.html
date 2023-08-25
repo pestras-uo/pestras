@@ -1,39 +1,59 @@
 <section class="flex flex-wrap align-items-center gap-2">
+  <ng-container *ngIf="value | fn : getValueName : optionsList as selected">
+    <p *ngIf="nullable" class="badge badge-small badge-primary bold nowrap">
+      {{ selected }}
+      <i
+        class="cursor-pointer"
+        size="tiny"
+        color="primary"
+        puiIcon="close"
+        (click)="remove()"
+      ></i>
+    </p>
 
-  <ng-container *ngIf="value | arrayMap: mapValues: optionsList | arrayFilter: filterNull as selected">
-
-    <ng-container *ngIf="selected.length">
-
-      <p *ngFor="let item of selected" class="badge badge-small badge-primary bold nowrap">
-        {{item['name']}}
-        <i class="cursor-pointer" size="tiny" color="primary" puiIcon="close" (click)="remove(item['value'])"></i>
-      </p>
-      
-    </ng-container>
-
+    <p *ngIf="!nullable">{{ selected }}</p>
   </ng-container>
 
+  <input
+    class="grow"
+    [id]="labelRef"
+    [placeholder]="placeholder"
+    type="text"
+    autocomplete="off"
+    [formControl]="searchControl"
+    (keypress)="tryAddNewValue($event, searchControl.value)"
+    (focus)="show()"
+  />
 
-  <input class="grow" [id]="labelRef" [placeholder]="placeholder" type="text" name="select-filter" autocomplete="off"
-    [formControl]="searchControl" (keypress)="tryAddNewValue($event, searchControl.value)" (focus)="show()">
-
-  <button *ngIf="addNew" type="button" [disabled]="searchControl.value === ''" class="btn-tiny btn-icon btn-primary"
-    (click)="addNewValue(searchControl.value)">
+  <button
+    *ngIf="addNew"
+    type="button"
+    [disabled]="searchControl.value === ''"
+    class="btn-tiny btn-icon btn-primary"
+    (click)="addNewValue(searchControl.value)"
+  >
     <i size="tiny" puiIcon="add"></i>
   </button>
-
 </section>
 
-<ng-container *ngIf="optionsList | arrayFilter: filterOptions: value : searchControl.value as list">
-  
+<ng-container
+  *ngIf="
+    optionsList
+      | arrayFilter : filterOptions : value : searchControl.value as list
+  "
+>
   <ng-template cdk-portal>
-  
-    <section class="options-list maxh-6 overflow-y-auto pb-2 shadow-3" *ngIf="optionsList.length">
-  
-      <p *ngFor="let item of list" class="f10 bold" (click)="add(item['value'])">{{item['name']}}</p>
-  
+    <section
+      class="options-list maxh-6 overflow-y-auto pb-2 shadow-3"
+      *ngIf="optionsList.length"
+    >
+      <p
+        *ngFor="let item of list"
+        class="f10 bold"
+        (click)="add(item['value'])"
+      >
+        {{ item['name'] }}
+      </p>
     </section>
-  
   </ng-template>
-  
 </ng-container>

@@ -13,12 +13,12 @@
   <div class="grow">
     <label for="value-field">{{c['valueFields']}}</label>
     <div [class]="'fc mbe-6 ' + fcClass">
-      <pui-select-input
+      <pui-multi-select-input
+        *ngIf="dsFields | arrayMap: mapField as fields"
         labelRef="value-field"
         formControlName="value_fields"
-        [multi]="true"
-        [list]="dsFields | arrayMap: mapField"
-      ></pui-select-input>
+        [list]="fields"
+      ></pui-multi-select-input>
     </div>
   </div>
 

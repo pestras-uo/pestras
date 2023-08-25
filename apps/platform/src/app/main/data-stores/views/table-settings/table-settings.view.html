@@ -192,12 +192,11 @@
 
       <label for="card-details">{{c['details']}}</label>
       <div class="fc fc-surface1 fc-outline mbe-6">
-        <pui-select-input
+        <pui-multi-select-input
           [list]="dataStore.fields | arrayMap: mapField"
           formControlName="details"
           labelRef="card-details"
-          [multi]="true"
-        ></pui-select-input>
+        ></pui-multi-select-input>
       </div>
     </ng-container>
 
