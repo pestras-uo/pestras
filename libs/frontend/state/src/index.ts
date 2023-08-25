@@ -1,3 +1,5 @@
+export { ActivitiesState, ActivityStats } from './lib/activities/activities.state';
+
 export { AttachmentsState } from './lib/attachments/attachments.state';
 
 export { BlueprintsState } from './lib/blueprints/blueprints.state';

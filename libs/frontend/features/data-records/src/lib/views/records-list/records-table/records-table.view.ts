@@ -2,7 +2,7 @@
 /* eslint-disable @angular-eslint/component-class-suffix */
 /* eslint-disable @angular-eslint/component-selector */
 import { Component, Input, OnInit } from '@angular/core';
-import { DataRecord, DataStore, Field, TypeKind } from '@pestras/shared/data-model';
+import { DataRecord, DataStore, Field, TypeKind, TypesNames } from '@pestras/shared/data-model';
 import { RecordsState } from '@pestras/frontend/state';
 import { Router } from '@angular/router';
 import { BehaviorSubject, Observable, combineLatest, distinctUntilChanged, map, switchMap } from 'rxjs';
@@ -15,6 +15,7 @@ export class RecordsTableView implements OnInit {
 
   readonly page$ = new BehaviorSubject<number>(1);
   readonly search$ = new BehaviorSubject<any>(null);
+  readonly sort$ = new BehaviorSubject<Record<string, -1 | 0 | 1>>({});
   readonly pageSize = 15;
 
   count = 0;
@@ -44,17 +45,18 @@ export class RecordsTableView implements OnInit {
 
     this.records$ = combineLatest([
       this.search$,
-      this.page$.pipe(distinctUntilChanged())
+      this.page$.pipe(distinctUntilChanged()),
+      this.sort$
     ])
       .pipe(
-        switchMap(([search, page]) => {
+        switchMap(([search, page, sort]) => {
           this.skip = (page - 1) * this.pageSize;
 
           return this.state.search(this.dataStore.serial, {
             limit: this.pageSize,
             skip: this.skip ?? 0,
             select: null,
-            sort: { serial: 1 },
+            sort: { ...sort, serial: 1 },
             search
           })
         }),
@@ -63,6 +65,17 @@ export class RecordsTableView implements OnInit {
           return res.results;
         })
       );
+  }
+
+  onSort(e: Record<string, -1 | 0 | 1>) {
+    const all = Object.assign({}, this.sort$.getValue(), e);
+    const sort: Record<string, -1 | 0 | 1> = {};
+
+    for (const key in all)
+      if (all[key] !== 0)
+        sort[key] = all[key];
+
+    this.sort$.next(sort);
   }
 
   findField(field: Field, name: string) {
@@ -76,5 +89,9 @@ export class RecordsTableView implements OnInit {
       this.dataStore.serial,
       record['serial'],
     ]);
+  }
+
+  sortable(type: TypesNames) {
+    return ['int', 'double', 'string', 'date', 'datetime'].includes(type);
   }
 }

@@ -155,3 +155,16 @@ summary,
 ::-webkit-scrollbar-thumb:hover {
   background: var(--scroller-thumb-hover);
 }
+
+// input placeholder
+::-webkit-input-placeholder { /* Edge */
+  font-size: 0.85rem;
+}
+
+:-ms-input-placeholder { /* Internet Explorer 10-11 */
+  font-size: 0.85rem;
+}
+
+::placeholder {
+  font-size: 0.85rem;
+}

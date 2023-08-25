@@ -23,9 +23,12 @@ import { DataVizState } from "./data_viz/data-viz.state";
 import { DataStoreResolver } from "./data-stores/data-store.resolver";
 import { DataStoresState } from "./data-stores/data-stores.state";
 import { EnvModule } from "@pestras/frontend/env";
+import { ActivitiesState } from "./activities/activities.state";
+import { ActivitiesService } from "./activities/activities.service";
 
 @NgModule({
-  imports: [EnvModule]
+  imports: [EnvModule],
+  providers: [ActivitiesService]
 })
 export class StateModule {
 
@@ -34,6 +37,7 @@ export class StateModule {
     return {
       ngModule: StateModule,
       providers: [
+        ActivitiesState,
         AttachmentsState,
         BlueprintsState,
         BlueprintResolver,

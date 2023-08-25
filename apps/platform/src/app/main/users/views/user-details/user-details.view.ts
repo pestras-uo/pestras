@@ -19,6 +19,7 @@ export class UserDetailsView implements OnChanges {
   orgunit$!: Observable<Orgunit | null>;
   canUpdate = false;
   preloader = false;
+  actsPeriod = 'week';
 
   @Input({ required: true })
   serial!: string;

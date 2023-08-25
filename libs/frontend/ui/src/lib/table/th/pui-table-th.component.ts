@@ -1,6 +1,6 @@
 /* eslint-disable @angular-eslint/component-class-suffix */
 /* eslint-disable @angular-eslint/component-selector */
-import { Component, EventEmitter, HostListener, Input, Output, booleanAttribute } from '@angular/core';
+import { Component, EventEmitter, HostBinding, HostListener, Input, Output, booleanAttribute } from '@angular/core';
 
 @Component({
   selector: 'pui-table-th',
@@ -18,7 +18,7 @@ import { Component, EventEmitter, HostListener, Input, Output, booleanAttribute 
 })
 export class PuiTableTh {
 
-  state = 0;
+  state: -1 | 0 | 1 = 0;
 
   @Input()
   key?: string;
@@ -36,9 +36,14 @@ export class PuiTableTh {
         ? -1
         : 0;
 
-    this.sort.emit({ key: this.key, state: this.state });
+    this.sort.emit({ [this.key]: this.state });
+  }
+
+  @HostBinding('class.cursor-pointer')
+  get hostClass() {
+    return this.sortable;
   }
 
   @Output()
-  sort = new EventEmitter<{ key: string, state: number; }>();
+  sort = new EventEmitter<Record<string, -1 | 0 | 1>>();
 }

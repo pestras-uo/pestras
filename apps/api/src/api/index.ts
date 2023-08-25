@@ -20,6 +20,7 @@ import { topicsRoutes } from "./topics";
 import { workflowRoutes } from "./workflow";
 import { workspacesRouter } from "./workspace";
 import { usersGroupsRoutes } from "./groups";
+import { activitiesRouter } from "./activities";
 
 export default Router()
   // active directory
@@ -43,6 +44,7 @@ export default Router()
   .use('/analysis', analysisRoutes)
   .use('/data-viz', dataVizRoutes)
   // features
+  .use('/activities', activitiesRouter)
   .use('/workspaces', workspacesRouter)
   .use('/content-views', contentViewsRoutes)
   .use('/attachments', attachmentsRoutes)

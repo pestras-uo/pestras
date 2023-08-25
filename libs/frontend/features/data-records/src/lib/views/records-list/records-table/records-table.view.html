@@ -5,11 +5,15 @@
         <thead>
           <tr>
             <th class="w-2">#</th>
-            <th *ngFor="let field of fields">{{field.display_name}}</th>
+            <th *ngFor="let field of fields">
+              <pui-table-th [sortable]="field.type | fn: sortable" [key]="field.name" (sort)="onSort($event)">
+                {{field.system ? c[field.display_name] : field.display_name}}
+              </pui-table-th>
+            </th>
           </tr>
         </thead>
         <tbody>
-          <tr *ngFor="let item of records; let i = index">
+          <tr *ngFor="let item of records; let i = index" class="hover cursor-pointer" (click)="tryVisit(item)">
             <td>{{skip + i + 1}}</td>
             <td *ngFor="let field of fields">
               <app-field-value
