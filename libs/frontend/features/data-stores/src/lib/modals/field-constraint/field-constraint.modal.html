@@ -13,6 +13,8 @@
         [list]="c['valueModifiers']"
         formControlName="modifiers"
         labelRef="modifiers"
+        badges
+        [trans]="{ item: c['item'], items: c['items'], all: c['all'], placeholder: c['selectFields'] }"
       ></pui-multi-select-input>
     </div>
 

@@ -13,6 +13,13 @@ import { getOverlayConfig } from './util';
 import { PuiUtilPipesModule } from '../util-pipes/util-pipes.module';
 import { untilDestroyed } from '../reactive';
 
+export interface MultiSelectTrans {
+  placeholder?: string;
+  item?: string;
+  items?: string;
+  all?: string;
+}
+
 @Component({
   selector: 'pui-multi-select-input',
   standalone: true,
@@ -31,6 +38,7 @@ export class PuiMultiSelectInput implements OnChanges, OnInit, ControlValueAcces
   id = `msi-${Math.ceil(Math.random() * 1000000)}`
 
   arrayCtrl = new FormArray<FormControl<boolean>>([]);
+  allCtrl = new FormControl<boolean>(false, { nonNullable: true });
 
   newOptions: any[] = [];
   optionsList: any[] = [];
@@ -38,6 +46,12 @@ export class PuiMultiSelectInput implements OnChanges, OnInit, ControlValueAcces
   disabled = false;
   touched = false;
   searchControl = new FormControl("", { nonNullable: true });
+  translation: MultiSelectTrans = {
+    placeholder: "",
+    item: "item",
+    items: "items",
+    all: "All"
+  };
 
   @HostListener('window:resize')
   public onWinResize(): void {
@@ -50,8 +64,14 @@ export class PuiMultiSelectInput implements OnChanges, OnInit, ControlValueAcces
   labelRef: number | string = '';
   @Input({ transform: booleanAttribute })
   addNew = false;
+  @Input({ transform: booleanAttribute })
+  badges = false;
   @Input()
   placeholder = '';
+  @Input()
+  set trans(value: MultiSelectTrans) {
+    Object.assign(this.translation, value);
+  }
 
   @ViewChild(CdkPortal)
   public contentTemplate!: CdkPortal;
@@ -87,6 +107,14 @@ export class PuiMultiSelectInput implements OnChanges, OnInit, ControlValueAcces
         this.onChange(this.value);
         this.changes.emit(this.value);
         this.touched || ((this.touched = true) && this.onTouched());
+      });
+
+    this.allCtrl.valueChanges
+      .pipe(this.ud())
+      .subscribe(checked => {
+        this.arrayCtrl.controls.forEach((c, i) => {
+          c.setValue(checked, { emitEvent: i === this.arrayCtrl.length - 1 })
+        });
       })
   }
 
@@ -141,6 +169,16 @@ export class PuiMultiSelectInput implements OnChanges, OnInit, ControlValueAcces
     this.optionsList = [...this.optionsList, newValue];
     this.arrayCtrl.push(new FormControl(true, { nonNullable: true }));
     this.searchControl.reset();
+  }
+
+  removeValue(value: any) {
+    const index = this.optionsList.findIndex(item => item.value === value);
+
+    console.log(value, index);
+
+    if (index > -1)
+      this.arrayCtrl.at(index).setValue(false);
+
   }
 
 

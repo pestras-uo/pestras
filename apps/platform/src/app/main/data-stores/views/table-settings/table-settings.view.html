@@ -196,6 +196,8 @@
           [list]="dataStore.fields | arrayMap: mapField"
           formControlName="details"
           labelRef="card-details"
+          badges
+          [trans]="{ item: c['item'], items: c['items'], all: c['all'], placeholder: c['selectFields'] }"
         ></pui-multi-select-input>
       </div>
     </ng-container>
@@ -209,7 +211,10 @@
       [formControl]="treeView"
     ></pui-check-input>
 
-    <ng-container *ngIf="treeView.value && form.controls.tree_view" formArrayName="tree_view">
+    <ng-container
+      *ngIf="treeView.value && form.controls.tree_view"
+      formArrayName="tree_view"
+    >
       <div
         class="flex align-items-end gap-2 mbe-6"
         *ngFor="let g of form.controls.tree_view.controls; let i = index"

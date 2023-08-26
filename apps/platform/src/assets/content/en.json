@@ -1,4 +1,6 @@
 {
+  "items": "Item",
+  "item": "Items",
   "range": "Range",
   "fieldConstraint": "Field Constraint",
   "fieldModifier": "Field Input Value Modifiers",

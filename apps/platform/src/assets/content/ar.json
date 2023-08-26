@@ -1,4 +1,6 @@
 {
+  "items": "عناصر",
+  "item": "عنصر",
   "range": "المجال",
   "fieldConstraint": "مقيد قيمة الحقل",
   "fieldModifier": "تعديل قيمة الحقل المدخلة",

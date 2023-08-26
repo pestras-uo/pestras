@@ -47,7 +47,7 @@ export class PuiSelectInput implements OnChanges, ControlValueAccessor {
   @Input({ transform: booleanAttribute })
   nullable = false;
   @Input()
-  placeholder = '';
+  placeholder = 'no item';
 
   @ViewChild(CdkPortal)
   public contentTemplate!: CdkPortal;
@@ -160,7 +160,7 @@ export class PuiSelectInput implements OnChanges, ControlValueAccessor {
   };
 
   writeValue(item: any) {
-    this.value = item;
+    this.value = item ?? null;
   }
 
   registerOnChange(onChange: any) {
