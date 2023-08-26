@@ -1,26 +1,32 @@
 :host {
-  width: 0;
-  height: 100vh;
-  overflow: auto;
-  transition: width 300ms ease-out 100ms;
+  width: 72px;
 
   aside {
-    min-height: 100vh;
-    display: grid;
-    opacity: 0;
-    gap: 64px;
-    grid-template-rows: auto 1fr auto;
-    padding: 0 16px 16px 16px;
-    transition: opacity 200ms;
+    text-align: center;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    overflow-x: hidden;
+    gap: 16px;
+    padding: 16px;
+  }
+
+  .full,
+  .close {
+    opacity: 1;
+  }
+
+  &.close {
+    .full {
+      display: none;
+    }
   }
 
   &.open {
-    transition: width 300ms ease-out;
     width: var(--drawer-width);
 
-    aside {
-      transition: opacity 200ms 200ms;
-      opacity: 1;
+    .short {
+      display: none;
     }
   }
 }
@@ -29,14 +35,30 @@
   width: 24px;
 }
 
+header {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.splitter {
+  width: 8px;
+  height: 8px;
+  background-color: var(--primary);
+  margin: 8px auto;
+  border-radius: 8px;
+}
+
 nav {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
 
   a {
     display: flex;
     position: relative;
     padding-block: 8px;
     padding-inline: 8px;
-    margin-block-end: 4px;
     border-radius: 8px;
     display: flex;
     gap: 16px;
@@ -55,7 +77,7 @@ nav {
 
     &:hover {
       background-color: var(--surface3);
-      
+
       p {
         color: var(--text1);
       }
@@ -77,35 +99,9 @@ nav {
       }
     }
 
-    &.open {
-      p {
-        color: var(--text1);
-      }
-
-      .icon {
-        background-color: var(--text1);
-      }
-
-      +.sub-nav {
-        height: fit-content;
-        opacity: 1;
-        transition: height 200ms ease-out, opacity 200ms 100ms;
-      }
-    }
-
     &.dimmed {
       opacity: 0.5;
       pointer-events: none;
-    }
-  }
-
-  .sub-nav {
-    height: 0;
-    opacity: 0;
-    transition: height 200ms ease-out 100ms, opacity 200ms;
-
-    a {
-      padding-inline-start: 52px;
     }
   }
 }

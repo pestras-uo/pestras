@@ -1,119 +1,110 @@
 <aside *contra="let c">
-  <header class="align-center">
-    <div class="toolbar pi-2 h-2 mbe-4">
+  <div class="toolbar">
+    <button class="btn-icon" (click)="toggle.emit()">
+      <i puiIcon="menu"></i>
+    </button>
+    <div class="full grow"></div>
+    <div class="full toolbar w-auto gap-2">
+      <h4>PESTRAS</h4>
       <img class="p-logo" src="assets/imgs/logo.png" alt="" />
-      <div class="grow"></div>
-
-      <ng-container *session="let user">
-        <button #profile class="btn-icon btn-round" (click)="dropdown.show()">
-          <i puiIcon="account_circle"></i>
-        </button>
-
-        <pui-dropdown #dropdown [origin]="profile">
-          <div class="card card-small w-6 shadow-4">
-            <div class="card-header bordered">
-              <div>
-                <h5>{{user.fullname}}</h5>
-                <p class="text3 f9">{{user.email}}</p>
-              </div>
-            </div>
-
-            <div class="card-body list list-actions list-clean">
-              <div class="list-item" routerLink="profile">
-                <i puiIcon="account_circle"></i>
-                <p>{{c['account']}}</p>
-              </div>
-              <div class="list-item" routerLink="profile">
-                <i puiIcon="settings"></i>
-                <p>{{c['settings']}}</p>
-              </div>
-            </div>
-
-            <div
-              class="card-footer hover hover-surface3 p-4 cursor-pointer"
-              (click)="this.openModal(signout)"
-            >
-              <i size="small" puiIcon="logout"></i>
-              <p>{{c['signout']}}</p>
-              <div class="grow"></div>
-            </div>
-          </div>
-        </pui-dropdown>
-      </ng-container>
     </div>
+  </div>
 
-    <img
-      class="inline-block w-3 mbe-2 radius-4"
-      src="assets/imgs/gam-logo.jpg"
-    />
-    <h3 class="mbe-2">{{c['appName']}}</h3>
-    <p class="text3">{{c['ownerName']}}</p>
-  </header>
+  <img class="short mi-auto p-logo" src="assets/imgs/logo.png" alt="" />
+
+  <a class="short btn btn-icon btn-round mi-auto" routerLink="profile">
+    <i puiIcon="account_circle"></i>
+  </a>
+
+  <app-avatar
+    class="mbs-8 full cursor-pointer"
+    *session="let user"
+    [serial]="user.serial"
+    size="huge"
+    vertical
+    [routerLink]="['/main/profile']"
+  ></app-avatar>
+
+  <div class="grow"></div>
 
   <nav>
-    <h4 class="primary weight-8 pi-2">{{c['dataManagement']}}</h4>
-    <p class="f10 pi-2 text3 mbe-4">{{c['dataMenuDesc']}}</p>
-
-    <div class="mbe-10">
-      <a class="hover" routerLink="/main/workspace" routerLinkActive="active">
-        <i puiIcon="home"></i>
-        <p>{{c['workspace']}}</p>
-      </a>
-
-      <a class="hover" routerLink="/main/topics" routerLinkActive="active">
-        <i puiIcon="topics"></i>
-        <p>{{c['topics']}}</p>
-      </a>
+    <div class="full align-start mbs-4">
+      <h4 class="primary weight-8 pi-2">{{c['dataManagement']}}</h4>
+      <p class="f10 pi-2 text3">{{c['dataMenuDesc']}}</p>
     </div>
 
-    <ng-container *ngIf="([roles.ADMIN, roles.DATA_ENG] | hasRoles)">
-      <h4 class="primary weight-8 pi-2">{{c['blueprintsManagment']}}</h4>
-      <p class="f10 pi-2 text3 mbe-4">{{c['blueprintsManagementDesc']}}</p>
+    <a class="hover" routerLink="/main/workspace" routerLinkActive="active">
+      <i puiIcon="home"></i>
+      <p class="full">{{c['workspace']}}</p>
+    </a>
+    <a class="hover" routerLink="/main/topics" routerLinkActive="active">
+      <i puiIcon="topics"></i>
+      <p class="full">{{c['topics']}}</p>
+    </a>
 
-      <div class="mbe-10">
-        <a
-          class="hover"
-          routerLink="/main/blueprints"
-          routerLinkActive="active"
-        >
-          <i puiIcon="blueprint"></i>
-          <p>{{c['blueprints']}}</p>
-        </a>
+    <ng-container *ngIf="([roles.ADMIN, roles.DATA_ENG] | hasRoles)">
+      <div class="full align-start mbs-4">
+        <h4 class="primary weight-8 pi-2">{{c['blueprintsManagment']}}</h4>
+        <p class="f10 pi-2 text3">{{c['blueprintsManagementDesc']}}</p>
       </div>
+
+      <div class="short splitter"></div>
+
+      <a class="hover" routerLink="/main/blueprints" routerLinkActive="active">
+        <i puiIcon="blueprint"></i>
+        <p class="full">{{c['blueprints']}}</p>
+      </a>
     </ng-container>
 
     <ng-container *ngIf="(roles.ADMIN | hasRoles)">
-      <h4 class="primary weight-8 pi-2">{{c['system_administration']}}</h4>
-      <p class="f10 pi-2 text3 mbe-4">{{c['adminMenuDesc']}}</p>
-
-      <div [class.hide]="collapse.has(3)">
-        <a class="hover" routerLink="/main/regions" routerLinkActive="active">
-          <i puiIcon="travel_explore"></i>
-          <p>{{c['regions']}}</p>
-        </a>
-        <a class="hover" routerLink="/main/orgunits" routerLinkActive="active">
-          <i puiIcon="lan"></i>
-          <p>{{c['orgunits']}}</p>
-        </a>
-        <a
-          *ngIf="'root' | inOrgunit"
-          class="hover"
-          routerLink="/main/groups"
-          routerLinkActive="active"
-        >
-          <i puiIcon="military_tech"></i>
-          <p>{{c['groups']}}</p>
-        </a>
-        <a class="hover" routerLink="/main/users" routerLinkActive="active">
-          <i puiIcon="group"></i>
-          <p>{{c['users']}}</p>
-        </a>
+      <div class="full align-start mbs-4">
+        <h4 class="primary weight-8 pi-2">{{c['system_administration']}}</h4>
+        <p class="f10 pi-2 text3">{{c['adminMenuDesc']}}</p>
       </div>
+
+      <div class="short splitter"></div>
+
+      <a class="hover" routerLink="/main/regions" routerLinkActive="active">
+        <i puiIcon="travel_explore"></i>
+        <p class="full">{{c['regions']}}</p>
+      </a>
+      <a class="hover" routerLink="/main/orgunits" routerLinkActive="active">
+        <i puiIcon="lan"></i>
+        <p class="full">{{c['orgunits']}}</p>
+      </a>
+      <a
+        *ngIf="'root' | inOrgunit"
+        class="hover"
+        routerLink="/main/groups"
+        routerLinkActive="active"
+      >
+        <i puiIcon="military_tech"></i>
+        <p class="full">{{c['groups']}}</p>
+      </a>
+      <a class="hover" routerLink="/main/users" routerLinkActive="active">
+        <i puiIcon="group"></i>
+        <p class="full">{{c['users']}}</p>
+      </a>
     </ng-container>
   </nav>
 
+  <div class="grow"></div>
+
   <footer>
-    <p class="align-center f10 pi-2 text3 en">{{c['rights']}}</p>
+    <button
+      class="short btn-outline-danger btn-small btn-icon"
+      (click)="this.openModal(signout)"
+    >
+      <i puiIcon="logout" size="small"></i>
+    </button>
+
+    <button
+      class="full btn-outline-danger btn-small btn-block"
+      (click)="this.openModal(signout)"
+    >
+      <i puiIcon="logout" size="small"></i>
+      {{c['signout']}}
+    </button>
   </footer>
 
   <ng-template #signout>

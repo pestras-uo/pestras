@@ -1,14 +1,17 @@
 <ng-container *ngIf="user$ | async as u">
-
-  <div class="avatar" [class.avatar-large]="size === 'large'" [class.avatar-small]="size === 'small'"
-    [style.background-color]="10 | randomColor">
-    <img *ngIf="u.avatar" [src]="u.avatar | docsPath" alt="">
+  <div
+    class="avatar"
+    [class.avatar-huge]="size === 'huge'"
+    [class.avatar-large]="size === 'large'"
+    [class.avatar-small]="size === 'small'"
+    [style.background-color]="10 | randomColor"
+  >
+    <img *ngIf="u.avatar" [src]="u.avatar | docsPath" alt="" />
     <i *ngIf="!u.avatar" color="white" puiIcon="person"></i>
   </div>
 
-  <div class="align-start">
+  <div [class.align-start]="!vertical" [class.align-center]="vertical">
     <p class="text1 bold">{{u.fullname}}</p>
     <p class="f10 text3">{{orgunit$ | async}}</p>
   </div>
-
 </ng-container>

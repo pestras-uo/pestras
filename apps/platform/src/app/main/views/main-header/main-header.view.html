@@ -1,11 +1,8 @@
 <div class="toolbar h-fit gap-2" *contra="let c, let dir = dir">
-  <button
-    *ngIf="[roles.ADMIN, roles.DATA_ENG] | hasRoles"
-    class="btn-icon"
-    (click)="openDrawerHandler($event)"
-  >
-    <i puiIcon="menu"></i>
-  </button>
+
+  <img class="inline-block h-1 radius-2" src="assets/imgs/undp-logo.jpg" />
+  <img class="inline-block h-1 radius-2" src="assets/imgs/gam-logo.jpg" />
+  <h4>{{c['ownerName']}}</h4>
 
   <div class="grow"></div>
 

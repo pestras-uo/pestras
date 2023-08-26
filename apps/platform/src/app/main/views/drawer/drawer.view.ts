@@ -1,6 +1,6 @@
 /* eslint-disable @angular-eslint/component-class-suffix */
 /* eslint-disable @angular-eslint/component-selector */
-import { Component, HostBinding, TemplateRef } from '@angular/core';
+import { Component, EventEmitter, HostBinding, Output, TemplateRef } from '@angular/core';
 import { take } from 'rxjs';
 import { Dialog, DialogRef } from '@angular/cdk/dialog';
 import { SessionState } from '@pestras/frontend/state';
@@ -17,24 +17,20 @@ export class DrawerView {
   private dialogRef: DialogRef | null = null;
   
   readonly roles = Role;
-  readonly collapse = new Set<number>();
   
   preloader = false;
 
   @HostBinding('class')
-  hostCLass = 'bg-surface1 hide-scroll color-scheme-dark'
+  hostCLass = 'bg-surface1 hide-scroll color-scheme-dark';
+
+  @Output()
+  toggle = new EventEmitter();
 
   constructor(
     private session: SessionState,
     private dialog: Dialog,
     private router: Router
   ) { }
-
-  toggleCollapse(index: number) {
-    this.collapse.has(index)
-      ? this.collapse.delete(index)
-      : this.collapse.add(index);
-  }
 
   openModal(tmp: TemplateRef<unknown>) {
     this.dialogRef = this.dialog.open(tmp);

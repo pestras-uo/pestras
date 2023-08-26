@@ -5,18 +5,23 @@ import { Role } from '@pestras/shared/data-model';
 @Component({
   selector: 'pestras-main',
   template: `
-    <main-drawer [class.open]="openDrawer"></main-drawer>
+    <main-drawer 
+      [class.open]="openDrawer" 
+      [class.close]="!openDrawer" 
+      (toggle)="openDrawer = !openDrawer">
+    </main-drawer>
     <main (click)="closeDrawer()">
-      <main-header (openDrawer)="openDrawer = true"></main-header>
+      <main-header></main-header>
       <router-outlet></router-outlet>
     </main>
   `,
   styles: [`
     :host {
       height: 100vh;
-
+      
       > main {
         position: relative;
+        padding-inline-start: 72px;
         z-index: 1;
         display: grid;
         grid-template-rows: var(--header-height) 1fr;
@@ -37,7 +42,7 @@ import { Role } from '@pestras/shared/data-model';
 })
 export class MainPage {
   readonly roles = Role;
-  
+
   openDrawer = false;
 
   closeDrawer() {

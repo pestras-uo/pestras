@@ -1,6 +1,6 @@
 /* eslint-disable @angular-eslint/component-selector */
 /* eslint-disable @angular-eslint/component-class-suffix */
-import { Component, Input, OnChanges, OnInit } from '@angular/core';
+import { Component, HostBinding, Input, OnChanges, OnInit, booleanAttribute } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Observable, switchMap, filter, map } from 'rxjs';
 import { User } from '@pestras/shared/data-model';
@@ -29,7 +29,11 @@ export class AvatarWidget implements OnInit, OnChanges {
   @Input()
   src: 'users' | 'session' = 'users'
   @Input()
-  size?: 'small' | 'large';
+  size?: 'small' | 'large' | 'huge';
+
+  @HostBinding('class.flex-column')
+  @Input({ transform: booleanAttribute })
+  vertical = false;
 
   constructor(
     private readonly session: SessionState,

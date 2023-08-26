@@ -9,6 +9,7 @@ import { SessionFeatureModule } from '@pestras/frontend/features/session';
 import { ContraModule } from '@pestras/frontend/util/contra';
 import { TopicsFeatureModule } from '@pestras/frontend/features/topics';
 import { ProfileModule } from './profile/profile.module';
+import { AvatarWidget } from '@pestras/frontend/widgets/avatar';
 
 
 @NgModule({
@@ -18,14 +19,21 @@ import { ProfileModule } from './profile/profile.module';
     DrawerView
   ],
   imports: [
+    // Angule
     CommonModule,
     RouterModule,
+    // Util
     ContraModule,
+    // Pui
     PuiIcon,
     PuiDropdown,
     PuiPreloaderModule,
+    // widgets
+    AvatarWidget,
+    // Features
     SessionFeatureModule,
     TopicsFeatureModule,
+    // pages
     ProfileModule
   ]
 })
