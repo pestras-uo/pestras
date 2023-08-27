@@ -39,9 +39,9 @@ export class PuiTableTh {
     this.sort.emit({ [this.key]: this.state });
   }
 
-  @HostBinding('class.cursor-pointer')
-  get hostClass() {
-    return this.sortable;
+  @HostBinding('class')
+  get hostCLass() {
+    return this.sortable ? 'cursor-pointer primary' : '';
   }
 
   @Output()

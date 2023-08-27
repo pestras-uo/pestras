@@ -3,13 +3,15 @@ import { CommonModule } from '@angular/common';
 import { BlueprintPipe } from './pipes/blueprint.pipe';
 import { BlueprintsPipe } from './pipes/blueprints.pipe';
 import { StateModule } from '@pestras/frontend/state';
+import { BlueprintsCountPipe } from './pipes/count.pipe';
 
 
 
 @NgModule({
   declarations: [
     BlueprintPipe,
-    BlueprintsPipe
+    BlueprintsPipe,
+    BlueprintsCountPipe
   ],
   imports: [
     CommonModule,
@@ -18,7 +20,8 @@ import { StateModule } from '@pestras/frontend/state';
   ],
   exports: [
     BlueprintPipe,
-    BlueprintsPipe
+    BlueprintsPipe,
+    BlueprintsCountPipe
   ]
 })
 export class BlueprintsFeatureModule { }

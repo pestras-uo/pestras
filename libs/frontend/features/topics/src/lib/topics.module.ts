@@ -10,6 +10,7 @@ import { DialogModule } from '@angular/cdk/dialog';
 import { AddTopicModal } from './modals/add-topic/add-topic.modal';
 import { NoDataPlaceholderWidget } from '@pestras/frontend/widgets/no-data-placeholder';
 import { TopicsPipe } from './pipes/topics.pipe';
+import { TopicsCountPipe } from './pipes/count.pipe';
 
 
 
@@ -17,7 +18,8 @@ import { TopicsPipe } from './pipes/topics.pipe';
   declarations: [
     TopicsListView,
     AddTopicModal,
-    TopicsPipe
+    TopicsPipe,
+    TopicsCountPipe
   ],
   imports: [
     // Angular
@@ -40,7 +42,8 @@ import { TopicsPipe } from './pipes/topics.pipe';
   exports: [
     TopicsListView,
     AddTopicModal,
-    TopicsPipe
+    TopicsPipe,
+    TopicsCountPipe
   ]
 })
 export class TopicsFeatureModule { }

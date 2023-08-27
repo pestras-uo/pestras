@@ -1,134 +1,131 @@
 <ng-container *contra="let c">
-  <div class="toolbar mbe-8">
+  <div class="toolbar mbe-4">
     <h3>{{c['groups']}}</h3>
     <div class="grow"></div>
     <button
-      class="btn-icon btn-round btn-small"
+      class="btn-icon btn-round btn-tiny btn-primary"
       (click)="openDialog(addGroupTmp)"
     >
       <i puiIcon="add" size="small"></i>
     </button>
   </div>
 
-  <div class="accordion" *ngIf="groups.length else noData">
-    <div
-      #card
-      class="card card-small mbe-4"
-      *ngFor="let g of groups; let first = first"
-    >
-      <div class="card-header bordered">
-        <h4>{{g.name}}</h4>
-        <div class="grow"></div>
-        <button
-          class="btn-icon btn-tiny btn-round"
-          (click)="openDialog(updateGroupTmp, g.serial)"
-        >
-          <i size="tiny" puiIcon="edit"></i>
-        </button>
-        <button
-          class="btn-icon btn-tiny btn-round"
-          (click)="openDialog(removeGroupTmp, g.serial)"
-        >
-          <i size="tiny" puiIcon="delete"></i>
-        </button>
-        <button
-          class="btn-icon btn-tiny btn-round"
-          (click)="card.classList.toggle('active')"
-        >
-          <i size="tiny" puiIcon="arrow_drop_down"></i>
-        </button>
+  <ng-container *ngIf="groups.length else noData">
+    <ng-container *ngFor="let g of groups; let last = last">
+
+      <div class="card card-small card-clear">
+        <div class="card-header pi-0">
+          <h4>{{g.name}}</h4>
+          <div class="grow"></div>
+          <button
+            class="btn-icon btn-tiny btn-round"
+            (click)="openDialog(updateGroupTmp, g.serial)"
+          >
+            <i size="tiny" puiIcon="edit"></i>
+          </button>
+          <button
+            class="btn-icon btn-tiny btn-round"
+            (click)="openDialog(removeGroupTmp, g.serial)"
+          >
+            <i size="tiny" puiIcon="delete"></i>
+          </button>
+        </div>
+
+        <div class="card-body  pi-0 pbe-0">
+          <no-data-placeholder-widget
+            [small]="true"
+            *ngIf="!g.dataStores.length && !g.blueprints.length && !g.topics.length && !g.dashboards.length && !g.reports.length"
+            >{{c['noDataMsg']}}</no-data-placeholder-widget
+          >
+          <div class="mbe-6" *ngIf="g.dataStores.length">
+            <h5 class="mbe-2 f10 bold text3">{{c['dataStores']}}</h5>
+            <div class="toolbar mbe-2" *ngFor="let pin of g.dataStores">
+              <a
+                class="f9 bold"
+                [routerLink]="['/main/data-stores', pin.serial]"
+                >{{pin.name}}
+              </a>
+              <div class="grow"></div>
+              <button
+                class="btn-icon btn-tiny btn-round"
+                (click)="openDialog(removePinTmp, pin.serial)"
+              >
+                <i size="tiny" puiIcon="delete"></i>
+              </button>
+            </div>
+          </div>
+          <div class="mbe-6" *ngIf="g.blueprints.length">
+            <h5 class="mbe-2 f10 bold text3">{{c['blueprints']}}</h5>
+            <div class="toolbar mbe-2" *ngFor="let pin of g.blueprints">
+              <a class="f9 bold" [routerLink]="['/main/blueprints', pin.serial]"
+                >{{pin.name}}</a
+              >
+              <div class="grow"></div>
+              <button
+                class="btn-icon btn-tiny btn-round"
+                (click)="openDialog(removePinTmp, pin.serial)"
+              >
+                <i size="tiny" puiIcon="delete"></i>
+              </button>
+            </div>
+          </div>
+          <div class="mbe-6" *ngIf="g.topics.length">
+            <h5 class="mbe-2 f10 bold text3">{{c['topics']}}</h5>
+            <div class="toolbar mbe-2" *ngFor="let pin of g.topics">
+              <a
+                class="f9 bold"
+                [routerLink]="['/main/topics', pin.scope, pin.serial]"
+                >{{pin.name}}</a
+              >
+              <div class="grow"></div>
+              <button
+                class="btn-icon btn-tiny btn-round"
+                (click)="openDialog(removePinTmp, pin.serial)"
+              >
+                <i size="tiny" puiIcon="delete"></i>
+              </button>
+            </div>
+          </div>
+          <div class="mbe-6" *ngIf="g.dashboards.length">
+            <h5 class="mbe-2 f10 bold text3">{{c['dashboards']}}</h5>
+            <div class="toolbar mbe-2" *ngFor="let pin of g.dashboards">
+              <a
+                class="f9 bold"
+                [routerLink]="['/main/dashboards', pin.scope, pin.serial]"
+                >{{pin.name}}</a
+              >
+              <div class="grow"></div>
+              <button
+                class="btn-icon btn-tiny btn-round"
+                (click)="openDialog(removePinTmp, pin.serial)"
+              >
+                <i size="tiny" puiIcon="delete"></i>
+              </button>
+            </div>
+          </div>
+          <div class="mbe-6" *ngIf="g.reports.length">
+            <h5 class="mbe-2 f10 bold text3">{{c['reports']}}</h5>
+            <div class="toolbar mbe-2" *ngFor="let pin of g.reports">
+              <a
+                class="f9 bold"
+                [routerLink]="['/main/reports', pin.scope, pin.serial]"
+                >{{pin.name}}</a
+              >
+              <div class="grow"></div>
+              <button
+                class="btn-icon btn-tiny btn-round"
+                (click)="openDialog(removePinTmp, pin.serial)"
+              >
+                <i size="tiny" puiIcon="delete"></i>
+              </button>
+            </div>
+          </div>
+        </div>
       </div>
 
-      <div class="card-body">
-        <no-data-placeholder-widget
-          [small]="true"
-          *ngIf="!g.dataStores.length && !g.blueprints.length && !g.topics.length && !g.dashboards.length && !g.reports.length"
-          >{{c['noDataMsg']}}</no-data-placeholder-widget
-        >
-        <div class="mbe-6" *ngIf="g.dataStores.length">
-          <h5 class="mbe-2 f10 bold text3">{{c['dataStores']}}</h5>
-          <div class="toolbar mbe-2" *ngFor="let pin of g.dataStores">
-            <a class="f9 bold" [routerLink]="['/main/data-stores', pin.serial]"
-              >{{pin.name}}
-            </a>
-            <div class="grow"></div>
-            <button
-              class="btn-icon btn-tiny btn-round"
-              (click)="openDialog(removePinTmp, pin.serial)"
-            >
-              <i size="tiny" puiIcon="delete"></i>
-            </button>
-          </div>
-        </div>
-        <div class="mbe-6" *ngIf="g.blueprints.length">
-          <h5 class="mbe-2 f10 bold text3">{{c['blueprints']}}</h5>
-          <div class="toolbar mbe-2" *ngFor="let pin of g.blueprints">
-            <a class="f9 bold" [routerLink]="['/main/blueprints', pin.serial]"
-              >{{pin.name}}</a
-            >
-            <div class="grow"></div>
-            <button
-              class="btn-icon btn-tiny btn-round"
-              (click)="openDialog(removePinTmp, pin.serial)"
-            >
-              <i size="tiny" puiIcon="delete"></i>
-            </button>
-          </div>
-        </div>
-        <div class="mbe-6" *ngIf="g.topics.length">
-          <h5 class="mbe-2 f10 bold text3">{{c['topics']}}</h5>
-          <div class="toolbar mbe-2" *ngFor="let pin of g.topics">
-            <a
-              class="f9 bold"
-              [routerLink]="['/main/topics', pin.scope, pin.serial]"
-              >{{pin.name}}</a
-            >
-            <div class="grow"></div>
-            <button
-              class="btn-icon btn-tiny btn-round"
-              (click)="openDialog(removePinTmp, pin.serial)"
-            >
-              <i size="tiny" puiIcon="delete"></i>
-            </button>
-          </div>
-        </div>
-        <div class="mbe-6" *ngIf="g.dashboards.length">
-          <h5 class="mbe-2 f10 bold text3">{{c['dashboards']}}</h5>
-          <div class="toolbar mbe-2" *ngFor="let pin of g.dashboards">
-            <a
-              class="f9 bold"
-              [routerLink]="['/main/dashboards', pin.scope, pin.serial]"
-              >{{pin.name}}</a
-            >
-            <div class="grow"></div>
-            <button
-              class="btn-icon btn-tiny btn-round"
-              (click)="openDialog(removePinTmp, pin.serial)"
-            >
-              <i size="tiny" puiIcon="delete"></i>
-            </button>
-          </div>
-        </div>
-        <div class="mbe-6" *ngIf="g.reports.length">
-          <h5 class="mbe-2 f10 bold text3">{{c['reports']}}</h5>
-          <div class="toolbar mbe-2" *ngFor="let pin of g.reports">
-            <a
-              class="f9 bold"
-              [routerLink]="['/main/reports', pin.scope, pin.serial]"
-              >{{pin.name}}</a
-            >
-            <div class="grow"></div>
-            <button
-              class="btn-icon btn-tiny btn-round"
-              (click)="openDialog(removePinTmp, pin.serial)"
-            >
-              <i size="tiny" puiIcon="delete"></i>
-            </button>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
+      <div *ngIf="!last" class="divider mb-2"></div>
+    </ng-container>
+  </ng-container>
 
   <ng-template #noData>
     <no-data-placeholder-widget

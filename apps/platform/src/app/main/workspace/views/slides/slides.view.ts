@@ -14,7 +14,7 @@ import { startWith } from 'rxjs';
   styles: [`
     :host {
       display: block;
-      padding-inline-end: 32px;
+      padding: 32px;
       height: 100%;
       overflow: auto;
     }

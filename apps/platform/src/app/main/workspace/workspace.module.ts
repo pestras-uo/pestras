@@ -8,30 +8,52 @@ import { SlidesView } from './views/slides/slides.view';
 import { ContraModule } from '@pestras/frontend/util/contra';
 import { DialogModule } from '@angular/cdk/dialog';
 import { ReactiveFormsModule } from '@angular/forms';
-import { PuiIcon, PuiPreloaderModule, PuiSelectInput } from '@pestras/frontend/ui';
+import {
+  PuiIcon,
+  PuiPreloaderModule,
+  PuiSelectInput,
+} from '@pestras/frontend/ui';
 import { DashboardsFeaturesModule } from '@pestras/frontend/features/dashboards';
 import { ReportsFeaturesModule } from '@pestras/frontend/features/reports';
 import { NoDataPlaceholderWidget } from '@pestras/frontend/widgets/no-data-placeholder';
-
+import { StatsView } from './views/stats/stats.view';
+import { BlueprintsFeatureModule } from '@pestras/frontend/features/blueprints';
+import { OrgunitsFeatureModule } from '@pestras/frontend/features/orgunits';
+import { UsersFeatureModule } from '@pestras/frontend/features/users';
+import { RegionsFeatureModule } from '@pestras/frontend/features/regions';
+import { TopicsFeatureModule } from '@pestras/frontend/features/topics';
+import { SessionFeatureModule } from '@pestras/frontend/features/session';
 
 @NgModule({
   declarations: [
-    WorkspacePage,
-    PinsView,
-    SlidesView
+    WorkspacePage, 
+    PinsView, 
+    SlidesView, 
+    StatsView
   ],
   imports: [
+    // Anguler
     CommonModule,
     WorkspaceRoutingModule,
     ReactiveFormsModule,
+    // Util
     ContraModule,
     DialogModule,
+    // Pui
     PuiPreloaderModule,
-    DashboardsFeaturesModule,
-    ReportsFeaturesModule,
     PuiIcon,
     PuiSelectInput,
-    NoDataPlaceholderWidget
-  ]
+    // Features
+    SessionFeatureModule,
+    BlueprintsFeatureModule,
+    OrgunitsFeatureModule,
+    UsersFeatureModule,
+    RegionsFeatureModule,
+    TopicsFeatureModule,
+    DashboardsFeaturesModule,
+    ReportsFeaturesModule,
+    // Widgets
+    NoDataPlaceholderWidget,
+  ],
 })
-export class WorkspaceModule { }
+export class WorkspaceModule {}

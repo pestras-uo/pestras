@@ -17,7 +17,7 @@
     ></i>
   </p>
 
-  <p *ngIf="!nullable && value !== null">
+  <p class="bold" *ngIf="!nullable && value !== null">
     {{ value | fn : getValueName : optionsList }}
   </p>
 

@@ -4,6 +4,7 @@ import { RegionsPipe } from './pipes/regions.pipe';
 import { RegionPipe } from './pipes/region.pipe';
 import { OrgunitRegionsPipe } from './pipes/orgunit-regions.pipe';
 import { UserRegionsPipe } from './pipes/user-regions.pipe';
+import { RegionsCountPipe } from './pipes/count.pipe';
 
 
 
@@ -12,7 +13,8 @@ import { UserRegionsPipe } from './pipes/user-regions.pipe';
     RegionsPipe,
     RegionPipe,
     OrgunitRegionsPipe,
-    UserRegionsPipe
+    UserRegionsPipe,
+    RegionsCountPipe
   ],
   imports: [
     CommonModule
@@ -21,7 +23,8 @@ import { UserRegionsPipe } from './pipes/user-regions.pipe';
     RegionsPipe,
     RegionPipe,
     OrgunitRegionsPipe,
-    UserRegionsPipe
+    UserRegionsPipe,
+    RegionsCountPipe
   ]
 })
 export class RegionsFeatureModule { }

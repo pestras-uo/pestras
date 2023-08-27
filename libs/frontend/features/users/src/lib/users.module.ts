@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { UserPipe } from './pipes/user.pipe';
 import { UsersPipe } from './pipes/users.pipe';
 import { UserUsersPipe } from './pipes/user-users.pipe';
+import { UsersCountPipe } from './pipes/count.pipe';
 
 
 
@@ -10,7 +11,8 @@ import { UserUsersPipe } from './pipes/user-users.pipe';
   declarations: [
     UserPipe,
     UsersPipe,
-    UserUsersPipe
+    UserUsersPipe,
+    UsersCountPipe
   ],
   imports: [
     CommonModule
@@ -18,7 +20,8 @@ import { UserUsersPipe } from './pipes/user-users.pipe';
   exports: [
     UserPipe,
     UsersPipe,
-    UserUsersPipe
+    UserUsersPipe,
+    UsersCountPipe
   ]
 })
 export class UsersFeatureModule { }

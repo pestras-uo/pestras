@@ -22,10 +22,8 @@ export class OrgunitsState extends StatorCollectionState<Orgunit> {
   private initListeners() {
     // when session starts fetch all orgunits
     this.channel.select(SessionStart)
-      .subscribe(() => {
-        this._init();
-        this._setLoading(false);
-      });
+      .pipe(tap(() => this._init()))
+      .subscribe(() => this._setLoading(false));
 
     // when session ends clear state
     this.channel.select(SessionEnd)

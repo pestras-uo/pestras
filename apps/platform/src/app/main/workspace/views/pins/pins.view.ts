@@ -13,10 +13,10 @@ import { WorkspaceState } from '@pestras/frontend/state';
   styles: [`
     :host {
       display: block;
-      width: 400px;
-      padding-inline-start: 32px;
+      width: 320px;
+      padding: 32px;
       height: 100%;
-      border-inline-start: 1px solid var(--border1);
+      border-inline-end: 1px solid var(--border1);
       overflow: auto;
     }
   `]

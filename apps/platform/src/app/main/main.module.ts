@@ -10,6 +10,7 @@ import { ContraModule } from '@pestras/frontend/util/contra';
 import { TopicsFeatureModule } from '@pestras/frontend/features/topics';
 import { ProfileModule } from './profile/profile.module';
 import { AvatarWidget } from '@pestras/frontend/widgets/avatar';
+import { WorkspaceFeatureModule } from '@pestras/frontend/features/workspace';
 
 
 @NgModule({
@@ -33,6 +34,7 @@ import { AvatarWidget } from '@pestras/frontend/widgets/avatar';
     // Features
     SessionFeatureModule,
     TopicsFeatureModule,
+    WorkspaceFeatureModule,
     // pages
     ProfileModule
   ]

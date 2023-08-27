@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { OrgunitPipe } from './pipes/orgunit.pipe';
 import { OrgunitsPipe } from './pipes/orgunits.pipe';
 import { UserOrgunitsPipe } from './pipes/user-orgunits.pipe';
+import { OrgunitCountPipe } from './pipes/count.pipe';
 
 
 
@@ -10,7 +11,8 @@ import { UserOrgunitsPipe } from './pipes/user-orgunits.pipe';
   declarations: [
     OrgunitPipe,
     OrgunitsPipe,
-    UserOrgunitsPipe
+    UserOrgunitsPipe,
+    OrgunitCountPipe
   ],
   imports: [
     CommonModule
@@ -18,7 +20,8 @@ import { UserOrgunitsPipe } from './pipes/user-orgunits.pipe';
   exports: [
     OrgunitPipe,
     OrgunitsPipe,
-    UserOrgunitsPipe
+    UserOrgunitsPipe,
+    OrgunitCountPipe
   ]
 })
 export class OrgunitsFeatureModule { }

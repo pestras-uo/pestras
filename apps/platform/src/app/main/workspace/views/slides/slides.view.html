@@ -1,16 +1,16 @@
 <ng-container *contra="let c">
 
-  <div class="toolbar gap-1 mbe-8">
+  <div class="toolbar gap-1 mbe-4">
     <h3>{{c['slides']}}</h3>
     <div class="grow"></div>
     <ng-container *ngIf="slides.length">
-      <button class="btn-icon btn-round btn-small rtl-x-flip" [class.btn-success]="playing" (click)="togglePlay()">
-        <i size="small" [puiIcon]="playing ? 'pause' : 'play'"></i>
+      <button class="btn-icon btn-round btn-small btn-outline rtl-x-flip" [class.btn-success]="playing" (click)="togglePlay()">
+        <i size="tiny" [puiIcon]="playing ? 'pause' : 'play'"></i>
       </button>
-      <button class="btn-icon btn-small btn-round" (click)="openDialog(removeTmp, active!.slide)">
-        <i size="small" puiIcon="delete"></i>
+      <button class="btn-icon btn-small btn-outline-danger btn-round" (click)="openDialog(removeTmp, active!.slide)">
+        <i size="tiny" puiIcon="delete"></i>
       </button>
-      <div class="fc fc-surface1 fc-outline fc-round">
+      <div class="fc fc-surface1 fc-small fc-outline fc-round w-10">
         <pui-select-input [list]="slides" [formControl]="select"></pui-select-input>
       </div>
     </ng-container>
