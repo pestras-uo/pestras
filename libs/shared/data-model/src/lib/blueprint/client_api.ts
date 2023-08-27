@@ -1,11 +1,12 @@
-export const clientApiDataStoreParamOperators = ['eq', 'ne', 'gt', 'gte', 'lt', 'lte', 'regex'] as const;
+/* eslint-disable @typescript-eslint/no-explicit-any */
+export const clientApiDataStoreParamOperators = ['$eq', '$ne', '$gte', '$lte', '$regex'] as const;
 
 export type ClientApiDataStoreParamOperators = typeof clientApiDataStoreParamOperators[number];
 
 export interface ClientApiDataStoreParam {
   serial: string;
   required: boolean;
-  default: unknown | null;
+  default: any | null;
   field: string;
   operator: ClientApiDataStoreParamOperators;
   /**
@@ -16,6 +17,7 @@ export interface ClientApiDataStoreParam {
 
 export interface ClientApiDataStore {
   serial: string;
+  // max records cound = limit rows
   max: number;
   params: ClientApiDataStoreParam[];
   method: 'GET' | 'POST';

@@ -1,9 +1,12 @@
 <ng-container *contra="let c">
-
   <div class="toolbar mbe-6">
     <h4>{{c['params']}}</h4>
     <div class="grow"></div>
-    <button *ngIf="editable" class="action btn-icon btn-small btn-round" (click)="openModal(formTmp)">
+    <button
+      *ngIf="editable"
+      class="action btn-icon btn-small btn-round"
+      (click)="openModal(formTmp)"
+    >
       <i puiIcon="add" size="small"></i>
     </button>
   </div>
@@ -33,12 +36,18 @@
         </td>
         <td>{{param.default || c['none']}}</td>
         <td *ngIf="editable">
-          <button class="action btn-icon btn-small btn-round" (click)="openModal(formTmp, param)">
+          <button
+            class="action btn-icon btn-small btn-round"
+            (click)="openModal(formTmp, param)"
+          >
             <i puiIcon="edit" size="small"></i>
           </button>
         </td>
         <td *ngIf="editable">
-          <button class="action btn-icon btn-small btn-round" (click)="openModal(removeTmp, param)">
+          <button
+            class="action btn-icon btn-small btn-round"
+            (click)="openModal(removeTmp, param)"
+          >
             <i puiIcon="delete" size="small"></i>
           </button>
         </td>
@@ -47,27 +56,41 @@
   </table>
 
   <ng-template #formTmp let-param>
-    <form class="card w-20 shadow-6" [formGroup]="form" (ngSubmit)="submit(param?.serial)">
+    <form
+      class="card w-20 shadow-6"
+      [formGroup]="form"
+      (ngSubmit)="submit(param?.serial)"
+    >
       <h4 *ngIf="!param" class="card-header">{{c['addParam']}}</h4>
       <h4 *ngIf="param" class="card-header">{{c['addParam']}}</h4>
 
       <div class="card-body">
-        <pui-check-input class="mbe-6" [label]="c['required']" formControlName="required"></pui-check-input>
+        <pui-check-input
+          class="mbe-6"
+          [label]="c['required']"
+          formControlName="required"
+        ></pui-check-input>
 
         <div class="flex gap-4 align-items-center mbe-6">
           <div class="grow">
             <label for="field">{{c['field']}}</label>
             <div class="fc">
-              <pui-select-input labelRef="field" [list]="dataStore.fields | arrayMap: mapField"
-                formControlName="field"></pui-select-input>
+              <pui-select-input
+                labelRef="field"
+                [list]="dataStore.fields | arrayMap: mapField"
+                formControlName="field"
+              ></pui-select-input>
             </div>
           </div>
 
           <div class="grow">
             <label for="operator">{{c['operator']}}</label>
             <div class="fc">
-              <pui-select-input labelRef="operator" [list]="c['dataVizFilterOperators']"
-                formControlName="operator"></pui-select-input>
+              <pui-select-input
+                labelRef="operator"
+                [list]="c['dataVizFilterOperators']"
+                formControlName="operator"
+              ></pui-select-input>
             </div>
           </div>
         </div>
@@ -76,22 +99,34 @@
           <div class="grow">
             <label for="alias">{{c['alias']}}</label>
             <div class="fc">
-              <input type="text" id="alias" formControlName="alias">
+              <input type="text" id="alias" formControlName="alias" />
             </div>
           </div>
 
           <div class="grow">
-            <label for="default">{{c['defaultValue']}}</label>
-            <div class="fc">
-              <input type="text" id="default" formControlName="default">
+            <label for="default">
+              {{c['defaultValue']}}
+              <div class="grow"></div>
+              <pui-check-input small [label]="c['callDate']" [formControl]="callDate"></pui-check-input>
+            </label>
+            <div class="fc" [class.disabled]="callDate.value">
+              <input type="text" id="default" formControlName="default" />
             </div>
           </div>
         </div>
       </div>
 
       <div class="card-footer">
-        <button class="btn-round btn-outline" type="reset" (click)="closeModal()">{{c['cancel']}}</button>
-        <button class="btn-round btn-primary" [disabled]="form.invalid">{{c['submit']}}</button>
+        <button
+          class="btn-round btn-outline"
+          type="reset"
+          (click)="closeModal()"
+        >
+          {{c['cancel']}}
+        </button>
+        <button class="btn-round btn-primary" [disabled]="form.invalid">
+          {{c['submit']}}
+        </button>
       </div>
 
       <pui-preloader *ngIf="preloader"></pui-preloader>
@@ -104,11 +139,13 @@
       <p class="card-body">{{c['confirmOperation']}}</p>
 
       <div class="card-footer">
-        <button class="btn-round btn-outline" (click)="closeModal()">{{c['cancel']}}</button>
-        <button class="btn-round btn-primary" (click)="remove(param.serial)">{{c['submit']}}</button>
+        <button class="btn-round btn-outline" (click)="closeModal()">
+          {{c['cancel']}}
+        </button>
+        <button class="btn-round btn-primary" (click)="remove(param.serial)">
+          {{c['submit']}}
+        </button>
       </div>
-
     </div>
   </ng-template>
-
 </ng-container>

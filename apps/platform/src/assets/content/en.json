@@ -117,27 +117,23 @@
   "dataVizFilterOperators": [
     {
       "name": "equals",
-      "value": "eq"
+      "value": "$eq"
     },
     {
       "name": "not equals",
-      "value": "ne"
-    },
-    {
-      "name": "greater than",
-      "value": "gt"
+      "value": "$ne"
     },
     {
       "name": "greater than or equals",
-      "value": "gte"
-    },
-    {
-      "name": "less than",
-      "value": "lt"
+      "value": "$gte"
     },
     {
       "name": "less than or equals",
-      "value": "lte"
+      "value": "$lte"
+    },
+    {
+      "name": "match",
+      "value": "$regex"
     }
   ],
   "filterOperations": {

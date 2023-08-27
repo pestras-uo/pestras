@@ -2,9 +2,10 @@
 /* eslint-disable @angular-eslint/component-class-suffix */
 /* eslint-disable @angular-eslint/component-selector */
 import { Dialog, DialogRef } from '@angular/cdk/dialog';
-import { Component, Input, TemplateRef } from '@angular/core';
-import { FormBuilder, Validators } from '@angular/forms';
+import { Component, Input, OnInit, TemplateRef } from '@angular/core';
+import { FormBuilder, FormControl, Validators } from '@angular/forms';
 import { ClientApiState } from '@pestras/frontend/state';
+import { untilDestroyed } from '@pestras/frontend/ui';
 import { ClientApi, ClientApiDataStore, ClientApiDataStoreParam, ClientApiDataStoreParamOperators, DataStore, Field } from '@pestras/shared/data-model';
 
 @Component({
@@ -13,12 +14,14 @@ import { ClientApi, ClientApiDataStore, ClientApiDataStoreParam, ClientApiDataSt
   styles: [
   ]
 })
-export class ParamsView {
+export class ParamsView implements OnInit {
+  private ud = untilDestroyed();
 
+  readonly callDate = new FormControl<boolean>(false, { nonNullable: true });
   readonly form = this.fb.nonNullable.group({
     required: false,
     field: ['', Validators.required],
-    operator: this.fb.nonNullable.control<ClientApiDataStoreParamOperators>('eq', Validators.required),
+    operator: this.fb.nonNullable.control<ClientApiDataStoreParamOperators>('$eq', Validators.required),
     alias: '',
     default: this.fb.control<any>(null)
   });
@@ -41,6 +44,12 @@ export class ParamsView {
     private fb: FormBuilder,
     private dialog: Dialog
   ) { }
+
+  ngOnInit(): void {
+    this.callDate.valueChanges
+      .pipe(this.ud())
+      .subscribe(checked => this.form.controls.default.setValue(checked ? "$$NOW" : ""));
+  }
 
   openModal(tmp: TemplateRef<any>, param?: ClientApiDataStoreParam) {
     if (param) {

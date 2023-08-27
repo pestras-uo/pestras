@@ -2,7 +2,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @angular-eslint/component-class-suffix */
 /* eslint-disable @angular-eslint/component-selector */
-import { Component, Input, OnInit, HostBinding, OnDestroy, Output, EventEmitter } from '@angular/core';
+import { Component, Input, OnInit, HostBinding, OnDestroy, Output, EventEmitter, booleanAttribute } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ControlValueAccessor, FormControl, NG_VALIDATORS, NG_VALUE_ACCESSOR, ReactiveFormsModule, ValidationErrors } from '@angular/forms';
 import { Subscription } from 'rxjs';
@@ -34,7 +34,7 @@ export class PuiCheckInput implements OnInit, OnDestroy, ControlValueAccessor {
   color: 'primary' | 'success' | 'warn' | 'danger' = 'primary';
   @Input()
   nullable = false;
-  @Input()
+  @Input({ transform: booleanAttribute })
   @HostBinding('class.small')
   small = false;
 

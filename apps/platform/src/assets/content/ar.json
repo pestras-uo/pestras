@@ -118,27 +118,23 @@
   "dataVizFilterOperators": [
     {
       "name": "يساوي",
-      "value": "eq"
+      "value": "$eq"
     },
     {
       "name": "لا يساوي",
-      "value": "ne"
-    },
-    {
-      "name": "أكبر من",
-      "value": "gt"
+      "value": "$ne"
     },
     {
       "name": "أكبر أو يساوي",
-      "value": "gte"
-    },
-    {
-      "name": "أقل من",
-      "value": "lt"
+      "value": "$gte"
     },
     {
       "name": "أقل أو يساوي",
-      "value": "lte"
+      "value": "$lte"
+    },
+    {
+      "name": "يحتوي",
+      "value": "$regex"
     }
   ],
   "filterOperations": {
