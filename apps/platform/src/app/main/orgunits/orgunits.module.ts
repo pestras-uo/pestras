@@ -27,6 +27,7 @@ import { RegionsFeatureModule } from '@pestras/frontend/features/regions';
 import { OrgunitsFeatureModule } from '@pestras/frontend/features/orgunits';
 import { UsersFeatureModule } from '@pestras/frontend/features/users';
 import { OrgunitsTableView } from './views/orgunits-table/orgunits-table.view';
+import { RegionsTableView } from './views/regions-table/regions-table.view';
 
 @NgModule({
   declarations: [
@@ -38,6 +39,7 @@ import { OrgunitsTableView } from './views/orgunits-table/orgunits-table.view';
     UpdateOrgunitModal,
     UpdateOrgunitLogoModal,
     OrgunitsTableView,
+    RegionsTableView
   ],
   imports: [
     // Angular

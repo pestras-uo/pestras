@@ -3,7 +3,8 @@ import { Validators } from '../../validators';
 
 export enum OrgunitsValidators {
   CREATE = 'createOrgunit',
-  UPDATE = 'updateOrgunit'
+  UPDATE = 'updateOrgunit',
+  UPDATE_REGIONS = 'updateOrgunitsRegions'
 }
 
 new Validall(OrgunitsValidators.CREATE, {
@@ -15,6 +16,9 @@ new Validall(OrgunitsValidators.CREATE, {
 
 new Validall(OrgunitsValidators.UPDATE, {
   name: { $ref: Validators.NAME },
-  class: { $type: 'string', $message: 'invalidOrgunitClass' },
+  class: { $type: 'string', $message: 'invalidOrgunitClass' }
+});
+
+new Validall(OrgunitsValidators.UPDATE_REGIONS, {
   regions: { $default: [], $each: { $type: 'string' } }
 });

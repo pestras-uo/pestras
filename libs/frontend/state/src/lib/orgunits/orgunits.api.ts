@@ -79,4 +79,17 @@ export namespace OrgunitsApi {
   
     export type Response = string; // date
   }
+  
+  
+  
+  // PUT
+  export namespace UpdateRegions {
+    export const path = basePath + '/:serial/regions';
+  
+    export interface Params { serial: string };
+  
+    export interface Body { regions: string[]; }
+  
+    export type Response = string; // date
+  }
 }

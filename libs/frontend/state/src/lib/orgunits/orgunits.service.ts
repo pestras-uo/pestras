@@ -50,4 +50,10 @@ export class OrgunitsService {
 
     return this.http.delete<OrgunitsApi.RemoveLogo.Response>(path);
   }
+
+  updateRegions(params: OrgunitsApi.UpdateRegions.Params, data: OrgunitsApi.UpdateRegions.Body) {
+    const path = injectURLPayload(this.envServ.env.api + OrgunitsApi.UpdateRegions.path, params);
+
+    return this.http.put<OrgunitsApi.UpdateRegions.Response>(path, data);
+  }
 }

@@ -47,50 +47,12 @@
           <h2 mbe>{{c['branchesOrgunits']}}</h2>
         </div> -->
 
-        <div class="content">
-          <section class="col-span-3 row-span-3">
-            <pestras-orgunits-table
-              [parent]="orgunit.serial"
-            ></pestras-orgunits-table>
-          </section>
+        <div class="grid cols-2 gap-8 mbe-8">
+          <pestras-orgunits-table
+            [parent]="orgunit.serial"
+          ></pestras-orgunits-table>
 
-          <section class="card col-4 row-1 minw-6">
-            <div
-              class="card-body flex align-items-cetner justify-content-center align-center"
-            >
-              <div>
-                <p class="f0 weight-8 primary">{{branches.length}}</p>
-                <p class="bold primary">{{c['orgunits']}}</p>
-              </div>
-            </div>
-          </section>
-
-          <section class="card col-4 row-2 minw-6">
-            <div
-              class="card-body flex align-items-cetner justify-content-center align-center"
-            >
-              <div>
-                <p class="f0 weight-8 danger">
-                  {{('' | users: orgunit.serial | async)?.length ?? 0}}
-                </p>
-                <p class="bold danger">{{c['users']}}</p>
-              </div>
-            </div>
-          </section>
-
-          <section class="card col-4 row-3 minw-6">
-            <div
-              class="card-body flex align-items-cetner justify-content-center align-center"
-            >
-              <div>
-                <p class="f0 weight-8 success">
-                  {{orgunit.regions.length || ('' | regions | async)?.length ??
-                  0}}
-                </p>
-                <p class="bold success">{{c['regions']}}</p>
-              </div>
-            </div>
-          </section>
+          <orgunits-regions-table [orgunit]="orgunit"></orgunits-regions-table>
         </div>
 
         <div class="card overflow-hidden" *ngIf="branches.length > 0">

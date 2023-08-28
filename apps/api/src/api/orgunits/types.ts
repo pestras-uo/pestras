@@ -21,6 +21,9 @@ export namespace OrgunitsApi {
   export type UpdateLogoReq = Request<{ serial: string }>;
   export type UpdateLogoRes = Response<{ path: string, date: Date; }, UserSession>;
 
+  export type UpdateRegionsReq = Request<{ serial: string }, any, { regions: string[]; }>;
+  export type UpdateRegionsRes = Response<{ date: Date; }, UserSession>;
+
   export type RemoveReq = Request<{ serial: string }>;
   export type RemoveRes = Response<Date, UserSession>;
 }

@@ -40,3 +40,9 @@ export const orgunitRoutes = Router()
     apiAuth([Role.ADMIN]),
     OrgunitsController.removeLogo
   )
+  .put(
+    '/:serial/regions',
+    apiAuth([Role.ADMIN]),
+    validate(OrgunitsValidators.UPDATE_REGIONS),
+    OrgunitsController.updateRegions
+  )

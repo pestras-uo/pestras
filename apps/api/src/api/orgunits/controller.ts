@@ -82,5 +82,14 @@ export const OrgunitsController = {
     } catch (error) {
       next(error);
     }
+  },
+
+  async updateRegions(req: OrgunitsApi.UpdateRegionsReq, res: OrgunitsApi.UpdateRegionsRes, next: NextFunction) {
+    try {
+      res.json(await orgunitsModel.updateRegions(req.params.serial, req.body.regions, res.locals.issuer.serial));
+      
+    } catch (error) {
+      next(error);
+    }
   }
 }

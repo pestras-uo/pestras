@@ -70,4 +70,12 @@ export class OrgunitsState extends StatorCollectionState<Orgunit> {
     return this.service.removeLogo(params)
       .pipe(tap(() => this._update(params.serial, { logo: '' })));
   }
+
+  updateRegions(serial: string, regions: string[]) {
+    return this.service.updateRegions({ serial }, { regions })
+      .pipe(tap(res => this._update(serial, {
+        regions: regions,
+        last_modified: new Date(res)
+      })));
+  }
 }

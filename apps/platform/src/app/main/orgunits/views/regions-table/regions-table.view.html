@@ -1,0 +1,91 @@
+<ng-container *contra="let c">
+  <div class="card-header">
+    <i puiIcon="travel_explore"></i>
+    <h4>{{c['regions']}}</h4>
+    <div class="grow"></div>
+    <div class="fc fc-round w-6">
+      <input type="search" [placeholder]="c['search']" [formControl]="search" />
+      <i puiIcon="search" size="small"></i>
+    </div>
+    <button
+      class="btn-icon btn-round"
+      (click)="openDialog(updateRegionsTemplate)"
+    >
+      <i puiIcon="add" size="small"></i>
+    </button>
+  </div>
+  <ng-container *ngIf="list$ | async as regions">
+    <div class="card-body">
+      <table *ngIf="regions.length else noData">
+        <thead>
+          <tr>
+            <th class="w-1">#</th>
+            <th>{{c['name']}}</th>
+            <th>{{c['type']}}</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr
+            *ngFor="let r of regions; let i = index"
+            class="hover cursor-pointer"
+          >
+            <td class="bold primary">{{skip + i + 1}}</td>
+            <td>{{r.name}}</td>
+            <td>{{r.type}}</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <ng-template #noData>
+        <no-data-placeholder-widget #noData [small]="true"
+          >{{c['noDataMsg']}}</no-data-placeholder-widget
+        >
+      </ng-template>
+    </div>
+
+    <div *ngIf="regions.length" class="card-footer">
+      <div class="grow"></div>
+      <pui-table-pagination
+        [count]="count"
+        [pageSize]="pageSize"
+        (selects)="page$.next($event)"
+      ></pui-table-pagination>
+      <div class="grow"></div>
+    </div>
+  </ng-container>
+
+  <ng-template #updateRegionsTemplate>
+    <div class="card w-10 shadow-6">
+      <h4 class="card-header">{{c['updateRegions']}}</h4>
+
+      <div class="card-body">
+        <label for="orgunit-regions">{{c['regions']}}</label>
+        <div class="fc">
+          <pui-multi-select-input
+            [list]="'' | userRegions | async | arrayMap: mapRegion"
+            [formControl]="regionsControl"
+          ></pui-multi-select-input>
+        </div>
+      </div>
+      <div class="card-footer">
+        <button
+          class="btn-round btn-outline"
+          type="reset"
+          (click)="closeDialog()"
+        >
+          {{c['cancel']}}
+        </button>
+        <button
+          class="btn-primary btn-round"
+          type="submit"
+          [disabled]="regionsControl.invalid"
+          (click)="updateRegions(c)"
+        >
+          {{c['add']}}
+        </button>
+      </div>
+
+      <pui-preloader *ngIf="preloader"></pui-preloader>
+    </div>
+  </ng-template>
+</ng-container>

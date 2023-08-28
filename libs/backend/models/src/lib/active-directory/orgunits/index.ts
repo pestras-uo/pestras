@@ -3,7 +3,7 @@ import { Model } from '../../model';
 import { getAll, getBySerial } from './read';
 import { exists } from './util';
 import { create } from './create';
-import { update, updateLogo } from './update';
+import { update, updateLogo, updateRegions } from './update';
 
 export { CreateOrgunitInput } from './create';
 export { UpdateOrgunitInput } from './update';
@@ -27,6 +27,7 @@ export class OrgunitsModel extends Model<Orgunit> {
   // ----------------------------------------------------------------------------
   update = update.bind(this);
   updateLogo = updateLogo.bind(this);
+  updateRegions = updateRegions.bind(this);
 
   // TODO: delete orgunit
   // ----------------------------------------------------------------------------
