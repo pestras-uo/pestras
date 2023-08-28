@@ -9,7 +9,7 @@ import { Role } from '@pestras/shared/data-model';
   template: `
     <ng-container *ngIf="workspace$ | async as ws">
       <app-pins [ws]="ws"></app-pins>
-      <div>
+      <div class="sec-2">
         <workspace-stats *ngIf="[roles.ADMIN, roles.DATA_ENG] | hasRoles">
         </workspace-stats>
         <app-slides [ws]="ws"></app-slides>
@@ -21,6 +21,11 @@ import { Role } from '@pestras/shared/data-model';
       display: grid;
       grid-template-columns: auto 1fr;
       height: var(--main-height);
+    }
+    
+    .sec-2 {
+      height: 100%;
+      overflow-y: auto;
     }
   `]
 })
