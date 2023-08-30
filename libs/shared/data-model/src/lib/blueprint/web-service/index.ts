@@ -5,6 +5,7 @@ import { WebServiceSelection } from "./selection";
 export * from './analyse-data-types';
 export * from './query-options';
 export * from './selection';
+export * from './log';
 
 export interface WSAuth {
   username: string;

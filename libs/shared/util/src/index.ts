@@ -1,7 +1,7 @@
 export * from './lib/misc';
 export * from './lib/objects';
 export * from './lib/time';
-// export * from './lib/reactive';
+export * from './lib/date';
 export * from './lib/geo';
 export * from './lib/string';
 export * from './lib/colors';

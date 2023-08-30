@@ -21,6 +21,10 @@
                 "onlyDependOnLibsWithTags": ["scope:shared", "scope:backend"]
               },
               {
+                "sourceTag": "scope:ws-import-job",
+                "onlyDependOnLibsWithTags": ["scope:shared", "scope:backend"]
+              },
+              {
                 "sourceTag": "scope:platform",
                 "onlyDependOnLibsWithTags": ["scope:shared", "scope:frontend"]
               },

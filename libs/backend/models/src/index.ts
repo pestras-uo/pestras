@@ -13,6 +13,8 @@ export * from './lib/blueprints/clients-api';
 export * from './lib/blueprints/data-stores';
 export * from './lib/blueprints/records';
 export * from './lib/blueprints/topics';
+export * from './lib/blueprints/web-service-error-log';
+export * from './lib/blueprints/web-service-log';
 export * from './lib/blueprints/workflow';
 export * from './lib/comments';
 export * from './lib/content-views';

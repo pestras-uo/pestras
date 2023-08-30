@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { DataStoresModel } from ".";
 
 export function getByBlueprint(this:DataStoresModel, bp: string) {
@@ -26,4 +27,8 @@ export async function getFields(
     return [];
 
   return ds.fields;
+}
+
+export function search(query: any, skip = 0, limit = 0, projection: any) {
+  return this.col.find(query, { projection, skip, limit }).toArray();
 }

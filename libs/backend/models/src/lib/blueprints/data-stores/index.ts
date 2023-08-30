@@ -1,7 +1,7 @@
 import { DataStore } from "@pestras/shared/data-model";
 import { Model } from "../../model";
 import { Db } from "mongodb";
-import { exists, getByBlueprint, getBySerial, getFields } from "./read";
+import { exists, getByBlueprint, getBySerial, getFields, search } from "./read";
 import { create } from "./create";
 import { update, updateState } from "./update";
 import { setTableSettings } from "./settings";
@@ -27,6 +27,7 @@ export class DataStoresModel extends Model<DataStore> {
   // ---------------------------------------------------------------------------------------
   getByBlueprint = getByBlueprint.bind(this);
   getBySerial = getBySerial.bind(this);
+  search = search.bind(this);
 
   // util
   // ---------------------------------------------------------------------------------------
