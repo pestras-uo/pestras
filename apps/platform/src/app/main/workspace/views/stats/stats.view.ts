@@ -1,7 +1,6 @@
 /* eslint-disable @angular-eslint/component-selector */
 /* eslint-disable @angular-eslint/component-class-suffix */
 import { Component } from '@angular/core';
-import { BlueprintsState, OrgunitsState, RegionsState, TopicsState, UsersState } from '@pestras/frontend/state';
 
 @Component({
   selector: 'workspace-stats',
@@ -20,12 +19,4 @@ import { BlueprintsState, OrgunitsState, RegionsState, TopicsState, UsersState }
   `],
 })
 export class StatsView {
-
-  constructor(
-    private bpsState: BlueprintsState,
-    private topicsState: TopicsState,
-    private orgsState: OrgunitsState,
-    private usersState: UsersState,
-    private regionsState: RegionsState
-  ) { }
 }
