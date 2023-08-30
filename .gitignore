@@ -40,7 +40,10 @@ Thumbs.db
 
 .angular
 
-# 
+# env
+**/_environments/
 **/.env
 ecosystem.config.js
+
+# uploads
 public/uploads/*
