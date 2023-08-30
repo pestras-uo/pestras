@@ -41,7 +41,7 @@ Thumbs.db
 .angular
 
 # env
-**/_environments/
+**/environments/
 **/.env
 ecosystem.config.js
 
