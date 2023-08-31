@@ -18,9 +18,9 @@ export const dateUtil = {
         date.setHours(date.getMinutes() + part.amount);
       else if (part.unit === 'second')
         date.setHours(date.getSeconds() + part.amount);
-
-      return date;
     }
+
+    return date;
   },
 
   dateUnit(date: Date | string | number, modifier: DateUnit) {

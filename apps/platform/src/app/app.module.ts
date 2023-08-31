@@ -35,7 +35,7 @@ import { NgxEchartsModule } from 'ngx-echarts';
       ]
     }),
     EnvModule.forRoot(environment),
-    StatorModule.forRoot({ development: !environment.production }),
+    StatorModule.forRoot({ development: environment.env === 'production' }),
     StateModule.forRoot(),
     NgxEchartsModule.forRoot({
       echarts: () => import('echarts')
