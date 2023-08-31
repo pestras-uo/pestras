@@ -3,8 +3,8 @@
   <app-side-menu
     [topic]="t"
     [view]="view"
-    (selects)="view = $event"
-    (selectDataStore)="view = 'datastores'; dataStore = $event"
+    (selects)="set($event)"
+    (selectDataStore)="dataStore = $event; set('datastores')"
   ></app-side-menu>
 
   <main puiInfiniteScroll (reached)="pageBottomReached()" *contra="let c">

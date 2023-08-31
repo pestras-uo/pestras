@@ -2,6 +2,7 @@
 /* eslint-disable @angular-eslint/component-class-suffix */
 /* eslint-disable @angular-eslint/component-selector */
 import { Component, Input, OnChanges } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
 import { RecordsEntitiesState } from '@pestras/frontend/state';
 import { DataStore, Field, TableDataRecord } from '@pestras/shared/data-model';
 import { Observable } from 'rxjs';
@@ -35,12 +36,26 @@ export class DetailsPage implements OnChanges {
   dataStore!: DataStore;
   @Input({ required: true })
   record!: string;
+  @Input()
+  menu?: string;
+  @Input()
+  payload?: string;
 
-  constructor(private state: RecordsEntitiesState) { }
+  constructor(
+    private state: RecordsEntitiesState,
+    private router: Router,
+    private route: ActivatedRoute
+  ) { }
 
   ngOnChanges() {
+    this.view = { name: this.menu ?? 'details', payload: this.payload ?? null };
+    
     this.mainField = this.dataStore.fields.find(f => f.name === this.dataStore.settings.interface_field) ?? null;
 
     this.record$ = this.state.select(this.record, this.dataStore.serial) as Observable<TableDataRecord | null>;
+  }
+
+  set(view: { name: string; payload?: any }) {
+    this.router.navigate([], { relativeTo: this.route, queryParams: { menu: view.name, payload: view.payload ?? '' } })
   }
 }

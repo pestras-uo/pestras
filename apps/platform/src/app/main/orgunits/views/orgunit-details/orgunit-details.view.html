@@ -50,6 +50,7 @@
         <div class="grid cols-2 gap-8 mbe-8">
           <pestras-orgunits-table
             [parent]="orgunit.serial"
+            (selects)="selects.emit($event)"
           ></pestras-orgunits-table>
 
           <orgunits-regions-table [orgunit]="orgunit"></orgunits-regions-table>

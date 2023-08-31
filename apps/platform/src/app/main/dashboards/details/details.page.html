@@ -3,7 +3,7 @@
   <app-side-menu
     [dashboard]="d"
     [view]="view"
-    (selects)="this.view = $event"
+    (selects)="set($event)"
   ></app-side-menu>
 
   <main *contra="let c">

@@ -3,7 +3,7 @@
 /* eslint-disable @angular-eslint/component-selector */
 import { Component, Input, OnChanges } from '@angular/core';
 import { DataStoresState } from '@pestras/frontend/state';
-import { DataRecord, DataStore, DataStoreType, SubDataStores } from '@pestras/shared/data-model';
+import { DataRecord, DataStore, DataStoreType } from '@pestras/shared/data-model';
 import { Observable } from 'rxjs';
 
 @Component({
@@ -22,15 +22,16 @@ export class SubDataStoresRecordsView implements OnChanges {
   @Input({ required: true })
   dataStore!: DataStore;
   @Input({ required: true })
-  options!: SubDataStores;
+  options!: string;
   @Input({ required: true })
   record!: DataRecord;
 
   constructor(private dsState: DataStoresState) {}
 
   ngOnChanges() {
-    this.search = { [this.options.on.foreign_field]: this.record[this.options.on.local_field] };
+    const sub = this.dataStore.settings.sub_data_stores[+this.options]
+    this.search = { [sub.on.foreign_field]: this.record[sub.on.local_field] };
 
-    this.subDataStore$ = this.dsState.select(this.options.data_store);
+    this.subDataStore$ = this.dsState.select(sub.data_store);
   }
 }

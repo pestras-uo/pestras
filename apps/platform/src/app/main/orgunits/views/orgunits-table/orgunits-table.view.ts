@@ -1,5 +1,5 @@
 /* eslint-disable @angular-eslint/component-class-suffix */
-import { Component, HostBinding, Input, OnChanges } from '@angular/core';
+import { Component, EventEmitter, HostBinding, Input, OnChanges, Output } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { OrgunitsState } from '@pestras/frontend/state';
 import { Orgunit } from '@pestras/shared/data-model';
@@ -23,6 +23,9 @@ export class OrgunitsTableView implements OnChanges {
 
   @Input({ required: true })
   parent!: string;
+
+  @Output()
+  selects = new EventEmitter<string>()
 
   constructor(private state: OrgunitsState) { }
 

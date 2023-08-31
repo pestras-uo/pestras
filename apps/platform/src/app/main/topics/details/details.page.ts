@@ -4,6 +4,7 @@
 import { Dialog, DialogRef } from '@angular/cdk/dialog';
 import { Component, Input, OnChanges, TemplateRef } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
+import { ActivatedRoute, Router } from '@angular/router';
 import { TopicsState } from '@pestras/frontend/state';
 import { PubSubService, ToastService } from '@pestras/frontend/ui';
 import { DataStore, Topic, WorkspacePinType } from '@pestras/shared/data-model';
@@ -41,13 +42,23 @@ export class DetailsPage implements OnChanges {
   theme!: string;
   @Input({ required: true })
   serial!: string;
+  @Input()
+  set menu(value: string) {
+    this.view = value ?? 'details';
+  }
 
   constructor(
     private state: TopicsState,
     private dialog: Dialog,
     private toast: ToastService,
-    private pubSub: PubSubService
+    private pubSub: PubSubService,
+    private router: Router,
+    private route: ActivatedRoute
   ) {}
+
+  set(menu: string) {
+    this.router.navigate([], { relativeTo: this.route, queryParams: { menu } });
+  }
 
   ngOnChanges() {
     this.topic$ = this.state.select(this.serial, this.theme);

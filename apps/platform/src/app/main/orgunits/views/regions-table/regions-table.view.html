@@ -28,6 +28,7 @@
           <tr
             *ngFor="let r of regions; let i = index"
             class="hover cursor-pointer"
+            [routerLink]="['/main/regions']" [queryParams]="{ region: r.serial }"
           >
             <td class="bold primary">{{skip + i + 1}}</td>
             <td>{{r.name}}</td>

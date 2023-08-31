@@ -4,6 +4,7 @@
 import { Dialog, DialogRef } from '@angular/cdk/dialog';
 import { Component, Input, OnChanges, TemplateRef } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
+import { ActivatedRoute, Router } from '@angular/router';
 import { BlueprintsState } from '@pestras/frontend/state';
 import { ToastService } from '@pestras/frontend/ui';
 import { Blueprint, DataStoreType, WorkspacePinType } from '@pestras/shared/data-model';
@@ -39,16 +40,26 @@ export class DetailsPage implements OnChanges {
 
   @Input({ required: true })
   serial!: string;
+  @Input()
+  set menu(value: string) {
+    this.view = value ?? 'details';
+  }
 
   constructor(
     private state: BlueprintsState,
     private dialog: Dialog,
-    private toast: ToastService
+    private toast: ToastService,
+    private router: Router,
+    private route: ActivatedRoute
   ) { }
 
   ngOnChanges() {
     this.bp$ = this.state.select(this.serial)
       .pipe(tap(bp => this.title.setValue(bp?.name ?? '')));
+  }
+
+  set(menu: string) {
+    this.router.navigate([], { relativeTo: this.route, queryParams: { menu } });
   }
 
   openDialog(tmp: TemplateRef<any>) {
