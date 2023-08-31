@@ -15,7 +15,7 @@
     </div>
   </header>
 
-  <div class="list" *ngIf="searchControl.value | userRegions | async as regions">
+  <div class="list" *ngIf="searchControl.value | userRegions | async | fn: selectFirst as regions">
 
     <ng-container *ngIf="regions.length else noData">
 

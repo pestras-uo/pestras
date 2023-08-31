@@ -4,6 +4,7 @@
 import { Component, EventEmitter, Input, Output, TemplateRef } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { Dialog, DialogRef } from '@angular/cdk/dialog';
+import { Region } from '@pestras/shared/data-model';
 
 
 @Component({
@@ -26,6 +27,15 @@ export class RegionsListView {
   constructor(
     private readonly dialog: Dialog
   ) { }
+
+  selectFirst = (regions: Region[]) => {
+    if (!this.selected && regions.length)
+      setTimeout(() => {
+        this.selects.emit(regions[0].serial);
+      });
+
+    return regions;
+  }
 
   openModal(ref: TemplateRef<any>) {
     this.dialogRef = this.dialog.open(ref);
