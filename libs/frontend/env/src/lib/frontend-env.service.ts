@@ -1,7 +1,7 @@
 import { Inject, Injectable, InjectionToken } from "@angular/core";
 
 export interface Environment {
-  production: boolean;
+  env: string;
   api: string;
   docs: string;
 }
