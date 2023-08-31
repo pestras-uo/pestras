@@ -1,8 +1,8 @@
 import { Route } from '@angular/router';
 import { SigninPage } from './signin/signin.page';
 import { MainPage } from './main/main.page';
-import { sessionGuard } from '@pestras/frontend/state';
 import { ProfilePage } from './main/profile/profile.page';
+import { sessionGuard } from './guards/session.gaurd';
 
 export const appRoutes: Route[] = [
   { path: 'signin', component: SigninPage, canActivate: [sessionGuard('signin')] },

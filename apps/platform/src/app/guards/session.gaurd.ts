@@ -1,6 +1,6 @@
 import { inject } from '@angular/core';
 import { CanActivateFn, Router } from '@angular/router';
-import { SessionState } from './session.state';
+import { SessionState } from '@pestras/frontend/state';
 import { map } from 'rxjs';
 
 export const sessionGuard = (page: string) => {
