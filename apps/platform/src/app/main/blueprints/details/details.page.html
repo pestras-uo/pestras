@@ -2,7 +2,7 @@
   <app-side-menu
     [blueprint]="bp"
     [view]="view"
-    (selects)="view = $event"
+    (selects)="set($event)"
   ></app-side-menu>
 
   <main *contra="let c">

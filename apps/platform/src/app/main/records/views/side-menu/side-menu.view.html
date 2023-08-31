@@ -118,7 +118,7 @@
       </div>
 
       <div
-        *ngFor="let ds of subDataStores"
+        *ngFor="let ds of subDataStores; let i = index"
         class="list-item"
         [class.active]="view.name === 'subDataStores'"
       >
@@ -133,7 +133,7 @@
 
         <button
           class="btn-icon btn-round btn-small"
-          (click)="selects.emit({ name: 'subDataStores', payload: ds })"
+          (click)="selects.emit({ name: 'subDataStores', payload: i })"
         >
           <i
             size="small"

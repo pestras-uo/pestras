@@ -4,6 +4,7 @@
 import { Dialog, DialogRef } from '@angular/cdk/dialog';
 import { Component, Input, OnChanges, TemplateRef } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
+import { ActivatedRoute, Router } from '@angular/router';
 import { DataStoresState } from '@pestras/frontend/state';
 import { PubSubService, ToastService } from '@pestras/frontend/ui';
 import { Blueprint, DataStore, DataStoreState, DataStoreType, Role } from '@pestras/shared/data-model';
@@ -34,6 +35,11 @@ export class DataStoreDetailsPage implements OnChanges {
   dialogRef: DialogRef | null = null;
   canBuild = false;
 
+  @Input()
+  set menu(value: string) {
+    this.view = value ?? 'details';
+  }
+
   readonly title = new FormControl('', { validators: Validators.required, nonNullable: true })
 
   @Input({ required: true })
@@ -45,12 +51,18 @@ export class DataStoreDetailsPage implements OnChanges {
     private state: DataStoresState,
     private toast: ToastService,
     private dialog: Dialog,
-    private pubSub: PubSubService
+    private pubSub: PubSubService,
+    private router: Router,
+    private route: ActivatedRoute
   ) { }
 
   ngOnChanges() {
     this.dataStore$ = this.state.select(this.serial, this.blueprint.serial)
       .pipe(tap(ds => this.canBuild = ds?.type !== DataStoreType.WEB_SERVICE && ds?.state === DataStoreState.BUILD));
+  }
+
+  set(menu: string) {
+    this.router.navigate([], { relativeTo: this.route, queryParams: { menu } });
   }
 
   pageBottomReached() {

@@ -1,15 +1,16 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @angular-eslint/component-class-suffix */
 /* eslint-disable @angular-eslint/component-selector */
-import { Component, TemplateRef } from '@angular/core';
+import { Component, Input, TemplateRef } from '@angular/core';
 import { Dialog, DialogRef } from "@angular/cdk/dialog";
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-orgunits',
   template: `
-    <app-orgunits-list [selected]="selected" (selects)="selected = $event" (add)="openModal(modal)"></app-orgunits-list>
+    <app-orgunits-list [selected]="selected" (selects)="set($event)" (add)="openModal(modal)"></app-orgunits-list>
 
-    <app-orgunit-details [serial]="selected" (selects)="selected = $event" (add)="openModal(modal, $event)"></app-orgunit-details>
+    <app-orgunit-details [serial]="selected" (selects)="set($event)" (add)="openModal(modal, $event)"></app-orgunit-details>
 
     <ng-template #modal let-data>
       <app-create-orgunit [parent]="data" (closes)="closeModal()"></app-create-orgunit>
@@ -29,7 +30,20 @@ export class OrgunitsPage {
   dialogRef?: DialogRef;
   selected = "";
 
-  constructor(private dialog: Dialog) { }
+  @Input()
+  set orgunit(value: string) {
+    this.selected = value ?? '';
+  }
+
+  constructor(
+    private dialog: Dialog,
+    private router: Router,
+    private route: ActivatedRoute,
+  ) { }
+
+  set(serial: string) {
+    this.router.navigate([], { relativeTo: this.route, queryParams: { orgunit: serial } });
+  }
 
   openModal(modal: TemplateRef<any>, parent?: string) {
     this.dialogRef = this.dialog.open(modal, {
@@ -39,7 +53,7 @@ export class OrgunitsPage {
 
   closeModal(serial?: string) {
     if (serial)
-      this.selected = serial;
+      this.set(serial);
 
     !!this.dialogRef && this.dialogRef.close();
   }

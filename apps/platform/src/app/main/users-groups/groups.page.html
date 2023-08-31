@@ -1,7 +1,7 @@
 <ng-container *contra="let c">
 
   <!-- goups list -->
-  <app-list [selected]="selected" (selects)="selected = $event" (add)="openDialog(addTmp)"></app-list>
+  <app-list [selected]="selected" (selects)="set($event)" (add)="openDialog(addTmp)"></app-list>
 
   <!-- group details -->
   <app-details [serial]="selected"></app-details>

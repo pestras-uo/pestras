@@ -19,7 +19,7 @@
           </tr>
         </thead>
         <tbody>
-          <tr *ngFor="let b of branches" class="hover cursor-pointer">
+          <tr *ngFor="let b of branches" class="hover cursor-pointer" (click)="selects.emit(b.serial)">
             <td>
               <div class="flex gap-4 align-items-center">
                 <div
