@@ -67,14 +67,14 @@ export class PuiTablePagination implements OnChanges, OnInit {
   ngOnInit(): void {
     this.page.valueChanges
       .pipe(this.ud(), distinctUntilChanged())
-      .subscribe(page => this.selects.emit(page))
+      .subscribe(page => this.selects.emit(page));
   }
 
   next() {
-    this.page.setValue(this.page.value + 1)
+    this.page.setValue(+this.page.value + 1)
   }
 
   prev() {
-    this.page.setValue(this.page.value - 1)
+    this.page.setValue(+this.page.value - 1)
   }
 }
