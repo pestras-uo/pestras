@@ -31,16 +31,16 @@
         <div class="divider mbs-4 mbe-8"></div>
 
         <ng-container
-          *ngIf="'' | users | async | arrayFilter: filterUsers as users else noData"
+          *ngIf="'' | users | async | arrayFilter: filterUsers: serial as users else noData"
         >
-          <div class="grid cols-4 gap-8" *ngIf="users.length else noData">
+          <div class="grid cols-3 gap-8" *ngIf="users.length else noData">
             <div class="card" *ngFor="let u of users">
               <div class="card-header">
                 <app-avatar [serial]="u.serial"></app-avatar>
 
                 <button
                   class="btn-icon btn-small btn-round"
-                  (click)="removeUser(c)"
+                  (click)="removeUser(c, u.serial)"
                 >
                   <i puiIcon="delete" size="small"></i>
                 </button>
@@ -92,7 +92,7 @@
         <div class="card-body">
           <label for="group-user">{{c['user']}}</label>
           <div
-            *ngIf="'' | users | async | arrayFilter: filterSelectUsers | arrayMap: mapUserSelect as sUsers"
+            *ngIf="'' | users | async | arrayFilter: filterSelectUsers: serial | arrayMap: mapUserSelect as sUsers"
             class="fc"
           >
             <pui-select-input

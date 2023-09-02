@@ -50,13 +50,12 @@ export class DetailsView implements OnChanges {
     this.user.reset();
   }
 
-  filterUsers = (user: User) => {
-    return user.groups.includes(this.serial);
+  filterUsers(user: User, group: string) {
+    return user.groups.includes(group);
   }
 
-  filterSelectUsers = (user: User) => {
-    console.log(user);
-    return !user.groups.includes(this.serial);
+  filterSelectUsers(user: User, group: string) {
+    return !user.groups.includes(group);
   }
 
   mapUserSelect(user: User) {
@@ -99,8 +98,8 @@ export class DetailsView implements OnChanges {
       });
   }
 
-  removeUser(c: Record<string, any>) {
-    this.usersState.removeGroup(this.user.value, this.serial)
+  removeUser(c: Record<string, any>, serial: string) {
+    this.usersState.removeGroup(serial, this.serial)
     .subscribe({
       next: () => {
         this.toast.msg(c['success'].orgunitAdd, { type: 'success' });
