@@ -1,23 +1,29 @@
 <ng-container *contra="let c; let dir = dir">
-
   <header class="toolbar gap-2">
     <i size="small" puiIcon="database"></i>
-    <h4>{{c['data']}}</h4>
+    <h3>{{c['data']}}</h3>
   </header>
 
-  <main class="list" *ngIf="datastores$ | async as datastores">
+  <div class="divider mbs-2 mbe-4"></div>
 
-    <div class="list-item" [class.active]="selected === datastore.serial" *ngFor="let datastore of datastores">
-
-      <h5>{{datastore.name}}</h5>
-
-      <div class="grow"></div>
-
-      <button class="btn-icon btn-round btn-small" (click)="selectDs(datastore)">
-        <i size="small" [puiIcon]="dir === 'rtl' ? 'navigate_before' : 'navigate_next'"></i>
-      </button>
+  <ng-container
+    class="list"
+    *ngIf="blueprint | blueprintDataStores: [types.TABLE] | async as datastores"
+  >
+    <div class="grid cols-3 gap-4" *ngIf="datastores.length else noData">
+      <div class="card" *ngFor="let ds of datastores">
+        <h4 class="card-header">{{ds.name}}</h4>
+        <!-- <div class="body"></div> -->
+        <div class="card-footer">
+          <button class="btn-round primary" (click)="selects.emit(ds.serial)">{{c['continue']}}</button>
+        </div>
+      </div>
     </div>
 
-  </main>
-
+    <ng-template #noData>
+      <no-data-placeholder-widget
+        >{{c['noDataMsg']}}</no-data-placeholder-widget
+      >
+    </ng-template>
+  </ng-container>
 </ng-container>

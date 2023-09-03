@@ -18,7 +18,7 @@ export class AddTopicModal {
 
   readonly form = new FormGroup<AddTopicFormModel>({
     name: new FormControl('', { nonNullable: true, validators: Validators.required }),
-    blueprint: new FormControl(null),
+    blueprint: new FormControl<string>('', { nonNullable: true }),
     parent: new FormControl(null)
   });
 

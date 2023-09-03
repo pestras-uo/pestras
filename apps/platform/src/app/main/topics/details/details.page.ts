@@ -7,19 +7,13 @@ import { FormControl, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { TopicsState } from '@pestras/frontend/state';
 import { PubSubService, ToastService } from '@pestras/frontend/ui';
-import { DataStore, Topic, WorkspacePinType } from '@pestras/shared/data-model';
+import { Topic, WorkspacePinType } from '@pestras/shared/data-model';
 import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-details',
   templateUrl: './details.page.html',
   styles: [`
-    :host {
-      height: var(--main-height);
-      display: grid;
-      grid-template-columns: auto 1fr;
-    }
-
     main {
       height: var(--main-height);
       overflow-y: auto;
@@ -30,7 +24,7 @@ export class DetailsPage implements OnChanges {
 
   wsType = WorkspacePinType.TOPICS;
   view = 'details';
-  dataStore!: DataStore;
+  dataStore: string | null = null;
   dialogRef: DialogRef | null = null;
   preloader = false;
 
@@ -44,7 +38,11 @@ export class DetailsPage implements OnChanges {
   serial!: string;
   @Input()
   set menu(value: string) {
-    this.view = value ?? 'details';
+    this.view = value ?? 'main';
+  }
+  @Input()
+  set ds(value: string) {
+    this.dataStore = value ?? '';
   }
 
   constructor(
@@ -56,8 +54,11 @@ export class DetailsPage implements OnChanges {
     private route: ActivatedRoute
   ) {}
 
-  set(menu: string) {
-    this.router.navigate([], { relativeTo: this.route, queryParams: { menu } });
+  set(menu: string, ds?: string) {
+    this.router.navigate([], { relativeTo: this.route, queryParams: { menu, ds: ds ?? '' } });
+
+    if (menu !== 'dataStores')
+      this.dataStore = null;
   }
 
   ngOnChanges() {

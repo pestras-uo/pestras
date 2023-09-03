@@ -1,13 +1,14 @@
 <ng-container *contra="let c">
-  <div class="toolbar">
-    <h2>{{c['dashboards']}}</h2>
+  <div class="toolbar gap-2">
+    <i size="small" puiIcon="dashboard"></i>
+    <h3>{{c['dashboards']}}</h3>
     <div class="grow"></div>
-    <button class="btn-round btn-icon" (click)="openDialog(addTmp)">
-      <i puiIcon="add"></i>
+    <button class="btn-round btn-icon btn-small" (click)="openDialog(addTmp)">
+      <i puiIcon="add" size="small"></i>
     </button>
   </div>
 
-  <div class="divider mbs-4 mbe-8"></div>
+  <div class="divider mbs-2 mbe-4"></div>
 
   <ng-container *ngIf="dashboards$ | async as dashboards">
     <div class="grid cols-3 gap-8 pi-0" *ngIf="dashboards.length; else noData">

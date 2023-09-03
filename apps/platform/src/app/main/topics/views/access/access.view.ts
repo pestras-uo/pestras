@@ -11,8 +11,9 @@ import { Topic } from '@pestras/shared/data-model';
 @Component({
   selector: 'app-access',
   templateUrl: './access.view.html',
-  styles: [
-  ]
+  styles: [`
+    :host { display: block; }
+  `]
 })
 export class AccessView {
 
