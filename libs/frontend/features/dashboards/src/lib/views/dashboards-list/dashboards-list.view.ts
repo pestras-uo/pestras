@@ -12,8 +12,9 @@ import { Observable } from 'rxjs';
 @Component({
   selector: 'app-dashboards-list',
   templateUrl: './dashboards-list.view.html',
-  styles: [
-  ]
+  styles: [`
+    :host { display: block; }
+  `]
 })
 export class DashboardsListView implements OnChanges {
 

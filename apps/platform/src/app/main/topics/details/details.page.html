@@ -1,14 +1,7 @@
 <ng-container *ngIf="topic$ | async as t">
-  <!-- side menu -->
-  <app-side-menu
-    [topic]="t"
-    [view]="view"
-    (selects)="set($event)"
-    (selectDataStore)="dataStore = $event; set('datastores')"
-  ></app-side-menu>
 
   <main puiInfiniteScroll (reached)="pageBottomReached()" *contra="let c">
-    <header class="bg-surface1 pb-10 pi-8 border-be">
+    <header class="bg-surface1 pbs-6 pi-8 border-be">
       <div class="container">
         <p class="bold text-3 f9">{{c['topic']}}</p>
         <div class="toolbar gap-2">
@@ -29,7 +22,33 @@
             {{c['update']}}
           </button>
         </div>
-        <p class="text-3 bold f9">{{t.create_date | date: 'dd/MM/YYYY'}}</p>
+        <p class="text-3 bold f9 mbe-8">
+          {{t.create_date | date: 'dd/MM/YYYY'}}
+        </p>
+
+        <div class="tabs-bar">
+          <h5
+            class="tab"
+            [class.active]="view === 'main'"
+            (click)="set('main')"
+          >
+            {{c['main']}}
+          </h5>
+          <h5
+            class="tab"
+            [class.active]="view === 'details'"
+            (click)="set('details')"
+          >
+            {{c['desc']}}
+          </h5>
+          <h5
+            *ngIf="dataStore | dataStore | async as ds"
+            class="tab"
+            [class.active]="view === 'dataStores'"
+          >
+            {{ds.name}}
+          </h5>
+        </div>
       </div>
     </header>
 
@@ -41,24 +60,23 @@
           [editable]="t.owner | sessionIs"
         ></app-content-views>
 
-        <app-access *ngIf="view === 'access'" [topic]="t"></app-access>
+        <div *ngIf="view === 'main'">
+          <app-data-stores-list-menu class="mbe-8" [blueprint]="t.blueprint" (selects)="set('dataStores', $event)"></app-data-stores-list-menu>
+
+          <app-dashboards-list class="mbe-8" [topic]="t.serial"></app-dashboards-list>
+
+          <app-reports-list class="mbe-8" [topic]="t.serial"></app-reports-list>
+
+          <app-access class="mbe-8" [topic]="t"></app-access>
+        </div>
 
         <app-records-list
-          *ngIf="view === 'datastores'"
+          *ngIf="view === 'dataStores' && dataStore"
           [topic]="t.serial"
-          [dataStore]="dataStore"
+          [dataStore]="(dataStore | dataStore | async)!"
         ></app-records-list>
-
-        <app-dashboards-list
-          *ngIf="view === 'dashboards'"
-          [topic]="t.serial"
-        ></app-dashboards-list>
-
-        <app-reports-list
-          *ngIf="view === 'reports'"
-          [topic]="t.serial"
-        ></app-reports-list>
       </div>
+
     </div>
 
     <ng-template #updateTmp>

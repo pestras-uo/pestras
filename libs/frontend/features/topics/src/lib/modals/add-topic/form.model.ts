@@ -1,7 +1,7 @@
 import { FormControl } from "@angular/forms";
 
 export interface AddTopicFormModel {
-  blueprint: FormControl<string | null>;
+  blueprint: FormControl<string>;
   parent: FormControl<string | null>;
   name: FormControl<string>;
 }

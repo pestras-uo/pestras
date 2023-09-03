@@ -2,7 +2,7 @@ import { EntityAccess } from "../active-directory/access";
 
 export interface Topic {
   serial: string;
-  blueprint: string | null;
+  blueprint: string;
   parent: string | null;
   
   name: string;
