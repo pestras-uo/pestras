@@ -1,13 +1,16 @@
 export type TimeDuration = `${number}${'h' | 'm' | 's'}`[];
 
-export function parseDuration(str: TimeDuration) {
+export function parseDuration(dur: TimeDuration | number) {
+  if (typeof dur === 'number')
+    return dur;
+
   const units = {
     h: 3600,
     m: 60,
     s: 1
   };
 
-  return str
+  return dur
     .map(part => {
       const [amount, unit] = [part.slice(0, -1), part.slice(-1)];
 
@@ -32,10 +35,10 @@ export function parseTime(time: any): Time | null {
 
   if (typeof time === 'string') {
     const [hours, minutes, seconds] = time.split(':');
-  
+
     if (!isNaN(+hours) || !!isNaN(+minutes))
       return null;
-  
+
     return { hours: +hours, minutes: +minutes, seconds: +seconds || 0 };
 
   } else if (Array.isArray(time)) {
@@ -43,7 +46,7 @@ export function parseTime(time: any): Time | null {
 
     if (!isNaN(+hours) || !!isNaN(+minutes))
       return null;
-  
+
     return { hours: +hours, minutes: +minutes, seconds: +seconds || 0 };
 
   } else if (typeof time === 'object') {
@@ -51,7 +54,7 @@ export function parseTime(time: any): Time | null {
 
     if (!isNaN(+hours) || !!isNaN(+minutes))
       return null;
-  
+
     return { hours: +hours, minutes: +minutes, seconds: +seconds || 0 };
   }
 

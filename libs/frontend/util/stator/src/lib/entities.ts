@@ -23,7 +23,7 @@ export abstract class StatorEntitiesState<T extends Record<string, any> = any> {
     this.loading$ = this._loading.pipe(distinctUntilChanged());
 
     this._data = new BehaviorSubject<Map<string, { expAt: number; doc: T, group?: string }>>(new Map());
-    this._exp = parseDuration(exp ?? ['1h']);
+    this._exp = parseDuration(exp ?? 0);
   }
 
   // loading

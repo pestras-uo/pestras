@@ -1,10 +1,10 @@
 <ng-container *ngIf="dashboard$ | async as d">
   <!--  menu -->
-  <app-side-menu
+  <pestras-dashboard-side-menu
     [dashboard]="d"
     [view]="view"
     (selects)="set($event)"
-  ></app-side-menu>
+  ></pestras-dashboard-side-menu>
 
   <main *contra="let c">
     <header class="bg-surface1 pb-10 pi-8 border-be">
@@ -39,7 +39,7 @@
           [editable]="(d.owner | sessionIs) || (d.collaborators | sessionIs)"
         ></app-content-views>
 
-        <app-access *ngIf="view === 'access'" [dashboard]="d"></app-access>
+        <pestras-dashboard-access *ngIf="view === 'access'" [dashboard]="d"></pestras-dashboard-access>
 
         <app-dashboard-slide
           *ngIf="view !== 'details' && view !== 'access'"

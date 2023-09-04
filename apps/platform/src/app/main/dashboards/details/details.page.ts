@@ -1,6 +1,4 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-/* eslint-disable @angular-eslint/component-class-suffix */
-/* eslint-disable @angular-eslint/component-selector */
 import { Dialog, DialogRef } from '@angular/cdk/dialog';
 import { Component, Input, OnChanges, TemplateRef } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
@@ -11,7 +9,7 @@ import { Dashboard, WorkspacePinType } from '@pestras/shared/data-model';
 import { Observable, tap } from 'rxjs';
 
 @Component({
-  selector: 'app-details',
+  selector: 'pestras-dashboard-details',
   templateUrl: './details.page.html',
   styles: [`
     :host {
@@ -26,7 +24,7 @@ import { Observable, tap } from 'rxjs';
     }
   `]
 })
-export class DetailsPage implements OnChanges {
+export class DetailsPageComponent implements OnChanges {
   wsType = WorkspacePinType.DASHBOARDS
 
   view = 'details';
@@ -38,7 +36,7 @@ export class DetailsPage implements OnChanges {
   readonly title = new FormControl('', { validators: Validators.required, nonNullable: true });
 
   @Input({ required: true })
-  topic!: string;
+  topic: string | null = null;
   @Input({ required: true })
   serial!: string;
   @Input()
@@ -55,7 +53,7 @@ export class DetailsPage implements OnChanges {
   ) { }
 
   ngOnChanges() {
-    this.dashboard$ = this.state.select(this.serial, this.topic)
+    this.dashboard$ = this.state.select(this.serial)
       .pipe(tap(d => this.title.setValue(d?.title ?? '')));
   }
 

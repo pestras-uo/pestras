@@ -13,7 +13,7 @@ export enum dashboardsValidators {
 }
 
 new Validall(dashboardsValidators.CREATE, {
-  topic: { $type: 'string' },
+  topic: { $type: 'string', $nullable: true },
   title: { $type: 'string' }
 });
 

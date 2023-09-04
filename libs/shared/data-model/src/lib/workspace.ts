@@ -18,7 +18,7 @@ export interface WorkspaceDashboardSlide {
   name: string;
   slide: string;
   dashboard: string;
-  scope: string;
+  scope: string | null;
 }
 
 export interface WorkspaceGroup {

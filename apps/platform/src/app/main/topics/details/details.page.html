@@ -63,7 +63,7 @@
         <div *ngIf="view === 'main'">
           <app-data-stores-list-menu class="mbe-8" [blueprint]="t.blueprint" (selects)="set('dataStores', $event)"></app-data-stores-list-menu>
 
-          <app-dashboards-list class="mbe-8" [topic]="t.serial"></app-dashboards-list>
+          <app-topic-dashboards-list class="mbe-8" [topic]="t.serial"></app-topic-dashboards-list>
 
           <app-reports-list class="mbe-8" [topic]="t.serial"></app-reports-list>
 

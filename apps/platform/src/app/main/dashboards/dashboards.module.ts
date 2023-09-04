@@ -2,14 +2,14 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 import { DashboardsRoutingModule } from './dashboards-routing.module';
-import { DashboardsRouter } from './dashboards.router';
+import { DashboardsRouterComponent } from './dashboards.router';
 import { ReactiveFormsModule } from '@angular/forms';
 import { QuillModule } from 'ngx-quill';
-import { DetailsPage } from './details/details.page';
+import { DetailsPageComponent } from './details/details.page';
 import { DialogModule } from '@angular/cdk/dialog';
 import { DragDropModule } from '@angular/cdk/drag-drop';
-import { SideMenuView } from './views/side-menu/side-menu.view';
-import { AccessView } from './views/access/access.view';
+import { SideMenuViewComponent } from './views/side-menu/side-menu.view';
+import { AccessViewComponent } from './views/access/access.view';
 import { ContraModule } from '@pestras/frontend/util/contra';
 import { PuiIcon, PuiImageInput, PuiPreloaderModule, PuiSelectInput, PuiSideDrawerModule, PuiUtilPipesModule } from '@pestras/frontend/ui';
 import { TBgWidget } from '@pestras/frontend/widgets/t-bg';
@@ -27,10 +27,10 @@ import { SessionFeatureModule } from '@pestras/frontend/features/session';
 
 @NgModule({
   declarations: [
-    DashboardsRouter,
-    DetailsPage,
-    SideMenuView,
-    AccessView
+    DashboardsRouterComponent,
+    DetailsPageComponent,
+    SideMenuViewComponent,
+    AccessViewComponent
   ],
   imports: [
     // Angular

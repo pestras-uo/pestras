@@ -27,6 +27,12 @@ export class DashboardsService {
     return this.http.get<DashboardsApi.GetBySerial.Response>(path);
   }
 
+  search(body: DashboardsApi.Search.Body) {
+    const path = injectURLPayload(this.envServ.env.api + DashboardsApi.Search.REQ_PATH);
+
+    return this.http.post<DashboardsApi.Search.Response>(path, body);
+  }
+
 
   // Create
   // ---------------------------------------------------------------------------------

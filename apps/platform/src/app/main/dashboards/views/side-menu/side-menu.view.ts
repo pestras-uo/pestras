@@ -1,6 +1,4 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-/* eslint-disable @angular-eslint/component-class-suffix */
-/* eslint-disable @angular-eslint/component-selector */
 import { Dialog, DialogRef } from '@angular/cdk/dialog';
 import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
 import { Location } from '@angular/common';
@@ -11,11 +9,11 @@ import { ToastService } from '@pestras/frontend/ui';
 import { Dashboard, DashboardSlide } from '@pestras/shared/data-model';
 
 @Component({
-  selector: 'app-side-menu',
+  selector: 'pestras-dashboard-side-menu',
   templateUrl: './side-menu.view.html',
   styleUrls: ['./side-menu.view.scss']
 })
-export class SideMenuView implements OnChanges {
+export class SideMenuViewComponent implements OnChanges {
   private playTimer: any = null;
   private currentSlideIndex = 0;
 

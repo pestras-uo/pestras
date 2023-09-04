@@ -1,32 +1,48 @@
 import { Injectable } from "@angular/core";
-import { Dashboard } from "@pestras/shared/data-model";
-import { StatorChannel, StatorGroupState } from "@pestras/frontend/util/stator";
+import { ApiQuery, Dashboard } from "@pestras/shared/data-model";
+import { StatorChannel, StatorQueryState,  } from "@pestras/frontend/util/stator";
 import { DashboardsService } from "./dashboards.service";
 import { SessionEnd } from "../session/session.events";
-import { Observable, tap } from "rxjs";
+import { Observable, map, tap } from "rxjs";
 import { DashboardsApi } from "./dashboards.api";
 
 @Injectable({ providedIn: 'root' })
-export class DashboardsState extends StatorGroupState<Dashboard> {
+export class DashboardsState extends StatorQueryState<Dashboard, Partial<ApiQuery<Dashboard>>> {
 
   constructor(
     private service: DashboardsService,
     private channel: StatorChannel
   ) {
-    super('dashboards', 'serial', 'topic', ['1h']);
+    super('dashboards', 'serial', ['10m']);
 
     this.channel.select(SessionEnd)
       .subscribe(() => this._clear());
   }
 
-  protected override _loadGroup(scope: string): Observable<Dashboard[]> {
-    return this.service.getByScope({ topic: scope });
-  }
-
-  protected override _loadSingle(serial: string) {
+  protected override _fetchDoc(serial: string): Observable<Dashboard | null> {
     return this.service.getBySerial({ serial });
   }
 
+  protected override _fetchQuery(key: string, query: ApiQuery<Dashboard>): Observable<{ count: number; results: Dashboard[]; }> {
+    return this.service.search(query);
+  }
+
+  protected override _onChange(doc: Dashboard): void {
+    doc.topic && this._updateInQuery(doc.topic, doc);
+  }
+
+  // selectors
+  // -----------------------------------------------------------------------------------------
+  selectGroup(topic: string) {
+    return this.query(topic, {
+      search: { topic },
+      limit: 0
+    }).pipe(map(res => res.results));
+  }
+
+
+  // change
+  // -----------------------------------------------------------------------------------------
   create(topic: string, title: string) {
     return this.service.create({ topic, title })
       .pipe(tap(db => this._insert(db)));
