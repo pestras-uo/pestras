@@ -5,13 +5,15 @@ import { DashboardsService } from "./dashboards.service";
 import { SessionEnd } from "../session/session.events";
 import { Observable, map, tap } from "rxjs";
 import { DashboardsApi } from "./dashboards.api";
+import { SessionState } from "../session/session.state";
 
 @Injectable({ providedIn: 'root' })
 export class DashboardsState extends StatorQueryState<Dashboard, Partial<ApiQuery<Dashboard>>> {
 
   constructor(
     private service: DashboardsService,
-    private channel: StatorChannel
+    private channel: StatorChannel,
+    private session: SessionState
   ) {
     super('dashboards', 'serial', ['10m']);
 
@@ -28,22 +30,49 @@ export class DashboardsState extends StatorQueryState<Dashboard, Partial<ApiQuer
   }
 
   protected override _onChange(doc: Dashboard): void {
-    doc.topic && this._updateInQuery(doc.topic, doc);
+    if (doc.topic)
+      this._updateInQuery(doc.topic, doc);
+    else {
+      this._updateInQuery('public', doc);
+      this._updateInQuery('owned', doc);
+    }
   }
 
   // selectors
   // -----------------------------------------------------------------------------------------
   selectGroup(topic: string) {
     return this.query(topic, {
+      sort: { serial: 1 },
       search: { topic },
+      select: { serial: 1, title: 1 },
       limit: 0
     }).pipe(map(res => res.results));
+  }
+
+  selectPublic(skip = 0, limit = 0) {
+    return this.query('public', {
+      sort: { serial: 1 },
+      search: { topic: null },
+      select: { serial: 1, title: 1 },
+      skip,
+      limit
+    });
+  }
+
+  selectOwned(skip = 0, limit = 0) {
+    return this.query('owned', {
+      sort: { serial: 1 },
+      search: { topic: null, owner: this.session.get()?.serial },
+      select: { serial: 1, title: 1 },
+      skip,
+      limit
+    });
   }
 
 
   // change
   // -----------------------------------------------------------------------------------------
-  create(topic: string, title: string) {
+  create(topic: string | null, title: string) {
     return this.service.create({ topic, title })
       .pipe(tap(db => this._insert(db)));
   }

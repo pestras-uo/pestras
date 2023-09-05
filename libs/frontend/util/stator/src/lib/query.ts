@@ -178,11 +178,11 @@ export abstract class StatorQueryState<
     if (conf) {
       const data = conf.docs.getValue();
 
-      conf.count;
-      data.set(doc[this.key] as string, doc);
-
       if (!data.has(doc[this.key] as string))
         conf.cache[0]?.keys.push(doc[this.key] as string);
+
+      conf.count;
+      data.set(doc[this.key] as string, doc);
 
       conf.docs.next(data);
     }
@@ -236,7 +236,7 @@ export abstract class StatorQueryState<
   query(key: string, query: QUERY, exp?: TimeDuration | number): Observable<{ count: number; results: DOC[] }> {
     const selector = this._qConfigs.get(key) ?? this._addQueryConfig(key, exp ?? this._exp);
     const cached = this._getCache(selector, query);
-    
+
     if ((cached.lastFetch + +selector.exp) < Date.now()) {
       return this._fetchQuery(key, query)
         .pipe(
@@ -277,7 +277,7 @@ export abstract class StatorQueryState<
           shareReplay(1)
         );
     }
-    
+
     return selector.docs.pipe(
       map(docs => ({ count: selector.count, results: this._collect(cached.keys, docs) })),
       shareReplay(1)

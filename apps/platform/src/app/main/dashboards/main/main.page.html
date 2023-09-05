@@ -1,0 +1,103 @@
+<div puiInfiniteScroll (reached)="load()" *contra="let c">
+  <header class="color-scheme-dark">
+    <t-bg-widget></t-bg-widget>
+
+    <div class="container tight">
+      <div class="align-center">
+        <h1 class="weight-8 mbe-4 f1">{{c['dashboards']}}</h1>
+        <p class="text3 f6 w-15 mi-auto">
+          خسائر اللازمة ومطالبة حدة بل. الآخر الحلفاء أن غزو, إجلاء وتنامت عدد
+          مع. لقهر معركة لبلجيكا، بـ انه, ربع الأثنان المقيتة في, اقتصّت المحور
+          حدة.
+        </p>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <div class="container">
+      <div class="card card-clear">
+        <div class="card-tabs">
+          <h5
+            class="tab"
+            [class.active]="tab() === 'public'"
+            (click)="tab.set('public')"
+          >
+            {{c['public']}}
+          </h5>
+          <h5
+            class="tab"
+            [class.active]="tab() === 'owned'"
+            (click)="tab.set('owned')"
+          >
+            {{c['owned']}}
+          </h5>
+          <div class="grow"></div>
+          <button
+            class="btn-small btn-icon btn-round btn-primary"
+            (click)="openDialog(addTmp)"
+          >
+            <i puiIcon="add" size="small"></i>
+          </button>
+        </div>
+
+        <ng-container *ngIf="dashboards$() | async as dashboards">
+          <div
+            class="card-body pi-0 grid cols-3 gap-6"
+            *ngIf="dashboards.results.length"
+          >
+            <div class="card" *ngFor="let d of dashboards.results">
+              <h4 class="card-header">{{d.title}}</h4>
+              <div class="card-footer">
+                <a class="btn btn-round" [routerLink]="[d.serial]"
+                  >{{c['continue']}}</a
+                >
+              </div>
+            </div>
+          </div>
+
+          <div class="card-body">
+            <no-data-placeholder-widget
+              [actionName]="c['addNew']"
+              (action)="openDialog(addTmp)"
+              >{{c['noDataMsg']}}</no-data-placeholder-widget
+            >
+          </div>
+        </ng-container>
+      </div>
+    </div>
+  </main>
+
+  <ng-template #addTmp>
+    <div class="card w-15 shadow-6">
+      <h4 class="card-header">{{c['addNew']}}</h4>
+
+      <div class="card-body">
+        <label for="dash-title">{{c['title']}} *</label>
+        <div class="fc">
+          <input
+            autocomplete="off"
+            type="text"
+            id="dash-title"
+            [formControl]="title"
+          />
+        </div>
+      </div>
+
+      <div class="card-footer">
+        <button class="btn-round btn-outline" (click)="this.closeDialog()">
+          {{c['cancel']}}
+        </button>
+        <button
+          class="btn-primary btn-round"
+          [disabled]="title.invalid"
+          (click)="add(c)"
+        >
+          {{c['add']}}
+        </button>
+      </div>
+
+      <pui-preloader *ngIf="preloader"></pui-preloader>
+    </div>
+  </ng-template>
+</div>
