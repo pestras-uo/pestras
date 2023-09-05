@@ -43,13 +43,15 @@
 </section>
 
 <ng-template cdk-portal>
-  <section class="options-list maxh-6 overflow-y-auto pb-2 shadow-3">
+  <section class="options-list maxh-6 overflow-y-auto shadow-3">
     <p
       *ngFor="
         let item of optionsList
-          | arrayFilter : filterOptions : value : searchControl.value as list
+          | arrayFilter : filterOptions : value : searchControl.value as list;
+        let last = last
       "
-      class="f10 bold"
+      class="f10 bold p-2 h-auto"
+      [class.border-be]="!last"
       (click)="add(item['value'])"
     >
       {{ item['name'] }}
