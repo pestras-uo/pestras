@@ -59,17 +59,17 @@
     "
   >
     <section
-      class="options-list maxh-6 overflow-y-auto p-2 shadow-3"
+      class="options-list maxh-6 overflow-y-auto shadow-3"
       *ngIf="optionsList.length"
     >
-      <div class="fc-checkbox fc-primary">
+      <div class="fc-checkbox fc-primary p-2 h-auto">
         <input [id]="id + '-all'" type="checkbox" [formControl]="allCtrl" />
         <label [for]="id + '-all'">{{ this.translation.all }}</label>
       </div>
 
       <div
         *ngFor="let item of list; let i = index"
-        class="fc-checkbox fc-primary"
+        class="fc-checkbox fc-primary p-2 border-bs h-auto"
       >
         <input
           [id]="id + i"
