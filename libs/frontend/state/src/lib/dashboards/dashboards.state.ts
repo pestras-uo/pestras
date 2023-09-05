@@ -1,33 +1,78 @@
 import { Injectable } from "@angular/core";
-import { Dashboard } from "@pestras/shared/data-model";
-import { StatorChannel, StatorGroupState } from "@pestras/frontend/util/stator";
+import { ApiQuery, Dashboard } from "@pestras/shared/data-model";
+import { StatorChannel, StatorQueryState,  } from "@pestras/frontend/util/stator";
 import { DashboardsService } from "./dashboards.service";
 import { SessionEnd } from "../session/session.events";
-import { Observable, tap } from "rxjs";
+import { Observable, map, tap } from "rxjs";
 import { DashboardsApi } from "./dashboards.api";
+import { SessionState } from "../session/session.state";
 
 @Injectable({ providedIn: 'root' })
-export class DashboardsState extends StatorGroupState<Dashboard> {
+export class DashboardsState extends StatorQueryState<Dashboard, Partial<ApiQuery<Dashboard>>> {
 
   constructor(
     private service: DashboardsService,
-    private channel: StatorChannel
+    private channel: StatorChannel,
+    private session: SessionState
   ) {
-    super('dashboards', 'serial', 'topic', ['1h']);
+    super('dashboards', 'serial', ['10m']);
 
     this.channel.select(SessionEnd)
       .subscribe(() => this._clear());
   }
 
-  protected override _loadGroup(scope: string): Observable<Dashboard[]> {
-    return this.service.getByScope({ topic: scope });
-  }
-
-  protected override _loadSingle(serial: string) {
+  protected override _fetchDoc(serial: string): Observable<Dashboard | null> {
     return this.service.getBySerial({ serial });
   }
 
-  create(topic: string, title: string) {
+  protected override _fetchQuery(key: string, query: ApiQuery<Dashboard>): Observable<{ count: number; results: Dashboard[]; }> {
+    return this.service.search(query);
+  }
+
+  protected override _onChange(doc: Dashboard): void {
+    if (doc.topic)
+      this._updateInQuery(doc.topic, doc);
+    else {
+      this._updateInQuery('public', doc);
+      this._updateInQuery('owned', doc);
+    }
+  }
+
+  // selectors
+  // -----------------------------------------------------------------------------------------
+  selectGroup(topic: string) {
+    return this.query(topic, {
+      sort: { serial: 1 },
+      search: { topic },
+      select: { serial: 1, title: 1 },
+      limit: 0
+    }).pipe(map(res => res.results));
+  }
+
+  selectPublic(skip = 0, limit = 0) {
+    return this.query('public', {
+      sort: { serial: 1 },
+      search: { topic: null },
+      select: { serial: 1, title: 1 },
+      skip,
+      limit
+    });
+  }
+
+  selectOwned(skip = 0, limit = 0) {
+    return this.query('owned', {
+      sort: { serial: 1 },
+      search: { topic: null, owner: this.session.get()?.serial },
+      select: { serial: 1, title: 1 },
+      skip,
+      limit
+    });
+  }
+
+
+  // change
+  // -----------------------------------------------------------------------------------------
+  create(topic: string | null, title: string) {
     return this.service.create({ topic, title })
       .pipe(tap(db => this._insert(db)));
   }

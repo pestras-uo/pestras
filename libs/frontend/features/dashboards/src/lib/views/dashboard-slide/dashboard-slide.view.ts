@@ -40,7 +40,7 @@ export class DashboardSlideComponent implements OnChanges {
   @Input({ required: true })
   slideSerial!: string;
   @Input({ required: true })
-  topic!: string;
+  topic: string | null = null;
   @Input()
   headless = false;
   @Input()

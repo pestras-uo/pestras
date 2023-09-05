@@ -41,6 +41,10 @@
       <i puiIcon="topics"></i>
       <p class="full">{{c['topics']}}</p>
     </a>
+    <a class="hover" routerLink="/main/dashboards" routerLinkActive="active">
+      <i puiIcon="dashboard"></i>
+      <p class="full">{{c['dashboards']}}</p>
+    </a>
 
     <ng-container *ngIf="([roles.ADMIN, roles.DATA_ENG] | hasRoles)">
       <div class="full align-start mbs-4">

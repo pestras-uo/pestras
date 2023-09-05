@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-namespace */
-import { Dashboard, DashboardSlide, DashboardSlideView } from "@pestras/shared/data-model";
+import { ApiQuery, Dashboard, DashboardSlide, DashboardSlideView } from "@pestras/shared/data-model";
 
 const basePath = '/dashboards';
 
@@ -25,6 +25,16 @@ export namespace DashboardsApi {
     export interface Params { serial: string; }
 
     export type Response = Dashboard | null;
+  }
+
+
+  // POST
+  export namespace Search {
+    export const REQ_PATH = basePath + '/search';
+
+    export type Body = ApiQuery<Dashboard>;
+
+    export type Response = { count: number; results: Dashboard[] };
   }
 
 

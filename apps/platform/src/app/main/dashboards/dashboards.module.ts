@@ -2,16 +2,24 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 import { DashboardsRoutingModule } from './dashboards-routing.module';
-import { DashboardsRouter } from './dashboards.router';
+import { DashboardsRouterComponent } from './dashboards.router';
 import { ReactiveFormsModule } from '@angular/forms';
 import { QuillModule } from 'ngx-quill';
-import { DetailsPage } from './details/details.page';
+import { DetailsPageComponent } from './details/details.page';
 import { DialogModule } from '@angular/cdk/dialog';
 import { DragDropModule } from '@angular/cdk/drag-drop';
-import { SideMenuView } from './views/side-menu/side-menu.view';
-import { AccessView } from './views/access/access.view';
+import { SideMenuViewComponent } from './views/side-menu/side-menu.view';
+import { AccessViewComponent } from './views/access/access.view';
 import { ContraModule } from '@pestras/frontend/util/contra';
-import { PuiIcon, PuiImageInput, PuiPreloaderModule, PuiSelectInput, PuiSideDrawerModule, PuiUtilPipesModule } from '@pestras/frontend/ui';
+import {
+  PuiIcon,
+  PuiImageInput,
+  PuiInfiniteScroll,
+  PuiPreloaderModule,
+  PuiSelectInput,
+  PuiSideDrawerModule,
+  PuiUtilPipesModule,
+} from '@pestras/frontend/ui';
 import { TBgWidget } from '@pestras/frontend/widgets/t-bg';
 import { NoDataPlaceholderWidget } from '@pestras/frontend/widgets/no-data-placeholder';
 import { AvatarWidget } from '@pestras/frontend/widgets/avatar';
@@ -23,14 +31,15 @@ import { OrgunitsFeatureModule } from '@pestras/frontend/features/orgunits';
 import { UsersFeatureModule } from '@pestras/frontend/features/users';
 import { UsersGroupsFeatureModule } from '@pestras/frontend/features/users-groups';
 import { SessionFeatureModule } from '@pestras/frontend/features/session';
-
+import { MainPageComponent } from './main/main.page';
 
 @NgModule({
   declarations: [
-    DashboardsRouter,
-    DetailsPage,
-    SideMenuView,
-    AccessView
+    DashboardsRouterComponent,
+    DetailsPageComponent,
+    SideMenuViewComponent,
+    AccessViewComponent,
+    MainPageComponent,
   ],
   imports: [
     // Angular
@@ -48,6 +57,7 @@ import { SessionFeatureModule } from '@pestras/frontend/features/session';
     PuiSideDrawerModule,
     PuiImageInput,
     PuiUtilPipesModule,
+    PuiInfiniteScroll,
     // Widgets
     QuillModule,
     TBgWidget,
@@ -61,7 +71,7 @@ import { SessionFeatureModule } from '@pestras/frontend/features/session';
     OrgunitsFeatureModule,
     UsersFeatureModule,
     UsersGroupsFeatureModule,
-    SessionFeatureModule
-  ]
+    SessionFeatureModule,
+  ],
 })
-export class DashboardsModule { }
+export class DashboardsModule {}

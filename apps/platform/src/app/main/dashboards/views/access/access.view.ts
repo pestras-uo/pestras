@@ -1,6 +1,4 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-/* eslint-disable @angular-eslint/component-class-suffix */
-/* eslint-disable @angular-eslint/component-selector */
 import { Dialog, DialogRef } from '@angular/cdk/dialog';
 import { Component, Input, TemplateRef } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
@@ -9,12 +7,12 @@ import { ToastService } from '@pestras/frontend/ui';
 import { Dashboard } from '@pestras/shared/data-model';
 
 @Component({
-  selector: 'app-access',
+  selector: 'pestras-dashboard-access',
   templateUrl: './access.view.html',
   styles: [
   ]
 })
-export class AccessView {
+export class AccessViewComponent {
 
   readonly control = new FormControl('', { validators: Validators.required, nonNullable: true });
 

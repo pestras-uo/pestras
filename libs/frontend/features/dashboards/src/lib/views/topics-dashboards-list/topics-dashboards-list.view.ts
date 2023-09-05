@@ -10,13 +10,13 @@ import { DashboardsState } from '@pestras/frontend/state';
 import { Observable } from 'rxjs';
 
 @Component({
-  selector: 'app-dashboards-list',
-  templateUrl: './dashboards-list.view.html',
+  selector: 'app-topic-dashboards-list',
+  templateUrl: './topics-dashboards-list.view.html',
   styles: [`
     :host { display: block; }
   `]
 })
-export class DashboardsListView implements OnChanges {
+export class TopicDashboardsListView implements OnChanges {
 
   dashboards$!: Observable<Dashboard[]>;
   dialogRef: DialogRef | null = null;

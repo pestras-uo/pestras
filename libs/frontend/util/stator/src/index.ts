@@ -5,5 +5,6 @@ export * from './lib/object';
 export * from './lib/collection';
 export * from './lib/entities';
 export * from './lib/group';
+export * from './lib/query';
 export * from './lib/channel.service';
 export * from './lib/stator.module';

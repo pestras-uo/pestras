@@ -23,7 +23,7 @@ export interface DashboardSlide {
 
 export interface Dashboard {
   serial: string;
-  topic: string;
+  topic: string | null;
 
   access: EntityAccess;
   

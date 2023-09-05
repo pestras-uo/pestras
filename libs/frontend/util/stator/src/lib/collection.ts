@@ -25,7 +25,7 @@ export abstract class StatorCollectionState<T extends Record<string, any> = any>
     this._loading = new BehaviorSubject<boolean>(isLoading);
     this.loading$ = this._loading.pipe(distinctUntilChanged());
 
-    this.exp = exp ? parseDuration(exp) : Infinity;
+    this.exp = exp ? parseDuration(exp) : 0;
 
     this.count$ = this._data.pipe(map(dataMap => dataMap.size), distinctUntilChanged(), shareReplay(1));
     this.data$ = this._data.pipe(

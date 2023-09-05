@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { DashboardsListView } from './views/dashboards-list/dashboards-list.view';
+import { TopicDashboardsListView } from './views/topics-dashboards-list/topics-dashboards-list.view';
 import { RouterModule } from '@angular/router';
 import { NoDataPlaceholderWidget } from '@pestras/frontend/widgets/no-data-placeholder';
 import { ReactiveFormsModule } from '@angular/forms';
@@ -18,7 +18,7 @@ import { StateModule } from '@pestras/frontend/state';
 
 @NgModule({
   declarations: [
-    DashboardsListView,
+    TopicDashboardsListView,
     DashboardSlideComponent,
     DashboardPipe
   ],
@@ -44,7 +44,7 @@ import { StateModule } from '@pestras/frontend/state';
     WorkspaceFeatureModule
   ],
   exports: [
-    DashboardsListView,
+    TopicDashboardsListView,
     DashboardSlideComponent,
     DashboardPipe
   ]
