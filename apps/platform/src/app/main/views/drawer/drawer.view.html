@@ -1,6 +1,6 @@
 <aside *contra="let c">
   <div class="toolbar">
-    <button class="btn-icon" (click)="toggle.emit()">
+    <button class="btn-icon" (click)="toggleView()">
       <i puiIcon="menu"></i>
     </button>
     <div class="full grow"></div>
@@ -12,15 +12,12 @@
 
   <img class="short mi-auto p-logo" src="assets/imgs/logo.png" alt="" />
 
-  <a class="short btn btn-icon btn-round mi-auto" routerLink="profile">
-    <i puiIcon="account_circle"></i>
-  </a>
-
   <app-avatar
-    class="mbs-8 full cursor-pointer"
+    class="cursor-pointer"
     *session="let user"
     [serial]="user.serial"
-    size="huge"
+    [size]="full ? 'huge':'small'"
+    [imageOnly]="!full"
     vertical
     [routerLink]="['/main/profile']"
   ></app-avatar>
@@ -28,52 +25,52 @@
   <div class="grow"></div>
 
   <nav>
-    <div class="full align-start mbs-4">
-      <h4 class="primary weight-8 pi-2">{{c['dataManagement']}}</h4>
+    <div class="full align-start mbs-6 mbe-2">
+      <h5 class="primary pi-2">{{c['dataManagement']}}</h5>
       <p class="f10 pi-2 text3">{{c['dataMenuDesc']}}</p>
     </div>
 
     <a class="hover" routerLink="/main/workspace" routerLinkActive="active">
-      <i puiIcon="home"></i>
+      <i size="small" puiIcon="home"></i>
       <p class="full">{{c['workspace']}}</p>
     </a>
     <a class="hover" routerLink="/main/topics" routerLinkActive="active">
-      <i puiIcon="topics"></i>
+      <i size="small" puiIcon="topics"></i>
       <p class="full">{{c['topics']}}</p>
     </a>
     <a class="hover" routerLink="/main/dashboards" routerLinkActive="active">
-      <i puiIcon="dashboard"></i>
+      <i size="small" puiIcon="dashboard"></i>
       <p class="full">{{c['dashboards']}}</p>
     </a>
 
     <ng-container *ngIf="([roles.ADMIN, roles.DATA_ENG] | hasRoles)">
-      <div class="full align-start mbs-4">
-        <h4 class="primary weight-8 pi-2">{{c['blueprintsManagment']}}</h4>
+      <div class="full align-start mbs-6 mbe-2">
+        <h5 class="primary pi-2">{{c['blueprintsManagment']}}</h5>
         <p class="f10 pi-2 text3">{{c['blueprintsManagementDesc']}}</p>
       </div>
 
       <div class="short splitter"></div>
 
       <a class="hover" routerLink="/main/blueprints" routerLinkActive="active">
-        <i puiIcon="blueprint"></i>
+        <i size="small" puiIcon="blueprint"></i>
         <p class="full">{{c['blueprints']}}</p>
       </a>
     </ng-container>
 
     <ng-container *ngIf="(roles.ADMIN | hasRoles)">
-      <div class="full align-start mbs-4">
-        <h4 class="primary weight-8 pi-2">{{c['system_administration']}}</h4>
+      <div class="full align-start mbs-6 mbe-2">
+        <h5 class="primary pi-2">{{c['system_administration']}}</h5>
         <p class="f10 pi-2 text3">{{c['adminMenuDesc']}}</p>
       </div>
 
       <div class="short splitter"></div>
 
       <a class="hover" routerLink="/main/regions" routerLinkActive="active">
-        <i puiIcon="travel_explore"></i>
+        <i size="small" puiIcon="travel_explore"></i>
         <p class="full">{{c['regions']}}</p>
       </a>
       <a class="hover" routerLink="/main/orgunits" routerLinkActive="active">
-        <i puiIcon="lan"></i>
+        <i size="small" puiIcon="lan"></i>
         <p class="full">{{c['orgunits']}}</p>
       </a>
       <a
@@ -82,17 +79,17 @@
         routerLink="/main/groups"
         routerLinkActive="active"
       >
-        <i puiIcon="military_tech"></i>
+        <i size="small" puiIcon="military_tech"></i>
         <p class="full">{{c['groups']}}</p>
       </a>
       <a class="hover" routerLink="/main/users" routerLinkActive="active">
-        <i puiIcon="group"></i>
+        <i size="small" puiIcon="group"></i>
         <p class="full">{{c['users']}}</p>
       </a>
     </ng-container>
   </nav>
 
-  <div class="grow"></div>
+  <div class="grow-3"></div>
 
   <footer>
     <button
@@ -103,7 +100,7 @@
     </button>
 
     <button
-      class="full btn-outline-danger btn-small btn-block"
+      class="full btn-outline-danger btn-small"
       (click)="this.openModal(signout)"
     >
       <i puiIcon="logout" size="small"></i>

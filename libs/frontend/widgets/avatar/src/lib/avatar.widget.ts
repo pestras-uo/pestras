@@ -29,7 +29,9 @@ export class AvatarWidget implements OnInit, OnChanges {
   @Input()
   src: 'users' | 'session' = 'users'
   @Input()
-  size?: 'small' | 'large' | 'huge';
+  size?: 'mini' |  'small' | 'large' | 'huge';
+  @Input({ transform: booleanAttribute })
+  imageOnly = false;
 
   @HostBinding('class.flex-column')
   @Input({ transform: booleanAttribute })

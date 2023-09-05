@@ -5,7 +5,8 @@ import { Role } from '@pestras/shared/data-model';
 @Component({
   selector: 'pestras-main',
   template: `
-    <main-drawer 
+    <main-drawer
+      [full]="openDrawer"
       [class.open]="openDrawer" 
       [class.close]="!openDrawer" 
       (toggle)="openDrawer = !openDrawer">

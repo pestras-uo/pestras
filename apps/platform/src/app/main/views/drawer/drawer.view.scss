@@ -58,14 +58,14 @@ nav {
     display: flex;
     position: relative;
     padding-block: 8px;
-    padding-inline: 8px;
+    padding-inline: 10px;
     border-radius: 8px;
     display: flex;
     gap: 16px;
     align-items: center;
     color: var(--text2);
     transition: background-color 250ms;
-    font-weight: 700;
+    // font-weight: 700;
 
     i {
       background-color: var(--text2);

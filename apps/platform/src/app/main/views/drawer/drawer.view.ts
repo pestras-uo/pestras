@@ -1,6 +1,6 @@
 /* eslint-disable @angular-eslint/component-class-suffix */
 /* eslint-disable @angular-eslint/component-selector */
-import { Component, EventEmitter, HostBinding, Output, TemplateRef } from '@angular/core';
+import { Component, EventEmitter, HostBinding, Input, Output, TemplateRef } from '@angular/core';
 import { take } from 'rxjs';
 import { Dialog, DialogRef } from '@angular/cdk/dialog';
 import { SessionState } from '@pestras/frontend/state';
@@ -19,9 +19,12 @@ export class DrawerView {
   readonly roles = Role;
   
   preloader = false;
-
+  
   @HostBinding('class')
   hostCLass = 'bg-surface1 hide-scroll color-scheme-dark';
+
+  @Input()
+  full = false;
 
   @Output()
   toggle = new EventEmitter();
@@ -41,6 +44,11 @@ export class DrawerView {
       this.dialogRef.close();
       this.dialogRef = null;
     }
+  }
+
+  toggleView() {
+    this.full = !this.full;
+    this.toggle.emit();
   }
 
   logout() {
