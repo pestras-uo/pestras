@@ -1,4 +1,4 @@
-<form class="relative" [class.disabled]="editable" [formGroup]="form" (ngSubmit)="update(c)" *contra="let c">
+<form class="relative" [class.disabled]="!editable" [formGroup]="form" (ngSubmit)="update(c)" *contra="let c">
 
   <label for="username">{{c['username']}}</label>
   <div class="fc fc-surface1 fc-outline mbe-6">

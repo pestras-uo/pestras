@@ -51,6 +51,8 @@ export const objUtil = {
     else
       for (const prop in target)
         src[prop] = this.deepMerge(src[prop], target[prop]);
+
+    return src;
   },
 
 
