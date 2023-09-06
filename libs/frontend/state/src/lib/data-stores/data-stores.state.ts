@@ -77,9 +77,17 @@ export class DataStoresState extends StatorGroupState<DataStore> {
         if (!ds.web_service)
           return ds;
 
+        const newHeaders = [...ds.web_service.headers];
+        const header = newHeaders.find(h => h.key === data.key);
+
+        if (header)
+          header.value = data.value;
+        else
+          newHeaders.push(data);
+
         return {
           ...ds,
-          web_service: { ...ds.web_service, headers: ds.web_service.headers.concat(data) },
+          web_service: { ...ds.web_service, headers: newHeaders },
           last_modified: new Date(date)
         }
       })));

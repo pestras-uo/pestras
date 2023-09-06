@@ -5,7 +5,10 @@
     <div #card [class.mbe-2]="!last" *ngFor="let s of selection; let i = index; let last = last" class="card">
 
       <div class="card-header">
-        <h4>{{s.field}}</h4>
+        <div>
+          <h4>{{s.display_name}}</h4>
+          <p class="text3 f9 bold">{{s.field}}</p>
+        </div>
         <div class="grow"></div>
         <button *ngIf="editable" class="btn-icon btn-small btn-round" (click)="remove(c, s.field)">
           <i size="small" color="danger" puiIcon="delete"></i>
