@@ -1,7 +1,7 @@
 /* eslint-disable @angular-eslint/component-class-suffix */
 /* eslint-disable @angular-eslint/component-selector */
 import { Dialog, DialogRef } from '@angular/cdk/dialog';
-import { Component, Input, OnChanges, TemplateRef } from '@angular/core';
+import { Component, Input, OnChanges, TemplateRef, booleanAttribute } from '@angular/core';
 import { DataRecord, DataStore, DataStoreType, Field } from '@pestras/shared/data-model';
 
 @Component({
@@ -22,12 +22,14 @@ export class DescView implements OnChanges {
   dataStore!: DataStore;
   @Input({ required: true })
   record!: DataRecord;
+  @Input({ transform: booleanAttribute })
+  headless = false;
 
   constructor(
     private dialog: Dialog
   ) { }
 
-  ngOnChanges(): void {
+  ngOnChanges(): void {    
     this.isTable = this.dataStore.type === DataStoreType.TABLE;
     this.groups = [];
 

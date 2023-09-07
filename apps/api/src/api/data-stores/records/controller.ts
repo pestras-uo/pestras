@@ -77,7 +77,7 @@ export const controller = {
   // -------------------------------------------------------------------------------------------------
   async update(req: RecordsApi.UpdateReq, res: RecordsApi.UpdateRes, next: NextFunction) {
     try {
-      const ds: DataStore | null = await dataStoresModel.getBySerial(req.params.serial, { type: 1, settings: 1, fields: 1, state: 1 });
+      const ds: DataStore | null = await dataStoresModel.getBySerial(req.params.serial);
       
       if (!ds)
         throw new HttpError(HttpCode.NOT_FOUND, 'dataStoreNotFound');
@@ -102,6 +102,8 @@ export const controller = {
           
           imgsToRemove.push(file.fieldname);
         }
+
+        console.log(paths);
 
         Object.assign(req.body, paths);
       }

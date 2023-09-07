@@ -1,5 +1,5 @@
 <ng-container *contra="let c">
-  <div class="toolbar mbe-8" *ngIf="record['owner']">
+  <div class="toolbar mbe-8" *ngIf="record['owner'] && !headless">
     <app-avatar [serial]="record['owner']"></app-avatar>
     <div class="grow"></div>
     <ng-container *ngIf="record['workflow']">

@@ -1,11 +1,11 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { Dialog, DialogRef } from '@angular/cdk/dialog';
-import { Component, Input, OnInit, TemplateRef } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output, TemplateRef } from '@angular/core';
 import { Router } from '@angular/router';
 import { RecordsState } from '@pestras/frontend/state';
 import { ToastService } from '@pestras/frontend/ui';
 import { DataRecordHistroyItem, DataStore } from '@pestras/shared/data-model';
-import { Observable } from 'rxjs';
+import { Observable, tap } from 'rxjs';
 
 @Component({
   selector: 'pestras-record-history',
@@ -25,6 +25,11 @@ export class HistoryViewComponent implements OnInit {
   dataStore!: DataStore;
   @Input({ required: true })
   record!: string;
+  @Input()
+  topic: string | null = null;
+
+  @Output()
+  selects = new EventEmitter<{ name: string; payload?: any; }>();
 
   constructor(
     private state: RecordsState,
@@ -34,7 +39,8 @@ export class HistoryViewComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.history$ = this.state.history(this.dataStore.serial, this.record);
+    this.history$ = this.state.history(this.dataStore.serial, this.record)
+      .pipe(tap(list => list.length > 0 && (this.selected = list[0])))
   }
 
   openDialog(tmp: TemplateRef<unknown>) {
@@ -59,7 +65,7 @@ export class HistoryViewComponent implements OnInit {
           this.toast.msg(c['success'].default, { type: 'success' });
 
           this.closeDialog();
-          this.router.navigate(['/main', this.dataStore, this.record]);
+          this.selects.emit({ name: 'details' });
         },
         error: e => {
           console.error(e);

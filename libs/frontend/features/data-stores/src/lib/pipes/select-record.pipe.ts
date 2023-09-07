@@ -30,7 +30,7 @@ export class SelectRecordPipe implements PipeTransform {
         if (term)
           query.search = { [interfaceField]: { $regex: term } };
 
-        return this.state.search(d.serial, query)
+        return this.state.query(d.serial, query)
           .pipe(map(list => list.results.map(r => ({ name: r[interfaceField] as string, value: r['serial'] as string }))));
       }));
   }

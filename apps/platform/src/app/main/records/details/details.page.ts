@@ -31,7 +31,7 @@ export class DetailsPage implements OnChanges {
   mainField: Field | null = null;
 
   @Input()
-  topic?: string;
+  topic: string | null = null;
   @Input({ required: true })
   dataStore!: DataStore;
   @Input({ required: true })
