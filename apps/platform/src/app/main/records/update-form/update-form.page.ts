@@ -4,7 +4,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { RecordsEntitiesState } from '@pestras/frontend/state';
+import { RecordsState } from '@pestras/frontend/state';
 import { ToastService, untilDestroyed } from '@pestras/frontend/ui';
 import { DataRecord, DataStore, Field } from '@pestras/shared/data-model';
 
@@ -38,7 +38,7 @@ export class UpdateFormPage implements OnInit {
   record!: DataRecord;
 
   constructor(
-    private state: RecordsEntitiesState,
+    private state: RecordsState,
     private fb: FormBuilder,
     private toast: ToastService,
     private router: Router

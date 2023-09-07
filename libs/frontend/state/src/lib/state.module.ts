@@ -9,7 +9,6 @@ import { DashboardsState } from "./dashboards/dashboards.state";
 import { DashboardResolver } from "./dashboards/dashboard.resolver";
 import { OrgunitsState } from "./orgunits/orgunits.state";
 import { RecordsState } from "./records/records.state";
-import { RecordsEntitiesState } from "./records/records-entities.state";
 import { RecordResolver } from "./records/record.resolver";
 import { RegionsState } from "./regions/regions.state";
 import { SessionState } from "./session/session.state";
@@ -48,7 +47,6 @@ export class StateModule {
         DashboardResolver,
         OrgunitsState,
         RecordsState,
-        RecordsEntitiesState,
         RecordResolver,
         RegionsState,
         SessionState,

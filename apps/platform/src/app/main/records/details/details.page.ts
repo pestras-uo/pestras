@@ -3,7 +3,7 @@
 /* eslint-disable @angular-eslint/component-selector */
 import { Component, Input, OnChanges } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { RecordsEntitiesState } from '@pestras/frontend/state';
+import { RecordsState } from '@pestras/frontend/state';
 import { DataStore, Field, TableDataRecord } from '@pestras/shared/data-model';
 import { Observable } from 'rxjs';
 
@@ -31,7 +31,7 @@ export class DetailsPage implements OnChanges {
   mainField: Field | null = null;
 
   @Input()
-  topic?: string;
+  topic: string | null = null;
   @Input({ required: true })
   dataStore!: DataStore;
   @Input({ required: true })
@@ -42,7 +42,7 @@ export class DetailsPage implements OnChanges {
   payload?: string;
 
   constructor(
-    private state: RecordsEntitiesState,
+    private state: RecordsState,
     private router: Router,
     private route: ActivatedRoute
   ) { }

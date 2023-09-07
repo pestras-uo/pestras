@@ -45,9 +45,9 @@ export abstract class StatorQueryState<
 
   // abstract
   // ----------------------------------------------------------------------------
-  protected abstract _fetchDoc(key: string): Observable<DOC | null>;
+  protected abstract _fetchDoc(key: string, ...args: unknown[]): Observable<DOC | null>;
   protected abstract _fetchQuery(key: string, query: QUERY): Observable<{ count: number; results: DOC[] }>;
-  protected abstract _onChange(doc: DOC): void;
+  protected abstract _onChange(doc: DOC, ...args: unknown[]): void;
 
 
   // util
@@ -83,7 +83,7 @@ export abstract class StatorQueryState<
 
   // setters
   // ----------------------------------------------------------------------------
-  protected _insert(doc: DOC) {
+  protected _insert(doc: DOC, ...args: unknown[]) {
     const dataMap = this._data.getValue();
 
     if (dataMap.has(doc[this.key] as string))
@@ -94,7 +94,7 @@ export abstract class StatorQueryState<
     dataMap.set(newDoc[this.key] as string, newDoc);
     this._expState.set(newDoc[this.key] as string, Date.now());
 
-    this._onChange(newDoc);
+    this._onChange(newDoc, ...args);
 
     this._data.next(dataMap);
   }
@@ -207,12 +207,12 @@ export abstract class StatorQueryState<
 
   // selectors
   // ----------------------------------------------------------------------------
-  select(key: string) {
+  select(key: string, ...args: unknown[]) {
     const data = this._data.getValue();
     const doc = data.get(key);
 
     if (!doc || ((this._expState.get(key) ?? 0) + this._exp) < Date.now())
-      return this._fetchDoc(key).pipe(
+      return this._fetchDoc(key, ...args).pipe(
         tap(() => this._expState.set(key, Date.now())),
         tap(doc => {
           if (doc) {

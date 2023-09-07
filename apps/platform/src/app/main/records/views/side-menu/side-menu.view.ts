@@ -18,7 +18,7 @@ export class SideMenuView implements OnChanges {
   @Input({ required: true })
   view!: { name: string; payload?: any; };
   @Input()
-  topic?: string;
+  topic: string | null = null;
   @Input({ required: true })
   dataStore!: DataStore;
 

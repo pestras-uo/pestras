@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-namespace */
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { ApiQuery, DataRecord } from "@pestras/shared/data-model";
+import { ApiQuery, DataRecordHistroyItem, TableDataRecord } from "@pestras/shared/data-model";
 import { basePath } from "../data-stores/data-stores.api";
 
 const localBasePath = `${basePath}/:ds/records`;
@@ -15,7 +15,7 @@ export namespace RecordsApi {
 
     export interface Params { ds: string; serial: string; }
 
-    export type Response<T = DataRecord> = T | null;
+    export type Response = TableDataRecord | null;
   }
 
   // POST
@@ -26,7 +26,16 @@ export namespace RecordsApi {
 
     export type Body = ApiQuery<any>;
 
-    export type Response<T = DataRecord> = { count: number; results: T[]; };
+    export type Response = { count: number; results: TableDataRecord[]; };
+  }
+
+  // GET
+  export namespace getHistory {
+    export const REQ_PATH = localBasePath + '/:record/histroy';
+
+    export interface Params { ds: string; record: string; }
+
+    export type Response = DataRecordHistroyItem[];
   }
 
 
@@ -40,7 +49,7 @@ export namespace RecordsApi {
 
     export type Body = any;
 
-    export type Response<T = DataRecord> = T;
+    export type Response = TableDataRecord;
   }
 
 
@@ -54,11 +63,23 @@ export namespace RecordsApi {
 
     export interface Body  { group: string; data: any; };
 
-    export type Response<T = DataRecord> = T;
+    export type Response = TableDataRecord;
   }
 
 
-  // DELETE
+  // history
+  // --------------------------------------------------------------------------------------
+  // PUT
+  export namespace RevertHistory {
+    export const REQ_PATH = localBasePath + '/history/:history/revert';
+
+    export interface Params { ds: string; history: string; }
+
+    export type Response = TableDataRecord;
+  }
+
+
+  // delete
   // --------------------------------------------------------------------------------------
   // POST
   export namespace Delete {

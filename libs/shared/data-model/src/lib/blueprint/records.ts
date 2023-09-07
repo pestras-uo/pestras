@@ -24,8 +24,8 @@ export interface TableDataRecord extends DataRecord {
 }
 
 export interface DataRecordHistroyItem {
+  serial: string;
   record: string;
   last_modified: Date;
-  modified_by: string;
-  changes: { [key: string]: unknown; };
+  state: TableDataRecord;
 }

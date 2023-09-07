@@ -4,7 +4,7 @@ import path from 'path';
 import config from "../../../config";
 import { RecordsApi } from "./types";
 import { HttpError, HttpCode } from "@pestras/backend/util";
-import { DataStore } from "@pestras/shared/data-model";
+import { DataStore, Field } from "@pestras/shared/data-model";
 import { NextFunction } from 'express';
 import { Serial } from "@pestras/shared/util";
 
@@ -77,7 +77,7 @@ export const controller = {
   // -------------------------------------------------------------------------------------------------
   async update(req: RecordsApi.UpdateReq, res: RecordsApi.UpdateRes, next: NextFunction) {
     try {
-      const ds: DataStore | null = await dataStoresModel.getBySerial(req.params.serial, { type: 1, settings: 1, fields: 1, state: 1 });
+      const ds: DataStore | null = await dataStoresModel.getBySerial(req.params.serial);
       
       if (!ds)
         throw new HttpError(HttpCode.NOT_FOUND, 'dataStoreNotFound');
@@ -103,23 +103,34 @@ export const controller = {
           imgsToRemove.push(file.fieldname);
         }
 
+        console.log(paths);
+
         Object.assign(req.body, paths);
       }
   
       res.json(await dataRecordsModel.update(ds, req.params.record, req.body, res.locals.issuer.serial));
   
-      for (const field of imgsToRemove) {
-        const image = record[field];
-  
-        if (image) {
-          const filename = image.slice(image.lastIndexOf('/') + 1);
-          await fs.unlink(path.join(config.uploadsDir, 'fields', req.params.serial, req.params.record, filename));
+      // if data store doesnot support history then remove changed images
+      if (!ds.settings.history) {
+        for (const field of imgsToRemove) {
+          const image = record[field];
+    
+          if (image) {
+            const filename = image.slice(image.lastIndexOf('/') + 1);
+            await fs.unlink(path.join(config.uploadsDir, 'fields', req.params.serial, req.params.record, filename));
+          }
         }
       }
 
     } catch (error) {
       next(error);
     }
+  },
+
+  // history
+  // -------------------------------------------------------------------------------------------------
+  async revertHistory(req: RecordsApi.RevertHistoryReq, res: RecordsApi.RevertHistoryRes) {
+    return res.json(await dataRecordsModel.revertHistory(req.params.serial, req.params.history));
   },
 
   // delete
@@ -140,7 +151,7 @@ export const controller = {
   
       res.json(await dataRecordsModel.delete(ds, req.params.record, res.locals.issuer));
   
-      for (const f of fields.filter(f => f.type === 'image')) {
+      for (const f of fields.filter((f: Field) => f.type === 'image')) {
         const image = record[f.name];
   
         if (image) {

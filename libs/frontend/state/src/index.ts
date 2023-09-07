@@ -22,7 +22,6 @@ export { DataVizState } from './lib/data_viz/data-viz.state';
 export { OrgunitsState } from './lib/orgunits/orgunits.state';
 
 export { RecordsState, DataRecordsSearchResponse } from './lib/records/records.state';
-export { RecordsEntitiesState } from './lib/records/records-entities.state';
 export { RecordResolver } from './lib/records/record.resolver';
 
 export { RegionsState } from './lib/regions/regions.state';

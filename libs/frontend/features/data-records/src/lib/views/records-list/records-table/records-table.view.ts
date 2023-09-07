@@ -52,7 +52,7 @@ export class RecordsTableView implements OnInit {
         switchMap(([search, page, sort]) => {
           this.skip = (page - 1) * this.pageSize;
 
-          return this.state.search(this.dataStore.serial, {
+          return this.state.query(this.dataStore.serial, {
             limit: this.pageSize,
             skip: this.skip ?? 0,
             select: null,

@@ -1,1 +1,64 @@
-<p>history works!</p>
+<ng-container *contra="let c">
+  <ng-container *ngIf="history$ | async as history">
+    <div
+      *ngIf="history.length else noData"
+      class="grid gap-6"
+      style="grid-template-columns: 160px 1fr"
+    >
+      <section>
+        <h3 class="mbe-2 line-height-12">{{c['history']}}:</h3>
+
+        <div class="list list-actions">
+          <div
+            *ngFor="let h of history"
+            class="list-item p-4"
+            [class.active]="selected?.serial === h.serial"
+            (click)="selected = h"
+          >
+            <p>{{h.last_modified | date: 'dd-MMM-yyyy'}}</p>
+          </div>
+        </div>
+      </section>
+
+      <section>
+        <div class="toolbar mbe-2">
+          <h3>{{c['data']}}</h3>
+          <div class="grow"></div>
+          <button
+            class="btn-round btn-primary btn-small btn-icon"
+            (click)="openDialog(revertTmp)"
+          >
+            <i puiIcon="check" size="small"></i>
+          </button>
+        </div>
+        <app-desc
+          *ngIf="selected"
+          [dataStore]="dataStore"
+          [record]="selected.state"
+          headless
+        ></app-desc>
+      </section>
+    </div>
+
+    <ng-template #noData>
+      <no-data-placeholder-widget>
+        {{c['noDataMsg']}}
+      </no-data-placeholder-widget>
+    </ng-template>
+
+    <ng-template #revertTmp>
+      <div class="card shadow-6 w-10">
+        <h4 class="card-header">{{c['applyChanges']}}</h4>
+        <p class="card-body">{{c['confirmOperation']}}</p>
+        <div class="card-footer">
+          <button class="btn-round btn-outine" (click)="closeDialog()">
+            {{c['cancel']}}
+          </button>
+          <button class="btn-round btn-primary" (click)="revert(c)">
+            {{c['yes']}}
+          </button>
+        </div>
+      </div>
+    </ng-template>
+  </ng-container>
+</ng-container>

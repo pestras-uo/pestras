@@ -12,7 +12,7 @@ export class QueryRecordsPipe implements PipeTransform {
   constructor(private state: RecordsState) { }
 
   transform(ds: string, query: ApiQuery<any>): Observable<DataRecord[]> {
-    return this.state.search(ds, query)
+    return this.state.query(ds, query)
       .pipe(map(res => res.results));
   }
 

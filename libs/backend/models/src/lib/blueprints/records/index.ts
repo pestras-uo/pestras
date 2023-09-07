@@ -1,10 +1,11 @@
 import { Db } from 'mongodb';
 import { Core } from '@pestras/backend/util';
 import { getBySerial, getHistory, search } from './read';
-import { pushHistory } from './util';
+import { pushHistory, revertHistory } from './history';
 import { deleteRecod } from './delete';
 import { create } from './create';
 import { update } from './update';
+import { ApiQuery, DataRecord, DataRecordHistroyItem, DataStore, TableDataRecord, User } from '@pestras/shared/data-model';
 
 export class DataRecordsModel extends Core {
   protected db!: Db;
@@ -17,23 +18,26 @@ export class DataRecordsModel extends Core {
 
   // read
   // --------------------------------------------------------------------------------
-  search = search.bind(this);
-  getBySerial = getBySerial.bind(this);
-  getHistory = getHistory.bind(this);
+  search: (dataStoreSerial: string, query: ApiQuery<DataRecord>) => Promise<{ count: number; results: DataRecord[] }> = search.bind(this);
+  getBySerial: <T extends DataRecord>(dataStoreSerial: string, serial: string) => Promise<T | null> = getBySerial.bind(this);
+  getHistory: (dataStoreSerial: string, serial: string) => Promise<DataRecordHistroyItem[]> = getHistory.bind(this);
 
   // create
   // --------------------------------------------------------------------------------
-  create = create.bind(this);
+  create: (ds: DataStore, recSerial: string, data: DataRecord, issuer: User) => Promise<TableDataRecord> = create.bind(this);
 
   // update
   // --------------------------------------------------------------------------------
-  update = update.bind(this);
+  update: (dataStore: DataStore, recordSerial: string, input: { group: string; data: DataRecord; }, issuer: string) => Promise<TableDataRecord> = update.bind(this);
+
+  // History
+  // --------------------------------------------------------------------------------
+  protected pushHistory: (dataStore: string, record: TableDataRecord) => Promise<boolean> = pushHistory.bind(this);
+  
+  revertHistory: (ds: string, serial: string) => Promise<TableDataRecord> = revertHistory.bind(this);
 
   // delete
   // --------------------------------------------------------------------------------
-  delete = deleteRecod.bind(this);
+  delete: (dataStore: DataStore, recordSerial: string, issuer: User) => Promise<boolean> = deleteRecod.bind(this);
 
-  // util
-  // --------------------------------------------------------------------------------
-  protected pushHistory = pushHistory.bind(this);
 }

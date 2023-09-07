@@ -7,7 +7,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { AddFormPage } from './add-form/add-form.page';
 import { QuillModule } from 'ngx-quill';
 import { DetailsPage } from './details/details.page';
-import { HistoryView } from './views/history/history.view';
+import { HistoryViewComponent } from './views/history/history.view';
 import { DialogModule } from '@angular/cdk/dialog';
 import { SideMenuView } from './views/side-menu/side-menu.view';
 import { DescView } from './views/desc/desc.view';
@@ -34,7 +34,7 @@ import { PuiIcon, PuiImageInput, PuiInfiniteScroll, PuiPreloaderModule, PuiSelec
     DetailsPage,
     SideMenuView,
     DescView,
-    HistoryView,
+    HistoryViewComponent,
     UpdateFormPage,
     SubDataStoresRecordsView
   ],

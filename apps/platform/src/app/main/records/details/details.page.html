@@ -37,6 +37,13 @@
       ></app-attachments-list>
 
       <!-- history -->
+      <pestras-record-history
+        *ngIf="view.name === 'history'"
+        [dataStore]="dataStore"
+        [record]="record.serial"
+        [topic]="topic"
+        (selects)="set($event)"
+      ></pestras-record-history>
 
       <!-- comments -->
 
