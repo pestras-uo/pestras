@@ -4,7 +4,7 @@
 import { Component, Input, OnChanges, OnInit } from '@angular/core';
 import { DataStore, TableDataRecord } from '@pestras/shared/data-model';
 import { PubSubService } from '@pestras/frontend/ui';
-import { OrgunitsState, SessionState, RecordsState } from '@pestras/frontend/state';
+import { RecordsState } from '@pestras/frontend/state';
 import { untilDestroyed } from '@pestras/frontend/ui';
 
 @Component({
@@ -46,8 +46,6 @@ export class RecordsCardView implements OnChanges, OnInit {
 
   constructor(
     private state: RecordsState,
-    private session: SessionState,
-    private orgsStore: OrgunitsState,
     private pubSub: PubSubService
   ) { }
 
@@ -72,7 +70,7 @@ export class RecordsCardView implements OnChanges, OnInit {
 
     this.skip = this.records.results.length;
 
-    this.state.search<TableDataRecord>(
+    this.state.query(
       this.dataStore.serial,
       {
         limit: 20,

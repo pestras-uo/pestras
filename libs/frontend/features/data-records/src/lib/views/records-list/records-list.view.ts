@@ -132,7 +132,7 @@ export class RecordsListView implements OnChanges {
   exportData() {
     this.exporting = true;
 
-    this.state.search(this.dataStore.serial, { ...this.query, limit: 0 })
+    this.state.query(this.dataStore.serial, { ...this.query, limit: 0 })
       .subscribe({
         next: data => {
           this.xlsx.export(data.results, this.dataStore.name);

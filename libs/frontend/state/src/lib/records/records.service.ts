@@ -2,7 +2,6 @@ import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { RecordsApi } from "./records.api";
 import { injectURLPayload } from "@pestras/shared/util";
-import { DataRecord } from "@pestras/shared/data-model";
 import { EnvService } from "@pestras/frontend/env";
 
 @Injectable({ providedIn: 'root' })
@@ -13,19 +12,25 @@ export class RecordsService {
     private http: HttpClient
   ) { }
 
-  getBySerial<T = DataRecord>(params: RecordsApi.GetBySerial.Params) {
+  getBySerial(params: RecordsApi.GetBySerial.Params) {
     const path = injectURLPayload(this.envServ.env.api + RecordsApi.GetBySerial.REQ_PATH, params);
 
-    return this.http.get<RecordsApi.GetBySerial.Response<T>>(path);
+    return this.http.get<RecordsApi.GetBySerial.Response>(path);
   }
 
-  search<T = DataRecord>(params: RecordsApi.Search.Params, body: RecordsApi.Search.Body) {
+  search(params: RecordsApi.Search.Params, body: RecordsApi.Search.Body) {
     const path = injectURLPayload(this.envServ.env.api + RecordsApi.Search.REQ_PATH, params);
 
-    return this.http.post<RecordsApi.Search.Response<T>>(path, body);
+    return this.http.post<RecordsApi.Search.Response>(path, body);
   }
 
-  create<T = DataRecord>(params: RecordsApi.Create.Params, body: RecordsApi.Create.Body) {
+  getHistory(params: RecordsApi.getHistory.Params) {
+    const path = injectURLPayload(this.envServ.env.api + RecordsApi.getHistory.REQ_PATH, params);
+
+    return this.http.get<RecordsApi.getHistory.Response>(path);
+  }
+
+  create(params: RecordsApi.Create.Params, body: RecordsApi.Create.Body) {
     const path = injectURLPayload(this.envServ.env.api + RecordsApi.Create.REQ_PATH, params);
     const data = new FormData();
 
@@ -40,13 +45,25 @@ export class RecordsService {
       }
     }
 
-    return this.http.post<RecordsApi.Create.Response<T>>(path, data);
+    return this.http.post<RecordsApi.Create.Response>(path, data);
   }
 
-  update<T = DataRecord>(params: RecordsApi.Update.Params, body: RecordsApi.Update.Body) {
+  update(params: RecordsApi.Update.Params, body: RecordsApi.Update.Body) {
     const path = injectURLPayload(this.envServ.env.api + RecordsApi.Update.REQ_PATH, params);
 
-    return this.http.put<RecordsApi.Update.Response<T>>(path, body);
+    return this.http.put<RecordsApi.Update.Response>(path, body);
+  }
+
+  applyHistory(params: RecordsApi.ApplyHistory.Params) {
+    const path = injectURLPayload(this.envServ.env.api + RecordsApi.ApplyHistory.REQ_PATH, params);
+
+    return this.http.put<RecordsApi.ApplyHistory.Response>(path, null);
+  }
+
+  revertHistory(params: RecordsApi.RevertHistory.Params) {
+    const path = injectURLPayload(this.envServ.env.api + RecordsApi.RevertHistory.REQ_PATH, params);
+
+    return this.http.put<RecordsApi.RevertHistory.Response>(path, null);
   }
 
   delete(params: RecordsApi.Delete.Params) {

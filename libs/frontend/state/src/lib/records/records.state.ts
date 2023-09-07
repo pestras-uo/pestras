@@ -1,10 +1,11 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { Injectable } from "@angular/core";
-import { ApiQuery, DataRecord, WorkflowState } from "@pestras/shared/data-model";
-import { StatorChannel, StatorState } from "@pestras/frontend/util/stator";
+import { ApiQuery, DataRecord, TableDataRecord } from "@pestras/shared/data-model";
+import { StatorChannel, StatorQueryState } from "@pestras/frontend/util/stator";
 import { RecordsService } from "./records.service";
 import { SessionState } from "../session/session.state";
 import { SessionEnd } from "../session/session.events";
+import { Observable, tap } from "rxjs";
 
 export interface DataRecordsSearchResponse {
   count: number;
@@ -12,67 +13,81 @@ export interface DataRecordsSearchResponse {
 }
 
 @Injectable({ providedIn: 'root' })
-export class RecordsState extends StatorState<DataRecordsSearchResponse> {
+export class RecordsState extends StatorQueryState<TableDataRecord, Partial<ApiQuery<TableDataRecord>>> {
 
   constructor(
     private readonly channel: StatorChannel,
     private readonly service: RecordsService,
     private readonly session: SessionState
   ) {
-    super('records', { count: 0, results: [] }, ['1h']);
+    super('records', 'serial', ['1h']);
 
     this.channel.select(SessionEnd)
       .subscribe(() => this._clear());
+
+
   }
 
-  protected override _fetch(key: string) {
-    return this.service.search({ ds: key }, {
-      skip: 0,
-      limit: 10000,
-      search: {},
-      sort: { serial: 1 },
-      select: null
-    } as ApiQuery<any>);
+  protected override _fetchDoc(serial: string, ds: string): Observable<TableDataRecord | null> {
+    return this.service.getBySerial({ ds, serial });
   }
 
-  getPublic<T = DataRecord>(
-    dataStore: string,
-    skip = 0,
-    searchTerm = "",
-    sort: Record<string, 1 | -1> = { serial: -1 }
-  ) {
-    const search: any = { workflow: WorkflowState.APPROVED };
-
-    if (searchTerm)
-      search.name = { $regex: searchTerm };
-
-    return this.service.search<T>({ ds: dataStore }, {
-      skip,
-      limit: 20,
-      search,
-      sort
-    } as ApiQuery<any>)
+  protected override _fetchQuery(ds: string, query: ApiQuery<TableDataRecord>): Observable<{ count: number; results: TableDataRecord[]; }> {
+    return this.service.search({ ds }, query);
   }
 
-  getOwned<T = DataRecord>(dataStore: string, workflow: WorkflowState, skip = 0, searchTerm = "", sort: Record<string, 1 | -1> = { serial: -1 }) {
-    const search: any = { owner: this.session.get()?.serial, workflow };
-
-    if (searchTerm)
-      search.name = { $regex: searchTerm };
-
-    return this.service.search<T>({ ds: dataStore }, {
-      skip,
-      limit: 20,
-      search,
-      sort
-    } as ApiQuery<any>)
+  protected override _onChange(doc: TableDataRecord, ds: string): void {
+    if (ds)
+      this._updateInQuery(ds, doc);
   }
 
-  data(dataStore: string, skip = 0, limit = 1000) {
-    return this.service.search({ ds: dataStore }, { skip, limit } as ApiQuery<any>)
+
+  // selectors
+  // --------------------------------------------------------------------------------------
+  selectDsRecords(ds: string) {
+    return this.query(ds, {
+      limit: 0
+    });
   }
 
-  search<T = DataRecord>(dataStore: string, query: ApiQuery<any>) {
-    return this.service.search<T>({ ds: dataStore }, query);
+  // create
+  // --------------------------------------------------------------------------------------
+  create(ds: string, record: any) {
+    return this.service.create({ ds }, record)
+      .pipe(tap(res => this._insert(res, ds)));
+  }
+
+
+  // update
+  // --------------------------------------------------------------------------------------
+  update(ds: string, serial: string, group: string, data: any) {
+    return this.service.update({ ds, serial }, { group, data })
+      .pipe(
+        tap(res => this._update(serial, res)),
+        tap(res => this._onChange(res, ds))
+      );
+  }
+
+
+  // history
+  // --------------------------------------------------------------------------------------
+  history(ds: string, record: string) {
+    return this.service.getHistory({ ds, record });
+  }
+
+  applyHistory(ds: string, history: string) {
+    return this.service.applyHistory({ ds, history })
+      .pipe(
+        tap(res => this._update(res.serial, res)),
+        tap(res => this._onChange(res, ds))
+      );
+  }
+
+  revertHistory(ds: string, history: string) {
+    return this.service.revertHistory({ ds, history })
+      .pipe(
+        tap(res => this._update(res.serial, res)),
+        tap(res => this._onChange(res, ds))
+      );
   }
 }
