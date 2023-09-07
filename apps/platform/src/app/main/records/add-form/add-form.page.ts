@@ -5,7 +5,7 @@ import { Location } from '@angular/common';
 import { Component, Input, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { RecordsEntitiesState } from '@pestras/frontend/state';
+import { RecordsState } from '@pestras/frontend/state';
 import { ToastService } from '@pestras/frontend/ui';
 import { DataStore, Field } from '@pestras/shared/data-model';
 
@@ -33,7 +33,7 @@ export class AddFormPage implements OnInit {
   dataStore!: DataStore;
 
   constructor(
-    private state: RecordsEntitiesState,
+    private state: RecordsState,
     private fb: FormBuilder,
     private toast: ToastService,
     private router: Router,

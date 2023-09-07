@@ -75,14 +75,6 @@ export class RecordsState extends StatorQueryState<TableDataRecord, Partial<ApiQ
     return this.service.getHistory({ ds, record });
   }
 
-  applyHistory(ds: string, history: string) {
-    return this.service.applyHistory({ ds, history })
-      .pipe(
-        tap(res => this._update(res.serial, res)),
-        tap(res => this._onChange(res, ds))
-      );
-  }
-
   revertHistory(ds: string, history: string) {
     return this.service.revertHistory({ ds, history })
       .pipe(

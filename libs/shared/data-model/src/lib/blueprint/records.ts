@@ -27,5 +27,5 @@ export interface DataRecordHistroyItem {
   serial: string;
   record: string;
   last_modified: Date;
-  changes: { [key: string]: unknown; };
+  state: TableDataRecord;
 }

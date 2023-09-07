@@ -127,10 +127,6 @@ export const controller = {
 
   // history
   // -------------------------------------------------------------------------------------------------
-  async applyHistory(req: RecordsApi.ApplyHistoryReq, res: RecordsApi.ApplyHistoryRes) {
-    return res.json(await dataRecordsModel.applyHistory(req.params.serial, req.params.history));
-  },
-
   async revertHistory(req: RecordsApi.RevertHistoryReq, res: RecordsApi.RevertHistoryRes) {
     return res.json(await dataRecordsModel.revertHistory(req.params.serial, req.params.history));
   },

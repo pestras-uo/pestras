@@ -53,13 +53,7 @@ export class RecordsService {
 
     return this.http.put<RecordsApi.Update.Response>(path, body);
   }
-
-  applyHistory(params: RecordsApi.ApplyHistory.Params) {
-    const path = injectURLPayload(this.envServ.env.api + RecordsApi.ApplyHistory.REQ_PATH, params);
-
-    return this.http.put<RecordsApi.ApplyHistory.Response>(path, null);
-  }
-
+  
   revertHistory(params: RecordsApi.RevertHistory.Params) {
     const path = injectURLPayload(this.envServ.env.api + RecordsApi.RevertHistory.REQ_PATH, params);
 

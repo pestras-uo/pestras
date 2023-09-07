@@ -1,7 +1,7 @@
 import { Db } from 'mongodb';
 import { Core } from '@pestras/backend/util';
 import { getBySerial, getHistory, search } from './read';
-import { applyHistory, pushHistory, revertHistory } from './history';
+import { pushHistory, revertHistory } from './history';
 import { deleteRecod } from './delete';
 import { create } from './create';
 import { update } from './update';
@@ -32,9 +32,8 @@ export class DataRecordsModel extends Core {
 
   // History
   // --------------------------------------------------------------------------------
-  protected pushHistory: (dataStore: string, record: TableDataRecord, fields: string[]) => Promise<boolean> = pushHistory.bind(this);
+  protected pushHistory: (dataStore: string, record: TableDataRecord) => Promise<boolean> = pushHistory.bind(this);
   
-  applyHistory: (ds: string, serial: string) => Promise<TableDataRecord> = applyHistory.bind(this);
   revertHistory: (ds: string, serial: string) => Promise<TableDataRecord> = revertHistory.bind(this);
 
   // delete

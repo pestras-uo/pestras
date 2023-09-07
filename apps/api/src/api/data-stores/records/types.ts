@@ -29,9 +29,6 @@ export namespace RecordsApi {
 
   // History
   // --------------------------------------------------------------------------------
-  export type ApplyHistoryReq = Request<{ serial: string; history: string; }>;
-  export type ApplyHistoryRes = Response<TableDataRecord, UserSession>;
-
   export type RevertHistoryReq = Request<{ serial: string; history: string; }>;
   export type RevertHistoryRes = Response<TableDataRecord, UserSession>;
 

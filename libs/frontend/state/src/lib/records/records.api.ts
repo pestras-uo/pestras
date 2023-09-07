@@ -70,14 +70,6 @@ export namespace RecordsApi {
   // history
   // --------------------------------------------------------------------------------------
   // PUT
-  export namespace ApplyHistory {
-    export const REQ_PATH = localBasePath + '/history/:history/apply';
-
-    export interface Params { ds: string; history: string; }
-
-    export type Response = TableDataRecord;
-  }
-
   export namespace RevertHistory {
     export const REQ_PATH = localBasePath + '/history/:history/revert';
 

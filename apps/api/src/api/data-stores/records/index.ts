@@ -37,11 +37,6 @@ export const recordsRoutes = Router({ mergeParams: true })
     controller.update
   )
   .put(
-    '/history/:history/apply',
-    apiAuth([Role.AUTHOR, Role.DATA_ENG]),
-    controller.applyHistory
-  )
-  .put(
     '/history/:history/revert',
     apiAuth([Role.AUTHOR, Role.DATA_ENG]),
     controller.revertHistory

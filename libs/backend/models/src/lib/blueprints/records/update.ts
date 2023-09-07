@@ -75,8 +75,8 @@ export async function update(
 
   await this.db.collection(dataStore.serial).updateOne({ serial: recordSerial }, { $set: update });
 
-  if (dataStore.settings.history)
-    this.pushHistory(dataStore.serial, record, Object.keys(data));
+  if (dataStore.settings.history && record.workflow === WorkflowState.APPROVED)
+    this.pushHistory(dataStore.serial, record);
 
   this.pubSub.emitActivity({
     issuer: issuer,
