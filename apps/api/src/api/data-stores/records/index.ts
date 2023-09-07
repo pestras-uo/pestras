@@ -24,17 +24,27 @@ export const recordsRoutes = Router({ mergeParams: true })
   )
   .post(
     '/',
-    apiAuth([Role.AUTHOR, Role.AUTHOR]),
+    apiAuth([Role.AUTHOR, Role.DATA_ENG]),
     tmpUpload.any(),
     validate(RecordsValidators.CREATE),
     controller.create
   )
   .put(
     '/:record',
-    apiAuth([Role.AUTHOR, Role.AUTHOR]),
+    apiAuth([Role.AUTHOR, Role.DATA_ENG]),
     tmpUpload.any(),
     validate(RecordsValidators.UPDATE),
     controller.update
+  )
+  .put(
+    '/history/:history/apply',
+    apiAuth([Role.AUTHOR, Role.DATA_ENG]),
+    controller.applyHistory
+  )
+  .put(
+    '/history/:history/revert',
+    apiAuth([Role.AUTHOR, Role.DATA_ENG]),
+    controller.revertHistory
   )
   .delete(
     '/:record',

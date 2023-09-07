@@ -2,6 +2,7 @@
 /* eslint-disable @typescript-eslint/no-namespace */
 import { Request, Response } from "express";
 import { UserSession } from "../../../auth";
+import { TableDataRecord } from "@pestras/shared/data-model";
 
 export namespace RecordsApi {
   
@@ -25,6 +26,14 @@ export namespace RecordsApi {
   // --------------------------------------------------------------------------------
   export type UpdateReq = Request<{ serial: string; record: string; }, any, { group: string; data: any; }>;
   export type UpdateRes = Response<any, UserSession>;
+
+  // History
+  // --------------------------------------------------------------------------------
+  export type ApplyHistoryReq = Request<{ serial: string; history: string; }>;
+  export type ApplyHistoryRes = Response<TableDataRecord, UserSession>;
+
+  export type RevertHistoryReq = Request<{ serial: string; history: string; }>;
+  export type RevertHistoryRes = Response<TableDataRecord, UserSession>;
 
   // delete
   // --------------------------------------------------------------------------------

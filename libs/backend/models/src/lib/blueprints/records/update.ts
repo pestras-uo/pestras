@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { DataStore, DataStoreState, DataStoreType, EntityTypes, WorkflowState, parseValue, validateConstraint, validateValueType } from "@pestras/shared/data-model";
+import { DataStore, DataStoreState, DataStoreType, EntityTypes, TableDataRecord, WorkflowState, parseValue, validateConstraint, validateValueType } from "@pestras/shared/data-model";
 import { DataRecordsModel } from ".";
 import { HttpError, HttpCode } from "@pestras/backend/util";
 
@@ -20,7 +20,7 @@ export async function update(
   if (dataStore.state === DataStoreState.BUILD)
     throw new HttpError(HttpCode.FORBIDDEN, 'dataStoreNotBuiltYet');
 
-  const record = await this.getBySerial(dataStore.serial, recordSerial);
+  const record = await this.getBySerial<TableDataRecord>(dataStore.serial, recordSerial);
 
   if (!record)
     throw new HttpError(HttpCode.NOT_FOUND, 'recordNotFound');
@@ -76,7 +76,7 @@ export async function update(
   await this.db.collection(dataStore.serial).updateOne({ serial: recordSerial }, { $set: update });
 
   if (dataStore.settings.history)
-    this.pushHistory(dataStore.serial, recordSerial, record, Object.keys(update));
+    this.pushHistory(dataStore.serial, record, Object.keys(data));
 
   this.pubSub.emitActivity({
     issuer: issuer,
@@ -87,5 +87,5 @@ export async function update(
     payload: { data_store: dataStore.serial }
   });
 
-  return this.getBySerial(dataStore.serial, recordSerial);
+  return this.getBySerial<TableDataRecord>(dataStore.serial, recordSerial);
 }
