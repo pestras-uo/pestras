@@ -6,11 +6,11 @@ import { UpdateMode } from "./types";
 // types
 // -------------------------------------------------------------------------------------
 interface QueryCache<QUERY extends Record<string, unknown>> {
-  query: QUERY;
+  query: QUERY | null;
   // last request call
   lastFetch: number;
   // response docs ids fetched
-  keys: string[];
+  keys: Set<string>;
 }
 
 export interface StatorQueryStateConfig<
@@ -38,7 +38,8 @@ export abstract class StatorQueryState<
   constructor(
     public readonly name: string,
     public readonly key: keyof DOC,
-    exp: TimeDuration | number = 0
+    exp: TimeDuration | number = 0,
+    private _light = false
   ) {
     this._exp = parseDuration(exp ?? 0);
   }
@@ -46,20 +47,21 @@ export abstract class StatorQueryState<
   // abstract
   // ----------------------------------------------------------------------------
   protected abstract _fetchDoc(key: string, ...args: unknown[]): Observable<DOC | null>;
-  protected abstract _fetchQuery(key: string, query: QUERY): Observable<{ count: number; results: DOC[] }>;
+  protected abstract _fetchQuery(key: string, query: QUERY | null): Observable<{ count: number; results: DOC[] }>;
   protected abstract _onChange(doc: DOC, ...args: unknown[]): void;
+  protected abstract _onRemove(doc: DOC, ...args: unknown[]): void;
 
 
   // util
   // ----------------------------------------------------------------------------
-  private _removeDocs(keys: string[], data = this._data.getValue()) {
+  private _removeDocs(keys: Set<string>, data = this._data.getValue()) {
     for (const key of keys) {
       data.delete(key);
       this._expState.delete(key);
     }
   }
 
-  private _collect(keys: string[], map: Map<string, DOC>) {
+  private _collect(keys: Set<string>, map: Map<string, DOC>) {
     const docs: DOC[] = [];
 
     for (const key of keys)
@@ -69,12 +71,12 @@ export abstract class StatorQueryState<
     return docs;
   }
 
-  private _getCache(selector: StatorQueryStateConfig<DOC, QUERY>, query: QUERY) {
+  private _getCache(selector: StatorQueryStateConfig<DOC, QUERY>, query: QUERY | null) {
     let cacheIndex = selector.cache.findIndex(c => objUtil.equals(query, c.query));
 
     if (cacheIndex === -1) {
       cacheIndex = selector.cache.length;
-      selector.cache.push({ query, keys: [], lastFetch: 0 });
+      selector.cache.push({ query, keys: new Set(), lastFetch: 0 });
     }
 
     return selector.cache[cacheIndex];
@@ -129,10 +131,12 @@ export abstract class StatorQueryState<
     this._data.next(dataMap);
   }
 
-  protected _delete(key: string) {
+  protected _delete(key: string, ...args: unknown[]) {
     const dataMap = this._data.getValue();
+    const doc = dataMap.get(key);
 
-    if (dataMap.has(key)) {
+    if (doc) {
+      this._onRemove(doc, ...args);
       dataMap.delete(key);
       this._expState.delete(key);
       this._data.next(dataMap);
@@ -153,7 +157,7 @@ export abstract class StatorQueryState<
     const selector: StatorQueryStateConfig<DOC, QUERY> = {
       cache: [],
       exp: parseDuration(exp),
-      docs: new BehaviorSubject(new Map()),
+      docs: this._light ? this._data : new BehaviorSubject(new Map()),
       count: 0
     }
 
@@ -168,7 +172,7 @@ export abstract class StatorQueryState<
       conf.cache = [];
       conf.count = 0;
       conf.exp = 0;
-      conf.docs.next(new Map());
+      !this._light && conf.docs.next(new Map());
     }
   }
 
@@ -178,13 +182,30 @@ export abstract class StatorQueryState<
     if (conf) {
       const data = conf.docs.getValue();
 
-      if (!data.has(doc[this.key] as string))
-        conf.cache[0]?.keys.push(doc[this.key] as string);
+      if (this._light || !data.has(doc[this.key] as string))
+        conf.cache[0]?.keys.add(doc[this.key] as string);
 
       conf.count;
       data.set(doc[this.key] as string, doc);
 
       conf.docs.next(data);
+    }
+  }
+
+  protected _removeFromQuery(key: string, docKey: string) {
+    const conf = this._qConfigs.get(key);
+
+    if (conf) {
+      const data = conf.docs.getValue();
+
+      if (this._light || data.has(docKey)) {
+        for (const c of conf.cache)
+          c.keys.delete(docKey);
+
+        conf.count--;
+        data.delete(docKey);
+        conf.docs.next(data);
+      }
     }
   }
 
@@ -218,7 +239,7 @@ export abstract class StatorQueryState<
           if (doc) {
             data.set(doc[this.key] as string, doc);
           } else {
-            this._removeDocs([key], data);
+            this._removeDocs(new Set([key]), data);
           }
           this._data.next(data);
         }),
@@ -233,7 +254,7 @@ export abstract class StatorQueryState<
     );
   }
 
-  query(key: string, query: QUERY, exp?: TimeDuration | number): Observable<{ count: number; results: DOC[] }> {
+  query(key: string, query: QUERY | null, exp?: TimeDuration | number): Observable<{ count: number; results: DOC[] }> {
     const selector = this._qConfigs.get(key) ?? this._addQueryConfig(key, exp ?? this._exp);
     const cached = this._getCache(selector, query);
 
@@ -244,12 +265,12 @@ export abstract class StatorQueryState<
             const data = selector.docs.getValue();
 
             if (!res) {
-              if (cached.keys.length) {
+              if (cached.keys.size) {
                 this._removeDocs(cached.keys, data);
                 selector.docs.next(data);
               }
 
-              cached.keys = []
+              cached.keys = new Set();
               cached.lastFetch = Date.now();
               selector.count = 0;
 
@@ -257,11 +278,11 @@ export abstract class StatorQueryState<
 
               const docs: DOC[] = res.results;
 
-              if (cached.keys.length)
+              if (cached.keys.size)
                 for (const key of cached.keys)
                   data.delete(key);
 
-              cached.keys = docs.map(d => d[this.key] as string);
+              cached.keys = new Set(docs.map(d => d[this.key] as string));
               cached.lastFetch = Date.now();
 
               for (const doc of docs)

@@ -41,6 +41,11 @@ export class RecordsState extends StatorQueryState<TableDataRecord, Partial<ApiQ
       this._updateInQuery(ds, doc);
   }
 
+  protected override _onRemove(doc: TableDataRecord, ds: string): void {
+    if (ds)
+      this._removeFromQuery(ds, doc.serial);
+  }
+
 
   // selectors
   // --------------------------------------------------------------------------------------
