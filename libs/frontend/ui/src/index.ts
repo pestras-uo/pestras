@@ -2,8 +2,11 @@
  * Public API Surface of ui
  */
 
-// drop down
+// check input
 export * from './lib/check-input/check-input.component';
+
+// click outside
+export * from './lib/click-outside/click-outside.directive';
 
 // drop down
 export * from './lib/dropdown/dropdown.component';

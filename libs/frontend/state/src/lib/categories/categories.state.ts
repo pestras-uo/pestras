@@ -1,15 +1,15 @@
-import { Injectable } from '@angular/core';
 import { Category, EntityTypes } from '@pestras/shared/data-model';
-import { StatorChannel, StatorCollectionState } from '@pestras/frontend/util/stator';
+import { ApiQueryResults, StatorChannel, StatorQueryState } from '@pestras/frontend/util/stator';
 import { CategoriesService } from './categories.service';
-import { SessionEnd, SessionStart } from '../session/session.events';
+import { SessionEnd } from '../session/session.events';
 import { CategoriesApi } from './categories.api';
-import { tap, map, filter } from 'rxjs';
+import { tap, map, filter, Observable } from 'rxjs';
 import { SSEActivity } from '../sse/sse.events';
 import { Serial } from '@pestras/shared/util';
+import { Injectable } from '@angular/core';
 
-@Injectable({ providedIn: 'root' })
-export class CategoriesState extends StatorCollectionState<Category> {
+@Injectable()
+export class CategoriesState extends StatorQueryState<Category> {
 
   constructor(
     private readonly channel: StatorChannel,
@@ -21,11 +21,6 @@ export class CategoriesState extends StatorCollectionState<Category> {
   }
 
   private initListeners() {
-    // when session starts fetch all categories
-    this.channel.select(SessionStart)
-      .pipe(tap(() => this._init()))
-      .subscribe(() => this._setLoading(false));
-
     // when session ends clear state
     this.channel.select(SessionEnd)
       .subscribe(() => this._clear());
@@ -48,15 +43,25 @@ export class CategoriesState extends StatorCollectionState<Category> {
       });
   }
 
-  protected override _load() {
-    return this.service.getAll();
+  protected override _fetchDoc(serial: string): Observable<Category | null> {
+    return this.service.getBySerial({ serial });
   }
 
-  protected getBySerial(params: CategoriesApi.GetBySerial.Params) {
-    return this.service.getBySerial(params)
-      .pipe(tap(res => res && this._upsert(res)));
+  protected override _fetchQuery(blueprint: string): Observable<ApiQueryResults<Category>> {
+    return this.service.getByBlueprint({ blueprint })
+      .pipe(map(res => ({ count: res.length, results: res })));
   }
 
+  protected override _onChange(doc: Category): void {
+    this._updateInQuery(doc.blueprint, doc);
+  }
+
+  protected override _onRemove(doc: Category): void {
+    this._removeFromQuery(doc.blueprint, doc.serial);
+  }
+
+  // selectors
+  // -------------------------------------------------------------------------------------------------
   selectParent(serial: string) {
     const ps = Serial.getParent(serial);
 
@@ -73,6 +78,13 @@ export class CategoriesState extends StatorCollectionState<Category> {
       .pipe(map(list => list.sort((a, b) => Serial.countLevels(a.serial) - Serial.countLevels(b.serial))));
   }
 
+  selectByBlueprint(bp: string) {
+    return this.query(bp, null)
+      .pipe(map(res => res.results));
+  }
+
+  // change
+  // -------------------------------------------------------------------------------------------------
   create(data: CategoriesApi.Create.Body) {
     return this.service.create(data)
       .pipe(tap(res => this._insert(res)));

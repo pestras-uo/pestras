@@ -1,15 +1,11 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { DataStoresState } from "./data-stores.state";
-import { SessionEnd, SessionStart } from "../session/session.events";
+import { SessionEnd } from "../session/session.events";
 import { SSEActivity } from "../sse/sse.events";
 import { filter } from "rxjs";
 import { Activity, EntityTypes, createField } from "@pestras/shared/data-model";
 
 export function dataStoresListeners(this: DataStoresState) {
-  // when session starts init cache
-  this.channel.select(SessionStart)
-    .subscribe(() => this._init());
-
   // when session ends clear state
   this.channel.select(SessionEnd)
     .subscribe(() => this._clear());
@@ -51,7 +47,7 @@ const sseHandlers: Record<string, (this: DataStoresState, activity: Activity<any
   // aggr updated
   setAggregation(this: DataStoresState, act: Activity<any>) {
     this.service.getBySerial({ serial: act.serial })
-      .subscribe(ds => !!ds && this._upsert(ds));
+      .subscribe(ds => !!ds && this._insert(ds));
   },
 
   // State

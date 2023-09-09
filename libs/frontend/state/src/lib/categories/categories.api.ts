@@ -25,6 +25,17 @@ export namespace CategoriesApi {
   
   
   
+  // GET
+  export namespace GetByBlueprint {
+    export const path = basePath + '/blueprint/:blueprint';
+  
+    export interface Params { blueprint: string };
+  
+    export type Response = Category[];
+  }
+  
+  
+  
   
   // POST
   export namespace Create {

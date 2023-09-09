@@ -8,7 +8,7 @@ import { DashboardsApi } from "./dashboards.api";
 import { SessionState } from "../session/session.state";
 
 @Injectable({ providedIn: 'root' })
-export class DashboardsState extends StatorQueryState<Dashboard, Partial<ApiQuery<Dashboard>>> {
+export class DashboardsState extends StatorQueryState<Dashboard> {
 
   constructor(
     private service: DashboardsService,

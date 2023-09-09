@@ -4,7 +4,7 @@ import { AttachmentsApi } from './attachments.api';
 import { injectURLPayload } from '@pestras/shared/util';
 import { EnvService } from '@pestras/frontend/env';
 
-@Injectable({ providedIn: 'root' })
+@Injectable()
 export class AttachmentService {
 
   constructor(

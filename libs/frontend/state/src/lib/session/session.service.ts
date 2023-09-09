@@ -5,7 +5,7 @@ import { HttpClient } from '@angular/common/http';
 import { catchError, of } from "rxjs";
 import { EnvService } from "@pestras/frontend/env";
 
-@Injectable({ providedIn: 'root' })
+@Injectable()
 export class SessionService {
 
   constructor(

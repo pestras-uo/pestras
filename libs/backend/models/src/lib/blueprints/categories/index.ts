@@ -3,7 +3,7 @@ import { Model } from "../../model";
 import { create } from './create';
 import { update } from "./update";
 import { titleExists } from "./util";
-import { getBySerial, getAll } from "./read";
+import { getBySerial, getAll, getByBlueprint } from "./read";
 import { deleteCategory } from "./delete";
 
 export { CreateCategoryInput } from './create';
@@ -15,6 +15,7 @@ export class CategoriesModel extends Model<Category> {
   // -----------------------------------------------------------------------------------
   getAll = getAll.bind(this);
   getBySerial = getBySerial.bind(this);
+  getByBlueprint = getByBlueprint.bind(this);
 
   // util
   // ------------------------------------------------------------------------------------

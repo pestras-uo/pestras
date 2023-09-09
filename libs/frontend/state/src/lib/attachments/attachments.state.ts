@@ -1,12 +1,12 @@
 import { Injectable } from '@angular/core';
-import { ApiQuery, Attachment } from '@pestras/shared/data-model';
-import { StatorChannel, StatorQueryState } from '@pestras/frontend/util/stator';
+import { Attachment } from '@pestras/shared/data-model';
+import { ApiQueryResults, StatorChannel, StatorQueryState } from '@pestras/frontend/util/stator';
 import { AttachmentService } from './attachments.service';
 import { Observable, map, tap } from 'rxjs';
 import { SessionEnd } from '../session/session.events';
 
 @Injectable({ providedIn: 'root' })
-export class AttachmentsState extends StatorQueryState<Attachment, ApiQuery<Attachment>> {
+export class AttachmentsState extends StatorQueryState<Attachment> {
 
   constructor(
     private service: AttachmentService,
@@ -22,7 +22,7 @@ export class AttachmentsState extends StatorQueryState<Attachment, ApiQuery<Atta
     return this.service.getBySerial({ serial });
   }
 
-  protected override _fetchQuery(entity: string): Observable<{ count: number; results: Attachment[]; }> {
+  protected override _fetchQuery(entity: string): Observable<ApiQueryResults<Attachment>> {
     return this.service.getByEntity({ entity })
       .pipe(map(res => ({ count: res.length, results: res })));
   }

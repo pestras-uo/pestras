@@ -13,9 +13,18 @@ export const CategorriesController = {
     }
   },
 
-  async get(req: CategoriesApi.GetByIdReq, res: CategoriesApi.GetByIdRes, next: NextFunction) {
+  async getBySerial(req: CategoriesApi.GetByIdReq, res: CategoriesApi.GetByIdRes, next: NextFunction) {
     try {
       res.json(await categoriesModel.getBySerial(req.params.serial));
+      
+    } catch (error) {
+      next(error);
+    }
+  },
+
+  async getByBlueprint(req: CategoriesApi.GetByBlueprintReq, res: CategoriesApi.GetByBlueprintRes, next: NextFunction) {
+    try {
+      res.json(await categoriesModel.getByBlueprint(req.params.bp));
       
     } catch (error) {
       next(error);

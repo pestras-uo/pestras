@@ -7,7 +7,7 @@ import { Observable, tap, filter } from 'rxjs';
 import { UsersApi } from './users.api';
 import { SSEActivity } from '../sse/sse.events';
 
-@Injectable({ providedIn: 'root' })
+@Injectable()
 export class UsersState extends StatorCollectionState<User> {
 
   constructor(

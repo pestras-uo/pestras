@@ -4,7 +4,7 @@ import { injectURLPayload } from "@pestras/shared/util";
 import { CategoriesApi } from "./categories.api";
 import { EnvService } from "@pestras/frontend/env";
 
-@Injectable({ providedIn: 'root' })
+@Injectable()
 export class CategoriesService {
 
   constructor(
@@ -22,6 +22,12 @@ export class CategoriesService {
     const path = injectURLPayload(this.envServ.env.api + CategoriesApi.GetBySerial.path, params);
 
     return this.http.get<CategoriesApi.GetBySerial.Response>(path);
+  }
+
+  getByBlueprint(params: CategoriesApi.GetByBlueprint.Params) {
+    const path = injectURLPayload(this.envServ.env.api + CategoriesApi.GetByBlueprint.path, params);
+
+    return this.http.get<CategoriesApi.GetByBlueprint.Response>(path);
   }
 
   create(data: CategoriesApi.Create.Body) {

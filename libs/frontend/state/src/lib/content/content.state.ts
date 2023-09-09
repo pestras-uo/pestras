@@ -1,25 +1,25 @@
 import { Injectable } from '@angular/core';
 import { EntityContentViews } from '@pestras/shared/data-model';
 import { tap } from 'rxjs';
-import { StatorChannel, StatorEntitiesState } from '@pestras/frontend/util/stator';
+import { StatorChannel, StatorQueryState } from '@pestras/frontend/util/stator';
 import { ContentService } from './content.service';
 import { SessionEnd } from '../session/session.events';
 import { ContentApi } from './content.api';
 
 @Injectable({ providedIn: 'root' })
-export class ContentState extends StatorEntitiesState<EntityContentViews> {
+export class ContentState extends StatorQueryState<EntityContentViews> {
 
   constructor(
     private service: ContentService,
     private channel: StatorChannel
   ) {
-    super('content-views', 'entity', ['10m']);
+    super('content-views', 'entity', ['10m'], true);
 
     this.channel.select(SessionEnd)
       .subscribe(() => this._clear());
   }
 
-  protected override _fetch(entity: string) {
+  protected override _fetchDoc(entity: string) {
     return this.service.getByEntity({ entity });
   }
 

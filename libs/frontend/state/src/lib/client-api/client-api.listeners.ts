@@ -1,14 +1,11 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { Activity, EntityTypes } from "@pestras/shared/data-model";
 import { SSEActivity } from "../sse/sse.events";
-import { SessionEnd, SessionStart } from "../session/session.events";
+import { SessionEnd } from "../session/session.events";
 import { ClientApiState } from "./client-api.state";
 import { filter } from 'rxjs';
 
 export function clientApiListeners(this: ClientApiState) {
-  // when session starts prepare caching
-  this.channel.select(SessionStart)
-    .subscribe(() => this._init());
 
   // when session ends clear state
   this.channel.select(SessionEnd)

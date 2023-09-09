@@ -1,6 +1,6 @@
 <ng-container *contra="let c; let dir=dir">
 
-  <ng-container *ngIf="bp | bpCategories as categories">
+  <ng-container *ngIf="bp | bpCategories | async as categories">
     <div class="grid cols-3 gap-8" *ngIf="categories.length; else noData">
 
       <div class="card" *ngFor="let cat of categories">

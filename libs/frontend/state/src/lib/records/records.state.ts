@@ -1,9 +1,8 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { Injectable } from "@angular/core";
 import { ApiQuery, DataRecord, TableDataRecord } from "@pestras/shared/data-model";
-import { StatorChannel, StatorQueryState } from "@pestras/frontend/util/stator";
+import { ApiQueryResults, StatorChannel, StatorQueryState } from "@pestras/frontend/util/stator";
 import { RecordsService } from "./records.service";
-import { SessionState } from "../session/session.state";
 import { SessionEnd } from "../session/session.events";
 import { Observable, tap } from "rxjs";
 
@@ -13,12 +12,11 @@ export interface DataRecordsSearchResponse {
 }
 
 @Injectable({ providedIn: 'root' })
-export class RecordsState extends StatorQueryState<TableDataRecord, Partial<ApiQuery<TableDataRecord>>> {
+export class RecordsState extends StatorQueryState<TableDataRecord> {
 
   constructor(
     private readonly channel: StatorChannel,
-    private readonly service: RecordsService,
-    private readonly session: SessionState
+    private readonly service: RecordsService
   ) {
     super('records', 'serial', ['1h']);
 
@@ -32,7 +30,7 @@ export class RecordsState extends StatorQueryState<TableDataRecord, Partial<ApiQ
     return this.service.getBySerial({ ds, serial });
   }
 
-  protected override _fetchQuery(ds: string, query: ApiQuery<TableDataRecord>): Observable<{ count: number; results: TableDataRecord[]; }> {
+  protected override _fetchQuery(ds: string, query: ApiQuery<TableDataRecord>): Observable<ApiQueryResults<TableDataRecord>> {
     return this.service.search({ ds }, query);
   }
 

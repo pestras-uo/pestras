@@ -4,7 +4,7 @@ import { injectURLPayload } from "@pestras/shared/util";
 import { OrgunitsApi } from "./orgunits.api";
 import { EnvService } from "@pestras/frontend/env";
 
-@Injectable({ providedIn: 'root' })
+@Injectable()
 export class OrgunitsService {
 
   constructor(

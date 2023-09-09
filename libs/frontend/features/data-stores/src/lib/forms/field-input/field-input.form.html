@@ -32,13 +32,13 @@
 <div class="fc" *ngIf="field.type === 'category'">
   <pui-select-input
     *ngIf="!multi"
-    [list]="field.ref_to | categoryBranches | arrayMap: mapCategoryBranch"
+    [list]="field.ref_to | categoryBranches | async | arrayMap: mapCategoryBranch"
     [id]="field.name"
     [formControl]="control"
   ></pui-select-input>
   <pui-multi-select-input
     *ngIf="multi"
-    [list]="field.ref_to | categoryBranches | arrayMap: mapCategoryBranch"
+    [list]="field.ref_to | categoryBranches | async | arrayMap: mapCategoryBranch"
     [id]="field.name"
     [formControl]="control"
   ></pui-multi-select-input>
