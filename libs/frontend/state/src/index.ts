@@ -44,4 +44,6 @@ export { WorkflowState } from './lib/workflow/workflow.state';
 
 export { WorkspaceState } from './lib/workspaces/workspace.state';
 
+export { NotificationsState } from './lib/notifications/notifications.state';
+
 export * from './lib/state.module';

@@ -41,6 +41,8 @@ import { UsersGroupsService } from "./users-groups/users-groups.service";
 import { WorkspaceService } from "./workspaces/workspace.service";
 import { DatavizService } from "./data_viz/data-viz.service";
 import { DataStoresService } from "./data-stores/data-stores.service";
+import { NotificationsService } from "./notifications/notifications.service";
+import { NotificationsState } from "./notifications/notifications.state";
 
 @NgModule({
   imports: [EnvModule],
@@ -62,7 +64,8 @@ import { DataStoresService } from "./data-stores/data-stores.service";
     UsersGroupsService,
     WorkspaceService,
     DatavizService,
-    DataStoresService
+    DataStoresService,
+    NotificationsService
   ]
 })
 export class StateModule {
@@ -94,7 +97,8 @@ export class StateModule {
         WorkspaceState,
         DataVizState,
         DataStoresState,
-        DataStoreResolver
+        DataStoreResolver,
+        NotificationsState
       ]
     }
   }
