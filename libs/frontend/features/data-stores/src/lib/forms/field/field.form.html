@@ -98,7 +98,7 @@
     <div class="fc fc-outline fc-surface1">
       <pui-select-input
         labelRef="field-category"
-        [list]="dataStore.blueprint | bpCategories: kindControl.value === kind.ORDINAL | arrayMap: mapCategory"
+        [list]="dataStore.blueprint | bpCategories: kindControl.value === kind.ORDINAL | async | arrayMap: mapCategory"
         formControlName="ref_to"
       ></pui-select-input>
     </div>
@@ -191,7 +191,7 @@
     >
       <pui-select-input
         labelRef="field-default-value"
-        [list]="refToControl.value | categoryBranches | arrayMap: mapCategory"
+        [list]="refToControl.value | categoryBranches | async | arrayMap: mapCategory"
         formControlName="default"
       ></pui-select-input>
     </div>

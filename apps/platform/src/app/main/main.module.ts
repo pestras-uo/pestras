@@ -4,7 +4,7 @@ import { MainPage } from './main.page';
 import { RouterModule } from '@angular/router';
 import { MainHeaderView } from './views/main-header/main-header.view';
 import { DrawerView } from './views/drawer/drawer.view';
-import { PuiDropdown, PuiIcon, PuiPreloaderModule } from '@pestras/frontend/ui';
+import { PuiClickOutsideDirective, PuiDropdown, PuiIcon, PuiPreloaderModule } from '@pestras/frontend/ui';
 import { SessionFeatureModule } from '@pestras/frontend/features/session';
 import { ContraModule } from '@pestras/frontend/util/contra';
 import { TopicsFeatureModule } from '@pestras/frontend/features/topics';
@@ -29,6 +29,7 @@ import { WorkspaceFeatureModule } from '@pestras/frontend/features/workspace';
     PuiIcon,
     PuiDropdown,
     PuiPreloaderModule,
+    PuiClickOutsideDirective,
     // widgets
     AvatarWidget,
     // Features

@@ -1,65 +1,74 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { TimeDuration, objUtil, parseDuration } from "@pestras/shared/util";
-import { BehaviorSubject, Observable, map, shareReplay, switchMap, tap } from "rxjs";
-import { UpdateMode } from "./types";
+import { BehaviorSubject, Observable, map, of, shareReplay, switchMap, tap } from "rxjs";
+import { ApiQuery, ApiQueryResults, Filter, UpdateMode } from "./types";
 
 // types
 // -------------------------------------------------------------------------------------
-interface QueryCache<QUERY extends Record<string, unknown>> {
-  query: QUERY;
+interface QueryCache<DOC extends Record<string, unknown>> {
+  query: Partial<ApiQuery<DOC>> | null;
   // last request call
   lastFetch: number;
   // response docs ids fetched
-  keys: string[];
+  keys: Set<string>;
 }
 
-export interface StatorQueryStateConfig<
-  DOC extends Record<string, unknown>,
-  QUERY extends Record<string, unknown>
-> {
+export interface StatorQueryStateConfig<DOC extends Record<string, unknown>> {
   // expire duration
   exp: TimeDuration | number; // number in milliseconds
-  cache: QueryCache<QUERY>[];
+  cache: QueryCache<DOC>[];
   // cached docs
   docs: BehaviorSubject<Map<string, DOC>>;
   // docs total count
   count: number;
 }
 
-export abstract class StatorQueryState<
-  DOC extends Record<string, any>,
-  QUERY extends Record<string, any>
-> {
+export abstract class StatorQueryState<DOC extends Record<string, any>> {
+
   private readonly _data = new BehaviorSubject(new Map<string, DOC>());
-  private _qConfigs = new Map<string, StatorQueryStateConfig<DOC, QUERY>>();
+  private _qConfigs = new Map<string | null, StatorQueryStateConfig<DOC>>();
   private readonly _exp!: number;
   private _expState = new Map<string, number>();
 
   constructor(
     public readonly name: string,
     public readonly key: keyof DOC,
-    exp: TimeDuration | number = 0
+    exp: TimeDuration | number = 0,
+    private _light = false
   ) {
     this._exp = parseDuration(exp ?? 0);
   }
 
   // abstract
   // ----------------------------------------------------------------------------
-  protected abstract _fetchDoc(key: string, ...args: unknown[]): Observable<DOC | null>;
-  protected abstract _fetchQuery(key: string, query: QUERY): Observable<{ count: number; results: DOC[] }>;
-  protected abstract _onChange(doc: DOC, ...args: unknown[]): void;
+  protected _fetchDoc(key: string, ...args: unknown[]): Observable<DOC | null> {
+    return of(null)
+  }
+
+  protected _fetchQuery(key: string | null, query: Partial<ApiQuery<DOC>> | null): Observable<ApiQueryResults<DOC>> {
+    return of({ count: 0, results: [] })
+  }
+
+  protected _onChange(doc: DOC, ...args: unknown[]): void {
+    //
+  }
+
+  protected _onRemove(doc: DOC, ...args: unknown[]): void {
+    //
+  }
 
 
   // util
   // ----------------------------------------------------------------------------
-  private _removeDocs(keys: string[], data = this._data.getValue()) {
+  private _removeDocs(keys: Set<string>, data = this._data.getValue()) {
     for (const key of keys) {
       data.delete(key);
       this._expState.delete(key);
     }
   }
 
-  private _collect(keys: string[], map: Map<string, DOC>) {
+  private _collect(keys: Set<string>, map: Map<string, DOC>) {
     const docs: DOC[] = [];
 
     for (const key of keys)
@@ -69,12 +78,12 @@ export abstract class StatorQueryState<
     return docs;
   }
 
-  private _getCache(selector: StatorQueryStateConfig<DOC, QUERY>, query: QUERY) {
+  private _getCache(selector: StatorQueryStateConfig<DOC>, query: Partial<ApiQuery<DOC>> | null) {
     let cacheIndex = selector.cache.findIndex(c => objUtil.equals(query, c.query));
 
     if (cacheIndex === -1) {
       cacheIndex = selector.cache.length;
-      selector.cache.push({ query, keys: [], lastFetch: 0 });
+      selector.cache.push({ query, keys: new Set(), lastFetch: 0 });
     }
 
     return selector.cache[cacheIndex];
@@ -129,10 +138,12 @@ export abstract class StatorQueryState<
     this._data.next(dataMap);
   }
 
-  protected _delete(key: string) {
+  protected _delete(key: string, ...args: unknown[]) {
     const dataMap = this._data.getValue();
+    const doc = dataMap.get(key);
 
-    if (dataMap.has(key)) {
+    if (doc) {
+      this._onRemove(doc, ...args);
       dataMap.delete(key);
       this._expState.delete(key);
       this._data.next(dataMap);
@@ -149,11 +160,11 @@ export abstract class StatorQueryState<
 
   // Query Config
   // ----------------------------------------------------------------------------
-  protected _addQueryConfig(key: string, exp: TimeDuration | number) {
-    const selector: StatorQueryStateConfig<DOC, QUERY> = {
+  protected _addQueryConfig(key: string | null, exp: TimeDuration | number) {
+    const selector: StatorQueryStateConfig<DOC> = {
       cache: [],
       exp: parseDuration(exp),
-      docs: new BehaviorSubject(new Map()),
+      docs: this._light ? this._data : new BehaviorSubject(new Map()),
       count: 0
     }
 
@@ -168,23 +179,40 @@ export abstract class StatorQueryState<
       conf.cache = [];
       conf.count = 0;
       conf.exp = 0;
-      conf.docs.next(new Map());
+      !this._light && conf.docs.next(new Map());
     }
   }
 
-  protected _updateInQuery(key: string, doc: DOC) {
+  protected _updateInQuery(key: string | null, doc: DOC) {
     const conf = this._qConfigs.get(key);
 
     if (conf) {
       const data = conf.docs.getValue();
 
-      if (!data.has(doc[this.key] as string))
-        conf.cache[0]?.keys.push(doc[this.key] as string);
+      if (this._light || !data.has(doc[this.key] as string))
+        conf.cache[0]?.keys.add(doc[this.key] as string);
 
       conf.count;
       data.set(doc[this.key] as string, doc);
 
       conf.docs.next(data);
+    }
+  }
+
+  protected _removeFromQuery(key: string | null, docKey: string) {
+    const conf = this._qConfigs.get(key);
+
+    if (conf) {
+      const data = conf.docs.getValue();
+
+      if (this._light || data.has(docKey)) {
+        for (const c of conf.cache)
+          c.keys.delete(docKey);
+
+        conf.count--;
+        data.delete(docKey);
+        conf.docs.next(data);
+      }
     }
   }
 
@@ -207,7 +235,20 @@ export abstract class StatorQueryState<
 
   // selectors
   // ----------------------------------------------------------------------------
-  select(key: string, ...args: unknown[]) {
+  select(key: string, ...args: unknown[]): Observable<DOC | null>
+  select(filter: Filter<DOC>, ...args: unknown[]): Observable<DOC | null>
+  select(key: string | Filter<DOC>, ...args: unknown[]): Observable<DOC | null> {
+
+    if (typeof key === 'function') {
+      return this._data.pipe(map(data => {
+        for (const doc of data.values())
+          if (key(doc))
+            return doc;
+
+        return null;
+      }));
+    }
+
     const data = this._data.getValue();
     const doc = data.get(key);
 
@@ -218,7 +259,7 @@ export abstract class StatorQueryState<
           if (doc) {
             data.set(doc[this.key] as string, doc);
           } else {
-            this._removeDocs([key], data);
+            this._removeDocs(new Set([key]), data);
           }
           this._data.next(data);
         }),
@@ -233,7 +274,30 @@ export abstract class StatorQueryState<
     );
   }
 
-  query(key: string, query: QUERY, exp?: TimeDuration | number): Observable<{ count: number; results: DOC[] }> {
+  selectMany(keys: string[]): Observable<DOC[]>;
+  selectMany(filter: Filter<DOC>): Observable<DOC[]>;
+  selectMany(filter: string[] | Filter<DOC>): Observable<DOC[]> {
+    return this._data.pipe(
+      map(data => {
+        const docs: DOC[] = [];
+
+        if (Array.isArray(filter)) {
+          for (const key of filter)
+            if (data.has(key))
+              docs.push(data.get(key) as DOC);
+
+        } else {
+          for (const doc of data.values())
+            if (filter(doc))
+              docs.push(doc);
+        }
+
+        return docs;
+      })
+    );
+  }
+
+  query(key: string | null, query: Partial<ApiQuery<DOC>> | null = null, exp?: TimeDuration | number): Observable<ApiQueryResults<DOC>> {
     const selector = this._qConfigs.get(key) ?? this._addQueryConfig(key, exp ?? this._exp);
     const cached = this._getCache(selector, query);
 
@@ -244,12 +308,12 @@ export abstract class StatorQueryState<
             const data = selector.docs.getValue();
 
             if (!res) {
-              if (cached.keys.length) {
+              if (cached.keys.size) {
                 this._removeDocs(cached.keys, data);
                 selector.docs.next(data);
               }
 
-              cached.keys = []
+              cached.keys = new Set();
               cached.lastFetch = Date.now();
               selector.count = 0;
 
@@ -257,11 +321,11 @@ export abstract class StatorQueryState<
 
               const docs: DOC[] = res.results;
 
-              if (cached.keys.length)
+              if (cached.keys.size)
                 for (const key of cached.keys)
                   data.delete(key);
 
-              cached.keys = docs.map(d => d[this.key] as string);
+              cached.keys = new Set(docs.map(d => d[this.key] as string));
               cached.lastFetch = Date.now();
 
               for (const doc of docs)

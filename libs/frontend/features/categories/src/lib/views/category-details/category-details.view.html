@@ -18,7 +18,7 @@
   <main>
     <div
       class="card"
-      *ngIf="selected.serial | categoryBranches | arrayFilter: filterBranches: search.value | fn: sliceBranches: page$.value as branches"
+      *ngIf="selected.serial | categoryBranches | async | arrayFilter: filterBranches: search.value | fn: sliceBranches: page$.value as branches"
     >
       <div class="card-header">
         <h4>{{c['branches']}}</h4>

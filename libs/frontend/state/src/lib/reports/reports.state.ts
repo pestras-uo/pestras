@@ -1,30 +1,42 @@
 import { Injectable } from '@angular/core';
 import { Report } from "@pestras/shared/data-model";
-import { StatorChannel, StatorGroupState } from "@pestras/frontend/util/stator";
+import { StatorChannel, StatorQueryState } from "@pestras/frontend/util/stator";
 import { ReportsService } from './reports.service';
 import { SessionEnd } from '../session/session.events';
 import { ReportsApi } from './reports.api';
-import { tap } from 'rxjs';
+import { map, tap } from 'rxjs';
 
 @Injectable({ providedIn: 'root' })
-export class ReportsState extends StatorGroupState<Report> {
+export class ReportsState extends StatorQueryState<Report> {
 
   constructor(
     private readonly service: ReportsService,
     private readonly channel: StatorChannel
   ) {
-    super('reports', 'serial', 'topic', ['1h']);
+    super('reports', 'serial', ['1h']);
 
     this.channel.select(SessionEnd)
       .subscribe(() => this._clear());
   }
 
-  protected override _loadGroup(topic: string) {
-    return this.service.getByScope({ topic });
+  protected override _fetchQuery(topic: string) {
+    return this.service.getByScope({ topic }).pipe(map(res => ({ count: res.length, results: res })));
   }
 
-  protected override _loadSingle(serial: string) {
+  protected override _fetchDoc(serial: string) {
     return this.service.getBySerial({ serial });
+  }
+
+  protected override _onChange(doc: Report): void {
+    this._updateInQuery(doc.topic, doc);
+  }
+
+  protected override _onRemove(doc: Report): void {
+    this._removeFromQuery(doc.topic, doc.serial);
+  }
+
+  selectGroup(topic: string) {
+    return this.query(topic).pipe(map(res => res.results));
   }
 
   // create

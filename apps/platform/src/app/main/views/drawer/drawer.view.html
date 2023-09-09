@@ -1,4 +1,4 @@
-<aside *contra="let c">
+<aside *contra="let c" (puiClickOutside)="this.full = false">
   <div class="toolbar">
     <button class="btn-icon" (click)="toggleView()">
       <i puiIcon="menu"></i>

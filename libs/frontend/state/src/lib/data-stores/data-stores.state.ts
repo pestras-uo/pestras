@@ -1,32 +1,44 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { Injectable } from "@angular/core";
 import { DataStore, DataStoreState, WebServiceConfig, createField } from "@pestras/shared/data-model";
-import { StatorChannel, StatorGroupState } from "@pestras/frontend/util/stator";
+import { StatorChannel, StatorQueryState } from "@pestras/frontend/util/stator";
 import { DataStoresService } from "./data-stores.service";
 import { DataStoresApi } from "./data-stores.api";
 import { tap, map, of } from "rxjs";
 import { dataStoresListeners } from "./data-stores.listeners";
 
 @Injectable({ providedIn: 'root' })
-export class DataStoresState extends StatorGroupState<DataStore> {
+export class DataStoresState extends StatorQueryState<DataStore> {
 
   constructor(
     protected service: DataStoresService,
     protected channel: StatorChannel
   ) {
-    super('datastores', 'serial', 'blueprint', ['1h']);
+    super('datastores', 'serial', ['1h']);
 
     dataStoresListeners.call(this);
   }
 
-  protected override _loadGroup(bp: string) {
-    return bp
+  protected override _fetchQuery(bp: string) {
+    return (bp
       ? this.service.getByBlueprint({ bp })
-      : of([]);
+      : of([])).pipe(map(res => ({ count: res.length, results: res })));
   }
 
-  protected override _loadSingle(serial: string) {
+  protected override _fetchDoc(serial: string) {
     return this.service.getBySerial({ serial });
+  }
+
+  protected override _onChange(doc: DataStore): void {
+    this._updateInQuery(doc.blueprint, doc);
+  }
+
+  protected override _onRemove(doc: DataStore): void {
+    this._removeFromQuery(doc.blueprint, doc.serial);
+  }
+
+  selectGroup(bp: string) {
+    return this.query(bp).pipe(map(res => res.results));
   }
 
   create(data: DataStoresApi.Create.Body) {

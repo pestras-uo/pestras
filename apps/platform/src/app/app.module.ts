@@ -44,7 +44,7 @@ import { NgxEchartsModule } from 'ngx-echarts';
     PuiIcon.forRoot('assets/svg'),
     PuiPreloaderModule,
     PuiToastModule.forRoot(),
-    PuiUtilPipesModule.forRoot({ docsPath: environment.docs }),
+    PuiUtilPipesModule.forRoot({ default: environment.docs }),
     PuiGoogleMapModule.forRoot(environment.googleApiKey),
     PuiSideDrawerModule.forRoot(),
     QuillModule.forRoot({

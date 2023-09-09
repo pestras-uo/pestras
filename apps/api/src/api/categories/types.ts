@@ -14,6 +14,9 @@ export namespace CategoriesApi {
   export type GetByIdReq = Request<{ serial: string }>;
   export type GetByIdRes = Response<Category | null, UserSession>;
 
+  export type GetByBlueprintReq = Request<{ bp: string }>;
+  export type GetByBlueprintRes = Response<Category[], UserSession>;
+
   export type CreateReq = Request<any, any, CreateCategoryInput>;
   export type CreateRes = Response<Category | null, UserSession>;
 

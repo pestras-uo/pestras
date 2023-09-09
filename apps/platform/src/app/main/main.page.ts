@@ -5,13 +5,8 @@ import { Role } from '@pestras/shared/data-model';
 @Component({
   selector: 'pestras-main',
   template: `
-    <main-drawer
-      [full]="openDrawer"
-      [class.open]="openDrawer" 
-      [class.close]="!openDrawer" 
-      (toggle)="openDrawer = !openDrawer">
-    </main-drawer>
-    <main (click)="closeDrawer()">
+    <main-drawer class="bg-surface1 hide-scroll color-scheme-dark"></main-drawer>
+    <main>
       <main-header></main-header>
       <router-outlet></router-outlet>
     </main>
@@ -43,11 +38,4 @@ import { Role } from '@pestras/shared/data-model';
 })
 export class MainPage {
   readonly roles = Role;
-
-  openDrawer = false;
-
-  closeDrawer() {
-    this.openDrawer = false;
-    return true;
-  }
 }

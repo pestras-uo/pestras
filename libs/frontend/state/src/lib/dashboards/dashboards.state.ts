@@ -8,7 +8,7 @@ import { DashboardsApi } from "./dashboards.api";
 import { SessionState } from "../session/session.state";
 
 @Injectable({ providedIn: 'root' })
-export class DashboardsState extends StatorQueryState<Dashboard, Partial<ApiQuery<Dashboard>>> {
+export class DashboardsState extends StatorQueryState<Dashboard> {
 
   constructor(
     private service: DashboardsService,
@@ -35,6 +35,15 @@ export class DashboardsState extends StatorQueryState<Dashboard, Partial<ApiQuer
     else {
       this._updateInQuery('public', doc);
       this._updateInQuery('owned', doc);
+    }
+  }
+
+  protected override _onRemove(doc: Dashboard): void {
+    if (doc.topic)
+      this._removeFromQuery(doc.topic, doc.serial);
+    else {
+      this._removeFromQuery('public', doc.serial);
+      this._removeFromQuery('owned', doc.serial);
     }
   }
 

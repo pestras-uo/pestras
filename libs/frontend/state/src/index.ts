@@ -12,7 +12,6 @@ export { ClientApiState } from './lib/client-api/client-api.state';
 export { ContentState } from './lib/content/content.state';
 
 export { DashboardsState } from './lib/dashboards/dashboards.state';
-export { DashboardsService } from './lib/dashboards/dashboards.service';
 
 export { DataStoresState } from './lib/data-stores/data-stores.state';
 export { DataStoreResolver } from './lib/data-stores/data-store.resolver';

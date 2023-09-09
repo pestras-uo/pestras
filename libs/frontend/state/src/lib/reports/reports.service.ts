@@ -4,7 +4,7 @@ import { injectURLPayload } from '@pestras/shared/util';
 import { ReportsApi } from './reports.api';
 import { EnvService } from '@pestras/frontend/env';
 
-@Injectable({ providedIn: 'root' })
+@Injectable()
 export class ReportsService {
 
   constructor(

@@ -14,7 +14,12 @@ export const categoriesRoutes = Router()
   .get(
     '/:serial',
     apiAuth([Role.DATA_ENG]),
-    CategorriesController.get
+    CategorriesController.getBySerial
+  )
+  .get(
+    '/blueprint/:bp',
+    apiAuth([Role.DATA_ENG]),
+    CategorriesController.getByBlueprint
   )
   .post(
     '/',

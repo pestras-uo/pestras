@@ -4,7 +4,7 @@ import { RegionsApi } from './regions.api';
 import { injectURLPayload } from '@pestras/shared/util';
 import { EnvService } from '@pestras/frontend/env';
 
-@Injectable({ providedIn: 'root' })
+@Injectable()
 export class RegionsService {
 
   constructor(

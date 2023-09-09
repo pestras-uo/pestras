@@ -24,10 +24,46 @@ import { DataStoresState } from "./data-stores/data-stores.state";
 import { EnvModule } from "@pestras/frontend/env";
 import { ActivitiesState } from "./activities/activities.state";
 import { ActivitiesService } from "./activities/activities.service";
+import { AttachmentService } from "./attachments/attachments.service";
+import { BlueprintsService } from "./blueprints/blueprints.service";
+import { CategoriesService } from "./categories/categories.service";
+import { ClientApiService } from "./client-api/client-api.service";
+import { ContentService } from "./content/content.service";
+import { DashboardsService } from "./dashboards/dashboards.service";
+import { OrgunitsService } from "./orgunits/orgunits.service";
+import { RecordsService } from "./records/records.service";
+import { RegionsService } from "./regions/regions.service";
+import { SessionService } from "./session/session.service";
+import { TopicsService } from "./topics/topics.service";
+import { UsersService } from "./users/users.service";
+import { WorkflowService } from "./workflow/workflow.service";
+import { UsersGroupsService } from "./users-groups/users-groups.service";
+import { WorkspaceService } from "./workspaces/workspace.service";
+import { DatavizService } from "./data_viz/data-viz.service";
+import { DataStoresService } from "./data-stores/data-stores.service";
 
 @NgModule({
   imports: [EnvModule],
-  providers: [ActivitiesService]
+  providers: [
+    ActivitiesService,
+    AttachmentService,
+    BlueprintsService,
+    CategoriesService,
+    ClientApiService,
+    ContentService,
+    DashboardsService,
+    OrgunitsService,
+    RecordsService,
+    RegionsService,
+    SessionService,
+    TopicsService,
+    UsersService,
+    WorkflowService,
+    UsersGroupsService,
+    WorkspaceService,
+    DatavizService,
+    DataStoresService
+  ]
 })
 export class StateModule {
 

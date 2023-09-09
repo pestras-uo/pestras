@@ -1,15 +1,11 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { Activity, EntityTypes } from "@pestras/shared/data-model";
 import { SSEActivity } from "../sse/sse.events";
-import { SessionEnd, SessionStart } from "../session/session.events";
+import { SessionEnd } from "../session/session.events";
 import { TopicsState } from "./topics.state";
-import { filter, tap } from "rxjs";
+import { filter } from "rxjs";
 
 export function topicsListeners(this: TopicsState) {
-  // when session starts init cache
-  this.channel.select(SessionStart)
-    .pipe(tap(() => this._init()))
-    .subscribe(() => this._setLoading(false));
 
   this.channel.select(SessionEnd)
     .subscribe(() => this._clear());
