@@ -71,9 +71,9 @@
         </div>
 
         <app-records-list
-          *ngIf="view === 'dataStores' && dataStore"
+          *ngIf="dataStore | dataStore | async as ds"
           [topic]="t.serial"
-          [dataStore]="(dataStore | dataStore | async)!"
+          [dataStore]="ds"
         ></app-records-list>
       </div>
 

@@ -61,6 +61,7 @@
       [topic]="topic"
       [dataStore]="dataStore"
       [search]="query"
+      [columns]="columns"
     ></app-records-table-view>
     <app-records-tree-view
       *ngIf="view === 'tree'"
@@ -71,6 +72,14 @@
   </ng-template>
 
   <ng-template #actionsTmp>
+    <button
+      *ngIf="view === 'table'"
+      class="btn-icon btn-small btn-round mie-1"
+      (click)="openDialog(selectColumns)"
+    >
+      <i puiIcon="records" size="small"></i>
+    </button>
+
     <button
       class="btn-icon btn-small btn-round mie-1"
       (click)="openSideDrawer(advancedSearch)"
@@ -129,5 +138,23 @@
       [filters]="filters"
       (done)="closeSlideDrawer($event)"
     ></app-advanced-search-modal>
+  </ng-template>
+
+  <ng-template #selectColumns>
+    <div class="card w-10 shadow-6">
+      <h4 class="card-header">{{c['selectColumns']}}</h4>
+      <div class="card-body">
+        <div class="fc">
+          <pui-multi-select-input
+            [list]="dataStore.fields | arrayMap: mapField"
+            [formControl]="columnsControl"
+          ></pui-multi-select-input>
+        </div>
+      </div>
+      <div class="card-footer">
+        <button class="btn-round btn-outline" (click)="closeDialog(true)">{{c['cancel']}}</button>
+        <button class="btn-round btn-primary" (click)="closeDialog()">{{c['submit']}}</button>
+      </div>
+    </div>
   </ng-template>
 </div>

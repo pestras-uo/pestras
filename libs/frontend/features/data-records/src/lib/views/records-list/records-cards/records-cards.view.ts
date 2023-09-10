@@ -66,11 +66,12 @@ export class RecordsCardView implements OnChanges, OnInit {
   }
 
   load() {
-    if (!this.init && this.records.count <= this.records.results.length) return;
+    if (!this.init && this.records.count <= this.records.results.length)
+      return;
 
     this.skip = this.records.results.length;
 
-    this.state.query(
+    this.state.search(
       this.dataStore.serial,
       {
         limit: 20,

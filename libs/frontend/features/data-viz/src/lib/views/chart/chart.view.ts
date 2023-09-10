@@ -40,7 +40,7 @@ export class ChartView implements OnChanges {
         switchMap(options => {
           return forkJoin([
             this.dsState.select(options.data_store).pipe(filter(Boolean), take(1)),
-            this.recordsState.selectDsRecords(options.data_store)
+            this.recordsState.search(options.data_store)
               .pipe(
                 filter(Boolean),
                 map(res => res.results),

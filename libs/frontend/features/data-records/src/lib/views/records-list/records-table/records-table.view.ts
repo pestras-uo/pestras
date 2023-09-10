@@ -17,6 +17,7 @@ export class RecordsTableView implements OnInit {
   readonly search$ = new BehaviorSubject<any>(null);
   readonly sort$ = new BehaviorSubject<Record<string, -1 | 0 | 1>>({});
   readonly pageSize = 15;
+  readonly columns$ = new BehaviorSubject<Record<string, 0 | 1> | null>(null)
 
   count = 0;
   skip = 0;
@@ -30,6 +31,10 @@ export class RecordsTableView implements OnInit {
   @Input()
   set search(input: any) {
     this.search$.next(input);
+  }
+  @Input({ required: true })
+  set columns(value: string[]) {
+    this.columns$.next(value.reduce((all, c) => (Object.assign(all, { [c]: 1 })), {} as Record<string, 0 | 1>));
   }
 
   constructor(
@@ -46,25 +51,32 @@ export class RecordsTableView implements OnInit {
     this.records$ = combineLatest([
       this.search$,
       this.page$.pipe(distinctUntilChanged()),
-      this.sort$
+      this.sort$,
+      this.columns$
     ])
       .pipe(
-        switchMap(([search, page, sort]) => {
+        switchMap(([search, page, sort, select]) => {
           this.skip = (page - 1) * this.pageSize;
 
-          return this.state.query(this.dataStore.serial, {
+          console.log(this.dataStore.serial);
+          return this.state.search(this.dataStore.serial, {
             limit: this.pageSize,
             skip: this.skip ?? 0,
-            select: null,
+            select: Object.assign({ serial: 1 }, select),
             sort: { ...sort, serial: 1 },
             search
           })
         }),
         map(res => {
+          console.log(res);
           this.count = res.count;
           return res.results;
         })
       );
+  }
+
+  filterFields = (field: Field, columns: Record<string, number>) => {
+    return Object.keys(columns).includes(field.name)
   }
 
   onSort(e: Record<string, -1 | 0 | 1>) {

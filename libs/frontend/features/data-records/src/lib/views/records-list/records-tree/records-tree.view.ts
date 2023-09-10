@@ -40,7 +40,7 @@ export class TreeViewView implements OnChanges {
       ? `/main/records/${this.topic}/${this.dataStore.serial}`
       : `/main/records/${this.dataStore.serial}`;
 
-    this.records$ = this.state.query(this.dataStore.serial, {
+    this.records$ = this.state.search(this.dataStore.serial, {
       limit: 0,
       skip: 0,
       select: null,

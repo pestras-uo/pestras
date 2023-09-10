@@ -43,6 +43,7 @@ import { DatavizService } from "./data_viz/data-viz.service";
 import { DataStoresService } from "./data-stores/data-stores.service";
 import { NotificationsService } from "./notifications/notifications.service";
 import { NotificationsState } from "./notifications/notifications.state";
+import { ReportsService } from "./reports/reports.service";
 
 @NgModule({
   imports: [EnvModule],
@@ -57,6 +58,7 @@ import { NotificationsState } from "./notifications/notifications.state";
     OrgunitsService,
     RecordsService,
     RegionsService,
+    ReportsService,
     SessionService,
     TopicsService,
     UsersService,

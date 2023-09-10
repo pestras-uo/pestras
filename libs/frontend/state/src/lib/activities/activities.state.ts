@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import { Injectable } from "@angular/core";
-import { StatorChannel, StatorQueryState } from "@pestras/frontend/util/stator";
+import { StatorChannel, StatorEntitiesState } from "@pestras/frontend/util/stator";
 import { ActivityStats } from "./activities.api";
 import { ActivitiesService } from "./activities.service";
 import { SessionEnd } from "../session/session.events";
@@ -9,7 +9,7 @@ import { Observable, of } from "rxjs";
 export { ActivityStats };
 
 @Injectable()
-export class ActivitiesState extends StatorQueryState<ActivityStats> {
+export class ActivitiesState extends StatorEntitiesState<ActivityStats> {
 
   constructor(
     private service: ActivitiesService,
@@ -21,7 +21,7 @@ export class ActivitiesState extends StatorQueryState<ActivityStats> {
       .subscribe(() => this._clear());
   }
 
-  protected override _fetchDoc(id: string): Observable<ActivityStats | null> {
+  protected override _fetch(id: string): Observable<ActivityStats | null> {
     const [serial, period] = id.split('-');
 
     return period === 'week'
