@@ -61,6 +61,7 @@
       [topic]="topic"
       [dataStore]="dataStore"
       [search]="query"
+      [columns]="columns"
     ></app-records-table-view>
     <app-records-tree-view
       *ngIf="view === 'tree'"
@@ -71,56 +72,81 @@
   </ng-template>
 
   <ng-template #actionsTmp>
-    <button
-      class="btn-icon btn-small btn-round mie-1"
-      (click)="openSideDrawer(advancedSearch)"
-    >
-      <i puiIcon="filter" size="small"></i>
-    </button>
-
-    <button
-      class="btn-icon btn-small btn-round mie-1"
-      [class.disabled]="exporting"
-      (click)="exportData()"
-    >
-      <i puiIcon="export" size="small"></i>
-    </button>
-
-    <ng-container *ngIf="hasCardsView || hasTreeView">
-      <button
-        class="btn-icon btn-small btn-round mie-1"
-        [class.btn-success]="view === 'table'"
-        (click)="view = 'table'"
-      >
-        <i puiIcon="table" size="small"></i>
-      </button>
-
-      <button
-        *ngIf="hasCardsView"
-        class="btn-icon btn-small btn-round mie-1"
-        [class.btn-success]="view === 'cards'"
-        (click)="view = 'cards'"
-      >
-        <i puiIcon="cards" size="small"></i>
-      </button>
-
-      <button
-        *ngIf="hasTreeView"
-        class="btn-icon btn-small btn-round mie-1"
-        [class.btn-success]="view === 'tree'"
-        (click)="view = 'tree'"
-      >
-        <i puiIcon="tree_view" size="small"></i>
-      </button>
-    </ng-container>
-
     <a
       *ngIf="canAdd || ((dataStore.blueprint | blueprint | async)?.owner | sessionIs)"
-      class="btn btn-icon btn-small -btn-round"
+      class="btn btn-icon btn-small btn-round"
       [routerLink]="['/main/records', topic, dataStore.serial, 'add']"
     >
       <i puiIcon="add" size="small"></i>
     </a>
+
+    <button
+      #options
+      class="btn-icon btn-small btn-round"
+      (click)="optionsList.show()"
+    >
+      <i puiIcon="more" size="small"></i>
+    </button>
+
+    <pui-dropdown #optionsList [origin]="options">
+      <div class="card shadow-4 w-5">
+        <div class="card-body list list-actions p-0">
+          <!-- export options -->
+          <h5 class="pi-4 mbs-4 mbe-2 primary">{{c['export']}}</h5>
+          <div class="list-item hover-surface2 pi-4" (click)="exportData(); optionsList.hide()">
+            <i puiIcon="export" size="small"></i>
+            <p>{{c['excel']}}</p>
+          </div>
+          <!-- display options -->
+          <ng-container *ngIf="hasCardsView || hasTreeView">
+            <h5 class="pi-4 mbs-4 mbe-2 primary">{{c['view']}}</h5>
+            <div
+              class="list-item hover-surface2 pi-4"
+              [class.active]="view === 'table'"
+              (click)="view = 'table'; optionsList.hide()"
+            >
+              <i puiIcon="table" size="small"></i>
+              <p>{{c['table']}}</p>
+            </div>
+            <div
+              *ngIf="hasCardsView"
+              class="list-item hover-surface2 pi-4"
+              [class.active]="view === 'cards'"
+              (click)="view = 'cards'; optionsList.hide()"
+            >
+              <i puiIcon="cards" size="small"></i>
+              <p>{{c['cardView']}}</p>
+            </div>
+            <div
+              *ngIf="hasTreeView"
+              class="list-item hover-surface2 pi-4"
+              [class.active]="view === 'tree'"
+              (click)="view = 'tree'; optionsList.hide()"
+            >
+              <i puiIcon="tree_view" size="small"></i>
+              <p>{{c['treeView']}}</p>
+            </div>
+          </ng-container>
+          <!--  -->
+          <h5 class="mbs-4 mbe-2 primary pi-4">{{c['controls']}}</h5>
+          <div
+            *ngIf="view === 'table'"
+            class="list-item hover-surface2 pi-4"
+            (click)="openDialog(selectColumns); optionsList.hide()"
+          >
+            <i puiIcon="columns" size="small"></i>
+            <p>{{c['selectColumns']}}</p>
+          </div>
+          <div
+            class="list-item hover-surface2 pi-4"
+            (click)="openSideDrawer(advancedSearch); optionsList.hide()"
+          >
+            <i puiIcon="filter" size="small"></i>
+            <p>{{c['advancedSearch']}}</p>
+          </div>
+        </div>
+      </div>
+    </pui-dropdown>
   </ng-template>
 
   <ng-template #advancedSearch>
@@ -129,5 +155,27 @@
       [filters]="filters"
       (done)="closeSlideDrawer($event)"
     ></app-advanced-search-modal>
+  </ng-template>
+
+  <ng-template #selectColumns>
+    <div class="card w-10 shadow-6">
+      <h4 class="card-header">{{c['selectColumns']}}</h4>
+      <div class="card-body">
+        <div class="fc">
+          <pui-multi-select-input
+            [list]="dataStore.fields | arrayMap: mapField"
+            [formControl]="columnsControl"
+          ></pui-multi-select-input>
+        </div>
+      </div>
+      <div class="card-footer">
+        <button class="btn-round btn-outline" (click)="closeDialog(true)">
+          {{c['cancel']}}
+        </button>
+        <button class="btn-round btn-primary" (click)="closeDialog()">
+          {{c['submit']}}
+        </button>
+      </div>
+    </div>
   </ng-template>
 </div>

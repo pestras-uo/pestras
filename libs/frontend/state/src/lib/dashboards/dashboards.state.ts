@@ -1,81 +1,36 @@
 import { Injectable } from "@angular/core";
 import { ApiQuery, Dashboard } from "@pestras/shared/data-model";
-import { StatorChannel, StatorQueryState,  } from "@pestras/frontend/util/stator";
+import { StatorChannel, StatorGroupState,  } from "@pestras/frontend/util/stator";
 import { DashboardsService } from "./dashboards.service";
 import { SessionEnd } from "../session/session.events";
-import { Observable, map, tap } from "rxjs";
+import { Observable, tap } from "rxjs";
 import { DashboardsApi } from "./dashboards.api";
 import { SessionState } from "../session/session.state";
 
 @Injectable({ providedIn: 'root' })
-export class DashboardsState extends StatorQueryState<Dashboard> {
+export class DashboardsState extends StatorGroupState<Dashboard> {
 
   constructor(
     private service: DashboardsService,
     private channel: StatorChannel,
     private session: SessionState
   ) {
-    super('dashboards', 'serial', ['10m']);
+    super('dashboards', 'serial', 'topic', ['10m']);
 
     this.channel.select(SessionEnd)
       .subscribe(() => this._clear());
   }
 
-  protected override _fetchDoc(serial: string): Observable<Dashboard | null> {
+  protected override _fetch(serial: string): Observable<Dashboard | null> {
     return this.service.getBySerial({ serial });
   }
 
-  protected override _fetchQuery(key: string, query: ApiQuery<Dashboard>): Observable<{ count: number; results: Dashboard[]; }> {
+  protected override _fetchGroup(topic: string): Observable<Dashboard[]> {
+    return this.service.getByScope({ topic });
+  }
+
+  search(query: Partial<ApiQuery<Dashboard>>) {
     return this.service.search(query);
-  }
-
-  protected override _onChange(doc: Dashboard): void {
-    if (doc.topic)
-      this._updateInQuery(doc.topic, doc);
-    else {
-      this._updateInQuery('public', doc);
-      this._updateInQuery('owned', doc);
-    }
-  }
-
-  protected override _onRemove(doc: Dashboard): void {
-    if (doc.topic)
-      this._removeFromQuery(doc.topic, doc.serial);
-    else {
-      this._removeFromQuery('public', doc.serial);
-      this._removeFromQuery('owned', doc.serial);
-    }
-  }
-
-  // selectors
-  // -----------------------------------------------------------------------------------------
-  selectGroup(topic: string) {
-    return this.query(topic, {
-      sort: { serial: 1 },
-      search: { topic },
-      select: { serial: 1, title: 1 },
-      limit: 0
-    }).pipe(map(res => res.results));
-  }
-
-  selectPublic(skip = 0, limit = 0) {
-    return this.query('public', {
-      sort: { serial: 1 },
-      search: { topic: null },
-      select: { serial: 1, title: 1 },
-      skip,
-      limit
-    });
-  }
-
-  selectOwned(skip = 0, limit = 0) {
-    return this.query('owned', {
-      sort: { serial: 1 },
-      search: { topic: null, owner: this.session.get()?.serial },
-      select: { serial: 1, title: 1 },
-      skip,
-      limit
-    });
   }
 
 

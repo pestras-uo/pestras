@@ -2,11 +2,13 @@
 /* eslint-disable @angular-eslint/component-selector */
 /* eslint-disable @angular-eslint/component-class-suffix */
 import { Component, Input, OnChanges, TemplateRef } from '@angular/core';
-import { DataStore, DataStoreType, Role, WorkflowState } from '@pestras/shared/data-model';
+import { DataStore, DataStoreType, Field, Role, WorkflowState } from '@pestras/shared/data-model';
 import { SessionState, OrgunitsState, RecordsState } from '@pestras/frontend/state';
 import { PuiXlsxService, PuiSideDrawer } from '@pestras/frontend/ui';
 import { AdvancedSearchModelItem, filterToQuery } from '../../modals/advanced-search/advanced-search.model';
 import { objUtil } from '@pestras/shared/util';
+import { Dialog, DialogRef } from '@angular/cdk/dialog';
+import { FormControl, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-records-list',
@@ -14,10 +16,11 @@ import { objUtil } from '@pestras/shared/util';
 })
 export class RecordsListView implements OnChanges {
 
+  readonly workflow = WorkflowState;
+  readonly columnsControl = new FormControl<string[]>([], { validators: Validators.required, nonNullable: true });
+
   hasCardsView = false;
   hasTreeView = false;
-  readonly workflow = WorkflowState;
-
   view = "table";
   exporting = false;
   isTable!: boolean;
@@ -25,6 +28,8 @@ export class RecordsListView implements OnChanges {
   canAdd!: boolean;
   query!: any;
   filters: AdvancedSearchModelItem[] | null = null;
+  dialogRef: DialogRef | null = null;
+  columns!: string[];
 
   @Input({ required: true })
   dataStore!: DataStore;
@@ -40,11 +45,14 @@ export class RecordsListView implements OnChanges {
     private orgsState: OrgunitsState,
     private state: RecordsState,
     private xlsx: PuiXlsxService,
-    private sideDrawer: PuiSideDrawer
+    private sideDrawer: PuiSideDrawer,
+    private dialog: Dialog
   ) { }
 
   ngOnChanges() {
     this.isTable = this.dataStore.type === DataStoreType.TABLE;
+    this.columnsControl.setValue(this.dataStore.fields.map(f => f.name));
+    this.columns = this.columnsControl.value;
     this.query = this.prepareQuery();
 
     const session = this.session.get();
@@ -78,6 +86,24 @@ export class RecordsListView implements OnChanges {
 
     this.filters = filters;
     this.query = this.prepareQuery();
+  }
+
+  mapField(f: Field) {
+    return { name: f.display_name, value: f.name };
+  }
+
+  openDialog(tmp: TemplateRef<any>) {
+    this.dialogRef = this.dialog.open(tmp);
+  }
+
+  closeDialog(cancel = false) {
+    this.dialogRef?.close();
+    this.dialogRef = null;
+    
+    if (cancel)
+      this.columnsControl.setValue(this.columns);
+    else
+      this.columns = this.columnsControl.value;
   }
 
   prepareQuery() {
@@ -132,7 +158,7 @@ export class RecordsListView implements OnChanges {
   exportData() {
     this.exporting = true;
 
-    this.state.query(this.dataStore.serial, { ...this.query, limit: 0 })
+    this.state.search(this.dataStore.serial, { ...this.query, limit: 0 })
       .subscribe({
         next: data => {
           this.xlsx.export(data.results, this.dataStore.name);

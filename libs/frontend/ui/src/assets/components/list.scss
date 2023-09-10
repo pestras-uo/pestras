@@ -21,17 +21,27 @@
   }
 
   &.list-actions>.list-item {
+    --hover-color: var(--surface1);
+
     cursor: pointer;
     transition: background-color 250ms;
 
+    &.hover-surface2 {
+      --hover-color: var(--surface2)
+    }
+
+    &.hover-surface3 {
+      --hover-color: var(--surface3)
+    }
+
     &:hover {
-      background-color: var(--surface1);
+      background-color: var(--hover-color);
     }
   }
 
 
   .list-item.active {
-    border-inline-start: 5px solid var(--primary);
+    background-color: var(--primary-overlay);
   }
 
   .list-item-hero {

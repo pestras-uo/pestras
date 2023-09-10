@@ -1,14 +1,14 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { Injectable } from '@angular/core';
 import { DataVizApi } from './data-viz.api';
-import { StatorChannel, StatorQueryState } from '@pestras/frontend/util/stator';
+import { StatorChannel, StatorEntitiesState } from '@pestras/frontend/util/stator';
 import { BaseDataViz } from '@pestras/shared/data-model';
 import { DatavizService } from './data-viz.service';
 import { tap } from 'rxjs';
 import { SessionEnd } from '../session/session.events';
 
 @Injectable({ providedIn: 'root' })
-export class DataVizState extends StatorQueryState<BaseDataViz<any>> {
+export class DataVizState extends StatorEntitiesState<BaseDataViz<any>> {
 
   constructor(
     private service: DatavizService,
@@ -20,7 +20,7 @@ export class DataVizState extends StatorQueryState<BaseDataViz<any>> {
       .subscribe(() => this._clear());
   }
 
-  protected override _fetchDoc(id: string) {
+  protected override _fetch(id: string) {
     return this.service.getBySerial({ serial: id });
   }
 

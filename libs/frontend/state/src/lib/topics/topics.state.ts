@@ -1,41 +1,29 @@
 import { Injectable } from '@angular/core';
 import { Topic } from '@pestras/shared/data-model';
-import { map, tap } from 'rxjs';
-import { StatorChannel, StatorQueryState } from '@pestras/frontend/util/stator';
+import { tap } from 'rxjs';
+import { StatorChannel, StatorGroupState } from '@pestras/frontend/util/stator';
 import { TopicsService } from './topics.service';
 import { TopicsApi } from './topics.api';
 import { topicsListeners } from './topics.listeners';
 
 @Injectable({ providedIn: 'root' })
-export class TopicsState extends StatorQueryState<Topic> {
+export class TopicsState extends StatorGroupState<Topic> {
 
   constructor(
     protected service: TopicsService,
     protected channel: StatorChannel
   ) {
-    super('bp-instances', 'serial', ['1h']);
+    super('bp-instances', 'serial', 'parent', ['1h']);
 
     topicsListeners.call(this);
   }
 
-  protected override _fetchQuery(parent: string | null) {
-    return this.service.getByParent({ parent }).pipe(map(res => ({ count: res.length, results: res })))
+  protected override _fetchGroup(parent: string | null) {
+    return this.service.getByParent({ parent });
   }
 
-  protected override _fetchDoc(serial: string) {
+  protected override _fetch(serial: string) {
     return this.service.getBySerial({ serial });
-  }
-
-  protected override _onChange(doc: Topic): void {
-    this._updateInQuery(doc.parent, doc);
-  }
-
-  protected override _onRemove(doc: Topic): void {
-    this._removeFromQuery(doc.parent, doc.serial);
-  }
-
-  selectGroup(parent: string | null) {
-    return this.query(parent).pipe(map(res => res.results));
   }
 
   create(data: TopicsApi.Create.Body) {

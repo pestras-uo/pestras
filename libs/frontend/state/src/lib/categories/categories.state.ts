@@ -1,5 +1,5 @@
 import { Category, EntityTypes } from '@pestras/shared/data-model';
-import { ApiQueryResults, StatorChannel, StatorQueryState } from '@pestras/frontend/util/stator';
+import { StatorChannel, StatorGroupState } from '@pestras/frontend/util/stator';
 import { CategoriesService } from './categories.service';
 import { SessionEnd } from '../session/session.events';
 import { CategoriesApi } from './categories.api';
@@ -9,13 +9,13 @@ import { Serial } from '@pestras/shared/util';
 import { Injectable } from '@angular/core';
 
 @Injectable()
-export class CategoriesState extends StatorQueryState<Category> {
+export class CategoriesState extends StatorGroupState<Category> {
 
   constructor(
     private readonly channel: StatorChannel,
     private readonly service: CategoriesService
   ) {
-    super('categories', 'serial', ['1h'], true);
+    super('categories', 'serial', 'blueprint', ['1h']);
 
     this.initListeners();
   }
@@ -43,21 +43,12 @@ export class CategoriesState extends StatorQueryState<Category> {
       });
   }
 
-  protected override _fetchDoc(serial: string): Observable<Category | null> {
+  protected override _fetch(serial: string): Observable<Category | null> {
     return this.service.getBySerial({ serial });
   }
 
-  protected override _fetchQuery(blueprint: string): Observable<ApiQueryResults<Category>> {
-    return this.service.getByBlueprint({ blueprint })
-      .pipe(map(res => ({ count: res.length, results: res })));
-  }
-
-  protected override _onChange(doc: Category): void {
-    this._updateInQuery(doc.blueprint, doc);
-  }
-
-  protected override _onRemove(doc: Category): void {
-    this._removeFromQuery(doc.blueprint, doc.serial);
+  protected override _fetchGroup(blueprint: string): Observable<Category[]> {
+    return this.service.getByBlueprint({ blueprint });
   }
 
   // selectors
@@ -68,8 +59,8 @@ export class CategoriesState extends StatorQueryState<Category> {
     return this.select(ps);
   }
 
-  selectChildren(serial: string) {
-    return this.selectMany(cat => Serial.isChild(serial, cat.serial));
+  getChildren(serial: string) {
+    return this.getMany(cat => Serial.isChild(serial, cat.serial));
   }
 
   selectTree(serial: string) {
@@ -79,8 +70,7 @@ export class CategoriesState extends StatorQueryState<Category> {
   }
 
   selectByBlueprint(bp: string) {
-    return this.query(bp, null)
-      .pipe(map(res => res.results));
+    return this.selectGroup(bp);
   }
 
   // change

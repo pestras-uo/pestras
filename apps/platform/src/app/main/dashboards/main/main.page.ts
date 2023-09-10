@@ -2,7 +2,7 @@
 import { Dialog, DialogRef } from '@angular/cdk/dialog';
 import { Component, TemplateRef, computed, signal } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
-import { DashboardsState } from '@pestras/frontend/state';
+import { DashboardsState, SessionState } from '@pestras/frontend/state';
 import { ToastService } from '@pestras/frontend/ui';
 import { tap } from 'rxjs';
 
@@ -14,8 +14,8 @@ import { tap } from 'rxjs';
 export class MainPageComponent {
   readonly dashboards$ = computed(
     () => (this.tab() === 'public'
-      ? this.state.selectPublic(this.skip(), 10)
-      : this.state.selectOwned(this.skip(), 10))
+      ? this.state.search({ skip: this.skip(), limit: 10 })
+      : this.state.search({ skip: this.skip(), limit: 10, search: { owner: this.session.get()?.serial } }))
       .pipe(tap(res => this.count = res.count))
   );
 
@@ -30,7 +30,8 @@ export class MainPageComponent {
   constructor(
     public state: DashboardsState,
     private dialog: Dialog,
-    private toast: ToastService
+    private toast: ToastService,
+    private session: SessionState
   ) { }
 
   load() {

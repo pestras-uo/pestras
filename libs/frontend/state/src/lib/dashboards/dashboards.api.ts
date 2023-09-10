@@ -32,7 +32,7 @@ export namespace DashboardsApi {
   export namespace Search {
     export const REQ_PATH = basePath + '/search';
 
-    export type Body = ApiQuery<Dashboard>;
+    export type Body = Partial<ApiQuery<Dashboard>>;
 
     export type Response = { count: number; results: Dashboard[] };
   }

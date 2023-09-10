@@ -1,45 +1,29 @@
 import { Injectable } from "@angular/core";
 import { ClientApi } from "@pestras/shared/data-model";
-import { Observable, map, tap } from "rxjs";
-import { ApiQueryResults, StatorChannel, StatorQueryState } from "@pestras/frontend/util/stator";
+import { Observable, tap } from "rxjs";
+import { StatorChannel, StatorGroupState } from "@pestras/frontend/util/stator";
 import { ClientApiService } from "./client-api.service";
 import { ClientApiApi } from "./client-api.api";
 import { clientApiListeners } from "./client-api.listeners";
 
 @Injectable({ providedIn: 'root' })
-export class ClientApiState extends StatorQueryState<ClientApi> {
+export class ClientApiState extends StatorGroupState<ClientApi> {
 
   constructor(
     protected service: ClientApiService,
     protected channel: StatorChannel
   ) {
-    super('client-api', 'serial', ['1h'], true);
+    super('client-api', 'serial', 'blueprint', ['1h']);
 
     clientApiListeners.call(this);
   }
 
-  protected override _fetchQuery(blueprint: string): Observable<ApiQueryResults<ClientApi>> {
-    return this.service.getByBlueprint({ blueprint })
-      .pipe(map(res => ({ count: res.length, results: res })));
+  protected override _fetchGroup(blueprint: string): Observable<ClientApi[]> {
+    return this.service.getByBlueprint({ blueprint });
   }
 
-  protected override _fetchDoc(serial: string): Observable<ClientApi | null> {
+  protected override _fetch(serial: string): Observable<ClientApi | null> {
     return this.service.getBySerial({ serial });
-  }
-
-  protected override _onChange(doc: ClientApi): void {
-    this._updateInQuery(doc.blueprint, doc);
-  }
-
-  protected override _onRemove(doc: ClientApi): void {
-    this._removeFromQuery(doc.blueprint, doc.serial);
-  }
-
-  // selectors
-  // -----------------------------------------------------------------------------------------------
-  selectGroup(bp: string) {
-    return this.query(bp, null)
-      .pipe(map(res => res.results));
   }
 
 

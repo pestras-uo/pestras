@@ -5,7 +5,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import { DataRecord, DataStore, Field, TypeKind, TypesNames } from '@pestras/shared/data-model';
 import { RecordsState } from '@pestras/frontend/state';
 import { Router } from '@angular/router';
-import { BehaviorSubject, Observable, combineLatest, distinctUntilChanged, map, switchMap } from 'rxjs';
+import { BehaviorSubject, Observable, combineLatest, distinctUntilChanged, map, switchMap, tap } from 'rxjs';
 
 @Component({
   selector: 'app-records-table-view',
@@ -17,11 +17,13 @@ export class RecordsTableView implements OnInit {
   readonly search$ = new BehaviorSubject<any>(null);
   readonly sort$ = new BehaviorSubject<Record<string, -1 | 0 | 1>>({});
   readonly pageSize = 15;
+  readonly columns$ = new BehaviorSubject<Record<string, 0 | 1> | null>(null)
 
   count = 0;
   skip = 0;
   records$!: Observable<DataRecord[]>;
   fields!: Field[];
+  preloader = false;
 
   @Input({ required: true })
   dataStore!: DataStore;
@@ -30,6 +32,10 @@ export class RecordsTableView implements OnInit {
   @Input()
   set search(input: any) {
     this.search$.next(input);
+  }
+  @Input({ required: true })
+  set columns(value: string[]) {
+    this.columns$.next(value.reduce((all, c) => (Object.assign(all, { [c]: 1 })), {} as Record<string, 0 | 1>));
   }
 
   constructor(
@@ -46,25 +52,32 @@ export class RecordsTableView implements OnInit {
     this.records$ = combineLatest([
       this.search$,
       this.page$.pipe(distinctUntilChanged()),
-      this.sort$
+      this.sort$,
+      this.columns$
     ])
       .pipe(
-        switchMap(([search, page, sort]) => {
+        tap(() => this.preloader = true),
+        switchMap(([search, page, sort, select]) => {
           this.skip = (page - 1) * this.pageSize;
-
-          return this.state.query(this.dataStore.serial, {
+          
+          return this.state.search(this.dataStore.serial, {
             limit: this.pageSize,
             skip: this.skip ?? 0,
-            select: null,
+            select: Object.assign({ serial: 1 }, select),
             sort: { ...sort, serial: 1 },
             search
           })
         }),
         map(res => {
           this.count = res.count;
+          this.preloader = false;
           return res.results;
         })
       );
+  }
+
+  filterFields = (field: Field, columns: Record<string, number>) => {
+    return Object.keys(columns).includes(field.name)
   }
 
   onSort(e: Record<string, -1 | 0 | 1>) {

@@ -26,6 +26,7 @@ export class DataStoresRecordsView implements OnChanges {
   constructor(private session: SessionState) {}
 
   ngOnChanges() {
+    console.log(this.dataStore);
     const session = this.session.get();
     this.canAdd = this.dataStore.collaborators.length
       ? this.dataStore.collaborators.includes(session?.serial ?? '')

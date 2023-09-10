@@ -1,11 +1,11 @@
 import { Injectable } from '@angular/core';
 import { RecordWorkflow } from '@pestras/shared/data-model';
-import { StatorChannel, StatorQueryState } from '@pestras/frontend/util/stator';
+import { StatorChannel, StatorEntitiesState } from '@pestras/frontend/util/stator';
 import { WorkflowService } from './workflow.service';
 import { SessionEnd } from '../session/session.events';
 
 @Injectable({ providedIn: 'root' })
-export class WorkflowState extends StatorQueryState<RecordWorkflow> {
+export class WorkflowState extends StatorEntitiesState<RecordWorkflow> {
 
   constructor(
     private service: WorkflowService,
@@ -17,7 +17,7 @@ export class WorkflowState extends StatorQueryState<RecordWorkflow> {
       .subscribe(() => this._clear());
   }
 
-  protected override _fetchDoc(record: string, ds: string) {
+  protected override _fetch(record: string, ds: string) {
     return this.service.getByEntity({ ds, record });
   }
 

@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { Injectable } from "@angular/core";
 import { ApiQuery, DataRecord, TableDataRecord } from "@pestras/shared/data-model";
-import { ApiQueryResults, StatorChannel, StatorQueryState } from "@pestras/frontend/util/stator";
+import { StatorChannel, StatorEntitiesState } from "@pestras/frontend/util/stator";
 import { RecordsService } from "./records.service";
 import { SessionEnd } from "../session/session.events";
 import { Observable, tap } from "rxjs";
@@ -12,7 +12,7 @@ export interface DataRecordsSearchResponse {
 }
 
 @Injectable({ providedIn: 'root' })
-export class RecordsState extends StatorQueryState<TableDataRecord> {
+export class RecordsState extends StatorEntitiesState<TableDataRecord> {
 
   constructor(
     private readonly channel: StatorChannel,
@@ -26,31 +26,15 @@ export class RecordsState extends StatorQueryState<TableDataRecord> {
 
   }
 
-  protected override _fetchDoc(serial: string, ds: string): Observable<TableDataRecord | null> {
+  protected override _fetch(serial: string, ds: string): Observable<TableDataRecord | null> {
     return this.service.getBySerial({ ds, serial });
-  }
-
-  protected override _fetchQuery(ds: string, query: ApiQuery<TableDataRecord>): Observable<ApiQueryResults<TableDataRecord>> {
-    return this.service.search({ ds }, query);
-  }
-
-  protected override _onChange(doc: TableDataRecord, ds: string): void {
-    if (ds)
-      this._updateInQuery(ds, doc);
-  }
-
-  protected override _onRemove(doc: TableDataRecord, ds: string): void {
-    if (ds)
-      this._removeFromQuery(ds, doc.serial);
   }
 
 
   // selectors
   // --------------------------------------------------------------------------------------
-  selectDsRecords(ds: string) {
-    return this.query(ds, {
-      limit: 0
-    });
+  search(ds: string, query: Partial<ApiQuery<TableDataRecord>> | null = null) {
+    return this.service.search({ ds }, query ?? {});
   }
 
   // create
@@ -65,10 +49,7 @@ export class RecordsState extends StatorQueryState<TableDataRecord> {
   // --------------------------------------------------------------------------------------
   update(ds: string, serial: string, group: string, data: any) {
     return this.service.update({ ds, serial }, { group, data })
-      .pipe(
-        tap(res => this._update(serial, res)),
-        tap(res => this._onChange(res, ds))
-      );
+      .pipe(tap(res => this._update(serial, res)));
   }
 
 
@@ -80,9 +61,6 @@ export class RecordsState extends StatorQueryState<TableDataRecord> {
 
   revertHistory(ds: string, history: string) {
     return this.service.revertHistory({ ds, history })
-      .pipe(
-        tap(res => this._update(res.serial, res)),
-        tap(res => this._onChange(res, ds))
-      );
+      .pipe(tap(res => this._update(res.serial, res)));
   }
 }

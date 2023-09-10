@@ -24,7 +24,7 @@ export namespace RecordsApi {
 
     export interface Params { ds: string; }
 
-    export type Body = ApiQuery<any>;
+    export type Body = Partial<ApiQuery<any>>;
 
     export type Response = { count: number; results: TableDataRecord[]; };
   }

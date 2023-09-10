@@ -44,7 +44,7 @@ export abstract class StatorGroupState<T extends Record<string, any> = any> {
 
       for (const [group, time] of this._groupsTiming) {
         if (this._exp && Date.now() > time + this._exp)
-          this._loadGroup(group)
+          this._fetchGroup(group)
             .subscribe({
               next: list => {
                 const dataMap = this._data.getValue();
@@ -73,9 +73,9 @@ export abstract class StatorGroupState<T extends Record<string, any> = any> {
 
   // abstract
   // -------------------------------------------------------------------------------------
-  protected abstract _loadGroup(group: string | null): Observable<T[]>;
+  protected abstract _fetchGroup(group: string | null): Observable<T[]>;
 
-  protected abstract _loadSingle(group: string): Observable<T | null>;
+  protected abstract _fetch(group: string): Observable<T | null>;
 
 
 
@@ -223,29 +223,58 @@ export abstract class StatorGroupState<T extends Record<string, any> = any> {
       .filter(doc => doc[this.groupBy] === group);
   }
 
-  select(id: string, group?: string | null): Observable<T | null> {
+  getMany(ids: string[]): T[];
+  getMany(filter: (doc: T) => boolean): T[];
+  getMany(filter: string[] | ((doc: T) => boolean)): T[] {
+    const data = this._data.getValue();
 
-    if (id && group)
+    if (Array.isArray(filter))
+      return filter.map(id => data.get(id)).filter(Boolean) as T[];
+
+    const docs: T[] = [];
+
+    for (const doc of data.values())
+      if (filter(doc))
+        docs.push(doc);
+
+    return docs;
+  }
+
+  select(id: string, group?: string | null): Observable<T | null>;
+  select(filter: (doc: T) => boolean): Observable<T | null>;
+  select(filter: string | ((doc: T) => boolean), group?: string | null): Observable<T | null> {
+
+    if (typeof filter === 'function') {
+      return this._data.pipe(map(map => {
+        for (const doc of map.values())
+          if (filter(doc))
+            return doc;
+
+        return null;
+      }));
+    }
+
+    if (filter && group)
       return this.selectGroup(group)
-        .pipe(map(() => this.get(id)))
+        .pipe(map(() => this.get(filter)))
 
-    if (this._exp && this._not_found[id] && (Date.now() - this._not_found[id].getTime() < this._exp))
+    if (this._exp && this._not_found[filter] && (Date.now() - this._not_found[filter].getTime() < this._exp))
       return of(null);
 
     return this._data.pipe(
       gate(this.loading$, true),
       switchMap(data => {
-        if (data.get(id))
-          return of(data.get(id) ?? null);
+        if (data.get(filter))
+          return of(data.get(filter) ?? null);
 
-        return this._loadSingle(id)
+        return this._fetch(filter)
           .pipe(map(doc => {
             if (!doc) {
-              this._not_found[id] = new Date();
+              this._not_found[filter] = new Date();
               return null;
             }
 
-            delete this._not_found[id];
+            delete this._not_found[filter];
 
             if (!this._groupsTiming.has(doc[this.groupBy] as string))
               this.selectGroup(doc[this.groupBy] as string)
@@ -269,7 +298,7 @@ export abstract class StatorGroupState<T extends Record<string, any> = any> {
         shareReplay(1)
       );
 
-    return this._loadGroup(group)
+    return this._fetchGroup(group)
       .pipe(
         tap(list => {
           const dataMap = this._data.getValue();
@@ -283,5 +312,12 @@ export abstract class StatorGroupState<T extends Record<string, any> = any> {
         }),
         switchMap(() => this.selectGroup(group))
       );
+  }
+
+  selectMany(ids: string[]): Observable<T[]>;
+  selectMany(filter: (doc: T) => boolean): Observable<T[]>;
+  selectMany(filter: string[] | ((doc: T) => boolean)): Observable<T[]> {
+    return this._data
+      .pipe(map(() => this.getMany(filter as string[])));
   }
 } 

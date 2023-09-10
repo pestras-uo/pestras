@@ -13,11 +13,11 @@ export class RecordsPipe implements PipeTransform {
   transform(serial: string | null | Observable<string | null>, skip = 0, limit = 1000): Observable<DataRecord[]> {
     return (
       serial && typeof serial === 'string'
-        ? this.state.query(serial, { skip, limit })
+        ? this.state.search(serial, { skip, limit })
         : isObservable(serial)
           ? serial.pipe(
             filter(Boolean),
-            switchMap(s => this.state.query(s, { skip, limit }))
+            switchMap(s => this.state.search(s, { skip, limit }))
           )
           : of({ count: 0, results: [] })
     )
