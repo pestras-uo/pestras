@@ -5,7 +5,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import { DataRecord, DataStore, Field, TypeKind, TypesNames } from '@pestras/shared/data-model';
 import { RecordsState } from '@pestras/frontend/state';
 import { Router } from '@angular/router';
-import { BehaviorSubject, Observable, combineLatest, distinctUntilChanged, map, switchMap } from 'rxjs';
+import { BehaviorSubject, Observable, combineLatest, distinctUntilChanged, map, switchMap, tap } from 'rxjs';
 
 @Component({
   selector: 'app-records-table-view',
@@ -23,6 +23,7 @@ export class RecordsTableView implements OnInit {
   skip = 0;
   records$!: Observable<DataRecord[]>;
   fields!: Field[];
+  preloader = false;
 
   @Input({ required: true })
   dataStore!: DataStore;
@@ -55,10 +56,10 @@ export class RecordsTableView implements OnInit {
       this.columns$
     ])
       .pipe(
+        tap(() => this.preloader = true),
         switchMap(([search, page, sort, select]) => {
           this.skip = (page - 1) * this.pageSize;
-
-          console.log(this.dataStore.serial);
+          
           return this.state.search(this.dataStore.serial, {
             limit: this.pageSize,
             skip: this.skip ?? 0,
@@ -68,8 +69,8 @@ export class RecordsTableView implements OnInit {
           })
         }),
         map(res => {
-          console.log(res);
           this.count = res.count;
+          this.preloader = false;
           return res.results;
         })
       );

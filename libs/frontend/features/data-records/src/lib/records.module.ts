@@ -5,7 +5,7 @@ import { RecordsPipe } from './pipes/records.pipe';
 import { RecordCardView } from './views/record-card/record-card.view';
 import { AvatarWidget } from '@pestras/frontend/widgets/avatar';
 import { RouterModule } from '@angular/router';
-import { PuiIcon, PuiInfiniteScroll, PuiSideDrawerModule, PuiTableModule, PuiUtilPipesModule, PuiCheckInput, PuiMultiSelectInput } from '@pestras/frontend/ui';
+import { PuiIcon, PuiInfiniteScroll, PuiSideDrawerModule, PuiTableModule, PuiUtilPipesModule, PuiCheckInput, PuiMultiSelectInput, PuiPreloaderModule, PuiDropdown } from '@pestras/frontend/ui';
 import { CategoriesFeatureModule } from '@pestras/frontend/features/categories';
 import { ContraModule } from '@pestras/frontend/util/contra';
 import { NoDataPlaceholderWidget } from '@pestras/frontend/widgets/no-data-placeholder';
@@ -57,6 +57,8 @@ import { RecordsListView } from './views/records-list/records-list.view';
     PuiUtilPipesModule,
     PuiCheckInput,
     PuiMultiSelectInput,
+    PuiPreloaderModule,
+    PuiDropdown,
     // Widgets
     TreeViewWidget  
   ],

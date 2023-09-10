@@ -1,5 +1,4 @@
 <div class="toolbar h-fit gap-2" *contra="let c, let dir = dir">
-
   <img class="inline-block h-1 radius-2" src="assets/imgs/undp-logo.jpg" />
   <img class="inline-block h-1 radius-2" src="assets/imgs/gam-logo.jpg" />
   <h4>{{c['ownerName']}}</h4>
@@ -29,15 +28,16 @@
 
     <pui-dropdown #langDD [origin]="langBtn">
       <div class="card card-small w-5 shadow-4" contraLang #contra="contra">
-        <h4 class="card-header">{{c['language']}}</h4>
-        <div class="card-body list list-actions list-clean">
+        <div class="card-body list list-actions p-0">
+          <h4 class="mb-2 pi-4">{{c['language']}}</h4>
           <div
-            class="list-item pi-2"
+            class="list-item hover-surface2 pi-4"
             *ngFor="let language of (null | contraLanguages)"
             (click)="contra.setLang(language.key)"
           >
+            <p>{{language.name}}</p>
+            <div class="grow"></div>
             <i *ngIf="lang === language.key" size="small" puiIcon="check"></i>
-            <p [class.pi-10]="lang !== 'ar'">{{language.name}}</p>
           </div>
         </div>
       </div>

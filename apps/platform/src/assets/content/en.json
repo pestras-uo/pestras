@@ -1,4 +1,7 @@
 {
+  "controls": "Controls",
+  "view": "View",
+  "excel": "Excel",
   "selectColumns": "Select Columns",
   "applyChanges": "Apply Changes",
   "owned": "Owned",

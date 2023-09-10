@@ -11,13 +11,17 @@ import { CommonModule } from '@angular/common';
   selector: 'pui-dropdown',
   template: `
     <ng-template cdk-portal>
-      <ng-content></ng-content>
+      <div [class]="dir">
+        <ng-content></ng-content>
+      </div>
     </ng-template>
   `
 })
 export class PuiDropdown {
 
   private overlayRef!: OverlayRef;
+
+  readonly dir = document.documentElement.getAttribute('dir');
 
   @ViewChild(CdkPortal) public contentTemplate!: CdkPortal;
 
@@ -42,16 +46,16 @@ export class PuiDropdown {
       .withPush(true)
       .withPositions([
         {
-          originX: 'start',
+          originX: 'end',
           originY: 'bottom',
-          overlayX: 'start',
+          overlayX: 'end',
           overlayY: 'top',
           offsetY: 4,
         },
         {
-          originX: 'start',
+          originX: 'end',
           originY: 'top',
-          overlayX: 'start',
+          overlayX: 'end',
           overlayY: 'bottom',
           offsetY: -4,
         },
@@ -72,7 +76,7 @@ export class PuiDropdown {
     this.overlayRef.backdropClick().subscribe(() => this.hide());
   }
 
-  private  hide(): void {
+  hide(): void {
     this.overlayRef.detach();
   }
 
