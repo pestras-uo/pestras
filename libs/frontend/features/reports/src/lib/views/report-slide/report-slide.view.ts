@@ -6,24 +6,18 @@ import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
 import { Component, ElementRef, Input, OnChanges, TemplateRef, ViewChild } from '@angular/core';
 import { FormBuilder, FormControl, Validators } from '@angular/forms';
 import { Report, ReportSlide, ReportView, ReportViewType } from '@pestras/shared/data-model';
-import { ToastService, PuiSideDrawer, ExportToPdfDirective } from '@pestras/frontend/ui';
+import { ToastService, PuiSideDrawer } from '@pestras/frontend/ui';
 import { ReportsState } from '@pestras/frontend/state';
 import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-report-slide',
   templateUrl: './report-slide.view.html',
-
-  
   styleUrls: ['./report-slide.view.scss']
-  
 })
 export class ReportSlideView implements OnChanges {
 
-  @ViewChild(ExportToPdfDirective, { static: false }) appExportToPdf!: ExportToPdfDirective;
-
   @ViewChild('content') content!: ElementRef;
-
 
   readonly form = this.fb.nonNullable.group({
     title: '',

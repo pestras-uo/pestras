@@ -22,7 +22,7 @@ import { OrgunitsFeatureModule } from '@pestras/frontend/features/orgunits';
 import { UsersFeatureModule } from '@pestras/frontend/features/users';
 import { UsersGroupsFeatureModule } from '@pestras/frontend/features/users-groups';
 import { SessionFeatureModule } from '@pestras/frontend/features/session';
-import { ExportToPdfDirective, PuiIcon, PuiImageInput, PuiPreloaderModule, PuiSelectInput, PuiSideDrawerModule, PuiUtilPipesModule } from '@pestras/frontend/ui';
+import { PuiExportToPdfDirective, PuiIcon, PuiImageInput, PuiPreloaderModule, PuiSelectInput, PuiSideDrawerModule, PuiUtilPipesModule } from '@pestras/frontend/ui';
 
 
 @NgModule({
@@ -62,7 +62,7 @@ import { ExportToPdfDirective, PuiIcon, PuiImageInput, PuiPreloaderModule, PuiSe
     PuiSideDrawerModule,
     PuiImageInput,
     PuiUtilPipesModule,
-    ExportToPdfDirective
+    PuiExportToPdfDirective
   ]
 })
 export class ReportsModule { }

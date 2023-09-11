@@ -1,48 +1,81 @@
+/* eslint-disable @typescript-eslint/no-non-null-assertion */
 import { Directive, ElementRef, Input } from '@angular/core';
 import html2canvas from 'html2canvas';
-import jspdf, { jsPDF } from 'jspdf';
+import { jsPDF } from 'jspdf';
 
 @Directive({
   // eslint-disable-next-line @angular-eslint/directive-selector
-  selector: '[appExportToPdf]',
-    standalone: true,
+  selector: '[puiExportToPdf]',
+  standalone: true,
 
-  exportAs: 'appExportToPdf',
+  exportAs: 'puiExportToPdf',
 })
-export class ExportToPdfDirective {
+export class PuiExportToPdfDirective {
+
   @Input()
   pdfName = 'file.pdf';
 
-  constructor(private elRef: ElementRef) {}
+  constructor(private elRef: ElementRef) { }
 
-
- export() {
+  export() {
     const domElm: HTMLElement = this.elRef.nativeElement;
 
-    // Set html2canvas options for better quality and avoiding potential issues
     const html2canvasOptions = {
       scale: 2, // Increase the scale for higher resolution
       useCORS: true, // Enable CORS for image loading
       allowTaint: true, // Allow tainting for external resources (e.g., images from different domains)
+      scrollY: 0
     };
 
-    html2canvas(domElm, html2canvasOptions).then(async (canvas: any) => {
-      const contentDataURL = canvas.toDataURL('image/jpeg'); // Use JPEG for better quality
+    html2canvas(domElm, html2canvasOptions).then((canvas) => {
+      const image = { type: 'jpeg', quality: 0.98 };
+      const margin = [0.5, 0.5];
 
-      // Create a new jsPDF instance
-      const pdf = new jsPDF('p', 'mm', 'a4'); // A4 size page of PDF
+      const imgWidth = 8.5;
+      let pageHeight = 11;
 
-      // Calculate the aspect ratio to maintain the correct page dimensions
-      const aspectRatio = canvas.width / canvas.height;
-      const pdfWidth = 190; // Adjust this value to control the width of the PDF page
-      const pdfHeight = pdfWidth / aspectRatio;
+      const innerPageWidth = imgWidth - margin[0] * 2;
+      const innerPageHeight = pageHeight - margin[1] * 2;
 
-      // Add image to the PDF
-      pdf.addImage(contentDataURL, 'JPEG', 0, 0, pdfWidth, pdfHeight);
+      // Calculate the number of pages.
+      const pxFullHeight = canvas.height;
+      const pxPageHeight = Math.floor(canvas.width * (pageHeight / imgWidth));
+      const nPages = Math.ceil(pxFullHeight / pxPageHeight);
 
+      // Define pageHeight separately so it can be trimmed on the final page.
+      pageHeight = innerPageHeight;
 
-      // Save the PDF
-      pdf.save(this.pdfName); // Generated PDF
+      // Create a one-page canvas to split up the full image.
+      const pageCanvas = document.createElement('canvas');
+      const pageCtx = pageCanvas.getContext('2d')!;
+      pageCanvas.width = canvas.width;
+      pageCanvas.height = pxPageHeight;
+
+      // Initialize the PDF.
+      const pdf = new jsPDF('p', 'in', [8.5, 11]);
+
+      for (let page = 0; page < nPages; page++) {
+        // Trim the final page to reduce file size.
+        if (page === nPages - 1 && pxFullHeight % pxPageHeight !== 0) {
+          pageCanvas.height = pxFullHeight % pxPageHeight;
+          pageHeight = (pageCanvas.height * innerPageWidth) / pageCanvas.width;
+        }
+
+        // Display the page.
+        const w = pageCanvas.width;
+        const h = pageCanvas.height;
+        pageCtx.fillStyle = 'white';
+        pageCtx.fillRect(0, 0, w, h);
+        pageCtx.drawImage(canvas, 0, page * pxPageHeight, w, h, 0, 0, w, h);
+
+        // Add the page to the PDF.
+        if (page > 0) pdf.addPage();
+        // debugger;
+        const imgData = pageCanvas.toDataURL('image/' + image.type, image.quality);
+        pdf.addImage(imgData, image.type, margin[1], margin[0], innerPageWidth, pageHeight);
+      }
+
+      pdf.save();
     });
   }
 }

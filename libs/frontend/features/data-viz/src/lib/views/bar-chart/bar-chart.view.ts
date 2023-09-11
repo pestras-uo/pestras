@@ -96,14 +96,14 @@ export class BarChartView implements OnChanges {
         }
       },
       legend: series.length > 1 ? { 
-        orient: 'vertical', 
-        left: 'right',
-        top: 'center'
+        // orient: 'vertical', 
+        // left: 'right',
+        // top: 'center'
       } : undefined,
       grid: {
-        top: '2%',
+        top: series.length > 1 ? '8%' : '3%',
         left: '3%',
-        right: series.length > 1 ? '10%' : '3%',
+        right: '3%',
         bottom: '3%',
         containLabel: true
       },
