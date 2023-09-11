@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { DataStore, DataStoreState, DataStoreType, intervalsByMonth } from "@pestras/shared/data-model";
-import { dataStoresModel, wsErrorLogModel, wsLogModel } from "./models";
+import { dataStoresModel, wsLogModel } from "./models";
 import { generateRequestPayload } from "./generate-payload";
 import { handleRequest } from "./handle-request";
 import { handleResponse } from "./handle-response";
@@ -61,7 +61,7 @@ export async function job(init: boolean) {
         console.error(error);
 
         await dataStoresModel.updateWsState(ds.serial, { state: DataStoreState.ERROR });
-        wsErrorLogModel.insert(ds.serial, error.message ?? JSON.stringify(error));
+        wsLogModel.insert(ds.serial, error.message ?? JSON.stringify(error), 'error');
       }
     }
 

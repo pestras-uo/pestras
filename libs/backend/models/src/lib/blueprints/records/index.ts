@@ -18,7 +18,7 @@ export class DataRecordsModel extends Core {
 
   // read
   // --------------------------------------------------------------------------------
-  search: (dataStoreSerial: string, query: ApiQuery<DataRecord>) => Promise<{ count: number; results: DataRecord[] }> = search.bind(this);
+  search: (dataStoreSerial: string, query: Partial<ApiQuery<DataRecord>>) => Promise<{ count: number; results: DataRecord[] }> = search.bind(this);
   getBySerial: <T extends DataRecord>(dataStoreSerial: string, serial: string) => Promise<T | null> = getBySerial.bind(this);
   getHistory: (dataStoreSerial: string, serial: string) => Promise<DataRecordHistroyItem[]> = getHistory.bind(this);
 

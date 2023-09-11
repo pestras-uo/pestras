@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { DataStore } from "@pestras/shared/data-model";
 import { Model } from "../../model";
 import { Db } from "mongodb";
@@ -26,7 +27,7 @@ export class DataStoresModel extends Model<DataStore> {
   // read
   // ---------------------------------------------------------------------------------------
   getByBlueprint = getByBlueprint.bind(this);
-  getBySerial = getBySerial.bind(this);
+  getBySerial: (serial: string, projection?: any) => Promise<DataStore> = getBySerial.bind(this);
   search = search.bind(this);
 
   // util
