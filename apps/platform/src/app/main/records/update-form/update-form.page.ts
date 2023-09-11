@@ -82,7 +82,6 @@ export class UpdateFormPage implements OnInit {
     this.state.update(
       this.dataStore.serial,
       this.record['serial'],
-      this.group,
       this.form.getRawValue()
     )
       .subscribe({

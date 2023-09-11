@@ -61,7 +61,7 @@ export namespace RecordsApi {
 
     export interface Params { ds: string; serial: string; }
 
-    export interface Body  { group: string; data: any; };
+    export type Body = any;
 
     export type Response = TableDataRecord;
   }

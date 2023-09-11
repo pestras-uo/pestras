@@ -51,7 +51,20 @@ export class RecordsService {
   update(params: RecordsApi.Update.Params, body: RecordsApi.Update.Body) {
     const path = injectURLPayload(this.envServ.env.api + RecordsApi.Update.REQ_PATH, params);
 
-    return this.http.put<RecordsApi.Update.Response>(path, body);
+    const data = new FormData();
+
+    for (const key in body) {
+      const value = body[key] ?? null;
+
+      if (value) {
+        if (typeof value === 'object' && !(value instanceof Date) && !(value instanceof File))
+          data.set(key, JSON.stringify(value));
+        else
+          data.set(key, value);
+      }
+    }
+
+    return this.http.put<RecordsApi.Update.Response>(path, data);
   }
   
   revertHistory(params: RecordsApi.RevertHistory.Params) {
