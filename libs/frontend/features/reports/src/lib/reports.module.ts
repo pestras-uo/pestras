@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { ReportsListView } from './views/reports-list/reports-list.view';
 import { RouterModule } from '@angular/router';
 import { NoDataPlaceholderWidget } from '@pestras/frontend/widgets/no-data-placeholder';
-import { ExportToPdfDirective, PuiIcon, PuiImageInput, PuiPreloaderModule, PuiSelectInput, PuiUtilPipesModule } from '@pestras/frontend/ui';
+import { PuiExportToPdfDirective, PuiIcon, PuiImageInput, PuiPreloaderModule, PuiSelectInput, PuiUtilPipesModule } from '@pestras/frontend/ui';
 import { ReactiveFormsModule } from '@angular/forms';
 import { DialogModule } from '@angular/cdk/dialog';
 import { ReportSlideView } from './views/report-slide/report-slide.view';
@@ -20,7 +20,7 @@ import { ContraModule } from '@pestras/frontend/util/contra';
     ReportsListView,
     ReportSlideView,
     ReportPipe,
-    
+
   ],
   imports: [
     // Angular
@@ -40,11 +40,9 @@ import { ContraModule } from '@pestras/frontend/util/contra';
     PuiPreloaderModule,
     PuiSelectInput,
     PuiImageInput,
+    PuiExportToPdfDirective,
     // Features
-    DataVizFeatureModule,
-    
-      //export pdf 
-   ExportToPdfDirective,
+    DataVizFeatureModule
   ],
   exports: [
     ReportsListView,
