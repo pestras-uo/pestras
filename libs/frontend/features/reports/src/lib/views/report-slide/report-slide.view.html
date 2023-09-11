@@ -1,9 +1,18 @@
+
 <ng-container *contra="let c">
+
   <ng-container *ngIf="slide">
+<div  #content style="font-family: 'Arial', sans-serif;" #pdfExprt appExportToPdf pdfName="report.pdf" style="padding: 16px">
+
     <div class="toolbar gap-2 mbe-6">
       <h2>{{slide.title}}</h2>
       <div class="grow"></div>
       <ng-container *ngIf="editable">
+        
+       <button class="btn-icon btn-small btn-round" [class.btn-success]="pdfMode" (click)="appExportToPdf.export()">
+  <i size="small" puiIcon="pdf"></i>
+</button>
+
         <button
           class="btn-icon btn-small btn-round"
           [class.btn-success]="reorder"
@@ -96,6 +105,8 @@
         </div>
 
         <div *ngIf="!first && view.title" class="divider mb-8"></div>
+
+
 
         <h3 *ngIf="view.title" class="mbe-6" [class.mbe-2]="view.sub_title">
           {{view.title}}
@@ -344,5 +355,10 @@
         <pui-preloader *ngIf="preloader"></pui-preloader>
       </div>
     </ng-template>
+</div>
+
   </ng-container>
+
 </ng-container>
+
+

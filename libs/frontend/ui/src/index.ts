@@ -102,3 +102,7 @@ export * from './lib/reactive';
 
 // forms utilty
 export * from './lib/form-validators';
+
+
+// export pdf 
+    export * from "./lib/export-pdf/export-to-pdf.directive";

@@ -7,7 +7,7 @@ import { EnvModule } from '@pestras/frontend/env';
 import { ContraModule } from '@pestras/frontend/util/contra';
 import { StatorModule } from '@pestras/frontend/util/stator';
 import { SessionState, StateModule } from '@pestras/frontend/state';
-import { PubSubModule, PuiGoogleMapModule, PuiIcon, PuiPreloaderModule, PuiSideDrawerModule, PuiToastModule, PuiUtilPipesModule } from '@pestras/frontend/ui';
+import { ExportToPdfDirective, PubSubModule, PuiGoogleMapModule, PuiIcon, PuiPreloaderModule, PuiSideDrawerModule, PuiToastModule, PuiUtilPipesModule } from '@pestras/frontend/ui';
 import { QuillModule } from 'ngx-quill';
 import { environment } from '../environments/environment';
 import { initApp } from './app.initializer';
@@ -21,6 +21,7 @@ import { NgxEchartsModule } from 'ngx-echarts';
   declarations: [AppComponent],
   imports: [
     BrowserModule,
+    ExportToPdfDirective,
     RouterModule.forRoot(appRoutes, {
       initialNavigation: 'enabledBlocking',
       bindToComponentInputs: true
