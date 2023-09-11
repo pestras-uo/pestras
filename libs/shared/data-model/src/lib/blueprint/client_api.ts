@@ -35,3 +35,12 @@ export interface ClientApi {
   create_date: Date;
   last_modified: Date;
 }
+
+export interface ClientsApiLog {
+  api_serial: string;
+  data_store: string | null;
+  ip: string;
+  date: Date;
+  msg: string;
+  type: 'error' | 'info';
+}

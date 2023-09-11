@@ -25,6 +25,10 @@
                 "onlyDependOnLibsWithTags": ["scope:shared", "scope:backend"]
               },
               {
+                "sourceTag": "scope:clients-api",
+                "onlyDependOnLibsWithTags": ["scope:shared", "scope:backend"]
+              },
+              {
                 "sourceTag": "scope:platform",
                 "onlyDependOnLibsWithTags": ["scope:shared", "scope:frontend"]
               },

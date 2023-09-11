@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { ClientApi } from "@pestras/shared/data-model";
 import { Model } from "../../model";
 import { exists, getByBlueprint, getBySerial, nameExists } from "./read";
@@ -15,7 +16,7 @@ export { AddClientApiParamInput, UpdateClientApiParamInput } from './params';
 export class ClientApiModel extends Model<ClientApi> {
 
   getByBlueprint = getByBlueprint.bind(this);
-  getBySerial = getBySerial.bind(this);
+  getBySerial: (serial: string, projection?: any) => Promise<ClientApi> = getBySerial.bind(this);
   exists = exists.bind(this);
   nameExists = nameExists.bind(this);
 

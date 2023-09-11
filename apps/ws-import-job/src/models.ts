@@ -1,5 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { DataRecordsModel, DataStoresModel, WebServiceErrorLogModel, WebServiceLogModel } from "@pestras/backend/models";
+import { DataRecordsModel, DataStoresModel, WebServiceLogModel } from "@pestras/backend/models";
+import config from "./config";
 
 export class RecordsModel extends DataRecordsModel {
 
@@ -20,7 +21,6 @@ export class DataStoresExtendedModel extends DataStoresModel {
   }
 }
 
-export const dataStoresModel = new DataStoresExtendedModel('uo', 'dataStores');
+export const dataStoresModel = new DataStoresExtendedModel(config.dbUoName, 'dataStores');
 export const dataRecordsModel = new RecordsModel();
-export const wsLogModel = new WebServiceLogModel('uo-data', 'web-service-log');
-export const wsErrorLogModel = new WebServiceErrorLogModel('uo-data', 'web-service-error-log');
+export const wsLogModel = new WebServiceLogModel(config.dbUoDataName, 'web-service-log');

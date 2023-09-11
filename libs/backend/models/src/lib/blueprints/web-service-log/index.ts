@@ -1,13 +1,17 @@
-import { WebServiceLog } from "@pestras/shared/data-model";
+import { ApiQuery, WebServiceLog } from "@pestras/shared/data-model";
 import { Model } from "../../model";
 import { Serial } from "@pestras/shared/util";
 
 export class WebServiceLogModel extends Model<WebServiceLog> {
 
-  async insert(service: string, msg: string) {
+  search(query: ApiQuery<WebServiceLog>) {
+    return this.col.find(query).toArray();
+  }
+
+  async insert(service: string, msg: string, type: 'error' | 'info' = 'info') {
     const serial = Serial.gen('WSL');
     
-    await this.col.insertOne({ serial, service, date: new Date(), msg, sub_logs: [] });
+    await this.col.insertOne({ serial, service, type, date: new Date(), msg, sub_logs: [] });
 
     return serial;
   }
