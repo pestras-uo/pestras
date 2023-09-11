@@ -7,12 +7,9 @@ export async function update(
   this: DataRecordsModel,
   dataStore: DataStore,
   recordSerial: string,
-  input: { group: string; data: any; },
+  input: any,
   issuer: string
 ) {
-  const group = input.group;
-  const data = input.data;
-
   // type must be table
   if (dataStore.type !== DataStoreType.TABLE)
     throw new HttpError(HttpCode.FORBIDDEN, 'unsupportedDataStoreType');
@@ -34,13 +31,14 @@ export async function update(
     throw new HttpError(HttpCode.FORBIDDEN, 'updatesNotAllowed');
 
   const update: any = {};
-  const fields = dataStore.fields.filter(f => !f.system && !f.automated && f.group === group);
+  const inputFieldsNames = Object.keys(input);
+  const fields = dataStore.fields.filter(f => !f.system && !f.automated && inputFieldsNames.includes(f.name));
 
   for (const field of fields) {
     if (field.constant && record[field.name] !== null)
       continue;
 
-    let value = parseValue(data[field.name]);
+    let value = parseValue(input[field.name]);
 
     if (value === null) {
       if (field.required)

@@ -10,6 +10,5 @@ new Validall(RecordsValidators.CREATE, {
 });
 
 new Validall(RecordsValidators.UPDATE, {
-  group: { $type: 'string' },
-  data: { $type: 'object' }
+  $required: true, $type: 'object', $message: 'invalidRecordInput'
 });

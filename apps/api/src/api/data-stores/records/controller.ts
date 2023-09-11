@@ -55,12 +55,14 @@ export const controller = {
         const paths: Record<string, string> = {};
 
         for (const file of files) {
-          const tmpPath = path.join(config.uploadsDir, 'tmp', file.filename);
+          const tmpPath = path.join(config.uploadsDir, 'tmp');
           const destPath = path.join(config.uploadsDir, 'fields', req.params.serial, serial)
 
           await fs.copy(tmpPath, destPath);
 
           paths[file.fieldname] = `/uploads/fields/${req.params.serial}/${serial}/${file.filename}`;
+
+          await fs.remove(path.join(tmpPath, file.filename));
         }
 
         Object.assign(req.body, paths);
@@ -94,16 +96,16 @@ export const controller = {
         const paths: Record<string, string> = {};
 
         for (const file of files) {
-          const tmpPath = path.join(config.uploadsDir, 'tmp', file.filename);
+          const tmpPath = path.join(config.uploadsDir, 'tmp');
           const destPath = path.join(config.uploadsDir, 'fields', req.params.serial, req.params.record);
           
           await fs.copy(tmpPath, destPath);
           paths[file.fieldname] = `/uploads/fields/${req.params.serial}/${req.params.record}/${file.filename}`;
+
+          await fs.remove(path.join(tmpPath, file.filename));
           
           imgsToRemove.push(file.fieldname);
         }
-
-        console.log(paths);
 
         Object.assign(req.body, paths);
       }

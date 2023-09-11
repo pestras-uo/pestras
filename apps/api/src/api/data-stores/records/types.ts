@@ -24,7 +24,7 @@ export namespace RecordsApi {
 
   // update
   // --------------------------------------------------------------------------------
-  export type UpdateReq = Request<{ serial: string; record: string; }, any, { group: string; data: any; }>;
+  export type UpdateReq = Request<{ serial: string; record: string; }>;
   export type UpdateRes = Response<any, UserSession>;
 
   // History

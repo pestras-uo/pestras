@@ -47,8 +47,8 @@ export class RecordsState extends StatorEntitiesState<TableDataRecord> {
 
   // update
   // --------------------------------------------------------------------------------------
-  update(ds: string, serial: string, group: string, data: any) {
-    return this.service.update({ ds, serial }, { group, data })
+  update(ds: string, serial: string, data: any) {
+    return this.service.update({ ds, serial }, data)
       .pipe(tap(res => this._update(serial, res)));
   }
 
