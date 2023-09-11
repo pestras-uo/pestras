@@ -34,7 +34,7 @@ export class RecordsState extends StatorEntitiesState<TableDataRecord> {
   // selectors
   // --------------------------------------------------------------------------------------
   search(ds: string, query: Partial<ApiQuery<TableDataRecord>> | null = null) {
-    return this.service.search({ ds }, query ?? {});
+    return this.service.search({ ds }, query ?? { limit: 0 });
   }
 
   // create
