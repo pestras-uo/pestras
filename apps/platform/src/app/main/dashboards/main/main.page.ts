@@ -14,8 +14,8 @@ import { tap } from 'rxjs';
 export class MainPageComponent {
   readonly dashboards$ = computed(
     () => (this.tab() === 'public'
-      ? this.state.search({ skip: this.skip(), limit: 10 })
-      : this.state.search({ skip: this.skip(), limit: 10, search: { owner: this.session.get()?.serial } }))
+      ? this.state.search({ skip: this.skip(), limit: 10, search: { topic: null } })
+      : this.state.search({ skip: this.skip(), limit: 10, search: { topic: null, owner: this.session.get()?.serial } }))
       .pipe(tap(res => this.count = res.count))
   );
 

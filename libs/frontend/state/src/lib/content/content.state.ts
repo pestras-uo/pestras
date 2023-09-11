@@ -13,7 +13,7 @@ export class ContentState extends StatorEntitiesState<EntityContentViews> {
     private service: ContentService,
     private channel: StatorChannel
   ) {
-    super('content-views', 'entity', ['10m'], true);
+    super('content-views', 'entity', ['10m']);
 
     this.channel.select(SessionEnd)
       .subscribe(() => this._clear());

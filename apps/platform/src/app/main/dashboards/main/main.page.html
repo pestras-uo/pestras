@@ -44,7 +44,7 @@
         <ng-container *ngIf="dashboards$() | async as dashboards">
           <div
             class="card-body pi-0 grid cols-3 gap-6"
-            *ngIf="dashboards.results.length"
+            *ngIf="dashboards.results.length else noData"
           >
             <div class="card" *ngFor="let d of dashboards.results">
               <h4 class="card-header">{{d.title}}</h4>
@@ -56,13 +56,15 @@
             </div>
           </div>
 
-          <div class="card-body">
-            <no-data-placeholder-widget
-              [actionName]="c['addNew']"
-              (action)="openDialog(addTmp)"
-              >{{c['noDataMsg']}}</no-data-placeholder-widget
-            >
-          </div>
+          <ng-template #noData>
+            <div class="card-body">
+              <no-data-placeholder-widget
+                [actionName]="c['addNew']"
+                (action)="openDialog(addTmp)"
+                >{{c['noDataMsg']}}</no-data-placeholder-widget
+              >
+            </div>
+          </ng-template>
         </ng-container>
       </div>
     </div>
