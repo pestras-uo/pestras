@@ -9,7 +9,6 @@ import { DetailsPageComponent } from './details/details.page';
 import { DialogModule } from '@angular/cdk/dialog';
 import { DragDropModule } from '@angular/cdk/drag-drop';
 import { SideMenuViewComponent } from './views/side-menu/side-menu.view';
-import { AccessViewComponent } from './views/access/access.view';
 import { ContraModule } from '@pestras/frontend/util/contra';
 import {
   PuiIcon,
@@ -32,13 +31,13 @@ import { UsersFeatureModule } from '@pestras/frontend/features/users';
 import { UsersGroupsFeatureModule } from '@pestras/frontend/features/users-groups';
 import { SessionFeatureModule } from '@pestras/frontend/features/session';
 import { MainPageComponent } from './main/main.page';
+import { EntityAccessFeatureModule } from '@pestras/frontend/features/entity-access';
 
 @NgModule({
   declarations: [
     DashboardsRouterComponent,
     DetailsPageComponent,
     SideMenuViewComponent,
-    AccessViewComponent,
     MainPageComponent,
   ],
   imports: [
@@ -72,6 +71,7 @@ import { MainPageComponent } from './main/main.page';
     UsersFeatureModule,
     UsersGroupsFeatureModule,
     SessionFeatureModule,
+    EntityAccessFeatureModule
   ],
 })
 export class DashboardsModule {}

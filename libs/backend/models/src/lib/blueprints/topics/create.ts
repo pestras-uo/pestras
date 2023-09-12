@@ -19,7 +19,6 @@ export async function create(
     ...input,
     create_date: date,
     last_modified: date,
-    access: { orgunits: [], users: [], groups: [] },
     serial: Serial.gen('TPC'),
     owner: issuer.serial
   };

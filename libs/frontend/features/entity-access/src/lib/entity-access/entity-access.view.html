@@ -5,7 +5,7 @@
 
   <div class="divider mbs-4 mbe-8"></div>
 
-  <div class="grid cols-3 gap-8">
+  <div class="grid cols-3 gap-8" *ngIf="access$ | async as access">
     <!--  orgunits -->
     <div class="card">
       <div class="card-header">
@@ -21,7 +21,7 @@
 
       <div
         class="card-body"
-        *ngIf="'' | orgunits | async | arrayFilter: filterEntity: dashboard.access?.orgunits as orgunits"
+        *ngIf="'' | orgunits | async | arrayFilter: filterEntity: access?.orgunits as orgunits"
       >
         <ng-container *ngIf="orgunits.length else noData">
           <div
@@ -57,7 +57,7 @@
 
       <div
         class="card-body"
-        *ngIf="'' | users | async | arrayFilter: filterEntity: dashboard.access?.users as users"
+        *ngIf="'' | users | async | arrayFilter: filterEntity: access?.users as users"
       >
         <ng-container *ngIf="users.length else noData">
           <div
@@ -93,7 +93,7 @@
 
       <div
         class="card-body"
-        *ngIf="'' | usersGroups | async | arrayFilter: filterEntity: dashboard.access?.groups as groups"
+        *ngIf="'' | usersGroups | async | arrayFilter: filterEntity: access?.groups as groups"
       >
         <ng-container *ngIf="groups.length else noData">
           <div
@@ -133,7 +133,7 @@
           <label for="add-new">{{c[type]}}</label>
           <div class="fc" *ngIf="type === 'orgunit'">
             <pui-select-input
-              *ngIf="'' | orgunits | async | arrayFilter: filterEntity: dashboard.access?.orgunits: true | arrayMap: mapEntity as orgunits"
+              *ngIf="'' | orgunits | async | arrayFilter: filterEntity: access?.orgunits: true | arrayMap: mapEntity as orgunits"
               [list]="orgunits"
               labelRef="add-new"
               [formControl]="control"
@@ -142,7 +142,7 @@
           </div>
           <div class="fc" *ngIf="type === 'users'">
             <pui-select-input
-              *ngIf="'' | users | async | arrayFilter: filterEntity: dashboard.access?.users: true | arrayMap: mapEntity as users"
+              *ngIf="'' | users | async | arrayFilter: filterEntity: access?.users: true | arrayMap: mapEntity as users"
               [list]="users"
               labelRef="add-new"
               [formControl]="control"
@@ -151,7 +151,7 @@
           </div>
           <div class="fc" *ngIf="type === 'groups'">
             <pui-select-input
-              *ngIf="'' | usersGroups | async | arrayFilter: filterEntity: dashboard.access?.groups: true | arrayMap: mapEntity as groups"
+              *ngIf="'' | usersGroups | async | arrayFilter: filterEntity: access?.groups: true | arrayMap: mapEntity as groups"
               [list]="groups"
               labelRef="add-new"
               [formControl]="control"

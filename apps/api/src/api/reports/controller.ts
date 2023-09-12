@@ -101,7 +101,11 @@ export const controller = {
 
         await dataVizModel.deleteManyDataViz(dataVizViews.map(v => v.content));
 
-        await fs.remove(imagesViews.map(v => path.join(config.uploadsDir, 'images', req.params.serial, v.content.slice(v.content.lastIndexOf('/') + 1))));
+        imagesViews.forEach(async v => {
+          const img = path.join(config.uploadsDir, 'images', req.params.serial, v.content.slice(v.content.lastIndexOf('/') + 1));
+
+          await fs.remove(img);
+        });
       }
 
     } catch (error) {

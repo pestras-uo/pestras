@@ -13,7 +13,6 @@ export async function create(
   const report: Report = {
     ...input,
     serial: Serial.gen("RPT"),
-    access: { orgunits: [], users: [], groups: [] },
     collaborators: [],
     slides: [],
     slides_order: [],

@@ -48,6 +48,9 @@
       "@pestras/frontend/features/data-viz": [
         "libs/frontend/features/data-viz/src/index.ts"
       ],
+      "@pestras/frontend/features/entity-access": [
+        "libs/frontend/features/entity-access/src/index.ts"
+      ],
       "@pestras/frontend/features/orgunits": [
         "libs/frontend/features/orgunits/src/index.ts"
       ],

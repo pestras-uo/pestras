@@ -9,7 +9,6 @@ import { DialogModule } from '@angular/cdk/dialog';
 import { SideMenuView } from './views/side-menu/side-menu.view';
 import { DataStoresListView } from './views/data-stores-list/data-stores-list.view';
 import { DataStoresRecordsView } from './views/data-stores-records/data-stores-records.view';
-import { AccessView } from './views/access/access.view';
 import { MainPage } from './main/main.page';
 import { ContraModule } from '@pestras/frontend/util/contra';
 import { PubSubModule, PuiIcon, PuiInfiniteScroll, PuiPreloaderModule, PuiSelectInput, PuiUtilPipesModule } from '@pestras/frontend/ui';
@@ -27,6 +26,7 @@ import { UsersFeatureModule } from '@pestras/frontend/features/users';
 import { SessionFeatureModule } from '@pestras/frontend/features/session';
 import { BlueprintsFeatureModule } from '@pestras/frontend/features/blueprints';
 import { UsersGroupsFeatureModule } from '@pestras/frontend/features/users-groups';
+import { EntityAccessFeatureModule } from '@pestras/frontend/features/entity-access';
 
 
 @NgModule({
@@ -36,7 +36,6 @@ import { UsersGroupsFeatureModule } from '@pestras/frontend/features/users-group
     SideMenuView,
     DataStoresListView,
     DataStoresRecordsView,
-    AccessView,
     MainPage
   ],
   imports: [
@@ -69,7 +68,8 @@ import { UsersGroupsFeatureModule } from '@pestras/frontend/features/users-group
     UsersFeatureModule,
     UsersGroupsFeatureModule,
     SessionFeatureModule,
-    BlueprintsFeatureModule
+    BlueprintsFeatureModule,
+    EntityAccessFeatureModule
   ]
 })
 export class TopicsModule { }
