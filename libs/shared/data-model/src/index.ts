@@ -8,7 +8,6 @@ export * from './lib/dashboard';
 export * from './lib/entity-view';
 export * from './lib/message';
 export * from './lib/notifications';
-export * from './lib/region';
 export * from './lib/report';
 export * from './lib/statistics';
 export * from './lib/util';
