@@ -1,29 +1,53 @@
 import { Auth } from "@pestras/shared/data-model";
 import { Model } from "../../model";
-import { create } from "./create";
-import { getAll, getByUserSerial } from "./read";
-import { updatePassword } from "./update-password";
-import { exists } from "./util";
 
 export class AuthModel extends Model<Auth> {
 
   // getters
   // ---------------------------------------------------------------------------------------
-  getAll = getAll.bind(this);
-  getByUserSerial = getByUserSerial.bind(this);
+  getAll(this: AuthModel, projection?: Document) {
+    const cursor = this.col.find({});
+  
+    return projection
+      ? cursor.project<Auth>(projection).toArray()
+      : cursor.toArray();
+  }
+
+  async getByUserSerial(this: AuthModel, serial: string, projection?: unknown) {
+    return await this.col.findOne({ user: serial }, { projection });
+  }
 
 
   // util
   // ---------------------------------------------------------------------------------------
-  exists = exists.bind(this);
+  async exists(this: AuthModel, user_serial: string) {
+    return (await this.col.countDocuments({ user: user_serial })) > 0;
+  }
 
 
   // create
   // ---------------------------------------------------------------------------------------
-  create = create.bind(this);
+  async create(auth: Pick<Auth, 'user' | 'password'>) {
+    const date = new Date();
 
+    await this.col.insertOne({
+      user: auth.user,
+      password: auth.password,
+      create_date: date,
+      last_modified: date
+    });
+
+    return date;
+  }
 
   // update password
   // ---------------------------------------------------------------------------------------
-  updatePassword = updatePassword.bind(this);
+  async updatePassword(this: AuthModel, user_serial: string, password: string) {
+    await this.col.updateOne(
+      { user: user_serial },
+      { $set: { password, last_modified: new Date() } }
+    );
+  
+    return true;
+  }
 }

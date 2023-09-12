@@ -1,4 +1,4 @@
-import { contentModel, dashboardsModel, dataVizModel } from "../../models";
+import { contentModel, dashboardsModel, dataVizModel, entityAccessModel } from "../../models";
 import { DashboardsApi } from "./types";
 import { NextFunction } from 'express';
 
@@ -39,6 +39,7 @@ export const controller = {
     try {
       const db = await dashboardsModel.create(req.body, res.locals.issuer);
       await contentModel.create(db.serial);
+      await entityAccessModel.create(db.serial);
   
       res.json(db);
       
@@ -179,63 +180,6 @@ export const controller = {
     }
   },
 
-
-  // access
-  // -----------------------------------------------------------------------------
-  async addOrgunit(req: DashboardsApi.AddOrgunitReq, res: DashboardsApi.AddOrgunitRes, next: NextFunction) {
-    try {
-      res.json(await dashboardsModel.addAccessOrgunit(req.params.serial, req.params.orgunit, res.locals.issuer))
-      
-    } catch (error) {
-      next(error);
-    }
-  },
-
-  async removeOrgunit(req: DashboardsApi.RemoveOrgunitReq, res: DashboardsApi.RemoveOrgunitRes, next: NextFunction) {
-    try {
-      res.json(await dashboardsModel.removeAccessOrgunit(req.params.serial, req.params.orgunit, res.locals.issuer))
-      
-    } catch (error) {
-      next(error);
-    }
-  },
-
-  async addUser(req: DashboardsApi.AddUserReq, res: DashboardsApi.AddUserRes, next: NextFunction) {
-    try {
-      res.json(await dashboardsModel.addAccessUser(req.params.serial, req.params.user, res.locals.issuer))
-      
-    } catch (error) {
-      next(error);
-    }
-  },
-
-  async removeUser(req: DashboardsApi.RemoveUserReq, res: DashboardsApi.RemoveUserRes, next: NextFunction) {
-    try {
-      res.json(await dashboardsModel.removeAccessUser(req.params.serial, req.params.user, res.locals.issuer))
-      
-    } catch (error) {
-      next(error);
-    }
-  },
-
-  async addGroup(req: DashboardsApi.AddGroupReq, res: DashboardsApi.AddGroupRes, next: NextFunction) {
-    try {
-      res.json(await dashboardsModel.addAccessGroup(req.params.serial, req.params.group, res.locals.issuer))
-      
-    } catch (error) {
-      next(error);
-    }
-  },
-
-  async removeGroup(req: DashboardsApi.RemoveGroupReq, res: DashboardsApi.RemoveGroupRes, next: NextFunction) {
-    try {
-      res.json(await dashboardsModel.removeAccessGroup(req.params.serial, req.params.group, res.locals.issuer))
-      
-    } catch (error) {
-      next(error);
-    }
-  },
-
   // Delete
   // -------------------------------------------------------------------------------
   async delete(req: DashboardsApi.DeleteReq, res: DashboardsApi.DeleteRes, next: NextFunction) {
@@ -250,6 +194,7 @@ export const controller = {
       res.json(await dashboardsModel.delete(req.params.serial, res.locals.issuer));
 
       contentModel.delete(req.params.serial);
+      entityAccessModel.delete(req.params.serial);
 
     } catch (error) {
       next(error);

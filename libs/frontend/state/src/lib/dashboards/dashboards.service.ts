@@ -110,43 +110,4 @@ export class DashboardsService {
 
     return this.http.delete<DashboardsApi.RemoveView.Response>(path);
   }
-
-  // access
-  // ---------------------------------------------------------------------------------------------------
-  // Orgunits
-  addAccessOrgunit(params: DashboardsApi.AddAccessOrgunit.Params) {
-    const path = injectURLPayload(this.envServ.env.api + DashboardsApi.AddAccessOrgunit.path, params);
-
-    return this.http.post<DashboardsApi.AddAccessOrgunit.Response>(path, null);
-  }
-
-  removeAccessOrgunit(params: DashboardsApi.RemoveAccessOrgunit.Params) {
-    const path = injectURLPayload(this.envServ.env.api + DashboardsApi.RemoveAccessOrgunit.path, params);
-
-    return this.http.delete<DashboardsApi.RemoveAccessOrgunit.Response>(path);
-  }
-
-  // Users
-  addAccessUser(params: DashboardsApi.AddAccessUser.Params) {
-    const path = injectURLPayload(this.envServ.env.api + DashboardsApi.AddAccessUser.path, params);
-
-    return this.http.post<DashboardsApi.AddAccessUser.Response>(path, null);
-  }
-  removeAccessUser(params: DashboardsApi.RemoveAccessUser.Params) {
-    const path = injectURLPayload(this.envServ.env.api + DashboardsApi.RemoveAccessUser.path, params);
-
-    return this.http.delete<DashboardsApi.RemoveAccessUser.Response>(path);
-  }
-
-  // Groups
-  addAccessGroup(params: DashboardsApi.AddAccessGroup.Params) {
-    const path = injectURLPayload(this.envServ.env.api + DashboardsApi.AddAccessGroup.path, params);
-
-    return this.http.post<DashboardsApi.AddAccessGroup.Response>(path, null);
-  }
-  removeAccessGroup(params: DashboardsApi.RemoveAccessGroup.Params) {
-    const path = injectURLPayload(this.envServ.env.api + DashboardsApi.RemoveAccessGroup.path, params);
-
-    return this.http.delete<DashboardsApi.RemoveAccessGroup.Response>(path);
-  }
 }

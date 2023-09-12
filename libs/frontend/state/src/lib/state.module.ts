@@ -44,6 +44,8 @@ import { DataStoresService } from "./data-stores/data-stores.service";
 import { NotificationsService } from "./notifications/notifications.service";
 import { NotificationsState } from "./notifications/notifications.state";
 import { ReportsService } from "./reports/reports.service";
+import { EntityAccessService } from "./entity-access/entity-access.service";
+import { EntityAccessState } from "./entity-access/entity-access.state";
 
 @NgModule({
   imports: [EnvModule],
@@ -67,7 +69,8 @@ import { ReportsService } from "./reports/reports.service";
     WorkspaceService,
     DatavizService,
     DataStoresService,
-    NotificationsService
+    NotificationsService,
+    EntityAccessService
   ]
 })
 export class StateModule {
@@ -100,7 +103,8 @@ export class StateModule {
         DataVizState,
         DataStoresState,
         DataStoreResolver,
-        NotificationsState
+        NotificationsState,
+        EntityAccessState
       ]
     }
   }

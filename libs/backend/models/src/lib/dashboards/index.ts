@@ -1,61 +1,49 @@
-import { Dashboard } from "@pestras/shared/data-model";
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import { ApiQuery, ApiQueryResults, Dashboard, DashboardSlide, DashboardSlideView, User } from "@pestras/shared/data-model";
 import { Model } from "../model";
 import { exists, getByTopic, getBySerial, search, titleExists } from "./read";
-import { create } from "./create";
-import { update } from "./update";
-import { addSlide, removeSlide, updateSlide, updateSlidesOrder } from "./slides";
-import { addView, removeView, updateView, updateViewDataViz, updateViewsOrder } from "./views";
-import { addAccessGroup, addAccessOrgunit, addAccessUser, removeAccessGroup, removeAccessOrgunit, removeAccessUser } from "./access";
+import { create, CreateDashboardInput } from "./create";
+import { update, UpdateDashboardInput } from "./update";
+import { addSlide, removeSlide, updateSlide, updateSlidesOrder, AddDashboardSlideInput, UpdateDashboardSlideInput } from "./slides";
+import { addView, removeView, updateView, updateViewDataViz, updateViewsOrder, UpdateDashbaordViewInput } from "./views";
 import { deleteDashboard } from "./delete";
 
-export { CreateDashboardInput } from './create';
-export { UpdateDashboardInput } from './update';
-export { AddDashboardSlideInput, UpdateDashboardSlideInput } from './slides';
-export { UpdateDashbaordViewInput } from './views';
+export { CreateDashboardInput, UpdateDashboardInput, AddDashboardSlideInput, UpdateDashboardSlideInput, UpdateDashbaordViewInput };
 
 export class DashboardsModel extends Model<Dashboard> {
 
   // read
   // ------------------------------------------------------------------------
-  search = search.bind(this);
-  getByTopic = getByTopic.bind(this);
-  getBySerial = getBySerial.bind(this);
-  exists = exists.bind(this);
-  titleExists = titleExists.bind(this);
+  search: (query: Partial<ApiQuery<Dashboard>>) => Promise<ApiQueryResults<Dashboard>> = search.bind(this);
+  getByTopic: (topic: string, user: User, projection?: any) => Promise<Dashboard[]> = getByTopic.bind(this);
+  getBySerial: (serial: string, projection?: any) => Promise<Dashboard> = getBySerial.bind(this);
+  exists: (serial: string) => Promise<boolean> = exists.bind(this);
+  titleExists: (title: string, exclude?: string) => Promise<boolean> = titleExists.bind(this);
 
   // create
   // ------------------------------------------------------------------------
-  create = create.bind(this);
+  create: (input: CreateDashboardInput, issuer: User) => Promise<Dashboard> = create.bind(this);
 
   // update
   // ------------------------------------------------------------------------
-  update = update.bind(this);
+  update: (serial: string, input: UpdateDashboardInput, issuer: User) => Promise<Date> = update.bind(this);
   
   // slides
   // ------------------------------------------------------------------------
-  addSlide = addSlide.bind(this);
-  updateSlidesOrder = updateSlidesOrder.bind(this);
-  updateSlide = updateSlide.bind(this);
-  removeSlide = removeSlide.bind(this);
+  addSlide: (serial: string, input: AddDashboardSlideInput, issuer: User) => Promise<{ slide: DashboardSlide; date: Date; }> = addSlide.bind(this);
+  updateSlidesOrder: (serial: string, input: string[], issuer: User) => Promise<Date> = updateSlidesOrder.bind(this);
+  updateSlide: (serial: string, slide: string, input: UpdateDashboardSlideInput, issuer: User) => Promise<Date> = updateSlide.bind(this);
+  removeSlide: (serial: string, slide: string, issuer: User) => Promise<Date> = removeSlide.bind(this);
   
   // data viz
   // ------------------------------------------------------------------------
-  addView = addView.bind(this);
-  updateViewsOrder = updateViewsOrder.bind(this);
-  updateView = updateView.bind(this);
-  updateViewDataViz = updateViewDataViz.bind(this);
-  removeView = removeView.bind(this);
-
-  // access
-  // -------------------------------------------------------------------------------------
-  addAccessOrgunit = addAccessOrgunit.bind(this);
-  removeAccessOrgunit = removeAccessOrgunit.bind(this);
-  addAccessUser = addAccessUser.bind(this);
-  removeAccessUser = removeAccessUser.bind(this);
-  addAccessGroup = addAccessGroup.bind(this);
-  removeAccessGroup = removeAccessGroup.bind(this);
+  addView: (serial: string, input: Omit<DashboardSlideView, 'serial'>, issuer: User) => Promise<{ view: DashboardSlideView; date: Date; }> = addView.bind(this);
+  updateViewsOrder: (serial: string, slide: string, input: string[], issuer: User) => Promise<Date> = updateViewsOrder.bind(this);
+  updateView: (serial: string, view: string, input: UpdateDashbaordViewInput, issuer: User) => Promise<Date> = updateView.bind(this);
+  updateViewDataViz: (serial: string, view: string, dataViz: string, issuer: User) => Promise<Date> = updateViewDataViz.bind(this);
+  removeView: (serial: string, view: string, issuer: User) => Promise<Date> = removeView.bind(this);
 
   // delete
   // ------------------------------------------------------------------------
-  delete = deleteDashboard.bind(this);
+  delete: (serial: string, issuer: User) => Promise<boolean> = deleteDashboard.bind(this);
 }

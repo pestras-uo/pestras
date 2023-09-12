@@ -2,32 +2,31 @@ import { Orgunit } from '@pestras/shared/data-model';
 import { Model } from '../../model';
 import { getAll, getBySerial } from './read';
 import { exists } from './util';
-import { create } from './create';
-import { update, updateLogo, updateRegions } from './update';
+import { create, CreateOrgunitInput } from './create';
+import { update, updateLogo, updateRegions, UpdateOrgunitInput } from './update';
 
-export { CreateOrgunitInput } from './create';
-export { UpdateOrgunitInput } from './update';
+export { UpdateOrgunitInput, CreateOrgunitInput };
 
 export class OrgunitsModel extends Model<Orgunit> {
 
   // Getters
   // ----------------------------------------------------------------------------
-  getAll = getAll.bind(this);
-  getBySerial = getBySerial.bind(this);
+  getAll: (projection?: unknown) => Promise<Orgunit[]> = getAll.bind(this);
+  getBySerial: (serial: string, projection?: unknown) => Promise<Orgunit> = getBySerial.bind(this);
 
   // Util
   // ----------------------------------------------------------------------------
-  exists = exists.bind(this);
+  exists: (serial: string) => Promise<boolean> = exists.bind(this);
 
   // create
   // ----------------------------------------------------------------------------
-  create = create.bind(this);
+  create: (input: CreateOrgunitInput, issuer: string) => Promise<Orgunit> = create.bind(this);
 
   // update
   // ----------------------------------------------------------------------------
-  update = update.bind(this);
-  updateLogo = updateLogo.bind(this);
-  updateRegions = updateRegions.bind(this);
+  update: (serial: string, input: UpdateOrgunitInput, issuer: string) => Promise<Date> = update.bind(this);
+  updateLogo: (serial: string, logo: string | null, issuer: string) => Promise<Date> = updateLogo.bind(this);
+  updateRegions: (serial: string, regions: string[], issuer: string) => Promise<Date> = updateRegions.bind(this);
 
   // TODO: delete orgunit
   // ----------------------------------------------------------------------------

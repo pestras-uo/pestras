@@ -9,19 +9,19 @@ export class CommentsModel extends Model<Comment> {
 
   // getters
   // -----------------------------------------------------------------------------------
-  getComments = getComments.bind(this);
-  getCommentors = getCommentors.bind(this);
+  getComments: (record: string, skip?: number, limit?: number) => Promise<Comment[]> = getComments.bind(this);
+  getCommentors: (record: string) => Promise<string[]> = getCommentors.bind(this);
 
   // create
   // -----------------------------------------------------------------------------------
-  create = create.bind(this);
+  create: (record: string, text: string, issuer: string) => Promise<Comment> = create.bind(this);
 
   // update
   // -----------------------------------------------------------------------------------
-  update = update.bind(this);
+  update: (serial: string, text: string, issuer: string) => Promise<Date> = update.bind(this);
 
   // delete
   // -----------------------------------------------------------------------------------
-  delete = deleteComment.bind(this);
-  deleteByRecord = deleteByRecord.bind(this);
+  delete: (serial: string, issuer: string) => Promise<boolean> = deleteComment.bind(this);
+  deleteByRecord: (record: string) => Promise<boolean> = deleteByRecord.bind(this);
 }

@@ -32,36 +32,4 @@ export const topicsRoutes = Router()
     apiAuth([Role.ADMIN]),
     validate(TopicsValidators.UPDATE),
     controller.update
-  )
-  // access
-  // --------------------------------------------------------------------------
-  .post(
-    '/:serial/access/orgunits/:orgunit',
-    apiAuth([Role.ADMIN]),
-    controller.addOrgunit
-  )
-  .delete(
-    '/:serial/access/orgunits/:orgunit',
-    apiAuth([Role.ADMIN]),
-    controller.removeOrgunit
-  )
-  .post(
-    '/:serial/access/users/:user',
-    apiAuth([Role.ADMIN]),
-    controller.addUser
-  )
-  .delete(
-    '/:serial/access/users/:user',
-    apiAuth([Role.ADMIN]),
-    controller.removeUser
-  )
-  .post(
-    '/:serial/access/groups/:group',
-    apiAuth([Role.ADMIN]),
-    controller.addGroup
-  )
-  .delete(
-    '/:serial/access/groups/:group',
-    apiAuth([Role.ADMIN]),
-    controller.removeGroup
   );

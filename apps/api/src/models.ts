@@ -20,7 +20,8 @@ import {
   RecordWorkflowModel,
   DataRecordsModel,
   WorkspaceModel,
-  UsersGroupsModel
+  UsersGroupsModel,
+  EntityAccessModel
 } from '@pestras/backend/models';
 
 export const orgunitsModel = new OrgunitsModel('ad', 'orgunits');
@@ -28,6 +29,8 @@ export const usersModel = new UsersModel('ad', 'users');
 export const authModel = new AuthModel('ad', 'auth');
 export const regionsModel = new RegionsModel('ad', 'regions');
 export const usersGroupsModel = new UsersGroupsModel('ad', 'groups');
+
+export const entityAccessModel = new EntityAccessModel('uo', 'entitiesAccess');
 
 export const activitiesModel = new ActivitiesModel('uo', 'activities');
 

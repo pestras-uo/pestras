@@ -68,26 +68,6 @@ export namespace DashboardsApi {
   export type RemoveViewReq = Request<{ serial: string; view: string; }>;
   export type RemoveViewRes = Response<Date, UserSession>;
 
-  // access
-  // ----------------------------------------------------------------------------
-  export type AddOrgunitReq = Request<{ serial: string; orgunit: string; }>;
-  export type AddOrgunitRes = Response<boolean, UserSession>;
-
-  export type RemoveOrgunitReq = Request<{ serial: string; orgunit: string; }>;
-  export type RemoveOrgunitRes = Response<boolean, UserSession>;
-
-  export type AddUserReq = Request<{ serial: string; user: string; }>;
-  export type AddUserRes = Response<boolean, UserSession>;
-
-  export type RemoveUserReq = Request<{ serial: string; user: string; }>;
-  export type RemoveUserRes = Response<boolean, UserSession>;
-
-  export type AddGroupReq = Request<{ serial: string; group: string; }>;
-  export type AddGroupRes = Response<boolean, UserSession>;
-
-  export type RemoveGroupReq = Request<{ serial: string; group: string; }>;
-  export type RemoveGroupRes = Response<boolean, UserSession>;
-
   // Delete
   // -------------------------------------------------------------------------------
   export type DeleteReq = Request<{ serial: string }>;

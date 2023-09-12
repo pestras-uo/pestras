@@ -35,43 +35,4 @@ export class TopicsService {
 
     return this.http.put<TopicsApi.Update.Response>(path, body);
   }
-
-  // access
-  // ---------------------------------------------------------------------------------------------------
-  // Orgunits
-  addAccessOrgunit(params: TopicsApi.AddAccessOrgunit.Params) {
-    const path = injectURLPayload(this.envServ.env.api + TopicsApi.AddAccessOrgunit.path, params);
-
-    return this.http.post<TopicsApi.AddAccessOrgunit.Response>(path, null);
-  }
-
-  removeAccessOrgunit(params: TopicsApi.RemoveAccessOrgunit.Params) {
-    const path = injectURLPayload(this.envServ.env.api + TopicsApi.RemoveAccessOrgunit.path, params);
-
-    return this.http.delete<TopicsApi.RemoveAccessOrgunit.Response>(path);
-  }
-
-  // Users
-  addAccessUser(params: TopicsApi.AddAccessUser.Params) {
-    const path = injectURLPayload(this.envServ.env.api + TopicsApi.AddAccessUser.path, params);
-
-    return this.http.post<TopicsApi.AddAccessUser.Response>(path, null);
-  }
-  removeAccessUser(params: TopicsApi.RemoveAccessUser.Params) {
-    const path = injectURLPayload(this.envServ.env.api + TopicsApi.RemoveAccessUser.path, params);
-
-    return this.http.delete<TopicsApi.RemoveAccessUser.Response>(path);
-  }
-
-  // Groups
-  addAccessGroup(params: TopicsApi.AddAccessGroup.Params) {
-    const path = injectURLPayload(this.envServ.env.api + TopicsApi.AddAccessGroup.path, params);
-
-    return this.http.post<TopicsApi.AddAccessGroup.Response>(path, null);
-  }
-  removeAccessGroup(params: TopicsApi.RemoveAccessGroup.Params) {
-    const path = injectURLPayload(this.envServ.env.api + TopicsApi.RemoveAccessGroup.path, params);
-
-    return this.http.delete<TopicsApi.RemoveAccessGroup.Response>(path);
-  }
 }

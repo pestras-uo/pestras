@@ -6,9 +6,12 @@ export async function create(
   ds: string,
   record: string
 ) {
-  return this.db.collection(`workflow_${ds}`).insertOne({
+  const wf = {
     record,
     state: WorkflowState.DRAFT,
     approve_date: null
-  });
+  }
+  await this.db.collection(`workflow_${ds}`).insertOne(wf);
+
+  return wf;
 }

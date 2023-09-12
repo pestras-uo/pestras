@@ -12,3 +12,4 @@ export * from './lib/report';
 export * from './lib/statistics';
 export * from './lib/util';
 export * from './lib/workspace';
+export * from './lib/access';
