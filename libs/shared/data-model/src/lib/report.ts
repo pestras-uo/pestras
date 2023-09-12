@@ -1,5 +1,3 @@
-import { EntityAccess } from "./active-directory/access";
-
 export enum ReportViewType {
   RICH_TEXT = 'richText',
   IMAGE = 'image',
@@ -28,8 +26,6 @@ export interface ReportSlide {
 export interface Report {
   serial: string;
   topic: string;
-
-  access: EntityAccess;
   
   /** grant access to specific users */
   collaborators: string[];

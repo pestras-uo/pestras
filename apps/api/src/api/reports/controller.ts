@@ -1,4 +1,4 @@
-import { contentModel, dataVizModel, reportsModel } from "../../models";
+import { contentModel, dataVizModel, entityAccessModel, reportsModel } from "../../models";
 import { ReportsApi } from "./types";
 import fs from 'fs-extra';
 import path from 'path';
@@ -35,7 +35,10 @@ export const controller = {
   async create(req: ReportsApi.CreateReq, res: ReportsApi.CreateRes, next: NextFunction) {
     try {
       const report = await reportsModel.create(req.body, res.locals.issuer);
+
       await contentModel.create(report.serial);
+      await entityAccessModel.create(report.serial);
+
       res.json();
 
     } catch (error) {
@@ -98,7 +101,11 @@ export const controller = {
 
         await dataVizModel.deleteManyDataViz(dataVizViews.map(v => v.content));
 
-        await fs.remove(imagesViews.map(v => path.join(config.uploadsDir, 'images', req.params.serial, v.content.slice(v.content.lastIndexOf('/') + 1))));
+        imagesViews.forEach(async v => {
+          const img = path.join(config.uploadsDir, 'images', req.params.serial, v.content.slice(v.content.lastIndexOf('/') + 1));
+
+          await fs.remove(img);
+        });
       }
 
     } catch (error) {
@@ -195,69 +202,14 @@ export const controller = {
     }
   },
 
-
-  // access
-  // -----------------------------------------------------------------------------
-  async addOrgunit(req: ReportsApi.AddOrgunitReq, res: ReportsApi.AddOrgunitRes, next: NextFunction) {
-    try {
-      res.json(await reportsModel.addAccessOrgunit(req.params.serial, req.params.orgunit, res.locals.issuer))
-
-    } catch (error) {
-      next(error);
-    }
-  },
-
-  async removeOrgunit(req: ReportsApi.RemoveOrgunitReq, res: ReportsApi.RemoveOrgunitRes, next: NextFunction) {
-    try {
-      res.json(await reportsModel.removeAccessOrgunit(req.params.serial, req.params.orgunit, res.locals.issuer))
-
-    } catch (error) {
-      next(error);
-    }
-  },
-
-  async addUser(req: ReportsApi.AddUserReq, res: ReportsApi.AddUserRes, next: NextFunction) {
-    try {
-      res.json(await reportsModel.addAccessUser(req.params.serial, req.params.user, res.locals.issuer))
-
-    } catch (error) {
-      next(error);
-    }
-  },
-
-  async removeUser(req: ReportsApi.RemoveUserReq, res: ReportsApi.RemoveUserRes, next: NextFunction) {
-    try {
-      res.json(await reportsModel.removeAccessUser(req.params.serial, req.params.user, res.locals.issuer))
-
-    } catch (error) {
-      next(error);
-    }
-  },
-
-  async addGroup(req: ReportsApi.AddGroupReq, res: ReportsApi.AddGroupRes, next: NextFunction) {
-    try {
-      res.json(await reportsModel.addAccessGroup(req.params.serial, req.params.group, res.locals.issuer))
-
-    } catch (error) {
-      next(error);
-    }
-  },
-
-  async removeGroup(req: ReportsApi.RemoveGroupReq, res: ReportsApi.RemoveGroupRes, next: NextFunction) {
-    try {
-      res.json(await reportsModel.removeAccessGroup(req.params.serial, req.params.group, res.locals.issuer))
-
-    } catch (error) {
-      next(error);
-    }
-  },
-
   // Delete
   // -------------------------------------------------------------------------------
   async delete(req: ReportsApi.DeleteReq, res: ReportsApi.DeleteRes, next: NextFunction) {
     try {
       res.json(await reportsModel.delete(req.params.serial, res.locals.issuer));
+
       contentModel.delete(req.params.serial);
+      entityAccessModel.delete(req.params.serial);
 
     } catch (error) {
       next(error);

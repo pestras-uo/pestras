@@ -1,5 +1,3 @@
-import { EntityAccess } from "../active-directory/access"; 
-
 export interface Topic {
   serial: string;
   blueprint: string;
@@ -7,8 +5,6 @@ export interface Topic {
   
   name: string;
   
-  access: EntityAccess;
-
   owner: string;
 
   create_date: Date;

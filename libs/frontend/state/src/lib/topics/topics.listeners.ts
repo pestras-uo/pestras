@@ -31,44 +31,5 @@ const sseHandlers: Record<string, (this: TopicsState, act: Activity<any>) => voi
   // new topic
   update(this: TopicsState, act: Activity<any>) {
     this._update(act.serial, act.payload);
-  },
-
-  // Access
-  // ---------------------------------------------------------------------------------------------------
-  // orgunit added
-  addAccessOrgunit(this: TopicsState, act: Activity<any>) {
-    this._update(act.serial, t => {
-      return { ...t, access: { ...t.access, orgunits: [...t.access.orgunits, act.payload['orgunit']] } };
-    });
-  },
-  // orgunit removed
-  removeAccessOrgunit(this: TopicsState, act: Activity<any>) {
-    this._update(act.serial, t => {
-      return { ...t, access: { ...t.access, orgunits: t.access.orgunits.filter(o => o !== act.payload['orgunit']) } };
-    });
-  },
-  // user added
-  addAccessUser(this: TopicsState, act: Activity<any>) {
-    this._update(act.serial, t => {
-      return { ...t, access: { ...t.access, users: [...t.access.users, act.payload['user']] } };
-    });
-  },
-  // user removed
-  removeAccessUser(this: TopicsState, act: Activity<any>) {
-    this._update(act.serial, t => {
-      return { ...t, access: { ...t.access, users: t.access.users.filter(o => o !== act.payload['user']) } };
-    });
-  },
-  // group added
-  addAccessGroup(this: TopicsState, act: Activity<any>) {
-    this._update(act.serial, t => {
-      return { ...t, access: { ...t.access, groups: [...t.access.groups, act.payload['group']] } };
-    });
-  },
-  // group removed
-  removeAccessGroup(this: TopicsState, act: Activity<any>) {
-    this._update(act.serial, t => {
-      return { ...t, access: { ...t.access, groups: t.access.groups.filter(o => o !== act.payload['group']) } };
-    });
-  },
+  }
 }

@@ -5,15 +5,13 @@ import { DashboardsService } from "./dashboards.service";
 import { SessionEnd } from "../session/session.events";
 import { Observable, tap } from "rxjs";
 import { DashboardsApi } from "./dashboards.api";
-import { SessionState } from "../session/session.state";
 
 @Injectable({ providedIn: 'root' })
 export class DashboardsState extends StatorGroupState<Dashboard> {
 
   constructor(
     private service: DashboardsService,
-    private channel: StatorChannel,
-    private session: SessionState
+    private channel: StatorChannel
   ) {
     super('dashboards', 'serial', 'topic', ['10m']);
 
@@ -187,53 +185,6 @@ export class DashboardsState extends StatorGroupState<Dashboard> {
             };
           })
         };
-      })));
-  }
-
-  // access
-  // ---------------------------------------------------------------------------------------------------
-  // orgunits
-  addAccessOrgunit(serial: string, orgunit: string) {
-    return this.service.addAccessOrgunit({ serial, orgunit })
-      .pipe(tap(() => this._update(serial, t => {
-        return { ...t, access: { ...t.access, orgunits: t.access.orgunits.concat(orgunit) } };
-      })));
-  }
-
-  removeAccessOrgunit(serial: string, orgunit: string) {
-    return this.service.removeAccessOrgunit({ serial, orgunit })
-      .pipe(tap(() => this._update(serial, t => {
-        return { ...t, access: { ...t.access, orgunits: t.access.orgunits.filter(g => g !== orgunit) } };
-      })));
-  }
-
-  // users
-  addAccessUser(serial: string, user: string) {
-    return this.service.addAccessUser({ serial, user })
-      .pipe(tap(() => this._update(serial, t => {
-        return { ...t, access: { ...t.access, users: t.access.users.concat(user) } };
-      })));
-  }
-
-  removeAccessUser(serial: string, user: string) {
-    return this.service.removeAccessUser({ serial, user })
-      .pipe(tap(() => this._update(serial, t => {
-        return { ...t, access: { ...t.access, users: t.access.users.filter(g => g !== user) } };
-      })));
-  }
-
-  // groups
-  addAccessGroup(serial: string, group: string) {
-    return this.service.addAccessGroup({ serial, group })
-      .pipe(tap(() => this._update(serial, t => {
-        return { ...t, access: { ...t.access, groups: t.access.groups.concat(group) } };
-      })));
-  }
-
-  removeAccessGroup(serial: string, group: string) {
-    return this.service.removeAccessGroup({ serial, group })
-      .pipe(tap(() => this._update(serial, t => {
-        return { ...t, access: { ...t.access, groups: t.access.groups.filter(g => g !== group) } };
       })));
   }
 }

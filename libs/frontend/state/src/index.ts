@@ -46,4 +46,6 @@ export { WorkspaceState } from './lib/workspaces/workspace.state';
 
 export { NotificationsState } from './lib/notifications/notifications.state';
 
+export { EntityAccessState } from './lib/entity-access/entity-access.state'
+
 export * from './lib/state.module';

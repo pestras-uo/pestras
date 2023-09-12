@@ -40,7 +40,7 @@
           [editable]="(d.owner | sessionIs) || (d.collaborators | sessionIs)"
         ></app-content-views>
 
-        <app-access *ngIf="view === 'access'" [report]="d"></app-access>
+        <pestras-entity-access *ngIf="view === 'access'" [entity]="d.serial"></pestras-entity-access>
 
         <app-report-slide
           *ngIf="view !== 'details' && view !== 'access'"

@@ -21,6 +21,7 @@ import { workflowRoutes } from "./workflow";
 import { workspacesRouter } from "./workspace";
 import { usersGroupsRoutes } from "./groups";
 import { activitiesRouter } from "./activities";
+import { entityAccessRouter } from "./entity-access";
 
 export default Router()
   // active directory
@@ -30,6 +31,8 @@ export default Router()
   .use('/orgunits', orgunitRoutes)
   .use('/regions', regionsRoutes)
   .use('/users-groups', usersGroupsRoutes)
+  // access
+  .use('/access', entityAccessRouter)
   //blueprints
   .use('/blueprints', blueprintsRoutes)
   .use('/topics', topicsRoutes)

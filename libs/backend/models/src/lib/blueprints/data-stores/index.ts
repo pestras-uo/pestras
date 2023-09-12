@@ -1,21 +1,19 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { DataStore } from "@pestras/shared/data-model";
+import { AggregationDataStoreConfig, DataStore, DataStoreSettings, DataStoreState, Field, User, ValueConstraint, WSAuth, WSQueryOptions, WebServiceSelection } from "@pestras/shared/data-model";
 import { Model } from "../../model";
 import { Db } from "mongodb";
 import { exists, getByBlueprint, getBySerial, getFields, search } from "./read";
-import { create } from "./create";
+import { create, CreateDataStoreInput } from "./create";
 import { update, updateState } from "./update";
 import { setTableSettings } from "./settings";
-import { addQueryOption, addSelection, removeQueryOption, removeSelection, setHeader, setWebServiceAuth, setWebServiceConfig } from "./web-service";
+import { addQueryOption, addSelection, removeQueryOption, removeSelection, setHeader, setWebServiceAuth, setWebServiceConfig, SetWebServiceConfigInput } from "./web-service";
 import { setAggregation } from "./aggregation";
-import { addField, removeField, setFieldConstraint, updateField, updateFieldConfig } from "./fields";
+import { addField, removeField, setFieldConstraint, updateField, updateFieldConfig, UpdateFieldConfigInput, UpdateFieldInput } from "./fields";
 import { addCollaborator, removeCollaborator } from "./collaborators";
 import { setActivation } from "./activation";
 import { build, buildView } from "./build";
 
-export { CreateDataStoreInput } from './create';
-export { SetWebServiceConfigInput } from './web-service';
-export { UpdateFieldConfigInput, UpdateFieldInput } from './fields';
+export { CreateDataStoreInput, SetWebServiceConfigInput, UpdateFieldConfigInput, UpdateFieldInput };
 
 export class DataStoresModel extends Model<DataStore> {
   protected dataDB!: Db;
@@ -26,58 +24,58 @@ export class DataStoresModel extends Model<DataStore> {
 
   // read
   // ---------------------------------------------------------------------------------------
-  getByBlueprint = getByBlueprint.bind(this);
+  getByBlueprint: (bp: string) => Promise<DataStore[]> = getByBlueprint.bind(this);
   getBySerial: (serial: string, projection?: any) => Promise<DataStore> = getBySerial.bind(this);
-  search = search.bind(this);
+  search: (query: any, skip: number, limit: number, projection: any) => any = search.bind(this);
 
   // util
   // ---------------------------------------------------------------------------------------
-  exists = exists.bind(this);
-  getFields = getFields.bind(this);
+  exists: (serial: string) => Promise<boolean> = exists.bind(this);
+  getFields: (serial: string) => Promise<Field[]> = getFields.bind(this);
 
   // create data store
   // ---------------------------------------------------------------------------------------
-  create = create.bind(this);
+  create: (data: CreateDataStoreInput, issuer: User) => Promise<DataStore> = create.bind(this);
 
   // update
   // --------------------------------------------------------------------------------------
-  update = update.bind(this);
-  updateState = updateState.bind(this);
-  build = build.bind(this);
-  buildView = buildView.bind(this);
+  update: (serial: string, name: string, issuer: User) => Promise<Date> = update.bind(this);
+  updateState: (serial: string, state: Exclude<DataStoreState, DataStoreState.BUILD>, issuer: User) => Promise<Date> = updateState.bind(this);
+  build: (serial: string, issuer: User) => Promise<boolean> = build.bind(this);
+  buildView: (ds: DataStore, rebuild?: boolean) => Promise<void> = buildView.bind(this);
 
   // Template Settings
   // --------------------------------------------------------------------------------------
-  setTableSettings = setTableSettings.bind(this);
+  setTableSettings: (serial: string, settings: DataStoreSettings, issuer: User) => Promise<Date> = setTableSettings.bind(this);
 
   // Web Serive
   // --------------------------------------------------------------------------------------
-  setWebServiceConfig = setWebServiceConfig.bind(this);
-  setWebServiceAuth = setWebServiceAuth.bind(this);
-  setHeader = setHeader.bind(this);
-  addQueryOption = addQueryOption.bind(this);
-  removeQueryOption = removeQueryOption.bind(this);
-  addSelection = addSelection.bind(this);
-  removeSelection = removeSelection.bind(this);
+  setWebServiceConfig: (serial: string, input: SetWebServiceConfigInput, issuer: User) => Promise<Date> = setWebServiceConfig.bind(this);
+  setWebServiceAuth: (serial: string, auth: WSAuth | null, issuer: User) => Promise<Date> = setWebServiceAuth.bind(this);
+  setHeader: (serial: string, header: { key: string; value?: string | null; }, issuer: User) => Promise<Date> = setHeader.bind(this);
+  addQueryOption: (serial: string, options: WSQueryOptions, issuer: User) => Promise<{ option: WSQueryOptions; date: Date; }> = addQueryOption.bind(this);
+  removeQueryOption: (serial: string, option: string, issuer: User) => Promise<Date> = removeQueryOption.bind(this);
+  addSelection: (serial: string, input: WebServiceSelection, issuer: User) => Promise<DataStore> = addSelection.bind(this);
+  removeSelection: (serial: string, field: string, issuer: User) => Promise<DataStore> = removeSelection.bind(this);
 
   // Aggregation
   // --------------------------------------------------------------------------------------
-  setAggregation = setAggregation.bind(this);
+  setAggregation: (serial: string, aggr: AggregationDataStoreConfig, issuer: User) => Promise<DataStore> = setAggregation.bind(this);
 
   // fields
   // --------------------------------------------------------------------------------------
-  addField = addField.bind(this);
-  updateField = updateField.bind(this);
-  updateFieldConfig = updateFieldConfig.bind(this);
-  setFieldConstraint = setFieldConstraint.bind(this);
-  removeField = removeField.bind(this);
+  addField: (serial: string, field: Field, issuer: User) => Promise<Date> = addField.bind(this);
+  updateField: (serial: string, field: string, input: UpdateFieldInput, issuer: User) => Promise<Date> = updateField.bind(this);
+  updateFieldConfig: (serial: string, field: string, input: UpdateFieldConfigInput, issuer: User) => Promise<Date> = updateFieldConfig.bind(this);
+  setFieldConstraint: (serial: string, field: string, constrinat: ValueConstraint | null, issuer: User) => Promise<Date> = setFieldConstraint.bind(this);
+  removeField: (serial: string, field: string, issuer: User) => Promise<Date> = removeField.bind(this);
 
   // collaborators
   // ---------------------------------------------------------------------------------
-  addCollaborator = addCollaborator.bind(this);
-  removeCollaborator = removeCollaborator.bind(this);
+  addCollaborator: (serial: string, collaborator: string, issuer: User) => Promise<Date> = addCollaborator.bind(this);
+  removeCollaborator: (serial: string, collaborator: string, issuer: User) => Promise<Date> = removeCollaborator.bind(this);
 
   // update activation
   // --------------------------------------------------------------------------------------
-  setActivation = setActivation.bind(this);
+  setActivation: (serial: string, is_active: boolean, issuer: User) => Promise<Date> = setActivation.bind(this);
 }

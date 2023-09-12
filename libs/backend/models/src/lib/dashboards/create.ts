@@ -24,7 +24,6 @@ export async function create(
     slides: [],
     slides_order: [],
     views: [],
-    access: { orgunits: [], users: [], groups: [] },
     collaborators: []
   };
 

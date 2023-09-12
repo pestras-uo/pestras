@@ -1,19 +1,18 @@
 import { BaseAnalysis } from "@pestras/shared/data-model";
 import { Model } from "../model";
 import { getBySerial } from './read'; 
-import { create } from "./create";
-import { update } from "./update";
+import { create, CreateAnalysisInput } from "./create";
+import { update, UpdateAnalysisInput } from "./update";
 import { deleteAnalysis } from "./delete";
 
-export { CreateAnalysisInput } from './create';
-export { UpdateAnalysisInput } from './update';
+export { CreateAnalysisInput, UpdateAnalysisInput }
 
 export class AnalysisModel extends Model<BaseAnalysis> {
 
-  getBySerial = getBySerial.bind(this);
+  getBySerial: (serial: string) => Promise<BaseAnalysis> = getBySerial.bind(this);
 
-  create = create.bind(this);
-  update = update.bind(this);
+  create: (input: CreateAnalysisInput, issuer: string) => Promise<BaseAnalysis> = create.bind(this);
+  update: (serial: string, input: UpdateAnalysisInput, issuer: string) => Promise<Date> = update.bind(this);
 
-  delete = deleteAnalysis.bind(this);
+  delete: (serial: string, issuer: string) => Promise<{ serial: string; date: Date; }> = deleteAnalysis.bind(this);
 }

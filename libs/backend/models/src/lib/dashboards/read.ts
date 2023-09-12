@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { ApiQuery, Dashboard, User } from "@pestras/shared/data-model";
+import { ApiQuery, ApiQueryResults, Dashboard, User } from "@pestras/shared/data-model";
 import { DashboardsModel } from ".";
 import { Filter } from "mongodb";
 
@@ -16,7 +16,7 @@ export async function search(
   })
     .toArray();
 
-  return { count, results };
+  return { count, results } as ApiQueryResults<Dashboard>;
 }
 
 

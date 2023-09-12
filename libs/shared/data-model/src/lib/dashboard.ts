@@ -1,5 +1,3 @@
-import { EntityAccess } from "./active-directory/access";
-
 export interface DashboardViewSize {
   x: 3 | 4 | 6 | 8 | 9 | 12;
   y: 1 | 2;
@@ -24,8 +22,6 @@ export interface DashboardSlide {
 export interface Dashboard {
   serial: string;
   topic: string | null;
-
-  access: EntityAccess;
   
   /** grant access to specific users */
   collaborators: string[];

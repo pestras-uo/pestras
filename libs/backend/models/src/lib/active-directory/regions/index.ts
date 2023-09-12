@@ -1,30 +1,29 @@
-import { Region } from "@pestras/shared/data-model";
+import { Region, RegionCoords } from "@pestras/shared/data-model";
 import { Model } from "../../model";
 import { getAll, getBySerial } from "./read";
 import { nameExists } from "./util";
-import { create } from "./create";
-import { update, updateCoords } from "./update";
+import { create, CreateRegionInput } from "./create";
+import { update, updateCoords, UpdateRegionInput } from "./update";
 
-export { CreateRegionInput } from './create';
-export { UpdateRegionInput } from './update';
+export { CreateRegionInput, UpdateRegionInput }
 
 export class RegionsModel extends Model<Region> {
 
   // getters
   // -----------------------------------------------------------------------------------
-  getAll = getAll.bind(this);
-  getBySerial = getBySerial.bind(this);
+  getAll: (projection?: unknown) => Promise<Region[]> = getAll.bind(this);
+  getBySerial: (serial: string, projection?: unknown) => Promise<Region> = getBySerial.bind(this);
 
   // util
   // ------------------------------------------------------------------------------------
-  nameExists = nameExists.bind(this);
+  nameExists: (name: string, exclude?: string) => Promise<boolean> = nameExists.bind(this);
 
   // create
   // ------------------------------------------------------------------------------------
-  create = create.bind(this);
+  create: (data: CreateRegionInput, issuer: string) => Promise<Region> = create.bind(this);
 
   // update
   // ------------------------------------------------------------------------------------
-  update = update.bind(this);
-  updateCoords = updateCoords.bind(this);
+  update: (serial: string, input: UpdateRegionInput, issuer: string) => Promise<Date> = update.bind(this);
+  updateCoords: (serial: string, input: RegionCoords, issuer: string) => Promise<Date> = updateCoords.bind(this);
 }

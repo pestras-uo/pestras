@@ -9,7 +9,6 @@ import { DialogModule } from '@angular/cdk/dialog';
 import { DragDropModule } from '@angular/cdk/drag-drop';
 import { DetailsPage } from './details/details.page';
 import { SideMenuView } from './views/side-menu/side-menu.view';
-import { AccessView } from './views/access/access.view';
 import { ContraModule } from '@pestras/frontend/util/contra';
 import { TBgWidget } from '@pestras/frontend/widgets/t-bg';
 import { NoDataPlaceholderWidget } from '@pestras/frontend/widgets/no-data-placeholder';
@@ -23,14 +22,14 @@ import { UsersFeatureModule } from '@pestras/frontend/features/users';
 import { UsersGroupsFeatureModule } from '@pestras/frontend/features/users-groups';
 import { SessionFeatureModule } from '@pestras/frontend/features/session';
 import { PuiExportToPdfDirective, PuiIcon, PuiImageInput, PuiPreloaderModule, PuiSelectInput, PuiSideDrawerModule, PuiUtilPipesModule } from '@pestras/frontend/ui';
+import { EntityAccessFeatureModule } from '@pestras/frontend/features/entity-access';
 
 
 @NgModule({
   declarations: [
     ReportsRouter,
     DetailsPage,
-    SideMenuView,
-    AccessView
+    SideMenuView
   ],
   imports: [
     // angular
@@ -55,6 +54,7 @@ import { PuiExportToPdfDirective, PuiIcon, PuiImageInput, PuiPreloaderModule, Pu
     UsersFeatureModule,
     UsersGroupsFeatureModule,
     SessionFeatureModule,
+    EntityAccessFeatureModule,
     // pui
     PuiPreloaderModule,
     PuiIcon,

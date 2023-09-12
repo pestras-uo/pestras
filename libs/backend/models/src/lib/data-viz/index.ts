@@ -2,20 +2,19 @@
 import { Model } from "../model";
 import { BaseDataViz } from "@pestras/shared/data-model";
 import { getBySerial } from './read'; 
-import { create } from "./create";
-import { update } from "./update";
+import { create, CreateDataVizInput } from "./create";
+import { update, UpdateDataVizInput } from "./update";
 import { deleteDataViz, deleteManyDataViz } from "./delete";
 
-export { CreateDataVizInput } from './create';
-export { UpdateDataVizInput } from './update';
+export { CreateDataVizInput, UpdateDataVizInput };
 
 export class DataVizModel extends Model<BaseDataViz<any>> {
 
-  getBySerial = getBySerial.bind(this);
+  getBySerial: (serial: string) => Promise<BaseDataViz<any>> = getBySerial.bind(this);
 
-  create = create.bind(this);
-  update = update.bind(this);
+  create: (input: CreateDataVizInput, issuer: string) => Promise<BaseDataViz<any>> = create.bind(this);
+  update: (serial: string, input: UpdateDataVizInput, issuer: string) => Promise<Date> = update.bind(this);
 
-  delete = deleteDataViz.bind(this);
-  deleteManyDataViz = deleteManyDataViz.bind(this);
+  delete: (serial: string) => Promise<boolean> = deleteDataViz.bind(this);
+  deleteManyDataViz: (serials: string[]) => Promise<boolean> = deleteManyDataViz.bind(this);
 }

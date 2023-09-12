@@ -1,35 +1,34 @@
-import { Category } from "@pestras/shared/data-model"
+import { Category, User } from "@pestras/shared/data-model"
 import { Model } from "../../model";
-import { create } from './create';
-import { update } from "./update";
+import { create, CreateCategoryInput } from './create';
+import { update, UpdateCategoryInput } from "./update";
 import { titleExists } from "./util";
 import { getBySerial, getAll, getByBlueprint } from "./read";
 import { deleteCategory } from "./delete";
 
-export { CreateCategoryInput } from './create';
-export { UpdateCategoryInput } from './update';
+export { CreateCategoryInput, UpdateCategoryInput };
 
 export class CategoriesModel extends Model<Category> {
 
   // read
   // -----------------------------------------------------------------------------------
-  getAll = getAll.bind(this);
-  getBySerial = getBySerial.bind(this);
-  getByBlueprint = getByBlueprint.bind(this);
+  getAll: (projection?: Document) => Promise<Category[]> = getAll.bind(this);
+  getBySerial: (serial: string, projection?: Document) => Promise<Category> = getBySerial.bind(this);
+  getByBlueprint: (bp: string, projection?: Document) => Promise<Category[]> = getByBlueprint.bind(this);
 
   // util
   // ------------------------------------------------------------------------------------
-  titleExists = titleExists.bind(this);
+  titleExists: (title: string, serial?: string) => Promise<boolean> = titleExists.bind(this);
 
   // create
   // ------------------------------------------------------------------------------------
-  create = create.bind(this);
+  create: (input: CreateCategoryInput, issuer: User) => Promise<Category> = create.bind(this);
 
   // update
   // ------------------------------------------------------------------------------------
-  update = update.bind(this);
+  update: (serial: string, input: UpdateCategoryInput, issuer: string) => Promise<Date> = update.bind(this);
 
   // delete
   // ------------------------------------------------------------------------------------
-  delete = deleteCategory.bind(this);
+  delete: (serial: string, issuer: string) => Promise<boolean> = deleteCategory.bind(this);
 }

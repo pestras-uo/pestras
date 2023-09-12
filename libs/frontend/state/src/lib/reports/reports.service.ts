@@ -113,43 +113,4 @@ export class ReportsService {
 
     return this.http.delete<ReportsApi.RemoveView.Response>(path);
   }
-
-  // access
-  // ---------------------------------------------------------------------------------------------------
-  // Orgunits
-  addAccessOrgunit(params: ReportsApi.AddAccessOrgunit.Params) {
-    const path = injectURLPayload(this.envServ.env.api + ReportsApi.AddAccessOrgunit.path, params);
-
-    return this.http.post<ReportsApi.AddAccessOrgunit.Response>(path, null);
-  }
-
-  removeAccessOrgunit(params: ReportsApi.RemoveAccessOrgunit.Params) {
-    const path = injectURLPayload(this.envServ.env.api + ReportsApi.RemoveAccessOrgunit.path, params);
-
-    return this.http.delete<ReportsApi.RemoveAccessOrgunit.Response>(path);
-  }
-
-  // Users
-  addAccessUser(params: ReportsApi.AddAccessUser.Params) {
-    const path = injectURLPayload(this.envServ.env.api + ReportsApi.AddAccessUser.path, params);
-
-    return this.http.post<ReportsApi.AddAccessUser.Response>(path, null);
-  }
-  removeAccessUser(params: ReportsApi.RemoveAccessUser.Params) {
-    const path = injectURLPayload(this.envServ.env.api + ReportsApi.RemoveAccessUser.path, params);
-
-    return this.http.delete<ReportsApi.RemoveAccessUser.Response>(path);
-  }
-
-  // Groups
-  addAccessGroup(params: ReportsApi.AddAccessGroup.Params) {
-    const path = injectURLPayload(this.envServ.env.api + ReportsApi.AddAccessGroup.path, params);
-
-    return this.http.post<ReportsApi.AddAccessGroup.Response>(path, null);
-  }
-  removeAccessGroup(params: ReportsApi.RemoveAccessGroup.Params) {
-    const path = injectURLPayload(this.envServ.env.api + ReportsApi.RemoveAccessGroup.path, params);
-
-    return this.http.delete<ReportsApi.RemoveAccessGroup.Response>(path);
-  }
 }

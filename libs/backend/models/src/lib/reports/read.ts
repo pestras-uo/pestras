@@ -1,11 +1,11 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { ApiQuery, Report, User } from "@pestras/shared/data-model";
+import { ApiQuery, ApiQueryResults, Report, User } from "@pestras/shared/data-model";
 import { Filter } from "mongodb";
 import { ReportsModel } from ".";
 
 export async function search(
   this: ReportsModel,
-  query: ApiQuery<Report>
+  query: Partial<ApiQuery<Report>>
 ) {
   const count = await this.col.countDocuments(query.search as Filter<Report>);
   const results = await this.col.find(query.search as any, {
@@ -16,7 +16,7 @@ export async function search(
   })
     .toArray();
 
-  return { count, results };
+  return { count, results } as ApiQueryResults<Report>;
 }
 
 

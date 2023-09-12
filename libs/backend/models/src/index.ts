@@ -24,3 +24,4 @@ export * from './lib/messages';
 export * from './lib/notifications';
 export * from './lib/reports';
 export * from './lib/workspace';
+export * from './lib/entity-access';

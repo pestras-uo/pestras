@@ -1,37 +1,38 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-/* eslint-disable @angular-eslint/component-class-suffix */
-/* eslint-disable @angular-eslint/component-selector */
 import { Dialog, DialogRef } from '@angular/cdk/dialog';
-import { Component, Input, TemplateRef } from '@angular/core';
+import { Component, Input, OnInit, TemplateRef } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
-import { TopicsState } from '@pestras/frontend/state';
+import { EntityAccessState } from '@pestras/frontend/state';
 import { ToastService } from '@pestras/frontend/ui';
-import { Topic } from '@pestras/shared/data-model';
+import { EntityAccess } from '@pestras/shared/data-model';
+import { Observable } from 'rxjs';
 
 @Component({
-  selector: 'app-access',
-  templateUrl: './access.view.html',
-  styles: [`
-    :host { display: block; }
-  `]
+  selector: 'pestras-entity-access',
+  templateUrl: './entity-access.view.html'
 })
-export class AccessView {
+export class EntityAccessViewComponent implements OnInit {
 
   readonly control = new FormControl('', { validators: Validators.required, nonNullable: true });
 
+  access$!: Observable<EntityAccess | null>;
   preloader = false;
   dialogRef: DialogRef | null = null;
 
   @Input({ required: true })
-  topic!: Topic;
+  entity!: string;
 
   constructor(
-    private state: TopicsState,
+    private state: EntityAccessState,
     private dialog: Dialog,
     private toast: ToastService
-  ) { }
+  ) {}
 
-  openDialog(tmp: TemplateRef<any>, type: string) {
+  ngOnInit(): void {
+    this.access$ = this.state.select(this.entity);
+  }
+
+  openDialog(tmp: TemplateRef<unknown>, type: string) {
     this.dialogRef = this.dialog.open(tmp, { data: type });
   }
 
@@ -43,9 +44,9 @@ export class AccessView {
   }
 
   filterEntity<T extends { serial: string; }>(entity: T, options: string[] = [], exclude = false) {
-    return exclude
-      ? !options.includes(entity.serial)
-      : options.includes(entity.serial);
+    return exclude 
+    ? !options.includes(entity.serial)
+    : options.includes(entity.serial);
   }
 
   mapEntity<T extends { serial: string; name?: string; fullname?: string; }>(entity: T) {
@@ -57,10 +58,10 @@ export class AccessView {
 
     (
       type === 'orgunit'
-        ? this.state.addAccessOrgunit(this.topic.serial, this.control.value)
+        ? this.state.addOrgunit(this.entity, this.control.value)
         : type === 'user'
-          ? this.state.addAccessUser(this.topic.serial, this.control.value)
-          : this.state.addAccessGroup(this.topic.serial, this.control.value)
+          ? this.state.addUser(this.entity, this.control.value)
+          : this.state.addGroup(this.entity, this.control.value)
     )
       .subscribe({
         next: () => {
@@ -79,10 +80,10 @@ export class AccessView {
   remove(c: Record<string, any>, type: string, serial: string) {
     (
       type === 'orgunit'
-        ? this.state.removeAccessOrgunit(this.topic.serial, serial)
+        ? this.state.removeOrgunit(this.entity, serial)
         : type === 'user'
-          ? this.state.removeAccessUser(this.topic.serial, serial)
-          : this.state.removeAccessGroup(this.topic.serial, serial)
+          ? this.state.removeUser(this.entity, serial)
+          : this.state.removeGroup(this.entity, serial)
     )
       .subscribe({
         next: () => {
