@@ -38,7 +38,7 @@ export const contentModel = new ContentViewsModel('uo', 'contentViews');
 
 export const blueprintsModel = new BlueprintsModel('uo', 'blueprints');
 export const topicsModel = new TopicsModel('uo', 'topics');
-export const categoriesModel = new CategoriesModel('uo-data', 'categories');
+export const categoriesModel = new CategoriesModel('data', 'categories');
 export const dataStoresModel = new DataStoresModel('uo', 'dataStores');
 export const recordsWorkflowModel = new RecordWorkflowModel();
 export const dataRecordsModel = new DataRecordsModel();
@@ -47,8 +47,8 @@ export const clientApiModel = new ClientApiModel('uo', 'clientsApi');
 export const reportsModel = new ReportsModel('uo', 'reports');
 export const dashboardsModel = new DashboardsModel('uo', 'dashboards');
 
-export const commentsModel = new CommentsModel('uo-data', 'comments');
-export const attachmentsModel = new AttachmentsModel('uo-data', 'attachments');
+export const commentsModel = new CommentsModel('data', 'comments');
+export const attachmentsModel = new AttachmentsModel('data', 'attachments');
 export const notificationsModel = new NotificationsModel('uo', 'notifications', usersModel, commentsModel, dataRecordsModel);
 
 export const analysisModel = new AnalysisModel('uo', 'analysis');

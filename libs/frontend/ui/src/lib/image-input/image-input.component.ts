@@ -26,7 +26,7 @@ export { PuiFileInputError };
 export class PuiImageInput implements OnInit, OnDestroy, ControlValueAccessor {
 
   private sub!: Subscription
-  readonly imageControl = new FormControl<File[] | null>(null);
+  readonly imageControl = new FormControl<File[] | File | null>(null);
 
   passedFiles: File[] = [];
   invalidMsgs: PuiFileInputError[] = [];
@@ -101,7 +101,7 @@ export class PuiImageInput implements OnInit, OnDestroy, ControlValueAccessor {
 
     this.sub = this.imageControl.valueChanges
       .subscribe(files => {
-        this.fileChanges(files)
+        this.fileChanges(files === null ? null : (Array.isArray(files) ? files : [files]))
       });
   }
 

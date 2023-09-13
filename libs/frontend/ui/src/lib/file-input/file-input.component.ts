@@ -148,7 +148,7 @@ export class PuiFileInput implements OnInit {
 
     if (this.passedFiles.length > 0) {
       this.total = passedFiles.length;
-      this.onChange(this.passedFiles);
+      this.onChange(this.max === 1 ? this.passedFiles[0] : this.passedFiles);
 
     } else
       this.reset();
