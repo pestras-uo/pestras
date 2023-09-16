@@ -17,7 +17,7 @@ import { ContraModule } from '@pestras/frontend/util/contra';
     fieldset {
       margin-block-end: 16px;
 
-      legend {
+      :is(legend) {
         padding-inline: 4px;
         gap: 4px;
       }
