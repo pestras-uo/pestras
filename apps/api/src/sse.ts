@@ -17,7 +17,7 @@ export interface ServerEventScope {
 
 export class SSE extends Core {
   readonly router = Router()
-    .get('/', apiAuth(), this.handler.bind(this));
+    .get('/:t', apiAuth('t'), this.handler.bind(this));
 
   constructor() {
     super();

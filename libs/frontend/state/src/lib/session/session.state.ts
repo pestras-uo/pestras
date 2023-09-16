@@ -12,6 +12,9 @@ const _roles = ['admin', 'data_engineer', 'reporter', 'author', 'guest'];
 
 @Injectable({ providedIn: 'root' })
 export class SessionState extends StatorObjectState<User> {
+  private storageKey = "nv29vh23vn2vh230bh2380";
+  private _token: string | null = null;
+  private _sseToken: string | null = null;
 
   constructor(
     private service: SessionService,
@@ -37,24 +40,43 @@ export class SessionState extends StatorObjectState<User> {
       });
   }
 
-  get isLoggedIn() {
+  isLoggedIn() {
     return !!this.get();
   }
 
-  get isLoggedIn$() {
+  isLoggedIn$() {
     return this.loading$.pipe(
       filter(loading => !loading),
       map(() => !!this.get())
     );
   }
 
+  getToken() {
+    return this._token;
+  }
+
+  getSSEToken() {
+    return this._sseToken;
+  }
+
   verifySession() {
+    this._token = localStorage.getItem(this.storageKey) ?? null;
+    
     return this.service.verifySession()
-      .pipe(tap(user => {
-        
-        if (user) {
-          this._set(user);
-          this.channel.dispatch(new SessionStart(user));
+      .pipe(tap(res => {
+        this._token = res?.token ?? null;
+        this._sseToken = res?.sseToken ?? null;
+
+        if (this._token)
+          localStorage.setItem(this.storageKey, this._token);
+        else {
+          this._token = this._sseToken = null;
+          localStorage.removeItem(this.storageKey);
+        }
+
+        if (res?.user) {
+          this._set(res.user);
+          this.channel.dispatch(new SessionStart(res.user));
         }
 
         this._setLoading(false);
@@ -63,10 +85,16 @@ export class SessionState extends StatorObjectState<User> {
 
   login(data: SessionApi.Login.Body) {
     return this.service.login(data)
-      .pipe(tap(user => {
-        if (user) {
-          this._set(user);
-          this.channel.dispatch(new SessionStart(user));
+      .pipe(tap(res => {
+        this._token = res?.token ?? null;
+        this._sseToken = res?.sseToken ?? null;
+
+        if (this._token)
+          localStorage.setItem(this.storageKey, this._token);
+
+        if (res?.user) {
+          this._set(res.user);
+          this.channel.dispatch(new SessionStart(res.user));
         }
       }));
   }
@@ -74,6 +102,8 @@ export class SessionState extends StatorObjectState<User> {
   logout() {
     return this.service.logout()
       .pipe(
+        tap(() => this._token = this._sseToken = null),
+        tap(() => localStorage.removeItem(this.storageKey)),
         tap(() => this._clear()),
         tap(() => this.channel.dispatch(new SessionEnd()))
       );
