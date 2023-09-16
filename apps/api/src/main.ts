@@ -6,7 +6,7 @@ import config from './config';
 import express, { NextFunction, Request, Response } from "express";
 import cors from 'cors';
 import helmet from 'helmet';
-import cookieParser from 'cookie-parser';
+// import cookieParser from 'cookie-parser';
 
 // misc
 import http from 'http';
@@ -49,7 +49,7 @@ import { requestLogger } from './middlewares/request-log';
   app.use('/uploads', express.static(path.join(config.uploadsDir)));
   // app.use('/assets', express.static(path.join(config.assetsDir)));
 
-  app.use(cookieParser());
+  // app.use(cookieParser());
   // app.use(xsrfCheck);
 
   // parsers

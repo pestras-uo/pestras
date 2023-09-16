@@ -19,7 +19,11 @@ export namespace SessionApi {
       remember?: boolean;
     }
   
-    export type Response = User;
+    export interface Response {
+      token: string;
+      sseToken: string;
+      user: User;
+    }
   }
   
   
@@ -28,7 +32,11 @@ export namespace SessionApi {
   export namespace Verify {
     export const path = sessionBasePath + "/verify-session";
   
-    export type Response = User;
+    export interface Response {
+      token: string;
+      sseToken: string;
+      user: User;
+    }
   }
   
   

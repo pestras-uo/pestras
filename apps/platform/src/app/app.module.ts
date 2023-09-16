@@ -65,7 +65,7 @@ import { NgxEchartsModule } from 'ngx-echarts';
   ],
   providers: [
     { provide: APP_INITIALIZER, useFactory: initApp, deps: [SessionState], multi: true },
-    { provide: HTTP_INTERCEPTORS, useClass: AppInterceptor, multi: true }
+    { provide: HTTP_INTERCEPTORS, useClass: AppInterceptor, deps: [SessionState], multi: true }
   ],
   bootstrap: [AppComponent],
 })

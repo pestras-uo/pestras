@@ -5,6 +5,7 @@ import { SessionEnd, SessionStart } from '../session/session.events';
 import { Activity } from '@pestras/shared/data-model';
 import { SSEActivity } from './sse.events';
 import { EnvService } from '@pestras/frontend/env';
+import { SessionState } from '../session/session.state';
 
 @Injectable()
 export class SSEService {
@@ -13,6 +14,7 @@ export class SSEService {
 
   constructor(
     private envServ: EnvService,
+    private session: SessionState,
     private channel: StatorChannel
   ) {
     this.channel.select(SessionStart)
@@ -24,10 +26,9 @@ export class SSEService {
 
   protected init() {
     this.reconnect = true;
-    this.es = new EventSource(this.envServ.env.api + '/events', { withCredentials: true });
+    this.es = new EventSource(this.envServ.env.api + '/events/' + this.session.getSSEToken());
 
     this.es.addEventListener('activity', (e: MessageEvent<string>) => {
-      console.log('sse:');
       try {
         const data: Activity<any> = JSON.parse(e.data);
         this.channel.dispatch(new SSEActivity(data));

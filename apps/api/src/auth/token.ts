@@ -4,8 +4,8 @@ import { HttpError, HttpCode } from '@pestras/backend/util';
 import config from '../config';
 
 export enum TokenType {
-  SESSION,
-  API
+  API,
+  SSE
 }
 
 export interface TokenData extends jwt.JwtPayload {
@@ -32,10 +32,10 @@ export function verify(token: string) {
     throw new HttpError(HttpCode.INVALID_TOKEN, "invalidToken");
   }
 
-  if (tokenData.type === TokenType.SESSION) {
-    if (!tokenData.sub)
-      throw new HttpError(HttpCode.INVALID_TOKEN, "invalidTokenData");
-  }
+  // if (tokenData.type === TokenType.API) {
+  if (!tokenData.sub)
+    throw new HttpError(HttpCode.INVALID_TOKEN, "invalidTokenData");
+  // }
 
   return tokenData;
 }

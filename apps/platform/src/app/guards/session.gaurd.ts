@@ -8,7 +8,7 @@ export const sessionGuard = (page: string) => {
     const router = inject(Router);
     const session = inject(SessionState);
 
-    return session.isLoggedIn$
+    return session.isLoggedIn$()
       .pipe(map(isLoggedIn => {
         if (page === 'signin') {
 
