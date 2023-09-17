@@ -7,7 +7,7 @@
     <main *ngIf="attachments$ | async as list">
 
 
-    <div class="card custom-mbe-2" *ngIf="list | arrayFilter: filterFiles as files">
+    <div class="card mbe-2" *ngIf="list | arrayFilter: filterFiles as files">
       <div class="card-header">
         <h3>{{c['documents']}}</h3>
             <button *ngIf="editable" class="document-action" (click)="openModal(addAttachmentTmp)">
@@ -130,7 +130,7 @@
     </ng-template>
 <ng-template #updateNameTmp let-serial let-name>
   <form class="card shadow-6 w-8" [formGroup]="form" (ngSubmit)="updateName(c, serial)">
-    <h4 class="card-header">{{c['updateName']}}</h4>
+    <h4 class="card-header">{{c['update']}}</h4>
     <div class="card-body">
       <label for="att-name">{{c['name']}}</label>
       <div class="fc mbe-6">
@@ -140,7 +140,7 @@
     </div>
     <div class="card-footer">
       <button class="btn-round btn-outline" type="button" (click)="closeModal()">{{c['cancel']}}</button>
-      <button class="btn-round btn-primary" >{{c['updateName']}}</button>
+      <button class="btn-round btn-primary" >{{c['update']}}</button>
     </div>
   </form>
 </ng-template>

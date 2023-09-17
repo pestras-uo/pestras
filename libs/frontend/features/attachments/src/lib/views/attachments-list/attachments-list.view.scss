@@ -1,0 +1,110 @@
+
+
+
+/* Custom Item Styles */
+.custom-item-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+  border-bottom: 1px dashed black; /* Transparent border line between items */
+
+  padding: 5px;
+}
+
+.custom-item {
+  flex-grow: 1;
+  
+}
+
+.custom-item a {
+  text-decoration: none;
+  color: #333;
+}
+
+/* Custom Item Actions Styles */
+.custom-item-actions {
+  display: flex;
+  gap: 5px;
+}
+
+.custom-action {
+  background-color: #fff; /* White background */
+  color: black; /* Grey color */
+  border: none;
+  cursor: pointer;
+  border-radius: 50%;
+  width: 30px;
+  height: 30px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+    padding: 4px; /* Add padding around the icon */
+
+  transition: background-color 0.3s, transform 0.3s; /* Transition for background and transform */
+}
+
+.custom-action i {
+  font-size: 12px;
+}
+
+.custom-action:hover {
+  background-color: #e4e4e4; /* Grey background on hover */
+  transform: scale(1.1); /* Zoom effect on hover */
+      padding: 14px; /* Add padding around the icon */
+
+}
+/* Styles for Document Cards */
+.document-card {
+  background-color: #fff;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1); /* Shadow for each document item */
+  border-radius: 8px;
+  margin-bottom: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px;
+}
+
+/* Styles for Document Item Containers */
+.document-item {
+  flex-grow: 1;
+  padding-right: 10px;
+}
+
+.document-item a {
+  text-decoration: none;
+  color: #333;
+}
+
+/* Styles for Document Item Actions */
+.document-item-actions {
+  display: flex;
+  gap: 5px;
+}
+
+/* Styles for Action Buttons */
+.document-action {
+  background-color: #fff;
+  color: #333;
+  border: none;
+  cursor: pointer;
+  border-radius: 50%;
+  width: 30px;
+  height: 30px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: background-color 0.3s, transform 0.3s;
+}
+
+.document-action i {
+  font-size: 16px;
+}
+
+/* Hover styles for Action Buttons */
+.document-action:hover {
+  background-color: #e4e4e4;
+  opacity: 0.6;
+  transform: scale(1.1); /* Adjust the scaling factor as needed */
+}

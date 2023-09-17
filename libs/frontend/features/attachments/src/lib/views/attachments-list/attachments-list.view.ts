@@ -12,7 +12,9 @@ import { EnvService } from '@pestras/frontend/env';
 
 @Component({
   selector: 'app-attachments-list',
-  templateUrl: './attachments-list.view.html'
+  templateUrl: './attachments-list.view.html',
+    styleUrls: ['./attachments-list.view.scss'],
+
 })
 export class AttachmentsListView implements OnInit {
   host = this.envServ.env.docs;

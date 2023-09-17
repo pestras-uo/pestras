@@ -8,7 +8,6 @@ import { NoDataPlaceholderWidget } from '@pestras/frontend/widgets/no-data-place
 import { AttachmentsListView } from './views/attachments-list/attachments-list.view';
 import { StateModule } from '@pestras/frontend/state';
 import { EnvModule } from '@pestras/frontend/env';
-import { SlickCarouselModule } from 'ngx-slick-carousel'; // Import the module
 
 
 
@@ -17,8 +16,7 @@ import { SlickCarouselModule } from 'ngx-slick-carousel'; // Import the module
     AttachmentsListView
   ],
   imports: [
-    //Carousel slider 
-    SlickCarouselModule,
+ 
     // Angular
     CommonModule,
     ReactiveFormsModule,
