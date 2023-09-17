@@ -34,6 +34,7 @@ export class AttachmentsListView implements OnInit {
   @Input()
   editable = false;
 
+  
   constructor(
     private state: AttachmentsState,
     private fb: FormBuilder,
@@ -97,17 +98,20 @@ export class AttachmentsListView implements OnInit {
       });
   }
 
-  updateName(c: Record<string, any>, serial: string, name: string) {
+  updateName(c: Record<string, any>, serial: string) {
     this.preloader = true;
+
+      const name = this.form.controls.name.value;
 
     this.state.updateName(serial, name)
       .subscribe({
-        next: () => {
+        next: () => { 
           this.toast.msg(c['success'].default, { type: 'success' });
-          this.closeModal();
+          this.closeModal();  
         },
         error: e => {
           console.error(e);
+          alert(JSON.stringify(e));
 
           this.toast.msg(c['errors'][e?.error] || c['errors'].default, { type: 'error' });
           this.preloader = false;
@@ -132,4 +136,14 @@ export class AttachmentsListView implements OnInit {
         }
       });
   }
+
+openUpdateNameModal(tmp: TemplateRef<any>, serial?: string, name?: string) {
+  // Set the initial value of the name field in the form
+  this.form.controls.name.setValue(name || '');
+
+  this.openModal(tmp,serial);
+}
+
+
+
 }

@@ -37,7 +37,7 @@ export namespace AttachmentsApi {
 
   // PUT
   export namespace UpdateName {
-    export const REQ_PATH = basePath + '/:serial';
+    export const REQ_PATH = basePath + '/:serial/name';
 
     export interface Params { serial: string; }
 
