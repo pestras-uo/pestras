@@ -1,149 +1,187 @@
-  <ng-container *contra="let c">
+<ng-container *contra="let c">
+  <div class="toolbar mbe-8">
+    <h2>{{c['attachments']}}</h2>
+  </div>
 
-    <div class="toolbar mbe-8">
-      <h2>{{c['attachments']}}</h2>
-    </div>
-
-    <main *ngIf="attachments$ | async as list">
-
-
+  <main *ngIf="attachments$ | async as list">
     <div class="card mbe-2" *ngIf="list | arrayFilter: filterFiles as files">
       <div class="card-header">
         <h3>{{c['documents']}}</h3>
-            <button *ngIf="editable" class="document-action" (click)="openModal(addAttachmentTmp)">
-                <i puiIcon="add"></i>
-              </button>
+        <button
+          *ngIf="canAdd && editable"
+          class="btn-primary btn-round"
+          (click)="openModal(addAttachmentTmp)"
+        >
+          <i puiIcon="add"></i>
+          {{c['addAttachment']}}
+        </button>
       </div>
 
       <div class="card-body">
-        <ng-container *ngFor="let file of files">
-          
-          <div class="document-card">
-            
+        <ng-container *ngIf="files.length else noData">
+          <div class="document-card" *ngFor="let file of files">
             <div class="document-item">
-              <a [href]="file.path | docsPath" [download]="file.name" target="_blank" class="badge badge-primary">{{file.name}}</a>
+              <a
+                [href]="file.path | docsPath"
+                [download]="file.name"
+                target="_blank"
+                class="badge badge-primary"
+                >{{file.name}}</a
+              >
             </div>
             <div class="document-item-actions">
-              <button *ngIf="editable" class="document-action"  (click)="openModal(removeTmp, file.serial)">
+              <button
+                *ngIf="editable"
+                class="btn-icon btn-round btn-small"
+                (click)="openModal(removeTmp, file.serial)"
+              >
                 <i puiIcon="delete" color="danger" size="tiny"></i>
               </button>
-              <button *ngIf="editable" class="document-action" (click)="openUpdateNameModal(updateNameTmp, file.serial,file.name)">
+              <button
+                *ngIf="editable"
+                class="btn-icon btn-round btn-small"
+                (click)="openUpdateNameModal(updateNameTmp, file.serial,file.name)"
+              >
                 <i puiIcon="edit" color="success" size="tiny"></i>
               </button>
-          
             </div>
           </div>
         </ng-container>
       </div>
-
-      <ng-template #noData>
-        <div class="custom-no-data-widget">{{c['noDataMsg']}}</div>
-      </ng-template>
     </div>
 
-  <br/>
+    <br />
 
-      <div class="card" *ngIf="list | arrayFilter: filterImages as images">
-        <div class="card-header">
-          <h3>{{c['images']}}</h3>
-          <button *ngIf="canAdd && editable" class="btn-primary btn-round" (click)="openImageModal(addImageTmp)">
-          اضافة صورة <i puiIcon="add"></i>
-          </button>
-        </div>
-
-        <div class="card-body" *ngIf="images.length else noData">
-          <pui-images-viewer [host]="host" [images]="images | arrayMap: mapImages" [canRemove]="editable"
-            (remove)="openModal(removeTmp, $event)"></pui-images-viewer>
-        </div>
+    <div class="card" *ngIf="list | arrayFilter: filterImages as images">
+      <div class="card-header">
+        <h3>{{c['images']}}</h3>
+        <button
+          *ngIf="canAdd && editable"
+          class="btn-primary btn-round"
+          (click)="openImageModal(addImageTmp)"
+        >
+          <i puiIcon="add"></i>
+          {{c['addImage']}}
+        </button>
       </div>
-      
-      
-      <ng-template #noData>
-        <no-data-placeholder-widget>{{c['noDataMsg']}}</no-data-placeholder-widget>
-      </ng-template>
 
+      <div class="card-body" *ngIf="images.length else noData">
+        <pui-images-viewer
+          [host]="host"
+          [images]="images | arrayMap: mapImages"
+          [canRemove]="editable"
+          (remove)="openModal(removeTmp, $event)"
+        ></pui-images-viewer>
+      </div>
+    </div>
+  </main>
 
-    </main>
+  <ng-template #noData>
+    <no-data-placeholder-widget>{{c['noDataMsg']}}</no-data-placeholder-widget>
+  </ng-template>
 
-    <ng-template #addImageTmp>
+  <ng-template #addImageTmp>
+    <form class="card shadow-6 w-12" [formGroup]="form" (ngSubmit)="add(c)">
+      <h4 class="card-header">{{c['addImage']}}</h4>
 
-      <form class="card shadow-6 w-8" [formGroup]="form" (ngSubmit)="add(c)">
+      <div class="card-body">
+        <label for="att-upload">{{c['image']}}</label>
+        <pui-image-input
+          labelRef="att-upload"
+          accept=".jpg,.jpeg,.png,.webp"
+          formControlName="attachment"
+        ></pui-image-input>
+      </div>
 
-        <h4 class="card-header">{{c['addImage']}}</h4>
+      <div class="card-footer">
+        <button
+          class="btn-round btn-outline"
+          type="button"
+          (click)="closeModal()"
+        >
+          {{c['cancel']}}
+        </button>
+        <button class="btn-round btn-primary" [disabled]="form.invalid">
+          {{c['add']}}
+        </button>
+      </div>
+    </form>
+  </ng-template>
 
-        <div class="card-body">
-          <label for="att-upload">{{c['image']}}</label>
-          <pui-image-input labelRef="att-upload" accept=".jpg,.jpeg,.png,.webp" formControlName="attachment"></pui-image-input>
+  <ng-template #addAttachmentTmp>
+    <form class="card shadow-6 w-12" [formGroup]="form" (ngSubmit)="add(c)">
+      <h4 class="card-header">{{c['addAttachment']}}</h4>
+
+      <div class="card-body">
+        <label for="att-name">{{c['name']}}</label>
+        <div class="fc mbe-6">
+          <input type="text" formControlName="name" id="att-name" />
         </div>
 
-        <div class="card-footer">
-          <button class="btn-round btn-outline" type="button" (click)="closeModal()">{{c['cancel']}}</button>
-          <button class="btn-round btn-primary" [disabled]="form.invalid">{{c['add']}}</button>
-        </div>
-
-      </form>
-
-    </ng-template>
-
-    <ng-template #addAttachmentTmp>
-
-      <form class="card shadow-6 w-8" [formGroup]="form" (ngSubmit)="add(c)">
-
-        <h4 class="card-header">{{c['addAttachment']}}</h4>
-
-        <div class="card-body">
-
-          <label for="att-name">{{c['name']}}</label>
-          <div class="fc mbe-6">
-            <input type="text" formControlName="name" id="att-name">
-          </div>
-
-          <label for="att-upload">{{c['attachment']}}</label>
-          <div class="fc">
-            <pui-file-input labelRef="att-upload" formControlName="attachment"
-              [placeholder]="c['addAttachment']"></pui-file-input>
-          </div>
-        </div>
-
-        <div class="card-footer">
-          <button class="btn-round btn-outline" type="button" (click)="closeModal()">{{c['cancel']}}</button>
-          <button class="btn-round btn-primary" [disabled]="form.invalid">{{c['add']}}</button>
-        </div>
-
-      </form>
-
-    </ng-template>
-
-    <ng-template #removeTmp let-serial>
-
-      <div class="card shaow-6">
-        <h4 class="card-header">{{c['removeAttachment']}}</h4>
-
-        <p class="card-body">{{c['confirmRemoveAttachment']}}</p>
-
-        <div class="card-footer">
-          <button class="btn-round btn-outline" (click)="closeModal()">{{c['cancel']}}</button>
-          <button class="btn-round btn-primary" (click)="remove(c, serial)">{{c['delete']}}</button>
+        <label for="att-upload">{{c['attachment']}}</label>
+        <div class="fc">
+          <pui-file-input
+            labelRef="att-upload"
+            formControlName="attachment"
+            [placeholder]="c['addAttachment']"
+          ></pui-file-input>
         </div>
       </div>
 
-    </ng-template>
-<ng-template #updateNameTmp let-serial let-name>
-  <form class="card shadow-6 w-8" [formGroup]="form" (ngSubmit)="updateName(c, serial)">
-    <h4 class="card-header">{{c['update']}}</h4>
-    <div class="card-body">
-      <label for="att-name">{{c['name']}}</label>
-      <div class="fc mbe-6">
-        <input type="text" formControlName="name" id="att-name">
+      <div class="card-footer">
+        <button
+          class="btn-round btn-outline"
+          type="button"
+          (click)="closeModal()"
+        >
+          {{c['cancel']}}
+        </button>
+        <button class="btn-round btn-primary" [disabled]="form.invalid">
+          {{c['add']}}
+        </button>
       </div>
-    
-    </div>
-    <div class="card-footer">
-      <button class="btn-round btn-outline" type="button" (click)="closeModal()">{{c['cancel']}}</button>
-      <button class="btn-round btn-primary" >{{c['update']}}</button>
-    </div>
-  </form>
-</ng-template>
+    </form>
+  </ng-template>
 
+  <ng-template #removeTmp let-serial>
+    <div class="card shaow-6 w-10">
+      <h4 class="card-header">{{c['removeAttachment']}}</h4>
 
-  </ng-container>
+      <p class="card-body">{{c['confirmRemoveAttachment']}}</p>
+
+      <div class="card-footer">
+        <button class="btn-round btn-outline" (click)="closeModal()">
+          {{c['cancel']}}
+        </button>
+        <button class="btn-round btn-primary" (click)="remove(c, serial)">
+          {{c['delete']}}
+        </button>
+      </div>
+    </div>
+  </ng-template>
+  <ng-template #updateNameTmp let-serial let-name>
+    <form
+      class="card shadow-6 w-12"
+      [formGroup]="form"
+      (ngSubmit)="updateName(c, serial)"
+    >
+      <h4 class="card-header">{{c['update']}}</h4>
+      <div class="card-body">
+        <label for="att-name">{{c['name']}}</label>
+        <div class="fc mbe-6">
+          <input type="text" formControlName="name" id="att-name" />
+        </div>
+      </div>
+      <div class="card-footer">
+        <button
+          class="btn-round btn-outline"
+          type="button"
+          (click)="closeModal()"
+        >
+          {{c['cancel']}}
+        </button>
+        <button class="btn-round btn-primary">{{c['update']}}</button>
+      </div>
+    </form>
+  </ng-template>
+</ng-container>
