@@ -57,7 +57,8 @@
 /* Styles for Document Cards */
 .document-card {
   background-color: #fff;
-  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1); /* Shadow for each document item */
+  // box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1); /* Shadow for each document item */
+  border: 1px solid var(--border1);
   border-radius: 8px;
   margin-bottom: 10px;
   display: flex;
