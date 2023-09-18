@@ -78,13 +78,13 @@ export interface DataStoreSettings {
 
   /**
    * ### workflow type
-   *  - **false**: no workflow
-   *  - **true**: default workflow where any admin can approve or reject
+   *  - **null**: no workflow
+   *  - **"default"**: default workflow where bp owner can approve or reject
    *  - **string (workflow serial)**: predefined custom workflow
    * 
    * cannot be changed after build
    */
-  workflow: string | boolean;
+  workflow: string | null;
   /** When true
    * - records are inserted in blueprint level rather than instance level.
    * - inserting data will be made by other data stores.
