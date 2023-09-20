@@ -2,18 +2,12 @@ import { Model } from "../model";
 import { Notification } from "@pestras/shared/data-model";
 import { Serial } from '@pestras/shared/util';
 import { changeListener } from "./listener";
-import { UsersModel } from "../active-directory/users";
-import { CommentsModel } from "../comments";
-import { DataRecordsModel } from "../blueprints/records";
 
 export class NotificationsModel extends Model<Notification> {
 
   constructor(
     db: string, 
-    col: string, 
-    protected usersModel: UsersModel,
-    protected commentsModel: CommentsModel,
-    protected dataRecordsModel: DataRecordsModel
+    col: string
   ) {
     super(db, col);
   }

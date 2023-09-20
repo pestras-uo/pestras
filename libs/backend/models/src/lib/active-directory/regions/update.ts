@@ -20,7 +20,7 @@ export async function update(
     { $set: { ...input, last_modified: date } }
   );
 
-  this.pubSub.emitActivity({
+  this.channel.emitActivity({
     issuer,
     create_date: date,
     method: 'update',
@@ -46,7 +46,7 @@ export async function updateCoords(
     { $set: { coords: input, last_modified: date } }
   );
 
-  this.pubSub.emitActivity({
+  this.channel.emitActivity({
     issuer,
     create_date: date,
     method: 'updateCoords',

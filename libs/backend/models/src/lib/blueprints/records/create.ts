@@ -1,15 +1,21 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { DataStore, DataStoreState, DataStoreType, EntityTypes, parseValue, validateConstraint, validateValueType, WorkflowState, User } from "@pestras/shared/data-model";
+import { DataStoreState, DataStoreType, parseValue, validateConstraint, validateValueType, User } from "@pestras/shared/data-model";
 import { DataRecordsModel } from ".";
 import { HttpError, HttpCode } from "@pestras/backend/util";
+import { dataStoresModel } from "../../models";
 
 export async function create(
   this: DataRecordsModel,
-  ds: DataStore,
+  dsSerial: string,
   recSerial: string,
   data: any,
   issuer: User
 ) {
+  const ds = await dataStoresModel.getBySerial(dsSerial, { serial: 1, type: 1, fields: 1, state: 1 });
+
+  if (!ds)
+    throw new HttpError(HttpCode.NOT_FOUND, 'dataStoreNotFound');
+  
   // type must be table
   if (ds.type !== DataStoreType.TABLE)
     throw new HttpError(HttpCode.FORBIDDEN, 'unsupportedDataStoreType');
@@ -57,26 +63,14 @@ export async function create(
 
   // add system fields
   const date = new Date();
+
   entry.serial = recSerial;
   entry.topic = data.topic ?? null;
-  entry.workflow = WorkflowState.DRAFT;
   entry.owner = issuer.serial;
   entry.create_date = date;
   entry.last_modified = date;
 
-  await this.db.collection(ds.serial).insertOne(entry);
-
-  // if (ds.settings.workflow)
-  //   await recordsWorkflowModel.create(ds.serial, entry.serial);
-
-  this.pubSub.emitActivity({
-    issuer: issuer.serial,
-    create_date: date,
-    method: 'create',
-    serial: entry.serial,
-    entity: EntityTypes.RECORD,
-    payload: { data_store: ds.serial }
-  });
+  await this.db.collection(`draft_${ds.serial}`).insertOne(entry);
 
   return entry;
 }

@@ -9,7 +9,7 @@ export async function deleteReport(
 
   await this.col.deleteOne({ serial });
 
-  this.pubSub.emitActivity({
+  this.channel.emitActivity({
     issuer: issuer.serial,
     create_date: new Date(),
     method: 'delete',

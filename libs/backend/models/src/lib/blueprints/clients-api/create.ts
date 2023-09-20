@@ -27,7 +27,7 @@ export async function create(
 
   await this.col.insertOne(cApi);
 
-  this.pubSub.emitActivity({
+  this.channel.emitActivity({
     method: 'create',
     serial: cApi.serial,
     entity: EntityTypes.CLIENT_API,

@@ -1,4 +1,4 @@
-import { regionsModel } from "../../models";
+import { regionsModel } from "@pestras/backend/models";
 import { RegionsApi } from "./types";
 import { NextFunction } from 'express';
 

@@ -40,7 +40,7 @@ export async function addParam(
     $set: { last_modified: date }
   });
 
-  this.pubSub.emitActivity({
+  this.channel.emitActivity({
     method: 'addParam',
     serial,
     entity: EntityTypes.CLIENT_API,
@@ -97,7 +97,7 @@ export async function updateParam(
     arrayFilters: [{ 'data_store.serial': ds }, { 'param.serial': param_serial }]
   });
 
-  this.pubSub.emitActivity({
+  this.channel.emitActivity({
     method: 'updateParam',
     serial,
     entity: EntityTypes.CLIENT_API,
@@ -131,7 +131,7 @@ export async function removeParam(
     $set: { last_modified: date }
   });
 
-  this.pubSub.emitActivity({
+  this.channel.emitActivity({
     method: 'removeParam',
     serial,
     entity: EntityTypes.CLIENT_API,

@@ -2,10 +2,10 @@ import { MongoClient, ServerApiVersion } from 'mongodb';
 import { Core } from './core';
 
 export interface MongoClientConfig {
-  dbUoAdName: string;
-  dbUoName: string;
+  adDb: string;
+  sysDb: string;
+  dataDb: string;
   dbUrl: string;
-  dbUoDataName: string;
 }
 
 class DB extends Core {
@@ -21,14 +21,16 @@ class DB extends Core {
 
     console.log("connected to database successfully");
 
-    this.pubSub.emit('ad-db-connected', conn.db(config.dbUoAdName));
-    this.pubSub.emit('uo-db-connected', conn.db(config.dbUoName));
-    this.pubSub.emit('data-db-connected', conn.db(config.dbUoDataName));
+    this.channel.emit('ad-db-connected', conn.db(config.adDb));
+    this.channel.emit('sys-db-connected', conn.db(config.sysDb));
+    this.channel.emit('data-db-connected', conn.db(config.dataDb));
 
     process
       .once('exit', () => this.closeConn(conn))
       .once('SIGTERM', () => this.closeConn(conn))
       .once('SIGINT', () => this.closeConn(conn));
+
+    return conn;
   }
 
   closeConn(conn: MongoClient) {

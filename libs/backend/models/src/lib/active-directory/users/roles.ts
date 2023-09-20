@@ -11,7 +11,7 @@ export async function updateRoles(this: UsersModel, serial: string, input: Updat
     { $set: { ...input, last_modified: date } }
   );
 
-  this.pubSub.emitActivity({
+  this.channel.emitActivity({
     issuer,
     create_date: date,
     method: 'updateRoles',

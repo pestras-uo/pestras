@@ -1,4 +1,4 @@
-import { contentModel, dashboardsModel, dataVizModel, entityAccessModel } from "../../models";
+import { contentModel, dashboardsModel, dataVizModel, entityAccessModel } from "@pestras/backend/models";
 import { DashboardsApi } from "./types";
 import { NextFunction } from 'express';
 

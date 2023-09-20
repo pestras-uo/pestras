@@ -19,7 +19,7 @@ export class DataStoresModel extends Model<DataStore> {
   protected dataDB!: Db;
 
   protected override init(): void {
-    this.pubSub.on<Db>('data-db-connected', db => this.dataDB = db);
+    this.channel.on<Db>('data-db-connected', db => this.dataDB = db);
   }
 
   // read
@@ -40,7 +40,16 @@ export class DataStoresModel extends Model<DataStore> {
   // update
   // --------------------------------------------------------------------------------------
   update: (serial: string, name: string, issuer: User) => Promise<Date> = update.bind(this);
-  updateState: (serial: string, state: Exclude<DataStoreState, DataStoreState.BUILD>, issuer: User) => Promise<Date> = updateState.bind(this);
+  updateState: (serial: string, state: Exclude<DataStoreState, DataStoreState.BUILD>) => Promise<Date> = updateState.bind(this);
+  async updateWsState(serial: string, state: DataStoreState, initialized: boolean) {
+    return this.col.updateOne({ serial }, {
+      $set: {
+        state,
+        'web_service.initialized': initialized,
+        last_modified: new Date()
+      }
+    });
+  }
   build: (serial: string, issuer: User) => Promise<boolean> = build.bind(this);
   buildView: (ds: DataStore, rebuild?: boolean) => Promise<void> = buildView.bind(this);
 

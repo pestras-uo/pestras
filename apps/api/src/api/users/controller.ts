@@ -1,7 +1,7 @@
-import { authModel, usersModel, workspaceModel } from "../../models";
 import argon from 'argon2';
 import { UsersApi } from "./types";
 import { NextFunction } from 'express';
+import { authModel, usersModel, workspaceModel } from '@pestras/backend/models';
 
 export const UsersController = {
 

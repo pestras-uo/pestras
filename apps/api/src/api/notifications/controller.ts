@@ -1,4 +1,4 @@
-import { notificationsModel } from "../../models";
+import { notificationsModel } from "@pestras/backend/models";
 import { NotificationsApi } from "./types";
 import { NextFunction } from 'express';
 

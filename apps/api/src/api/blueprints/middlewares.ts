@@ -1,8 +1,8 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { NextFunction, Request, Response } from "express";
-import { blueprintsModel } from "../../models";
 import { HttpError, HttpCode } from "@pestras/backend/util";
 import { UserSession } from "../../auth";
+import { blueprintsModel } from "@pestras/backend/models";
 
 export function checkOwner(withCollaborators = false) {
 

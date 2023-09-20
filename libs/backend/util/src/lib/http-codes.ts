@@ -55,7 +55,7 @@ export enum HttpCode {
   /**
    * Used inside a <dav:propstat> response element to avoid repeatedly enumerating the internal members of multiple bindings to the same collection.
    */
-  ALREADT_REPORTED,
+  ALREADY_REPORTED,
   /**
    * The server has fulfilled a GET request for the resource, and the response is a representation of the result of one or more instance-manipulations applied to the current instance.
    */

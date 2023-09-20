@@ -11,7 +11,7 @@ export async function update(
 
   await this.col.updateOne({ serial }, { $set: { name, last_modified: date } });
 
-  this.pubSub.emitActivity({
+  this.channel.emitActivity({
     issuer: issuer.serial,
     create_date: date,
     method: 'update',
@@ -28,23 +28,11 @@ export async function update(
 export async function updateState(
   this: DataStoresModel,
   serial: string,
-  state: Exclude<DataStoreState, DataStoreState.BUILD>,
-  issuer: User
+  state: Exclude<DataStoreState, DataStoreState.BUILD>
 ) {
   const date = new Date();
 
   await this.col.updateOne({ serial }, { $set: { state, last_modified: date } });
-
-  this.pubSub.emitActivity({
-    issuer: issuer.serial,
-    create_date: date,
-    method: 'updateState',
-    serial,
-    entity: EntityTypes.DATA_STORE,
-    payload: { state }
-  }, {
-    orgunits: [issuer.orgunit]
-  });
 
   return date;
 }

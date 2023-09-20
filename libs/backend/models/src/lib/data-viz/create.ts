@@ -20,7 +20,7 @@ export async function create(
 
     await this.col.insertOne(dataViz);
 
-    this.pubSub.emitActivity({
+    this.channel.emitActivity({
       issuer,
       create_date: date,
       method: 'create',

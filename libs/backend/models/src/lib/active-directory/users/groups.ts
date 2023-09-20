@@ -14,7 +14,7 @@ export async function addGroup(
     { $addToSet: { groups: group }, $set: { last_modified: date } }
   );
 
-  this.pubSub.emitActivity({
+  this.channel.emitActivity({
     issuer,
     create_date: date,
     method: 'addGroup',
@@ -41,7 +41,7 @@ export async function removeGroup(
     { $pull: { groups: group }, $set: { last_modified: date } }
   );
 
-  this.pubSub.emitActivity({
+  this.channel.emitActivity({
     issuer,
     create_date: date,
     method: 'removeGroup',

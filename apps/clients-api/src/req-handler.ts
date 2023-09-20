@@ -1,9 +1,9 @@
 import { Request, Response } from "express";
-import { clientsApiLogModel, clientsApiModel, dataRecordsModel, dataStoresModel } from "./models";
 import { ApiError } from "./error";
 import { HttpCode } from "@pestras/backend/util";
 import { getIpAddress } from "./get-ip-address";
 import { validateValueType } from "@pestras/shared/data-model";
+import { clientsApiLogModel, clientsApiModel, dataRecordsModel, dataStoresModel } from "@pestras/backend/models";
 
 export async function reqHandler(req: Request<{ client: string; dataStore: string; }>, res: Response) {
   try {

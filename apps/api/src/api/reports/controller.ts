@@ -1,4 +1,3 @@
-import { contentModel, dataVizModel, entityAccessModel, reportsModel } from "../../models";
 import { ReportsApi } from "./types";
 import fs from 'fs-extra';
 import path from 'path';
@@ -6,6 +5,7 @@ import config from "../../config";
 import { HttpCode, HttpError } from "@pestras/backend/util";
 import { ReportViewType } from "@pestras/shared/data-model";
 import { NextFunction } from 'express';
+import { contentModel, dataVizModel, entityAccessModel, reportsModel } from "@pestras/backend/models";
 
 export const controller = {
 

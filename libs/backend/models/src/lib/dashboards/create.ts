@@ -29,7 +29,7 @@ export async function create(
 
   await this.col.insertOne(dashboard);
 
-  this.pubSub.emitActivity({
+  this.channel.emitActivity({
     create_date: date,
     issuer: issuer.serial,
     method: 'create',

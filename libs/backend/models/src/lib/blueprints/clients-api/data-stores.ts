@@ -23,7 +23,7 @@ export async function addDataStore(
     $set: { last_modified: date }
   });
 
-  this.pubSub.emitActivity({
+  this.channel.emitActivity({
     method: 'addDataStore',
     serial,
     entity: EntityTypes.CLIENT_API,
@@ -61,7 +61,7 @@ export async function updateDataStore(
     }
   });
 
-  this.pubSub.emitActivity({
+  this.channel.emitActivity({
     method: 'updateDataStore',
     serial,
     entity: EntityTypes.CLIENT_API,
@@ -93,7 +93,7 @@ export async function removeDataStore(
     $set: { last_modified: date }
   });
 
-  this.pubSub.emitActivity({
+  this.channel.emitActivity({
     method: 'removeDataStore',
     serial,
     entity: EntityTypes.CLIENT_API,

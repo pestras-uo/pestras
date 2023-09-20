@@ -16,7 +16,7 @@ export async function update(
 
   await this.col.updateOne({ serial }, { $set: { client_name: clientName, last_modified: date }});
 
-  this.pubSub.emitActivity({
+  this.channel.emitActivity({
     method: 'update',
     serial,
     entity: EntityTypes.CLIENT_API,

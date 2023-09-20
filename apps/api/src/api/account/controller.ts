@@ -1,11 +1,11 @@
 import { HttpError, HttpCode } from "@pestras/backend/util";
-import { usersModel, authModel } from "../../models";
 import fs from 'fs';
 import path from 'path';
 import config from "../../config";
 import argon from 'argon2';
 import { AccountApi } from './types';
 import { NextFunction } from "express";
+import { authModel, usersModel } from "@pestras/backend/models";
 
 export const AccountController = {
 

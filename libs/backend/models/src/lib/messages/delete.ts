@@ -10,7 +10,7 @@ export async function deleteMessage(
   const date = new Date();
   await this.messages.updateOne({ serial }, { $set: { delete_date: date }});
 
-  this.pubSub.emit('messages', {
+  this.channel.emit('messages', {
     method: 'delete',
     entity: EntityTypes.MESSAGE,
     serial,
@@ -43,7 +43,7 @@ export async function leaveGroup(
 
   await this.col.updateOne({ serial }, { $pull: { parties: issuer } });
 
-  this.pubSub.emit('messages', {
+  this.channel.emit('messages', {
     method: 'leaveGroup',
     entity: EntityTypes.INBOX,
     serial,

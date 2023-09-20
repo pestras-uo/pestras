@@ -27,7 +27,7 @@ export async function addSlide(
     $set: { last_modified: date }
   });
 
-  this.pubSub.emitActivity({
+  this.channel.emitActivity({
     issuer: issuer.serial,
     create_date: date,
     method: 'addSlide',
@@ -64,7 +64,7 @@ export async function updateSlide(
     }
   });
 
-  this.pubSub.emitActivity({
+  this.channel.emitActivity({
     issuer: issuer.serial,
     create_date: date,
     method: 'updateSlide',
@@ -87,7 +87,7 @@ export async function updateSlidesOrder(
 
   await this.col.updateOne({ serial }, { $set: { slides_order: input, last_modified: date } });
 
-  this.pubSub.emitActivity({
+  this.channel.emitActivity({
     create_date: date,
     issuer: issuer.serial,
     method: 'updateSlidesOrder',
@@ -118,7 +118,7 @@ export async function removeSlide(
     $set: { last_modified: date }
   });
 
-  this.pubSub.emitActivity({
+  this.channel.emitActivity({
     issuer: issuer.serial,
     create_date: date,
     method: 'removeSlide',

@@ -63,7 +63,7 @@ export async function setAggregation(
 
   await this.col.updateOne({ serial }, { $set: { aggr, fields: aggrFields } });
 
-  this.pubSub.emitActivity({
+  this.channel.emitActivity({
     issuer: issuer.serial,
     create_date: date,
     method: 'setAggregation',

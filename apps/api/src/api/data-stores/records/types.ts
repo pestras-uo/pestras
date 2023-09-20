@@ -2,7 +2,8 @@
 /* eslint-disable @typescript-eslint/no-namespace */
 import { Request, Response } from "express";
 import { UserSession } from "../../../auth";
-import { TableDataRecord } from "@pestras/shared/data-model";
+import { DataRecordState, TableDataRecord } from "@pestras/shared/data-model";
+import { UpdateRecordInput } from "libs/backend/models/src/lib/blueprints/records";
 
 export namespace RecordsApi {
   
@@ -11,7 +12,7 @@ export namespace RecordsApi {
   export type SearchReq = Request<{ serial: string; }>;
   export type SearchRes = Response<{ count: number; results: any[] }, UserSession>;
 
-  export type GetBySerialReq = Request<{ serial: string; record: string; }>;
+  export type GetBySerialReq = Request<{ serial: string; record: string; state: DataRecordState }>;
   export type GetBySerialRes = Response<any, UserSession>;
 
   export type GetHistoryReq = Request<{ serial: string; record: string; }>;
@@ -24,7 +25,7 @@ export namespace RecordsApi {
 
   // update
   // --------------------------------------------------------------------------------
-  export type UpdateReq = Request<{ serial: string; record: string; }>;
+  export type UpdateReq = Request<{ serial: string; record: string; }, any, UpdateRecordInput>;
   export type UpdateRes = Response<any, UserSession>;
 
   // History
@@ -34,6 +35,6 @@ export namespace RecordsApi {
 
   // delete
   // --------------------------------------------------------------------------------
-  export type DeleteReq = Request<{ serial: string; record: string; }>;
+  export type DeleteReq = Request<{ serial: string; record: string; draft: string }>;
   export type DeleteRes = Response<boolean, UserSession>;
 }

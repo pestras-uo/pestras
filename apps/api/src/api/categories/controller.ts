@@ -1,4 +1,4 @@
-import { categoriesModel } from "../../models";
+import { categoriesModel } from "@pestras/backend/models";
 import { CategoriesApi } from "./types";
 import { NextFunction } from 'express';
 

@@ -22,7 +22,7 @@ export async function create(this: BlueprintsModel, input: CreateBlueprintInput,
 
   await this.col.insertOne(bp);
 
-  this.pubSub.emitActivity({
+  this.channel.emitActivity({
     issuer: issuer,
     create_date: date,
     method: 'create',

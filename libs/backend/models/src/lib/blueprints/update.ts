@@ -11,7 +11,7 @@ export async function update(this: BlueprintsModel, serial: string, name: string
 
   await this.col.updateOne({ serial }, { $set: { name, last_modified: date } });
 
-  this.pubSub.emitActivity({
+  this.channel.emitActivity({
     issuer: issuer.serial,
     create_date: date,
     method: 'update',
@@ -35,7 +35,7 @@ export async function setOwner(
 
   await this.col.updateOne({ serial }, { $set: { owner, last_modified: date } });
 
-  this.pubSub.emitActivity({
+  this.channel.emitActivity({
     issuer: issuer.serial,
     create_date: date,
     method: 'setOwner',

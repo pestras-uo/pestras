@@ -8,7 +8,7 @@ export async function deleteClientApi(
 ) {
   await this.col.deleteOne({ serial });
 
-  this.pubSub.emitActivity({
+  this.channel.emitActivity({
     method: 'delete',
     serial,
     entity: EntityTypes.CLIENT_API,

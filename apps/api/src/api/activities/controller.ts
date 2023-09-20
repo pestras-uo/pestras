@@ -1,4 +1,4 @@
-import { activitiesModel } from "../../models";
+import { activitiesModel } from "@pestras/backend/models";
 import { ActivitiesApi } from "./types";
 
 export const controller = {

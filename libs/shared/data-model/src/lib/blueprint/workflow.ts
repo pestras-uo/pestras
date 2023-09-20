@@ -1,4 +1,4 @@
-// Workflow State
+// Workflow Step State
 // ----------------------------------------------------------------------------------------------
 export enum WorkflowAction {
   APPROVE = 'approve',
@@ -6,63 +6,52 @@ export enum WorkflowAction {
   REVIEW = 'review'
 }
 
-export interface WorkflowPartyState {
+export const workflowTriggers = ['new', 'update', 'delete'] as const;
+
+export type WorkflowTriggers = typeof workflowTriggers[number];
+
+export interface UserWorkflowAction {
   user: string;
   action: WorkflowAction;
-  receive_date: Date | null;
-  action_date: Date | null;
-  /** fields names that current party has modified */
-  changes: string[];
-  /** in case one of the user alternatives made the action */
-  action_by: string;
+  date: Date;
+  message: string;
 }
 
 export interface RecordWorkflow {
+  actions: UserWorkflowAction[];
   /** One to one relation no need for serial */
   record: string;
   /** reference to workflow settings */
   workflow: string;
+  /** party step serial */
+  step: string;
 
-  action: WorkflowTriggerActions;
+  trigger: WorkflowTriggers;
 
-  state: WorkflowPartyState[];
+  action: WorkflowAction;
+
+  create_date: Date | null;
+
+  action_date: Date | null;
 }
 
 
 // Workflow Definition
 // ----------------------------------------------------------------------------------------------
-export enum WorkflowTriggerRole {
-  RUN = 'run',
-  BY_PASS = 'by_pass',
-  BLOCK = 'block'
+export enum WorkflowPartyAlgo {
+  ANY = 'any',
+  ANY_ALL = 'any_all',
+  ALL_ANY = 'all_any',
+  ANY_MOST = 'any_most',
+  MOST_ANY = 'most_any',
+  /** only is parties are odd */
+  MOST = 'most'
 }
 
-export enum WorkflowTriggerActions {
-  CREATE = 'create',
-  UPDATE = 'update',
-  DELETE = 'delete'
-}
-
-export interface WorkflowPartyOptions {
-  user: string;
-  /** Allow party to update specific fields */
-  allow_change: string[];
-}
-
-/**
- * ### Actions state
- *  - **by_pass**: apply update directly
- *  - **run**: run workflow
- *  - **block**: prevent any update
- */
-export interface WorkflowTriggerOptions {
-  action: WorkflowTriggerActions;
-  trigger: WorkflowTriggerRole;
-  /** 
-   * in case of update action:
-   * spicify which fields to trigger workflow
-   */
-  fields: string[];
+export interface WorkflowStepOptions {
+  serial: string;
+  users: string[];
+  algo: WorkflowPartyAlgo
 }
 
 export interface Workflow {
@@ -70,10 +59,10 @@ export interface Workflow {
   blueprint: string;
 
   name: string;
-
-  triggers: WorkflowTriggerOptions[];
   /** max days to wait for an action */
   max_review_days: number;
+
+  cancalable: boolean;
 
   /** 
    * in case user is:
@@ -84,5 +73,48 @@ export interface Workflow {
   default_action: Exclude<WorkflowAction, WorkflowAction.REVIEW>;
 
   /** users to approve */
-  parties: WorkflowPartyOptions[];
+  steps: WorkflowStepOptions[];
+}
+
+export function getWorkflowStepAction(actions: UserWorkflowAction[], algo: WorkflowPartyAlgo) {
+  const length = actions.length;
+
+  switch (algo) {
+    case WorkflowPartyAlgo.ANY:
+      return actions.some(a => a.action === WorkflowAction.APPROVE)
+        ? WorkflowAction.APPROVE
+        : actions.some(a => a.action === WorkflowAction.REJECT)
+          ? WorkflowAction.REJECT
+          : WorkflowAction.REVIEW;
+    case WorkflowPartyAlgo.ALL_ANY:
+      return actions.every(a => a.action === WorkflowAction.APPROVE)
+        ? WorkflowAction.APPROVE
+        : actions.some(a => a.action === WorkflowAction.REJECT)
+          ? WorkflowAction.REJECT
+          : WorkflowAction.REVIEW;
+    case WorkflowPartyAlgo.ANY_ALL:
+      return actions.some(a => a.action === WorkflowAction.APPROVE)
+        ? WorkflowAction.APPROVE
+        : actions.every(a => a.action === WorkflowAction.REJECT)
+          ? WorkflowAction.REJECT
+          : WorkflowAction.REVIEW;
+    case WorkflowPartyAlgo.ANY_MOST:
+      return actions.some(a => a.action === WorkflowAction.APPROVE)
+        ? WorkflowAction.APPROVE
+        : actions.reduce((total, a) => total += (a.action === WorkflowAction.REJECT ? 1 : 0), 0) > length / 2
+          ? WorkflowAction.REJECT
+          : WorkflowAction.REVIEW;
+    case WorkflowPartyAlgo.MOST_ANY:
+      return actions.reduce((total, a) => total += (a.action === WorkflowAction.APPROVE ? 1 : 0), 0) > length / 2
+        ? WorkflowAction.APPROVE
+        : actions.some(a => a.action === WorkflowAction.REJECT)
+          ? WorkflowAction.REJECT
+          : WorkflowAction.REVIEW;
+    case WorkflowPartyAlgo.MOST:
+      return actions.reduce((total, a) => total += (a.action === WorkflowAction.APPROVE ? 1 : 0), 0) > length / 2
+        ? WorkflowAction.APPROVE
+        : actions.reduce((total, a) => total += (a.action === WorkflowAction.REJECT ? 1 : 0), 0) > length / 2
+          ? WorkflowAction.REJECT
+          : WorkflowAction.REVIEW;
+  }
 }

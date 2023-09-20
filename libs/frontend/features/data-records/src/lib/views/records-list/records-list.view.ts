@@ -24,7 +24,7 @@ export class RecordsListView implements OnChanges {
   view = "table";
   exporting = false;
   isTable!: boolean;
-  tab: WorkflowState = WorkflowState.APPROVED;
+  tab: WorkflowState = WorkflowState.REVIEW;
   canAdd!: boolean;
   query!: any;
   filters: AdvancedSearchModelItem[] | null = null;
@@ -119,7 +119,7 @@ export class RecordsListView implements OnChanges {
     if (this.isTable) {
       query.workflow = this.tab;
 
-      if (this.tab !== WorkflowState.APPROVED)
+      if (this.tab !== WorkflowState.REVIEW)
         query.owner = this.session.get('serial');
     }
 

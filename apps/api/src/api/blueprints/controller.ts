@@ -1,4 +1,4 @@
-import { blueprintsModel, contentModel } from "../../models";
+import { blueprintsModel, contentModel } from "@pestras/backend/models";
 import { BlueprintsApi } from "./types";
 import { NextFunction } from 'express';
 

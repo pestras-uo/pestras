@@ -1,44 +1,46 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { DataStore, DataStoreState, DataStoreType, EntityTypes, TableDataRecord, WorkflowState, parseValue, validateConstraint, validateValueType } from "@pestras/shared/data-model";
+import { DataRecordState, DataStoreState, DataStoreType, EntityTypes, TableDataRecord, parseValue, validateConstraint, validateValueType } from "@pestras/shared/data-model";
 import { DataRecordsModel } from ".";
 import { HttpError, HttpCode } from "@pestras/backend/util";
+import { dataStoresModel } from "../../models";
+
+export type UpdateRecordInput = { group: string; data: TableDataRecord; draft: boolean; };
 
 export async function update(
   this: DataRecordsModel,
-  dataStore: DataStore,
+  dsSerial: string,
   recordSerial: string,
-  input: any,
+  input: UpdateRecordInput,
   issuer: string
 ) {
+  const ds = await dataStoresModel.getBySerial(dsSerial, { type: 1, settings: 1, state: 1, serial: 1, fields: 1 });
+
+  if (!ds)
+    throw new HttpError(HttpCode.NOT_FOUND, 'dataStoreNotFound');
+
   // type must be table
-  if (dataStore.type !== DataStoreType.TABLE)
+  if (ds.type !== DataStoreType.TABLE)
     throw new HttpError(HttpCode.FORBIDDEN, 'unsupportedDataStoreType');
 
-  if (dataStore.state === DataStoreState.BUILD)
+  if (ds.state === DataStoreState.BUILD)
     throw new HttpError(HttpCode.FORBIDDEN, 'dataStoreNotBuiltYet');
 
-  const record = await this.getBySerial<TableDataRecord>(dataStore.serial, recordSerial);
+  const record = input.draft
+    ? await this.db.collection<TableDataRecord>(`draft_${dsSerial}`).findOne({ serial: recordSerial }, { projection: { _id: 0 } })
+    : await this.db.collection<TableDataRecord>(dsSerial).findOne({ serial: recordSerial }, { projection: { _id: 0 } });
 
   if (!record)
     throw new HttpError(HttpCode.NOT_FOUND, 'recordNotFound');
 
-  // check workflow
-  if (record['workflow'] === WorkflowState.PENDING)
-    throw new HttpError(HttpCode.FORBIDDEN, 'recordInPendingState');
-
-  // workflow state is approved and history not enabled then stop request
-  if (dataStore.settings.workflow && record['workflow'] === WorkflowState.APPROVED && !dataStore.settings.history)
-    throw new HttpError(HttpCode.FORBIDDEN, 'updatesNotAllowed');
-
   const update: any = {};
-  const inputFieldsNames = Object.keys(input);
-  const fields = dataStore.fields.filter(f => !f.system && !f.automated && inputFieldsNames.includes(f.name));
+  const inputFieldsNames = Object.keys(input.data);
+  const fields = ds.fields.filter(f => !f.system && !f.automated && inputFieldsNames.includes(f.name));
 
   for (const field of fields) {
     if (field.constant && record[field.name] !== null)
       continue;
 
-    let value = parseValue(input[field.name]);
+    let value = parseValue(input.data[field.name]);
 
     if (value === null) {
       if (field.required)
@@ -57,7 +59,7 @@ export async function update(
         throw new HttpError(HttpCode.BAD_REQUEST, 'valueNotMatchConstraints');
 
       if (field.unique) {
-        const exists = (await this.db.collection(dataStore.serial).countDocuments({ [field.name]: value })) > 0;
+        const exists = (await this.db.collection(ds.serial).countDocuments({ [field.name]: value })) > 0;
 
         if (exists)
           throw new HttpError(HttpCode.CONFLICT, 'valueAlreadyExists', { field: field.name });
@@ -71,19 +73,18 @@ export async function update(
 
   update.last_modified = date;
 
-  await this.db.collection(dataStore.serial).updateOne({ serial: recordSerial }, { $set: update });
+  Object.assign(record, update);
 
-  if (dataStore.settings.history && record.workflow === WorkflowState.APPROVED)
-    this.pushHistory(dataStore.serial, record);
+  await this.db.collection(`draft_${ds.serial}`).replaceOne({ serial: recordSerial }, record, { upsert: true });
 
-  this.pubSub.emitActivity({
+  this.channel.emitActivity({
     issuer: issuer,
     create_date: date,
     method: 'update',
-    serial: dataStore.serial,
+    serial: ds.serial,
     entity: EntityTypes.RECORD,
-    payload: { data_store: dataStore.serial }
+    payload: { data_store: ds.serial }
   });
 
-  return this.getBySerial<TableDataRecord>(dataStore.serial, recordSerial);
+  return this.getBySerial<TableDataRecord>(ds.serial, recordSerial, DataRecordState.DRAFT);
 }

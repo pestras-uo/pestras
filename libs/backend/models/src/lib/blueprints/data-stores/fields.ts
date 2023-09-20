@@ -57,7 +57,7 @@ export async function addField(
       .collection(ds.serial)
       .updateMany({}, { $set: { [field.name]: field.default ?? null } });
 
-  this.pubSub.emitActivity({
+  this.channel.emitActivity({
     issuer: issuer.serial,
     create_date: date,
     method: 'addField',
@@ -112,7 +112,7 @@ export async function updateField(
     }
   );
 
-  this.pubSub.emitActivity({
+  this.channel.emitActivity({
     issuer: issuer.serial,
     create_date: date,
     method: 'updateField',
@@ -170,7 +170,7 @@ export async function updateFieldConfig(
     }
   );
 
-  this.pubSub.emitActivity({
+  this.channel.emitActivity({
     issuer: issuer.serial,
     create_date: date,
     method: 'updateFieldConfig',
@@ -221,7 +221,7 @@ export async function setFieldConstraint(
     }
   );
 
-  this.pubSub.emitActivity({
+  this.channel.emitActivity({
     issuer: issuer.serial,
     create_date: date,
     method: 'setFieldConstraint',
@@ -273,7 +273,7 @@ export async function removeField(
     }
   );
 
-  this.pubSub.emitActivity({
+  this.channel.emitActivity({
     issuer: issuer.serial,
     create_date: date,
     method: 'removeField',

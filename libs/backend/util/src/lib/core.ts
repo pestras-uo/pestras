@@ -61,5 +61,5 @@ const pubSub = new PubSub();
 pubSub.setMaxListeners(100)
 
 export class Core {
-  protected pubSub = pubSub;
+  protected readonly channel = pubSub;
 }

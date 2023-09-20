@@ -23,7 +23,7 @@ export class UsersGroupsModel extends Model<UsersGroup> {
 
     await this.col.insertOne(group);
 
-    this.pubSub.emitActivity({
+    this.channel.emitActivity({
       method: 'create',
       create_date: date,
       serial: group.serial,
@@ -42,7 +42,7 @@ export class UsersGroupsModel extends Model<UsersGroup> {
 
     await this.col.updateOne({ serial }, { $set: { name, last_modified: date } });
 
-    this.pubSub.emitActivity({
+    this.channel.emitActivity({
       method: 'update',
       create_date: date,
       serial: serial,
@@ -60,7 +60,7 @@ export class UsersGroupsModel extends Model<UsersGroup> {
   async delete(serial: string, issuer: string) {
     await this.col.deleteOne({ serial });
 
-    this.pubSub.emitActivity({
+    this.channel.emitActivity({
       method: 'delete',
       create_date: new Date(),
       serial: serial,

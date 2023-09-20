@@ -46,7 +46,7 @@ export async function createMessage(
 
   await this.messages.insertOne(message);
 
-  this.pubSub.emit('messages', {
+  this.channel.emit('messages', {
     method: 'create',
     entity: EntityTypes.MESSAGE,
     create_date: message.create_date,

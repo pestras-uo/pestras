@@ -1,10 +1,10 @@
 import config from "../../config";
 import { HttpError, HttpCode } from "@pestras/backend/util";
-import { attachmentsModel } from "../../models";
 import { AttachmentsApi } from "./types";
 import fs from 'fs';
 import path from 'path';
 import { NextFunction } from 'express';
+import { attachmentsModel } from "@pestras/backend/models";
 
 export const controller = {
 

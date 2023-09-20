@@ -10,5 +10,7 @@ new Validall(RecordsValidators.CREATE, {
 });
 
 new Validall(RecordsValidators.UPDATE, {
-  $required: true, $type: 'object', $message: 'invalidRecordInput'
+  group: { $type: 'string'},
+  data: { $type: 'object', $message: 'invalidRecordInput' },
+  draft: { $type: 'boolean' }
 });

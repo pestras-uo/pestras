@@ -8,7 +8,7 @@ const months = ['jan', 'feb', 'mar', 'apr', 'may', 'jun', 'jul', 'aug', 'sep', '
 export class ActivitiesModel extends Model<Activity> {
 
   protected override onConnect() {
-    this.pubSub.onActivity(activity => {
+    this.channel.onActivity(activity => {
       this.col.insertOne({ ...activity, serial: Serial.gen('ACT') });
     });
   }

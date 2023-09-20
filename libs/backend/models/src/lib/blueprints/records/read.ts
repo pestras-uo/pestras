@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { DataRecordHistroyItem, DataRecord, ApiQuery } from "@pestras/shared/data-model";
+import { DataRecordHistroyItem, DataRecord, ApiQuery, DataRecordState } from "@pestras/shared/data-model";
 import { Filter } from "mongodb";
 import { DataRecordsModel } from ".";
 
@@ -28,9 +28,14 @@ export async function search(
 export async function getBySerial(
   this: DataRecordsModel,
   dataStoreSerial: string,
-  serial: string
+  serial: string,
+  state = DataRecordState.PUBLISHED
 ) {
-  return await this.db.collection<DataRecord>(dataStoreSerial).findOne({ serial });
+  return state === DataRecordState.PUBLISHED
+    ? await this.db.collection<DataRecord>(dataStoreSerial).findOne({ serial })
+    : state === DataRecordState.REVIEW
+      ? await this.db.collection<DataRecord>(`review_${dataStoreSerial}`).findOne({ serial })
+      : await this.db.collection<DataRecord>(`draft_${dataStoreSerial}`).findOne({ serial })
 }
 
 
