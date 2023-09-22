@@ -30,7 +30,7 @@ export const recordsRoutes = Router({ mergeParams: true })
     controller.create
   )
   .put(
-    '/:record',
+    '/:record/:draft',
     apiAuth([Role.AUTHOR, Role.DATA_ENG]),
     tmpUpload.any(),
     validate(RecordsValidators.UPDATE),

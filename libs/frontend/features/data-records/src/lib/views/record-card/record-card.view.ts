@@ -1,7 +1,7 @@
 /* eslint-disable @angular-eslint/component-class-suffix */
 /* eslint-disable @angular-eslint/component-selector */
 import { Component, Input, OnInit } from '@angular/core';
-import { TableDataRecord, DataStore, Field } from '@pestras/shared/data-model';
+import { TableDataRecord, DataStore, Field, DataRecordState } from '@pestras/shared/data-model';
 
 @Component({
   selector: 'app-record-card',
@@ -21,6 +21,8 @@ export class RecordCardView implements OnInit {
   topic?: string;
   @Input({ required: true })
   record!: TableDataRecord;
+  @Input()
+  state: DataRecordState | "" = "";
 
   ngOnInit(): void {
     this.titleField = this.ds.fields.find(f => f.name === this.ds.settings.card_view?.title) ?? null;

@@ -60,9 +60,9 @@ export const controller = {
     }
   },
 
-  async updateParties(req: WorkflowApi.UpdatePartiesReq, res: WorkflowApi.UpdatePartiesRes, next: NextFunction) {
+  async updateSteps(req: WorkflowApi.UpdateStepsReq, res: WorkflowApi.UpdateStepsRes, next: NextFunction) {
     try {
-      res.json(await workflowModel.updateParties(req.params.serial, req.body.steps));
+      res.json(await workflowModel.updateSteps(req.params.serial, req.body.steps));
     } catch (error) {
       next(error);
     }

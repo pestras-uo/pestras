@@ -6,11 +6,9 @@ export enum RecordsValidators {
 }
 
 new Validall(RecordsValidators.CREATE, {
-  $required: true, $type: 'object', $message: 'invalidRecordInput'
+  $type: 'object', $message: 'invalidRecordInput'
 });
 
 new Validall(RecordsValidators.UPDATE, {
-  group: { $type: 'string'},
-  data: { $type: 'object', $message: 'invalidRecordInput' },
-  draft: { $type: 'boolean' }
+  $type: 'object', $message: 'invalidRecordInput'
 });

@@ -40,7 +40,7 @@ export default Router()
   .use('/categories', categoriesRoutes)
   .use('/data-stores', dataStoresRoutes)
   .use('/workflows', workflowsRouter)
-  .use('/record-workflow', recordWorkflowRoutes)
+  .use('/records-workflow', recordWorkflowRoutes)
   // export
   .use('/client-api', clientsApiRoutes)
   // statistics and analysis

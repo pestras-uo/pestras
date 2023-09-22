@@ -22,7 +22,7 @@ export class SSE extends Core {
   constructor() {
     super();
 
-    this.pubSub.onServerEvent((activity, scope) => {
+    this.channel.onServerEvent((activity, scope) => {
       for (const res of connected.values()) {
         const user = res.locals.issuer;
 

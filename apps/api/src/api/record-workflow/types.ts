@@ -6,21 +6,21 @@ import { UserSession } from "../../auth";
 
 export namespace RecordWorkflowApis {
 
-  export type getByRecordReq = Request<{ ds: string; record: string }>
-  export type getByRecordRes = Response<RecordWorkflow[], UserSession>;
+  export type GetByRecordReq = Request<{ ds: string; record: string }>
+  export type GetByRecordRes = Response<RecordWorkflow[], UserSession>;
 
-  export type getRecordWfStateReq = Request<{ ds: string; record: string }>
-  export type getRecordWfStateRes = Response<RecordWorkflow | null, UserSession>;
+  export type GetRecordWfStateReq = Request<{ ds: string; record: string }>
+  export type GetRecordWfStateRes = Response<RecordWorkflow | null, UserSession>;
 
-  export type publishReq = Request<{ ds: string; record: string; trigger: WorkflowTriggers }>;
-  export type publishRes = Response<boolean, UserSession>;
+  export type PublishReq = Request<{ ds: string; record: string; trigger: WorkflowTriggers }>;
+  export type PublishRes = Response<boolean, UserSession>;
 
-  export type approveReq = Request<{ ds: string; record: string; }>;
-  export type approveRes = Response<boolean, UserSession>;
+  export type ApproveReq = Request<{ ds: string; step: string; }, any, { message: string; }>;
+  export type ApproveRes = Response<boolean, UserSession>;
 
-  export type rejectReq = Request<{ ds: string; record: string; }>;
-  export type rejectRes = Response<boolean, UserSession>;
+  export type RejectReq = Request<{ ds: string; step: string; }, any, { message: string; }>;
+  export type RejectRes = Response<boolean, UserSession>;
 
-  export type cancelReq = Request<{ ds: string; record: string; }>;
-  export type cancelRes = Response<boolean, UserSession>;
+  export type CancelReq = Request<{ ds: string; record: string; }>;
+  export type CancelRes = Response<boolean, UserSession>;
 }

@@ -1,16 +1,15 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { DataRecordState, DataStoreState, DataStoreType, EntityTypes, TableDataRecord, parseValue, validateConstraint, validateValueType } from "@pestras/shared/data-model";
+import { DataRecord, DataStoreState, DataStoreType, EntityTypes, TableDataRecord, parseValue, validateConstraint, validateValueType } from "@pestras/shared/data-model";
 import { DataRecordsModel } from ".";
 import { HttpError, HttpCode } from "@pestras/backend/util";
 import { dataStoresModel } from "../../models";
-
-export type UpdateRecordInput = { group: string; data: TableDataRecord; draft: boolean; };
 
 export async function update(
   this: DataRecordsModel,
   dsSerial: string,
   recordSerial: string,
-  input: UpdateRecordInput,
+  draft: boolean,
+  input: DataRecord,
   issuer: string
 ) {
   const ds = await dataStoresModel.getBySerial(dsSerial, { type: 1, settings: 1, state: 1, serial: 1, fields: 1 });
@@ -25,7 +24,7 @@ export async function update(
   if (ds.state === DataStoreState.BUILD)
     throw new HttpError(HttpCode.FORBIDDEN, 'dataStoreNotBuiltYet');
 
-  const record = input.draft
+  const record = draft
     ? await this.db.collection<TableDataRecord>(`draft_${dsSerial}`).findOne({ serial: recordSerial }, { projection: { _id: 0 } })
     : await this.db.collection<TableDataRecord>(dsSerial).findOne({ serial: recordSerial }, { projection: { _id: 0 } });
 
@@ -33,14 +32,14 @@ export async function update(
     throw new HttpError(HttpCode.NOT_FOUND, 'recordNotFound');
 
   const update: any = {};
-  const inputFieldsNames = Object.keys(input.data);
+  const inputFieldsNames = Object.keys(input);
   const fields = ds.fields.filter(f => !f.system && !f.automated && inputFieldsNames.includes(f.name));
 
   for (const field of fields) {
     if (field.constant && record[field.name] !== null)
       continue;
 
-    let value = parseValue(input.data[field.name]);
+    let value = parseValue(input[field.name]);
 
     if (value === null) {
       if (field.required)
@@ -86,5 +85,5 @@ export async function update(
     payload: { data_store: ds.serial }
   });
 
-  return this.getBySerial<TableDataRecord>(ds.serial, recordSerial, DataRecordState.DRAFT);
+  return this.getBySerial<TableDataRecord>(ds.serial, `draft_${recordSerial}`);
 }

@@ -29,6 +29,6 @@ export namespace WorkflowApi {
   export type UpdateCancelableReq = Request<{ serial: string; }, any, { cancelable: boolean; }>;
   export type UpdateCancelableRes = Response<boolean, UserSession>;
   
-  export type UpdatePartiesReq = Request<{ serial: string; }, any, { steps: WorkflowStepOptions[]; }>;
-  export type UpdatePartiesRes = Response<boolean, UserSession>;
+  export type UpdateStepsReq = Request<{ serial: string; }, any, { steps: WorkflowStepOptions[]; }>;
+  export type UpdateStepsRes = Response<boolean, UserSession>;
 }

@@ -47,8 +47,8 @@ export const workflowsRouter = Router()
     controller.updateCancelable
   )
   .put(
-    '/:serial/parties',
+    '/:serial/steps',
     apiAuth([Role.ADMIN, Role.DATA_ENG]),
-    validate(WorkflowValidators.UPDATE_PARTIES),
-    controller.updateParties
+    validate(WorkflowValidators.UPDATE_STEPS),
+    controller.updateSteps
   )

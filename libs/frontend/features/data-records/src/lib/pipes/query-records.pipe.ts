@@ -2,17 +2,17 @@
 import { Pipe, PipeTransform } from '@angular/core';
 import { Observable, map } from 'rxjs';
 import { ApiQuery, DataRecord } from '@pestras/shared/data-model';
-import { RecordsState } from '@pestras/frontend/state';
+import { RecordsService } from '@pestras/frontend/state';
 
 @Pipe({
   name: 'queryRecords'
 })
 export class QueryRecordsPipe implements PipeTransform {
 
-  constructor(private state: RecordsState) { }
+  constructor(private service: RecordsService) { }
 
   transform(ds: string, query: ApiQuery<any>): Observable<DataRecord[]> {
-    return this.state.search(ds, query)
+    return this.service.search({ ds }, query)
       .pipe(map(res => res.results));
   }
 

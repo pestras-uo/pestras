@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @angular-eslint/component-class-suffix */
 /* eslint-disable @angular-eslint/component-selector */
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { DataStore, Field } from '@pestras/shared/data-model';
 import { PuiIcon } from '@pestras/frontend/ui';
@@ -44,9 +44,10 @@ export class TreeViewWidget implements OnInit {
   @Input()
   index = 0;
   @Input()
-  baseUrl?: string;
-  @Input()
   filter?: { field: string, value: any };
+
+  @Output()
+  clicked = new EventEmitter<string>();
 
   ngOnInit(): void {
     this.isLast = this.index === this.levels.length;

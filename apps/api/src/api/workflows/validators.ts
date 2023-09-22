@@ -7,7 +7,7 @@ export enum WorkflowValidators {
   UPDATE_MAX_REVIEW_DAYS = 'updateWorkflowMaxReviewDays',
   UPDATE_DEFAULT_ACTION = 'updateWorkflowDefaultAction',
   UPDATE_CANCELABLE = 'updateWorkflowCancelable',
-  UPDATE_PARTIES = 'updateWorkflowParties'
+  UPDATE_STEPS = 'updateWorkflowParties'
 }
 
 const DEFAULT_ACTION = 'WorkflowDefaultAction';
@@ -63,6 +63,6 @@ new Validall(WorkflowValidators.UPDATE_CANCELABLE, {
   cancelable: { $type: "boolean" }
 });
 
-new Validall(WorkflowValidators.UPDATE_PARTIES, {
+new Validall(WorkflowValidators.UPDATE_STEPS, {
   parties: { $ref: STEPS }
 });

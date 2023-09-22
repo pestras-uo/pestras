@@ -2,8 +2,8 @@
 /* eslint-disable @angular-eslint/component-selector */
 /* eslint-disable @angular-eslint/component-class-suffix */
 import { Component, Input, OnChanges, TemplateRef } from '@angular/core';
-import { DataStore, DataStoreType, Field, Role, WorkflowState } from '@pestras/shared/data-model';
-import { SessionState, OrgunitsState, RecordsState } from '@pestras/frontend/state';
+import { DataRecordState, DataStore, DataStoreType, Field, Role } from '@pestras/shared/data-model';
+import { SessionState, OrgunitsState, RecordsService } from '@pestras/frontend/state';
 import { PuiXlsxService, PuiSideDrawer } from '@pestras/frontend/ui';
 import { AdvancedSearchModelItem, filterToQuery } from '../../modals/advanced-search/advanced-search.model';
 import { objUtil } from '@pestras/shared/util';
@@ -16,7 +16,7 @@ import { FormControl, Validators } from '@angular/forms';
 })
 export class RecordsListView implements OnChanges {
 
-  readonly workflow = WorkflowState;
+  readonly rState = DataRecordState;
   readonly columnsControl = new FormControl<string[]>([], { validators: Validators.required, nonNullable: true });
 
   hasCardsView = false;
@@ -24,7 +24,7 @@ export class RecordsListView implements OnChanges {
   view = "table";
   exporting = false;
   isTable!: boolean;
-  tab: WorkflowState = WorkflowState.REVIEW;
+  tab: DataRecordState | "" = "";
   canAdd!: boolean;
   query!: any;
   filters: AdvancedSearchModelItem[] | null = null;
@@ -43,7 +43,7 @@ export class RecordsListView implements OnChanges {
   constructor(
     private session: SessionState,
     private orgsState: OrgunitsState,
-    private state: RecordsState,
+    private service: RecordsService,
     private xlsx: PuiXlsxService,
     private sideDrawer: PuiSideDrawer,
     private dialog: Dialog
@@ -51,6 +51,7 @@ export class RecordsListView implements OnChanges {
 
   ngOnChanges() {
     this.isTable = this.dataStore.type === DataStoreType.TABLE;
+    this.tab = this.isTable ? (this.tab || DataRecordState.PUBLISHED): "";
     this.columnsControl.setValue(this.dataStore.fields.map(f => f.name));
     this.columns = this.columnsControl.value;
     this.query = this.prepareQuery();
@@ -66,7 +67,7 @@ export class RecordsListView implements OnChanges {
     this.hasTreeView = !!this.dataStore.settings.tree_view;
   }
 
-  setTab(t: WorkflowState) {
+  setTab(t: DataRecordState) {
     if (this.tab === t)
       return;
 
@@ -117,9 +118,8 @@ export class RecordsListView implements OnChanges {
       query.topic = this.topic;
 
     if (this.isTable) {
-      query.workflow = this.tab;
 
-      if (this.tab !== WorkflowState.REVIEW)
+      if (this.tab !== DataRecordState.DRAFT)
         query.owner = this.session.get('serial');
     }
 
@@ -158,7 +158,9 @@ export class RecordsListView implements OnChanges {
   exportData() {
     this.exporting = true;
 
-    this.state.search(this.dataStore.serial, { ...this.query, limit: 0 })
+    const src = this.tab && this.tab !== DataRecordState.PUBLISHED ? `${this.tab}_${this.dataStore.serial}` : this.dataStore.serial;
+
+    this.service.search({ ds: src }, { ...this.query, limit: 0 })
       .subscribe({
         next: data => {
           this.xlsx.export(data.results, this.dataStore.name);

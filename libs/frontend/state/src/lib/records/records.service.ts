@@ -4,6 +4,8 @@ import { RecordsApi } from "./records.api";
 import { injectURLPayload } from "@pestras/shared/util";
 import { EnvService } from "@pestras/frontend/env";
 
+export { DataRecordsSearchResponse } from './records.api';
+
 @Injectable()
 export class RecordsService {
 

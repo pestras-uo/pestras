@@ -4,7 +4,7 @@ import { NextFunction } from 'express';
 
 export const controller = {
 
-  async getByRecord(req: RecordWorkflowApis.getByRecordReq, res: RecordWorkflowApis.getByRecordRes, next: NextFunction) {
+  async getByRecord(req: RecordWorkflowApis.GetByRecordReq, res: RecordWorkflowApis.GetByRecordRes, next: NextFunction) {
     try {
       res.json(await recordsWorkflowModel.getByRecord(req.params.ds, req.params.record));
 
@@ -13,7 +13,7 @@ export const controller = {
     }
   },
 
-  async getRecordWfState(req: RecordWorkflowApis.getRecordWfStateReq, res: RecordWorkflowApis.getRecordWfStateRes, next: NextFunction) {
+  async getRecordWfState(req: RecordWorkflowApis.GetRecordWfStateReq, res: RecordWorkflowApis.GetRecordWfStateRes, next: NextFunction) {
     try {
       res.json(await recordsWorkflowModel.getRecordWfState(req.params.ds, req.params.record));
 
@@ -22,7 +22,7 @@ export const controller = {
     }
   },
 
-  async publish(req: RecordWorkflowApis.publishReq, res: RecordWorkflowApis.publishRes, next: NextFunction) {
+  async publish(req: RecordWorkflowApis.PublishReq, res: RecordWorkflowApis.PublishRes, next: NextFunction) {
     try {
       res.json(await recordsWorkflowModel.publish(req.params.ds, req.params.record, req.params.trigger));
 
@@ -31,25 +31,25 @@ export const controller = {
     }
   },
 
-  async approve(req: RecordWorkflowApis.approveReq, res: RecordWorkflowApis.approveRes, next: NextFunction) {
+  async approve(req: RecordWorkflowApis.ApproveReq, res: RecordWorkflowApis.ApproveRes, next: NextFunction) {
     try {
-      res.json(await recordsWorkflowModel.approve(req.params.ds, req.params.record, res.locals.issuer));
+      res.json(await recordsWorkflowModel.approve(req.params.ds, req.params.step, req.body.message, res.locals.issuer));
 
     } catch (error) {
       next(error);
     }
   },
 
-  async reject(req: RecordWorkflowApis.cancelReq, res: RecordWorkflowApis.cancelRes, next: NextFunction) {
+  async reject(req: RecordWorkflowApis.RejectReq, res: RecordWorkflowApis.RejectRes, next: NextFunction) {
     try {
-      res.json(await recordsWorkflowModel.reject(req.params.ds, req.params.record, res.locals.issuer));
+      res.json(await recordsWorkflowModel.reject(req.params.ds, req.params.step, req.body.message, res.locals.issuer));
 
     } catch (error) {
       next(error);
     }
   },
 
-  async cancel(req: RecordWorkflowApis.cancelReq, res: RecordWorkflowApis.cancelRes, next: NextFunction) {
+  async cancel(req: RecordWorkflowApis.CancelReq, res: RecordWorkflowApis.CancelRes, next: NextFunction) {
     try {
       res.json(await recordsWorkflowModel.cancel(req.params.ds, req.params.record));
 

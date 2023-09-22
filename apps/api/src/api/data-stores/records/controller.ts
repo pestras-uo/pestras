@@ -23,7 +23,7 @@ export const controller = {
 
   async getBySerial(req: RecordsApi.GetBySerialReq, res: RecordsApi.GetBySerialRes, next: NextFunction) {
     try {
-      res.json(await dataRecordsModel.getBySerial(req.params.serial, req.params.record, req.params.state));
+      res.json(await dataRecordsModel.getBySerial(req.params.serial, req.params.record));
 
     } catch (error) {
       next(error);
@@ -75,11 +75,13 @@ export const controller = {
   async update(req: RecordsApi.UpdateReq, res: RecordsApi.UpdateRes, next: NextFunction) {
     try {
       const ds: DataStore | null = await dataStoresModel.getBySerial(req.params.serial, { settings: 1 });
+      const draft = !!(+req.params.draft);
 
       if (!ds)
         throw new HttpError(HttpCode.NOT_FOUND, 'dataStoreNotFound');
 
-      const record = await dataRecordsModel.getBySerial(req.params.serial, req.params.record, req.body.draft ? DataRecordState.DRAFT : DataRecordState.PUBLISHED);
+      const src = `${draft ? DataRecordState.DRAFT : DataRecordState.PUBLISHED}_${req.params.serial}`
+      const record = await dataRecordsModel.getBySerial(src, req.params.record);
       const imgsToRemove: string[] = [];
 
       if (!record)
@@ -105,7 +107,7 @@ export const controller = {
         Object.assign(req.body, paths);
       }
 
-      res.json(await dataRecordsModel.update(req.params.serial, req.params.record, req.body, res.locals.issuer.serial));
+      res.json(await dataRecordsModel.update(req.params.serial, req.params.record, draft, req.body, res.locals.issuer.serial));
 
       // if data store doesnot support history then remove changed images
       if (!ds.settings.history) {
@@ -140,7 +142,8 @@ export const controller = {
       if (!ds)
         throw new HttpError(HttpCode.NOT_FOUND, 'dataStoreNotFound');
 
-      const record = await dataRecordsModel.getBySerial(req.params.serial, req.params.record, isDraft ? DataRecordState.DRAFT : DataRecordState.PUBLISHED);
+      const src = `${isDraft ? DataRecordState.DRAFT : DataRecordState.PUBLISHED}_${req.params.serial}`;
+      const record = await dataRecordsModel.getBySerial(src, req.params.record);
 
       if (!record)
         return res.json(true);

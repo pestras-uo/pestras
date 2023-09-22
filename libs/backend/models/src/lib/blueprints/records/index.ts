@@ -4,10 +4,8 @@ import { getBySerial, getHistory, search } from './read';
 import { pushHistory, revertHistory } from './history';
 import { deleteRecod } from './delete';
 import { create } from './create';
-import { UpdateRecordInput, update } from './update';
-import { ApiQuery, DataRecord, DataRecordHistroyItem, DataRecordState, TableDataRecord, User } from '@pestras/shared/data-model';
-
-export { UpdateRecordInput };
+import { update } from './update';
+import { ApiQuery, DataRecord, DataRecordHistroyItem, TableDataRecord, User } from '@pestras/shared/data-model';
 
 export class DataRecordsModel extends Core {
   protected db!: Db;
@@ -29,7 +27,7 @@ export class DataRecordsModel extends Core {
   // read
   // --------------------------------------------------------------------------------
   search: (dataStoreSerial: string, query: Partial<ApiQuery<DataRecord>>) => Promise<{ count: number; results: DataRecord[] }> = search.bind(this);
-  getBySerial: <T extends DataRecord>(dataStoreSerial: string, serial: string, state?: DataRecordState) => Promise<T | null> = getBySerial.bind(this);
+  getBySerial: <T extends DataRecord>(dataStoreSerial: string, serial: string, projection?: Record<string, 0 | 1>) => Promise<T | null> = getBySerial.bind(this);
   getHistory: (dataStoreSerial: string, serial: string) => Promise<DataRecordHistroyItem[]> = getHistory.bind(this);
 
   // create
@@ -38,7 +36,7 @@ export class DataRecordsModel extends Core {
 
   // update
   // --------------------------------------------------------------------------------
-  update: (ds: string, recordSerial: string, input: UpdateRecordInput, issuer: string) => Promise<TableDataRecord> = update.bind(this);
+  update: (ds: string, recordSerial: string, draft: boolean, input: DataRecord, issuer: string) => Promise<TableDataRecord> = update.bind(this);
 
   // History
   // --------------------------------------------------------------------------------

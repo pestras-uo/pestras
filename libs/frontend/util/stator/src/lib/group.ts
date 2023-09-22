@@ -75,7 +75,7 @@ export abstract class StatorGroupState<T extends Record<string, any> = any> {
   // -------------------------------------------------------------------------------------
   protected abstract _fetchGroup(group: string | null): Observable<T[]>;
 
-  protected abstract _fetch(group: string): Observable<T | null>;
+  protected abstract _fetch(key: string): Observable<T | null>;
 
 
 

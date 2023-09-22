@@ -19,7 +19,7 @@ export class WorkflowModel extends Model<Workflow> {
       serial: Serial.gen("WKF"),
       blueprint: input.blueprint,
       name: input.name,
-      cancalable: input.cancalable,
+      cancelable: input.cancelable,
       default_action: input.default_action,
       max_review_days: input.max_review_days,
       steps: input.steps.map(s => ({ serial: Serial.gen("WFS"), ...s }))
@@ -54,7 +54,7 @@ export class WorkflowModel extends Model<Workflow> {
     return true;
   }
 
-  async updateParties(serial: string, parties: WorkflowStepOptions[]) {
+  async updateSteps(serial: string, parties: WorkflowStepOptions[]) {
     await this.col.updateOne({ serial }, { $set: { steps: parties } });
 
     return true;

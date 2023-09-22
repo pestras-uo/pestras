@@ -62,7 +62,7 @@ export interface Workflow {
   /** max days to wait for an action */
   max_review_days: number;
 
-  cancalable: boolean;
+  cancelable: boolean;
 
   /** 
    * in case user is:

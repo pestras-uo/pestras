@@ -9,7 +9,7 @@
         >
           <i puiIcon="add" size="tiny"></i>
         </button>
-        <p *ngIf="!isLast || (!item.serial || !baseUrl)" [class.bold]="!isLast">
+        <p *ngIf="!isLast || !item.serial" [class.bold]="!isLast">
           {{item.displayFieldValue}}
         </p>
       </legend>
@@ -19,7 +19,6 @@
           *ngIf="!isLast"
           [data]="data"
           [dataStore]="dataStore"
-          [baseUrl]="baseUrl"
           [levels]="levels"
           [index]="index + 1"
           [filter]="{ field: item.fieldName, value: item.value }"
@@ -28,14 +27,14 @@
     </fieldset>
 
     <ng-container *ngIf="isLast">
-      <p *ngIf="!isLast || (!item.serial || !baseUrl)" [class.bold]="!isLast">
+      <p *ngIf="!isLast || !item.serial" [class.bold]="!isLast">
         {{item.displayFieldValue}}
       </p>
       <a
-        *ngIf="isLast && item.serial && baseUrl"
+        *ngIf="isLast && item.serial"
         class="badge badge-primary"
         [class.mbe-2]="!lst"
-        [routerLink]="[baseUrl, item.serial]"
+        (click)="clicked.emit(item.serial)"
       >
         {{item.displayFieldValue}}
       </a>

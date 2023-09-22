@@ -1,8 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { Dialog, DialogRef } from '@angular/cdk/dialog';
 import { Component, EventEmitter, Input, OnInit, Output, TemplateRef } from '@angular/core';
-import { Router } from '@angular/router';
-import { RecordsState } from '@pestras/frontend/state';
+import { RecordsService } from '@pestras/frontend/state';
 import { ToastService } from '@pestras/frontend/ui';
 import { DataRecordHistroyItem, DataStore } from '@pestras/shared/data-model';
 import { Observable, tap } from 'rxjs';
@@ -32,14 +31,13 @@ export class HistoryViewComponent implements OnInit {
   selects = new EventEmitter<{ name: string; payload?: any; }>();
 
   constructor(
-    private state: RecordsState,
+    private service: RecordsService,
     private dialog: Dialog,
-    private toast: ToastService,
-    private router: Router
+    private toast: ToastService
   ) { }
 
   ngOnInit(): void {
-    this.history$ = this.state.history(this.dataStore.serial, this.record)
+    this.history$ = this.service.getHistory({ ds: this.dataStore.serial, record: this.record })
       .pipe(tap(list => list.length > 0 && (this.selected = list[0])))
   }
 
@@ -59,7 +57,7 @@ export class HistoryViewComponent implements OnInit {
     if (!this.selected)
       return;
 
-    this.state.revertHistory(this.dataStore.serial, this.selected.serial)
+    this.service.revertHistory({ ds: this.dataStore.serial, history: this.selected.serial })
       .subscribe({
         next: () => {
           this.toast.msg(c['success'].default, { type: 'success' });
