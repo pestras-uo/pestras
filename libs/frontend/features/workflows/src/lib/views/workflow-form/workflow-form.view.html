@@ -1,0 +1,84 @@
+<form class="relative" *contra="let c" [formGroup]="form" (ngSubmit)="create(c)">
+  <label for="wf-name">{{c['name']}}</label>
+  <div class="fc fc-outline fc-surface1 mbe-4">
+    <input type="text" formControlName="name" id="wf-name" />
+  </div>
+
+  <label for="wf-days">{{c['maxReviewDays']}}</label>
+  <div class="fc fc-outline fc-surface1 mbe-4">
+    <input type="number" formControlName="max_review_days" id="wf-days" />
+  </div>
+
+  <label for="wf-atcion">{{c['defaultAction']}}</label>
+  <label for="wf-atcion" class="f10 text4">{{c['defaultActionInfo']}}</label>
+  <div class="fc fc-outline fc-surface1 mbe-4">
+    <pui-select-input
+      labelRef="wf-atcion"
+      formControlName="default_action"
+      ,
+      [list]="c['defaultActionList']"
+    ></pui-select-input>
+  </div>
+
+  <pui-check-input
+    class="mbe-4"
+    [label]="c['cancelable']"
+    formControlName="cancelable"
+  ></pui-check-input>
+
+  <fieldset formArrayName="steps" class="mbe-6">
+    <legend>
+      <h4>{{c['steps']}}</h4>
+      <button class="btn-round btn-icon btn-small" (click)="addStep()">
+        <i puiIcon="add" size="small"></i>
+      </button>
+    </legend>
+
+    <div
+      *ngFor="let g of steps.controls; let i = index; let last = last"
+      [formGroup]="g"
+      class="flex gap-4 align-items-bottom"
+      [class.mbe-2]="!last"
+    >
+      <div class="grow">
+        <label [for]="i + '-step-users'">{{c['users']}}</label>
+        <div class="fc fc-outline fc-surface1">
+          <pui-multi-select-input
+            #users
+            [labelRef]="i + '-step-users'"
+            [list]="'' | users | async | arrayMap: mapUser"
+            formControlName="users"
+          ></pui-multi-select-input>
+        </div>
+      </div>
+
+      <div class="grow" *ngIf="users.value.length > 1">
+        <label [for]="i + '-step-algo'">{{c['algo']}}</label>
+        <div class="fc fc-outline fc-surface1">
+          <pui-multi-select-input
+            #users
+            [labelRef]="i + '-step-algo'"
+            [list]="c['algoList'] | arrayFilter: filterAlgo: users.value"
+            formControlName="algo"
+          ></pui-multi-select-input>
+        </div>
+      </div>
+
+      <button
+        *ngIf="steps.controls.length > 1"
+        class="btn-icon btn-round btn-small"
+        (click)="steps.removeAt(i)"
+      >
+        <i puiIcon="delete" size="small"></i>
+      </button>
+    </div>
+  </fieldset>
+
+  <div class="flex gap-4">
+    <div class="grow"></div>
+    <button type="reset" class="btn-outline btn-round" (click)="cancel.emit()">{{c['cancel']}}</button>
+    <button type="submit" [disabled]="form.invalid" class="btn-primary btn-round">{{c['add']}}</button>
+  </div>
+
+  <pui-preloader *ngIf="loading"></pui-preloader>
+</form>

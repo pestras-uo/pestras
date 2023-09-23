@@ -1,4 +1,22 @@
 {
+  "algo": "Algorithm",
+  "algoList": [
+    { "name": "Approval: Any - Rejection: Any", "value": "any" },
+    { "name": "Approval: Any - Rejection: All", "value": "any_all" },
+    { "name": "Approval: All - Rejection: Any", "value": "all_any" },
+    { "name": "Approval: Any - Rejection: Majority", "value": "any_most" },
+    { "name": "Approval: Majority - Rejection: Any", "value": "most_any" },
+    { "name": "Approval: Majority - Rejection: Majority", "value": "most" }
+  ],
+  "steps": "Steps",
+  "defaultAction": "Default Action",
+  "defaultActionInfo": "In case user exceeded review days limit",
+  "defaultActionList": [
+    { "name": "Approve", "value": "approve" },
+    { "name": "Reject", "value": "reject" }
+  ],
+  "cancelable": "Cancelable",
+  "maxReviewDays": "Max Review Days",
   "controls": "Controls",
   "view": "View",
   "excel": "Excel",
