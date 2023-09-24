@@ -10,7 +10,7 @@ export { CreateDataVizInput, UpdateDataVizInput };
 
 export class DataVizModel extends Model<BaseDataViz<any>> {
 
-  getBySerial: (serial: string) => Promise<BaseDataViz<any>> = getBySerial.bind(this);
+  getBySerial: (serial: string) => Promise<BaseDataViz<any> | null> = getBySerial.bind(this);
 
   create: (input: CreateDataVizInput, issuer: string) => Promise<BaseDataViz<any>> = create.bind(this);
   update: (serial: string, input: UpdateDataVizInput, issuer: string) => Promise<Date> = update.bind(this);

@@ -25,6 +25,7 @@ import { SessionFeatureModule } from '@pestras/frontend/features/session';
 import { BlueprintsFeatureModule } from '@pestras/frontend/features/blueprints';
 import { AttachmentsFeatureModule } from '@pestras/frontend/features/attachments';
 import { PuiIcon, PuiImageInput, PuiInfiniteScroll, PuiPreloaderModule, PuiSelectInput, PuiUtilPipesModule } from '@pestras/frontend/ui';
+import { RecordsWorkflowFeatureModule } from '@pestras/frontend/features/records-workflow';
 
 
 @NgModule({
@@ -58,6 +59,7 @@ import { PuiIcon, PuiImageInput, PuiInfiniteScroll, PuiPreloaderModule, PuiSelec
     RecordsFeatureModule,
     SessionFeatureModule,
     BlueprintsFeatureModule,
+    RecordsWorkflowFeatureModule,
     // PUI
     PuiInfiniteScroll,
     PuiPreloaderModule,

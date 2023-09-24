@@ -12,7 +12,7 @@ export class RegionsModel extends Model<Region> {
   // getters
   // -----------------------------------------------------------------------------------
   getAll: (projection?: unknown) => Promise<Region[]> = getAll.bind(this);
-  getBySerial: (serial: string, projection?: unknown) => Promise<Region> = getBySerial.bind(this);
+  getBySerial: (serial: string, projection?: unknown) => Promise<Region | null> = getBySerial.bind(this);
 
   // util
   // ------------------------------------------------------------------------------------

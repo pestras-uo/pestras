@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { Dialog, DialogRef } from "@angular/cdk/dialog";
-import { Component, Input, TemplateRef } from "@angular/core";
+import { Component, Input, OnChanges, TemplateRef } from "@angular/core";
 import { FormControl, Validators } from "@angular/forms";
 import { ToastService } from "@pestras/frontend/ui";
 import { Workflow } from "@pestras/shared/data-model";
@@ -10,7 +10,7 @@ import { WorkflowsState } from "libs/frontend/state/src/lib/workflows/workflows.
   selector: 'pestras-workflow-name',
   templateUrl: './workflow-name.view.html'
 })
-export class WorkflowNameViewComponent {
+export class WorkflowNameViewComponent implements OnChanges {
 
   readonly nameCtrl = new FormControl<string>('', { nonNullable: true, validators: Validators.required });
 
@@ -26,14 +26,18 @@ export class WorkflowNameViewComponent {
     private toast: ToastService
   ) {}
 
-  openDialog(tmp: TemplateRef<any>) {
+  ngOnChanges(): void {
+    this.nameCtrl.setValue(this.wf.name);
+  }
+
+  openDialog(tmp: TemplateRef<unknown>) {
     this.dialogRef = this.dialog.open(tmp);
   }
 
   closeDialog() {
     this.dialogRef?.close();
     this.dialogRef = null;
-    this.nameCtrl.reset();
+    this.nameCtrl.setValue(this.wf.name);
     this.loading = false;
   }
 

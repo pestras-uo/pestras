@@ -1,25 +1,42 @@
 <ng-container *contra="let c">
-  <div class="grid cols-3 gap-4" *ngIf="(!isEmpty && !form) else noData">
+  <div class="flex gap-8" *ngIf="(!isEmpty && !form) else noData">
     <pestras-workflows-list
-      class="col-1"
+      class="w-10"
       [editable]="editable"
       [blueprint]="blueprint"
       [selected]="selected"
+      (selects)="this.selected = $event"
       (add)="form = true"
       (noData)="isEmpty = true"
     ></pestras-workflows-list>
 
-    <div *ngIf="selected" class="col-2 col-span-2">
+    <div *ngIf="selected" class="grow">
       <pestras-workflow-name [wf]="selected"></pestras-workflow-name>
+
+      <div class="divider mb-6"></div>
+
+      <pestras-workflow-cancelable [wf]="selected"></pestras-workflow-cancelable>
+
+      <div class="divider mb-6"></div>
+
+      <pestras-workflow-default-action [wf]="selected"></pestras-workflow-default-action>
+
+      <div class="divider mb-6"></div>
+
+      <pestras-workflow-max-review-days [wf]="selected"></pestras-workflow-max-review-days>
+
+      <div class="divider mb-6"></div>
+
+      <pestras-workflow-steps [wf]="selected"></pestras-workflow-steps>
     </div>
   </div>
 
   <ng-template #noData>
     <no-data-placeholder-widget
       [showAction]="editable"
-      actionName="c['addNew']"
+      [actionName]="c['addNew']"
       (action)="form = true"
-      *ngIf="form"
+      *ngIf="!form"
       >{{c['noDataMsg']}}</no-data-placeholder-widget
     >
   </ng-template>
@@ -28,5 +45,6 @@
     *ngIf="form"
     [blueprint]="blueprint"
     (cancel)="form = false"
+    (done)="form = false"
   ></pestras-workflow-form>
 </ng-container>

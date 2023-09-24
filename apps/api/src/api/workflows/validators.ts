@@ -1,4 +1,4 @@
-import { WorkflowAction, WorkflowPartyAlgo } from "@pestras/shared/data-model";
+import { WorkflowAction, WorkflowStepAlgo } from "@pestras/shared/data-model";
 import { Validall } from "@pestras/validall";
 
 export enum WorkflowValidators {
@@ -27,12 +27,12 @@ new Validall(STEPS, {
     users: { $is:'notEmpty', $each: { $type: 'string' } },
     algo: {
       $enum: [
-        WorkflowPartyAlgo.ANY,
-        WorkflowPartyAlgo.ANY_ALL,
-        WorkflowPartyAlgo.ANY_MOST,
-        WorkflowPartyAlgo.ALL_ANY,
-        WorkflowPartyAlgo.MOST,
-        WorkflowPartyAlgo.MOST_ANY
+        WorkflowStepAlgo.ANY,
+        WorkflowStepAlgo.ANY_ALL,
+        WorkflowStepAlgo.ANY_MOST,
+        WorkflowStepAlgo.ALL_ANY,
+        WorkflowStepAlgo.MOST,
+        WorkflowStepAlgo.MOST_ANY
       ]
     }
   }
@@ -43,7 +43,7 @@ new Validall(WorkflowValidators.CREATE, {
   name: { $type: 'string' },
   max_review_days: { $type: 'number', $gte: 1 },
   default_action: { $ref: DEFAULT_ACTION },
-  cancalable: { $type: 'boolean' },
+  cancelable: { $type: 'boolean' },
   steps: { $ref: STEPS }
 });
 
@@ -64,5 +64,5 @@ new Validall(WorkflowValidators.UPDATE_CANCELABLE, {
 });
 
 new Validall(WorkflowValidators.UPDATE_STEPS, {
-  parties: { $ref: STEPS }
+  steps: { $ref: STEPS }
 });

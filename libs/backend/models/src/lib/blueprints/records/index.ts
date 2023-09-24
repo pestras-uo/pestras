@@ -26,8 +26,8 @@ export class DataRecordsModel extends Core {
 
   // read
   // --------------------------------------------------------------------------------
-  search: (dataStoreSerial: string, query: Partial<ApiQuery<DataRecord>>) => Promise<{ count: number; results: DataRecord[] }> = search.bind(this);
-  getBySerial: <T extends DataRecord>(dataStoreSerial: string, serial: string, projection?: Record<string, 0 | 1>) => Promise<T | null> = getBySerial.bind(this);
+  search: (dataStoreSerial: string, query: Partial<ApiQuery<DataRecord>>) => Promise<{ count: number; results: TableDataRecord[] }> = search.bind(this);
+  getBySerial: (dataStoreSerial: string, serial: string, projection?: Record<string, 0 | 1>) => Promise<TableDataRecord | null> = getBySerial.bind(this);
   getHistory: (dataStoreSerial: string, serial: string) => Promise<DataRecordHistroyItem[]> = getHistory.bind(this);
 
   // create
@@ -36,7 +36,7 @@ export class DataRecordsModel extends Core {
 
   // update
   // --------------------------------------------------------------------------------
-  update: (ds: string, recordSerial: string, draft: boolean, input: DataRecord, issuer: string) => Promise<TableDataRecord> = update.bind(this);
+  update: (ds: string, recordSerial: string, draft: boolean, input: DataRecord, issuer: string) => Promise<TableDataRecord | null> = update.bind(this);
 
   // History
   // --------------------------------------------------------------------------------

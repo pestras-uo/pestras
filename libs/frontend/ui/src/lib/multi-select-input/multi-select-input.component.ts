@@ -192,7 +192,7 @@ export class PuiMultiSelectInput implements OnChanges, OnInit, ControlValueAcces
   };
 
   writeValue(items: any[]) {
-    this.value = items;
+    this.value = items ?? [];
     const checked = this.optionsList?.map(v => this.value.includes(v.value));
     if (this.optionsList.length)
       this.arrayCtrl.controls

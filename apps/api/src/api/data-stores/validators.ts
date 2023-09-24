@@ -58,7 +58,11 @@ new Validall(DataStoreValidators.UPDATE_STATE, {
 new Validall(DataStoreValidators.SET_TABLE_SETTINGS, {
   interface_field: { $type: 'string' },
   static: { $cast: "boolean", $default: false },
-  workflow: { $cast: "boolean", $default: false },
+  workflow: {
+    new: { $or: [{ $type: 'boolean' }, { $type: 'string' }] },
+    update: { $or: [{ $type: 'boolean' }, { $type: 'string' }] },
+    delete: { $or: [{ $type: 'boolean' }, { $type: 'string' }] }
+  },
   max_attachments_count: { $type: "number", $default: 0 },
   history: { $cast: "boolean", $default: false },
   card_view: {

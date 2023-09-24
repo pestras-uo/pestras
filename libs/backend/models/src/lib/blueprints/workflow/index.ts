@@ -22,7 +22,7 @@ export class WorkflowModel extends Model<Workflow> {
       cancelable: input.cancelable,
       default_action: input.default_action,
       max_review_days: input.max_review_days,
-      steps: input.steps.map(s => ({ serial: Serial.gen("WFS"), ...s }))
+      steps: input.steps.map(s => ({ ...s, serial: Serial.gen("WFS") }))
     };
 
     await this.col.insertOne(wf);

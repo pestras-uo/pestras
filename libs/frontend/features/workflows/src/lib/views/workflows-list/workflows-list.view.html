@@ -1,19 +1,19 @@
 <ng-container *contra="let c">
-  <div class="toolbar">
-    <h4 class="mbe-4">{{c['list']}}</h4>
+  <div class="toolbar mbe-4">
+    <h4>{{c['list']}}</h4>
     <div class="grow"></div>
     <button
       *ngIf="editable"
-      class="btn-round btn-small btn-icon"
+      class="btn-round btn-small btn-icon btn-primary"
       (click)="add.emit()"
     >
-      <i puiIcon="add" size="small" color="primary"></i>
+      <i puiIcon="add" size="small"></i>
     </button>
   </div>
 
-  <div class="card card-clear border list list-actions">
+  <div class="card card-clear bordered list list-actions">
     <p
-      class="list-item"
+      class="list-item pi-4"
       *ngFor="let wf of list$ | async"
       (click)="selects.emit(wf)"
     >

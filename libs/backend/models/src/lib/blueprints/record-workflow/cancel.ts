@@ -15,6 +15,9 @@ export async function cancel(
 
   const wf = await workflowModel.getBySerial(recordWf.workflow);
 
+  if (!wf)
+    throw new HttpError(HttpCode.NOT_FOUND, 'workflowNotFound');
+
   if (!wf.cancelable)
     throw new HttpError(HttpCode.FORBIDDEN, 'workflowIsNotCancelable');
 

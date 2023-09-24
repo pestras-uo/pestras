@@ -7,8 +7,8 @@ import { deleteEntityContentView } from "./delete";
 
 export class ContentViewsModel extends Model<EntityContentViews> {
 
-  getByEntity: (entity: string) => Promise<EntityContentViews> = getByEntity.bind(this);
-  getView: (entity: string, view: string) => Promise<ContentView> = getView.bind(this);
+  getByEntity: (entity: string) => Promise<EntityContentViews | null> = getByEntity.bind(this);
+  getView: (entity: string, view: string) => Promise<ContentView | null> = getView.bind(this);
 
   create: (entity: string) => Promise<EntityContentViews> = create.bind(this);
 

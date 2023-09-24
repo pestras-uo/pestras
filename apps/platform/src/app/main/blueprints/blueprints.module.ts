@@ -17,6 +17,7 @@ import { WorkspaceFeatureModule } from '@pestras/frontend/features/workspace';
 import { ClientsApiFeatureModule } from '@pestras/frontend/features/clients-api';
 import { SessionFeatureModule } from '@pestras/frontend/features/session';
 import { ContentViewsFeatureModule } from '@pestras/frontend/features/content-views';
+import { WorkflowsFeatureModule } from '@pestras/frontend/features/workflows';
 
 
 @NgModule({
@@ -27,10 +28,14 @@ import { ContentViewsFeatureModule } from '@pestras/frontend/features/content-vi
     DetailsPage
   ],
   imports: [
+    // Angular
     CommonModule,
     BlueprintsRoutingModule,
     ReactiveFormsModule,
+    // Util
     ContraModule,
+    // Features
+    WorkflowsFeatureModule,
     ContentViewsFeatureModule,
     PuiPreloaderModule,
     PuiIcon,

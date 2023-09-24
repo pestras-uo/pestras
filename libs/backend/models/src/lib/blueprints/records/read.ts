@@ -1,14 +1,14 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { DataRecordHistroyItem, DataRecord, ApiQuery } from "@pestras/shared/data-model";
+import { DataRecordHistroyItem, DataRecord, ApiQuery, TableDataRecord } from "@pestras/shared/data-model";
 import { Filter } from "mongodb";
 import { DataRecordsModel } from ".";
 
 export async function search(
   this: DataRecordsModel,
   dataStoreSerial: string,
-  query: ApiQuery<DataRecord>
+  query: Partial<ApiQuery<DataRecord>>
 ) {
-  const col = this.db.collection<DataRecord>(dataStoreSerial);
+  const col = this.db.collection<TableDataRecord>(dataStoreSerial);
   const count = await col.countDocuments(query.search ?? {} as Filter<any>);
 
   if (!count)
@@ -31,7 +31,7 @@ export async function getBySerial(
   serial: string,
   projection?: Record<string, 0 | 1>
 ) {
-  return this.db.collection<DataRecord>(dataStoreSerial).findOne({ serial }, projection);
+  return this.db.collection<TableDataRecord>(dataStoreSerial).findOne({ serial }, projection);
 }
 
 

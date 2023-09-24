@@ -13,7 +13,7 @@ export class AuthModel extends Model<Auth> {
       : cursor.toArray();
   }
 
-  async getByUserSerial(this: AuthModel, serial: string, projection?: unknown) {
+  async getByUserSerial(this: AuthModel, serial: string, projection?: Record<string, 0 | 1>) {
     return await this.col.findOne({ user: serial }, { projection });
   }
 

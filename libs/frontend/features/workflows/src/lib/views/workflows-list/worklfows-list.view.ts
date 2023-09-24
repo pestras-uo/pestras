@@ -32,8 +32,11 @@ export class WorkflowsListViewComponent implements OnInit {
   ngOnInit(): void {
     this.list$ = this.wfState.selectGroup(this.blueprint)
       .pipe(
-        tap(list => list.length === 0 && this.noData.emit()),
-        tap(list => !this.selected && list.length && this.selects.emit(list[0]))
+        tap(list => !this.selected && list.length && this.selects.emit(list[0])),
+        tap(list => {
+          if (list.length === 0)
+            setTimeout(() => this.noData.emit())
+        }),
       );
   }
 }

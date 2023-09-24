@@ -18,9 +18,9 @@ export class UsersModel extends Model<User> {
   // ---------------------------------------------------------------------------------
   getAll: (projection?: unknown) => Promise<User[]> = getAll.bind(this);
   count: () => Promise<number> = count.bind(this);
-  getBySerial: (serial: string, projection?: unknown) => Promise<User> = getBySerial.bind(this);
-  getByUsername: (username: string, projection?: unknown) => Promise<User> = getByUsername.bind(this);
-  electAdmin: (orgunit: string, projection?: unknown, preferable?: string) => Promise<User> = electAdmin.bind(this);
+  getBySerial: (serial: string, projection?: unknown) => Promise<User | null> = getBySerial.bind(this);
+  getByUsername: (username: string, projection?: unknown) => Promise<User | null> = getByUsername.bind(this);
+  electAdmin: (orgunit: string, projection?: unknown, preferable?: string) => Promise<User | null> = electAdmin.bind(this);
 
   // util
   // ---------------------------------------------------------------------------------

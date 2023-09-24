@@ -5,7 +5,7 @@ import { publishRecord } from "./publish";
 import { approve } from "./approve";
 import { reject } from "./reject";
 import { cancel } from "./cancel";
-import { RecordWorkflow, User, WorkflowTriggers } from "@pestras/shared/data-model";
+import { DataRecordState, RecordWorkflow, User, WorkflowTriggers } from "@pestras/shared/data-model";
 import { Core } from "@pestras/backend/util";
 
 export class RecordWorkflowModel extends Core {
@@ -22,8 +22,8 @@ export class RecordWorkflowModel extends Core {
   getRecordWfState: (ds: string, record: string) => Promise<RecordWorkflow | null> = getRecordWfState.bind(this);
 
   publish: (ds: string, serial: string, trigger: WorkflowTriggers) => Promise<boolean> = publishRecord.bind(this);
-  approve: (ds: string, step: string, msg: string, issuer: User) => Promise<boolean> = approve.bind(this);
-  reject: (ds: string, step: string, msg: string, issuer: User) => Promise<boolean> = reject.bind(this);
+  approve: (ds: string, step: string, msg: string, issuer: User) => Promise<DataRecordState | null> = approve.bind(this);
+  reject: (ds: string, step: string, msg: string, issuer: User) => Promise<DataRecordState> = reject.bind(this);
 
   cancel: (ds: string, record: string) => Promise<boolean> = cancel.bind(this);
 }

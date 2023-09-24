@@ -1,4 +1,7 @@
 {
+  "confirmPublish": "Are you sure about publishing the record?",
+  "review": "Review",
+  "step": "Step",
   "algo": "Algorithm",
   "algoList": [
     { "name": "Approval: Any - Rejection: Any", "value": "any" },
@@ -8,6 +11,14 @@
     { "name": "Approval: Majority - Rejection: Any", "value": "most_any" },
     { "name": "Approval: Majority - Rejection: Majority", "value": "most" }
   ],
+  "algos": {
+    "any": "Approval: Any - Rejection: Any",
+    "any_all": "Approval: Any - Rejection: All",
+    "all_any": "Approval: All - Rejection: Any",
+    "any_most": "Approval: Any - Rejection: Majority",
+    "most_any": "Approval: Majority - Rejection: Any",
+    "most": "Approval: Majority - Rejection: Majority"
+  },
   "steps": "Steps",
   "defaultAction": "Default Action",
   "defaultActionInfo": "In case user exceeded review days limit",
@@ -15,6 +26,10 @@
     { "name": "Approve", "value": "approve" },
     { "name": "Reject", "value": "reject" }
   ],
+  "defaultActions": {
+    "approve": "Approve",
+    "regect": "Reject"
+  },
   "cancelable": "Cancelable",
   "maxReviewDays": "Max Review Days",
   "controls": "Controls",
@@ -631,6 +646,7 @@
   "months": "Months",
   "_day": "Day",
   "day": "Day",
+  "_days": "Days",
   "days": "Days",
   "hour": "Hour",
   "hours": "Hours",

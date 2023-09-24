@@ -1,4 +1,4 @@
-import { User, WorkflowAction, getWorkflowStepAction } from "@pestras/shared/data-model";
+import { DataRecordState, RecordWorkflow, TableDataRecord, User, WorkflowAction, getWorkflowStepAction } from "@pestras/shared/data-model";
 import { RecordWorkflowModel } from ".";
 import { HttpError, HttpCode } from "@pestras/backend/util";
 import { dataStoresModel, workflowModel } from "../../models";
@@ -9,7 +9,8 @@ export async function reject(
   step: string,
   message: string,
   issuer: User
-) {
+): Promise<DataRecordState> {
+  const recordWorkFlowCol = this.db.collection<RecordWorkflow>(`workflow_${dsSerial}`);
   const ds = await dataStoresModel.getBySerial(dsSerial, { serial: 1, settings: 1 });
 
   if (!ds)
@@ -27,24 +28,37 @@ export async function reject(
   );
 
   const wf = await workflowModel.getBySerial(wfStep.workflow);
+
+  if (!wf)
+    throw new HttpError(HttpCode.NOT_FOUND, 'workflowNotFound');
+
   const wfStepOpt = wf.steps.find(o => o.serial === step);
-  const isOver = getWorkflowStepAction(wfStep.actions, wfStepOpt.algo);
+  const isOver = wfStepOpt ? getWorkflowStepAction(wfStep.actions, wfStepOpt.algo) : WorkflowAction.REVIEW;
 
-  if (isOver !== WorkflowAction.REJECT) {
-    await this.db.collection(`workflow_${dsSerial}`).updateOne({ step, 'actions.user': issuer.serial }, {
-      $set: {
-        'action.$': { user: issuer.serial, action: WorkflowAction.REJECT, date: new Date(), message }
-      }
-    });
+  if (isOver) {
 
-  } else {
+    await recordWorkFlowCol.deleteMany({ record: wfStep.record });
+
     // if was not delete trigger, put record back to draft 
     if (wfStep.trigger !== "delete") {
-      const record = await this.db.collection(`review_${dsSerial}`).findOne({ serial: wfStep.record })
-      await this.db.collection(`draft_${dsSerial}`).insertOne(record);
-      await this.db.collection(`review_${dsSerial}`).deleteOne({ serial: wfStep.record });
+      const record = await this.db.collection<TableDataRecord>(`review_${dsSerial}`).findOne({ serial: wfStep.record });
+
+      if (record) {
+        await this.db.collection<TableDataRecord>(`draft_${dsSerial}`).insertOne(record);
+        await this.db.collection<TableDataRecord>(`review_${dsSerial}`).deleteOne({ serial: wfStep.record });
+      }
+
+      return DataRecordState.DRAFT;
     }
+
+    return DataRecordState.PUBLISHED;
   }
 
-  return true;
+  await this.db.collection(`workflow_${dsSerial}`).updateOne({ step, 'actions.user': issuer.serial }, {
+    $set: {
+      'action.$': { user: issuer.serial, action: WorkflowAction.REJECT, date: new Date(), message }
+    }
+  });
+
+  return DataRecordState.REVIEW;
 }

@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-namespace */
-import { RecordWorkflow, WorkflowTriggers } from "@pestras/shared/data-model";
+import { DataRecordState, RecordWorkflow, WorkflowTriggers } from "@pestras/shared/data-model";
 
 const basePath = '/records-workflow';
 
@@ -42,7 +42,7 @@ export namespace RecordsWorkflowApi {
 
     export interface Body { message: string; }
 
-    export type Response = boolean;
+    export type Response = DataRecordState | null;
   }
 
 
@@ -54,7 +54,7 @@ export namespace RecordsWorkflowApi {
 
     export interface Body { message: string; }
 
-    export type Response = boolean;
+    export type Response = DataRecordState;
   }
 
 

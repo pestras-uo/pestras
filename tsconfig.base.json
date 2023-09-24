@@ -54,6 +54,9 @@
       "@pestras/frontend/features/orgunits": [
         "libs/frontend/features/orgunits/src/index.ts"
       ],
+      "@pestras/frontend/features/records-workflow": [
+        "libs/frontend/features/records-workflow/src/index.ts"
+      ],
       "@pestras/frontend/features/regions": [
         "libs/frontend/features/regions/src/index.ts"
       ],

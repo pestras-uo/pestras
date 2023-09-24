@@ -30,6 +30,7 @@ import { PuiCheckInput, PuiHint, PuiIcon, PuiInfiniteScroll, PuiMultiSelectInput
 import { TBgWidget } from '@pestras/frontend/widgets/t-bg';
 import { NoDataPlaceholderWidget } from '@pestras/frontend/widgets/no-data-placeholder';
 import { AvatarWidget } from '@pestras/frontend/widgets/avatar';
+import { WorkflowsFeatureModule } from '@pestras/frontend/features/workflows';
 
 
 @NgModule({
@@ -61,6 +62,7 @@ import { AvatarWidget } from '@pestras/frontend/widgets/avatar';
     DataStoresFeatureModule,
     RecordsFeatureModule,
     SessionFeatureModule,
+    WorkflowsFeatureModule,
     // Util
     ContraModule,
     PuiUtilPipesModule,

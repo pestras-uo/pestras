@@ -9,7 +9,7 @@ export { CreateAnalysisInput, UpdateAnalysisInput }
 
 export class AnalysisModel extends Model<BaseAnalysis> {
 
-  getBySerial: (serial: string) => Promise<BaseAnalysis> = getBySerial.bind(this);
+  getBySerial: (serial: string) => Promise<BaseAnalysis | null> = getBySerial.bind(this);
 
   create: (input: CreateAnalysisInput, issuer: string) => Promise<BaseAnalysis> = create.bind(this);
   update: (serial: string, input: UpdateAnalysisInput, issuer: string) => Promise<Date> = update.bind(this);

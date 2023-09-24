@@ -9,7 +9,7 @@ export { CreateAttachmentInput };
 
 export class AttachmentsModel extends Model<Attachment> {
 
-  getBySerial: (serial: string) => Promise<Attachment> = getBySerial.bind(this);
+  getBySerial: (serial: string) => Promise<Attachment | null> = getBySerial.bind(this);
   getByEntity: (entity: string) => Promise<Attachment[]> = getByEntity.bind(this);
 
   create: (input: CreateAttachmentInput) => Promise<Attachment> = create.bind(this);

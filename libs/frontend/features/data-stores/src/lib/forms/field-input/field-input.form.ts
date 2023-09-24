@@ -4,7 +4,7 @@
 /* eslint-disable @angular-eslint/component-selector */
 import { Component, Input, OnChanges, ViewChild, ElementRef, SimpleChanges, OnInit } from '@angular/core';
 import { AbstractControl, ControlValueAccessor, FormControl, NG_VALIDATORS, NG_VALUE_ACCESSOR, ValidationErrors, Validators } from '@angular/forms';
-import { Category, Field, Orgunit, Region, Topic, TypeKind, User } from '@pestras/shared/data-model';
+import { Category, Field, Orgunit, Region, Topic, TypeKind, User, castTypedEntityValue } from '@pestras/shared/data-model';
 import { untilDestroyed } from '@pestras/frontend/ui';
 
 @Component({
@@ -18,8 +18,7 @@ import { untilDestroyed } from '@pestras/frontend/ui';
 export class FieldInputForm implements OnChanges, OnInit, ControlValueAccessor {
 
   private ud = untilDestroyed();
-
-  init = true;
+  
   disabled = false;
   touched = false;
 
@@ -31,7 +30,7 @@ export class FieldInputForm implements OnChanges, OnInit, ControlValueAccessor {
 
   @ViewChild('dateInput')
   dateInput: ElementRef | null = null;
-  
+
   @Input({ required: true })
   field!: Field;
   @Input()
@@ -92,12 +91,6 @@ export class FieldInputForm implements OnChanges, OnInit, ControlValueAccessor {
   };
 
   writeValue(value: any): void {
-
-    if (this.init && !value) {
-      this.init = false;
-      return;
-    }
-
     this.control.setValue(value);
   }
 

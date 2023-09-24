@@ -13,7 +13,7 @@ export type WorkflowTriggers = typeof workflowTriggers[number];
 export interface UserWorkflowAction {
   user: string;
   action: WorkflowAction;
-  date: Date;
+  date: Date | null;
   message: string;
 }
 
@@ -38,7 +38,7 @@ export interface RecordWorkflow {
 
 // Workflow Definition
 // ----------------------------------------------------------------------------------------------
-export enum WorkflowPartyAlgo {
+export enum WorkflowStepAlgo {
   ANY = 'any',
   ANY_ALL = 'any_all',
   ALL_ANY = 'all_any',
@@ -51,7 +51,7 @@ export enum WorkflowPartyAlgo {
 export interface WorkflowStepOptions {
   serial: string;
   users: string[];
-  algo: WorkflowPartyAlgo
+  algo: WorkflowStepAlgo
 }
 
 export interface Workflow {
@@ -76,41 +76,41 @@ export interface Workflow {
   steps: WorkflowStepOptions[];
 }
 
-export function getWorkflowStepAction(actions: UserWorkflowAction[], algo: WorkflowPartyAlgo) {
+export function getWorkflowStepAction(actions: UserWorkflowAction[], algo: WorkflowStepAlgo) {
   const length = actions.length;
 
   switch (algo) {
-    case WorkflowPartyAlgo.ANY:
+    case WorkflowStepAlgo.ANY:
       return actions.some(a => a.action === WorkflowAction.APPROVE)
         ? WorkflowAction.APPROVE
         : actions.some(a => a.action === WorkflowAction.REJECT)
           ? WorkflowAction.REJECT
           : WorkflowAction.REVIEW;
-    case WorkflowPartyAlgo.ALL_ANY:
+    case WorkflowStepAlgo.ALL_ANY:
       return actions.every(a => a.action === WorkflowAction.APPROVE)
         ? WorkflowAction.APPROVE
         : actions.some(a => a.action === WorkflowAction.REJECT)
           ? WorkflowAction.REJECT
           : WorkflowAction.REVIEW;
-    case WorkflowPartyAlgo.ANY_ALL:
+    case WorkflowStepAlgo.ANY_ALL:
       return actions.some(a => a.action === WorkflowAction.APPROVE)
         ? WorkflowAction.APPROVE
         : actions.every(a => a.action === WorkflowAction.REJECT)
           ? WorkflowAction.REJECT
           : WorkflowAction.REVIEW;
-    case WorkflowPartyAlgo.ANY_MOST:
+    case WorkflowStepAlgo.ANY_MOST:
       return actions.some(a => a.action === WorkflowAction.APPROVE)
         ? WorkflowAction.APPROVE
         : actions.reduce((total, a) => total += (a.action === WorkflowAction.REJECT ? 1 : 0), 0) > length / 2
           ? WorkflowAction.REJECT
           : WorkflowAction.REVIEW;
-    case WorkflowPartyAlgo.MOST_ANY:
+    case WorkflowStepAlgo.MOST_ANY:
       return actions.reduce((total, a) => total += (a.action === WorkflowAction.APPROVE ? 1 : 0), 0) > length / 2
         ? WorkflowAction.APPROVE
         : actions.some(a => a.action === WorkflowAction.REJECT)
           ? WorkflowAction.REJECT
           : WorkflowAction.REVIEW;
-    case WorkflowPartyAlgo.MOST:
+    case WorkflowStepAlgo.MOST:
       return actions.reduce((total, a) => total += (a.action === WorkflowAction.APPROVE ? 1 : 0), 0) > length / 2
         ? WorkflowAction.APPROVE
         : actions.reduce((total, a) => total += (a.action === WorkflowAction.REJECT ? 1 : 0), 0) > length / 2

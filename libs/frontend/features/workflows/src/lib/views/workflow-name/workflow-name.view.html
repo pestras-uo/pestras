@@ -1,8 +1,8 @@
 <div class="toolbar" *contra="let c">
-  <h4>{{c['name']}}</h4>
+  <h4>{{wf.name}}</h4>
   <div class="grow"></div>
-  <button class="btn-icon btn-tiny btn-round">
-    <i puiIcon="edit" size="small"></i>
+  <button class="btn-icon btn-tiny btn-round btn-success" (click)="openDialog(editName)">
+    <i puiIcon="edit" size="tiny"></i>
   </button>
 
   <ng-template #editName>

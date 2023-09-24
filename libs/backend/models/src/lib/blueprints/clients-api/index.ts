@@ -14,7 +14,7 @@ export { CreateClientApiInput, AddClientApiDataStoreInput, UpdateClientApiDataSt
 export class ClientApiModel extends Model<ClientApi> {
 
   getByBlueprint: (blueprint: string, projection?: any) => Promise<ClientApi[]> = getByBlueprint.bind(this);
-  getBySerial: (serial: string, projection?: any) => Promise<ClientApi> = getBySerial.bind(this);
+  getBySerial: (serial: string, projection?: any) => Promise<ClientApi | null> = getBySerial.bind(this);
   exists: (serial: string) => Promise<boolean> = exists.bind(this);
   nameExists: (name: string, exclude?: string) => Promise<boolean> = nameExists.bind(this);
 

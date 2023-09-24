@@ -1,5 +1,5 @@
 import { FormArray, FormControl, FormGroup } from "@angular/forms";
-import { WorkflowAction, WorkflowPartyAlgo } from "@pestras/shared/data-model";
+import { WorkflowAction, WorkflowStepAlgo } from "@pestras/shared/data-model";
 
 export interface WorkflowFormModel {
   name: FormControl<string>;
@@ -13,5 +13,5 @@ export interface WorkflowFormModel {
 export interface WorkflowStepOptionsFormModel {
   serial: FormControl<string>;
   users: FormControl<string[]>;
-  algo: FormControl<WorkflowPartyAlgo>;
+  algo: FormControl<WorkflowStepAlgo>;
 }

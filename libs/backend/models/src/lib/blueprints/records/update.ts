@@ -85,5 +85,5 @@ export async function update(
     payload: { data_store: ds.serial }
   });
 
-  return this.getBySerial<TableDataRecord>(ds.serial, `draft_${recordSerial}`);
+  return this.getBySerial(ds.serial, `draft_${recordSerial}`);
 }

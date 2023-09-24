@@ -39,10 +39,74 @@
       ></pui-check-input>
 
       <!-- Workflow -->
-      <pui-check-input
-        [label]="c['enableWorkflow']"
-        formControlName="workflow"
-      ></pui-check-input>
+      <h4 class="mbe-6">{{c['workflow']}}</h4>
+      <div formGroupName="workflow" class="grid cols-3 gap-4 mbe-6">
+        <div>
+          <label for="wf-add">
+            {{c['add']}}
+            <div class="grow"></div>
+            <pui-check-input
+              small
+              [label]="c['allow']"
+              [formControl]="allowNewCtrl"
+            ></pui-check-input>
+          </label>
+          <div
+            [class.disabled]="allowNewCtrl.value"
+            class="fc fc-surface1 fc-outline"
+          >
+            <pui-select-input
+              labelRef="wf-add"
+              [list]="dataStore.blueprint | workflows | async | arrayMap: mapWorkflow"
+              formControlName="new"
+            ></pui-select-input>
+          </div>
+        </div>
+        <div>
+          <label for="wf-update">
+            {{c['update']}}
+            <div class="grow"></div>
+            <pui-check-input
+              small
+              [label]="c['allow']"
+              [nullable]="true"
+              [formControl]="allowUpdateCtrl"
+            ></pui-check-input>
+          </label>
+          <div
+            [class.disabled]="allowUpdateCtrl.value !== null"
+            class="fc fc-surface1 fc-outline"
+          >
+            <pui-select-input
+              labelRef="wf-update"
+              [list]="dataStore.blueprint | workflows | async | arrayMap: mapWorkflow"
+              formControlName="update"
+            ></pui-select-input>
+          </div>
+        </div>
+        <div>
+          <label for="wf-delete">
+            {{c['delete']}}
+            <div class="grow"></div>
+            <pui-check-input
+              small
+              [label]="c['allow']"
+              [nullable]="true"
+              [formControl]="allowDeleteCtrl"
+            ></pui-check-input>
+          </label>
+          <div
+            [class.disabled]="allowDeleteCtrl.value !== null"
+            class="fc fc-surface1 fc-outline"
+          >
+            <pui-select-input
+              labelRef="wf-delete"
+              [list]="dataStore.blueprint | workflows | async | arrayMap: mapWorkflow"
+              formControlName="delete"
+            ></pui-select-input>
+          </div>
+        </div>
+      </div>
 
       <div class="divider mb-8"></div>
 

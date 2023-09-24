@@ -17,7 +17,7 @@ class PubSub extends EventEmitter {
     return this.emit('activity', data);
   }
 
-  on<T = any>(eventName: string | symbol, listener: (data: T, ...args: any[]) => void): this {
+  override on<T = any>(eventName: string | symbol, listener: (data: T, ...args: any[]) => void): this {
     return super.on(eventName, listener);
   }
 

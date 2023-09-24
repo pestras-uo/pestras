@@ -86,8 +86,8 @@ export function changeListener(this: NotificationsModel) {
     try {
       const record = await dataRecordsModel.getBySerial(activity.serial, activity.payload['record']);
   
-      if (record?.owner && activity.issuer !== record.owner)
-        this.create({ ...activity, target: record.owner, seen_date: null });
+      if (record?.['owner'] && activity.issuer !== record['owner'])
+        this.create({ ...activity, target: record['owner'], seen_date: null });
       
     } catch (error) {
       console.error(error);
@@ -98,8 +98,8 @@ export function changeListener(this: NotificationsModel) {
     try {
       const record = await dataRecordsModel.getBySerial(activity.serial, activity.payload['record']);
   
-      if (record?.owner && activity.issuer !== record.owner)
-        this.create({ ...activity, target: record.owner, seen_date: null });
+      if (record?.['owner'] && activity.issuer !== record['owner'])
+        this.create({ ...activity, target: record['owner'], seen_date: null });
       
     } catch (error) {
       console.error(error);
