@@ -17,7 +17,7 @@ export async function update(
 
   await this.col.updateOne({ serial }, { $set: { ...input, last_modified: date } });
 
-  this.pubSub.emitActivity({
+  this.channel.emitActivity({
     create_date: date,
     issuer: issuer.serial,
     method: 'update',

@@ -1,6 +1,7 @@
 import { IAggrPiplineStage } from "../util";
 import { Field } from './fields';
 import { WebServiceConfig } from './web-service';
+import { WorkflowTriggers } from "./workflow";
 
 export enum DataStoreType {
   TABLE = 'table',
@@ -61,6 +62,18 @@ export interface DataStoreTreeViewItemConfig {
   display_field: string | null;
 }
 
+/**
+ * string: workflow name
+ * true: by pass
+ * false: not allowed
+ */
+export interface WorkflowOptions {
+  new: string | boolean;
+  update: string | boolean;
+  delete: string | boolean;
+  reset: string | boolean;
+}
+
 export interface DataStoreSettings {
   // General Settings
   // ------------------------------------------------------------------------------------
@@ -78,13 +91,13 @@ export interface DataStoreSettings {
 
   /**
    * ### workflow type
-   *  - **false**: no workflow
-   *  - **true**: default workflow where any admin can approve or reject
    *  - **string (workflow serial)**: predefined custom workflow
+   *  - **true**: by pass
+   *  - **false**: not allowed
    * 
    * cannot be changed after build
    */
-  workflow: string | boolean;
+  workflow: Record<WorkflowTriggers, string | boolean>;
   /** When true
    * - records are inserted in blueprint level rather than instance level.
    * - inserting data will be made by other data stores.

@@ -2,9 +2,10 @@
 /* eslint-disable @angular-eslint/component-class-suffix */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { Component, Input, OnChanges } from '@angular/core';
-import { DataRecord, DataStore } from '@pestras/shared/data-model';
-import { RecordsState } from '@pestras/frontend/state';
+import { DataRecord, DataRecordState, DataStore } from '@pestras/shared/data-model';
+import { RecordsService } from '@pestras/frontend/state';
 import { Observable, map } from 'rxjs';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-records-tree-view',
@@ -14,7 +15,7 @@ import { Observable, map } from 'rxjs';
       [data]="rs"
       [dataStore]="dataStore"
       [levels]="dataStore.settings.tree_view!"
-      [baseUrl]="baseUrl"
+      (clicked)="tryVisit($event)"
     >     
     </tree-view-widget>
   `
@@ -27,12 +28,15 @@ export class TreeViewView implements OnChanges {
   @Input({ required: true })
   dataStore!: DataStore;
   @Input()
+  rState: DataRecordState | "" = "";
+  @Input()
   topic?: string;
   @Input()
   search: any;
 
   constructor(
-    private state: RecordsState
+    private service: RecordsService,
+    private router: Router
   ) { }
 
   ngOnChanges() {
@@ -40,7 +44,9 @@ export class TreeViewView implements OnChanges {
       ? `/main/records/${this.topic}/${this.dataStore.serial}`
       : `/main/records/${this.dataStore.serial}`;
 
-    this.records$ = this.state.search(this.dataStore.serial, {
+    const src = this.rState && this.rState !== DataRecordState.PUBLISHED ? `${this.rState}_${this.dataStore.serial}` : this.dataStore.serial;
+
+    this.records$ = this.service.search({ ds: src }, {
       limit: 0,
       skip: 0,
       select: null,
@@ -48,5 +54,16 @@ export class TreeViewView implements OnChanges {
       search: this.search,
     })
       .pipe(map((data) => data.results));
+  }
+
+  tryVisit(serial: string) {
+    this.router.navigate(
+      this.topic
+        ? ['/main/records', this.topic, this.dataStore.serial, serial]
+        : ['/main/records', this.dataStore.serial, serial],
+      {
+        queryParams: { state: this.rState }
+      }
+    )
   }
 }

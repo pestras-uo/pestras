@@ -6,9 +6,9 @@ export enum RecordsValidators {
 }
 
 new Validall(RecordsValidators.CREATE, {
-  $required: true, $type: 'object', $message: 'invalidRecordInput'
+  $type: 'object', $message: 'invalidRecordInput'
 });
 
 new Validall(RecordsValidators.UPDATE, {
-  $required: true, $type: 'object', $message: 'invalidRecordInput'
+  $type: 'object', $message: 'invalidRecordInput'
 });

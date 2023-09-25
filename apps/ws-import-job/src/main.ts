@@ -3,8 +3,6 @@ import config from "./config";
 import nodeCron from 'node-cron';
 import { job } from "./job";
 
-import './models';
-
 (async () => {
 
   await db.connect(config);

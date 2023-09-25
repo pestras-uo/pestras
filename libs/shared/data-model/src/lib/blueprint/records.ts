@@ -1,7 +1,7 @@
-export enum WorkflowState {
-  DRAFT = 'draft',
-  PENDING = 'pending',
-  APPROVED = 'approved'
+export enum DataRecordState {
+  PUBLISHED = 'published',
+  REVIEW = 'review',
+  DRAFT = 'draft'
 }
 
 export interface DataRecord {
@@ -13,8 +13,6 @@ export interface TableDataRecord extends DataRecord {
   serial: string;
   // relations
   topic: string | null;
-  // workflow
-  workflow: WorkflowState | null;
   
   owner: string;
 

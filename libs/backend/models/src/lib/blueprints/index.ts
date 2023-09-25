@@ -10,7 +10,7 @@ export { CreateBlueprintInput };
 export class BlueprintsModel extends Model<Blueprint> {
 
   getAll: (issuer: User) => Promise<Blueprint[]> = getAll.bind(this);
-  getBySerial: (serial: string, projection?: unknown) => Promise<Blueprint> = getBySerial.bind(this);
+  getBySerial: (serial: string, projection?: unknown) => Promise<Blueprint | null> = getBySerial.bind(this);
   nameExists: (name: string, exclude?: string) => Promise<boolean> = nameExists.bind(this);
 
   create: (input: CreateBlueprintInput, issuer: string) => Promise<Blueprint> = create.bind(this);

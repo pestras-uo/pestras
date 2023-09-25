@@ -25,7 +25,7 @@ export async function addCollaborator(
     }
   );
 
-  this.pubSub.emitActivity({
+  this.channel.emitActivity({
     issuer: issuer.serial,
     create_date: date,
     method: 'addCollaborator',
@@ -63,7 +63,7 @@ export async function removeCollaborator(
     }
   );
 
-  this.pubSub.emitActivity({
+  this.channel.emitActivity({
     issuer: issuer.serial,
     create_date: date,
     method: 'removeCollaborator',

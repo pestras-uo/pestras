@@ -7,7 +7,7 @@ table {
   width: 100%;
   border-collapse: collapse;
   border-radius: 8px;
-  overflow: hidden;
+  overflow: auto;
   border-spacing: 0;
 
   &.no-collapse {
@@ -17,9 +17,11 @@ table {
   thead,
   tfoot {
     position: sticky;
+    z-index: 2;
   }
 
   thead {
+    background-color: var(--surface1);
     inset-block-start: 0;
   }
 
@@ -27,7 +29,6 @@ table {
     inset-block-end: 0;
   }
 
-  thead tr,
   tfoot tr:not(:last-child) {
     border-block-end: 1px solid var(--border2);
   }
@@ -69,6 +70,10 @@ table {
 
   tbody tr {
     border-block-end: 1px solid var(--border1);
+
+    &:nth-child(odd) {
+      background-color: var(--surface2);
+    }
 
     &:last-child {
       border-block-end-color: transparent;

@@ -17,7 +17,7 @@ class PubSub extends EventEmitter {
     return this.emit('activity', data);
   }
 
-  on<T = any>(eventName: string | symbol, listener: (data: T, ...args: any[]) => void): this {
+  override on<T = any>(eventName: string | symbol, listener: (data: T, ...args: any[]) => void): this {
     return super.on(eventName, listener);
   }
 
@@ -61,5 +61,5 @@ const pubSub = new PubSub();
 pubSub.setMaxListeners(100)
 
 export class Core {
-  protected pubSub = pubSub;
+  protected readonly channel = pubSub;
 }

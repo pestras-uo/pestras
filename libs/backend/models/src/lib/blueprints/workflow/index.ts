@@ -1,30 +1,62 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
-import { Db } from "mongodb";
-import { Core } from "@pestras/backend/util";
-import { getByRecord } from "./read";
-import { create } from "./create";
-import { publish } from "./publish";
-import { approve } from "./approve";
-import { reject } from "./reject";
-import { deleteWorkflow } from "./delete";
-import { RecordWorkflow, User, WorkflowState } from "@pestras/shared/data-model";
+import { Workflow, WorkflowAction, WorkflowStepOptions } from "@pestras/shared/data-model";
+import { Model } from "../../model";
+import { Serial } from "@pestras/shared/util";
 
-export class RecordWorkflowModel extends Core {
-  protected db!: Db;
+export type CreateWorkflowInput = Omit<Workflow, 'serial'>;
 
-  constructor() {
-    super();
+export class WorkflowModel extends Model<Workflow> {
 
-    this.pubSub.on('data-db-connected', _db => this.db = _db);
+  getBySerial(serial: string) {
+    return this.col.findOne({ serial });
   }
 
-  getByRecord: (ds: string, record: string) => Promise<RecordWorkflow> = getByRecord.bind(this);
+  getByBlueprint(bp: string) {
+    return this.col.find({ blueprint: bp }).toArray();
+  }
 
-  create: (ds: string, record: string) => Promise<any> = create.bind(this);
+  async create(input: CreateWorkflowInput) {
+    const wf: Workflow = {
+      serial: Serial.gen("WKF"),
+      blueprint: input.blueprint,
+      name: input.name,
+      cancelable: input.cancelable,
+      default_action: input.default_action,
+      max_review_days: input.max_review_days,
+      steps: input.steps.map(s => ({ ...s, serial: Serial.gen("WFS") }))
+    };
 
-  publish: (ds: string, serial: string, issuer: User) => Promise<WorkflowState.PENDING | WorkflowState.APPROVED> = publish.bind(this);
-  approve: (ds: string, serial: string, issuer: User) => Promise<boolean> = approve.bind(this);
-  reject: (ds: string, serial: string, issuer: User) => Promise<boolean> = reject.bind(this);
+    await this.col.insertOne(wf);
 
-  delete: (ds: string, record: string) => Promise<boolean> = deleteWorkflow.bind(this);
+    return wf;
+  }
+
+  async updateName(serial: string, name: string) {
+    await this.col.updateOne({ serial }, { $set: { name } });
+
+    return true;
+  }
+
+  async updateMaxReviewDays(serial: string, days: number) {
+    await this.col.updateOne({ serial }, { $set: { max_review_days: days } });
+
+    return true;
+  }
+
+  async updateDefaultAction(serial: string, action: Exclude<WorkflowAction, WorkflowAction.REVIEW>) {
+    await this.col.updateOne({ serial }, { $set: { default_action: action } });
+
+    return true;
+  }
+
+  async updateCancelable(serial: string, cancelable: boolean) {
+    await this.col.updateOne({ serial }, { $set: { cancelable } });
+
+    return true;
+  }
+
+  async updateSteps(serial: string, parties: WorkflowStepOptions[]) {
+    await this.col.updateOne({ serial }, { $set: { steps: parties } });
+
+    return true;
+  }
 }

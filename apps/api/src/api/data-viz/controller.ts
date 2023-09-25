@@ -1,4 +1,4 @@
-import { dataVizModel } from "../../models";
+import { dataVizModel } from "@pestras/backend/models";
 import { DataVizApi } from "./types";
 import { NextFunction } from 'express';
 

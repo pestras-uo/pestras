@@ -1,10 +1,10 @@
-import { orgunitsModel } from "../../models";
 import fs from 'fs';
 import path from 'path';
 import { OrgunitsApi } from "./types";
 import config from "../../config";
 import { HttpError, HttpCode } from "@pestras/backend/util";
 import { NextFunction } from 'express';
+import { orgunitsModel } from '@pestras/backend/models';
 
 export const OrgunitsController = {
 

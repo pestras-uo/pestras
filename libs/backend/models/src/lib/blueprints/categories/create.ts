@@ -26,7 +26,7 @@ export async function create(
     last_modified: date
   });
 
-  this.pubSub.emitActivity({
+  this.channel.emitActivity({
     issuer: issuer.serial,
     create_date: date,
     method: 'create',

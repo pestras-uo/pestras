@@ -8,14 +8,12 @@ import { ContentState } from "./content/content.state";
 import { DashboardsState } from "./dashboards/dashboards.state";
 import { DashboardResolver } from "./dashboards/dashboard.resolver";
 import { OrgunitsState } from "./orgunits/orgunits.state";
-import { RecordsState } from "./records/records.state";
 import { RecordResolver } from "./records/record.resolver";
 import { RegionsState } from "./regions/regions.state";
 import { SessionState } from "./session/session.state";
 import { SSEService } from "./sse/sse.service";
 import { TopicsState } from "./topics/topics.state";
 import { UsersGroupsState } from "./users-groups/users.groups.state";
-import { WorkflowState } from "./workflow/workflow.state";
 import { UsersState } from "./users/users.state";
 import { WorkspaceState } from "./workspaces/workspace.state";
 import { DataVizState } from "./data_viz/data-viz.state";
@@ -36,7 +34,7 @@ import { RegionsService } from "./regions/regions.service";
 import { SessionService } from "./session/session.service";
 import { TopicsService } from "./topics/topics.service";
 import { UsersService } from "./users/users.service";
-import { WorkflowService } from "./workflow/workflow.service";
+import { RecordsWorkflowService } from "./record-workflow/records-workflow.service";
 import { UsersGroupsService } from "./users-groups/users-groups.service";
 import { WorkspaceService } from "./workspaces/workspace.service";
 import { DatavizService } from "./data_viz/data-viz.service";
@@ -46,6 +44,8 @@ import { NotificationsState } from "./notifications/notifications.state";
 import { ReportsService } from "./reports/reports.service";
 import { EntityAccessService } from "./entity-access/entity-access.service";
 import { EntityAccessState } from "./entity-access/entity-access.state";
+import { WorkflowsService } from "./workflows/workflows.service";
+import { WorkflowsState } from "./workflows/workflows.state";
 
 @NgModule({
   imports: [EnvModule],
@@ -58,19 +58,18 @@ import { EntityAccessState } from "./entity-access/entity-access.state";
     ContentService,
     DashboardsService,
     OrgunitsService,
-    RecordsService,
     RegionsService,
     ReportsService,
     SessionService,
     TopicsService,
     UsersService,
-    WorkflowService,
     UsersGroupsService,
     WorkspaceService,
     DatavizService,
     DataStoresService,
     NotificationsService,
-    EntityAccessService
+    EntityAccessService,
+    WorkflowsService
   ]
 })
 export class StateModule {
@@ -90,7 +89,7 @@ export class StateModule {
         DashboardsState,
         DashboardResolver,
         OrgunitsState,
-        RecordsState,
+        RecordsService,
         RecordResolver,
         RegionsState,
         SessionState,
@@ -98,13 +97,14 @@ export class StateModule {
         TopicsState,
         UsersState,
         UsersGroupsState,
-        WorkflowState,
+        RecordsWorkflowService,
         WorkspaceState,
         DataVizState,
         DataStoresState,
         DataStoreResolver,
         NotificationsState,
-        EntityAccessState
+        EntityAccessState,
+        WorkflowsState
       ]
     }
   }

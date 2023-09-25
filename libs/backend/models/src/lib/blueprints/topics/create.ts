@@ -25,7 +25,7 @@ export async function create(
 
   await this.col.insertOne(bpi);
 
-  this.pubSub.emitActivity({
+  this.channel.emitActivity({
     issuer: issuer.serial,
     create_date: date,
     method: 'create',

@@ -30,7 +30,7 @@ export const recordsRoutes = Router({ mergeParams: true })
     controller.create
   )
   .put(
-    '/:record',
+    '/:record/:draft',
     apiAuth([Role.AUTHOR, Role.DATA_ENG]),
     tmpUpload.any(),
     validate(RecordsValidators.UPDATE),
@@ -42,7 +42,7 @@ export const recordsRoutes = Router({ mergeParams: true })
     controller.revertHistory
   )
   .delete(
-    '/:record',
+    '/:record/:draft',
     apiAuth([Role.ADMIN, Role.DATA_ENG]),
     controller.delete
   )

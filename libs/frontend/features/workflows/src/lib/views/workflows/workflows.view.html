@@ -1,0 +1,50 @@
+<ng-container *contra="let c">
+  <div class="flex gap-8" *ngIf="(!isEmpty && !form) else noData">
+    <pestras-workflows-list
+      class="w-10"
+      [editable]="editable"
+      [blueprint]="blueprint"
+      [selected]="selected"
+      (selects)="this.selected = $event"
+      (add)="form = true"
+      (noData)="isEmpty = true"
+    ></pestras-workflows-list>
+
+    <div *ngIf="selected" class="grow">
+      <pestras-workflow-name [wf]="selected"></pestras-workflow-name>
+
+      <div class="divider mb-6"></div>
+
+      <pestras-workflow-cancelable [wf]="selected"></pestras-workflow-cancelable>
+
+      <div class="divider mb-6"></div>
+
+      <pestras-workflow-default-action [wf]="selected"></pestras-workflow-default-action>
+
+      <div class="divider mb-6"></div>
+
+      <pestras-workflow-max-review-days [wf]="selected"></pestras-workflow-max-review-days>
+
+      <div class="divider mb-6"></div>
+
+      <pestras-workflow-steps [wf]="selected"></pestras-workflow-steps>
+    </div>
+  </div>
+
+  <ng-template #noData>
+    <no-data-placeholder-widget
+      [showAction]="editable"
+      [actionName]="c['addNew']"
+      (action)="form = true"
+      *ngIf="!form"
+      >{{c['noDataMsg']}}</no-data-placeholder-widget
+    >
+  </ng-template>
+
+  <pestras-workflow-form
+    *ngIf="form"
+    [blueprint]="blueprint"
+    (cancel)="form = false"
+    (done)="form = false"
+  ></pestras-workflow-form>
+</ng-container>

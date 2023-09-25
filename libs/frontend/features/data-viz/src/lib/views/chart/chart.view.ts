@@ -2,7 +2,7 @@
 /* eslint-disable @angular-eslint/component-selector */
 import { ChangeDetectionStrategy, Component, HostBinding, Input, OnChanges } from '@angular/core';
 import { BaseDataViz, DataRecord, DataVizTypes, TypedEntity, aggrRecords, createField } from '@pestras/shared/data-model';
-import { DataVizState, DataStoresState, RecordsState, RegionsState } from '@pestras/frontend/state';
+import { DataVizState, DataStoresState, RegionsState, RecordsService } from '@pestras/frontend/state';
 import { Observable, switchMap, forkJoin, filter, take, map, tap } from 'rxjs';
 import { ChartDataLoad } from '../../util';
 
@@ -27,7 +27,7 @@ export class ChartView implements OnChanges {
     private state: DataVizState,
     private dsState: DataStoresState,
     private regionsState: RegionsState,
-    private recordsState: RecordsState
+    private recordsService: RecordsService
   ) { }
 
   ngOnChanges(): void {
@@ -40,7 +40,7 @@ export class ChartView implements OnChanges {
         switchMap(options => {
           return forkJoin([
             this.dsState.select(options.data_store).pipe(filter(Boolean), take(1)),
-            this.recordsState.search(options.data_store)
+            this.recordsService.search({ ds: options.data_store }, {})
               .pipe(
                 filter(Boolean),
                 map(res => res.results),

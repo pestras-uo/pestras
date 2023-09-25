@@ -4,9 +4,9 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { RecordsState } from '@pestras/frontend/state';
+import { RecordsService } from '@pestras/frontend/state';
 import { ToastService, untilDestroyed } from '@pestras/frontend/ui';
-import { DataRecord, DataStore, Field } from '@pestras/shared/data-model';
+import { DataRecord, DataRecordState, DataStore, Field } from '@pestras/shared/data-model';
 
 @Component({
   selector: 'app-update-form',
@@ -36,9 +36,11 @@ export class UpdateFormPage implements OnInit {
   group!: string;
   @Input({ required: true })
   record!: DataRecord;
+  @Input({ required: true })
+  state!: DataRecordState;
 
   constructor(
-    private state: RecordsState,
+    private service: RecordsService,
     private fb: FormBuilder,
     private toast: ToastService,
     private router: Router
@@ -79,15 +81,17 @@ export class UpdateFormPage implements OnInit {
   update(c: Record<string, any>) {
     this.preloader = true;
 
-    this.state.update(
-      this.dataStore.serial,
-      this.record['serial'],
+    this.service.update(
+      { draft: this.state === DataRecordState.DRAFT ? 1 : 0, ds: this.dataStore.serial, serial: this.record['serial'] },
       this.form.getRawValue()
     )
       .subscribe({
         next: () => {
           this.toast.msg(c['success'].default, { type: 'success' });
-          this.router.navigate(['/main/records', this.topic, this.dataStore.serial, this.record['serial']], { replaceUrl: true });
+          this.router.navigate(
+            ['/main/records', this.topic, this.dataStore.serial, this.record['serial']], 
+            { replaceUrl: true, queryParams: { state: DataRecordState.DRAFT } }
+          );
         },
         error: e => {
           console.error(e);

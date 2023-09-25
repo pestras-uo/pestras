@@ -1,9 +1,14 @@
 /* eslint-disable @typescript-eslint/no-namespace */
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { ApiQuery, DataRecordHistroyItem, TableDataRecord } from "@pestras/shared/data-model";
+import { ApiQuery, DataRecord, DataRecordHistroyItem, TableDataRecord } from "@pestras/shared/data-model";
 import { basePath } from "../data-stores/data-stores.api";
 
 const localBasePath = `${basePath}/:ds/records`;
+
+export interface DataRecordsSearchResponse {
+  count: number;
+  results: TableDataRecord[];
+}
 
 export namespace RecordsApi {
 
@@ -26,7 +31,7 @@ export namespace RecordsApi {
 
     export type Body = Partial<ApiQuery<any>>;
 
-    export type Response = { count: number; results: TableDataRecord[]; };
+    export type Response = DataRecordsSearchResponse;
   }
 
   // GET
@@ -57,11 +62,11 @@ export namespace RecordsApi {
   // --------------------------------------------------------------------------------------
   // POST
   export namespace Update {
-    export const REQ_PATH = localBasePath + '/:serial';
+    export const REQ_PATH = localBasePath + '/:serial/:draft';
 
-    export interface Params { ds: string; serial: string; }
+    export interface Params { ds: string; serial: string; draft: number }
 
-    export type Body = any;
+    export type Body = DataRecord;
 
     export type Response = TableDataRecord;
   }

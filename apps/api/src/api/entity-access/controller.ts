@@ -1,4 +1,4 @@
-import { entityAccessModel } from '../../models';
+import { entityAccessModel } from '@pestras/backend/models';
 import { EntityAccessApi } from './types';
 
 export const controller = {

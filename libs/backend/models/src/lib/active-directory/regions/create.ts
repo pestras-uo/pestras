@@ -26,7 +26,7 @@ export async function create(this: RegionsModel, data: CreateRegionInput, issuer
 
   await this.col.insertOne(region);
 
-  this.pubSub.emitActivity({
+  this.channel.emitActivity({
     issuer: issuer,
     create_date: date,
     method: 'create',

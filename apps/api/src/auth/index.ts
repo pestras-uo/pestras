@@ -2,7 +2,7 @@
 import { HttpError, HttpCode } from "@pestras/backend/util";
 import { User, UserState } from "@pestras/shared/data-model";
 import { TokenType, verify } from "./token";
-import { usersModel } from "../models";
+import { usersModel } from "@pestras/backend/models";
 
 export interface UserSession {
   issuer: User;

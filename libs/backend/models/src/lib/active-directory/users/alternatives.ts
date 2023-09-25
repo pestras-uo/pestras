@@ -14,7 +14,7 @@ export async function addAlternative(
     { $addToSet: { alternatives: alternative }, $set: { last_modified: date } }
   );
 
-  this.pubSub.emitActivity({
+  this.channel.emitActivity({
     issuer,
     create_date: date,
     method: 'addAlternative',
@@ -39,7 +39,7 @@ export async function removeAlternative(
     { $pull: { alternatives: alternative }, $set: { last_modified: date } }
   );
 
-  this.pubSub.emitActivity({
+  this.channel.emitActivity({
     issuer,
     create_date: date,
     method: 'removeAlternative',

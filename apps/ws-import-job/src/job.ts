@@ -1,9 +1,9 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { DataStore, DataStoreState, DataStoreType, intervalsByMonth } from "@pestras/shared/data-model";
-import { dataStoresModel, wsLogModel } from "./models";
 import { generateRequestPayload } from "./generate-payload";
 import { handleRequest } from "./handle-request";
 import { handleResponse } from "./handle-response";
+import { dataStoresModel, webServiceLogModel } from "@pestras/backend/models";
 
 export async function job(init: boolean) {
 
@@ -36,32 +36,26 @@ export async function job(init: boolean) {
 
     for (const ds of dataStores) {
       try {
-        const logSerial = await wsLogModel.insert(ds.serial, 'init request');
+        const logSerial = await webServiceLogModel.insert(ds.serial, 'init request');
         const payload = generateRequestPayload(ds);
 
-        await wsLogModel.insertSub(logSerial, 'payload generated');
+        await webServiceLogModel.insertSub(logSerial, 'payload generated');
 
         const data = await handleRequest(ds, payload, logSerial);
 
-        await wsLogModel.insertSub(logSerial, 'request responded successfully');
+        await webServiceLogModel.insertSub(logSerial, 'request responded successfully');
 
         await handleResponse(data, ds);
 
-        await dataStoresModel.update({ serial: ds.serial }, {
-          $set: {
-            state: DataStoreState.READY,
-            initialized: true,
-            last_modified: new Date()
-          }
-        });
+        await dataStoresModel.updateWsState(ds.serial, DataStoreState.READY, true);
 
-        wsLogModel.insertSub(logSerial, 'response handled successfully.');
+        webServiceLogModel.insertSub(logSerial, 'response handled successfully.');
 
       } catch (error: any) {
         console.error(error);
 
-        await dataStoresModel.updateWsState(ds.serial, { state: DataStoreState.ERROR });
-        wsLogModel.insert(ds.serial, error.message ?? JSON.stringify(error), 'error');
+        await dataStoresModel.updateState(ds.serial, DataStoreState.ERROR);
+        webServiceLogModel.insert(ds.serial, error.message ?? JSON.stringify(error), 'error');
       }
     }
 

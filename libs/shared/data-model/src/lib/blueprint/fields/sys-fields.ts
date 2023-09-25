@@ -38,14 +38,6 @@ export function getSystemFields(blueprint: string): Array<Field> {
       system: true
     }),
     createField({
-      name: 'workflow',
-      display_name: 'workflow',
-      type: 'string',
-      group: '_workflow',
-      system: true,
-      required: true
-    }),
-    createField({
       name: 'topic',
       display_name: 'topic',
       type: 'serial',

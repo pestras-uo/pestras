@@ -10,7 +10,7 @@ export async function deleteAnalysis(
 
   await this.col.deleteOne({ serial });
 
-  this.pubSub.emitActivity({
+  this.channel.emitActivity({
     issuer,
     create_date: date,
     method: 'delete',

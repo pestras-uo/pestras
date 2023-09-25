@@ -84,6 +84,11 @@
 
         <!-- actions -->
         <!-- workflow -->
+        <pestras-workflows
+          *ngIf="view === 'workflow'"
+          [blueprint]="serial"
+          [editable]="([bp.owner] | sessionIs) || (bp.collaborators | sessionIs)"
+        ></pestras-workflows>
         <!-- settings -->
       </div>
     </div>

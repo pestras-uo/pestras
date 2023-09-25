@@ -19,7 +19,7 @@ export async function addIP(
     $set: { last_modified: date }
   });
 
-  this.pubSub.emitActivity({
+  this.channel.emitActivity({
     method: 'addIP',
     serial,
     entity: EntityTypes.CLIENT_API,
@@ -51,7 +51,7 @@ export async function removeIP(
     $set: { last_modified: date }
   });
 
-  this.pubSub.emitActivity({
+  this.channel.emitActivity({
     method: 'removeIP',
     serial,
     entity: EntityTypes.CLIENT_API,

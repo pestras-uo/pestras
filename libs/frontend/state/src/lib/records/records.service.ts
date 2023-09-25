@@ -4,6 +4,8 @@ import { RecordsApi } from "./records.api";
 import { injectURLPayload } from "@pestras/shared/util";
 import { EnvService } from "@pestras/frontend/env";
 
+export { DataRecordsSearchResponse } from './records.api';
+
 @Injectable()
 export class RecordsService {
 
@@ -37,7 +39,7 @@ export class RecordsService {
     for (const key in body) {
       const value = body[key] ?? null;
 
-      if (value) {
+      if (value !== null) {
         if (typeof value === 'object' && !(value instanceof Date) && !(value instanceof File))
           data.set(key, JSON.stringify(value));
         else
@@ -56,7 +58,7 @@ export class RecordsService {
     for (const key in body) {
       const value = body[key] ?? null;
 
-      if (value) {
+      if (value !== null) {
         if (typeof value === 'object' && !(value instanceof Date) && !(value instanceof File))
           data.set(key, JSON.stringify(value));
         else

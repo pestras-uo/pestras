@@ -1,12 +1,10 @@
 import express from 'express';
 import config from './config';
-import './models';
 import { db } from "@pestras/backend/util";
 import cors from 'cors';
 import helmet from 'helmet';
 import http from 'http';
 import { reqHandler } from './req-handler';
-
 
 (async () => {
 

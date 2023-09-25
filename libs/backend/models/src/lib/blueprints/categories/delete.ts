@@ -8,7 +8,7 @@ export async function deleteCategory(this: CategoriesModel, serial: string, issu
 
   await this.col.deleteOne({ serial });
 
-  this.pubSub.emitActivity({
+  this.channel.emitActivity({
     issuer: issuer,
     create_date: new Date(),
     method: 'delete',

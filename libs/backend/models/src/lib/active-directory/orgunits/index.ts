@@ -12,7 +12,7 @@ export class OrgunitsModel extends Model<Orgunit> {
   // Getters
   // ----------------------------------------------------------------------------
   getAll: (projection?: unknown) => Promise<Orgunit[]> = getAll.bind(this);
-  getBySerial: (serial: string, projection?: unknown) => Promise<Orgunit> = getBySerial.bind(this);
+  getBySerial: (serial: string, projection?: unknown) => Promise<Orgunit | null> = getBySerial.bind(this);
 
   // Util
   // ----------------------------------------------------------------------------

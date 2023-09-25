@@ -5,7 +5,7 @@ import { Filter } from "mongodb";
 
 export async function search(
   this: DashboardsModel,
-  query: ApiQuery<Dashboard>
+  query: Partial<ApiQuery<Dashboard>>
 ) {
   const count = await this.col.countDocuments(query.search as Filter<Dashboard>);
   const results = await this.col.find(query.search as any, {

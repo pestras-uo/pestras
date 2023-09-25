@@ -2,7 +2,7 @@
 import { Pipe, PipeTransform } from '@angular/core';
 import { DatePipe } from '@angular/common';
 import { Observable, of, map, switchMap } from 'rxjs'
-import { RegionsState, OrgunitsState, UsersState, DataStoresState, CategoriesState, TopicsState, RecordsState } from '@pestras/frontend/state';
+import { RegionsState, OrgunitsState, UsersState, DataStoresState, CategoriesState, TopicsState, RecordsService } from '@pestras/frontend/state';
 import { TypedEntity } from '@pestras/shared/data-model';
 
 @Pipe({
@@ -15,7 +15,7 @@ export class fieldValuePipe implements PipeTransform {
     private readonly datePipe: DatePipe,
     private readonly orgsState: OrgunitsState,
     private readonly usersState: UsersState,
-    private readonly recordsEntitiesState: RecordsState,
+    private readonly recordsService: RecordsService,
     private readonly dsState: DataStoresState,
     private readonly catsState: CategoriesState,
     private readonly topicsState: TopicsState
@@ -47,7 +47,7 @@ export class fieldValuePipe implements PipeTransform {
       return this.catsState.select(c => c.value === value).pipe(map(c => c?.title ?? value));
 
     if (entity.type === 'serial' && entity.ref_type === 'data_store' && entity.ref_to)
-      return this.recordsEntitiesState.select(value, entity.ref_to)
+      return this.recordsService.getBySerial({ serial: value, ds: entity.ref_to })
         .pipe(switchMap(r => {
           if (!r || !entity.ref_to)
             return of(null);

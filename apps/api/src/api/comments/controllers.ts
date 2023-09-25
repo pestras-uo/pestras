@@ -1,4 +1,4 @@
-import { commentsModel } from "../../models";
+import { commentsModel } from "@pestras/backend/models";
 import { CommentsApi } from "./types";
 import { NextFunction } from 'express';
 

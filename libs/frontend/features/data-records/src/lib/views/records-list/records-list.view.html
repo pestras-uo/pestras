@@ -19,22 +19,22 @@
     <div class="card-tabs">
       <h5
         class="tab"
-        [class.active]="tab === workflow.APPROVED"
-        (click)="setTab(workflow.APPROVED)"
+        [class.active]="tab === rState.PUBLISHED"
+        (click)="setTab(rState.PUBLISHED)"
       >
         {{c['public']}}
       </h5>
       <h5
         class="tab"
-        [class.active]="tab === workflow.DRAFT"
-        (click)="setTab(workflow.DRAFT)"
+        [class.active]="tab === rState.DRAFT"
+        (click)="setTab(rState.DRAFT)"
       >
         {{c['draft']}}
       </h5>
       <h5
         class="tab"
-        [class.active]="tab === workflow.PENDING"
-        (click)="setTab(workflow.PENDING)"
+        [class.active]="tab === rState.REVIEW"
+        (click)="setTab(rState.REVIEW)"
       >
         {{c['pending']}}
       </h5>
@@ -54,12 +54,14 @@
       *ngIf="view === 'cards'"
       [topic]="topic"
       [dataStore]="dataStore"
+      [rState]="tab"
       [search]="query"
     ></app-records-cards-view>
     <app-records-table-view
       *ngIf="view === 'table'"
       [topic]="topic"
       [dataStore]="dataStore"
+      [rState]="tab"
       [search]="query"
       [columns]="columns"
     ></app-records-table-view>
@@ -67,6 +69,7 @@
       *ngIf="view === 'tree'"
       [topic]="topic"
       [dataStore]="dataStore"
+      [rState]="tab"
       [search]="query"
     ></app-records-tree-view>
   </ng-template>

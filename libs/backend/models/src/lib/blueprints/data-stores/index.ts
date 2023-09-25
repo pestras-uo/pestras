@@ -19,13 +19,13 @@ export class DataStoresModel extends Model<DataStore> {
   protected dataDB!: Db;
 
   protected override init(): void {
-    this.pubSub.on<Db>('data-db-connected', db => this.dataDB = db);
+    this.channel.on<Db>('data-db-connected', db => this.dataDB = db);
   }
 
   // read
   // ---------------------------------------------------------------------------------------
   getByBlueprint: (bp: string) => Promise<DataStore[]> = getByBlueprint.bind(this);
-  getBySerial: (serial: string, projection?: any) => Promise<DataStore> = getBySerial.bind(this);
+  getBySerial: (serial: string, projection?: any) => Promise<DataStore | null> = getBySerial.bind(this);
   search: (query: any, skip: number, limit: number, projection: any) => any = search.bind(this);
 
   // util
@@ -40,7 +40,16 @@ export class DataStoresModel extends Model<DataStore> {
   // update
   // --------------------------------------------------------------------------------------
   update: (serial: string, name: string, issuer: User) => Promise<Date> = update.bind(this);
-  updateState: (serial: string, state: Exclude<DataStoreState, DataStoreState.BUILD>, issuer: User) => Promise<Date> = updateState.bind(this);
+  updateState: (serial: string, state: Exclude<DataStoreState, DataStoreState.BUILD>) => Promise<Date> = updateState.bind(this);
+  async updateWsState(serial: string, state: DataStoreState, initialized: boolean) {
+    return this.col.updateOne({ serial }, {
+      $set: {
+        state,
+        'web_service.initialized': initialized,
+        last_modified: new Date()
+      }
+    });
+  }
   build: (serial: string, issuer: User) => Promise<boolean> = build.bind(this);
   buildView: (ds: DataStore, rebuild?: boolean) => Promise<void> = buildView.bind(this);
 
@@ -55,12 +64,12 @@ export class DataStoresModel extends Model<DataStore> {
   setHeader: (serial: string, header: { key: string; value?: string | null; }, issuer: User) => Promise<Date> = setHeader.bind(this);
   addQueryOption: (serial: string, options: WSQueryOptions, issuer: User) => Promise<{ option: WSQueryOptions; date: Date; }> = addQueryOption.bind(this);
   removeQueryOption: (serial: string, option: string, issuer: User) => Promise<Date> = removeQueryOption.bind(this);
-  addSelection: (serial: string, input: WebServiceSelection, issuer: User) => Promise<DataStore> = addSelection.bind(this);
-  removeSelection: (serial: string, field: string, issuer: User) => Promise<DataStore> = removeSelection.bind(this);
+  addSelection: (serial: string, input: WebServiceSelection, issuer: User) => Promise<DataStore | null> = addSelection.bind(this);
+  removeSelection: (serial: string, field: string, issuer: User) => Promise<DataStore | null> = removeSelection.bind(this);
 
   // Aggregation
   // --------------------------------------------------------------------------------------
-  setAggregation: (serial: string, aggr: AggregationDataStoreConfig, issuer: User) => Promise<DataStore> = setAggregation.bind(this);
+  setAggregation: (serial: string, aggr: AggregationDataStoreConfig, issuer: User) => Promise<DataStore | null> = setAggregation.bind(this);
 
   // fields
   // --------------------------------------------------------------------------------------

@@ -12,7 +12,7 @@ export async function update(this: OrgunitsModel, serial: string, input: UpdateO
     { $set: { name: input.name, class: input.class, last_modified: date } }
   );
 
-  this.pubSub.emitActivity({
+  this.channel.emitActivity({
     issuer: issuer,
     create_date: date,
     serial,
@@ -42,7 +42,7 @@ export async function updateLogo(
     { $set: { logo, last_modified: date } }
   );
 
-  this.pubSub.emitActivity({
+  this.channel.emitActivity({
     issuer: issuer,
     create_date: date,
     method: 'updateLogo',
@@ -67,7 +67,7 @@ export async function updateRegions(
     { $set: { regions, last_modified: date } }
   );
 
-  this.pubSub.emitActivity({
+  this.channel.emitActivity({
     issuer: issuer,
     create_date: date,
     method: 'updateRegions',

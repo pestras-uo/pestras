@@ -29,7 +29,7 @@ export async function updateOrgunit(this: UsersModel, serial: string, orgunit: s
     { $set: { orgunit, last_modified: date } }
   );
 
-  this.pubSub.emitActivity({
+  this.channel.emitActivity({
     issuer: issuer,
     create_date: date,
     method: 'updateOrgunit',

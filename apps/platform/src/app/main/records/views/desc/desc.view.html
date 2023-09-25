@@ -30,7 +30,7 @@
         *ngIf="isTable && (record['owner'] | sessionIs) && ((dataStore.blueprint | blueprint | async)?.owner | sessionIs)"
         class="btn-small btn-icon btn-round"
         routerLink="update"
-        [queryParams]="{ group: group.group }"
+        [queryParams]="{ group: group.group, state }"
       >
         <i puiIcon="edit" size="small"></i>
       </a>

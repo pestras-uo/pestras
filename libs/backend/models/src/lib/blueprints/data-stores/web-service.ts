@@ -56,7 +56,7 @@ export async function setWebServiceConfig(
     { $set: { web_service: ws, last_modified: date } }
   );
 
-  this.pubSub.emitActivity({
+  this.channel.emitActivity({
     issuer: issuer.serial,
     create_date: date,
     method: 'setWebServiceConfig',
@@ -101,7 +101,7 @@ export async function setWebServiceAuth(
 
   await this.col.updateOne({ serial }, { $set: { 'web_service.auth': auth, last_modified: date } });
 
-  this.pubSub.emitActivity({
+  this.channel.emitActivity({
     issuer: issuer.serial,
     create_date: date,
     method: 'setWebServiceAuth',
@@ -166,7 +166,7 @@ export async function setHeader(
       }
     );
 
-  this.pubSub.emitActivity({
+  this.channel.emitActivity({
     issuer: issuer.serial,
     create_date: date,
     method: 'setHeader',
@@ -220,7 +220,7 @@ export async function addQueryOption(
     }
   );
 
-  this.pubSub.emitActivity({
+  this.channel.emitActivity({
     issuer: issuer.serial,
     create_date: date,
     method: 'addQueryOption',
@@ -265,7 +265,7 @@ export async function removeQueryOption(
     }
   );
 
-  this.pubSub.emitActivity({
+  this.channel.emitActivity({
     issuer: issuer.serial,
     create_date: date,
     method: 'removeQueryOption',
@@ -320,7 +320,7 @@ export async function addSelection(
     }
   );
 
-  this.pubSub.emitActivity({
+  this.channel.emitActivity({
     issuer: issuer.serial,
     create_date: date,
     method: 'addSelection',
@@ -368,7 +368,7 @@ export async function removeSelection(
     }
   );
 
-  this.pubSub.emitActivity({
+  this.channel.emitActivity({
     issuer: issuer.serial,
     create_date: date,
     method: 'removeSelection',

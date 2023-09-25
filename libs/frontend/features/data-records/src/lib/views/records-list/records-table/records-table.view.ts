@@ -2,8 +2,8 @@
 /* eslint-disable @angular-eslint/component-class-suffix */
 /* eslint-disable @angular-eslint/component-selector */
 import { Component, Input, OnInit } from '@angular/core';
-import { DataRecord, DataStore, Field, TypeKind, TypesNames } from '@pestras/shared/data-model';
-import { RecordsState } from '@pestras/frontend/state';
+import { DataRecord, DataRecordState, DataStore, Field, TypeKind, TypesNames } from '@pestras/shared/data-model';
+import { RecordsService } from '@pestras/frontend/state';
 import { Router } from '@angular/router';
 import { BehaviorSubject, Observable, combineLatest, distinctUntilChanged, map, switchMap, tap } from 'rxjs';
 
@@ -28,6 +28,8 @@ export class RecordsTableView implements OnInit {
   @Input({ required: true })
   dataStore!: DataStore;
   @Input()
+  rState: DataRecordState | "" = "";
+  @Input()
   topic?: string;
   @Input()
   set search(input: any) {
@@ -39,13 +41,13 @@ export class RecordsTableView implements OnInit {
   }
 
   constructor(
-    private state: RecordsState,
+    private service: RecordsService,
     private router: Router
   ) { }
 
   ngOnInit(): void {
     this.fields = this.dataStore.fields.filter(f => {
-      return !['unknown', 'image', 'file'].includes(f.type) && f.kind !== TypeKind.RICH_TEXT;
+      return !['unknown', 'image', 'file'].includes(f.type) && f.kind !== TypeKind.RICH_TEXT && f.name !== 'serial';
     });
 
 
@@ -59,12 +61,14 @@ export class RecordsTableView implements OnInit {
         tap(() => this.preloader = true),
         switchMap(([search, page, sort, select]) => {
           this.skip = (page - 1) * this.pageSize;
+
+          const src = this.rState && this.rState !== DataRecordState.PUBLISHED ? `${this.rState}_${this.dataStore.serial}` : this.dataStore.serial;
           
-          return this.state.search(this.dataStore.serial, {
+          return this.service.search({ ds: src }, {
             limit: this.pageSize,
             skip: this.skip ?? 0,
             select: Object.assign({ serial: 1 }, select),
-            sort: { ...sort, serial: 1 },
+            sort: { ...sort, serial: -1 },
             search
           })
         }),
@@ -101,7 +105,9 @@ export class RecordsTableView implements OnInit {
       this.topic ?? '',
       this.dataStore.serial,
       record['serial'],
-    ]);
+    ], {
+      queryParams: { state: this.rState }
+    });
   }
 
   sortable(type: TypesNames) {

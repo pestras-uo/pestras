@@ -1,4 +1,4 @@
-import { workspaceModel } from "../../models";
+import { workspaceModel } from "@pestras/backend/models";
 import { WorkspaceApi } from "./types";
 import { NextFunction } from 'express';
 

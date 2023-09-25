@@ -20,7 +20,7 @@ export { DataVizState } from './lib/data_viz/data-viz.state';
 
 export { OrgunitsState } from './lib/orgunits/orgunits.state';
 
-export { RecordsState, DataRecordsSearchResponse } from './lib/records/records.state';
+export { RecordsService, DataRecordsSearchResponse } from './lib/records/records.service';
 export { RecordResolver } from './lib/records/record.resolver';
 
 export { RegionsState } from './lib/regions/regions.state';
@@ -39,8 +39,6 @@ export { TopicsState } from './lib/topics/topics.state';
 export { UsersState } from './lib/users/users.state';
 
 export { UsersGroupsState } from './lib/users-groups/users.groups.state';
-
-export { WorkflowState } from './lib/workflow/workflow.state';
 
 export { WorkspaceState } from './lib/workspaces/workspace.state';
 

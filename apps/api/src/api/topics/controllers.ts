@@ -1,4 +1,4 @@
-import { topicsModel, contentModel, entityAccessModel } from "../../models";
+import { contentModel, entityAccessModel, topicsModel } from "@pestras/backend/models";
 import { TopicsApi } from "./types";
 import { NextFunction } from 'express';
 

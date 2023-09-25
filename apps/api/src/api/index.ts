@@ -17,11 +17,12 @@ import { clientsApiRoutes } from "./clients_api";
 import { contentViewsRoutes } from "./content";
 import { blueprintsRoutes } from "./blueprints";
 import { topicsRoutes } from "./topics";
-import { workflowRoutes } from "./workflow";
+import { recordWorkflowRoutes } from "./record-workflow";
 import { workspacesRouter } from "./workspace";
 import { usersGroupsRoutes } from "./groups";
 import { activitiesRouter } from "./activities";
 import { entityAccessRouter } from "./entity-access";
+import { workflowsRouter } from "./workflows";
 
 export default Router()
   // active directory
@@ -38,7 +39,8 @@ export default Router()
   .use('/topics', topicsRoutes)
   .use('/categories', categoriesRoutes)
   .use('/data-stores', dataStoresRoutes)
-  .use('/workflow', workflowRoutes)
+  .use('/workflows', workflowsRouter)
+  .use('/records-workflow', recordWorkflowRoutes)
   // export
   .use('/client-api', clientsApiRoutes)
   // statistics and analysis

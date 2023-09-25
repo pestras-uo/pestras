@@ -11,7 +11,7 @@ export class TopicsModel extends Model<Topic> {
 
   getByBlueprint: (bp: string, user: User) => Promise<Topic[]> = getByBlueprint.bind(this);
   getByParent: (parent: string, user: User) => Promise<Topic[]> = getByParent.bind(this);
-  getBySerial: (serial: string, projection?: any) => Promise<Topic> = getBySerial.bind(this);
+  getBySerial: (serial: string, projection?: any) => Promise<Topic | null> = getBySerial.bind(this);
   nameExists: (bp: string, name: string, exclude?: string) => Promise<boolean> = nameExists.bind(this);
 
   create: (input: CreateTopicInput, issuer: User) => Promise<Topic> = create.bind(this);

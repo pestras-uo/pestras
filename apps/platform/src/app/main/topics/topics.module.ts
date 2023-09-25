@@ -8,7 +8,6 @@ import { DetailsPage } from './details/details.page';
 import { DialogModule } from '@angular/cdk/dialog';
 import { SideMenuView } from './views/side-menu/side-menu.view';
 import { DataStoresListView } from './views/data-stores-list/data-stores-list.view';
-import { DataStoresRecordsView } from './views/data-stores-records/data-stores-records.view';
 import { MainPage } from './main/main.page';
 import { ContraModule } from '@pestras/frontend/util/contra';
 import { PubSubModule, PuiIcon, PuiInfiniteScroll, PuiPreloaderModule, PuiSelectInput, PuiUtilPipesModule } from '@pestras/frontend/ui';
@@ -35,7 +34,6 @@ import { EntityAccessFeatureModule } from '@pestras/frontend/features/entity-acc
     DetailsPage,
     SideMenuView,
     DataStoresListView,
-    DataStoresRecordsView,
     MainPage
   ],
   imports: [

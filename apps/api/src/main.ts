@@ -6,7 +6,6 @@ import config from './config';
 import express, { NextFunction, Request, Response } from "express";
 import cors from 'cors';
 import helmet from 'helmet';
-// import cookieParser from 'cookie-parser';
 
 // misc
 import http from 'http';
@@ -21,11 +20,9 @@ import { sse } from './sse';
 
 // init validators & models
 import './validators/exports';
-import './models';
 
 // routes
 import api from "./api";
-// import { xsrfCheck } from './middlewares/xsrf';
 import { requestLogger } from './middlewares/request-log';
 
 (async () => {

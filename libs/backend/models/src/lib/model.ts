@@ -10,7 +10,7 @@ export class Model<T extends Document> extends Core {
 
     this.init();
 
-    this.pubSub.on<Db>(`${dbName}-db-connected`, db => this._onConnect(db));
+    this.channel.on<Db>(`${dbName}-db-connected`, db => this._onConnect(db));
   }
 
   protected init() {
@@ -23,7 +23,7 @@ export class Model<T extends Document> extends Core {
 
   private _onConnect(db: Db) {
     this.col = db.collection(this._name);
-    this.pubSub.emit(`${this._name}-model-ready`);
+    this.channel.emit(`${this._name}-model-ready`);
 
     this.onConnect(db);
   }

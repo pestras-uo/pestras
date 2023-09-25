@@ -3,8 +3,8 @@
 /* eslint-disable @angular-eslint/component-selector */
 import { Component, Input, OnChanges } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { RecordsState } from '@pestras/frontend/state';
-import { DataStore, Field, TableDataRecord } from '@pestras/shared/data-model';
+import { RecordsService } from '@pestras/frontend/state';
+import { DataRecordState, DataStore, Field, TableDataRecord } from '@pestras/shared/data-model';
 import { Observable } from 'rxjs';
 
 @Component({
@@ -40,9 +40,11 @@ export class DetailsPage implements OnChanges {
   menu?: string;
   @Input()
   payload?: string;
+  @Input()
+  state: DataRecordState | "" = "";
 
   constructor(
-    private state: RecordsState,
+    private service: RecordsService,
     private router: Router,
     private route: ActivatedRoute
   ) { }
@@ -52,7 +54,8 @@ export class DetailsPage implements OnChanges {
     
     this.mainField = this.dataStore.fields.find(f => f.name === this.dataStore.settings.interface_field) ?? null;
 
-    this.record$ = this.state.select(this.record, this.dataStore.serial) as Observable<TableDataRecord | null>;
+    const src = this.state && this.state !== DataRecordState.PUBLISHED ? `${this.state}_${this.dataStore.serial}` : this.dataStore.serial;
+    this.record$ = this.service.getBySerial({ ds: src, serial: this.record }) as Observable<TableDataRecord | null>;
   }
 
   set(view: { name: string; payload?: any }) {

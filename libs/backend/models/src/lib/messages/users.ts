@@ -9,7 +9,7 @@ export async function addUser(
 ) {
   await this.col.updateOne({ serial: inbox }, { $addToSet: { parties: user } });
 
-  this.pubSub.emit('messages', {
+  this.channel.emit('messages', {
     method: 'addUser',
     entity: EntityTypes.INBOX,
     serial: inbox,

@@ -25,12 +25,15 @@ export async function build(
 
     // if data store type is table:
     // then create history collection
-    // also create workflow collection if workflow is enabled and not basic
+    // also create workflow collection if workflow is enabled
     if (ds.type === DataStoreType.TABLE) {
+      await this.dataDB.createCollection(`draft_${ds.serial}`);
       await this.dataDB.createCollection(`history_${ds.serial}`);
 
-      if (typeof ds.settings.workflow === 'string')
+      if (typeof ds.settings.workflow === 'string') {
+        await this.dataDB.createCollection(`review_${ds.serial}`);
         await this.dataDB.createCollection(`workflow_${ds.serial}`);
+      }
     }
 
   } else {
@@ -39,7 +42,7 @@ export async function build(
 
   await this.col.updateOne({ serial }, { $set: { state: DataStoreState.READY, last_modified: date } });
 
-  this.pubSub.emitActivity({
+  this.channel.emitActivity({
     issuer: issuer.serial,
     create_date: date,
     method: 'updateState',

@@ -54,6 +54,9 @@
       "@pestras/frontend/features/orgunits": [
         "libs/frontend/features/orgunits/src/index.ts"
       ],
+      "@pestras/frontend/features/records-workflow": [
+        "libs/frontend/features/records-workflow/src/index.ts"
+      ],
       "@pestras/frontend/features/regions": [
         "libs/frontend/features/regions/src/index.ts"
       ],
@@ -71,6 +74,9 @@
       ],
       "@pestras/frontend/features/users-groups": [
         "libs/frontend/features/users-groups/src/index.ts"
+      ],
+      "@pestras/frontend/features/workflows": [
+        "libs/frontend/features/workflows/src/index.ts"
       ],
       "@pestras/frontend/features/workspace": [
         "libs/frontend/features/workspace/src/index.ts"

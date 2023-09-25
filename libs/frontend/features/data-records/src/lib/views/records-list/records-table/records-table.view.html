@@ -1,6 +1,6 @@
-<div class="card" *contra="let c">
+<div class="card radius-2" *contra="let c">
   <ng-container *ngIf="records$ | async as records">
-    <div class="card-body overflow-x-auto">
+    <div class="card-body p-0 h-15 overflow-auto">
       <table *ngIf="records.length else noData">
         <thead>
           <tr>

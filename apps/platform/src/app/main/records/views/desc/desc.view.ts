@@ -2,7 +2,7 @@
 /* eslint-disable @angular-eslint/component-selector */
 import { Dialog, DialogRef } from '@angular/cdk/dialog';
 import { Component, Input, OnChanges, TemplateRef, booleanAttribute } from '@angular/core';
-import { DataRecord, DataStore, DataStoreType, Field } from '@pestras/shared/data-model';
+import { DataRecord, DataRecordState, DataStore, DataStoreType, Field } from '@pestras/shared/data-model';
 
 @Component({
   selector: 'app-desc',
@@ -24,6 +24,8 @@ export class DescView implements OnChanges {
   record!: DataRecord;
   @Input({ transform: booleanAttribute })
   headless = false;
+  @Input()
+  state: DataRecordState | "" = "";
 
   constructor(
     private dialog: Dialog

@@ -1,11 +1,11 @@
 import { ContentViewType } from "@pestras/shared/data-model";
 import { HttpError, HttpCode } from "@pestras/backend/util";
-import { contentModel } from "../../models";
 import { ContentViewsApi } from "./types";
 import config from "../../config";
 import fs from 'fs';
 import path from 'path';
 import { NextFunction } from 'express';
+import { contentModel } from "@pestras/backend/models";
 
 export const controller = {
 

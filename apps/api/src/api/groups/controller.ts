@@ -1,4 +1,4 @@
-import { usersGroupsModel } from "../../models";
+import { usersGroupsModel } from "@pestras/backend/models";
 import { UsersGroupsApi } from "./types";
 import { NextFunction } from 'express';
 

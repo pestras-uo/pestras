@@ -21,9 +21,9 @@ const config = {
   rememberSessionTokenExpiry: +(process.env.REMEMBER_SESSION_TOKEN_EXP || 0) || 1000 * 60 * 60 * 24 * 30,
 
   // database
-  dbUoName: process.env.DB_UO_NAME,
-  dbUoAdName: process.env.DB_UO_AD_NAME,
-  dbUoDataName: process.env.DB_UO_DATA_NAME,
+  sysDb: process.env.SYS_DB,
+  adDb: process.env.AD_DB,
+  dataDb: process.env.DATA_DB,
   dbUrl: process.env.DB_STR,
 
   // upload files config

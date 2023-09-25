@@ -13,7 +13,7 @@ export class CategoriesModel extends Model<Category> {
   // read
   // -----------------------------------------------------------------------------------
   getAll: (projection?: Document) => Promise<Category[]> = getAll.bind(this);
-  getBySerial: (serial: string, projection?: Document) => Promise<Category> = getBySerial.bind(this);
+  getBySerial: (serial: string, projection?: Document) => Promise<Category | null> = getBySerial.bind(this);
   getByBlueprint: (bp: string, projection?: Document) => Promise<Category[]> = getByBlueprint.bind(this);
 
   // util
@@ -22,7 +22,7 @@ export class CategoriesModel extends Model<Category> {
 
   // create
   // ------------------------------------------------------------------------------------
-  create: (input: CreateCategoryInput, issuer: User) => Promise<Category> = create.bind(this);
+  create: (input: CreateCategoryInput, issuer: User) => Promise<Category | null> = create.bind(this);
 
   // update
   // ------------------------------------------------------------------------------------

@@ -19,7 +19,7 @@ export async function create(this: OrgunitsModel, input: CreateOrgunitInput, iss
 
   await this.col.insertOne(orgunit);
 
-  this.pubSub.emitActivity({
+  this.channel.emitActivity({
     issuer: issuer,
     create_date: date,
     method: 'create',

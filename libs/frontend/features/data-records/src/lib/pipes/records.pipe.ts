@@ -1,5 +1,5 @@
 import { Pipe, PipeTransform } from '@angular/core';
-import { RecordsState } from '@pestras/frontend/state';
+import { RecordsService } from '@pestras/frontend/state';
 import { Observable, filter, isObservable, map, of, switchMap } from 'rxjs';
 import { DataRecord } from '@pestras/shared/data-model';
 
@@ -8,16 +8,16 @@ import { DataRecord } from '@pestras/shared/data-model';
 })
 export class RecordsPipe implements PipeTransform {
 
-  constructor(private state: RecordsState) { }
+  constructor(private service: RecordsService) { }
 
-  transform(serial: string | null | Observable<string | null>, skip = 0, limit = 1000): Observable<DataRecord[]> {
+  transform(ds: string | null | Observable<string | null>, skip = 0, limit = 1000): Observable<DataRecord[]> {
     return (
-      serial && typeof serial === 'string'
-        ? this.state.search(serial, { skip, limit })
-        : isObservable(serial)
-          ? serial.pipe(
+      ds && typeof ds === 'string'
+        ? this.service.search({ ds }, { skip, limit })
+        : isObservable(ds)
+          ? ds.pipe(
             filter(Boolean),
-            switchMap(s => this.state.search(s, { skip, limit }))
+            switchMap(s => this.service.search({ ds: s }, { skip, limit }))
           )
           : of({ count: 0, results: [] })
     )

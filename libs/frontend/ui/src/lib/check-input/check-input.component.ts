@@ -76,7 +76,7 @@ export class PuiCheckInput implements OnInit, OnDestroy, ControlValueAccessor {
 
   writeValue(value: boolean | null): void {
     this.lastValue = !!value;
-    this.control.setValue(value ?? null);
+    this.control.setValue(value ?? (this.nullable ? null : false));
   }
 
   registerOnChange(fn: any): void {

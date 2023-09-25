@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { Pipe, PipeTransform } from '@angular/core';
 import { Observable, map, of, switchMap } from 'rxjs';
-import { DataStoresState, RecordsState } from '@pestras/frontend/state';
+import { DataStoresState, RecordsService } from '@pestras/frontend/state';
 import { ApiQuery } from '@pestras/shared/data-model';
 
 @Pipe({
@@ -10,7 +10,7 @@ import { ApiQuery } from '@pestras/shared/data-model';
 export class SelectRecordPipe implements PipeTransform {
 
   constructor(
-    private state: RecordsState,
+    private service: RecordsService,
     private dsState: DataStoresState
   ) { }
 
@@ -30,7 +30,7 @@ export class SelectRecordPipe implements PipeTransform {
         if (term)
           query.search = { [interfaceField]: { $regex: term } };
 
-        return this.state.search(d.serial, query)
+        return this.service.search({ ds: d.serial }, query)
           .pipe(map(list => list.results.map(r => ({ name: r[interfaceField] as string, value: r['serial'] as string }))));
       }));
   }

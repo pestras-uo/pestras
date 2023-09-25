@@ -2,9 +2,9 @@
 /* eslint-disable @angular-eslint/component-class-suffix */
 /* eslint-disable @angular-eslint/component-selector */
 import { Component, Input, OnChanges, OnInit } from '@angular/core';
-import { DataStore, TableDataRecord } from '@pestras/shared/data-model';
+import { DataRecordState, DataStore, TableDataRecord } from '@pestras/shared/data-model';
 import { PubSubService } from '@pestras/frontend/ui';
-import { RecordsState } from '@pestras/frontend/state';
+import { RecordsService } from '@pestras/frontend/state';
 import { untilDestroyed } from '@pestras/frontend/ui';
 
 @Component({
@@ -20,6 +20,7 @@ import { untilDestroyed } from '@pestras/frontend/ui';
           [topic]="topic"
           [ds]="dataStore"
           [record]="record"
+          [state]="rState"
         >
         </app-record-card>
       </div>
@@ -40,12 +41,14 @@ export class RecordsCardView implements OnChanges, OnInit {
   @Input({ required: true })
   dataStore!: DataStore;
   @Input()
+  rState: DataRecordState | "" = "";
+  @Input()
   topic?: string;
   @Input()
   search: any;
 
   constructor(
-    private state: RecordsState,
+    private service: RecordsService,
     private pubSub: PubSubService
   ) { }
 
@@ -71,12 +74,14 @@ export class RecordsCardView implements OnChanges, OnInit {
 
     this.skip = this.records.results.length;
 
-    this.state.search(
-      this.dataStore.serial,
+    const src = this.rState && this.rState !== DataRecordState.PUBLISHED ? `${this.rState}_${this.dataStore.serial}` : this.dataStore.serial;
+
+    this.service.search(
+      { ds: src },
       {
         limit: 20,
         skip: this.skip,
-        sort: { serial: 1 },
+        sort: { serial: -1 },
         select: null,
         search: this.search,
       }

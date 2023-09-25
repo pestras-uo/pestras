@@ -3,6 +3,7 @@
   *ngIf="field.type === 'boolean'"
   [label]="field.display_name"
   [formControl]="control"
+  [nullable]="!field.required"
 ></pui-check-input>
 
 <label *ngIf="field.type !== 'boolean'" [for]="field.name"

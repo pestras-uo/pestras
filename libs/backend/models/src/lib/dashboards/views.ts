@@ -23,7 +23,7 @@ export async function addView(
     $set: { last_modified: date }
   });
 
-  this.pubSub.emitActivity({
+  this.channel.emitActivity({
     issuer: issuer.serial,
     create_date: date,
     method: 'addView',
@@ -57,7 +57,7 @@ export async function updateViewsOrder(
     }
   });
 
-  this.pubSub.emitActivity({
+  this.channel.emitActivity({
     issuer: issuer.serial,
     create_date: date,
     method: 'updateViewsOrder',
@@ -94,7 +94,7 @@ export async function updateView(
     }
   });
 
-  this.pubSub.emitActivity({
+  this.channel.emitActivity({
     issuer: issuer.serial,
     create_date: date,
     method: 'updateView',
@@ -125,7 +125,7 @@ export async function updateViewDataViz(
     }
   });
 
-  this.pubSub.emitActivity({
+  this.channel.emitActivity({
     issuer: issuer.serial,
     create_date: date,
     method: 'updateViewDataViz',
@@ -162,7 +162,7 @@ export async function removeView(
     $set: { last_modified: date }
   });
 
-  this.pubSub.emitActivity({
+  this.channel.emitActivity({
     issuer: issuer.serial,
     create_date: date,
     method: 'removeView',

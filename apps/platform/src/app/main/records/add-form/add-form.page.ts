@@ -5,9 +5,9 @@ import { Location } from '@angular/common';
 import { Component, Input, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { RecordsState } from '@pestras/frontend/state';
+import { RecordsService } from '@pestras/frontend/state';
 import { ToastService } from '@pestras/frontend/ui';
-import { DataStore, Field } from '@pestras/shared/data-model';
+import { DataStore, Field, getInitTypedEntityValue } from '@pestras/shared/data-model';
 
 @Component({
   selector: 'app-form',
@@ -33,7 +33,7 @@ export class AddFormPage implements OnInit {
   dataStore!: DataStore;
 
   constructor(
-    private state: RecordsState,
+    private service: RecordsService,
     private fb: FormBuilder,
     private toast: ToastService,
     private router: Router,
@@ -68,7 +68,7 @@ export class AddFormPage implements OnInit {
       else
         this.groups.push({ group: field.group, fields: [field] });
 
-      const control = new FormControl(null);
+      const control = new FormControl(getInitTypedEntityValue(field));
 
       if (field.required)
         control.setValidators(Validators.required);
@@ -76,18 +76,18 @@ export class AddFormPage implements OnInit {
       this.form.addControl(field.name, control);
     }
   }
-  
+
   add(c: Record<string, any>) {
     this.preloader = true;
 
-    this.state.create(this.dataStore.serial, this.form.getRawValue())
+    this.service.create({ ds: this.dataStore.serial }, this.form.getRawValue())
       .subscribe({
         next: r => {
           this.toast.msg(c['success'].default, { type: 'success' });
 
           this.topic
-          ? this.router.navigate(['/main/records', this.topic, this.dataStore.serial, r.serial], { replaceUrl: true })
-          : this.location.back();
+            ? this.router.navigate(['/main/records', this.topic, this.dataStore.serial, r.serial], { replaceUrl: true, queryParams: { state: 'draft' } })
+            : this.location.back();
         },
         error: e => {
           console.error(e);

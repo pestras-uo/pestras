@@ -1,4 +1,4 @@
-import { analysisModel, dashboardsModel, reportsModel } from "../../models";
+import { analysisModel, dashboardsModel, reportsModel } from "@pestras/backend/models";
 import { AnalysisApi } from "./types";
 import {  NextFunction } from 'express';
 

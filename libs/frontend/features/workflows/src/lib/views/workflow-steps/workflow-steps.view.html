@@ -1,0 +1,107 @@
+<ng-container *contra="let c">
+  <ng-container *ngIf="!editMode">
+    <div class="toolbar mbe-2">
+      <h4>{{c['steps']}}</h4>
+      <div class="grow"></div>
+      <button class="btn-icon btn-round btn-tiny btn-success" (click)="edit()">
+        <i puiIcon="edit" size="tiny"></i>
+      </button>
+    </div>
+
+    <div
+      *ngFor="let step of wf.steps; let i = index; let last = last"
+      class="card card-clear bordered card-small"
+      [class.mbe-2]="!last"
+    >
+      <h5 class="card-header">{{c['step']}}: {{i + 1}}</h5>
+      <div class="card-body flex align-items-start gap-4">
+        <app-avatar
+          *ngFor="let u of step.users; let uLast = last"
+          [class.mbe-2]="!uLast"
+          [serial]="u"
+        ></app-avatar>
+      </div>
+      <div class="card-footer" *ngIf="step.users.length > 1">
+        <p><b>{{c['algo']}}: </b>{{c['algos'][step.algo]}}</p>
+        <div class="grow"></div>
+      </div>
+    </div>
+  </ng-container>
+
+  <form
+    *ngIf="editMode"
+    class="card card-clear bordered"
+    [formGroup]="form"
+    (ngSubmit)="update(c['success'].default, c['errors'])"
+  >
+    <h4 class="card-header">{{c['update']}} {{c['steps']}}</h4>
+
+    <div class="card-body">
+      <fieldset formArrayName="steps" class="mbe-6">
+        <legend>
+          <h4>{{c['steps']}}</h4>
+          <button class="btn-round btn-icon btn-small" (click)="addStep()">
+            <i puiIcon="add" size="small"></i>
+          </button>
+        </legend>
+
+        <div
+          *ngFor="let g of steps.controls; let i = index; let last = last"
+          [formGroup]="g"
+          class="flex gap-4 align-items-end"
+          [class.mbe-2]="!last"
+        >
+          <div class="grow">
+            <label [for]="i + '-step-users'">{{c['users']}}</label>
+            <div class="fc fc-outline fc-surface1">
+              <pui-multi-select-input
+                #users
+                [labelRef]="i + '-step-users'"
+                [list]="'' | users | async | arrayMap: mapUser"
+                formControlName="users"
+              ></pui-multi-select-input>
+            </div>
+          </div>
+
+          <div class="grow" *ngIf="users.value.length > 1">
+            <label [for]="i + '-step-algo'">{{c['algo']}}</label>
+            <div class="fc fc-outline fc-surface1">
+              <pui-select-input
+                [labelRef]="i + '-step-algo'"
+                [list]="c['algoList'] | arrayFilter: filterAlgo: users.value"
+                formControlName="algo"
+              ></pui-select-input>
+            </div>
+          </div>
+
+          <button
+            *ngIf="steps.controls.length > 1"
+            class="btn-icon btn-round btn-small"
+            (click)="steps.removeAt(i)"
+          >
+            <i puiIcon="delete" size="small"></i>
+          </button>
+        </div>
+      </fieldset>
+    </div>
+
+    <div class="card-footer">
+      <button
+        type="reset"
+        class="button btn-round btn-outline"
+        (click)="endEdit()"
+      >
+        {{c['cancel']}}
+      </button>
+      <button
+        type="submit"
+        class="button btn-round btn-primary"
+        [disabled]="form.invalid"
+      >
+        {{c['update']}}
+      </button>
+    </div>
+
+    <pui-preloader *ngIf="loading"></pui-preloader>
+  </form>
+</ng-container>

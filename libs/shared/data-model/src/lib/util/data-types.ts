@@ -66,38 +66,22 @@ export function createTypedEntity(type: Partial<TypedEntity>): TypedEntity {
 
 // Validations
 // --------------------------------------------------------------------------------------------------
-const basicTypeValidators: Record<TypesNames, (value: any) => any> = {
-  category: (value: any) => typeof value === 'string' ? value : null,
-  image: (value: any) => value ?? null,
-  region: (value: any) => typeof value === 'string' ? value : null,
-  file: (value: any) => value ?? null,
-  unknown: (value: any) => value ?? null,
-  serial: (value: any) => Serial.isValid(value) ? value : null,
-  boolean: (value: any) => value === 'true' ? true : (value === 'false' ? false : !!value),
-  int: (value: any) => Number.isInteger(+value) ? +value : null,
-  double: (value: any) => typeof value === 'number' && isFinite(value) && Math.floor(value) !== Math.ceil(value) ? +value : null,
-  string: (value: any) => typeof value === "string" ? value : null,
-  date: (value: any) => new Date(value).toString() !== 'Invalid Date' ? new Date(value) : null,
-  // time: (value: any) => parseTime(value),
-  datetime: (value: any) => new Date(value).toString() !== 'Invalid Date' ? new Date(value) : null,
-  location: (value: any) => parseLocation(value)
-};
 
 export function validateValueType(value: any, entity: TypedEntity): any {
   if (entity.length !== 1 && Array.isArray(value)) {
-    if (!value.every((v: any) => basicTypeValidators[entity.type](v) !== null))
+    if (!value.every((v: any) => castTypedEntityValue(v, entity.type) !== null))
       return null;
 
-    return value.map((v: any) => basicTypeValidators[entity.type](v) as any);
+    return value.map((v: any) => castTypedEntityValue(v, entity.type) as any);
   }
 
   if (entity.length !== 1)
     return null;
 
   if (entity.type === 'category')
-    return entity.kind === TypeKind.ORDINAL ? basicTypeValidators.int(value) : basicTypeValidators.category(value);
+    return entity.kind === TypeKind.ORDINAL ? castTypedEntityValue(value, 'int') : castTypedEntityValue(value, 'category');
 
-  return basicTypeValidators[entity.type](value) as any;
+  return castTypedEntityValue(value, entity.type) as any;
 }
 
 export function parseValue(value: any): any {
@@ -114,4 +98,57 @@ export function parseValue(value: any): any {
     return null;
 
   return value;
+}
+
+export function castTypedEntityValue(value: any, type: TypesNames) {
+  if (value === null)
+    return null;
+
+  switch (type) {
+    case 'boolean':
+      return !!value;
+    case 'category':
+    case 'string':
+    case 'region':
+      return "" + value;
+    case 'date':
+    case 'datetime':
+      return new Date(value).toString() !== 'Invalid Date' ? new Date(value) : null;
+    case 'double':
+    case 'int':
+      return +value;
+    case 'file':
+    case 'image':
+    case 'unknown':
+      return value;
+    case 'location':
+      return parseLocation(value);
+    case 'serial':
+      return Serial.isValid(value) ? value : null;
+  }
+}
+
+export function getInitTypedEntityValue(entity: TypedEntity) {
+  switch (entity.type) {
+    case 'boolean':
+      return false;
+    case 'category':
+    case 'string':
+    case 'region':
+      return "";
+    case 'date':
+    case 'datetime':
+      return new Date();
+    case 'double':
+    case 'int':
+      return 0;
+    case 'file':
+    case 'image':
+    case 'unknown':
+      return "";
+    case 'location':
+      return null;
+    case 'serial':
+      return "";
+  }
 }

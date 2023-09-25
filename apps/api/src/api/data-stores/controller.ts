@@ -1,4 +1,4 @@
-import { contentModel, dataStoresModel } from "../../models";
+import { contentModel, dataStoresModel } from "@pestras/backend/models";
 import { DataStoreApi } from "./types";
 import { NextFunction } from 'express';
 
@@ -52,7 +52,7 @@ export const controller = {
 
   async updateState(req: DataStoreApi.UpdateStateReq, res: DataStoreApi.UpdateStateRes, next: NextFunction) {
     try {
-      res.json(await dataStoresModel.updateState(req.params.serial, req.body.state, res.locals.issuer));
+      res.json(await dataStoresModel.updateState(req.params.serial, req.body.state));
       
     } catch (error) {
       next(error);

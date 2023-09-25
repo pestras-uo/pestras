@@ -26,7 +26,7 @@ export async function create(
       history: false,
       max_attachments_count: 0,
       static: false,
-      workflow: false,
+      workflow: { delete: true, new: true, update: true },
       card_view: null,
       tree_view: null
     },
@@ -37,7 +37,7 @@ export async function create(
 
   await this.col.insertOne(ds);
 
-  this.pubSub.emitActivity({
+  this.channel.emitActivity({
     issuer: issuer.serial,
     create_date: date,
     method: 'create',

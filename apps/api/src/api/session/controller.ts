@@ -2,10 +2,10 @@ import { UserState } from "@pestras/shared/data-model";
 import { sign, TokenType } from "../../auth/token";
 import config from "../../config";
 import { HttpError, HttpCode } from "@pestras/backend/util";
-import { authModel, usersModel } from "../../models";
 import { SessionApi } from "./types";
 import argon from 'argon2';
 import { NextFunction } from 'express';
+import { authModel, usersModel } from "@pestras/backend/models";
 
 export const SessionController = {
 

@@ -3,11 +3,11 @@ import { DataStore } from "@pestras/shared/data-model";
 import { injectURLPayload, objUtil } from "@pestras/shared/util";
 import { RequestPayload } from "./types";
 import axios, { AxiosRequestConfig } from 'axios';
-import { wsLogModel } from "./models";
+import { webServiceLogModel } from "@pestras/backend/models";
 
 export async function handleRequest(ds: DataStore, payload: RequestPayload, logSerial) {
 
-  await wsLogModel.insertSub(logSerial, 'init http request');
+  await webServiceLogModel.insertSub(logSerial, 'init http request');
 
   const reqConfig: AxiosRequestConfig = {
     headers: {
