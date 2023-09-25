@@ -33,9 +33,9 @@ export async function reject(
     throw new HttpError(HttpCode.NOT_FOUND, 'workflowNotFound');
 
   const wfStepOpt = wf.steps.find(o => o.serial === step);
-  const isOver = wfStepOpt ? getWorkflowStepAction(wfStep.actions, wfStepOpt.algo) : WorkflowAction.REVIEW;
+  const stepState = wfStepOpt ? getWorkflowStepAction(wfStep.actions, wfStepOpt.algo) : WorkflowAction.REVIEW;
 
-  if (isOver) {
+  if (stepState === WorkflowAction.REJECT) {
 
     await recordWorkFlowCol.deleteMany({ record: wfStep.record });
 

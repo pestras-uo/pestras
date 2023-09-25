@@ -81,7 +81,7 @@ export class RecordsCardView implements OnChanges, OnInit {
       {
         limit: 20,
         skip: this.skip,
-        sort: { serial: 1 },
+        sort: { serial: -1 },
         select: null,
         search: this.search,
       }

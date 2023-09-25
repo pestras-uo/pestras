@@ -1,4 +1,7 @@
 {
+  "new": "Addition",
+  "reject": "Reject",
+  "comment": "Comment",
   "confirmPublish": "Are you sure about publishing the record?",
   "review": "Review",
   "step": "Step",

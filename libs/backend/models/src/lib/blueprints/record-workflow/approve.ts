@@ -34,9 +34,9 @@ export async function approve(
       : a
   );
   
-  const isOver = getWorkflowStepAction(wfStep.actions, wfStepOpt.algo);
+  const stepState = getWorkflowStepAction(wfStep.actions, wfStepOpt.algo);
 
-  if (isOver === WorkflowAction.APPROVE) {
+  if (stepState === WorkflowAction.APPROVE) {
 
     // is last step
     if (currStepIndex === wf.steps.length - 1) {
@@ -68,14 +68,14 @@ export async function approve(
       await reviewCol.deleteOne({ serial: wfStep.record });
       await recordWorkFlowCol.deleteMany({ record: wfStep.record });
 
-      return wfStep.trigger ? null : DataRecordState.PUBLISHED;
+      return wfStep.trigger === 'delete' ? null : DataRecordState.PUBLISHED;
 
     } else {
       await this.db.collection(`workflow_${dsSerial}`).updateOne({ step, 'actions.user': issuer.serial }, {
         $set: {
           action: WorkflowAction.APPROVE,
           action_date: new Date(),
-          'action.$': { user: issuer.serial, action: WorkflowAction.APPROVE, date: new Date(), message }
+          'actions.$': { user: issuer.serial, action: WorkflowAction.APPROVE, date: new Date(), message }
         }
       });
 
@@ -86,7 +86,7 @@ export async function approve(
         workflow: wf.serial,
         step: nextStep.serial,
         trigger: wfStep.trigger,
-        action: isOver,
+        action: stepState,
         create_date: new Date(),
         action_date: null
       };

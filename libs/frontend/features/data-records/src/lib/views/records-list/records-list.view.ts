@@ -119,7 +119,7 @@ export class RecordsListView implements OnChanges {
 
     if (this.isTable) {
 
-      if (this.tab !== DataRecordState.DRAFT)
+      if (this.tab === DataRecordState.DRAFT)
         query.owner = this.session.get('serial');
     }
 

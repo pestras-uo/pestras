@@ -47,7 +47,7 @@ export class RecordsTableView implements OnInit {
 
   ngOnInit(): void {
     this.fields = this.dataStore.fields.filter(f => {
-      return !['unknown', 'image', 'file'].includes(f.type) && f.kind !== TypeKind.RICH_TEXT;
+      return !['unknown', 'image', 'file'].includes(f.type) && f.kind !== TypeKind.RICH_TEXT && f.name !== 'serial';
     });
 
 
@@ -68,7 +68,7 @@ export class RecordsTableView implements OnInit {
             limit: this.pageSize,
             skip: this.skip ?? 0,
             select: Object.assign({ serial: 1 }, select),
-            sort: { ...sort, serial: 1 },
+            sort: { ...sort, serial: -1 },
             search
           })
         }),

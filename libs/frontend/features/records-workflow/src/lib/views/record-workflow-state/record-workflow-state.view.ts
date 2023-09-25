@@ -19,7 +19,7 @@ export class RecordWorkflowStateViewComponent implements OnChanges {
   readonly user = this.session.get()?.serial;
 
   readonly icons: Record<WorkflowAction, string> = {
-    approve: 'cehck',
+    approve: 'check',
     reject: 'close',
     review: 'time'
   }
