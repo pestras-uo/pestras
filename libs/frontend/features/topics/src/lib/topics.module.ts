@@ -11,6 +11,7 @@ import { AddTopicModal } from './modals/add-topic/add-topic.modal';
 import { NoDataPlaceholderWidget } from '@pestras/frontend/widgets/no-data-placeholder';
 import { TopicsPipe } from './pipes/topics.pipe';
 import { TopicsCountPipe } from './pipes/count.pipe';
+import { TopicPipe } from './pipes/topic.pipe';
 
 
 
@@ -19,7 +20,8 @@ import { TopicsCountPipe } from './pipes/count.pipe';
     TopicsListView,
     AddTopicModal,
     TopicsPipe,
-    TopicsCountPipe
+    TopicsCountPipe,
+    TopicPipe
   ],
   imports: [
     // Angular
@@ -43,7 +45,8 @@ import { TopicsCountPipe } from './pipes/count.pipe';
     TopicsListView,
     AddTopicModal,
     TopicsPipe,
-    TopicsCountPipe
+    TopicsCountPipe,
+    TopicPipe
   ]
 })
 export class TopicsFeatureModule { }

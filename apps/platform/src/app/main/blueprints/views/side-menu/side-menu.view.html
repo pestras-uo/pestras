@@ -12,49 +12,6 @@
   </header>
 
   <main class="list">
-    <div class="list-item" [class.active]="view === 'details'">
-      <div class="flex gap-2">
-        <i size="small" puiIcon="description"></i>
-        <div>
-          <h4 class="mbe-1">{{c['desc']}}</h4>
-          <p class="text3 f9">{{c['themeDetails']}}</p>
-        </div>
-      </div>
-
-      <div class="grow"></div>
-
-      <button
-        class="btn-icon btn-round btn-small"
-        (click)="selects.emit('details')"
-      >
-        <i
-          size="small"
-          [puiIcon]="dir === 'rtl' ? 'navigate_before' : 'navigate_next'"
-        ></i>
-      </button>
-    </div>
-
-    <div class="list-item" [class.active]="view === 'categories'">
-      <div class="flex gap-2">
-        <i size="small" puiIcon="category"></i>
-        <div>
-          <h4 class="mbe-1">{{c['categories']}}</h4>
-          <p class="text3 f9">{{c['categoriesListDesc']}}</p>
-        </div>
-      </div>
-
-      <div class="grow"></div>
-
-      <button
-        class="btn-icon btn-round btn-small"
-        (click)="selects.emit('categories')"
-      >
-        <i
-          size="small"
-          [puiIcon]="dir === 'rtl' ? 'navigate_before' : 'navigate_next'"
-        ></i>
-      </button>
-    </div>
 
     <div class="list-item" [class.active]="view === 'tables'">
       <div class="flex gap-2">
@@ -92,6 +49,28 @@
       <button
         class="btn-icon btn-round btn-small"
         (click)="selects.emit('aggr')"
+      >
+        <i
+          size="small"
+          [puiIcon]="dir === 'rtl' ? 'navigate_before' : 'navigate_next'"
+        ></i>
+      </button>
+    </div>
+
+    <div class="list-item" [class.active]="view === 'categories'">
+      <div class="flex gap-2">
+        <i size="small" puiIcon="category"></i>
+        <div>
+          <h4 class="mbe-1">{{c['categories']}}</h4>
+          <p class="text3 f9">{{c['categoriesListDesc']}}</p>
+        </div>
+      </div>
+
+      <div class="grow"></div>
+
+      <button
+        class="btn-icon btn-round btn-small"
+        (click)="selects.emit('categories')"
       >
         <i
           size="small"

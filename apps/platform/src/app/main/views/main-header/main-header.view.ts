@@ -2,7 +2,7 @@
 /* eslint-disable @angular-eslint/component-class-suffix */
 /* eslint-disable @angular-eslint/component-selector */
 import { Dialog, DialogRef } from '@angular/cdk/dialog';
-import { Component, TemplateRef, HostBinding } from '@angular/core';
+import { Component, TemplateRef } from '@angular/core';
 import { Role } from '@pestras/shared/data-model';
 
 @Component({
@@ -14,9 +14,6 @@ export class MainHeaderView {
   readonly roles = Role;
 
   dialogRef: DialogRef | null = null;
-
-  @HostBinding('class')
-  hostClass = 'shadow-1';
 
   constructor(
     private dialog: Dialog

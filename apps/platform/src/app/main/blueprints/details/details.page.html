@@ -33,12 +33,6 @@
 
     <div class="pb-10 pi-8">
       <div class="container">
-        <!-- details -->
-        <app-content-views
-          *ngIf="view === 'details'"
-          [entity]="serial"
-          [editable]="([bp.owner] | sessionIs) || (bp.collaborators | sessionIs)"
-        ></app-content-views>
 
         <!-- categories -->
         <app-categories

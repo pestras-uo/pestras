@@ -13,7 +13,6 @@ import { ContraModule } from '@pestras/frontend/util/contra';
 import { PubSubModule, PuiIcon, PuiInfiniteScroll, PuiPreloaderModule, PuiSelectInput, PuiUtilPipesModule } from '@pestras/frontend/ui';
 import { ContentViewsFeatureModule } from '@pestras/frontend/features/content-views';
 import { NoDataPlaceholderWidget } from '@pestras/frontend/widgets/no-data-placeholder';
-import { TBgWidget } from '@pestras/frontend/widgets/t-bg';
 import { TopicsFeatureModule } from '@pestras/frontend/features/topics';
 import { DashboardsFeaturesModule } from '@pestras/frontend/features/dashboards';
 import { ReportsFeaturesModule } from '@pestras/frontend/features/reports';
@@ -26,12 +25,14 @@ import { SessionFeatureModule } from '@pestras/frontend/features/session';
 import { BlueprintsFeatureModule } from '@pestras/frontend/features/blueprints';
 import { UsersGroupsFeatureModule } from '@pestras/frontend/features/users-groups';
 import { EntityAccessFeatureModule } from '@pestras/frontend/features/entity-access';
+import { TopicsListViewComponent } from './views/topics-list/topics-list.view';
 
 
 @NgModule({
   declarations: [
     TopicsRouter,
     DetailsPage,
+    TopicsListViewComponent,
     SideMenuView,
     DataStoresListView,
     MainPage
@@ -54,7 +55,6 @@ import { EntityAccessFeatureModule } from '@pestras/frontend/features/entity-acc
     // Widgets
     ContentViewsFeatureModule,
     NoDataPlaceholderWidget,
-    TBgWidget,
     // Features
     TopicsFeatureModule,
     DashboardsFeaturesModule,

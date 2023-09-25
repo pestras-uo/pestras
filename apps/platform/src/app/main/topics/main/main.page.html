@@ -1,38 +1,37 @@
 <ng-container *contra="let c">
-  <header class="color-scheme-dark">
-    <t-bg-widget></t-bg-widget>
+  <pestras-topics-list
+    [selected]="selected"
+    (selects)="set($event)"
+    (add)="openDialog(addTopic)"
+  ></pestras-topics-list>
 
-    <div class="container tight">
-      <div class="align-center">
-        <h1 class="weight-8 mbe-4 f1">{{c['topics']}}</h1>
-        <p class="text3 f6 w-15 mi-auto">
-          خسائر اللازمة ومطالبة حدة بل. الآخر الحلفاء أن غزو, إجلاء وتنامت عدد
-          مع. لقهر معركة لبلجيكا، بـ انه, ربع الأثنان المقيتة في, اقتصّت المحور
-          حدة.
-        </p>
+  <div class="topic-details" *ngIf="selected | topic | async as topic">
+    <header class="bg-surface1 pi-8 border-be">
+      <div class="container">
+        <div class="toolbar gap-4">
+          <div>
+            <p class="primary bold">
+              {{topic.create_date | date: 'dd-MM-yyyy'}}
+            </p>
+            <h1 class="weight-8">{{topic.name}}</h1>
+          </div>
+          <div class="grow"></div>
+          <a class="btn btn-primary btn-round" [routerLink]="topic.serial">
+            {{c['continue']}}
+          </a>
+        </div>
       </div>
-    </div>
-  </header>
+    </header>
 
-  <main>
-    <div class="container">
-      <div class="toolbar">
-        <h2>{{c['list']}}</h2>
-        <div class="grow"></div>
-        <button
-          *ngIf="roles.ADMIN | hasRoles"
-          class="btn-round btn-outline-primary"
-          (click)="openDialog(addTopic)"
-        >
-          {{c['addTopic']}}
-        </button>
+    <main class="pi-8">
+      <div class="container">
+        <app-content-views
+          [entity]="topic.serial"
+          [editable]="topic.owner | sessionIs"
+        ></app-content-views>
       </div>
-
-      <div class="divider mbs-4 mbe-8"></div>
-
-      <app-topics-list [parent]="parent ?? null"></app-topics-list>
-    </div>
-  </main>
+    </main>
+  </div>
 
   <ng-template #addTopic>
     <app-add-topic

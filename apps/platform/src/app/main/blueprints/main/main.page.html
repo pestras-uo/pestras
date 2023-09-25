@@ -1,59 +1,39 @@
 <ng-container *contra="let c">
 
-  <header class="color-scheme-dark">
+  <pestras-blueprints-list
+    [selected]="selected"
+    (selects)="set($event)"
+    (add)="openDialog(addTmp)"
+  ></pestras-blueprints-list>
+  
 
-    <t-bg-widget></t-bg-widget>
-
-    <div class="container">
-
-      <div class="align-center">
-        <h1 class="weight-8 mbe-4 f1">{{c['blueprints']}}</h1>
-        <p class="text3 f6 w-15 mi-auto">
-          خسائر اللازمة ومطالبة حدة بل. الآخر الحلفاء أن غزو, إجلاء وتنامت عدد مع. لقهر معركة لبلجيكا، بـ انه, ربع
-          الأثنان المقيتة في, اقتصّت المحور حدة.
-        </p>
-      </div>
-
-    </div>
-
-  </header>
-
-  <main>
-
-    <div class="container">
-
-      <div class="toolbar">
-        <h2>{{c['list']}}</h2>
-        <div class="grow"></div>
-        <button *ngIf="roles.DATA_ENG | hasRoles" class="btn-small btn-round btn-icon mbe" (click)="openDialog(addTmp)">
-          <i puiIcon="add" size="small"></i>
-        </button>
-      </div>
-
-      <div class="divider mbs-4 mbe-8"></div>
-
-      <ng-container *ngIf="bps$ | async as bps">
-        <div class="grid cols-3 gap-8 pi-0" *ngIf="bps.length; else noData">
-          <div class="card mbe-2" *ngFor="let bp of bps">
-            <div class="card-body">
-              <h3>{{bp.name}}</h3>
-              <p class="bold text-3">{{bp.create_date | date: 'dd/MM/YYYY'}}</p>
-            </div>
-            <div class="card-footer">
-              <a [routerLink]="['/main/blueprints', bp.serial]" class="btn btn-outline btn-round">{{c['continue']}}</a>
-            </div>
+  <div class="bp-details" *ngIf="selected | blueprint | async as bp">
+    <header class="bg-surface1 pi-8 border-be">
+      <div class="container">
+        <div class="toolbar gap-4">
+          <div>
+            <p class="primary bold">
+              {{bp.create_date | date: 'dd-MM-yyyy'}}
+            </p>
+            <h1 class="weight-8">{{bp.name}}</h1>
           </div>
+          <div class="grow"></div>
+          <a class="btn btn-primary btn-round" [routerLink]="bp.serial" [queryParams]="{ menu: 'tables' }">
+            {{c['continue']}}
+          </a>
         </div>
-      </ng-container>
+      </div>
+    </header>
 
-      <ng-template #noData>
-        <no-data-placeholder-widget [actionName]="c['addNew']"
-          (action)="openDialog(addTmp)">{{c['noDataMsg']}}</no-data-placeholder-widget>
-      </ng-template>
-
-    </div>
-
-  </main>
+    <main class="pi-8">
+      <div class="container">
+        <app-content-views
+          [entity]="bp.serial"
+          [editable]="bp.owner | sessionIs"
+        ></app-content-views>
+      </div>
+    </main>
+  </div>
 
   <ng-template #addTmp>
     <div class="card w-15 shadow-6">
