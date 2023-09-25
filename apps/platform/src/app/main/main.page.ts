@@ -7,7 +7,7 @@ import { Role } from '@pestras/shared/data-model';
   template: `
     <main-drawer class="bg-surface1 hide-scroll color-scheme-dark"></main-drawer>
     <main>
-      <main-header></main-header>
+      <main-header class="color-scheme-dark"></main-header>
       <router-outlet></router-outlet>
     </main>
   `,
