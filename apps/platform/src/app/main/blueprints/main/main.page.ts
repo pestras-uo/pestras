@@ -2,41 +2,37 @@
 /* eslint-disable @angular-eslint/component-class-suffix */
 /* eslint-disable @angular-eslint/component-selector */
 import { Dialog, DialogRef } from '@angular/cdk/dialog';
-import { Component, TemplateRef } from '@angular/core';
-import { BlueprintsState, SessionState } from '@pestras/frontend/state';
+import { Component, Input, TemplateRef } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
+import { BlueprintsState } from '@pestras/frontend/state';
 import { ToastService } from '@pestras/frontend/ui';
-import { Role } from '@pestras/shared/data-model';
-import { Serial } from '@pestras/shared/util';
-import { map } from 'rxjs';
 
 @Component({
   selector: 'app-main',
   templateUrl: './main.page.html',
   styleUrls: ['./main.page.scss']
 })
-export class MainPage {
-  readonly roles = Role;
-
-  readonly bps$ = this.state.data$
-    .pipe(map(list => {
-      const session = this.session.get();
-
-      return session?.roles.includes(Role.ADMIN)
-        ? list.filter(b => Serial.isBranch(b.orgunit, session.orgunit, true))
-        // otherwise is data engineer
-        : list.filter(b => b.owner === session?.serial || b.collaborators.includes(session?.serial || ''));
-    }));
-
-  addModal = false;
+export class MainPage {    
   dialogRef?: DialogRef;
   preloader = false;
+  selected = '';
+
+  @Input({ required: true })
+  set active(value: string) {
+    this.selected = value ?? '';
+  }
 
   constructor(
     private state: BlueprintsState,
     private dialog: Dialog,
-    private session: SessionState,
-    private toast: ToastService
+    private toast: ToastService,
+    private router: Router,
+    private route: ActivatedRoute
   ) { }
+
+  set(serial: string) {
+    this.router.navigate([], { relativeTo: this.route, queryParams: { active: serial } });
+  }
 
   openDialog(modal: TemplateRef<any>) {
     this.dialogRef = this.dialog.open(modal);

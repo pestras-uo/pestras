@@ -30,7 +30,7 @@ export class DetailsPage implements OnChanges {
   wsType = WorkspacePinType.BLUEPRINTS;
   dsType = DataStoreType
 
-  view = 'details';
+  view = 'tables';
   dialogRef: DialogRef | null = null;
   preloader = false;
 

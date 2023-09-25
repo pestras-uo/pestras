@@ -10,7 +10,6 @@ import { DetailsPage } from './details/details.page';
 import { ContraModule } from '@pestras/frontend/util/contra';
 import { PuiIcon, PuiPreloaderModule } from '@pestras/frontend/ui';
 import { NoDataPlaceholderWidget } from '@pestras/frontend/widgets/no-data-placeholder';
-import { TBgWidget } from '@pestras/frontend/widgets/t-bg';
 import { DataStoresFeatureModule } from '@pestras/frontend/features/data-stores';
 import { CategoriesFeatureModule } from '@pestras/frontend/features/categories';
 import { WorkspaceFeatureModule } from '@pestras/frontend/features/workspace';
@@ -18,12 +17,15 @@ import { ClientsApiFeatureModule } from '@pestras/frontend/features/clients-api'
 import { SessionFeatureModule } from '@pestras/frontend/features/session';
 import { ContentViewsFeatureModule } from '@pestras/frontend/features/content-views';
 import { WorkflowsFeatureModule } from '@pestras/frontend/features/workflows';
+import { BlueprintsListViewComponent } from './views/blueprints-list/blueprints-list.view';
+import { BlueprintsFeatureModule } from '@pestras/frontend/features/blueprints';
 
 
 @NgModule({
   declarations: [
     MainPage,
     BlueprintsRouter,
+    BlueprintsListViewComponent,
     SideMenuView,
     DetailsPage
   ],
@@ -34,15 +36,17 @@ import { WorkflowsFeatureModule } from '@pestras/frontend/features/workflows';
     ReactiveFormsModule,
     // Util
     ContraModule,
+    // Pui
+    PuiIcon,
+    PuiPreloaderModule,
+    // Widgets
+    NoDataPlaceholderWidget,
     // Features
+    BlueprintsFeatureModule,
     WorkflowsFeatureModule,
     ContentViewsFeatureModule,
-    PuiPreloaderModule,
-    PuiIcon,
-    NoDataPlaceholderWidget,
     DataStoresFeatureModule,
     CategoriesFeatureModule,
-    TBgWidget,
     WorkspaceFeatureModule,
     ClientsApiFeatureModule,
     SessionFeatureModule

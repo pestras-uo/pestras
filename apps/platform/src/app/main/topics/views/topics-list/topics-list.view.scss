@@ -1,0 +1,25 @@
+:host {
+  background-color: var(--surface2);
+  width: 320px;
+  height: var(--main-height);
+  display: grid;
+  grid-template-rows: auto 1fr;
+  border-inline-end: 1px solid var(--border1);
+}
+
+header {
+  padding: 20px 28px;
+}
+
+.list {
+  overflow-y: auto;
+  background-color: var(--surface1);
+}
+
+.list-item {
+  padding: 20px 28px;
+
+  &.active {
+    padding-inline-start: 23px;
+  }
+}

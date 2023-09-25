@@ -1,0 +1,61 @@
+<ng-container *contra="let c; let dir=dir">
+  <header>
+    <div class="toolbar mbe-4">
+      <h3 class="weight-8">{{c['blueprints']}}</h3>
+      <div class="grow"></div>
+      <button
+        *ngIf="roles.DATA_ENG | hasRoles"
+        class="btn-icon btn-small btn-round"
+        (click)="add.emit()"
+      >
+        <i puiIcon="add" size="small"></i>
+      </button>
+    </div>
+
+    <div class="fc fc-round fc-surface1 fc-outline">
+      <i size="small" puiIcon="search"></i>
+      <input
+        type="search"
+        [placeholder]="c['search']"
+        [formControl]="searchControl"
+      />
+    </div>
+  </header>
+
+  <div class="list" *ngIf="blueprints$ | async as blueprints">
+    <ng-container *ngIf="blueprints.length else noData">
+      <div
+        *ngFor="let blueprint of blueprints"
+        class="list-item"
+        [class.active]="selected === blueprint.serial"
+      >
+        <div>
+          <p class="text1 bold">{{blueprint.name}}</p>
+          <p class="f10 text3">
+            {{blueprint.create_date | date: 'dd-MM-yyyy'}}
+          </p>
+        </div>
+
+        <div class="grow"></div>
+
+        <button
+          class="btn-icon btn-small btn-round"
+          (click)="selects.emit(blueprint.serial)"
+        >
+          <i
+            size="small"
+            [puiIcon]="dir === 'rtl' ? 'navigate_before' : 'navigate_next'"
+          ></i>
+        </button>
+      </div>
+    </ng-container>
+
+    <ng-template #noData>
+      <no-data-placeholder-widget
+        [actionName]="c['addNew']"
+        (action)="add.emit()"
+        >{{c['noDataMsg']}}</no-data-placeholder-widget
+      >
+    </ng-template>
+  </div>
+</ng-container>
