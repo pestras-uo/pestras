@@ -1,99 +1,76 @@
 <ng-container *contra="let c; let dir = dir">
-  <div class="card bg-success-overlay card-small grow">
-    <div class="card-body">
-      <div class="flex gap-4 align-itenms-center">
-        <i puiIcon="blueprint"></i>
+  <a
+    class="card color-scheme-dark shadow-0 bg-success grow"
+    routerLink="/main/blueprints"
+  >
+    <div class="card-body pis-8">
+      <i class="stats-icon" puiIcon="blueprint"></i>
+      <div>
+        <p class="f0 mbe-4 stats-value">
+          {{null | blueprintsCount | async}}
+        </p>
         <p class="weight-9">{{c['blueprints']}}</p>
       </div>
-      <div class="toolbar">
-        <p class="weight-9 f3 stats-value success">{{null | blueprintsCount | async}}</p>
-        <div class="grow"></div>
-        <a
-          class="btn btn-small btn-icon btn-round"
-          routerLink="/main/blueprints"
-        >
-          <i
-            [puiIcon]="dir === 'rtl' ? 'navigate_before' : 'navigate_next'"
-            size="small"
-          ></i>
-        </a>
-      </div>
     </div>
-  </div>
+  </a>
 
-  <div class="card card-small bg-warn-overlay grow">
-    <div class="card-body">
-      <div class="flex gap-4 align-itenms-center">
-        <i puiIcon="topics"></i>
+  <a
+    class="card color-scheme-dark shadow-0 bg-warn grow"
+    routerLink="/main/topics"
+  >
+    <div class="card-body pis-8">
+      <i class="stats-icon" puiIcon="topics"></i>
+      <div>
+        <p class="f0 mbe-4 stats-value">
+          {{null | topicsCount | async}}
+        </p>
         <p class="weight-9">{{c['topics']}}</p>
       </div>
-      <div class="toolbar">
-        <p class="weight-9 f3 stats-value warn">{{null | topicsCount | async}}</p>
-        <div class="grow"></div>
-        <a class="btn btn-small btn-icon btn-round" routerLink="/main/topics">
-          <i
-            [puiIcon]="dir === 'rtl' ? 'navigate_before' : 'navigate_next'"
-            size="small"
-          ></i>
-        </a>
-      </div>
     </div>
-  </div>
+  </a>
 
-  <div class="card card-small bg-primary-overlay grow">
-    <div class="card-body">
-      <div class="flex gap-4 align-itenms-center">
-        <i puiIcon="lan"></i>
+  <a
+    class="card color-scheme-dark shadow-0 bg-primary grow"
+    routerLink="/main/orgunits"
+  >
+    <div class="card-body pis-8">
+      <i class="stats-icon" puiIcon="lan"></i>
+      <div>
+        <p class="f0 mbe-4 stats-value">
+          {{null | orgunitsCount | async}}
+        </p>
         <p class="weight-9">{{c['orgunits']}}</p>
       </div>
-      <div class="toolbar">
-        <p class="weight-9 f3 stats-value primary">{{null | orgunitsCount | async}}</p>
-        <div class="grow"></div>
-        <a class="btn btn-small btn-icon btn-round" routerLink="/main/orgunits">
-          <i
-            [puiIcon]="dir === 'rtl' ? 'navigate_before' : 'navigate_next'"
-            size="small"
-          ></i>
-        </a>
-      </div>
     </div>
-  </div>
+  </a>
 
-  <div class="card card-small bg-danger-overlay grow">
-    <div class="card-body">
-      <div class="flex gap-4 align-itenms-center">
-        <i puiIcon="group"></i>
+  <a
+    class="card color-scheme-dark shadow-0 bg-danger grow"
+    routerLink="/main/users"
+  >
+    <div class="card-body pis-8">
+      <i class="stats-icon" puiIcon="group"></i>
+      <div>
+        <p class="f0 mbe-4 stats-value">
+          {{null | usersCount | async}}
+        </p>
         <p class="weight-9">{{c['users']}}</p>
       </div>
-      <div class="toolbar">
-        <p class="weight-9 f3 stats-value danger">{{null | usersCount | async}}</p>
-        <div class="grow"></div>
-        <a class="btn btn-small btn-icon btn-round" routerLink="/main/users">
-          <i
-            [puiIcon]="dir === 'rtl' ? 'navigate_before' : 'navigate_next'"
-            size="small"
-          ></i>
-        </a>
-      </div>
     </div>
-  </div>
+  </a>
 
-  <div class="card card-small bg-success-overlay grow">
-    <div class="card-body">
-      <div class="flex gap-4 align-itenms-center">
-        <i puiIcon="travel_explore"></i>
+  <a
+    class="card color-scheme-dark shadow-0 bg-surface4 grow"
+    routerLink="/main/regions"
+  >
+    <div class="card-body pis-8">
+      <i class="stats-icon" puiIcon="travel_explore"></i>
+      <div>
+        <p class="f0 mbe-4 stats-value">
+          {{null | regionsCount | async}}
+        </p>
         <p class="weight-9">{{c['regions']}}</p>
       </div>
-      <div class="toolbar">
-        <p class="weight-9 f3 stats-value success">{{null | regionsCount | async}}</p>
-        <div class="grow"></div>
-        <a class="btn btn-small btn-icon btn-round" routerLink="/main/users">
-          <i
-            [puiIcon]="dir === 'rtl' ? 'navigate_before' : 'navigate_next'"
-            size="small"
-          ></i>
-        </a>
-      </div>
     </div>
-  </div>
+  </a>
 </ng-container>

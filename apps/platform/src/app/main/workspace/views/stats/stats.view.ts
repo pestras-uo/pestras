@@ -12,9 +12,19 @@ import { Component } from '@angular/core';
       padding: 32px 32px 0;
     }
 
+    .stats-icon {
+      height: 200px;
+      width: 200px;
+      opacity: 0.2;
+      position: absolute;
+      z-index: 0;
+      inset-inline-end: -32px;
+      inset-block-start: -32px;
+    }
     .stats-value {
-      padding-inline-start: 42px;
-      line-height: 1.5rem;
+      line-height: 0.75;
+      font-family: Arial;
+      font-weight: bold
     }
   `],
 })
