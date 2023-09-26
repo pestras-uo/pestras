@@ -45,5 +45,5 @@ export const blueprintsRoutes = Router()
     '/:serial/collaborators/:collaborator',
     apiAuth([Role.DATA_ENG]),
     checkOwner(),
-    controller.addCollaborator
+    controller.removeCollaborator
   )

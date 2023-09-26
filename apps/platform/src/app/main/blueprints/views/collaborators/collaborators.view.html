@@ -1,0 +1,91 @@
+<ng-container *contra="let c">
+  <div class="toolbar">
+    <h3>{{c['collaborators']}}</h3>
+    <div class="grow"></div>
+    <button
+      *ngIf="editable"
+      class="btn-small btn-round btn-icon btn-primary"
+      (click)="openDialog(addTmp)"
+    >
+      <i puiIcon="add" size="small"></i>
+    </button>
+  </div>
+
+  <div class="divider mb-6"></div>
+
+  <main class="card">
+    <table>
+      <thead>
+        <tr>
+          <th *ngIf="editable" class="w-1">#</th>
+          <th>{{c['name']}}</th>
+          <th>{{c['orgunit']}}</th>
+          <th *ngIf="editable" class="w-2">{{c['remove']}}</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <tr *ngFor="let serial of blueprint.collaborators; let i = index">
+          <td>{{i + 1}}</td>
+          <ng-container *ngIf="serial | user | async as user">
+            <td>{{user.fullname}}</td>
+            <td>{{(user.orgunit | orgunit | async)?.name}}</td>
+            <td *ngIf="editable">
+              <button
+                class="btn-icon btn-tiny btn-round"
+                (click)="openDialog(removeTmp, user.serial)"
+              >
+                <i puiIcon="delete" size="small" color="danger"></i>
+              </button>
+            </td>
+          </ng-container>
+        </tr>
+      </tbody>
+    </table>
+  </main>
+
+  <ng-template #addTmp>
+    <div class="card shadow-6 w-12">
+      <h4 class="card-header">{{c['addUser']}}</h4>
+      <div class="card-body">
+        <div class="fc">
+          <pui-select-input
+            [list]="'' | users | async | arrayFilter: filterUsers | arrayMap: mapUser"
+            [formControl]="usersCtrl"
+          ></pui-select-input>
+        </div>
+      </div>
+      <div class="card-footer">
+        <button class="btn-round btn-outline" (click)="closeDialog()">
+          {{c['cancel']}}
+        </button>
+        <button
+          class="btn-round btn-primary"
+          (click)="add(c['success'].default, c['errors'])"
+        >
+          {{c['add']}}
+        </button>
+      </div>
+      <pui-preloader *ngIf="loading"></pui-preloader>
+    </div>
+  </ng-template>
+
+  <ng-template #removeTmp let-serial>
+    <div class="card shadow-6 w-12">
+      <h4 class="card-header">{{c['removeUser']}}</h4>
+      <p class="card-body">{{c['confirmOperation']}}</p>
+      <div class="card-footer">
+        <button class="btn-round btn-outline" (click)="closeDialog()">
+          {{c['cancel']}}
+        </button>
+        <button
+          class="btn-round btn-primary"
+          (click)="remove(serial, c['success'].default, c['errors'])"
+        >
+          {{c['remove']}}
+        </button>
+      </div>
+      <pui-preloader *ngIf="loading"></pui-preloader>
+    </div>
+  </ng-template>
+</ng-container>
