@@ -32,12 +32,6 @@
 
     <div class="pb-10 pi-8">
       <div class="container wider">
-        <!-- desc -->
-        <app-content-views
-          *ngIf="view === 'details'"
-          [entity]="d.serial"
-          [editable]="(d.owner | sessionIs) || (d.collaborators | sessionIs)"
-        ></app-content-views>
 
         <pestras-entity-access *ngIf="view === 'access'" [entity]="d.serial"></pestras-entity-access>
 

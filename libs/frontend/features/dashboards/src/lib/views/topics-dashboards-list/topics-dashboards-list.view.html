@@ -1,30 +1,40 @@
 <ng-container *contra="let c">
-  <div class="toolbar gap-2">
-    <i size="small" puiIcon="dashboard"></i>
-    <h3>{{c['dashboards']}}</h3>
-    <div class="grow"></div>
-    <button class="btn-round btn-icon btn-small" (click)="openDialog(addTmp)">
-      <i puiIcon="add" size="small"></i>
-    </button>
-  </div>
-
-  <div class="divider mbs-2 mbe-4"></div>
-
-  <ng-container *ngIf="dashboards$ | async as dashboards">
-    <div class="grid cols-3 gap-8 pi-0" *ngIf="dashboards.length; else noData">
-      <div class="card mbe-2" *ngFor="let dash of dashboards">
+  <ng-container
+    *ngIf="dashboards$ | async | fn: setDefaultActive as dashboards"
+  >
+    <main *ngIf="dashboards.length else noData">
+      <div class="card card-small bordered">
         <div class="card-header">
-          <h4>{{dash.title}}</h4>
-        </div>
-        <div class="card-footer">
-          <a
-            [routerLink]="['/main/dashboards', dash.topic, dash.serial]"
-            class="btn btn-round"
-            >{{c['continue']}}</a
+          <h5 class="primary">{{c['list']}}</h5>
+          <div class="grow"></div>
+          <button
+            class="btn-round btn-icon btn-small"
+            (click)="openDialog(addTmp)"
           >
+            <i puiIcon="add" size="small"></i>
+          </button>
         </div>
+        <ul class="card-body list list-actions p-0">
+          <li
+            *ngFor="let ds of dashboards"
+            class="list-item hover-surface2 pi-4"
+            [class.active]="active === ds"
+            (click)="active = ds"
+          >
+            <h5>{{ds.title}}</h5>
+          </li>
+        </ul>
       </div>
-    </div>
+
+      <app-content-views *ngIf="active" [entity]="active.serial" size="small">
+        <a
+          [routerLink]="['/main/dashboards', active.topic, active.serial]"
+          class="action btn-small btn-primary btn btn-round"
+        >
+          {{c['continue']}}
+        </a>
+      </app-content-views>
+    </main>
   </ng-container>
 
   <ng-template #noData>

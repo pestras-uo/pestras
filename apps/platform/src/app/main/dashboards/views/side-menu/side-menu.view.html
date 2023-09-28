@@ -13,27 +13,6 @@
 
   <main>
     <div class="list">
-      <div class="list-item" [class.active]="view === 'details'">
-        <div class="flex gap-2">
-          <i size="small" puiIcon="description"></i>
-          <div>
-            <h4 class="mbe-1">{{c['desc']}}</h4>
-            <p class="text3 f9">{{c['dashboardDetails']}}</p>
-          </div>
-        </div>
-
-        <div class="grow"></div>
-
-        <button
-          class="btn-icon btn-round btn-small"
-          (click)="selects.emit('details')"
-        >
-          <i
-            size="small"
-            [puiIcon]="dir === 'rtl' ? 'navigate_before' : 'navigate_next'"
-          ></i>
-        </button>
-      </div>
 
       <div
         *ngIf="dashboard.owner | sessionIs"

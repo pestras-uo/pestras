@@ -1,5 +1,5 @@
-<div class="container" *contra="let c">
-  <div class="toolbar">
+<ng-container *contra="let c">
+  <div *ngIf="!headless" class="toolbar">
     <h2>{{c['records']}}</h2>
 
     <div class="grow"></div>
@@ -15,7 +15,7 @@
     <ng-container [ngTemplateOutlet]="recordsTmp"></ng-container>
   </ng-container>
 
-  <div class="card card-clear mbs-6" *ngIf="isTable">
+  <div class="card card-clear" [class.mbs-6]="!headless" *ngIf="isTable">
     <div class="card-tabs">
       <h5
         class="tab"
@@ -96,7 +96,10 @@
         <div class="card-body list list-actions p-0">
           <!-- export options -->
           <h5 class="pi-4 mbs-4 mbe-2 primary">{{c['export']}}</h5>
-          <div class="list-item hover-surface2 pi-4" (click)="exportData(); optionsList.hide()">
+          <div
+            class="list-item hover-surface2 pi-4"
+            (click)="exportData(); optionsList.hide()"
+          >
             <i puiIcon="export" size="small"></i>
             <p>{{c['excel']}}</p>
           </div>
@@ -181,4 +184,4 @@
       </div>
     </div>
   </ng-template>
-</div>
+</ng-container>

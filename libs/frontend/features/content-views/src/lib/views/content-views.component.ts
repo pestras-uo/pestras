@@ -48,6 +48,8 @@ export class ContentViewsComponent implements OnChanges {
   entity!: string;
   @Input()
   editable = false;
+  @Input()
+  size = 'normal';
 
   constructor(
     private state: ContentState,

@@ -1,7 +1,11 @@
 <ng-container *contra="let c">
   <ng-container *ngIf="content$ | async">
-    <div class="toolbar">
-      <h2>{{ c['desc'] }}</h2>
+    <div class="toolbar gap-1 pb-4">
+      <h5 *ngIf="size === 'small' else defaultHeading">{{ c['desc'] }}</h5>
+      
+      <ng-template #defaultHeading>
+        <h2>{{ c['desc'] }}</h2>
+      </ng-template>
 
       <div class="grow"></div>
 
@@ -20,9 +24,11 @@
       >
         <i size="small" puiIcon="add"></i>
       </button>
+
+      <ng-content select=".action"></ng-content>
     </div>
 
-    <div class="divider mbs-4 mbe-8"></div>
+    <div class="divider mbe-8"></div>
 
     <div cdkDropList (cdkDropListDropped)="drop($event)">
       <ng-container *ngIf="views.length; else noViews">
