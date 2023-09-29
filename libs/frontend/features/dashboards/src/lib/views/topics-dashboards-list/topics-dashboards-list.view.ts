@@ -14,13 +14,6 @@ import { Observable } from 'rxjs';
   templateUrl: './topics-dashboards-list.view.html',
   styles: [`
     :host { display: block; }
-
-    main {
-      display: grid;
-      grid-template-columns: 240px 1fr;
-      gap: 24px;
-      align-items: start;
-    }
   `]
 })
 export class TopicDashboardsListView implements OnChanges {
@@ -28,11 +21,8 @@ export class TopicDashboardsListView implements OnChanges {
   dashboards$!: Observable<Dashboard[]>;
   dialogRef: DialogRef | null = null;
   preloader = false;
-  active: Dashboard | null = null;
-  tab = 'data';
 
   readonly title = new FormControl('', { validators: Validators.required, nonNullable: true });
-
 
   @Input({ required: true })
   topic!: string;
@@ -45,13 +35,6 @@ export class TopicDashboardsListView implements OnChanges {
 
   ngOnChanges(): void {
     this.dashboards$ = this.state.selectGroup(this.topic);
-  }
-
-  setDefaultActive = (dashboards: Dashboard[]) => {
-    if (!this.active && dashboards?.length > 0)
-      this.active = dashboards[0];
-
-    return dashboards;
   }
 
   openDialog(tmp: TemplateRef<any>) {

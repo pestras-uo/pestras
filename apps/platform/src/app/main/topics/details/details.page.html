@@ -81,11 +81,13 @@
 
         <app-topic-dashboards-list
           *ngIf="view === 'dashboards'"
-          class="mbe-8"
           [topic]="t.serial"
         ></app-topic-dashboards-list>
 
-        <!-- <app-reports-list class="mbe-8" [topic]="t.serial"></app-reports-list> -->
+        <app-reports-list
+          *ngIf="view === 'reports'"
+          [topic]="t.serial"
+        ></app-reports-list>
 
         <pestras-entity-access
           *ngIf="view === 'access'"

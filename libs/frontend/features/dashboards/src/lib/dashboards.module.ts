@@ -15,6 +15,7 @@ import { ContraModule } from '@pestras/frontend/util/contra';
 import { StateModule } from '@pestras/frontend/state';
 import { DashboardsPipe } from './pipes/dashboards.pipe';
 import { ContentViewsFeatureModule } from '@pestras/frontend/features/content-views';
+import { AvatarWidget } from '@pestras/frontend/widgets/avatar';
 
 
 
@@ -38,6 +39,7 @@ import { ContentViewsFeatureModule } from '@pestras/frontend/features/content-vi
     DragDropModule,
     // Widgets
     NoDataPlaceholderWidget,
+    AvatarWidget,
     // Pui
     PuiPreloaderModule,
     PuiIcon,

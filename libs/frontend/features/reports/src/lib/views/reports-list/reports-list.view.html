@@ -1,30 +1,39 @@
 <ng-container *contra="let c">
-  <div class="toolbar gap-2">
-    <i size="small" puiIcon="report"></i>
-    <h3>{{c['reports']}}</h3>
+  <div class="toolbar mbe-2">
+    <h3>{{c['list']}}</h3>
     <div class="grow"></div>
     <button class="btn-round btn-icon btn-small" (click)="openDialog(addTmp)">
       <i puiIcon="add" size="small"></i>
     </button>
   </div>
 
-  <div class="divider mbs-2 mbe-4"></div>
-
   <ng-container *ngIf="reports$ | async as reports">
-    <div class="grid cols-3 gap-8 pi-0" *ngIf="reports.length; else noData">
-      <div class="card mbe-2" *ngFor="let rep of reports">
-        <div class="card-body">
-          <h4>{{rep.title}}</h4>
-          <p class="text3 bold f10">{{rep.create_date | date: 'dd/MM/yyyy'}}</p>
-        </div>
-        <div class="card-footer">
-          <a
-            [routerLink]="['/main/reports', rep.topic, rep.serial]"
-            class="btn btn-round"
-            >{{c['continue']}}</a
+
+    <div *ngIf="reports.length else noData" class="card">
+      <table>
+        <thead>
+          <tr>
+            <th class="w-1">#</th>
+            <th>{{c['title']}}</th>
+            <th>{{c['owner']}}</th>
+            <th class="w-3">{{c['createDate']}}</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr
+            *ngFor="let report of reports; let i = index"
+            class="row-hover"
+            [routerLink]="['/main/reports', report.topic, report.serial]"
           >
-        </div>
-      </div>
+            <td class="index-col">{{i + 1}}</td>
+            <td>{{report.title}}</td>
+            <td>
+              <app-avatar [serial]="report.owner" [size]="'small'"></app-avatar>
+            </td>
+            <td class="date-col">{{report.create_date | date: 'dd-MM-yyyy'}}</td>
+          </tr>
+        </tbody>
+      </table>
     </div>
   </ng-container>
 

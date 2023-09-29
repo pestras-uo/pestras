@@ -1,40 +1,39 @@
 <ng-container *contra="let c">
-  <ng-container
-    *ngIf="dashboards$ | async | fn: setDefaultActive as dashboards"
-  >
-    <main *ngIf="dashboards.length else noData">
-      <div class="card card-small bordered">
-        <div class="card-header">
-          <h5 class="primary">{{c['list']}}</h5>
-          <div class="grow"></div>
-          <button
-            class="btn-round btn-icon btn-small"
-            (click)="openDialog(addTmp)"
-          >
-            <i puiIcon="add" size="small"></i>
-          </button>
-        </div>
-        <ul class="card-body list list-actions p-0">
-          <li
-            *ngFor="let ds of dashboards"
-            class="list-item hover-surface2 pi-4"
-            [class.active]="active === ds"
-            (click)="active = ds"
-          >
-            <h5>{{ds.title}}</h5>
-          </li>
-        </ul>
-      </div>
+  <div class="toolbar mbe-2">
+    <h3 class="primary">{{c['list']}}</h3>
+    <div class="grow"></div>
+    <button class="btn-round btn-icon btn-small" (click)="openDialog(addTmp)">
+      <i puiIcon="add" size="small"></i>
+    </button>
+  </div>
 
-      <app-content-views *ngIf="active" [entity]="active.serial" size="small">
-        <a
-          [routerLink]="['/main/dashboards', active.topic, active.serial]"
-          class="action btn-small btn-primary btn btn-round"
-        >
-          {{c['continue']}}
-        </a>
-      </app-content-views>
-    </main>
+  <ng-container *ngIf="dashboards$ | async as dashboards">
+    <div *ngIf="dashboards.length else noData" class="card">
+      <table>
+        <thead>
+          <tr>
+            <th class="w-1">#</th>
+            <th>{{c['title']}}</th>
+            <th>{{c['owner']}}</th>
+            <th class="w-3">{{c['createDate']}}</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr
+            *ngFor="let ds of dashboards; let i = index"
+            class="row-hover"
+            [routerLink]="['/main/dashboards', ds.topic, ds.serial]"
+          >
+            <td class="index-col">{{i + 1}}</td>
+            <td>{{ds.title}}</td>
+            <td>
+              <app-avatar [serial]="ds.owner" [size]="'small'"></app-avatar>
+            </td>
+            <td class="date-col">{{ds.create_date | date: 'dd-MM-yyyy'}}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
   </ng-container>
 
   <ng-template #noData>
