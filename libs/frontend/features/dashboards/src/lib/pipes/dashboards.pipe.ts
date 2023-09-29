@@ -4,13 +4,13 @@ import { Observable } from 'rxjs';
 import { DashboardsState } from '@pestras/frontend/state';
 
 @Pipe({
-  name: 'dashboard'
+  name: 'dashboards'
 })
-export class DashboardPipe implements PipeTransform {
+export class DashboardsPipe implements PipeTransform {
 
   constructor(private state: DashboardsState) { }
 
-  transform(serial: string): Observable<Dashboard | null> {
-    return this.state.select(serial);
+  transform(topic: string | null): Observable<Dashboard[]> {
+    return this.state.selectGroup(topic);
   }
 }

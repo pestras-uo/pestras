@@ -3,7 +3,7 @@
 
   background-color: var(--surface1);
   position: relative;
-  border-radius: 16px;
+  border-radius: 8px;
   display: flex;
   flex-direction: column;
   overflow: hidden;
@@ -79,7 +79,7 @@
       align-items: center;
       cursor: pointer;
       gap: 8px;
-      border-radius: 8px;
+      border-radius: 8px 8px 0px 0px;
       text-align: center;
       transition: background-color 200ms;
 

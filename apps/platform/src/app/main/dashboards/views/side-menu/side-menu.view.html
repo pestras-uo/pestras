@@ -1,5 +1,5 @@
-<ng-container *contra="let c; let dir = dir">
-  <header class="pi-7 pb-4 flex gap-2 align-items-center">
+<main *contra="let c; let dir = dir">
+  <div class="toolbar pb-4 pi-7">
     <button class="btn-small btn-round btn-icon" (click)="loc.back()">
       <i
         size="small"
@@ -8,139 +8,83 @@
         puiIcon="trending_flat"
       ></i>
     </button>
-    <p class="f9 bold">{{c['list']}}</p>
-  </header>
+    <h4>{{c['slides']}}</h4>
+    <div class="grow"></div>
+    <button
+      *ngIf="(dashboard.owner | sessionIs) || (dashboard.collaborators | sessionIs)"
+      class="btn-icon btn-round btn-small"
+      [disabled]="reorder || playing"
+      (click)="openDialog(slideForm)"
+    >
+      <i size="small" puiIcon="add"></i>
+    </button>
 
-  <main>
-    <div class="list">
-      <div class="list-item" [class.active]="view === 'details'">
-        <div class="flex gap-2">
-          <i size="small" puiIcon="description"></i>
-          <div>
-            <h4 class="mbe-1">{{c['desc']}}</h4>
-            <p class="text3 f9">{{c['dashboardDetails']}}</p>
-          </div>
-        </div>
-
-        <div class="grow"></div>
-
-        <button
-          class="btn-icon btn-round btn-small"
-          (click)="selects.emit('details')"
-        >
-          <i
-            size="small"
-            [puiIcon]="dir === 'rtl' ? 'navigate_before' : 'navigate_next'"
-          ></i>
-        </button>
-      </div>
-
-      <div
-        *ngIf="dashboard.owner | sessionIs"
-        class="list-item"
-        [class.active]="view === 'access'"
-      >
-        <div class="flex gap-2">
-          <i size="small" puiIcon="access"></i>
-          <div>
-            <h4 class="mbe-1">{{c['access']}}</h4>
-            <p class="text3 f9">{{c['accessDetails']}}</p>
-          </div>
-        </div>
-
-        <div class="grow"></div>
-
-        <button
-          class="btn-icon btn-round btn-small"
-          (click)="selects.emit('access')"
-        >
-          <i
-            size="small"
-            [puiIcon]="dir === 'rtl' ? 'navigate_before' : 'navigate_next'"
-          ></i>
-        </button>
-      </div>
-    </div>
-
-    <div class="toolbar pb-4 pi-7">
-      <h3>{{c['slides']}}</h3>
-      <div class="grow"></div>
+    <ng-container *ngIf="slides.length > 1">
       <button
         *ngIf="(dashboard.owner | sessionIs) || (dashboard.collaborators | sessionIs)"
         class="btn-icon btn-round btn-small"
-        [disabled]="reorder || playing"
-        (click)="openDialog(slideForm)"
+        [class.btn-success]="reorder"
+        [disabled]="playing"
+        (click)="reorder = !reorder"
       >
-        <i size="small" puiIcon="add"></i>
+        <i size="small" puiIcon="reorder"></i>
+      </button>
+      <button
+        class="btn-icon btn-round btn-small rtl-x-flip"
+        [class.btn-success]="playing"
+        [disabled]="reorder"
+        (click)="togglePlay()"
+      >
+        <i size="small" [puiIcon]="playing ? 'pause' : 'play'"></i>
+      </button>
+    </ng-container>
+  </div>
+
+  <div
+    class="list list-actions boards"
+    cdkDropList
+    (cdkDropListDropped)="drop($event)"
+  >
+    <div
+      class="list-item"
+      *ngFor="let slide of slides; let i = index"
+      [class.active]="view === slide.serial"
+      cdkDragBoundary=".boards"
+      cdkDrag
+      [cdkDragDisabled]="!reorder"
+      (click)="selectSlide(i)"
+    >
+      <button
+        class="btn-small btn-icon btn-round"
+        cdkDragHandle
+        *ngIf="reorder"
+      >
+        <i size="small" puiIcon="drag"></i>
       </button>
 
-      <ng-container *ngIf="slides.length > 1">
+      <h4 class="mbe-1">{{slide.title}}</h4>
+
+      <div class="grow"></div>
+
+      <ng-container
+        *ngIf="(dashboard.owner | sessionIs) || (dashboard.collaborators | sessionIs)"
+      >
         <button
-          *ngIf="(dashboard.owner | sessionIs) || (dashboard.collaborators | sessionIs)"
-          class="btn-icon btn-round btn-small"
-          [class.btn-success]="reorder"
-          [disabled]="playing"
-          (click)="reorder = !reorder"
+          class="btn-icon btn-round btn-tiny"
+          (click)="openDialog(slideForm, slide)"
         >
-          <i size="small" puiIcon="reorder"></i>
+          <i size="tiny" puiIcon="edit"></i>
         </button>
+
         <button
-          class="btn-icon btn-round btn-small rtl-x-flip"
-          [class.btn-success]="playing"
-          [disabled]="reorder"
-          (click)="togglePlay()"
+          class="btn-icon btn-round btn-tiny"
+          (click)="openDialog(removeSlideTmp, slide)"
         >
-          <i size="small" [puiIcon]="playing ? 'pause' : 'play'"></i>
+          <i size="tiny" color="danger" puiIcon="delete"></i>
         </button>
       </ng-container>
     </div>
-
-    <div
-      class="list list-actions boards"
-      cdkDropList
-      (cdkDropListDropped)="drop($event)"
-    >
-      <div
-        class="list-item"
-        *ngFor="let slide of slides; let i = index"
-        [class.active]="view === slide.serial"
-        cdkDragBoundary=".boards"
-        cdkDrag
-        [cdkDragDisabled]="!reorder"
-        (click)="selectSlide(i)"
-      >
-        <button
-          class="btn-small btn-icon btn-round"
-          cdkDragHandle
-          *ngIf="reorder"
-        >
-          <i size="small" puiIcon="drag"></i>
-        </button>
-
-        <h4 class="mbe-1">{{slide.title}}</h4>
-
-        <div class="grow"></div>
-
-        <ng-container
-          *ngIf="(dashboard.owner | sessionIs) || (dashboard.collaborators | sessionIs)"
-        >
-          <button
-            class="btn-icon btn-round btn-tiny"
-            (click)="openDialog(slideForm, slide)"
-          >
-            <i size="tiny" puiIcon="edit"></i>
-          </button>
-
-          <button
-            class="btn-icon btn-round btn-tiny"
-            (click)="openDialog(removeSlideTmp, slide)"
-          >
-            <i size="tiny" color="danger" puiIcon="delete"></i>
-          </button>
-        </ng-container>
-      </div>
-    </div>
-  </main>
+  </div>
 
   <ng-template #slideForm let-slide>
     <form
@@ -211,4 +155,4 @@
       </div>
     </div>
   </ng-template>
-</ng-container>
+</main>

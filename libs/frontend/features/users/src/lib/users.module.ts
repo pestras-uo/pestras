@@ -4,6 +4,7 @@ import { UserPipe } from './pipes/user.pipe';
 import { UsersPipe } from './pipes/users.pipe';
 import { UserUsersPipe } from './pipes/user-users.pipe';
 import { UsersCountPipe } from './pipes/count.pipe';
+import { UsersBySerialsPipe } from './pipes/users-by-serials.pipe';
 
 
 
@@ -12,7 +13,8 @@ import { UsersCountPipe } from './pipes/count.pipe';
     UserPipe,
     UsersPipe,
     UserUsersPipe,
-    UsersCountPipe
+    UsersCountPipe,
+    UsersBySerialsPipe
   ],
   imports: [
     CommonModule
@@ -21,7 +23,8 @@ import { UsersCountPipe } from './pipes/count.pipe';
     UserPipe,
     UsersPipe,
     UserUsersPipe,
-    UsersCountPipe
+    UsersCountPipe,
+    UsersBySerialsPipe
   ]
 })
 export class UsersFeatureModule { }

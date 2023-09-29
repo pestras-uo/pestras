@@ -1,29 +1,38 @@
 <ng-container *contra="let c">
-  <div class="toolbar gap-2">
-    <i size="small" puiIcon="dashboard"></i>
-    <h3>{{c['dashboards']}}</h3>
+  <div class="toolbar mbe-2">
+    <h3 class="primary">{{c['list']}}</h3>
     <div class="grow"></div>
     <button class="btn-round btn-icon btn-small" (click)="openDialog(addTmp)">
       <i puiIcon="add" size="small"></i>
     </button>
   </div>
 
-  <div class="divider mbs-2 mbe-4"></div>
-
   <ng-container *ngIf="dashboards$ | async as dashboards">
-    <div class="grid cols-3 gap-8 pi-0" *ngIf="dashboards.length; else noData">
-      <div class="card mbe-2" *ngFor="let dash of dashboards">
-        <div class="card-header">
-          <h4>{{dash.title}}</h4>
-        </div>
-        <div class="card-footer">
-          <a
-            [routerLink]="['/main/dashboards', dash.topic, dash.serial]"
-            class="btn btn-round"
-            >{{c['continue']}}</a
+    <div *ngIf="dashboards.length else noData" class="card">
+      <table>
+        <thead>
+          <tr>
+            <th class="w-1">#</th>
+            <th>{{c['title']}}</th>
+            <th>{{c['owner']}}</th>
+            <th class="w-3">{{c['createDate']}}</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr
+            *ngFor="let ds of dashboards; let i = index"
+            class="row-hover"
+            [routerLink]="['/main/dashboards', ds.topic, ds.serial]"
           >
-        </div>
-      </div>
+            <td class="index-col">{{i + 1}}</td>
+            <td>{{ds.title}}</td>
+            <td>
+              <app-avatar [serial]="ds.owner" [size]="'small'"></app-avatar>
+            </td>
+            <td class="date-col">{{ds.create_date | date: 'dd-MM-yyyy'}}</td>
+          </tr>
+        </tbody>
+      </table>
     </div>
   </ng-container>
 

@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @angular-eslint/component-selector */
 /* eslint-disable @angular-eslint/component-class-suffix */
-import { Component, Input, OnChanges, TemplateRef } from '@angular/core';
+import { Component, Input, OnChanges, TemplateRef, booleanAttribute } from '@angular/core';
 import { DataRecordState, DataStore, DataStoreType, Field, Role } from '@pestras/shared/data-model';
 import { SessionState, OrgunitsState, RecordsService } from '@pestras/frontend/state';
 import { PuiXlsxService, PuiSideDrawer } from '@pestras/frontend/ui';
@@ -12,7 +12,12 @@ import { FormControl, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-records-list',
-  templateUrl: './records-list.view.html'
+  templateUrl: './records-list.view.html',
+  styles: [`
+    :host {
+      overflow: auto;
+    }
+  `]
 })
 export class RecordsListView implements OnChanges {
 
@@ -39,6 +44,8 @@ export class RecordsListView implements OnChanges {
   editable = false;
   @Input()
   search?: any;
+  @Input({ transform: booleanAttribute })
+  headless = false;
 
   constructor(
     private session: SessionState,

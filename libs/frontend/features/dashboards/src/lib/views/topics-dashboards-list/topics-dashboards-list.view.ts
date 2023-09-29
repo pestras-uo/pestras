@@ -24,7 +24,6 @@ export class TopicDashboardsListView implements OnChanges {
 
   readonly title = new FormControl('', { validators: Validators.required, nonNullable: true });
 
-
   @Input({ required: true })
   topic!: string;
 
@@ -32,7 +31,7 @@ export class TopicDashboardsListView implements OnChanges {
     private state: DashboardsState,
     private dialog: Dialog,
     private toast: ToastService
-  ) {}
+  ) { }
 
   ngOnChanges(): void {
     this.dashboards$ = this.state.selectGroup(this.topic);

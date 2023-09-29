@@ -1,24 +1,53 @@
-<ng-container *contra="let c; let dir = dir">
-  <header class="toolbar gap-2">
-    <i size="small" puiIcon="database"></i>
-    <h3>{{c['data']}}</h3>
-  </header>
-
-  <div class="divider mbs-2 mbe-4"></div>
-
+<ng-container *contra="let c">
   <ng-container
-    class="list"
-    *ngIf="blueprint | blueprintDataStores: [types.TABLE] | async as datastores"
+    *ngIf="blueprint | blueprintDataStores: [types.TABLE] | async | fn: setDefaultActive as datastores"
   >
-    <div class="grid cols-3 gap-4" *ngIf="datastores.length else noData">
-      <div class="card" *ngFor="let ds of datastores">
-        <h4 class="card-header">{{ds.name}}</h4>
-        <!-- <div class="body"></div> -->
-        <div class="card-footer">
-          <button class="btn-round primary" (click)="selects.emit(ds.serial)">{{c['continue']}}</button>
-        </div>
+    <main *ngIf="datastores.length else noData">
+      <div class="card card-small bordered">
+        <h5 class="card-header primary">{{c['list']}}</h5>
+        <ul class="card-body list list-actions p-0">
+          <ng-container *ngFor="let ds of datastores">
+            <li
+              class="list-item hover-surface2 pi-4"
+              [class.active]="active === ds"
+              (click)="active = ds"
+            >
+              <h5>{{ds.name}}</h5>
+            </li>
+            <ng-container *ngIf="active === ds">
+              <li class="list-item" (click)="tab = 'data'">
+                <p class="pis-8 pie-4 f9 bold" [class.primary]="tab === 'data'">
+                  {{c['data']}}
+                </p>
+              </li>
+              <li class="list-item" (click)="tab = 'details'">
+                <p
+                  class="pis-8 pie-4 f9 bold"
+                  [class.primary]="tab === 'details'"
+                >
+                  {{c['desc']}}
+                </p>
+              </li>
+            </ng-container>
+          </ng-container>
+        </ul>
       </div>
-    </div>
+
+      <ng-container *ngIf="active">
+        <app-records-list
+          *ngIf="tab === 'data'"
+          [topic]="topic"
+          [dataStore]="active"
+          headless
+        ></app-records-list>
+
+        <app-content-views
+          *ngIf="tab === 'details'"
+          [entity]="active.serial"
+          size="small"
+        ></app-content-views>
+      </ng-container>
+    </main>
 
     <ng-template #noData>
       <no-data-placeholder-widget

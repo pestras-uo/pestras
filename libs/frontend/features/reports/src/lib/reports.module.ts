@@ -12,6 +12,7 @@ import { DataVizFeatureModule } from '@pestras/frontend/features/data-viz';
 import { QuillModule } from 'ngx-quill';
 import { ReportPipe } from './pipes/report.pipe';
 import { ContraModule } from '@pestras/frontend/util/contra';
+import { AvatarWidget } from '@pestras/frontend/widgets/avatar';
 
 
 
@@ -35,6 +36,7 @@ import { ContraModule } from '@pestras/frontend/util/contra';
     // Widgets
     NoDataPlaceholderWidget,
     QuillModule,
+    AvatarWidget,
     // Pui
     PuiIcon,
     PuiPreloaderModule,

@@ -167,6 +167,28 @@
       </button>
     </div>
 
+    <div class="list-item" [class.active]="view === 'collaborators'">
+      <div class="flex gap-2">
+        <i size="small" puiIcon="group"></i>
+        <div>
+          <h4 class="mbe-1">{{c['collaborators']}}</h4>
+          <p class="text3 f9">{{c['collaboratorsDeffinition']}}</p>
+        </div>
+      </div>
+
+      <div class="grow"></div>
+
+      <button
+        class="btn-icon btn-round btn-small"
+        (click)="selects.emit('collaborators')"
+      >
+        <i
+          size="small"
+          [puiIcon]="dir === 'rtl' ? 'navigate_before' : 'navigate_next'"
+        ></i>
+      </button>
+    </div>
+
     <!-- <div class="list-item disabled" [class.active]="view === 'settings'">
       <div class="flex gap-2">
         <i size="small" puiIcon="settings"></i>

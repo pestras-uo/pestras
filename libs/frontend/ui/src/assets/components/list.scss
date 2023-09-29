@@ -1,6 +1,7 @@
 :where(.list) {
 
   > :where(.list-item) {
+    position: relative;
     display: flex;
     gap: 8px;
     align-items: center;
@@ -40,8 +41,14 @@
   }
 
 
-  .list-item.active {
-    background-color: var(--primary-overlay);
+  .list-item.active::before {
+    content: "";
+    position: absolute;
+    background-color: var(--primary);
+    width: 4px;
+    height: 100%;
+    inset-inline-start: 0;
+    inset-block-start: 0;
   }
 
   .list-item-hero {

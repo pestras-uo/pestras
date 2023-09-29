@@ -33,7 +33,6 @@
 
     <div class="pb-10 pi-8">
       <div class="container">
-
         <!-- categories -->
         <app-categories
           *ngIf="view === 'categories'"
@@ -77,12 +76,21 @@
         ></app-clients-api-list>
 
         <!-- actions -->
+
         <!-- workflow -->
         <pestras-workflows
           *ngIf="view === 'workflow'"
           [blueprint]="serial"
           [editable]="([bp.owner] | sessionIs) || (bp.collaborators | sessionIs)"
         ></pestras-workflows>
+
+        <!-- workflow -->
+        <pestras-blueprint-collaborators
+          *ngIf="view === 'collaborators'"
+          [blueprint]="bp"
+          [editable]="([bp.owner] | sessionIs) || (bp.collaborators | sessionIs)"
+        ></pestras-blueprint-collaborators>
+
         <!-- settings -->
       </div>
     </div>

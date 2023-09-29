@@ -41,6 +41,7 @@ table {
       padding: 16px 12px;
       white-space: nowrap;
       overflow: hidden;
+      font-size: 0.9rem;
 
       >* {
         vertical-align: middle;
@@ -104,6 +105,7 @@ table {
   }
 
   tbody tr.row-hover {
+    cursor: pointer;
     transition: border-color 250ms;
 
     &:hover {
@@ -119,5 +121,15 @@ table {
   .icon-col {
     width: 44px;
     text-align: center;
+  }
+
+  .date-col {
+    font-weight: bold;
+    color: var(--success-active);
+  }
+
+  .num-col {
+    font-weight: bold;
+    color: var(--primary);
   }
 }

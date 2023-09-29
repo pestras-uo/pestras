@@ -21,6 +21,15 @@
 
           <button
             *ngIf="(d.owner | sessionIs) || (d.collaborators | sessionIs)"
+            class="btn-outline btn-round"
+            (click)="set('access')"
+          >
+            <i size="small" puiIcon="access"></i>
+            {{c['access']}}
+          </button>
+
+          <button
+            *ngIf="(d.owner | sessionIs) || (d.collaborators | sessionIs)"
             class="btn-primary btn-round"
             (click)="openDialog(updateTmp)"
           >
@@ -33,14 +42,10 @@
 
     <div class="pb-10 pi-8">
       <div class="container tight">
-        <!-- desc -->
-        <app-content-views
-          *ngIf="view === 'details'"
+        <pestras-entity-access
+          *ngIf="view === 'access'"
           [entity]="d.serial"
-          [editable]="(d.owner | sessionIs) || (d.collaborators | sessionIs)"
-        ></app-content-views>
-
-        <pestras-entity-access *ngIf="view === 'access'" [entity]="d.serial"></pestras-entity-access>
+        ></pestras-entity-access>
 
         <app-report-slide
           *ngIf="view !== 'details' && view !== 'access'"

@@ -8,7 +8,7 @@ import { BlueprintsRouter } from './blueprints.router';
 import { SideMenuView } from './views/side-menu/side-menu.view';
 import { DetailsPage } from './details/details.page';
 import { ContraModule } from '@pestras/frontend/util/contra';
-import { PuiIcon, PuiPreloaderModule } from '@pestras/frontend/ui';
+import { PuiIcon, PuiPreloaderModule, PuiSelectInput, PuiUtilPipesModule } from '@pestras/frontend/ui';
 import { NoDataPlaceholderWidget } from '@pestras/frontend/widgets/no-data-placeholder';
 import { DataStoresFeatureModule } from '@pestras/frontend/features/data-stores';
 import { CategoriesFeatureModule } from '@pestras/frontend/features/categories';
@@ -19,6 +19,9 @@ import { ContentViewsFeatureModule } from '@pestras/frontend/features/content-vi
 import { WorkflowsFeatureModule } from '@pestras/frontend/features/workflows';
 import { BlueprintsListViewComponent } from './views/blueprints-list/blueprints-list.view';
 import { BlueprintsFeatureModule } from '@pestras/frontend/features/blueprints';
+import { UsersFeatureModule } from '@pestras/frontend/features/users';
+import { CollaboratorsViewComponent } from './views/collaborators/collaborators.view';
+import { OrgunitsFeatureModule } from '@pestras/frontend/features/orgunits';
 
 
 @NgModule({
@@ -27,7 +30,8 @@ import { BlueprintsFeatureModule } from '@pestras/frontend/features/blueprints';
     BlueprintsRouter,
     BlueprintsListViewComponent,
     SideMenuView,
-    DetailsPage
+    DetailsPage,
+    CollaboratorsViewComponent
   ],
   imports: [
     // Angular
@@ -39,6 +43,8 @@ import { BlueprintsFeatureModule } from '@pestras/frontend/features/blueprints';
     // Pui
     PuiIcon,
     PuiPreloaderModule,
+    PuiSelectInput,
+    PuiUtilPipesModule,
     // Widgets
     NoDataPlaceholderWidget,
     // Features
@@ -49,7 +55,9 @@ import { BlueprintsFeatureModule } from '@pestras/frontend/features/blueprints';
     CategoriesFeatureModule,
     WorkspaceFeatureModule,
     ClientsApiFeatureModule,
-    SessionFeatureModule
+    SessionFeatureModule,
+    UsersFeatureModule,
+    OrgunitsFeatureModule
   ]
 })
 export class BlueprintsModule { }
