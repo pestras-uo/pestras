@@ -73,7 +73,11 @@ export class MapRegionsChartView implements OnChanges {
           type: 'map',
           map: this.serial,
           label: {
-            show: true
+            show: true,
+            fontSize: 12
+          },
+          itemStyle: {
+            borderWidth: 0
           },
           data
         }

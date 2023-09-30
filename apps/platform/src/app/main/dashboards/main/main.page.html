@@ -17,54 +17,72 @@
   <main>
     <div class="container">
       <div class="card card-clear">
-        <div class="card-tabs">
+        <div class="card-tabs" *ngIf="tab$ | async as tab">
           <h5
             class="tab"
-            [class.active]="tab() === 'public'"
-            (click)="tab.set('public')"
+            [class.active]="tab === 'public'"
+            (click)="tab$.next('public')"
           >
             {{c['public']}}
           </h5>
           <h5
             class="tab"
-            [class.active]="tab() === 'owned'"
-            (click)="tab.set('owned')"
+            [class.active]="tab === 'owned'"
+            (click)="tab$.next('owned')"
           >
             {{c['owned']}}
           </h5>
           <div class="grow"></div>
           <button
-            class="btn-small btn-icon btn-round btn-primary"
+            class="btn-small btn-icon btn-round"
             (click)="openDialog(addTmp)"
           >
             <i puiIcon="add" size="small"></i>
           </button>
         </div>
 
-        <ng-container *ngIf="dashboards$() | async as dashboards">
-          <div
-            class="card-body pi-0 grid cols-3 gap-6"
-            *ngIf="dashboards.results.length else noData"
-          >
-            <div class="card" *ngFor="let d of dashboards.results">
-              <h4 class="card-header">{{d.title}}</h4>
-              <div class="card-footer">
-                <a class="btn btn-round" [routerLink]="[d.serial]"
-                  >{{c['continue']}}</a
+        <ng-container *ngIf="dashboards$ | async as dashboards">
+          <div class="card-body pi-0 pbe-0">
+            <table *ngIf="dashboards.results.length else noData">
+              <thead>
+                <tr>
+                  <th class="w-2">#</th>
+                  <th>{{c['title']}}</th>
+                  <th>{{c['owner']}}</th>
+                  <th>{{c['createDate']}}</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr
+                  *ngFor="let ds of dashboards.results; let i = index"
+                  class="row-hover"
+                  [routerLink]="[ds.serial]"
                 >
-              </div>
-            </div>
-          </div>
+                  <td class="index-col">{{skip + i + 1}}</td>
+                  <td>{{ds.title}}</td>
+                  <td><app-avatar [serial]="ds.owner" size="small"></app-avatar></td>
+                  <td class="date-col w-3">
+                    {{ds.create_date | date: 'dd-MM-yyyy'}}
+                  </td>
+                </tr>
+              </tbody>
+            </table>
 
-          <ng-template #noData>
-            <div class="card-body">
+            <ng-template #noData>
               <no-data-placeholder-widget
                 [actionName]="c['addNew']"
                 (action)="openDialog(addTmp)"
                 >{{c['noDataMsg']}}</no-data-placeholder-widget
               >
-            </div>
-          </ng-template>
+            </ng-template>
+          </div>
+
+          <div class="card-footer">
+            <div class="grow"></div>
+            <pui-table-pagination [pageSize]="10" [count]="count" (selects)="page$.next($event)"></pui-table-pagination>
+            <div class="grow"></div>
+          </div>
+
         </ng-container>
       </div>
     </div>

@@ -17,6 +17,7 @@ import {
   PuiPreloaderModule,
   PuiSelectInput,
   PuiSideDrawerModule,
+  PuiTableModule,
   PuiUtilPipesModule,
 } from '@pestras/frontend/ui';
 import { TBgWidget } from '@pestras/frontend/widgets/t-bg';
@@ -57,6 +58,7 @@ import { EntityAccessFeatureModule } from '@pestras/frontend/features/entity-acc
     PuiImageInput,
     PuiUtilPipesModule,
     PuiInfiniteScroll,
+    PuiTableModule,
     // Widgets
     QuillModule,
     TBgWidget,

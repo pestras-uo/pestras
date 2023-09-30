@@ -1,5 +1,5 @@
 <form [formGroup]="form" *contra="let c">
-  <div class="flex gap-4 align-items-center mbe-6">
+  <div class="flex gap-2 align-items-center mbe-4">
     <div class="grow" formGroupName="use_map">
       <label for="map-region">
         {{c['selectMap']}}
@@ -33,7 +33,7 @@
   </div>
 
   <div
-    class="flex gap-4 align-items-center mbe-6"
+    class="flex gap-2 align-items-center mbe-4"
     *ngIf="type.value === 'regions'"
     formGroupName="regions"
   >
@@ -69,7 +69,7 @@
         </button>
       </div>
 
-      <div class="flex gap-4 align-items-center">
+      <div class="flex gap-2 align-items-center">
         <div class="grow" *ngFor="let color of colorRange.controls; let i = index; let last = last">
           <label for=" + '-color">
             {{c['color']}}
@@ -89,12 +89,12 @@
 
   <ng-container *ngIf="type.value === 'scatter'" formGroupName="scatter">
     <pui-check-input
-      class="mbe-6"
+      class="mbe-4"
       [label]="c['useGoogleMap']"
       formControlName="google_map"
     ></pui-check-input>
 
-    <div class="flex gap-4 align-items-center mbe-6">
+    <div class="flex gap-2 align-items-center mbe-4">
       <div class="grow">
         <label for="value-field">{{c['valueField']}}</label>
         <div [class]="'fc ' + fcClass">
@@ -117,7 +117,7 @@
       </div>
     </div>
 
-    <div class="flex gap-4 align-items-center mbe-6">
+    <div class="flex gap-2 align-items-center mbe-4">
       <div class="grow">
         <label for="size-field">{{c['sizeField']}}</label>
         <div [class]="'fc ' + fcClass">
@@ -142,16 +142,16 @@
     </div>
 
     <ng-container formGroupName="tooltip">
-      <h4 class="mbe-6">{{c['tooltipContent']}}</h4>
+      <h4 class="mbe-4">{{c['tooltipContent']}}</h4>
 
-      <div class="flex gap-4 align-items-center mbe-6">
+      <div class="flex gap-2 align-items-center mbe-4">
         <div class="grow">
           <label for="tooltip-image">{{c['image']}}</label>
           <div [class]="'fc ' + fcClass">
             <pui-select-input
               labelRef="tooltip-image"
               formControlName="image"
-              [list]="dsFields | arrayFilter: filterTooltipField | arrayMap: mapField"
+              [list]="dsFields | arrayFilter: filterTooltipImageField | arrayMap: mapField"
             ></pui-select-input>
           </div>
         </div>
@@ -180,7 +180,7 @@
   </ng-container>
 
   <div
-    class="flex gap-4 align-items-end mbe-6"
+    class="flex gap-2 align-items-end mbe-4"
     *ngIf="type.value === 'pie'"
     formGroupName="pie"
   >

@@ -1,5 +1,5 @@
 <form [formGroup]="form" *contra="let c">
-  <div class="flex gap-4 align-items-end mbe-6">
+  <div class="flex gap-2 align-items-end mbe-4">
     <div class="grow">
       <label for="count-name">{{c['countFieldName']}}</label>
       <div [class]="'fc ' + fcClass">
@@ -20,7 +20,7 @@
   </div>
 
   <ng-container formArrayName="by">
-    <div class="toolbar mbe-6">
+    <div class="toolbar mbe-4">
       <h4>{{c['groupFields']}}</h4>
       <div class="grow"></div>
       <button
@@ -35,10 +35,10 @@
     <!-- by fields list -->
     <div
       *ngFor="let g of by.controls; let i = index; let last = last"
-      [class.mbe-6]="!last"
+      [class.mbe-4]="!last"
       [formGroup]="g"
     >
-      <div class="flex gap-4 align-items-end mbe-6">
+      <div class="flex gap-2 align-items-end mbe-4">
         <div class="grow">
           <label [for]="serial + i + '-group-field'">{{c['fieldName']}}</label>
           <div [class]="'fc ' + fcClass">
@@ -67,7 +67,7 @@
 
       <div
         *ngIf="g.controls.logical.value"
-        class="flex gap-4 align-items-end mbs-6"
+        class="flex gap-2 align-items-end mbs-6"
       >
         <div class="grow">
           <label [for]="i + '-logical_name'">{{c['newName']}}</label>
@@ -117,7 +117,7 @@
 
     <div class="divider mb-6"></div>
 
-    <div class="toolbar mbe-6">
+    <div class="toolbar mbe-4">
       <h4>{{c['calcFields']}}</h4>
       <div class="grow"></div>
       <button
@@ -130,9 +130,9 @@
     </div>
 
     <div
-      class="flex gap-4 align-items-end"
+      class="flex gap-2 align-items-end"
       *ngFor="let g of calc.controls; let i = index; let last = last"
-      [class.mbe-6]="!last"
+      [class.mbe-4]="!last"
       [formGroup]="g"
     >
       <div class="grow">

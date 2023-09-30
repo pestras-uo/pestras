@@ -1,5 +1,5 @@
 <form [formGroup]="form" *contra="let c">
-  <div class="flex gap-4 align-items-end mbe-6">
+  <div class="flex gap-2 align-items-end mbe-4">
     <div class="grow">
       <label for="x-field">{{c['xField']}}</label>
       <div [class]="'fc ' + fcClass">
@@ -17,7 +17,7 @@
     ></pui-check-input>
   </div>
 
-  <div class="toolbar mbe-6">
+  <div class="toolbar mbe-4">
     <h4>{{c['series']}}</h4>
     <div class="grow"></div>
     <button class="btn-icon btn-small btn-round" (click)="addSerie()">
@@ -27,7 +27,7 @@
 
   <ng-container formArrayName="series">
     <fieldset
-      [class.mbe-6]="!last"
+      [class.mbe-4]="!last"
       *ngFor="let serie of series.controls; let last= last; let i = index"
       [formGroup]="serie"
     >
@@ -43,7 +43,7 @@
         </button>
       </legend>
 
-      <div class="flex gap-4 align-items-end mbe-6">
+      <div class="flex gap-2 align-items-end mbe-4">
         <div class="grow">
           <label [for]="i + '-serie-name'">{{c['serieName']}}</label>
           <div [class]="'fc ' + fcClass">
@@ -67,7 +67,7 @@
         </div>
       </div>
 
-      <div class="flex gap-4 align-items-end mbe-6">
+      <div class="flex gap-2 align-items-end mbe-4">
         <div class="grow">
           <label for="-mark-lines">{{c['markLines']}}</label>
           <div [class]="'fc ' + fcClass">

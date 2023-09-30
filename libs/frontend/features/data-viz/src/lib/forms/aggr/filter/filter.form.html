@@ -1,5 +1,5 @@
 <form [formGroup]="form" *contra="let c">
-  <div class="toolbar mbe-6">
+  <div class="toolbar mbe-4">
     <pui-check-input
       [label]="c['anyCase']"
       formControlName="any"
@@ -16,8 +16,8 @@
 
   <ng-container formArrayName="filters">
     <div
-      class="flex gap-4 align-items-end"
-      [class.mbe-6]="!last"
+      class="flex gap-2 align-items-end"
+      [class.mbe-4]="!last"
       *ngFor="let g of filters.controls; let i = index; let last = last"
       [formGroup]="g"
     >

@@ -1,10 +1,10 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { Dialog, DialogRef } from '@angular/cdk/dialog';
-import { Component, TemplateRef, computed, signal } from '@angular/core';
+import { Component, TemplateRef } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
 import { DashboardsState, SessionState } from '@pestras/frontend/state';
 import { ToastService } from '@pestras/frontend/ui';
-import { tap } from 'rxjs';
+import { BehaviorSubject, combineLatest, distinctUntilChanged, switchMap, tap } from 'rxjs';
 
 @Component({
   selector: 'pestras-dashboards-main-page',
@@ -12,18 +12,26 @@ import { tap } from 'rxjs';
   styleUrls: ['./main.page.scss'],
 })
 export class MainPageComponent {
-  readonly dashboards$ = computed(
-    () => (this.tab() === 'public'
-      ? this.state.search({ skip: this.skip(), limit: 10, search: { topic: null } })
-      : this.state.search({ skip: this.skip(), limit: 10, search: { topic: null, owner: this.session.get()?.serial } }))
-      .pipe(tap(res => this.count = res.count))
-  );
+  readonly tab$ = new BehaviorSubject('public');
+  readonly page$ = new BehaviorSubject(1);
+  readonly pageSize = 10;
+
+  readonly dashboards$ = combineLatest([this.tab$, this.page$.pipe(distinctUntilChanged())])
+    .pipe(
+      switchMap(([tab, page]) => {
+        this.skip = (page - 1) * this.pageSize;
+
+        return tab === 'public'
+          ? this.state.search({ skip: this.skip, limit: 10, search: { topic: null } })
+          : this.state.search({ skip: this.skip, limit: 10, search: { topic: null, owner: this.session.get()?.serial } })
+      }),
+      tap(res => this.count = res.count)
+    );
 
   readonly title = new FormControl<string>('', { validators: Validators.required, nonNullable: true });
 
   count = 0;
-  tab = signal('public');
-  skip = signal(0);
+  skip = 0;
   dialogRef: DialogRef | null = null;
   preloader = false;
 
@@ -35,8 +43,8 @@ export class MainPageComponent {
   ) { }
 
   load() {
-    if (this.skip() + 10 < this.count)
-      this.skip.set(this.skip() + 10);
+    if (this.skip + 10 < this.count)
+      this.skip = this.skip + 10;
   }
 
   openDialog(tmp: TemplateRef<unknown>) {

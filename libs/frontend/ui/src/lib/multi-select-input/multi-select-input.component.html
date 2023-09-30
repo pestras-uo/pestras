@@ -1,6 +1,6 @@
 <section class="flex flex-wrap align-items-center gap-2">
   <ng-container *ngIf="value.length; else noItems">
-    <p *ngIf="!badges; else badgesTmp" class="bold">
+    <p *ngIf="!badges; else badgesTmp" class="bold f9 text2">
       {{ value.length }}
       {{ value.length === 1 ? translation.item : translation.items }}
     </p>

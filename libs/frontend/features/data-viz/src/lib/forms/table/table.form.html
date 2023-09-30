@@ -1,18 +1,18 @@
 <form [formGroup]="form" *contra="let c">
   <label for="pagination">{{c['recordsPerPage']}}</label>
-  <div [class]="'fc mbe-6 ' + fcClass">
+  <div [class]="'fc mbe-4 ' + fcClass">
     <input type="number" formControlName="pagination" id="pagination" />
   </div>
 
   <pui-check-input
-    class="mbe-6"
+    class="mbe-4"
     [label]="c['showIndicator']"
     [formControl]="indicator"
   ></pui-check-input>
 
   <div
     *ngIf="indicator.value"
-    class="flex gap-4 align-items-center"
+    class="flex gap-2 align-items-center"
     formGroupName="indicator"
   >
     <div class="grow">

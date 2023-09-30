@@ -34,12 +34,6 @@
   min-height: var(--control-height);
   font-size: var(--font-size);
 
-  input,
-  select,
-  textarea {
-    font-size: var(--font-size);
-  }
-
   &.fc-clear {
     background-color: transparent;
     border: 2px solid transparent;

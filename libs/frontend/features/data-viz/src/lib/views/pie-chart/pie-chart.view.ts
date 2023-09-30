@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @angular-eslint/component-class-suffix */
 /* eslint-disable @angular-eslint/component-selector */
-import { Component, Input, OnChanges } from '@angular/core';
+import { Component, Input, OnChanges, booleanAttribute } from '@angular/core';
 import { BaseDataViz, PieDataVizOptions } from '@pestras/shared/data-model';
 import { EChartsOption } from 'echarts';
 import { ChartDataLoad } from '../../util';
@@ -15,13 +15,14 @@ import { ChartDataLoad } from '../../util';
   `]
 })
 export class PieChartView implements OnChanges {
-
   chartOptions!: EChartsOption;
 
   @Input({ required: true })
   conf!: BaseDataViz<any>;
   @Input({ required: true })
   data!: ChartDataLoad;
+  @Input({ transform: booleanAttribute })
+  dark = false;
 
   ngOnChanges() {
     this.renderPieChart(this.conf.options, this.init(this.conf.options));
@@ -63,17 +64,23 @@ export class PieChartView implements OnChanges {
           avoidLabelOverlap: false,
           itemStyle: {
             borderRadius: 10,
-            borderColor: '#fff',
             borderWidth: 2
           },
           label: {
             position: 'outer',
             alignTo: 'labelLine',
+            color: this.dark ? '#DDF' : '#335',
             show: true,
             formatter(param) {
               // correct the percentage
               return param.name + ': ' + param.value + ' (' + (param?.percent || 0) * 2 + '%)';
             }
+          },
+          tooltip: {
+            backgroundColor: this.dark ? '#224' : '#EEF',
+            // textStyle: {
+            //   color: '#335'
+            // }
           },
           emphasis: {
             label: {

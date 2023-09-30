@@ -303,7 +303,7 @@ export abstract class StatorGroupState<T extends Record<string, any> = any> {
         tap(list => {
           const dataMap = this._data.getValue();
 
-          for (const doc of list)
+          for (const doc of list ?? [])
             dataMap.set(this._id(doc), objUtil.freezeObj(objUtil.cloneObject(doc)));
 
           this._groupsTiming.set(group, Date.now());

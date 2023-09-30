@@ -36,5 +36,5 @@ new Validall(WorkspaceValidators.ADD_SLIDE, {
   name: { $type: 'string' },
   dashboard: { $type: 'string' },
   slide: { $type: 'string' },
-  scope: { $type: 'string' }
+  scope: { $type: 'string', $nullable: true }
 });
