@@ -7,7 +7,7 @@
 
   <div class="topic-details" *ngIf="selected | topic | async as topic">
     <header class="bg-surface1 pi-8 border-be">
-      <div class="container">
+      <div class="container tight">
         <div class="toolbar gap-4">
           <div>
             <p class="primary bold">
@@ -24,7 +24,7 @@
     </header>
 
     <main class="pi-8">
-      <div class="container">
+      <div class="container tight">
         <app-content-views
           [entity]="topic.serial"
           [editable]="topic.owner | sessionIs"

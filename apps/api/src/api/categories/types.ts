@@ -8,8 +8,8 @@ import { CreateCategoryInput, UpdateCategoryInput } from "@pestras/backend/model
 
 export namespace CategoriesApi {
 
-  export type GetAllReq = Request;
-  export type GetAllRes = Response<Category[], UserSession>;
+  export type GetByParentReq = Request<{ serial: string; }>;
+  export type GetByParentRes = Response<Category[], UserSession>;
 
   export type GetByIdReq = Request<{ serial: string }>;
   export type GetByIdRes = Response<Category | null, UserSession>;

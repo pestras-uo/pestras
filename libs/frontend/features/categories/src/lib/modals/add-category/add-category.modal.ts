@@ -5,7 +5,7 @@ import { Component, EventEmitter, Input, Output, OnInit } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { Category } from '@pestras/shared/data-model';
 import { ToastService } from '@pestras/frontend/ui';
-import { CategoriesState } from '@pestras/frontend/state';
+import { CategoriesService } from '@pestras/frontend/state';
 
 @Component({
   selector: 'app-add-category',
@@ -33,7 +33,7 @@ export class AddCategoryModal implements OnInit {
   closes = new EventEmitter<Category | null>();
 
   constructor(
-    private state: CategoriesState,
+    private service: CategoriesService,
     private fb: FormBuilder,
     private toast: ToastService
   ) { }
@@ -52,7 +52,7 @@ export class AddCategoryModal implements OnInit {
     data.parent = this.parent?.serial ?? null;
     data.value = (this.ordinal.value && this.parent) ? +data.value : data.title;
 
-    this.state.create(data)
+    this.service.create(data)
       .subscribe({
         next: cat => {
           this.toast.msg(c['success'].categoryAdd, { type: 'success' });

@@ -69,7 +69,7 @@ const imagesStorage = multer.diskStorage({
 
 const contentStorage = multer.diskStorage({
   destination: function (req, __, cb) {
-    const dir = path.join(config.uploadsDir, 'images', req.params.entity, 'tmp');
+    const dir = path.join(config.uploadsDir, 'images', req.params.entity);
     fs.mkdirSync(dir, { recursive: true });
     cb(null, dir);
   },

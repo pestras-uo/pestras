@@ -4,9 +4,9 @@ import { NextFunction } from 'express';
 
 export const CategorriesController = {
 
-  async getAll(_: CategoriesApi.GetAllReq, res: CategoriesApi.GetAllRes, next: NextFunction) {
+  async getByParent(req: CategoriesApi.GetByParentReq, res: CategoriesApi.GetByParentRes, next: NextFunction) {
     try {
-      res.json(await categoriesModel.getAll());
+      res.json(await categoriesModel.getByParent(req.params.serial));
       
     } catch (error) {
       next(error);

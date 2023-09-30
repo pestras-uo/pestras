@@ -1,6 +1,6 @@
 /* eslint-disable @angular-eslint/component-class-suffix */
 /* eslint-disable @angular-eslint/component-selector */
-import { Component, EventEmitter, HostBinding, Output, TemplateRef } from '@angular/core';
+import { Component, HostBinding, TemplateRef } from '@angular/core';
 import { take } from 'rxjs';
 import { Dialog, DialogRef } from '@angular/cdk/dialog';
 import { SessionState } from '@pestras/frontend/state';
@@ -21,9 +21,6 @@ export class DrawerView {
   preloader = false;
   full = false;
 
-  @Output()
-  toggle = new EventEmitter();
-
   @HostBinding('class.open')
   get isOpen() { return this.full; }
   @HostBinding('class.close')
@@ -35,6 +32,11 @@ export class DrawerView {
     private router: Router
   ) { }
 
+  nav(url: string[]) {
+    this.router.navigate(url)
+    this.full = false;
+  }
+
   openModal(tmp: TemplateRef<unknown>) {
     this.dialogRef = this.dialog.open(tmp);
   }
@@ -44,11 +46,6 @@ export class DrawerView {
       this.dialogRef.close();
       this.dialogRef = null;
     }
-  }
-
-  toggleView() {
-    this.full = !this.full;
-    this.toggle.emit();
   }
 
   logout() {

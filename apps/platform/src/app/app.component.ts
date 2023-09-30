@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { CategoriesState, RegionsState } from '@pestras/frontend/state';
+import { RegionsState } from '@pestras/frontend/state';
 import { ToastService } from '@pestras/frontend/ui';
 import { ContraService } from '@pestras/frontend/util/contra';
 import { SSEService } from '@pestras/frontend/state';
@@ -21,7 +21,6 @@ export class AppComponent {
     protected readonly toast: ToastService,
     protected readonly sse: SSEService,
     protected readonly regions: RegionsState,
-    protected readonly orgunits: RegionsState,
-    protected readonly cats: CategoriesState
+    protected readonly orgunits: RegionsState
   ) {}
 }

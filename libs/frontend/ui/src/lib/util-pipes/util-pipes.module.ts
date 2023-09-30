@@ -13,6 +13,7 @@ import { TimePipe } from './time.pipe';
 import { RandomColorPipe } from './random-color.pipe';
 import { DocsPathPipe } from './docs-path.pipe';
 import { PUI_UTIL_PIPES_CONFIG, PuiUtilPipesConfig } from './config';
+import { SafeUrlPipe } from './safe-url.pipe';
 
 
 
@@ -29,7 +30,8 @@ import { PUI_UTIL_PIPES_CONFIG, PuiUtilPipesConfig } from './config';
     TrimTextPipe,
     TimePipe,
     RandomColorPipe,
-    DocsPathPipe
+    DocsPathPipe,
+    SafeUrlPipe
   ],
   imports: [
     CommonModule
@@ -46,7 +48,8 @@ import { PUI_UTIL_PIPES_CONFIG, PuiUtilPipesConfig } from './config';
     TrimTextPipe,
     TimePipe,
     RandomColorPipe,
-    DocsPathPipe
+    DocsPathPipe,
+    SafeUrlPipe
   ]
 })
 export class PuiUtilPipesModule {

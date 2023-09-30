@@ -1,8 +1,8 @@
 import { Document } from "mongodb";
 import { CategoriesModel } from ".";
 
-export function getAll(this: CategoriesModel, projection?: Document) {
-  return this.col.find({}, { projection }).toArray();
+export function getByParent(this: CategoriesModel, parent: string) {
+  return this.col.find({ serial: { $regex: new RegExp(`_${parent}$`) }}).toArray();
 }
 
 export async function getBySerial(this: CategoriesModel, serial: string, projection?: Document) {

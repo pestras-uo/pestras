@@ -109,13 +109,11 @@
   "recordsPerPage": "Records Count per Page",
   "contentViewTypes": [
     { "name": "Rich Text", "value": "richText" },
-    { "name": "Image", "value": "image" },
-    { "name": "Video", "value": "video" }
+    { "name": "Image", "value": "image" }
   ],
   "reportViewTypes": [
     { "name": "Rich Text", "value": "richText" },
     { "name": "Image", "value": "image" },
-    { "name": "Video", "value": "video" },
     { "name": "Chart", "value": "dataViz" }
   ],
   "calcFields": "Calculate Fields",
