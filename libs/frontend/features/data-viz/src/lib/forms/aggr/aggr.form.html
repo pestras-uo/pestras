@@ -1,10 +1,10 @@
 <ng-container *contra="let c">
-  <h4 class="mbe-6">{{c['modifyRecords']}}</h4>
+  <h4 class="mbe-4">{{c['modifyRecords']}}</h4>
 
-  <div class="flex gap-4 align-items-end mbe-6">
+  <div class="flex gap-2 align-items-end mbe-4">
     <div class="grow">
       <label for="select-stage">{{c['selectOperation']}}</label>
-      <div [class]="'fc fc-round ' + fcClass">
+      <div [class]="'fc' + fcClass">
         <pui-select-input
           labelRef="select-stage"
           [formControl]="select"
@@ -13,7 +13,7 @@
       </div>
     </div>
     <button
-      class="btn-round btn-icon btn-primary"
+      class="btn-icon"
       [disabled]="select.invalid"
       (click)="addStage()"
     >
@@ -23,7 +23,7 @@
 
   <div
     class="card card-clear bordered"
-    [class.mbe-6]="!last"
+    [class.mbe-4]="!last"
     *ngFor="let stage of stages; let last = last"
   >
     <!-- Filter -->
@@ -36,7 +36,7 @@
           class="btn-small btn-icon btn-round"
           (click)="popStage()"
         >
-          <i puiIcon="delete"></i>
+          <i puiIcon="delete" size="small"></i>
         </button>
       </div>
 
@@ -58,7 +58,7 @@
           class="btn-small btn-icon btn-round"
           (click)="popStage()"
         >
-          <i puiIcon="delete"></i>
+          <i puiIcon="delete" size="small"></i>
         </button>
       </div>
 
@@ -80,7 +80,7 @@
           class="btn-small btn-icon btn-round"
           (click)="popStage()"
         >
-          <i puiIcon="delete"></i>
+          <i puiIcon="delete" size="small"></i>
         </button>
       </div>
 
@@ -102,7 +102,7 @@
           class="btn-small btn-icon btn-round"
           (click)="popStage()"
         >
-          <i puiIcon="delete"></i>
+          <i puiIcon="delete" size="small"></i>
         </button>
       </div>
 
@@ -121,7 +121,7 @@
           class="btn-small btn-icon btn-round"
           (click)="popStage()"
         >
-          <i puiIcon="delete"></i>
+          <i puiIcon="delete" size="small"></i>
         </button>
       </div>
 

@@ -1,6 +1,6 @@
 /* eslint-disable @angular-eslint/component-class-suffix */
 /* eslint-disable @angular-eslint/component-selector */
-import { Component, Input, Output, EventEmitter } from '@angular/core';
+import { Component, Input, Output, EventEmitter, booleanAttribute } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 @Component({
@@ -38,7 +38,7 @@ export class NoDataPlaceholderWidget {
   actionName?: string;
   @Input()
   showAction = true;
-  @Input()
+  @Input({ transform: booleanAttribute })
   small = false;
 
   @Output()

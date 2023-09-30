@@ -13,11 +13,23 @@ import { WorkspaceState } from '@pestras/frontend/state';
   styles: [`
     :host {
       display: block;
-      width: 320px;
+      width: 240px;
       padding: 32px;
       height: 100%;
       border-inline-end: 1px solid var(--border1);
       overflow: auto;
+    }
+
+    .toolbar, .card-header {
+      min-height: 24px;
+    }
+
+    .actions-on-hover button {
+      display: none;
+    }
+
+    .actions-on-hover:hover button {
+      display: inline-block;
     }
   `]
 })

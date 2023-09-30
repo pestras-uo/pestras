@@ -1,4 +1,9 @@
 {
+  "colorsTheme": "Colors Theme",
+  "colorsThemeList": [
+    { "name": "Light", "value": "light" },
+    { "name": "Dark", "value": "dark" }
+  ],
   "new": "Addition",
   "reject": "Reject",
   "comment": "Comment",
@@ -304,12 +309,20 @@
   "height": "Height",
   "viewHeightSizes": [
     {
-      "name": "Half of Screen Height",
+      "name": "Quarter of Screen Height",
       "value": 1
     },
     {
-      "name": "Full Screen Height",
+      "name": "Half of Screen Height",
       "value": 2
+    },
+    {
+      "name": "Three Quarters of Screen Height",
+      "value": 3
+    },
+    {
+      "name": "Full Screen Height",
+      "value": 4
     }
   ],
   "subTitle": "Sub Title",

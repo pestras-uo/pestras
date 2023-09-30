@@ -1,5 +1,5 @@
 <form [formGroup]="form" *contra="let c">
-  <div class="flex gap-4 mbe-6">
+  <div class="flex gap-2 mbe-4">
     <div class="grow">
       <label for="transpose-field">{{c['fieldName']}}</label>
       <div [class]="'fc ' + fcClass">
@@ -39,7 +39,7 @@
     formControlName="logical"
   ></pui-check-input>
 
-  <div *ngIf="form.controls.logical.value" class="flex gap-4 mbs-6">
+  <div *ngIf="form.controls.logical.value" class="flex gap-2 mbs-6">
     <div class="grow">
       <label for="true_value">{{c['trueValue']}}</label>
       <div [class]="'fc ' + fcClass">

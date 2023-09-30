@@ -1,7 +1,7 @@
-<form class="flex gap-4" [formGroup]="form" *contra="let c">
+<form class="flex gap-2" [formGroup]="form" *contra="let c">
   <div class="grow">
     <label for="serie-field">{{c['categoryField']}}</label>
-    <div [class]="'fc mbe-6 ' + fcClass">
+    <div [class]="'fc mbe-4 ' + fcClass">
       <pui-select-input
         labelRef="serie-field"
         formControlName="category_field"
@@ -12,7 +12,7 @@
 
   <div class="grow">
     <label for="start-field">{{c['startDateField']}}</label>
-    <div [class]="'fc mbe-6 ' + fcClass">
+    <div [class]="'fc mbe-4 ' + fcClass">
       <pui-select-input
         labelRef="start-field"
         formControlName="start_field"
@@ -23,7 +23,7 @@
 
   <div class="grow">
     <label for="end-field">{{c['endDateField']}}</label>
-    <div [class]="'fc mbe-6 ' + fcClass">
+    <div [class]="'fc mbe-4 ' + fcClass">
       <pui-select-input
         labelRef="end-field"
         formControlName="end_field"
@@ -34,7 +34,7 @@
 
   <div class="grow">
     <label for="indicator-field">{{c['indicatorField']}}</label>
-    <div [class]="'fc mbe-6 ' + fcClass">
+    <div [class]="'fc mbe-4 ' + fcClass">
       <pui-select-input
         labelRef="indicator-field"
         formControlName="indicator"

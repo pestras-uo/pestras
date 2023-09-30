@@ -41,7 +41,7 @@ new Validall(dashboardsValidators.ADD_VIEW, {
   mode: { $enum: ['light', 'dark'], $default: 'light' },
   size: {
     x: { $enum: [3,4,6,8,9,12] },
-    y: { $enum: [1,2] }
+    y: { $enum: [1,2,3,4] }
   }
 });
 
@@ -54,7 +54,7 @@ new Validall(dashboardsValidators.UPDATE_VIEW, {
   mode: { $enum: ['light', 'dark'], $default: 'light' },
   size: {
     x: { $enum: [3,4,6,8,9,12] },
-    y: { $enum: [1,2] }
+    y: { $enum: [1,2,3,4] }
   }
 });
 

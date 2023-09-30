@@ -107,6 +107,10 @@ export class MapForm implements OnInit, ControlValueAccessor {
     return ['int', 'double', 'ordinal'].includes(field.type);
   }
 
+  filterTooltipImageField(field: Field) {
+    return field.type === 'image';
+  }
+  
   filterTooltipField(field: Field) {
     return field.type === 'string';
   }

@@ -3,8 +3,17 @@
 /* eslint-disable @angular-eslint/component-selector */
 import { Component, Input, OnChanges } from '@angular/core';
 import { BarDataVizOptions, BaseDataViz, Field } from '@pestras/shared/data-model';
-import { EChartsOption, BarSeriesOption } from 'echarts';
+import { EChartsOption, BarSeriesOption, graphic } from 'echarts';
 import { ChartDataLoad } from '../../util';
+
+const colors = [
+  ['#83bff6', '#188df0', '#188df0'],
+  ['#83e6af', '#18e08d', '#18e08d'],
+  ['#e683af', '#e0188d', '#e0188d'],
+  ['#e6af83', '#e08d18', '#e08d18'],
+  ['#bf83f6', '#d818f0', '#d818f0'],
+  ['#83afe6', '#188de0', '#188de0']
+]
 
 @Component({
   selector: 'app-bar-chart',
@@ -68,7 +77,8 @@ export class BarChartView implements OnChanges {
       formatter: function (param: any) {
         return "" + Math.round(+param.value);
       },
-      fontSize: 16
+      fontSize: 16,
+      color: '#ffffff'
     }
 
     if (options.horizontal) {
@@ -95,7 +105,7 @@ export class BarChartView implements OnChanges {
           type: 'shadow'
         }
       },
-      legend: series.length > 1 ? { 
+      legend: series.length > 1 ? {
         // orient: 'vertical', 
         // left: 'right',
         // top: 'center'
@@ -108,17 +118,44 @@ export class BarChartView implements OnChanges {
         containLabel: true
       },
       xAxis: options.horizontal
-        ? { type: 'value', boundaryGap: [0, 0.01] }
-        : { type: 'category', data: categories, axisLabel: { rotate: 45 } },
+        ? { type: 'value', boundaryGap: [0.2, 0.2], alignTicks: true }
+        : {
+          type: 'category',
+          data: categories,
+          axisLabel: { rotate: 45 }
+        },
       yAxis:
         !options.horizontal
-          ? valueFields.map(f => ({ 
-            type: 'value', 
-            boundaryGap: [0, 0.01],
-            formatter: function (value: number) { return value + ' ' + f.unit} 
+          ? valueFields.map(f => ({
+            type: 'value',
+            boundaryGap: [0.2, 0.2],
+            formatter: function (value: number) { return value + ' ' + f.unit },
+            alignTicks: true
           }))
-          : { type: 'category', data: categories },
-      series: series.map(s => ({ ...s, label: labelOptions }))
+          : {
+            type: 'category',
+            data: categories
+          },
+      series: series.map((s, i) => ({
+        ...s,
+        label: labelOptions,
+        itemStyle: {
+          color: new graphic.LinearGradient(0, 0, 0, 1, [
+            { offset: 0, color: colors[i][0] },
+            { offset: 0.5, color: colors[i][1] },
+            { offset: 1, color: colors[i][2] }
+          ])
+        },
+        emphasis: {
+          itemStyle: {
+            color: new graphic.LinearGradient(0, 0, 0, 1, [
+              { offset: 0, color: colors[i][2] },
+              { offset: 0.7, color: colors[i][1] },
+              { offset: 1, color: colors[i][0] }
+            ])
+          }
+        },
+      }))
     };
   }
 }

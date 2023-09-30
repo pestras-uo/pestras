@@ -1,7 +1,7 @@
 <form class="flex gap-4 align-items-end" [formGroup]="form" *contra="let c">
   <div class="grow">
     <label for="category-name">{{c['categoryField']}}</label>
-    <div [class]="'fc mbe-6 ' + fcClass">
+    <div [class]="'fc mbe-4 ' + fcClass">
       <pui-select-input
         labelRef="category-name"
         formControlName="category_field"
@@ -12,7 +12,7 @@
 
   <div class="grow">
     <label for="value-field">{{c['valueFields']}}</label>
-    <div [class]="'fc mbe-6 ' + fcClass">
+    <div [class]="'fc mbe-4 ' + fcClass">
       <pui-multi-select-input
         *ngIf="dsFields | arrayMap: mapField as fields"
         labelRef="value-field"
@@ -23,7 +23,7 @@
   </div>
 
   <pui-check-input
-    class="mbe-6"
+    class="mbe-4"
     [label]="c['horizontal']"
     formControlName="horizontal"
   ></pui-check-input>

@@ -46,23 +46,25 @@ export class RadarChartView implements OnChanges {
         const serie = series.get(field.display_name) || [];
         const cat = r[catField.name];
 
-        const catIndex = indicators.findIndex(i => i.name === cat);
+        let catIndex = indicators.findIndex(i => i.name === cat);
 
-        if (catIndex === -1)
+        if (catIndex === -1) {
           indicators.push({ name: cat, max: r[field.name] });
-        else
-          if (indicators[catIndex].max < r[field.name])
-            indicators[catIndex].max = r[field.name];
+          catIndex = indicators.length - 1;
+        } else
+          indicators[catIndex].max = Math.max(indicators[catIndex].max, r[field.name]);
 
         serie[catIndex] = r[field.name];
         series.set(field.display_name, serie);
       }
+
     }
 
     return { indicators, data: [...series.entries()].map(([name, value]) => ({ name, value })) };
   }
 
   render(indicators: { name: string; max: number; }[], data: { name: string; value: number[] }[]) {
+    
     this.chartOptions = {
       textStyle: { fontFamily: 'Almarai' },
       legend: {},

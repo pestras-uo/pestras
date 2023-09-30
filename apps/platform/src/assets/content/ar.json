@@ -1,4 +1,9 @@
 {
+  "colorsTheme": "سمة الألوان",
+  "colorsThemeList": [
+    { "name": "الفاتح", "value": "light" },
+    { "name": "الغامق", "value": "dark" }
+  ],
   "new": "إضافة",
   "reject": "رفض",
   "comment": "تعليق",
@@ -378,12 +383,20 @@
   "height": "الطول",
   "viewHeightSizes": [
     {
-      "name": "نصف الشاشة",
+      "name": "ربع الشاشة",
       "value": 1
     },
     {
-      "name": "كامل الشاشة",
+      "name": "نصف الشاشة",
       "value": 2
+    },
+    {
+      "name": "ثلاثة أرباع الشاشة",
+      "value": 3
+    },
+    {
+      "name": "كامل الشاشة",
+      "value": 4
     }
   ],
   "subTitle": "العنوان الفرعي",

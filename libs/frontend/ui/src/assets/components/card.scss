@@ -8,6 +8,10 @@
   flex-direction: column;
   overflow: hidden;
 
+  &.color-scheme-dark {
+    background-color: var(--surface2);
+  }
+
   @include boxShadow(1);
 
   &.card-clear {

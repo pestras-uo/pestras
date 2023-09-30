@@ -1,7 +1,7 @@
-<form class="flex gap-4 align-items-end" [formGroup]="form" *contra="let c">
+<form class="flex gap-2 align-items-end" [formGroup]="form" *contra="let c">
   <div class="grow">
     <label for="value-field">{{c['valueFields']}}</label>
-    <div [class]="'fc mbe-6 ' + fcClass">
+    <div [class]="'fc mbe-4 ' + fcClass">
       <pui-multi-select-input
         labelRef="value-field"
         formControlName="value_fields"
@@ -12,7 +12,7 @@
 
   <div class="grow">
     <label for="category-field">{{c['categoryField']}}</label>
-    <div [class]="'fc mbe-6 ' + fcClass">
+    <div [class]="'fc mbe-4 ' + fcClass">
       <pui-select-input
         labelRef="category-field"
         formControlName="category_field"

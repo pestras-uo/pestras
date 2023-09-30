@@ -1,6 +1,6 @@
 /* eslint-disable @angular-eslint/component-class-suffix */
 /* eslint-disable @angular-eslint/component-selector */
-import { ChangeDetectionStrategy, Component, HostBinding, Input, OnChanges } from '@angular/core';
+import { ChangeDetectionStrategy, Component, HostBinding, Input, OnChanges, booleanAttribute } from '@angular/core';
 import { BaseDataViz, DataRecord, DataVizTypes, TypedEntity, aggrRecords, createField } from '@pestras/shared/data-model';
 import { DataVizState, DataStoresState, RegionsState, RecordsService } from '@pestras/frontend/state';
 import { Observable, switchMap, forkJoin, filter, take, map, tap } from 'rxjs';
@@ -19,6 +19,8 @@ export class ChartView implements OnChanges {
 
   @Input({ required: true })
   serial!: string;
+  @Input({ transform: booleanAttribute })
+  dark = false;
 
   @HostBinding('class.ltr')
   ltr = false;

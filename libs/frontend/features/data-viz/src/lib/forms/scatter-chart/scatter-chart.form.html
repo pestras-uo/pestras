@@ -1,5 +1,5 @@
 <form [formGroup]="form" *contra="let c">
-  <div class="toolbar mbe-6">
+  <div class="toolbar mbe-4">
     <h4>{{c['series']}}</h4>
     <div class="grow"></div>
     <button
@@ -13,7 +13,7 @@
 
   <ng-container formArrayName="series">
     <fieldset
-      class="mbe-6"
+      class="mbe-4"
       *ngFor="let serie of series.controls; let i = index"
       [formGroup]="serie"
     >
@@ -28,10 +28,10 @@
         </button>
       </legend>
 
-      <div class="flex gap-4 align-items-end mbe-6">
+      <div class="flex gap-2 align-items-end mbe-4">
         <div class="grow">
           <label [for]="i + '-serie-name'">{{c['serieName']}}</label>
-          <div [class]="'fc mbe-6 ' + fcClass">
+          <div [class]="'fc mbe-4 ' + fcClass">
             <input
               type="text"
               [id]="i + '-serie-name'"
@@ -42,7 +42,7 @@
 
         <div class="grow">
           <label for="x-field">{{c['xField']}}</label>
-          <div [class]="'fc mbe-6 ' + fcClass">
+          <div [class]="'fc mbe-4 ' + fcClass">
             <pui-select-input
               labelRef="x-field"
               formControlName="x"
@@ -53,7 +53,7 @@
 
         <div class="grow">
           <label [for]="i + '-y-field'">{{c['yFields']}}</label>
-          <div [class]="'fc mbe-6 ' + fcClass">
+          <div [class]="'fc mbe-4 ' + fcClass">
             <pui-select-input
               [labelRef]="i + '-y-field'"
               formControlName="y"
@@ -63,7 +63,7 @@
         </div>
       </div>
 
-      <div class="flex gap-4 align-items-end mbe-6" formGroupName="size">
+      <div class="flex gap-2 align-items-end mbe-4" formGroupName="size">
         <div class="grow">
           <label [for]="i + '-size-field'">{{c['sizeField']}}</label>
           <div [class]="'fc ' + fcClass">
@@ -94,13 +94,13 @@
 
   <ng-container *ngIf="series.length <= 1 && !useCluster.value">
     <pui-check-input
-      class="mbe-6"
+      class="mbe-4"
       [label]="c['useRegression']"
       [formControl]="useRegression"
     ></pui-check-input>
 
     <div
-      class="flex gap-4 align-items-end mbe-6"
+      class="flex gap-2 align-items-end mbe-4"
       *ngIf="useRegression.value"
       formGroupName="regression"
     >
@@ -129,7 +129,7 @@
 
   <ng-container *ngIf="series.length <= 1 && !useRegression.value">
     <pui-check-input
-      class="mbe-6"
+      class="mbe-4"
       [label]="c['useCluster']"
       [formControl]="useCluster"
     ></pui-check-input>

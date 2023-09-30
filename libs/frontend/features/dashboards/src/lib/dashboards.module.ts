@@ -4,7 +4,7 @@ import { TopicDashboardsListView } from './views/topics-dashboards-list/topics-d
 import { RouterModule } from '@angular/router';
 import { NoDataPlaceholderWidget } from '@pestras/frontend/widgets/no-data-placeholder';
 import { ReactiveFormsModule } from '@angular/forms';
-import { PuiIcon, PuiPreloaderModule, PuiSelectInput, PuiUtilPipesModule } from '@pestras/frontend/ui';
+import { PuiCheckInput, PuiIcon, PuiPreloaderModule, PuiSelectInput, PuiUtilPipesModule } from '@pestras/frontend/ui';
 import { DialogModule } from '@angular/cdk/dialog';
 import { DashboardSlideComponent } from './views/dashboard-slide/dashboard-slide.view';
 import { DragDropModule } from '@angular/cdk/drag-drop';
@@ -45,6 +45,7 @@ import { AvatarWidget } from '@pestras/frontend/widgets/avatar';
     PuiIcon,
     PuiSelectInput,
     PuiUtilPipesModule,
+    PuiCheckInput,
     // Features
     DataVizFeatureModule,
     WorkspaceFeatureModule,

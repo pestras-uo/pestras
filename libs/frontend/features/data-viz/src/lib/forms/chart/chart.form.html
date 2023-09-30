@@ -1,9 +1,9 @@
-<div class="card w-30 h-fit card-clear" *contra="let c" [formGroup]="form">
+<div class="card w-25 h-fit card-clear" *contra="let c" [formGroup]="form">
   <h3 class="card-header">{{c['addDataViz']}}</h3>
 
   <div class="card-body overflow-auto">
     <app-data-store-input
-      class="mbe-6"
+      class="mbe-4"
       [fcClass]="fcClass"
       formControlName="data_store"
     ></app-data-store-input>
@@ -11,7 +11,7 @@
     <ng-container *ngIf="dataStore.value | dataStore | async as ds">
       <ng-container *ngIf="ds.serial | records | async as records">
         <app-aggr
-          class="mbe-6"
+          class="mbe-4"
           [dataStore]="ds"
           [records]="records"
           [fcClass]="fcClass"
@@ -20,10 +20,10 @@
         ></app-aggr>
       </ng-container>
 
-      <h4 class="mbe-6">{{c['viewSettings']}}</h4>
+      <h4 class="mbe-4">{{c['viewSettings']}}</h4>
 
       <label for="type">{{c['type']}}</label>
-      <div [class]="'fc mbe-6 ' + fcClass">
+      <div [class]="'fc mbe-4 ' + fcClass">
         <pui-select-input
           labelRef="type"
           formControlName="type"

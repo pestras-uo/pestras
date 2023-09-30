@@ -86,7 +86,7 @@ export class GroupForm implements OnInit, ControlValueAccessor {
   }
 
   filterCalcFields(field: Field) {
-    return ['int', 'double'].includes(field.type)
+    return ['int', 'double'].includes(field.type) || (field.type === 'category' && field.kind === TypeKind.ORDINAL);
   }
 
   addGroup(group?: GroupField) {
