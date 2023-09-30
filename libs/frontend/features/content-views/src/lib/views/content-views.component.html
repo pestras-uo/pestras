@@ -64,23 +64,13 @@
           </h4>
 
           <ng-container *ngIf="view.content">
-            <p *ngIf="view.type === 'richText'" [innerHTML]="view.content"></p>
+            <p *ngIf="view.type === 'richText'" class="mbe-4" [innerHTML]="view.content"></p>
 
             <img
-              class="radius-4"
+              class="radius-2 mbe-4 mi-auto"
               *ngIf="view.type === 'image'"
               [src]="view.content | docsPath"
             />
-
-            <iframe
-              *ngIf="view.type === 'video'"
-              [src]="view.content"
-              title="YouTube video player"
-              frameborder="0"
-              allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-              allowfullscreen
-            >
-            </iframe>
           </ng-container>
         </div>
 
@@ -98,7 +88,7 @@
 
   <ng-template #viewTmp let-view>
     <form
-      class="card w-25"
+      class="card w-25 card-dialog"
       [formGroup]="form"
       (ngSubmit)="submitView(c, view?.serial)"
     >
@@ -107,18 +97,18 @@
 
       <div class="card-body">
         <label for="view-title">{{ c['title'] }}</label>
-        <div class="fc mbe-6">
+        <div class="fc mbe-4">
           <input type="text" id="view-title" formControlName="title" />
         </div>
 
         <label for="view-subTitle">{{ c['subTitle'] }}</label>
-        <div class="fc mbe-6">
+        <div class="fc mbe-4">
           <input type="text" id="view-subTitle" formControlName="sub_title" />
         </div>
 
         <ng-container *ngIf="!view">
           <label for="view-type">{{ c['type'] }}</label>
-          <div class="fc">
+          <div class="fc mbe-4">
             <pui-select-input
               [list]="c['contentViewTypes']"
               labelRef="view-type"
@@ -145,21 +135,14 @@
             formControlName="content"
           ></quill-editor>
         </ng-container>
-
-        <ng-container *ngIf="type.value === 'video'">
-          <label for="view-video">{{ c['videoLink'] }}</label>
-          <div class="fc">
-            <input type="string" id="view-video" formControlName="content" />
-          </div>
-        </ng-container>
       </div>
 
       <div class="card-footer">
-        <button class="btn-outline btn-round" (click)="closeDialog()">
+        <button class="btn-round" (click)="closeDialog()">
           {{ c['cancel'] }}
         </button>
         <button
-          class="btn-outline btn-round btn-primary"
+          class="btn-round btn-primary"
           [disabled]="form.invalid"
         >
           {{ c['add'] }}

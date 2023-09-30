@@ -5,7 +5,7 @@ export { AttachmentsState } from './lib/attachments/attachments.state';
 export { BlueprintsState } from './lib/blueprints/blueprints.state';
 export { BlueprintResolver } from './lib/blueprints/blueprints.resolver';
 
-export { CategoriesState } from './lib/categories/categories.state';
+export { CategoriesService } from './lib/categories/categories.service';
 
 export { ClientApiState } from './lib/client-api/client-api.state';
 

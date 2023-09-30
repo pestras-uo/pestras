@@ -3,7 +3,7 @@ import { Model } from "../../model";
 import { create, CreateCategoryInput } from './create';
 import { update, UpdateCategoryInput } from "./update";
 import { titleExists } from "./util";
-import { getBySerial, getAll, getByBlueprint } from "./read";
+import { getBySerial, getByParent, getByBlueprint } from "./read";
 import { deleteCategory } from "./delete";
 
 export { CreateCategoryInput, UpdateCategoryInput };
@@ -12,7 +12,7 @@ export class CategoriesModel extends Model<Category> {
 
   // read
   // -----------------------------------------------------------------------------------
-  getAll: (projection?: Document) => Promise<Category[]> = getAll.bind(this);
+  getByParent: (parent: string) => Promise<Category[]> = getByParent.bind(this);
   getBySerial: (serial: string, projection?: Document) => Promise<Category | null> = getBySerial.bind(this);
   getByBlueprint: (bp: string, projection?: Document) => Promise<Category[]> = getByBlueprint.bind(this);
 

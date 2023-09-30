@@ -2,7 +2,6 @@ import { ModuleWithProviders, NgModule } from "@angular/core";
 import { AttachmentsState } from "./attachments/attachments.state";
 import { BlueprintsState } from "./blueprints/blueprints.state";
 import { BlueprintResolver } from "./blueprints/blueprints.resolver";
-import { CategoriesState } from "./categories/categories.state";
 import { ClientApiState } from "./client-api/client-api.state";
 import { ContentState } from "./content/content.state";
 import { DashboardsState } from "./dashboards/dashboards.state";
@@ -53,7 +52,6 @@ import { WorkflowsState } from "./workflows/workflows.state";
     ActivitiesService,
     AttachmentService,
     BlueprintsService,
-    CategoriesService,
     ClientApiService,
     ContentService,
     DashboardsService,
@@ -83,7 +81,7 @@ export class StateModule {
         AttachmentsState,
         BlueprintsState,
         BlueprintResolver,
-        CategoriesState,
+        CategoriesService,
         ClientApiState,
         ContentState,
         DashboardsState,

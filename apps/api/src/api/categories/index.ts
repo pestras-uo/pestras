@@ -7,9 +7,9 @@ import { CategoriesValidators } from "./validators";
 
 export const categoriesRoutes = Router()
   .get(
-    '/',
-    apiAuth([Role.DATA_ENG]),
-    CategorriesController.getAll
+    '/parent/:serial',
+    apiAuth(),
+    CategorriesController.getByParent
   )
   .get(
     '/:serial',

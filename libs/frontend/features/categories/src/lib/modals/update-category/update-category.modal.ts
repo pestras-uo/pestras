@@ -6,7 +6,7 @@ import { FormBuilder, Validators } from '@angular/forms';
 import { Category } from '@pestras/shared/data-model';
 import { Serial } from '@pestras/shared/util';
 import { ToastService } from '@pestras/frontend/ui';
-import { CategoriesState } from '@pestras/frontend/state';
+import { CategoriesService } from '@pestras/frontend/state';
 
 @Component({
   selector: 'app-update-category',
@@ -30,7 +30,7 @@ export class UpdateCategoryModal implements OnInit {
   closes = new EventEmitter<Category | null>();
 
   constructor(
-    private state: CategoriesState,
+    private service: CategoriesService,
     private fb: FormBuilder,
     private toast: ToastService
   ) { }
@@ -45,7 +45,7 @@ export class UpdateCategoryModal implements OnInit {
   update(c: Record<string, any>) {
     this.preloader = true;
 
-    this.state.update({ serial: this.category.serial }, this.form.getRawValue())
+    this.service.update({ serial: this.category.serial }, this.form.getRawValue())
       .subscribe({
         next: () => {
           this.toast.msg(c['success'].default, { type: 'success' });

@@ -12,10 +12,10 @@ export class CategoriesService {
     private readonly http: HttpClient
   ) {}
 
-  getAll() {
-    const path = injectURLPayload(this.envServ.env.api + CategoriesApi.GetAll.path);
+  getByParent(params: CategoriesApi.GetByParent.Params) {
+    const path = injectURLPayload(this.envServ.env.api + CategoriesApi.GetByParent.path, params);
 
-    return this.http.get<CategoriesApi.GetAll.Response>(injectURLPayload(path));
+    return this.http.get<CategoriesApi.GetByParent.Response>(injectURLPayload(path));
   }
 
   getBySerial(params: CategoriesApi.GetBySerial.Params) {

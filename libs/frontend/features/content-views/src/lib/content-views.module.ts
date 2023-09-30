@@ -32,6 +32,7 @@ import { StateModule } from '@pestras/frontend/state';
     PuiPreloaderModule,
     PuiIcon,
     PuiSelectInput,
+    PuiUtilPipesModule,
     // Widgets
     QuillModule,
     NoDataPlaceholderWidget

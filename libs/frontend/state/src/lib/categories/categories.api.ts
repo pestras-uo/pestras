@@ -6,8 +6,10 @@ const basePath = `/categories`;
 export namespace CategoriesApi {
 
   // GET
-  export namespace GetAll {
-    export const path = basePath + '';
+  export namespace GetByParent {
+    export const path = basePath + '/parent/:serial';
+  
+    export interface Params { serial: string };
   
     export type Response = Category[];
   }

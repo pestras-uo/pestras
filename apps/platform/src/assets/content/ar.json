@@ -111,13 +111,11 @@
   "recordsPerPage": "عدد السجلات في الصفحة",
   "contentViewTypes": [
     { "name": "نص منسق", "value": "richText" },
-    { "name": "صورة", "value": "image" },
-    { "name": "قيديو", "value": "video" }
+    { "name": "صورة", "value": "image" }
   ],
   "reportViewTypes": [
     { "name": "نص منسق", "value": "richText" },
     { "name": "صورة", "value": "image" },
-    { "name": "قيديو", "value": "video" },
     { "name": "تصوير بيانات", "value": "dataViz" }
   ],
   "calcFields": "حساب الحقول",

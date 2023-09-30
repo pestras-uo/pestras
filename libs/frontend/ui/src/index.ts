@@ -92,6 +92,7 @@ export * from './lib/util-pipes/is-dir.pipe';
 export * from './lib/util-pipes/random-color.pipe';
 export * from './lib/util-pipes/time.pipe';
 export * from './lib/util-pipes/trim-text.pipe';
+export * from './lib/util-pipes/safe-url.pipe';
 export * from './lib/util-pipes/util-pipes.module';
 
 // xlsx
