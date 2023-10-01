@@ -30,6 +30,14 @@ export const controller = {
     }
   },
 
+  async getCategoryValues(req: RecordsApi.GetCategoryValuesReq, res: RecordsApi.GetCategoryValuesRes, next: NextFunction) {
+    try {
+      res.json(await dataRecordsModel.getCategoryValues(req.params.serial, req.body.field, req.body.search));
+    } catch (error) {
+      next(error);
+    }
+  },
+
   async getHistory(req: RecordsApi.GetHistoryReq, res: RecordsApi.GetHistoryRes, next: NextFunction) {
     try {
       res.json(await dataRecordsModel.getHistory(req.params.serial, req.params.record));

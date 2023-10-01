@@ -1,6 +1,6 @@
 import { Db } from 'mongodb';
 import { Core } from '@pestras/backend/util';
-import { getBySerial, getHistory, search } from './read';
+import { getBySerial, getCategoryValues, getHistory, search } from './read';
 import { pushHistory, revertHistory } from './history';
 import { deleteRecod } from './delete';
 import { create } from './create';
@@ -28,6 +28,7 @@ export class DataRecordsModel extends Core {
   // --------------------------------------------------------------------------------
   search: (dataStoreSerial: string, query: Partial<ApiQuery<DataRecord>>) => Promise<{ count: number; results: TableDataRecord[] }> = search.bind(this);
   getBySerial: (dataStoreSerial: string, serial: string, projection?: Record<string, 0 | 1>) => Promise<TableDataRecord | null> = getBySerial.bind(this);
+  getCategoryValues: (dataStoreSerial: string, catField: string, search: unknown) => Promise<string[]> = getCategoryValues.bind(this);
   getHistory: (dataStoreSerial: string, serial: string) => Promise<DataRecordHistroyItem[]> = getHistory.bind(this);
 
   // create

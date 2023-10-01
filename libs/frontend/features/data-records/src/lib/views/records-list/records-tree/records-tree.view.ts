@@ -2,7 +2,7 @@
 /* eslint-disable @angular-eslint/component-class-suffix */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { Component, Input, OnChanges } from '@angular/core';
-import { DataRecord, DataRecordState, DataStore } from '@pestras/shared/data-model';
+import { DataRecord, DataRecordState, DataStore, DataStoreTreeViewItemConfig } from '@pestras/shared/data-model';
 import { RecordsService } from '@pestras/frontend/state';
 import { Observable, map } from 'rxjs';
 import { Router } from '@angular/router';
@@ -11,11 +11,14 @@ import { Router } from '@angular/router';
   selector: 'app-records-tree-view',
   template: `
     <tree-view-widget
-      *ngIf="records$ | async as rs"
-      [data]="rs"
+      *ngIf="levels"
       [dataStore]="dataStore"
-      [levels]="dataStore.settings.tree_view!"
-      (clicked)="tryVisit($event)"
+      [levels]="levels"
+      [loadCategory]="loadCategory"
+      [loadData]="loadData"
+      [level]="0"
+      [filter]="{}"
+      [clickHandler]="click"
     >     
     </tree-view-widget>
   `
@@ -24,6 +27,7 @@ export class TreeViewView implements OnChanges {
 
   baseUrl!: string;
   records$!: Observable<DataRecord[]>;
+  levels!: DataStoreTreeViewItemConfig[] | null;
 
   @Input({ required: true })
   dataStore!: DataStore;
@@ -39,31 +43,31 @@ export class TreeViewView implements OnChanges {
     private router: Router
   ) { }
 
-  ngOnChanges() {
+  ngOnChanges(): void {
+    this.levels = this.dataStore.settings.tree_view;
     this.baseUrl = this.topic
       ? `/main/records/${this.topic}/${this.dataStore.serial}`
       : `/main/records/${this.dataStore.serial}`;
+  }
 
+  loadCategory = (category: string, parents: Record<string, string>) => {
     const src = this.rState && this.rState !== DataRecordState.PUBLISHED ? `${this.rState}_${this.dataStore.serial}` : this.dataStore.serial;
+    return this.service.getCategoryValues({ ds: src }, { field: category, search: parents });
+  }
 
-    this.records$ = this.service.search({ ds: src }, {
+  loadData = (parents: Record<string, string>): Observable<Record<string, any>[]> => {
+    const src = this.rState && this.rState !== DataRecordState.PUBLISHED ? `${this.rState}_${this.dataStore.serial}` : this.dataStore.serial;
+    return this.service.search({ ds: src }, {
       limit: 0,
       skip: 0,
       select: null,
       sort: { serial: 1 },
-      search: this.search,
-    })
-      .pipe(map((data) => data.results));
+      search: parents,
+    }).pipe(map((data) => data.results));
   }
 
-  tryVisit(serial: string) {
-    this.router.navigate(
-      this.topic
-        ? ['/main/records', this.topic, this.dataStore.serial, serial]
-        : ['/main/records', this.dataStore.serial, serial],
-      {
-        queryParams: { state: this.rState }
-      }
-    )
+  click = (record: DataRecord) => {
+    if (record['serial'])
+      this.router.navigate([this.baseUrl, record['serial']])
   }
 }
