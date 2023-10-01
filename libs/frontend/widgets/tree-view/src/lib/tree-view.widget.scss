@@ -1,0 +1,38 @@
+/* Style for the 'none' template */
+p[contra] {
+  font-style: italic;
+  color: #999; /* Text color for the 'none' template */
+}
+
+
+
+legend{
+  font-weight: 700;
+}
+
+/* Default styles for larger screens */
+.card-fieldset {
+  margin: 10px;
+}
+
+/* Media query for smaller screens */
+@media (max-width: 768px) {
+  .card-fieldset {
+    margin: 5px; /* Adjust the margin for smaller screens */
+  }
+}
+/* Default styles for the badge elements */
+.badge {
+  /* Your existing styles for badge elements */
+  /* For example, background color, padding, text color, etc. */
+
+  /* Add border properties */
+  border: 1px solid transparent; /* Transparent border by default */
+  transition: border-color 0.3s ease; /* Smooth transition for border color change */
+}
+
+/* Hover effect for the badge elements */
+.badge:hover {
+  border-color:  var(--primary-light);
+  cursor: pointer; /* Show pointer cursor on hover */
+}

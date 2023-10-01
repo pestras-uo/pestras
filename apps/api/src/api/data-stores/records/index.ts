@@ -18,6 +18,12 @@ export const recordsRoutes = Router({ mergeParams: true })
     controller.getHistory
   )
   .post(
+    '/get-category-values',
+    apiAuth(),
+    validate(RecordsValidators.GET_CATEGORIES),
+    controller.getCategoryValues
+  )
+  .post(
     '/search',
     apiAuth(),
     controller.search

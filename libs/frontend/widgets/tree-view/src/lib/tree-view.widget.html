@@ -1,47 +1,50 @@
-<ng-container *ngIf="list.length else none">
-  <div *ngFor="let item of list; let lst = last">
-    <fieldset #fieldset class="fieldset-closed" *ngIf="!isLast">
-      <legend>
-        <button
-          *ngIf="!isLast"
-          class="btn-tiny btn-round btn-icon"
-          (click)="subList.classList.toggle('hide'); fieldset.classList.toggle('fieldset-closed')"
-        >
-          <i puiIcon="add" size="tiny"></i>
-        </button>
-        <p *ngIf="!isLast || !item.serial" [class.bold]="!isLast">
-          {{item.displayFieldValue}}
-        </p>
-      </legend>
-
-      <div #subList class="hide">
-        <tree-view-widget
-          *ngIf="!isLast"
-          [data]="data"
-          [dataStore]="dataStore"
-          [levels]="levels"
-          [index]="index + 1"
-          [filter]="{ field: item.fieldName, value: item.value }"
-        ></tree-view-widget>
+<ng-container *ngIf="!isLast">
+  <ng-container *ngIf="categories$ | async as cats">
+    <div
+      *ngFor="let cat of cats; let i = index; let last = last"
+      [class.mbe-4]="!last"
+    >
+      <div class="card">
+        <fieldset class="card-fieldset">
+          <legend>
+            <button
+              class="btn-icon btn-tiny btn-round"
+              (click)="toggleNode(i, cat)"
+            >
+              <i puiIcon="add" size="tiny"></i>
+            </button>
+            {{ cat }}
+          </legend>
+          <tree-view-widget
+            *ngIf="loadedNodes[i]"
+            [class.hide]="!hidden[i]"
+            [dataStore]="dataStore"
+            [levels]="levels"
+            [loadCategory]="loadCategory"
+            [loadData]="loadData"
+            [level]="this.level + 1"
+            [filter]="loadedNodes[i]"
+            [clickHandler]="clickHandler"
+          >
+          </tree-view-widget>
+        </fieldset>
       </div>
-    </fieldset>
-
-    <ng-container *ngIf="isLast">
-      <p *ngIf="!isLast || !item.serial" [class.bold]="!isLast">
-        {{item.displayFieldValue}}
-      </p>
-      <a
-        *ngIf="isLast && item.serial"
-        class="badge badge-primary"
-        [class.mbe-2]="!lst"
-        (click)="clicked.emit(item.serial)"
-      >
-        {{item.displayFieldValue}}
-      </a>
-    </ng-container>
-  </div>
+    </div>
+  </ng-container>
 </ng-container>
 
-<ng-template #none>
-  <p *contra="let c">{{c['none']}}</p>
-</ng-template>
+<ng-container *ngIf="isLast">
+  <ng-container *ngIf="data$ | async as data">
+    <div *ngFor="let item of data; let last = last">
+      <div class="data-card">
+        <p
+          class="badge badge-primary"
+          [class.mbe-2]="!last"
+          (click)="onClick(item)"
+        >
+          {{ item[dataStore.settings.interface_field] }}
+        </p>
+      </div>
+    </div>
+  </ng-container>
+</ng-container>

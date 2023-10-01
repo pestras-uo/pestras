@@ -14,6 +14,9 @@ export namespace RecordsApi {
   export type GetBySerialReq = Request<{ serial: string; record: string; }>;
   export type GetBySerialRes = Response<any, UserSession>;
 
+  export type GetCategoryValuesReq = Request<{ serial: string; }, any, { field: string, search: unknown }>;
+  export type GetCategoryValuesRes = Response<string[], UserSession>;
+
   export type GetHistoryReq = Request<{ serial: string; record: string; }>;
   export type GetHistoryRes = Response<any, UserSession>;
 

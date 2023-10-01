@@ -34,6 +34,17 @@ export namespace RecordsApi {
     export type Response = DataRecordsSearchResponse;
   }
 
+  // POST
+  export namespace GetCategoryValues {
+    export const REQ_PATH = localBasePath + '/get-category-values';
+
+    export interface Params { ds: string; }
+
+    export interface Body { field: string; search: any; }
+
+    export type Response = string[];
+  }
+
   // GET
   export namespace getHistory {
     export const REQ_PATH = localBasePath + '/:record/histroy';

@@ -34,7 +34,20 @@ export async function getBySerial(
   return this.db.collection<TableDataRecord>(dataStoreSerial).findOne({ serial }, projection);
 }
 
+export async function getCategoryValues(
+  this: DataRecordsModel,
+  dataStoreSerial: string,
+  categoryField: string,
+  search: unknown
+) {
+  const res = await this.db.collection<TableDataRecord>(dataStoreSerial)
+    .aggregate([
+      { $match: search },
+      { $group: { _id: `$${categoryField}` } }
+    ]).toArray();
 
+  return res.map(record => record['_id'] as string);
+}
 
 export async function getHistory(
   this: DataRecordsModel,

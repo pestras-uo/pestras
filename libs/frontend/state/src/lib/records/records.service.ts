@@ -26,6 +26,12 @@ export class RecordsService {
     return this.http.post<RecordsApi.Search.Response>(path, body);
   }
 
+  getCategoryValues(params: RecordsApi.GetCategoryValues.Params, body: RecordsApi.GetCategoryValues.Body) {
+    const path = injectURLPayload(this.envServ.env.api + RecordsApi.GetCategoryValues.REQ_PATH, params);
+
+    return this.http.post<RecordsApi.GetCategoryValues.Response>(path, body);
+  }
+
   getHistory(params: RecordsApi.getHistory.Params) {
     const path = injectURLPayload(this.envServ.env.api + RecordsApi.getHistory.REQ_PATH, params);
 
