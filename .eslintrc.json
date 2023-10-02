@@ -29,6 +29,10 @@
                 "onlyDependOnLibsWithTags": ["scope:shared", "scope:backend"]
               },
               {
+                "sourceTag": "scope:workflow-check",
+                "onlyDependOnLibsWithTags": ["scope:shared", "scope:backend"]
+              },
+              {
                 "sourceTag": "scope:platform",
                 "onlyDependOnLibsWithTags": ["scope:shared", "scope:frontend"]
               },

@@ -13,7 +13,7 @@ export class WorkspaceService {
   ) { }
 
   getByOwner() {
-    const path = injectURLPayload(this.envServ.env.api + WorkspaceApi.GetByOwner.REQ_PATH);
+    const path = injectURLPayload(this.envServ.env.api + WorkspaceApi.GetByOwner.REQ_PATH, null, { c: Math.random() });
 
     return this.http.get<WorkspaceApi.GetByOwner.Response>(path);
   }
