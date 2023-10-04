@@ -89,12 +89,16 @@ export class SessionState extends StatorObjectState<User> {
         this._token = res?.token ?? null;
         this._sseToken = res?.sseToken ?? null;
 
+
         if (this._token)
           localStorage.setItem(this.storageKey, this._token);
 
         if (res?.user) {
           this._set(res.user);
+          
           this.channel.dispatch(new SessionStart(res.user));
+          
+
         }
       }));
   }
@@ -192,4 +196,7 @@ export class SessionState extends StatorObjectState<User> {
   getTopRole(roles: Role[]) {
     return Math.min(...roles.map(r => _roles.indexOf(r)));
   }
+
 }
+
+

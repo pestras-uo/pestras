@@ -57,6 +57,13 @@
       ></pestras-record-history>
 
       <!-- comments -->
+           <pestras-record-comments
+        *ngIf="view.name === 'comments'"
+        [dataStore]="dataStore"
+        [record]="record"
+      ></pestras-record-comments>
+
+      
 
       <!-- sub data store -->
       <app-sub-data-stores-records

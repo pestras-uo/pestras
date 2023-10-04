@@ -26,6 +26,7 @@ import { BlueprintsFeatureModule } from '@pestras/frontend/features/blueprints';
 import { AttachmentsFeatureModule } from '@pestras/frontend/features/attachments';
 import { PuiIcon, PuiImageInput, PuiInfiniteScroll, PuiPreloaderModule, PuiSelectInput, PuiUtilPipesModule } from '@pestras/frontend/ui';
 import { RecordsWorkflowFeatureModule } from '@pestras/frontend/features/records-workflow';
+import { CommentsViewComponent } from './views/comments/comments.view';
 
 
 @NgModule({
@@ -36,6 +37,7 @@ import { RecordsWorkflowFeatureModule } from '@pestras/frontend/features/records
     SideMenuView,
     DescView,
     HistoryViewComponent,
+    CommentsViewComponent,
     UpdateFormPage,
     SubDataStoresRecordsView
   ],

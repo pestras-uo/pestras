@@ -1,0 +1,112 @@
+<ng-container *contra="let c">
+  <!-- Add Comment Form -->
+  <form class="card mbe-6" [formGroup]="form" (ngSubmit)="add(c)">
+    <!-- Your form fields for adding comments -->
+    <div class="card-header">
+      <app-avatar
+        size="small"
+        *session="let user"
+        [serial]="user.serial"
+      ></app-avatar>
+    </div>
+    <div class="card-body">
+      <label for="com-text">{{c['addComment']}}</label>
+      <div class="fc">
+        <textarea rows="5" formControlName="text" id="com-text"></textarea>
+      </div>
+    </div>
+    <div class="card-footer">
+      <button class="btn-round btn-outline" type="button" (click)="resetForm()">
+        {{c['cancel']}}
+      </button>
+      <button
+        class="btn-round btn-primary"
+        [disabled]="form.invalid"
+        type="submit"
+      >
+        {{c['add']}}
+      </button>
+    </div>
+  </form>
+
+  <!-- Comments Column -->
+  <div class="comments-column">
+    <h3 class="mbe-4">{{c['comments']}}</h3>
+    <!-- My Comments -->
+    <ng-container *ngFor="let comment of comments">
+      <div class="card mbe-3">
+        <!-- Render My Comments -->
+        <div class="card-header">
+          <app-avatar [serial]="comment.issuer" size="small"></app-avatar>
+
+          <div
+            class="action"
+            *ngIf="((comment.issuer | sessionIs) && (comment | fn : isNotExpired)) "
+          >
+            <button
+              class="btn-icon btn-round btn-small"
+              (click)="openModal(deleteTmp,comment.serial)"
+            >
+              <i puiIcon="delete" color="danger" size="tiny"></i>
+            </button>
+            <button
+              class="btn-icon btn-round btn-small"
+              (click)="openUpdateModal(updateTmp,comment.text, comment.serial)"
+            >
+              <i puiIcon="edit" color="success" size="tiny"></i>
+            </button>
+          </div>
+        </div>
+        <div class="card-body">
+          <span class="bold f9">
+            {{comment.create_date | date: 'dd-MM-yyyy'}}</span
+          >
+          <p>{{ comment.text }}</p>
+        </div>
+      </div>
+    </ng-container>
+  </div>
+
+  <ng-template #updateTmp let-serial let-text>
+    <form
+      class="card shadow-6 w-12"
+      [formGroup]="form"
+      (ngSubmit)="update(c, serial)"
+    >
+      <h4 class="card-header">{{c['update']}}</h4>
+      <div class="card-body">
+        <label for="att-name">{{c['text']}}</label>
+        <div class="fc mbe-6">
+          <input type="text" formControlName="text" id="att-text" />
+        </div>
+      </div>
+      <div class="card-footer">
+        <button
+          class="btn-round btn-outline"
+          type="button"
+          (click)="closeModal()"
+        >
+          {{c['cancel']}}
+        </button>
+        <button class="btn-round btn-primary">{{c['update']}}</button>
+      </div>
+    </form>
+  </ng-template>
+
+  <ng-template #deleteTmp let-serial>
+    <div class="card w-10 shadow-6">
+      <h4 class="card-header">{{c['delete']}}</h4>
+
+      <p class="card-body">{{c['confirmRemoveComments']}}</p>
+
+      <div class="card-footer">
+        <button class="btn-outline btn-round" (click)="closeModal()">
+          {{c['cancel']}}
+        </button>
+        <button class="btn-danger btn-round" (click)="delete(c,serial)">
+          {{c['yes']}}
+        </button>
+      </div>
+    </div>
+  </ng-template>
+</ng-container>

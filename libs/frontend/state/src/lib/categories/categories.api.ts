@@ -25,7 +25,7 @@ export namespace CategoriesApi {
     export type Response = Category | null;
   }
   
-  
+    
   
   // GET
   export namespace GetByBlueprint {
