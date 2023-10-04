@@ -1,8 +1,13 @@
 {
   "colorsTheme": "Colors Theme",
-  "colorsThemeList": [
-    { "name": "Light", "value": "light" },
-    { "name": "Dark", "value": "dark" }
+  "colorsThemeList": [{
+      "name": "Light",
+      "value": "light"
+    },
+    {
+      "name": "Dark",
+      "value": "dark"
+    }
   ],
   "new": "Addition",
   "reject": "Reject",
@@ -11,13 +16,30 @@
   "review": "Review",
   "step": "Step",
   "algo": "Algorithm",
-  "algoList": [
-    { "name": "Approval: Any - Rejection: Any", "value": "any" },
-    { "name": "Approval: Any - Rejection: All", "value": "any_all" },
-    { "name": "Approval: All - Rejection: Any", "value": "all_any" },
-    { "name": "Approval: Any - Rejection: Majority", "value": "any_most" },
-    { "name": "Approval: Majority - Rejection: Any", "value": "most_any" },
-    { "name": "Approval: Majority - Rejection: Majority", "value": "most" }
+  "algoList": [{
+      "name": "Approval: Any - Rejection: Any",
+      "value": "any"
+    },
+    {
+      "name": "Approval: Any - Rejection: All",
+      "value": "any_all"
+    },
+    {
+      "name": "Approval: All - Rejection: Any",
+      "value": "all_any"
+    },
+    {
+      "name": "Approval: Any - Rejection: Majority",
+      "value": "any_most"
+    },
+    {
+      "name": "Approval: Majority - Rejection: Any",
+      "value": "most_any"
+    },
+    {
+      "name": "Approval: Majority - Rejection: Majority",
+      "value": "most"
+    }
   ],
   "algos": {
     "any": "Approval: Any - Rejection: Any",
@@ -30,9 +52,14 @@
   "steps": "Steps",
   "defaultAction": "Default Action",
   "defaultActionInfo": "In case user exceeded review days limit",
-  "defaultActionList": [
-    { "name": "Approve", "value": "approve" },
-    { "name": "Reject", "value": "reject" }
+  "defaultActionList": [{
+      "name": "Approve",
+      "value": "approve"
+    },
+    {
+      "name": "Reject",
+      "value": "reject"
+    }
   ],
   "defaultActions": {
     "approve": "Approve",
@@ -95,6 +122,8 @@
   "zoomLevel": "Zoom Level",
   "operaotr": "Compare Operator",
   "alias": "Alias Name",
+  "addComment": "Add Comment",
+  "confirmRemoveComments"َ: "Are you sure ?",
   "removeParam": "Remove Search Param",
   "updateParam": "Update Search Param",
   "addParam": "Add Search Param",
@@ -107,22 +136,49 @@
   "clientName": "Client Name",
   "clientsList": "Clients List",
   "recordsPerPage": "Records Count per Page",
-  "contentViewTypes": [
-    { "name": "Rich Text", "value": "richText" },
-    { "name": "Image", "value": "image" }
+  "contentViewTypes": [{
+      "name": "Rich Text",
+      "value": "richText"
+    },
+    {
+      "name": "Image",
+      "value": "image"
+    }
   ],
-  "reportViewTypes": [
-    { "name": "Rich Text", "value": "richText" },
-    { "name": "Image", "value": "image" },
-    { "name": "Chart", "value": "dataViz" }
+  "reportViewTypes": [{
+      "name": "Rich Text",
+      "value": "richText"
+    },
+    {
+      "name": "Image",
+      "value": "image"
+    },
+    {
+      "name": "Chart",
+      "value": "dataViz"
+    }
   ],
   "calcFields": "Calculate Fields",
-  "dataVizStages": [
-    { "name": "Filter", "value": "filter" },
-    { "name": "Group", "value": "group" },
-    { "name": "Limit", "value": "limit" },
-    { "name": "Sort", "value": "sort" },
-    { "name": "Transpose", "value": "transpose" }
+  "dataVizStages": [{
+      "name": "Filter",
+      "value": "filter"
+    },
+    {
+      "name": "Group",
+      "value": "group"
+    },
+    {
+      "name": "Limit",
+      "value": "limit"
+    },
+    {
+      "name": "Sort",
+      "value": "sort"
+    },
+    {
+      "name": "Transpose",
+      "value": "transpose"
+    }
   ],
   "selectOperation": "اختر عملية",
   "modifyRecords": "تعديل السجلات",
@@ -138,30 +194,79 @@
   "groupFields": "Group Fields",
   "logical": "Logical",
   "groupMethod": "Group Method",
-  "statisticsMethods": [
-    { "name": "First Value", "value": "first" },
-    { "name": "Last Value", "value": "last" },
-    { "name": "Count Values", "value": "count" },
-    { "name": "Min Value", "value": "min" },
-    { "name": "Max Value", "value": "max" },
-    { "name": "Values Range", "value": "range" },
-    { "name": "Total", "value": "sum" },
-    { "name": "Average", "value": "mean" },
-    { "name": "First Quartile Value", "value": "q1" },
-    { "name": "Median Value", "value": "medean" },
-    { "name": "Third Quartile Value", "value": "q3" },
-    { "name": "Interqurtile Range", "value": "iqr" },
-    { "name": "Varianve", "value": "variance" },
-    { "name": "Standard Deviation", "value": "std" },
-    { "name": "Mode Value", "value": "mode" },
-    { "name": "Skewness", "value": "skewness" },
-    { "name": "Kurtosis", "value": "kurtosis" }
+  "statisticsMethods": [{
+      "name": "First Value",
+      "value": "first"
+    },
+    {
+      "name": "Last Value",
+      "value": "last"
+    },
+    {
+      "name": "Count Values",
+      "value": "count"
+    },
+    {
+      "name": "Min Value",
+      "value": "min"
+    },
+    {
+      "name": "Max Value",
+      "value": "max"
+    },
+    {
+      "name": "Values Range",
+      "value": "range"
+    },
+    {
+      "name": "Total",
+      "value": "sum"
+    },
+    {
+      "name": "Average",
+      "value": "mean"
+    },
+    {
+      "name": "First Quartile Value",
+      "value": "q1"
+    },
+    {
+      "name": "Median Value",
+      "value": "medean"
+    },
+    {
+      "name": "Third Quartile Value",
+      "value": "q3"
+    },
+    {
+      "name": "Interqurtile Range",
+      "value": "iqr"
+    },
+    {
+      "name": "Varianve",
+      "value": "variance"
+    },
+    {
+      "name": "Standard Deviation",
+      "value": "std"
+    },
+    {
+      "name": "Mode Value",
+      "value": "mode"
+    },
+    {
+      "name": "Skewness",
+      "value": "skewness"
+    },
+    {
+      "name": "Kurtosis",
+      "value": "kurtosis"
+    }
   ],
   "_minutes": "minutes",
   "showInternalRegions": "Show Internal Regions",
   "selectMap": "Select Map",
-  "dataVizFilterOperators": [
-    {
+  "dataVizFilterOperators": [{
       "name": "equals",
       "value": "$eq"
     },
@@ -217,11 +322,22 @@
   "polynomialOrder": "Polynomial Order",
   "useRegression": "Enable Regression",
   "regressionType": "Regression Type",
-  "regressionTypes": [
-    { "name": "Linear", "value": "linear" },
-    { "name": "Logarithmic", "value": "logarithmic" },
-    { "name": "Exponential", "value": "exponential" },
-    { "name": "Polynomial", "value": "polynomial" }
+  "regressionTypes": [{
+      "name": "Linear",
+      "value": "linear"
+    },
+    {
+      "name": "Logarithmic",
+      "value": "logarithmic"
+    },
+    {
+      "name": "Exponential",
+      "value": "exponential"
+    },
+    {
+      "name": "Polynomial",
+      "value": "polynomial"
+    }
   ],
   "maxFields": "Max Values Fields",
   "InverseIndicator": "Inverse Indicator",
@@ -232,40 +348,96 @@
   "valueField": "Value Field",
   "regionField": "Region Field",
   "mapType": "Map Type",
-  "mapTypesList": [
-    { "name": "Regions", "value": "regions" },
-    { "name": "Scatter", "value": "scatter" },
-    { "name": "Pie", "value": "pie" }
+  "mapTypesList": [{
+      "name": "Regions",
+      "value": "regions"
+    },
+    {
+      "name": "Scatter",
+      "value": "scatter"
+    },
+    {
+      "name": "Pie",
+      "value": "pie"
+    }
   ],
   "area": "Area Chart",
   "markPoints": "Mark Points",
-  "markPointsList": [
-    { "name": "Average", "value": "average" },
-    { "name": "Min Value", "value": "min" },
-    { "name": "Max Value", "value": "max" }
+  "markPointsList": [{
+      "name": "Average",
+      "value": "average"
+    },
+    {
+      "name": "Min Value",
+      "value": "min"
+    },
+    {
+      "name": "Max Value",
+      "value": "max"
+    }
   ],
   "markLines": "Mark Lines",
-  "markLinesList": [
-    { "name": "Average", "value": "average" },
-    { "name": "Min Value", "value": "min" },
-    { "name": "Max Value", "value": "max" }
+  "markLinesList": [{
+      "name": "Average",
+      "value": "average"
+    },
+    {
+      "name": "Min Value",
+      "value": "min"
+    },
+    {
+      "name": "Max Value",
+      "value": "max"
+    }
   ],
   "color": " Color",
   "colorsRange": "Colors Range",
   "sizeField": "Size Field",
   "nameField": "Naming Field",
-  "chartTypes": [
-    { "name": "Bar / Column", "value": "bar" },
-    { "name": "Boxplot", "value": "boxplot" },
-    { "name": "Hierarchical", "value": "hierarchical" },
-    { "name": "Line / Area", "value": "line" },
-    { "name": "Map", "value": "map" },
-    { "name": "Pie / doughnat", "value": "pie" },
-    { "name": "Polar", "value": "polar" },
-    { "name": "Radar", "value": "radar" },
-    { "name": "Scatter", "value": "scatter" },
-    { "name": "Table", "value": "table" },
-    { "name": "Timeline", "value": "timeline" }
+  "chartTypes": [{
+      "name": "Bar / Column",
+      "value": "bar"
+    },
+    {
+      "name": "Boxplot",
+      "value": "boxplot"
+    },
+    {
+      "name": "Hierarchical",
+      "value": "hierarchical"
+    },
+    {
+      "name": "Line / Area",
+      "value": "line"
+    },
+    {
+      "name": "Map",
+      "value": "map"
+    },
+    {
+      "name": "Pie / doughnat",
+      "value": "pie"
+    },
+    {
+      "name": "Polar",
+      "value": "polar"
+    },
+    {
+      "name": "Radar",
+      "value": "radar"
+    },
+    {
+      "name": "Scatter",
+      "value": "scatter"
+    },
+    {
+      "name": "Table",
+      "value": "table"
+    },
+    {
+      "name": "Timeline",
+      "value": "timeline"
+    }
   ],
   "horizontal": "Horizontal",
   "groupField": "Grouping Field",
@@ -278,8 +450,7 @@
   "deleteView": "Delete View",
   "viewSize": "View Size",
   "width": "Width",
-  "viewWidthSizes": [
-    {
+  "viewWidthSizes": [{
       "name": "Quarter of Screen Width",
       "value": 3
     },
@@ -305,8 +476,7 @@
     }
   ],
   "height": "Height",
-  "viewHeightSizes": [
-    {
+  "viewHeightSizes": [{
       "name": "Quarter of Screen Height",
       "value": 1
     },
@@ -328,16 +498,42 @@
   "viewSettingsInfo": "Select Input fields and visualizing configutations",
   "viewDetails": "View Detials",
   "viewDetailsInfo": "Choose title, data srouce and view type",
-  "dataVizTypes": [
-    { "name": "Categorical", "value": "categorical" },
-    { "name": "Change", "value": "change" },
-    { "name": "Hierarchical", "value": "hierarchical" },
-    { "name": "Map", "value": "map" },
-    { "name": "Plot", "value": "plot" },
-    { "name": "Progress", "value": "progress" },
-    { "name": "Radar", "value": "radar" },
-    { "name": "Table", "value": "table" },
-    { "name": "Timeline", "value": "timeline" }
+  "dataVizTypes": [{
+      "name": "Categorical",
+      "value": "categorical"
+    },
+    {
+      "name": "Change",
+      "value": "change"
+    },
+    {
+      "name": "Hierarchical",
+      "value": "hierarchical"
+    },
+    {
+      "name": "Map",
+      "value": "map"
+    },
+    {
+      "name": "Plot",
+      "value": "plot"
+    },
+    {
+      "name": "Progress",
+      "value": "progress"
+    },
+    {
+      "name": "Radar",
+      "value": "radar"
+    },
+    {
+      "name": "Table",
+      "value": "table"
+    },
+    {
+      "name": "Timeline",
+      "value": "timeline"
+    }
   ],
   "removeSlide": "Remove Slide",
   "playTime": "Play Time",
@@ -409,8 +605,7 @@
   "pestras": "PESTRAS",
   "mapFields": "Unify Fields",
   "welcomeMsg": "Strategic planning, risk managment, KPIs, data Analysis and more all in one platform.",
-  "aggrStages": [
-    {
+  "aggrStages": [{
       "name": "Bucket Field",
       "value": "bucket",
       "desc": "يصنف المستندات الواردة إلى عدد محدد من المجموعات ، تسمى الحاويات ، بناءً على تعبير محدد"
@@ -483,8 +678,7 @@
   ],
   "outputs": "Outputs",
   "chooseField": "Choose Field",
-  "createFieldOptions": [
-    {
+  "createFieldOptions": [{
       "name": "Manual",
       "value": 1
     },
@@ -497,8 +691,7 @@
       "value": 3
     }
   ],
-  "setStageOperations": [
-    {
+  "setStageOperations": [{
       "name": "Convert",
       "value": "convert"
     },
@@ -531,8 +724,7 @@
       "value": "switch"
     }
   ],
-  "fillOptions": [
-    {
+  "fillOptions": [{
       "name": "value",
       "value": null
     },
@@ -545,8 +737,7 @@
       "value": "locf"
     }
   ],
-  "orderOptions": [
-    {
+  "orderOptions": [{
       "name": "Descending",
       "value": -1
     },
@@ -559,8 +750,7 @@
   "roundPlace": "Round Place",
   "onNullValue": "On Null Input Value",
   "onErrorValue": "On Error Value",
-  "convertOptionTypes": [
-    {
+  "convertOptionTypes": [{
       "name": "Integer",
       "value": "int"
     },
@@ -680,8 +870,7 @@
   "cumulationEnd": "Cumulation End",
   "partitions": "Partitions",
   "partition": "Partition",
-  "cumulateOperations": [
-    {
+  "cumulateOperations": [{
       "name": "Sumation",
       "value": "sum"
     },
@@ -726,8 +915,7 @@
   "maximum": "Maximum",
   "omit": "Omit Record",
   "allFields": "All Fields",
-  "castOptions": [
-    {
+  "castOptions": [{
       "name": "Text",
       "value": "string"
     },
@@ -954,8 +1142,7 @@
   "manualEntry": "Manual Entry",
   "aggregational": "Aggregational",
   "aggregationSettings": "Aggregation Settings",
-  "dataStoresTypes": [
-    {
+  "dataStoresTypes": [{
       "value": "table",
       "name": "Table"
     },
@@ -970,8 +1157,7 @@
   ],
   "updateInterval": "Update Interval",
   "intervals": "Intervals",
-  "intervalsList": [
-    {
+  "intervalsList": [{
       "name": "None",
       "value": 0
     },
@@ -1009,8 +1195,7 @@
   "displayName": "Display Name",
   "isSystem": "Is System",
   "unit": "Unit",
-  "fieldTypesList": [
-    {
+  "fieldTypesList": [{
       "name": "Unknown",
       "value": "unknown"
     },
@@ -1074,8 +1259,7 @@
     "image": "Image"
   },
   "referenceType": "Reference Type",
-  "referenceTypesList": [
-    {
+  "referenceTypesList": [{
       "name": "Data Store",
       "value": "data_store"
     },
@@ -1112,8 +1296,7 @@
   "updateWsConfig": "Update Web Service Config",
   "resourceUri": "Resource URI",
   "httpMethod": "HTTP Method",
-  "httpMethods": [
-    {
+  "httpMethods": [{
       "name": "GET",
       "value": "get"
     },
@@ -1150,8 +1333,7 @@
   "use": "Use",
   "usernameAndPassword": "Username and password",
   "contentType": "Content Type",
-  "httpContentTypes": [
-    {
+  "httpContentTypes": [{
       "name": "JSON",
       "value": "application/json"
     },
@@ -1161,8 +1343,7 @@
     }
   ],
   "acceptContent": "Accept Content Type",
-  "acceptContentTypes": [
-    {
+  "acceptContentTypes": [{
       "name": "JSON",
       "value": "application/json"
     },
@@ -1180,8 +1361,7 @@
   "modifyDate": "Modify Date",
   "queryDest": "Destination",
   "body": "Body",
-  "queryDests": [
-    {
+  "queryDests": [{
       "name": "Search",
       "value": "search"
     },
@@ -1195,8 +1375,7 @@
     }
   ],
   "usage": "Usage",
-  "usages": [
-    {
+  "usages": [{
       "name": "Later Requests",
       "value": 0
     },
@@ -1220,8 +1399,7 @@
   "submit": "Submit",
   "noFieldsFound": "No fields found in the current data store!",
   "constraintsOperator": "Operator",
-  "constraintsOperators": [
-    {
+  "constraintsOperators": [{
       "name": "Equals",
       "value": "$eq"
     },
@@ -1270,8 +1448,7 @@
   "inputModifiers": "Input Modifiers",
   "valueModifier": "Value Modifier",
   "compareToModifier": "Compare To Value Modifier",
-  "valueModifiers": [
-    {
+  "valueModifiers": [{
       "name": "Integer",
       "value": "int"
     },
@@ -1365,8 +1542,7 @@
   "formula": "Formula",
   "cumsum": "Cumsum",
   "dateUnit": "Date Unit",
-  "dateUnitsList": [
-    {
+  "dateUnitsList": [{
       "value": "year",
       "name": "Year"
     },
@@ -1393,8 +1569,7 @@
   "to": "To",
   "removeConstraint": "Remove Constraint",
   "confirmRemoveConstraint": "Are you sure you want to remove the selected constraint?",
-  "computeTypes": [
-    {
+  "computeTypes": [{
       "name": "Conditional",
       "value": "switch"
     },
@@ -1453,8 +1628,7 @@
   ],
   "timespan": "Tima Span",
   "priority": "Proprity",
-  "measureLevels": [
-    {
+  "measureLevels": [{
       "name": "Trivial",
       "value": 0
     },

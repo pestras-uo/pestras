@@ -45,6 +45,7 @@ import { EntityAccessService } from "./entity-access/entity-access.service";
 import { EntityAccessState } from "./entity-access/entity-access.state";
 import { WorkflowsService } from "./workflows/workflows.service";
 import { WorkflowsState } from "./workflows/workflows.state";
+import { CommentsService } from "./comments/comments.service";
 
 @NgModule({
   imports: [EnvModule],
@@ -53,6 +54,7 @@ import { WorkflowsState } from "./workflows/workflows.state";
     AttachmentService,
     BlueprintsService,
     ClientApiService,
+    CommentsService,
     ContentService,
     DashboardsService,
     OrgunitsService,

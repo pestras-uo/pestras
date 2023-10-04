@@ -113,7 +113,6 @@ export class AttachmentsListView implements OnInit {
         },
         error: e => {
           console.error(e);
-          alert(JSON.stringify(e));
 
           this.toast.msg(c['errors'][e?.error] || c['errors'].default, { type: 'error' });
           this.preloader = false;

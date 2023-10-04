@@ -7,6 +7,9 @@ export { BlueprintResolver } from './lib/blueprints/blueprints.resolver';
 
 export { CategoriesService } from './lib/categories/categories.service';
 
+export { CommentsService } from './lib/comments/comments.service';
+
+
 export { ClientApiState } from './lib/client-api/client-api.state';
 
 export { ContentState } from './lib/content/content.state';

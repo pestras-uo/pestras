@@ -1,0 +1,27 @@
+.comment-card {
+  margin-bottom: 20px;
+}
+
+.comment-card .card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.comment-card .date {
+  font-size: 11px;
+  color: #999;
+  margin-right: 15px;
+}
+
+.comment-card .action {
+  display: flex;
+  gap: 5px;
+}
+
+@media (max-width: 768px) {
+  .comment-card .card {
+    width: 100%;
+  }
+}
