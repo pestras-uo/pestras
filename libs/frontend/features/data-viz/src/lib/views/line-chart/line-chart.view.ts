@@ -3,7 +3,7 @@
 /* eslint-disable @angular-eslint/component-selector */
 import { Component, Input, OnChanges } from '@angular/core';
 import { LineDataVizOptions, BaseDataViz } from '@pestras/shared/data-model';
-import { EChartsOption, LineSeriesOption } from 'echarts';
+import { EChartsOption, LineSeriesOption, graphic } from 'echarts';
 import { ChartDataLoad } from '../../util';
 
 @Component({
@@ -44,11 +44,26 @@ export class LineChartView implements OnChanges {
       return {
         type: 'line',
         smooth: true,
+        color: 'rgb(68, 210, 158)',
+        symbol: options.area ? 'none' : '',
         name: s.serie_name || field.display_name,
         data: this.data.records.map(r => r[field.name]),
         markLine: s.mark_lines?.length ? { data: s.mark_lines.map(l => ({ type: l })) } : null,
-        markPoint: s.mark_lines?.length ? { data: s.mark_lines.map(p => ({ type: p, name: p })) } : null
-      }
+        markPoint: s.mark_lines?.length ? { data: s.mark_lines.map(p => ({ type: p, name: p })) } : null,
+        areaStyle: options.area 
+          ? {
+            color: new graphic.LinearGradient(0, 0, 0, 1, [
+              {
+                offset: 0,
+                color: 'rgb(68, 210, 158)'
+              },
+              {
+                offset: 1,
+                color: 'rgb(70, 210, 131)'
+              }
+            ])
+          } : null
+      } as LineSeriesOption
     })
       .filter(Boolean) as LineSeriesOption[];
 

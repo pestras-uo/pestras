@@ -73,7 +73,7 @@
         </div>
 
         <div class="card-footer">
-          <button class="btn-round btn-outline" (click)="this.closeDialog()">
+          <button class="btn-round btn-outline" (click)="closeDialog()">
             {{c['cancel']}}
           </button>
           <button
@@ -81,7 +81,7 @@
             [disabled]="title.invalid"
             (click)="update(c, d.serial)"
           >
-            {{c['add']}}
+            {{c['update']}}
           </button>
         </div>
 

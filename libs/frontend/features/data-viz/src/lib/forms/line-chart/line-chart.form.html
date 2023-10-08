@@ -71,22 +71,22 @@
         <div class="grow">
           <label for="-mark-lines">{{c['markLines']}}</label>
           <div [class]="'fc ' + fcClass">
-            <pui-select-input
+            <pui-multi-select-input
               labelRef="-mark-lines"
               formControlName="mark_lines"
               [list]="c['markLinesList']"
-            ></pui-select-input>
+            ></pui-multi-select-input>
           </div>
         </div>
 
         <div class="grow">
           <label for="-mark-points">{{c['markPoints']}}</label>
           <div [class]="'fc ' + fcClass">
-            <pui-select-input
+            <pui-multi-select-input
               labelRef="-mark-points"
               formControlName="mark_points"
               [list]="c['markPointsList']"
-            ></pui-select-input>
+            ></pui-multi-select-input>
           </div>
         </div>
       </div>
