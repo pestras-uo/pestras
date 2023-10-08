@@ -27,7 +27,7 @@
       <h3>{{group.group}}</h3>
       <div class="grow"></div>
       <a
-        *ngIf="isTable && (record['owner'] | sessionIs) && ((dataStore.blueprint | blueprint | async)?.owner | sessionIs)"
+        *ngIf="isTable && ((record['owner'] | sessionIs) || ((dataStore.blueprint | blueprint | async)?.owner | sessionIs))"
         class="btn-small btn-icon btn-round"
         routerLink="update"
         [queryParams]="{ group: group.group, state }"

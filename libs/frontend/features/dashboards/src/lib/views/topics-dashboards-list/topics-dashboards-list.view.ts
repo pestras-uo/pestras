@@ -4,7 +4,7 @@
 import { Dialog, DialogRef } from '@angular/cdk/dialog';
 import { Component, Input, OnChanges, TemplateRef } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
-import { Dashboard } from '@pestras/shared/data-model';
+import { Dashboard, Role } from '@pestras/shared/data-model';
 import { ToastService } from '@pestras/frontend/ui';
 import { DashboardsState } from '@pestras/frontend/state';
 import { Observable } from 'rxjs';
@@ -17,6 +17,7 @@ import { Observable } from 'rxjs';
   `]
 })
 export class TopicDashboardsListView implements OnChanges {
+  readonly roles = Role;
 
   dashboards$!: Observable<Dashboard[]>;
   dialogRef: DialogRef | null = null;

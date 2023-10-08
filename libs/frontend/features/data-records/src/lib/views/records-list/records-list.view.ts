@@ -116,7 +116,7 @@ export class RecordsListView implements OnChanges {
 
   prepareQuery() {
     // initial query settings
-    const query = { ...this.search };
+    const query = { ...(this.search || {}) };
 
     if (this.filters)
       Object.assign(query, filterToQuery(this.filters));
@@ -124,19 +124,18 @@ export class RecordsListView implements OnChanges {
     if (this.topic)
       query.topic = this.topic;
 
-    if (this.isTable) {
-
-      if (this.tab === DataRecordState.DRAFT)
-        query.owner = this.session.get('serial');
-    }
-
-    // check if region, orgunit, or user fields are in datastore
-    const orgsFields = this.dataStore.fields.filter(f => f.type === 'serial' && f.ref_type === 'orgunit');
-    const usersFields = this.dataStore.fields.filter(f => f.type === 'serial' && f.ref_type === 'user');
-    const regionsFields = this.dataStore.fields.filter(f => f.type === 'region');
+    if (this.isTable && this.tab === DataRecordState.DRAFT)
+      query.owner = this.session.get('serial');
 
     // get user session
     const user = this.session.get();
+
+    if (user?.orgunit === "*")
+      return query;
+
+    // check if region, orgunit, or user fields are in datastore
+    const orgsFields = this.dataStore.fields.filter(f => f.type === 'serial' && f.ref_type === 'orgunit');
+    const regionsFields = this.dataStore.fields.filter(f => f.type === 'region');
 
     // add filter on orgunits
     if (orgsFields.length && user?.orgunit !== "*")
@@ -150,13 +149,6 @@ export class RecordsListView implements OnChanges {
       if (org && org.regions.length)
         for (const f of regionsFields)
           query.$or = org.regions.map(r => ({ [f.name]: { $regex: `${r}$` } }));
-    }
-
-    // add filter on users
-    if (usersFields.length && user?.orgunit !== "*") {
-      if (!user?.roles.some(r => [Role.ADMIN, Role.DATA_ENG, Role.REPORTER].includes(r)))
-        for (const f of usersFields)
-          query[f.name] = user?.serial;
     }
 
     return query;

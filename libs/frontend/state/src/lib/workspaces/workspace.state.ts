@@ -21,12 +21,16 @@ export class WorkspaceState extends StatorObjectState<Workspace> {
       .subscribe(() => this._setLoading(false));
 
     this.channel.select(SessionEnd)
-      .subscribe(() => this._clear());
+      .subscribe(() => {
+        this._clear();
+      });
   }
 
   private init() {
     return this.service.getByOwner()
-      .pipe(tap(w => this._set(w)));
+      .pipe(tap(w => {
+        this._set(w);
+      }));
   }
 
   addGroup(name: string) {
