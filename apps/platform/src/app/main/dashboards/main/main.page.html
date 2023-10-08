@@ -16,7 +16,7 @@
 
   <main>
     <div class="container">
-      <div class="card card-clear">
+      <div class="card card-clear pi-3">
         <div class="card-tabs" *ngIf="tab$ | async as tab">
           <h5
             class="tab"
@@ -42,7 +42,7 @@
         </div>
 
         <ng-container *ngIf="dashboards$ | async as dashboards">
-          <div class="card-body pi-0 pbe-0">
+          <div class="card-body pi-3 pbe-0">
             <table *ngIf="dashboards.results.length else noData">
               <thead>
                 <tr>
@@ -60,7 +60,9 @@
                 >
                   <td class="index-col">{{skip + i + 1}}</td>
                   <td>{{ds.title}}</td>
-                  <td><app-avatar [serial]="ds.owner" size="small"></app-avatar></td>
+                  <td>
+                    <app-avatar [serial]="ds.owner" size="small"></app-avatar>
+                  </td>
                   <td class="date-col w-3">
                     {{ds.create_date | date: 'dd-MM-yyyy'}}
                   </td>
@@ -79,10 +81,13 @@
 
           <div class="card-footer">
             <div class="grow"></div>
-            <pui-table-pagination [pageSize]="10" [count]="count" (selects)="page$.next($event)"></pui-table-pagination>
+            <pui-table-pagination
+              [pageSize]="10"
+              [count]="count"
+              (selects)="page$.next($event)"
+            ></pui-table-pagination>
             <div class="grow"></div>
           </div>
-
         </ng-container>
       </div>
     </div>

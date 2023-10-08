@@ -9,8 +9,10 @@ import { Component } from '@angular/core';
     :host {
       display: flex;
       gap: 32px;
+      
       padding: 32px 32px 0;
     }
+    
 
     .stats-icon {
       height: 200px;

@@ -1,24 +1,24 @@
 <ng-container *contra="let c">
-
   <pestras-blueprints-list
     [selected]="selected"
     (selects)="set($event)"
     (add)="openDialog(addTmp)"
   ></pestras-blueprints-list>
-  
 
   <div class="bp-details" *ngIf="selected | blueprint | async as bp">
     <header class="bg-surface1 pi-8 border-be">
       <div class="container">
         <div class="toolbar gap-4">
           <div>
-            <p class="primary bold">
-              {{bp.create_date | date: 'dd-MM-yyyy'}}
-            </p>
+            <p class="primary bold">{{bp.create_date | date: 'dd-MM-yyyy'}}</p>
             <h1 class="weight-8">{{bp.name}}</h1>
           </div>
           <div class="grow"></div>
-          <a class="btn btn-primary btn-round" [routerLink]="bp.serial" [queryParams]="{ menu: 'tables' }">
+          <a
+            class="btn btn-primary btn-round"
+            [routerLink]="bp.serial"
+            [queryParams]="{ menu: 'tables' }"
+          >
             {{c['continue']}}
           </a>
         </div>
@@ -37,27 +37,29 @@
 
   <ng-template #addTmp>
     <div class="card w-15 shadow-6">
-
       <h3 class="card-header">{{c['addBlueprint']}}</h3>
 
       <div class="card-body">
-
         <label for="bp-name">{{c['name']}}</label>
         <div class="fc">
-          <input #nameInput id="bp-name" type="text" autocomplete="off">
+          <input #nameInput id="bp-name" type="text" autocomplete="off" />
         </div>
-
       </div>
 
       <div class="card-footer">
-        <button class="btn-round btn-outline" (click)="closeDialog()">{{c['cancel']}}</button>
-        <button class="btn-primary btn-round" [disabled]="!nameInput.value"
-          (click)="add(c, nameInput.value)">{{c['add']}}</button>
+        <button class="btn-round btn-outline" (click)="closeDialog()">
+          {{c['cancel']}}
+        </button>
+        <button
+          class="btn-primary btn-round"
+          [disabled]="!nameInput.value"
+          (click)="add(c, nameInput.value)"
+        >
+          {{c['add']}}
+        </button>
       </div>
 
       <pui-preloader *ngIf="preloader"></pui-preloader>
-
     </div>
   </ng-template>
-
 </ng-container>

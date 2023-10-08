@@ -1,9 +1,9 @@
 <ng-container *contra="let c">
-  <div class="card-header">
+  <div class="card-header flex flex-column align-items-center">
     <i puiIcon="lan"></i>
     <h4>{{c['branchesOrgunits']}}</h4>
     <div class="grow"></div>
-    <div class="fc fc-round w-6">
+    <div class="fc fc-round w-10 pi-4">
       <input type="search" [placeholder]="c['search']" [formControl]="search" />
       <i puiIcon="search" size="small"></i>
     </div>
@@ -19,7 +19,11 @@
           </tr>
         </thead>
         <tbody>
-          <tr *ngFor="let b of branches" class="hover cursor-pointer" (click)="selects.emit(b.serial)">
+          <tr
+            *ngFor="let b of branches"
+            class="hover cursor-pointer"
+            (click)="selects.emit(b.serial)"
+          >
             <td>
               <div class="flex gap-4 align-items-center">
                 <div

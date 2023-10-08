@@ -1,7 +1,7 @@
 <ng-container *contra="let c">
-  <div class="flex gap-8" *ngIf="(!isEmpty && !form) else noData">
+  <div *ngIf="(!isEmpty && !form) else noData">
     <pestras-workflows-list
-      class="w-10"
+      class="block"
       [editable]="editable"
       [blueprint]="blueprint"
       [selected]="selected"
@@ -10,20 +10,26 @@
       (noData)="isEmpty = true"
     ></pestras-workflows-list>
 
-    <div *ngIf="selected" class="grow">
+    <div *ngIf="selected" class="w-100 block mbs-2 card shadow-2 p-8">
       <pestras-workflow-name [wf]="selected"></pestras-workflow-name>
 
       <div class="divider mb-6"></div>
 
-      <pestras-workflow-cancelable [wf]="selected"></pestras-workflow-cancelable>
+      <pestras-workflow-cancelable
+        [wf]="selected"
+      ></pestras-workflow-cancelable>
 
       <div class="divider mb-6"></div>
 
-      <pestras-workflow-default-action [wf]="selected"></pestras-workflow-default-action>
+      <pestras-workflow-default-action
+        [wf]="selected"
+      ></pestras-workflow-default-action>
 
       <div class="divider mb-6"></div>
 
-      <pestras-workflow-max-review-days [wf]="selected"></pestras-workflow-max-review-days>
+      <pestras-workflow-max-review-days
+        [wf]="selected"
+      ></pestras-workflow-max-review-days>
 
       <div class="divider mb-6"></div>
 

@@ -1,42 +1,44 @@
 <ng-container *contra="let c">
   <ng-container *ngIf="orgunit$ | async as orgunit">
     <header class="bg-surface1 pi-8 border-be">
-      <div class="container">
-        <div class="toolbar gap-4">
-          <div
-            class="avatar avatar-large"
-            [style.background-color]="10 | randomColor"
-          >
-            <img
-              *ngIf="orgunit.logo"
-              [src]="orgunit.logo | docsPath"
-              alt="orgunit logo"
-              class="org-logo"
-            />
-            <i *ngIf="!orgunit.logo" color="white" puiIcon="lan"></i>
+      <div class="toolbar mbe-4">
+        <div class="container">
+          <div class="toolbar gap-2">
+            <div
+              class="avatar avatar-large"
+              [style.background-color]="10 | randomColor"
+            >
+              <img
+                *ngIf="orgunit.logo"
+                [src]="orgunit.logo | docsPath"
+                alt="orgunit logo"
+                class="org-logo"
+              />
+              <i *ngIf="!orgunit.logo" color="white" puiIcon="lan"></i>
+            </div>
+            <div>
+              <h1 class="weight-8 f7">{{orgunit.name}}</h1>
+              <p class="primary bold">{{orgunit.class}}</p>
+            </div>
+
+            <div class="grow"></div>
+
+            <button
+              class="color-scheme-dark btn-surface1 btn-round"
+              (click)="openModal(updateLogoModal)"
+            >
+              <i color="white" size="small" puiIcon="imagesmode"></i>
+              {{c['updateLogo']}}
+            </button>
+
+            <button
+              class="btn-primary btn-round"
+              (click)="openModal(updateModal)"
+            >
+              <i color="white" size="small" puiIcon="edit_fill"></i>
+              {{c['update']}}
+            </button>
           </div>
-          <div>
-            <p class="primary bold">{{orgunit.class}}</p>
-            <h1 class="weight-8">{{orgunit.name}}</h1>
-          </div>
-
-          <div class="grow"></div>
-
-          <button
-            class="color-scheme-dark btn-surface1 btn-round"
-            (click)="openModal(updateLogoModal)"
-          >
-            <i color="white" size="small" puiIcon="imagesmode"></i>
-            {{c['updateLogo']}}
-          </button>
-
-          <button
-            class="btn-primary btn-round"
-            (click)="openModal(updateModal)"
-          >
-            <i color="white" size="small" puiIcon="edit_fill"></i>
-            {{c['update']}}
-          </button>
         </div>
       </div>
     </header>
@@ -47,7 +49,7 @@
           <h2 mbe>{{c['branchesOrgunits']}}</h2>
         </div> -->
 
-        <div class="grid cols-2 gap-8 mbe-8">
+        <div class="grid cols-1 gap-8 mbe-8">
           <pestras-orgunits-table
             [parent]="orgunit.serial"
             (selects)="selects.emit($event)"

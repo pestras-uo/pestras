@@ -1,0 +1,107 @@
+:host {
+  width: 72px;
+
+  aside {
+    text-align: center;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    overflow-x: hidden;
+    gap: 16px;
+    padding: 16px;
+  }
+
+  .full,
+  .close {
+    opacity: 1;
+  }
+
+  &.close {
+    .full {
+      display: none;
+    }
+  }
+
+  &.open {
+    width: var(--drawer-width);
+
+    .short {
+      display: none;
+    }
+  }
+}
+
+.p-logo {
+  width: 24px;
+}
+
+header {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.splitter {
+  width: 8px;
+  height: 8px;
+  background-color: var(--primary);
+  margin: 8px auto;
+  border-radius: 8px;
+}
+
+nav {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+
+  a {
+    display: flex;
+    position: relative;
+    padding-block: 8px;
+    padding-inline: 10px;
+    border-radius: 8px;
+    display: flex;
+    gap: 16px;
+    align-items: center;
+    color: var(--text2);
+    transition: background-color 250ms;
+    // font-weight: 700;
+
+    i {
+      background-color: var(--text2);
+    }
+
+    p {
+      position: relative;
+    }
+
+    &:hover {
+      background-color: var(--surface3);
+
+      p {
+        color: var(--text1);
+      }
+
+      .icon {
+        background-color: var(--text1);
+      }
+    }
+
+    &.active {
+      background-color: var(--surface3);
+
+      p {
+        color: var(--text1);
+      }
+
+      .icon {
+        background-color: var(--text1);
+      }
+    }
+
+    &.dimmed {
+      opacity: 0.5;
+      pointer-events: none;
+    }
+  }
+}

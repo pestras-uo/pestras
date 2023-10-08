@@ -12,7 +12,6 @@
 
   <ng-container *ngIf="groups.length else noData">
     <ng-container *ngFor="let g of groups; let last = last">
-
       <div class="card card-small card-clear">
         <div class="card-header pi-0 actions-on-hover">
           <h4>{{g.name}}</h4>
@@ -31,7 +30,7 @@
           </button>
         </div>
 
-        <div class="card-body  pi-0 pbe-0">
+        <div class="card-body pi-0 pbe-0">
           <no-data-placeholder-widget
             [small]="true"
             *ngIf="!g.dataStores.length && !g.blueprints.length && !g.topics.length && !g.dashboards.length && !g.reports.length"
@@ -39,7 +38,10 @@
           >
           <div class="mbe-6" *ngIf="g.dataStores.length">
             <h5 class="mbe-2 f10 bold text3">{{c['dataStores']}}</h5>
-            <div class="toolbar mbe-1 actions-on-hover" *ngFor="let pin of g.dataStores">
+            <div
+              class="toolbar mbe-1 actions-on-hover"
+              *ngFor="let pin of g.dataStores"
+            >
               <a
                 class="f9 bold"
                 [routerLink]="['/main/data-stores', pin.serial]"
@@ -56,7 +58,10 @@
           </div>
           <div class="mbe-6" *ngIf="g.blueprints.length">
             <h5 class="mbe-2 f10 bold text3">{{c['blueprints']}}</h5>
-            <div class="toolbar mbe-1 actions-on-hover" *ngFor="let pin of g.blueprints">
+            <div
+              class="toolbar mbe-1 actions-on-hover"
+              *ngFor="let pin of g.blueprints"
+            >
               <a class="f9 bold" [routerLink]="['/main/blueprints', pin.serial]"
                 >{{pin.name}}</a
               >
@@ -71,7 +76,10 @@
           </div>
           <div class="mbe-6" *ngIf="g.topics.length">
             <h5 class="mbe-2 f10 bold text3">{{c['topics']}}</h5>
-            <div class="toolbar mbe-1 actions-on-hover" *ngFor="let pin of g.topics">
+            <div
+              class="toolbar mbe-1 actions-on-hover"
+              *ngFor="let pin of g.topics"
+            >
               <a
                 class="f9 bold"
                 [routerLink]="['/main/topics', pin.scope, pin.serial]"
@@ -88,7 +96,10 @@
           </div>
           <div class="mbe-6" *ngIf="g.dashboards.length">
             <h5 class="mbe-2 f10 bold text3">{{c['dashboards']}}</h5>
-            <div class="toolbar mbe-1 actions-on-hover" *ngFor="let pin of g.dashboards">
+            <div
+              class="toolbar mbe-1 actions-on-hover"
+              *ngFor="let pin of g.dashboards"
+            >
               <a
                 class="f9 bold"
                 [routerLink]="['/main/dashboards', pin.scope, pin.serial]"
@@ -105,7 +116,10 @@
           </div>
           <div *ngIf="g.reports.length">
             <h5 class="mbe-2 f10 bold text3">{{c['reports']}}</h5>
-            <div class="toolbar mbe-1 actions-on-hover" *ngFor="let pin of g.reports">
+            <div
+              class="toolbar mbe-1 actions-on-hover"
+              *ngFor="let pin of g.reports"
+            >
               <a
                 class="f9 bold"
                 [routerLink]="['/main/reports', pin.scope, pin.serial]"

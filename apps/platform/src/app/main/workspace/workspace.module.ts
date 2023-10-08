@@ -9,6 +9,7 @@ import { ContraModule } from '@pestras/frontend/util/contra';
 import { DialogModule } from '@angular/cdk/dialog';
 import { ReactiveFormsModule } from '@angular/forms';
 import {
+  PuiClickOutsideDirective,
   PuiIcon,
   PuiPreloaderModule,
   PuiSelectInput,
@@ -25,12 +26,7 @@ import { TopicsFeatureModule } from '@pestras/frontend/features/topics';
 import { SessionFeatureModule } from '@pestras/frontend/features/session';
 
 @NgModule({
-  declarations: [
-    WorkspacePage, 
-    PinsView, 
-    SlidesView, 
-    StatsView
-  ],
+  declarations: [WorkspacePage, PinsView, SlidesView, StatsView],
   imports: [
     // Anguler
     CommonModule,
@@ -38,11 +34,14 @@ import { SessionFeatureModule } from '@pestras/frontend/features/session';
     ReactiveFormsModule,
     // Util
     ContraModule,
+    
     DialogModule,
     // Pui
     PuiPreloaderModule,
     PuiIcon,
     PuiSelectInput,
+    PuiClickOutsideDirective,
+
     // Features
     SessionFeatureModule,
     BlueprintsFeatureModule,

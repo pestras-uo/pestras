@@ -3,34 +3,42 @@
     *ngIf="blueprint | blueprintDataStores: [types.TABLE] | async | fn: setDefaultActive as datastores"
   >
     <main *ngIf="datastores.length else noData">
-      <div class="card card-small bordered">
-        <h5 class="card-header primary">{{c['list']}}</h5>
-        <ul class="card-body list list-actions p-0">
-          <ng-container *ngFor="let ds of datastores">
-            <li
-              class="list-item hover-surface2 pi-4"
-              [class.active]="active === ds"
-              (click)="active = ds"
-            >
-              <h5>{{ds.name}}</h5>
-            </li>
-            <ng-container *ngIf="active === ds">
-              <li class="list-item" (click)="tab = 'data'">
-                <p class="pis-8 pie-4 f9 bold" [class.primary]="tab === 'data'">
-                  {{c['data']}}
-                </p>
+      <div class="card card-small ">
+        <button class="card-header" (click)="toggleDropdown()">
+          {{c['list']}}
+          <i size="small" puiIcon="arrow_drop_down"></i>
+        </button>
+        <div *ngIf="showDropdown">
+          <ul class="card-body list list-actions p-0">
+            <ng-container *ngFor="let ds of datastores">
+              <li
+                class="list-item hover-surface2 pi-4"
+                [class.active]="active === ds"
+                (click)="active = ds"
+              >
+                <h5>{{ds.name}}</h5>
               </li>
-              <li class="list-item" (click)="tab = 'details'">
-                <p
-                  class="pis-8 pie-4 f9 bold"
-                  [class.primary]="tab === 'details'"
-                >
-                  {{c['desc']}}
-                </p>
-              </li>
+              <ng-container *ngIf="active === ds">
+                <li class="list-item" (click)="tab = 'data'">
+                  <p
+                    class="pis-8 pie-4 f9 bold"
+                    [class.primary]="tab === 'data'"
+                  >
+                    {{c['data']}}
+                  </p>
+                </li>
+                <li class="list-item" (click)="tab = 'details'">
+                  <p
+                    class="pis-8 pie-4 f9 bold"
+                    [class.primary]="tab === 'details'"
+                  >
+                    {{c['desc']}}
+                  </p>
+                </li>
+              </ng-container>
             </ng-container>
-          </ng-container>
-        </ul>
+          </ul>
+        </div>
       </div>
 
       <ng-container *ngIf="active">

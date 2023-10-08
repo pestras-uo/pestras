@@ -17,7 +17,8 @@ import { WorkspaceFeatureModule } from '@pestras/frontend/features/workspace';
   declarations: [
     MainPage,
     MainHeaderView,
-    DrawerView
+    DrawerView,
+    
   ],
   imports: [
     // Angule

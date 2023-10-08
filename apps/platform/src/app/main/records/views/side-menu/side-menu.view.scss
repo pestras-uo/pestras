@@ -17,17 +17,56 @@
 
   .list-item {
     padding: 28px;
-    
+
     &.active {
       padding-inline-start: 23px;
-  
+
       .icon {
         background-color: var(--primary);
       }
-  
+
       h4 {
         color: var(--primary);
       }
     }
   }
+}
+
+/* Landscape */
+@media only screen and (min-width: 768px) and (max-width: 1180px) and (orientation: landscape) {
+  main {
+
+    width: 240px;
+  }
+
+  :host {
+    width: 240px;
+
+
+  }
+
+  h4 {
+    text-wrap: nowrap;
+  }
+
+
+}
+
+/* Portrait */
+@media only screen and (min-width: 768px) and (max-width: 1024px) and (orientation: portrait) {
+  main {
+
+    width: 240px;
+  }
+
+  :host {
+    width: 240px;
+
+
+  }
+
+  h4 {
+    text-wrap: nowrap;
+  }
+
 }

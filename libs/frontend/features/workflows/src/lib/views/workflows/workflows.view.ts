@@ -1,9 +1,10 @@
-import { Component, Input } from "@angular/core";
-import { Workflow } from "@pestras/shared/data-model";
+import { Component, Input } from '@angular/core';
+import { Workflow } from '@pestras/shared/data-model';
 
 @Component({
   selector: 'pestras-workflows',
-  templateUrl: './workflows.view.html'
+  templateUrl: './workflows.view.html',
+  styleUrls: ['./workflows.view.scss'],
 })
 export class WorkflowsViewComponent {
   isEmpty = false;
@@ -14,5 +15,4 @@ export class WorkflowsViewComponent {
   blueprint!: string;
   @Input()
   editable = false;
-
 }

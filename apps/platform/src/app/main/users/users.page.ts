@@ -13,6 +13,7 @@ import { ActivatedRoute, Router } from '@angular/router';
   styles: [`
     :host {
       display: grid;
+      
       grid-template-columns: auto 1fr;
       height: var(--main-height);
     }

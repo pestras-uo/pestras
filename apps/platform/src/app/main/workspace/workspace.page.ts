@@ -7,7 +7,9 @@ import { Role } from '@pestras/shared/data-model';
 @Component({
   selector: 'app-workspace',
   template: `
-    <ng-container *ngIf="workspace$ | async as ws">
+    <ng-container
+      *ngIf="workspace$ | async as ws"
+    >
       <app-pins [ws]="ws"></app-pins>
       <div class="sec-2">
         <workspace-stats *ngIf="[roles.ADMIN, roles.DATA_ENG] | hasRoles">
@@ -16,23 +18,25 @@ import { Role } from '@pestras/shared/data-model';
       </div>
     </ng-container>
   `,
-  styles: [`
-    :host {
-      display: grid;
-      grid-template-columns: auto 1fr;
-      height: var(--main-height);
-    }
-    
-    .sec-2 {
-      height: 100%;
-      overflow-y: auto;
-    }
-  `]
+  styles: [
+    `
+      :host {
+        display: grid;
+        grid-template-columns: auto 1fr;
+        height: var(--main-height);
+      }
+
+      .sec-2 {
+        height: 100%;
+        overflow-y: auto;
+      }
+    `,
+  ],
 })
 export class WorkspacePage {
   readonly roles = Role;
 
   readonly workspace$ = this.state.select();
 
-  constructor(private state: WorkspaceState) { }
+  constructor(private state: WorkspaceState) {}
 }

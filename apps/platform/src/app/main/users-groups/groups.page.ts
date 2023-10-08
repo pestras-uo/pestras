@@ -17,6 +17,7 @@ import { ToastService } from '@pestras/frontend/ui';
       grid-template-columns: auto 1fr;
       height: var(--main-height);
     }
+    
   `]
 })
 export class GroupsPage {

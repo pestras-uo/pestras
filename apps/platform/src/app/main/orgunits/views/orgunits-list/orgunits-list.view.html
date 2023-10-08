@@ -30,11 +30,12 @@
             *ngIf="org.logo"
             [src]="org.logo | docsPath"
             alt="orgunit logo"
+            class="img-icon"
           />
           <i *ngIf="!org.logo" color="white" size="small" puiIcon="lan"></i>
         </div>
 
-        <div>
+        <div class="content">
           <p class="text1 bold">{{org.name}}</p>
           <p class="f10 text3">{{org.class}}</p>
         </div>

@@ -78,13 +78,14 @@ export class CommentsViewComponent implements OnInit {
 
     const data = this.form.getRawValue();
 
+    alert(this.record['serial']);
     const obj: {
       record: string;
       text: string;
       create_date: Date;
       last_modified: Date;
     } = {
-      record: this.dataStore.serial,
+      record: this.record['serial'],
       text: data.text || '', // Use an empty string if data.text is falsy (null or undefined)
       create_date: new Date(),
       last_modified: new Date(),

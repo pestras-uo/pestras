@@ -33,16 +33,17 @@
         <ng-container
           *ngIf="'' | users | async | arrayFilter: filterUsers: serial as users else noData"
         >
-          <div class="grid cols-3 gap-8" *ngIf="users.length else noData">
+          <div class="block" *ngIf="users.length else noData">
             <div class="card" *ngFor="let u of users">
               <div class="card-header">
                 <app-avatar [serial]="u.serial"></app-avatar>
-
+              </div>
+              <div class="card-footer">
                 <button
                   class="btn-icon btn-small btn-round"
                   (click)="removeUser(c, u.serial)"
                 >
-                  <i puiIcon="delete" size="small"></i>
+                  <i puiIcon="delete" size="small" color="danger"></i>
                 </button>
               </div>
             </div>
