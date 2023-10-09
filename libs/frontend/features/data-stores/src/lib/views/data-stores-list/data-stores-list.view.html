@@ -15,7 +15,7 @@
 
   <ng-container *ngIf="datastores$ | async as datastores">
     <div class="grid cols-3 gap-4" *ngIf="datastores.length; else noData">
-      <div class="card mbe-2" *ngFor="let ds of datastores">
+      <div class="card" *ngFor="let ds of datastores">
         <div class="card-body">
           <h3>{{ds.name}}</h3>
           <p>{{ds.create_date | date: 'dd/MM/YYYY'}}</p>

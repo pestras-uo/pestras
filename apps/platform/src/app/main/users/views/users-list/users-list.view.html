@@ -1,37 +1,38 @@
-<ng-container *contra="let c; let dir=dir">
-
-  <header>
+<ng-container *contra="let c">
+  <header class="p-4">
     <div class="toolbar mbe-4">
       <h3 class="weight-8">{{c['users']}}</h3>
       <div class="grow"></div>
-      <button class="btn-icon btn-small btn-round" (click)="openModal(addUserModal)">
+      <button
+        class="btn-icon btn-small btn-round"
+        (click)="openModal(addUserModal)"
+      >
         <i puiIcon="add" size="small"></i>
       </button>
     </div>
 
     <div class="fc fc-round fc-surface1 fc-outline">
       <i size="small" puiIcon="search"></i>
-      <input type="search" [placeholder]="c['search']" [formControl]="searchControl">
+      <input
+        type="search"
+        [placeholder]="c['search']"
+        [formControl]="searchControl"
+      />
     </div>
   </header>
 
   <div class="list">
-
-    <div class="list-item" [class.active]="selected === u.serial" *ngFor="let u of users$ | async">
-
-      <app-avatar [serial]="u.serial"></app-avatar>
-
-      <div class="grow"></div>
-
-      <button class="btn-icon btn-small btn-round" (click)="selects.emit(u.serial)">
-        <i size="small" [puiIcon]="dir === 'rtl' ? 'navigate_before' : 'navigate_next'"></i>
-      </button>
+    <div
+      class="list-item hover cursor-pointer p-4"
+      [class.active]="selected === u.serial"
+      *ngFor="let u of users$ | async"
+      (click)="selects.emit(u.serial)"
+    >
+      <app-avatar [serial]="u.serial" size="small"></app-avatar>
     </div>
-
   </div>
 
   <ng-template #addUserModal>
     <app-add-user (closes)="closeModal()"></app-add-user>
   </ng-template>
-
 </ng-container>

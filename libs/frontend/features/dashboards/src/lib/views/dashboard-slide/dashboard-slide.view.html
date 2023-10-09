@@ -10,32 +10,32 @@
       ></app-workspace-toggle-slide>
 
       <button
-        class="btn-icon btn-small btn-round"
+        class="btn-icon btn-tiny btn-round"
         [disabled]="reorder"
         (click)="toggleFullScreen(viewsElm)"
       >
         <i
-          size="small"
+          size="tiny"
           [puiIcon]="fullscreen ? 'fullscreen_exit' : 'fullscreen'"
         ></i>
       </button>
 
       <ng-container *ngIf="editable">
         <button
-          class="btn-icon btn-small btn-round"
+          class="btn-icon btn-tiny btn-round"
           [class.btn-success]="reorder"
           [disabled]="fullscreen"
           (click)="reorder = !reorder"
         >
-          <i size="small" puiIcon="reorder"></i>
+          <i size="tiny" puiIcon="reorder"></i>
         </button>
 
         <button
-          class="btn-icon btn-small btn-round"
+          class="btn-icon btn-tiny btn-round"
           [disabled]="reorder || fullscreen"
           (click)="openDialog(addViewTmp)"
         >
-          <i size="small" puiIcon="add"></i>
+          <i size="tiny" puiIcon="add"></i>
         </button>
       </ng-container>
     </div>
@@ -59,9 +59,9 @@
           <button
             *ngIf="reorder"
             cdkDragHandle
-            class="btn-icon btn-small btn-round"
+            class="btn-icon btn-tiny btn-round"
           >
-            <i size="small" puiIcon="drag"></i>
+            <i size="tiny" puiIcon="drag"></i>
           </button>
           <h4>{{view.title}}</h4>
           <div class="grow"></div>

@@ -7,7 +7,7 @@ table {
   width: 100%;
   border-collapse: collapse;
   border-radius: 8px;
-  overflow: auto;
+  overflow-y: auto;
   border-spacing: 0;
 
   &.no-collapse {
@@ -67,6 +67,11 @@ table {
         }
       }
     }
+  }
+
+  th,
+  td {
+    min-width: 160px;
   }
 
   tbody tr {

@@ -4,24 +4,24 @@
 // https://opensource.org/licenses/MIT
 
 :where(.container) {
-  width: 100%;
-  max-width: 1280px;
+  max-width: 100%;
+  width: 1280px;
   margin-inline: auto;
 
   &.wider {
-    max-width: 1600px;
+    width: 1600px;
   }
 
   &.wide {
-    max-width: 1420px;
+    width: 1420px;
   }
 
   &.narrow {
-    max-width: 1096px;
+    width: 1096px;
   }
 
   &.tight {
-    max-width: 960px;
+    width: 960px;
   }
 
   &.fit {

@@ -10,54 +10,13 @@
 }
 
 header {
-  padding-block: 48px;
   border-block-end: 1px solid var(--border1);
 }
 
-main {
-  padding-block: 32px;
-
-  .content {
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
-    grid-template-rows: auto auto auto;
-    gap: 28px;
-    margin-block-end: 28px;
-  }
+.content {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-rows: auto auto auto;
+  gap: 28px;
+  margin-block-end: 28px;
 }
-
-// /* Landscape */
-// @media only screen 
-//   and (min-width: 768px) 
-//   and (max-width: 1024px) 
-//   and (orientation: landscape) {
-
-//     /* Your styles for landscape orientation go here */
-//     main  {
-//       background-color: aqua;
-
-      
-//     }
-
-
-
-//     }
-
-
-// /* Portrait */
-// @media only screen 
-//   and (min-width: 768px) 
-//   and (max-width: 1024px) 
-//   and (orientation: portrait) {
-
-//     /* Your styles for portrait orientation go here */
-//       main  {
-
-      
-//     }
-
-
-
- 
-
-// }

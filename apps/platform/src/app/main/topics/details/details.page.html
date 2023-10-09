@@ -1,6 +1,6 @@
 <ng-container *ngIf="topic$ | async as t">
   <main puiInfiniteScroll (reached)="pageBottomReached()" *contra="let c">
-    <header class="bg-surface1 pbs-6 pi-8 border-be">
+    <header class="bg-surface1 pbs-6 pi-4 border-be">
       <div class="container">
         <p class="bold text-3 f9">{{c['topic']}}</p>
         <div class="toolbar gap-2">
@@ -21,7 +21,7 @@
             {{c['update']}}
           </button>
         </div>
-        <p class="text-3 bold f9 mbe-8">
+        <p class="text-3 bold f9 mbe-4">
           {{t.create_date | date: 'dd/MM/YYYY'}}
         </p>
 
@@ -63,7 +63,7 @@
       </div>
     </header>
 
-    <div class="pb-10 pi-8">
+    <div class="pb-6 pi-4">
       <div class="container">
         <app-data-stores-list-menu
           *ngIf="view === 'main'"

@@ -10,6 +10,7 @@ import { DialogModule } from '@angular/cdk/dialog';
 import { ReactiveFormsModule } from '@angular/forms';
 import {
   PuiClickOutsideDirective,
+  PuiDropdown,
   PuiIcon,
   PuiPreloaderModule,
   PuiSelectInput,
@@ -41,7 +42,7 @@ import { SessionFeatureModule } from '@pestras/frontend/features/session';
     PuiIcon,
     PuiSelectInput,
     PuiClickOutsideDirective,
-
+    PuiDropdown,
     // Features
     SessionFeatureModule,
     BlueprintsFeatureModule,

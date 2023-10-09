@@ -2,13 +2,8 @@
   display: grid;
   grid-template-rows: auto 1fr;
   height: var(--main-height);
-  width: 320px;
+  width: 240px;
   border-inline-end: 1px solid var(--border1);
-
-  header {
-    background-color: var(--surface2);
-    border-block-end: 1px solid var(--border1);
-  }
 
   main {
     overflow-y: auto;
@@ -17,54 +12,4 @@
   .list {
     background-color: var(--surface1);
   }
-
-  .list-item {
-    padding: 28px;
-
-    &.active {
-      padding-inline-start: 23px;
-
-      .icon {
-        background-color: var(--primary);
-      }
-
-      h4 {
-        color: var(--primary);
-      }
-    }
-  }
-}
-
-
-
-/* Landscape */
-@media only screen and (min-width: 768px) and (max-width: 1024px) and (orientation: landscape) {
-
-  /* Your styles for landscape orientation go here */
-  :host,
-  main {
-    width: 240px;
-
-
-  }
-
-
-
-
-
-
-}
-
-
-/* Portrait */
-@media only screen and (min-width: 768px) and (max-width: 1024px) and (orientation: portrait) {
-
-  :host,
-  main {
-    width: 240px;
-
-
-  }
-
-
 }

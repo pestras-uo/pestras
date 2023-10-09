@@ -1,191 +1,121 @@
-<ng-container *contra="let c; let dir = dir">
+<ng-container *contra="let c">
   <header class="pi-7 pb-4 flex gap-2 align-items-center">
-    <button class="btn-small btn-round btn-icon" (click)="loc.back()">
-      <i
-        size="small"
-        color="primary"
-        [class.rotate-180]="dir === 'ltr'"
-        puiIcon="trending_flat"
-      ></i>
-    </button>
     <p class="f9 bold">{{c['list']}}</p>
   </header>
 
   <main class="list">
     <!-- Data Store Details -->
     <!-- ------------------------------------------------------------------------------------------ -->
-    <div class="list-item" [class.active]="view === 'details'">
+    <div
+      class="list-item hover"
+      [class.active]="view === 'details'"
+      (click)="selects.emit('details')"
+    >
       <div class="flex gap-2">
         <i size="small" puiIcon="description"></i>
         <div>
-          <h4 class="mbe-1">{{c['desc']}}</h4>
+          <h5 class="mbe-1">{{c['desc']}}</h5>
           <p class="text3 f9">{{c['templateDetails']}}</p>
         </div>
       </div>
-
-      <div class="grow"></div>
-
-      <button
-        class="btn-icon btn-round btn-small"
-        (click)="selects.emit('details')"
-      >
-        <i
-          size="small"
-          [puiIcon]="dir === 'rtl' ? 'navigate_before' : 'navigate_next'"
-        ></i>
-      </button>
     </div>
 
     <!-- Data Store Data -->
     <!-- ------------------------------------------------------------------------------------------ -->
-    <div class="list-item" [class.active]="view === 'data'">
+    <div
+      class="list-item hover"
+      [class.active]="view === 'data'"
+      (click)="selects.emit('data')"
+    >
       <div class="flex gap-2">
         <i size="small" puiIcon="description"></i>
         <div>
-          <h4 class="mbe-1">{{c['data']}}</h4>
+          <h5 class="mbe-1">{{c['data']}}</h5>
           <p class="text3 f9">{{c['templateData']}}</p>
         </div>
       </div>
-
-      <div class="grow"></div>
-
-      <button
-        class="btn-icon btn-round btn-small"
-        (click)="selects.emit('data')"
-      >
-        <i
-          size="small"
-          [puiIcon]="dir === 'rtl' ? 'navigate_before' : 'navigate_next'"
-        ></i>
-      </button>
     </div>
 
     <!-- Data Store Settings -->
     <!-- ------------------------------------------------------------------------------------------ -->
-    <div class="list-item" [class.active]="view === 'settings'">
+    <div
+      class="list-item hover"
+      [class.active]="view === 'settings'"
+      (click)="selects.emit('settings')"
+    >
       <div class="flex gap-2">
         <i size="small" puiIcon="settings"></i>
         <div>
-          <h4 class="mbe-1">{{c['settings']}}</h4>
+          <h5 class="mbe-1">{{c['settings']}}</h5>
           <p class="text3 f9">{{c['templateSettingsDesc']}}</p>
         </div>
       </div>
-
-      <div class="grow"></div>
-
-      <button
-        class="btn-icon btn-round btn-small"
-        (click)="selects.emit('settings')"
-      >
-        <i
-          size="small"
-          [puiIcon]="dir === 'rtl' ? 'navigate_before' : 'navigate_next'"
-        ></i>
-      </button>
     </div>
 
     <!-- Data Store Web Service -->
     <!-- ------------------------------------------------------------------------------------------ -->
     <div
       *ngIf="dataStore.type === 'web_service'"
-      class="list-item"
+      class="list-item hover"
       [class.active]="view === 'webService'"
+      (click)="selects.emit('webService')"
     >
       <div class="flex gap-2">
         <i size="small" puiIcon="api"></i>
         <div>
-          <h4 class="mbe-1">{{c['webService']}}</h4>
+          <h5 class="mbe-1">{{c['webService']}}</h5>
           <p class="text3 f9">{{c['templateSettingsDesc']}}</p>
         </div>
       </div>
-
-      <div class="grow"></div>
-
-      <button
-        class="btn-icon btn-round btn-small"
-        (click)="selects.emit('webService')"
-      >
-        <i
-          size="small"
-          [puiIcon]="dir === 'rtl' ? 'navigate_before' : 'navigate_next'"
-        ></i>
-      </button>
     </div>
 
     <!-- Data Store Web Service -->
     <!-- ------------------------------------------------------------------------------------------ -->
     <div
       *ngIf="dataStore.type === 'aggregational'"
-      class="list-item"
+      class="list-item hover"
       [class.active]="view === 'aggregation'"
+      (click)="selects.emit('aggregation')"
     >
       <div class="flex gap-2">
         <i size="small" puiIcon="family_history"></i>
         <div>
-          <h4 class="mbe-1">{{c['aggr']}}</h4>
+          <h5 class="mbe-1">{{c['aggr']}}</h5>
           <p class="text3 f9">{{c['templateSettingsDesc']}}</p>
         </div>
       </div>
-
-      <div class="grow"></div>
-
-      <button
-        class="btn-icon btn-round btn-small"
-        (click)="selects.emit('aggregation')"
-      >
-        <i
-          size="small"
-          [puiIcon]="dir === 'rtl' ? 'navigate_before' : 'navigate_next'"
-        ></i>
-      </button>
     </div>
 
     <!-- Data Store Fields -->
     <!-- ------------------------------------------------------------------------------------------ -->
-    <div class="list-item" [class.active]="view === 'fields'">
+    <div
+      class="list-item hover"
+      [class.active]="view === 'fields'"
+      (click)="selects.emit('fields')"
+    >
       <div class="flex gap-2">
         <i size="small" puiIcon="table_rows"></i>
         <div>
-          <h4 class="mbe-1">{{c['fields']}}</h4>
+          <h5 class="mbe-1">{{c['fields']}}</h5>
           <p class="text3 f9">{{c['fieldsDeffinition']}}</p>
         </div>
       </div>
-
-      <div class="grow"></div>
-
-      <button
-        class="btn-icon btn-round btn-small"
-        (click)="selects.emit('fields')"
-      >
-        <i
-          size="small"
-          [puiIcon]="dir === 'rtl' ? 'navigate_before' : 'navigate_next'"
-        ></i>
-      </button>
     </div>
 
     <!-- Data Store Collaborators -->
     <!-- ------------------------------------------------------------------------------------------ -->
-    <div class="list-item" *ngIf="dataStore.type === 'table'">
+    <div
+      class="list-item hover"
+      *ngIf="dataStore.type === 'table'"
+      (click)="selects.emit('collaborators')"
+    >
       <div class="flex gap-2">
         <i size="small" puiIcon="group"></i>
         <div>
-          <h4 class="mbe-1">{{c['collaborators']}}</h4>
+          <h5 class="mbe-1">{{c['collaborators']}}</h5>
           <p class="text3 f9">{{c['collaboratorsDeffinition']}}</p>
         </div>
       </div>
-
-      <div class="grow"></div>
-
-      <button
-        class="btn-icon btn-round btn-small"
-        (click)="selects.emit('collaborators')"
-      >
-        <i
-          size="small"
-          [puiIcon]="dir === 'rtl' ? 'navigate_before' : 'navigate_next'"
-        ></i>
-      </button>
     </div>
   </main>
 </ng-container>

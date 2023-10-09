@@ -19,27 +19,7 @@ import { WorkspaceState } from '@pestras/frontend/state';
     `
       :host {
         display: block;
-        width: 240px;
-        padding: 32px;
-        height: 100%;
-        border-inline-end: 1px solid var(--border1);
-        overflow: auto;
-      }
-
-      /* Landscape */
-      @media only screen and (min-width: 768px) and (max-width: 1024px) and (orientation: landscape) {
-        /* Your styles for portrait orientation go here */
-        :host {
-          width: 180px;
-        }
-      }
-
-      /* Portrait */
-      @media only screen and (min-width: 768px) and (max-width: 1024px) and (orientation: portrait) {
-        /* Your styles for portrait orientation go here */
-        :host {
-          width: 180px;
-        }
+        width: 180px;
       }
 
       .toolbar,
@@ -47,12 +27,14 @@ import { WorkspaceState } from '@pestras/frontend/state';
         min-height: 24px;
       }
 
-      .actions-on-hover button {
-        display: none;
-      }
-
-      .actions-on-hover:hover button {
-        display: inline-block;
+      @media screen and (max-width: 1024px) {
+        .actions-on-hover button {
+          display: none;
+        }
+  
+        .actions-on-hover:hover button {
+          display: inline-block;
+        }
       }
     `,
   ],

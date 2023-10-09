@@ -4,10 +4,11 @@
   >
     <main *ngIf="datastores.length else noData">
       <div class="card card-small">
-        <button class="card-header" (click)="toggleDropdown()">
-          {{c['list']}}
+        <div class="card-header cursor-pointer" (click)="toggleDropdown()">
+          <h4>{{active?.name ?? c['data']}}</h4>
+          <div class="grow"></div>
           <i size="small" puiIcon="arrow_drop_down"></i>
-        </button>
+        </div>
         <div *ngIf="showDropdown">
           <ul class="card-body list list-actions p-0 ">
             <ng-container *ngFor="let ds of datastores">

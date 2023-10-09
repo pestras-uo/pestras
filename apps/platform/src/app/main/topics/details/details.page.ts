@@ -14,6 +14,10 @@ import { Observable } from 'rxjs';
   selector: 'app-details',
   templateUrl: './details.page.html',
   styles: [`
+    :host {
+      display: block;
+      width: calc(100vw - 72px);
+    }
     main {
       height: var(--main-height);
       overflow-y: auto;

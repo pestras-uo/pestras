@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 
 import { TopicsRoutingModule } from './topics-routing.module';
 import { ReactiveFormsModule } from '@angular/forms';
-import { TopicsRouter } from './topics.router';
+import { TopicsRouterComponent } from './topics.router';
 import { DetailsPage } from './details/details.page';
 import { DialogModule } from '@angular/cdk/dialog';
 import { SideMenuView } from './views/side-menu/side-menu.view';
@@ -30,7 +30,7 @@ import { TopicsListViewComponent } from './views/topics-list/topics-list.view';
 
 @NgModule({
   declarations: [
-    TopicsRouter,
+    TopicsRouterComponent,
     DetailsPage,
     TopicsListViewComponent,
     SideMenuView,

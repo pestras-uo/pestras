@@ -6,8 +6,7 @@ import { DataStore, DataStoreType } from '@pestras/shared/data-model';
 @Component({
   selector: 'app-data-stores-list-menu',
   templateUrl: './data-stores-list.view.html',
-  styles: [
-    `
+  styles: [`
       :host {
         display: block;
       }
@@ -27,8 +26,7 @@ import { DataStore, DataStoreType } from '@pestras/shared/data-model';
         align-items: flex-start !important;
         padding: 6px 6px;
       }
-    `,
-  ],
+    `],
 })
 export class DataStoresListView {
   types = DataStoreType;

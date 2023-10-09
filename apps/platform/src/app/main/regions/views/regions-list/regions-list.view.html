@@ -1,6 +1,5 @@
-<ng-container *contra="let c; let dir=dir">
-
-  <header>
+<ng-container *contra="let c">
+  <header class="p-4">
     <div class="toolbar mbe-4">
       <h3 class="weight-8">{{c['regions']}}</h3>
       <div class="grow"></div>
@@ -11,39 +10,42 @@
 
     <div class="fc fc-round fc-surface1 fc-outline">
       <i size="small" puiIcon="search"></i>
-      <input type="search" [placeholder]="c['search']" [formControl]="searchControl">
+      <input
+        type="search"
+        [placeholder]="c['search']"
+        [formControl]="searchControl"
+      />
     </div>
   </header>
 
-  <div class="list" *ngIf="searchControl.value | userRegions | async | fn: selectFirst as regions">
-
+  <div
+    class="list"
+    *ngIf="searchControl.value | userRegions | async | fn: selectFirst as regions"
+  >
     <ng-container *ngIf="regions.length else noData">
-
-      <div class="list-item" [class.active]="selected === region.serial" *ngFor="let region of regions">
-
+      <div
+        class="list-item hover cursor-pointer p-4"
+        [class.active]="selected === region.serial"
+        *ngFor="let region of regions"
+        (click)="this.selects.emit(region.serial)"
+      >
         <div>
           <p class="text1 bold">{{region.name}}</p>
           <p class="text3 f10">{{region.type}}</p>
         </div>
-
-        <div class="grow"></div>
-
-        <button class="btn-icon btn-round btn-small" (click)="this.selects.emit(region.serial)">
-          <i size="small" [puiIcon]="dir === 'rtl' ? 'navigate_before' : 'navigate_next'"></i>
-        </button>
       </div>
-
     </ng-container>
 
     <ng-template #noData>
-      <no-data-placeholder-widget [actionName]="c['addNew']"
-        (action)="openModal(addModal)">{{c['noDataMsg']}}</no-data-placeholder-widget>
+      <no-data-placeholder-widget
+        [actionName]="c['addNew']"
+        (action)="openModal(addModal)"
+        >{{c['noDataMsg']}}</no-data-placeholder-widget
+      >
     </ng-template>
-
   </div>
 
   <ng-template #addModal>
     <app-add-region (closes)="closeModal()"></app-add-region>
   </ng-template>
-
 </ng-container>
