@@ -12,9 +12,13 @@ import { Observable } from 'rxjs';
 @Component({
   selector: 'app-topic-dashboards-list',
   templateUrl: './topics-dashboards-list.view.html',
-  styles: [`
-    :host { display: block; }
-  `]
+  styles: [
+    `
+      :host {
+        display: block;
+      }
+    `,
+  ],
 })
 export class TopicDashboardsListView implements OnChanges {
   readonly roles = Role;
@@ -23,7 +27,10 @@ export class TopicDashboardsListView implements OnChanges {
   dialogRef: DialogRef | null = null;
   preloader = false;
 
-  readonly title = new FormControl('', { validators: Validators.required, nonNullable: true });
+  readonly title = new FormControl('', {
+    validators: Validators.required,
+    nonNullable: true,
+  });
 
   @Input({ required: true })
   topic!: string;
@@ -32,7 +39,7 @@ export class TopicDashboardsListView implements OnChanges {
     private state: DashboardsState,
     private dialog: Dialog,
     private toast: ToastService
-  ) { }
+  ) {}
 
   ngOnChanges(): void {
     this.dashboards$ = this.state.selectGroup(this.topic);
@@ -53,18 +60,19 @@ export class TopicDashboardsListView implements OnChanges {
   add(c: Record<string, any>) {
     this.preloader = true;
 
-    this.state.create(this.topic, this.title.value)
-      .subscribe({
-        next: () => {
-          this.toast.msg(c['success'].default, { type: 'success' });
-          this.closeDialog();
-        },
-        error: e => {
-          console.error(e);
+    this.state.create(this.topic, this.title.value).subscribe({
+      next: () => {
+        this.toast.msg(c['success'].default, { type: 'success' });
+        this.closeDialog();
+      },
+      error: (e) => {
+        console.error(e);
 
-          this.toast.msg(c['errors'][e?.error] || c['errors'].default, { type: 'error' });
-          this.preloader = false;
-        }
-      });
+        this.toast.msg(c['errors'][e?.error] || c['errors'].default, {
+          type: 'error',
+        });
+        this.preloader = false;
+      },
+    });
   }
 }

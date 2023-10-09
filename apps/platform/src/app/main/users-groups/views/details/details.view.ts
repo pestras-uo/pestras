@@ -12,12 +12,17 @@ import { Observable, tap, filter } from 'rxjs';
 @Component({
   selector: 'app-details',
   templateUrl: './details.view.html',
-  styleUrls: ['./details.view.scss']
+  styleUrls: ['./details.view.scss'],
 })
 export class DetailsView implements OnChanges {
-
-  readonly name = new FormControl('', { nonNullable: true, validators: Validators.required });
-  readonly user = new FormControl('', { nonNullable: true, validators: Validators.required });
+  readonly name = new FormControl('', {
+    nonNullable: true,
+    validators: Validators.required,
+  });
+  readonly user = new FormControl('', {
+    nonNullable: true,
+    validators: Validators.required,
+  });
 
   group$!: Observable<UsersGroup | null>;
 
@@ -32,11 +37,13 @@ export class DetailsView implements OnChanges {
     private readonly usersState: UsersState,
     private readonly dialog: Dialog,
     private readonly toast: ToastService
-  ) { }
+  ) {}
 
   ngOnChanges() {
-    this.group$ = this.state.select(this.serial)
-      .pipe(filter(Boolean), tap(g => this.name.setValue(g.name)));
+    this.group$ = this.state.select(this.serial).pipe(
+      filter(Boolean),
+      tap((g) => this.name.setValue(g.name))
+    );
   }
 
   openDialog(ref: TemplateRef<any>) {
@@ -65,52 +72,55 @@ export class DetailsView implements OnChanges {
   update(c: Record<string, any>) {
     this.preloader = true;
 
-    this.state.update(this.serial, this.name.value)
-      .subscribe({
-        next: () => {
-          this.toast.msg(c['success'].orgunitAdd, { type: 'success' });
-          this.closeDialog();
-        },
-        error: e => {
-          console.error(e);
+    this.state.update(this.serial, this.name.value).subscribe({
+      next: () => {
+        this.toast.msg(c['success'].orgunitAdd, { type: 'success' });
+        this.closeDialog();
+      },
+      error: (e) => {
+        console.error(e);
 
-          this.toast.msg(c['errors'][e?.error] || c['errors'].default, { type: 'error' });
-          this.preloader = false;
-        }
-      });
+        this.toast.msg(c['errors'][e?.error] || c['errors'].default, {
+          type: 'error',
+        });
+        this.preloader = false;
+      },
+    });
   }
 
   addUser(c: Record<string, any>) {
     this.preloader = true;
 
-    this.usersState.addGroup(this.user.value, this.serial)
-      .subscribe({
-        next: () => {
-          this.toast.msg(c['success'].orgunitAdd, { type: 'success' });
-          this.closeDialog();
-        },
-        error: e => {
-          console.error(e);
-
-          this.toast.msg(c['errors'][e?.error] || c['errors'].default, { type: 'error' });
-          this.preloader = false;
-        }
-      });
-  }
-
-  removeUser(c: Record<string, any>, serial: string) {
-    this.usersState.removeGroup(serial, this.serial)
-    .subscribe({
+    this.usersState.addGroup(this.user.value, this.serial).subscribe({
       next: () => {
         this.toast.msg(c['success'].orgunitAdd, { type: 'success' });
         this.closeDialog();
       },
-      error: e => {
+      error: (e) => {
         console.error(e);
 
-        this.toast.msg(c['errors'][e?.error] || c['errors'].default, { type: 'error' });
+        this.toast.msg(c['errors'][e?.error] || c['errors'].default, {
+          type: 'error',
+        });
         this.preloader = false;
-      }
+      },
+    });
+  }
+
+  removeUser(c: Record<string, any>, serial: string) {
+    this.usersState.removeGroup(serial, this.serial).subscribe({
+      next: () => {
+        this.toast.msg(c['success'].orgunitAdd, { type: 'success' });
+        this.closeDialog();
+      },
+      error: (e) => {
+        console.error(e);
+
+        this.toast.msg(c['errors'][e?.error] || c['errors'].default, {
+          type: 'error',
+        });
+        this.preloader = false;
+      },
     });
   }
 }

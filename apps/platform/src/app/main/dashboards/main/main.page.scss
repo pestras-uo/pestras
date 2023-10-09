@@ -1,5 +1,6 @@
 :host {
   display: block;
+  width: calc(100vw - 72px);
   height: var(--main-height);
   overflow: auto;
 }

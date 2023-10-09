@@ -1,5 +1,5 @@
 <ng-container *contra="let c; let dir = dir">
-  <header class="pi-7 pb-4 flex gap-2 align-items-center">
+  <header class="p-4 flex gap-2 align-items-center">
     <button class="btn-small btn-round btn-icon" (click)="loc.back()">
       <i
         size="small"
@@ -12,7 +12,11 @@
   </header>
 
   <main class="list">
-    <div class="list-item" [class.active]="view === 'details'">
+    <div
+      class="list-item hover cursor-pointer p-4"
+      [class.active]="view === 'details'"
+      (click)="selects.emit('details')"
+    >
       <div class="flex gap-2">
         <i size="small" puiIcon="description"></i>
         <div>
@@ -20,21 +24,14 @@
           <p class="text3 f9">{{c['topicDetails']}}</p>
         </div>
       </div>
-
-      <div class="grow"></div>
-
-      <button
-        class="btn-icon btn-round btn-small"
-        (click)="selects.emit('details')"
-      >
-        <i
-          size="small"
-          [puiIcon]="dir === 'rtl' ? 'navigate_before' : 'navigate_next'"
-        ></i>
-      </button>
     </div>
 
-    <div *ngIf="topic.owner | sessionIs" class="list-item" [class.active]="view === 'access'">
+    <div
+      *ngIf="topic.owner | sessionIs"
+      class="list-item hover cursor-pointer p-4"
+      [class.active]="view === 'access'"
+      (click)="selects.emit('access')"
+    >
       <div class="flex gap-2">
         <i size="small" puiIcon="access"></i>
         <div>
@@ -42,21 +39,13 @@
           <p class="text3 f9">{{c['accessDesc']}}</p>
         </div>
       </div>
-
-      <div class="grow"></div>
-
-      <button
-        class="btn-icon btn-round btn-small"
-        (click)="selects.emit('access')"
-      >
-        <i
-          size="small"
-          [puiIcon]="dir === 'rtl' ? 'navigate_before' : 'navigate_next'"
-        ></i>
-      </button>
     </div>
 
-    <div class="list-item" [class.active]="view === 'dashboards'">
+    <div
+      class="list-item hover cursor-pointer p-4"
+      [class.active]="view === 'dashboards'"
+      (click)="selects.emit('dashboards')"
+    >
       <div class="flex gap-2">
         <i size="small" puiIcon="dashboard"></i>
         <div>
@@ -64,21 +53,13 @@
           <p class="text3 f9">{{c['dashboardsDesc']}}</p>
         </div>
       </div>
-
-      <div class="grow"></div>
-
-      <button
-        class="btn-icon btn-round btn-small"
-        (click)="selects.emit('dashboards')"
-      >
-        <i
-          size="small"
-          [puiIcon]="dir === 'rtl' ? 'navigate_before' : 'navigate_next'"
-        ></i>
-      </button>
     </div>
 
-    <div class="list-item" [class.active]="view === 'reports'">
+    <div
+      class="list-item hover cursor-pointer p-4"
+      [class.active]="view === 'reports'"
+      (click)="selects.emit('reports')"
+    >
       <div class="flex gap-2">
         <i size="small" puiIcon="report"></i>
         <div>
@@ -86,18 +67,6 @@
           <p class="text3 f9">{{c['reportsDesc']}}</p>
         </div>
       </div>
-
-      <div class="grow"></div>
-
-      <button
-        class="btn-icon btn-round btn-small"
-        (click)="selects.emit('reports')"
-      >
-        <i
-          size="small"
-          [puiIcon]="dir === 'rtl' ? 'navigate_before' : 'navigate_next'"
-        ></i>
-      </button>
     </div>
   </main>
 </ng-container>

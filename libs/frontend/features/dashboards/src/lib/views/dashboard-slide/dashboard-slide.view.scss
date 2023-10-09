@@ -1,6 +1,6 @@
 main {
   display: grid;
-  gap: 32px;
+  gap: 16px;
   grid-template-columns: repeat(12, 1fr);
   grid-auto-rows: 200px;
   width: 100%;
@@ -30,6 +30,9 @@ main {
   grid-column: auto / span 12;
 }
 
+
+
+
 .y1 {
   grid-row: auto / span 1;
 }
@@ -51,4 +54,23 @@ main {
   padding: 32px;
   height: 100vh;
   overflow: auto;
+}
+
+
+/* Landscape */
+@media only screen and (max-width: 1024px) and (orientation: landscape) {
+
+  /* Your styles for landscape orientation go here */
+  main {
+    gap: 16px;
+  }
+
+  .x3,
+  .x4,
+  .x6,
+  .x8,
+  .x9 {
+    grid-column: auto / span 12;
+  }
+
 }

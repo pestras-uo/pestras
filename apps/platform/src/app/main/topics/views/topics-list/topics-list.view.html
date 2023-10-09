@@ -1,4 +1,4 @@
-<ng-container *contra="let c; let dir=dir">
+<ng-container *contra="let c">
   <header>
     <div class="toolbar mbe-4">
       <h3 class="weight-8">{{c['topics']}}</h3>
@@ -22,25 +22,14 @@
     <ng-container *ngIf="topics.length else noData">
       <div
         *ngFor="let topic of topics"
-        class="list-item"
+        class="list-item hover cursor-pointer"
         [class.active]="selected === topic.serial"
+        (click)="selects.emit(topic.serial)"
       >
         <div>
           <p class="text1 bold">{{topic.name}}</p>
           <p class="f10 text3">{{topic.create_date | date: 'dd-MM-yyyy'}}</p>
         </div>
-
-        <div class="grow"></div>
-
-        <button
-          class="btn-icon btn-small btn-round"
-          (click)="selects.emit(topic.serial)"
-        >
-          <i
-            size="small"
-            [puiIcon]="dir === 'rtl' ? 'navigate_before' : 'navigate_next'"
-          ></i>
-        </button>
       </div>
     </ng-container>
 

@@ -18,6 +18,8 @@ import { Observable, tap } from 'rxjs';
       grid-template-columns: auto 1fr;
     }
 
+    
+
     main {
       height: 100%;
       overflow-y: auto;

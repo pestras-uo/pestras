@@ -38,8 +38,6 @@ export class PieChartView implements OnChanges {
     if (!catField)
       throw new Error(`category field not found (${options.category_field}): pie chart`);
 
-      console.log(this.data.records);
-
     return this.data.records.map(r => ({ name: r[catField.name] ?? catField.display_name, value: r[valueField.name] }));
   }
 

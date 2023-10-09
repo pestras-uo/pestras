@@ -1,9 +1,9 @@
 <ng-container *contra="let c; let dir = dir">
   <a
-    class="card color-scheme-dark shadow-0 bg-success grow"
+    class="card card-small color-scheme-dark shadow-0 bg-success grow"
     routerLink="/main/blueprints"
   >
-    <div class="card-body pis-8">
+    <div class="card-body">
       <i class="stats-icon" puiIcon="blueprint"></i>
       <div>
         <p class="f0 text1 mbe-4 stats-value">
@@ -18,7 +18,7 @@
     class="card color-scheme-dark shadow-0 bg-warn grow"
     routerLink="/main/topics"
   >
-    <div class="card-body pis-8">
+    <div class="card-body">
       <i class="stats-icon" puiIcon="topics"></i>
       <div>
         <p class="f0 text1 mbe-4 stats-value">
@@ -33,7 +33,7 @@
     class="card color-scheme-dark shadow-0 bg-primary grow"
     routerLink="/main/orgunits"
   >
-    <div class="card-body pis-8">
+    <div class="card-body">
       <i class="stats-icon" puiIcon="lan"></i>
       <div>
         <p class="f0 text1 mbe-4 stats-value">
@@ -48,7 +48,7 @@
     class="card color-scheme-dark shadow-0 bg-danger grow"
     routerLink="/main/users"
   >
-    <div class="card-body pis-8">
+    <div class="card-body">
       <i class="stats-icon" puiIcon="group"></i>
       <div>
         <p class="f0 text1 mbe-4 stats-value">
@@ -63,13 +63,29 @@
     class="card color-scheme-dark shadow-0 bg-surface4 grow"
     routerLink="/main/regions"
   >
-    <div class="card-body pis-8">
+    <div class="card-body">
       <i class="stats-icon" puiIcon="travel_explore"></i>
       <div>
         <p class="f0 text1 mbe-4 stats-value">
           {{null | regionsCount | async}}
         </p>
         <p class="weight-9 text1">{{c['regions']}}</p>
+      </div>
+    </div>
+  </a>
+
+  <a
+    class="card color-scheme-dark shadow-0 grow"
+    style="background-color: #3562db;"
+    routerLink="/main/dashboards"
+  >
+    <div class="card-body">
+      <i class="stats-icon" puiIcon="dashboard"></i>
+      <div>
+        <p class="f0 text1 mbe-4 stats-value">
+          {{null | regionsCount | async}}
+        </p>
+        <p class="weight-9 text1">{{c['dashboards']}}</p>
       </div>
     </div>
   </a>

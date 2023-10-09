@@ -1,6 +1,6 @@
 :host {
   background-color: var(--surface2);
-  width: 320px;
+  width: 240px;
   height: var(--main-height);
   display: grid;
   grid-template-rows: auto 1fr;
@@ -8,7 +8,7 @@
 }
 
 header {
-  padding: 20px 28px;
+  padding: 16px;
 }
 
 .list {
@@ -17,7 +17,7 @@ header {
 }
 
 .list-item {
-  padding: 20px 28px;
+  padding: 16px;
 
   &.active {
     padding-inline-start: 23px;

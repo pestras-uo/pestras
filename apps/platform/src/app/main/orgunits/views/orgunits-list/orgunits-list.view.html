@@ -1,5 +1,5 @@
 <ng-container *contra="let c; let dir=dir">
-  <header>
+  <header class="p-4">
     <div class="toolbar mbe-4">
       <h3 class="weight-8">{{c['orgunits']}}</h3>
       <div class="grow"></div>
@@ -21,35 +21,36 @@
   <div class="list" *ngIf="orgunits$ | async as orgunits">
     <ng-container *ngIf="orgunits.length else noData">
       <div
-        class="list-item"
+        class="list-item hover cursor-pointer p-4"
+        (click)="selects.emit(org.serial)"
         [class.active]="selected === org.serial"
         *ngFor="let org of orgunits"
       >
-        <div class="list-item-hero" [style.background-color]="10 | randomColor">
+        <div class="list-item-hero list-item-hero-small" [style.background-color]="10 | randomColor">
           <img
             *ngIf="org.logo"
             [src]="org.logo | docsPath"
             alt="orgunit logo"
+            class="img-icon"
           />
           <i *ngIf="!org.logo" color="white" size="small" puiIcon="lan"></i>
         </div>
 
-        <div>
+        <div class="content">
           <p class="text1 bold">{{org.name}}</p>
           <p class="f10 text3">{{org.class}}</p>
         </div>
 
         <div class="grow"></div>
 
-        <button
+        <!-- <button
           class="btn-icon btn-small btn-round"
-          (click)="selects.emit(org.serial)"
         >
-          <i
+          <!-- <i
             size="small"
             [puiIcon]="dir === 'rtl' ? 'navigate_before' : 'navigate_next'"
           ></i>
-        </button>
+        </button> -->
       </div>
     </ng-container>
 

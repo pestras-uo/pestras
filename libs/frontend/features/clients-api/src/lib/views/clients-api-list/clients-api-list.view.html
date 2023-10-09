@@ -14,7 +14,7 @@
   <div class="divider mbs-4 mbe-8"></div>
 
   <ng-container *ngIf="list$ | async as list">
-    <div *ngIf="list.length else noData" class="grid cols-3 gap-8">
+    <div *ngIf="list.length else noData" class="grid cols-3 gap-4">
       <div class="card" *ngFor="let item of list">
         <div class="card-body">
           <h4 class="mbe-1">{{item.client_name}}</h4>

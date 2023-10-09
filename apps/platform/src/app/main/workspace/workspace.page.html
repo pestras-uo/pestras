@@ -1,0 +1,5 @@
+<ng-container *ngIf="workspace$ | async as ws">
+  <workspace-stats *ngIf="[roles.ADMIN, roles.DATA_ENG] | hasRoles">
+  </workspace-stats>
+  <app-slides [ws]="ws"></app-slides>
+</ng-container>

@@ -8,8 +8,12 @@ import { Component } from '@angular/core';
   styles: [`
     :host {
       display: flex;
-      gap: 32px;
+      gap: 16px;
       padding: 32px 32px 0;
+    }
+
+    .card-body {
+      padding: 32px;
     }
 
     .stats-icon {
@@ -25,6 +29,12 @@ import { Component } from '@angular/core';
       line-height: 0.75;
       font-family: Arial;
       font-weight: bold
+    }
+
+    @media screen and (max-width: 1024px) {
+      .card-body {
+        padding: 16px;
+      }
     }
   `],
 })

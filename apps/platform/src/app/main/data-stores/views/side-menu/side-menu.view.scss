@@ -2,7 +2,7 @@
   display: grid;
   grid-template-rows: auto 1fr;
   height: var(--main-height);
-  width: 320px;
+  width: 240px;
   border-inline-end: 1px solid var(--border1);
 
   header {
@@ -16,15 +16,15 @@
   }
 
   .list-item {
-    padding: 28px;
-    
+    padding: 16px;
+
     &.active {
       padding-inline-start: 23px;
-  
+
       .icon {
         background-color: var(--primary);
       }
-  
+
       h4 {
         color: var(--primary);
       }
