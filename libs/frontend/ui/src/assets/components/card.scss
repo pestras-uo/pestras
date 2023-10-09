@@ -54,6 +54,7 @@
     --padding: 16px;
   }
 
+  // TODO: reset class props and define custom classes
   :where(.card-header) {
     padding: var(--padding);
     flex-basis: 0;
