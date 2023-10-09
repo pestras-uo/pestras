@@ -4,7 +4,7 @@
 import { Dialog, DialogRef } from '@angular/cdk/dialog';
 import { Component, Input, OnChanges, TemplateRef } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
-import { Report } from '@pestras/shared/data-model';
+import { Report, Role } from '@pestras/shared/data-model';
 import { ToastService } from '@pestras/frontend/ui';
 import { ReportsState } from '@pestras/frontend/state';
 import { Observable } from 'rxjs';
@@ -17,6 +17,7 @@ import { Observable } from 'rxjs';
   `]
 })
 export class ReportsListView implements OnChanges {
+  readonly roles = Role;
 
   reports$!: Observable<Report[]>;
   dialogRef: DialogRef | null = null;

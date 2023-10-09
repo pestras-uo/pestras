@@ -16,6 +16,7 @@ import { StateModule } from '@pestras/frontend/state';
 import { DashboardsPipe } from './pipes/dashboards.pipe';
 import { ContentViewsFeatureModule } from '@pestras/frontend/features/content-views';
 import { AvatarWidget } from '@pestras/frontend/widgets/avatar';
+import { SessionFeatureModule } from '@pestras/frontend/features/session';
 
 
 
@@ -49,7 +50,8 @@ import { AvatarWidget } from '@pestras/frontend/widgets/avatar';
     // Features
     DataVizFeatureModule,
     WorkspaceFeatureModule,
-    ContentViewsFeatureModule
+    ContentViewsFeatureModule,
+    SessionFeatureModule
   ],
   exports: [
     TopicDashboardsListView,

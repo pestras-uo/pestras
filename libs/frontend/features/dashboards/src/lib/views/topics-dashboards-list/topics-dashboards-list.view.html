@@ -2,7 +2,7 @@
   <div class="toolbar mbe-2">
     <h3 class="primary">{{c['list']}}</h3>
     <div class="grow"></div>
-    <button class="btn-round btn-icon btn-small" (click)="openDialog(addTmp)">
+    <button *ngIf="[roles.REPORTER] | hasRoles" class="btn-round btn-icon btn-small" (click)="openDialog(addTmp)">
       <i puiIcon="add" size="small"></i>
     </button>
   </div>
