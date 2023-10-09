@@ -38,7 +38,9 @@ export class PieChartView implements OnChanges {
     if (!catField)
       throw new Error(`category field not found (${options.category_field}): pie chart`);
 
-    return this.data.records.map(r => ({ name: r[catField.name], value: r[valueField.name] }));
+      console.log(this.data.records);
+
+    return this.data.records.map(r => ({ name: r[catField.name] ?? catField.display_name, value: r[valueField.name] }));
   }
 
 
@@ -73,7 +75,7 @@ export class PieChartView implements OnChanges {
             show: true,
             formatter(param) {
               // correct the percentage
-              return param.name + ': ' + param.value + ' (' + (param?.percent || 0) * 2 + '%)';
+              return param.name + ': ' + param.value + ' (' + (param?.percent || 0) + '%)';
             }
           },
           tooltip: {

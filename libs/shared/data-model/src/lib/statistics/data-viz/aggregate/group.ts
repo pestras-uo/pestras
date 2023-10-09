@@ -40,15 +40,16 @@ function singleGroup(data: any[], options: DataVizGroup, index: number) {
   const by = options.by[index];
   const map = new Map<string, any[]>();
   const output: any[] = [];
+  let groupName = by.name;
 
   if (by.logical) {
     for (const r of data) {
       const parsedValue = parseValue(r[by.name]);
-      const key = by.logical_name || by.name;
+      groupName = by.logical_name || by.name;
       const value = parsedValue ? by.true_value ?? 'YES' : by.false_value ?? 'NO';
       const g = map.get(value);
 
-      r[key] = value;
+      r[groupName] = value;
 
       if (g === undefined)
         map.set(value, [r]);
@@ -72,7 +73,7 @@ function singleGroup(data: any[], options: DataVizGroup, index: number) {
       output.push(...singleGroup(list, options, index + 1).map(v => ({ ...v, [by.name]: key })));
   } else
     for (const [key, list] of map.entries())
-      output.push({ ...calcList(list, options), [by.name]: key });
+      output.push({ ...calcList(list, options), [groupName]: key });
 
   return output;
 }
