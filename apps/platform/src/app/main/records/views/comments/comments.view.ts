@@ -59,8 +59,7 @@ export class CommentsViewComponent implements OnInit {
     private session: SessionState
   ) {}
   loadComments(): void {
-    // TODO: change to this.record['serial']
-    this.service.getAll({ serial: this.dataStore.serial }).subscribe((res) => {
+    this.service.getAll({ serial: this.record['serial'] }).subscribe((res) => {
       this.comments = res;
     });
   }
@@ -79,8 +78,6 @@ export class CommentsViewComponent implements OnInit {
 
     const data = this.form.getRawValue();
 
-    // TODO: remove alert
-    alert(this.record['serial']);
     const obj: {
       record: string;
       text: string;

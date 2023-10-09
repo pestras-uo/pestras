@@ -21,7 +21,8 @@
   <div class="list" *ngIf="orgunits$ | async as orgunits">
     <ng-container *ngIf="orgunits.length else noData">
       <div
-        class="list-item"
+        class="list-item hover "
+        (click)="selects.emit(org.serial)"
         [class.active]="selected === org.serial"
         *ngFor="let org of orgunits"
       >
@@ -42,15 +43,14 @@
 
         <div class="grow"></div>
 
-        <button
+        <!-- <button
           class="btn-icon btn-small btn-round"
-          (click)="selects.emit(org.serial)"
         >
-          <i
+          <!-- <i
             size="small"
             [puiIcon]="dir === 'rtl' ? 'navigate_before' : 'navigate_next'"
           ></i>
-        </button>
+        </button> -->
       </div>
     </ng-container>
 

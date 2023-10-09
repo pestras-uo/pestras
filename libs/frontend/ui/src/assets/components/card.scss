@@ -21,16 +21,11 @@
 
   &.card-dialog {
     max-height: 100vh !important;
-    box-shadow: 0 2.4px 1.8px
-        hsl(var(--surface-shadow) / calc(var(--shadow-strength) + 0.15)),
-      0 4.8px 3.6px
-        hsl(var(--surface-shadow) / calc(var(--shadow-strength) + 0.075)),
-      0 9.6px 7.2px
-        hsl(var(--surface-shadow) / calc(var(--shadow-strength) + 0.15)),
-      0 19.2px 14.4px
-        hsl(var(--surface-shadow) / calc(var(--shadow-strength) + 0.15)),
-      0 38.4px 28.8px
-        hsl(var(--surface-shadow) / calc(var(--shadow-strength) + 0.21)),
+    box-shadow: 0 2.4px 1.8px hsl(var(--surface-shadow) / calc(var(--shadow-strength) + 0.15)),
+      0 4.8px 3.6px hsl(var(--surface-shadow) / calc(var(--shadow-strength) + 0.075)),
+      0 9.6px 7.2px hsl(var(--surface-shadow) / calc(var(--shadow-strength) + 0.15)),
+      0 19.2px 14.4px hsl(var(--surface-shadow) / calc(var(--shadow-strength) + 0.15)),
+      0 38.4px 28.8px hsl(var(--surface-shadow) / calc(var(--shadow-strength) + 0.21)),
       0 76.8px 57.6px hsl(var(--surface-shadow) / var(--shadow-strength));
 
     .card-body {
@@ -54,14 +49,13 @@
     --padding: 16px;
   }
 
-  // TODO: reset class props and define custom classes
   :where(.card-header) {
     padding: var(--padding);
     flex-basis: 0;
-    //display: flex;
+    display: flex;
     align-items: flex-start;
-    //justify-content: space-between;
-    //align-items: center;
+    justify-content: space-between;
+    align-items: center;
     gap: 8px;
     border-radius: 8px 8px 0 0;
 
@@ -136,6 +130,7 @@
       }
 
       &.active {
+
         &,
         .tab-title {
           color: var(--primary);
@@ -170,7 +165,7 @@
     flex-grow: 1;
   }
 
-  .card-header:not(.bordered) + .card-body {
+  .card-header:not(.bordered)+.card-body {
     padding-block-start: 0px;
   }
 

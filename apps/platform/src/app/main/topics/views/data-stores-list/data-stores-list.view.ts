@@ -12,6 +12,10 @@ import { DataStore, DataStoreType } from '@pestras/shared/data-model';
         display: block;
       }
 
+      .card {
+        margin-bottom: 16px;
+      }
+
       main {
         display: block;
 

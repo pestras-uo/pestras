@@ -9,12 +9,12 @@ import { untilDestroyed } from '@pestras/frontend/ui';
 
 @Component({
   selector: 'app-records-cards-view',
+    styleUrls: ['./records-cards.view.scss'],
   template: `
     <ng-container *contra="let c">
       <!-- TODO: change cols-3 to auto fit grid columns -->
-      <!-- grid-template-columns: repeat( auto-fit, minmax(250px, 1fr) ); -->
       <div
-        class="grid cols-3 gap-4"
+        class="record-card-content"
         *ngIf="records.results.length; else noData"
       >
         <app-record-card

@@ -1,6 +1,6 @@
 <ng-container *contra="let c">
   <ng-container *ngIf="topics$ | async as topics">
-    <div class="grid cols-3 gap-8" *ngIf="topics.length; else noData">
+    <div class="grid cols-3 gap-4" *ngIf="topics.length; else noData">
       <div class="card mbe-2" *ngFor="let topic of topics">
         <div class="card-header">
           <h4>{{topic.name}}</h4>
@@ -14,12 +14,14 @@
           >
             {{c['continue']}}
           </button>
-        </div>  
+        </div>
       </div>
     </div>
 
     <ng-template #noData>
-      <no-data-placeholder-widget>{{c['noDataMsg']}}</no-data-placeholder-widget>
+      <no-data-placeholder-widget
+        >{{c['noDataMsg']}}</no-data-placeholder-widget
+      >
     </ng-template>
   </ng-container>
 </ng-container>

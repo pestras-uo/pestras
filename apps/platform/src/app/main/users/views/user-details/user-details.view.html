@@ -37,7 +37,7 @@
           <h2 mbe>{{c['details']}}</h2>
         </div>
 
-        <div class="grid cols-2 gap-8 mbe-8">
+        <div class="grid cols-1 gap-4 mbe-8">
           <section class="card">
             <div class="card-header">
               <i puiIcon="access"></i>
@@ -76,7 +76,7 @@
               </button>
             </div>
 
-            <div class="card-body flex gap-2 flex-wrap">
+            <div class="card-body flex gap- flex-wrap">
               <p
                 class="badge badge-primary badge-round"
                 *ngFor="let r of u.roles"
@@ -86,7 +86,7 @@
             </div>
           </section>
 
-          <section class="card">
+          <!-- <section class="card">
             <div class="card-header">
               <i puiIcon="group"></i>
               <h3>{{c['alternatives']}}</h3>
@@ -101,7 +101,7 @@
                 >{{c['noDataMsg']}}</no-data-placeholder-widget
               >
             </div>
-          </section>
+          </section> -->
         </div>
 
         <section class="card activity">

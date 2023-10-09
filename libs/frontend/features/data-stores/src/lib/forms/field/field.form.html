@@ -109,7 +109,7 @@
   <h3 class="mbe-2">{{c['attributes']}}</h3>
   <p class="text3 mbe-6">{{c['attributesInfo']}}</p>
 
-  <div class="flex gap-8 mbe-6">
+  <div class="flex gap-4 mbe-6">
     <!-- initial -->
     <pui-check-input
       class="grow"
@@ -148,7 +148,9 @@
       formControlName="default"
     ></pui-check-input>
 
-    <label *ngIf="typeField.value !== 'boolean'" for="">{{c['defaultValue']}}</label>
+    <label *ngIf="typeField.value !== 'boolean'" for=""
+      >{{c['defaultValue']}}</label
+    >
 
     <!-- string type -->
     <ng-container *ngIf="typeField.value === 'string'">

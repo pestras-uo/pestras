@@ -1,6 +1,5 @@
 main {
   display: grid;
-  // TODO: gap = 16 for width smaller than 1024
   gap: 32px;
   grid-template-columns: repeat(12, 1fr);
   grid-auto-rows: 200px;
@@ -31,7 +30,8 @@ main {
   grid-column: auto / span 12;
 }
 
-/* TODO: Add media query for size 1024, so every x size will be 12 columns (full width) */
+
+
 
 .y1 {
   grid-row: auto / span 1;
@@ -63,12 +63,35 @@ main {
   /* Your styles for landscape orientation go here */
   main {
     display: grid;
-    gap: 32px;
+    gap: 16px;
     grid-template-columns: repeat(12, 1fr);
     grid-auto-rows: 200px;
     width: 100%;
   }
 
+  .x3 {
+    grid-column: auto / span 12;
+  }
+
+  .x4 {
+    grid-column: auto / span 12;
+  }
+
+  .x6 {
+    grid-column: auto / span 12;
+  }
+
+  .x8 {
+    grid-column: auto / span 12;
+  }
+
+  .x9 {
+    grid-column: auto / span 12;
+  }
+
+  .x12 {
+    grid-column: auto / span 12;
+  }
 
 
 
@@ -80,7 +103,7 @@ main {
 
   main {
     display: grid;
-    gap: 32px;
+    gap: 16px;
     grid-template-columns: repeat(12, 1fr);
     grid-auto-rows: 200px;
     width: 100%;

@@ -23,31 +23,26 @@ header {
     padding-inline-start: 23px;
   }
 }
-/* Landscape */
-@media only screen 
-  and (min-width: 768px) 
-  and (max-width: 1024px) 
-  and (orientation: landscape) {
 
- /* Your styles for portrait orientation go here */
-        :host {
-                    width: 220px;
-          
-    }
- 
+/* Landscape */
+@media only screen and (min-width: 768px) and (max-width: 1024px) and (orientation: landscape) {
+
+  /* Your styles for portrait orientation go here */
+  :host {
+    width: 220px;
+
+  }
+
 
 }
 
 /* Portrait */
-@media only screen 
-  and (min-width: 768px) 
-  and (max-width: 1024px) 
-  and (orientation: portrait) {
+@media only screen and (min-width: 768px) and (max-width: 1024px) and (orientation: portrait) {
 
-    /* Your styles for portrait orientation go here */
-        :host {
-                    width: 220px;      
-    }
- 
+  /* Your styles for portrait orientation go here */
+  :host {
+    width: 220px;
+  }
+
 
 }

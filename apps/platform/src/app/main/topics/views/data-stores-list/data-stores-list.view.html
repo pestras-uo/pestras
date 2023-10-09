@@ -3,13 +3,13 @@
     *ngIf="blueprint | blueprintDataStores: [types.TABLE] | async | fn: setDefaultActive as datastores"
   >
     <main *ngIf="datastores.length else noData">
-      <div class="card card-small ">
+      <div class="card card-small">
         <button class="card-header" (click)="toggleDropdown()">
           {{c['list']}}
           <i size="small" puiIcon="arrow_drop_down"></i>
         </button>
         <div *ngIf="showDropdown">
-          <ul class="card-body list list-actions p-0">
+          <ul class="card-body list list-actions p-0 ">
             <ng-container *ngFor="let ds of datastores">
               <li
                 class="list-item hover-surface2 pi-4"

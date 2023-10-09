@@ -17,17 +17,18 @@
 
   .list-item {
     padding: 28px;
-    
+
     &.active {
       padding-inline-start: 23px;
-  
+
       .icon {
         background-color: var(--primary);
       }
-  
+
       h4 {
         color: var(--primary);
       }
     }
   }
 }
+

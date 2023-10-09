@@ -41,13 +41,15 @@
 @media only screen and (min-width: 768px) and (max-width: 1024px) and (orientation: landscape) {
 
   /* Your styles for landscape orientation go here */
-  :host {
+  :host,
+  main {
     width: 240px;
-    
 
 
   }
- 
+
+
+
 
 
 
@@ -57,10 +59,12 @@
 /* Portrait */
 @media only screen and (min-width: 768px) and (max-width: 1024px) and (orientation: portrait) {
 
-  :host {
+  :host,
+  main {
     width: 240px;
 
 
   }
+
 
 }
