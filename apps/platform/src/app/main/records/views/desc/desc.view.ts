@@ -17,6 +17,7 @@ export class DescView implements OnChanges {
   groups: { group: string; fields: Field[]; }[] = [];
   others: Field[] = [];
   isTable!: boolean;
+  canUpdate = false;
 
   @Input({ required: true })
   dataStore!: DataStore;
@@ -34,6 +35,7 @@ export class DescView implements OnChanges {
   ngOnChanges(): void {    
     this.isTable = this.dataStore.type === DataStoreType.TABLE;
     this.groups = [];
+    this.canUpdate = this.state === DataRecordState.DRAFT || (this.state === DataRecordState.PUBLISHED && !!this.dataStore.settings.workflow.update);
 
     for (const field of this.dataStore.fields) {
 

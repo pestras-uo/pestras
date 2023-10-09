@@ -13,6 +13,7 @@ import { QuillModule } from 'ngx-quill';
 import { ReportPipe } from './pipes/report.pipe';
 import { ContraModule } from '@pestras/frontend/util/contra';
 import { AvatarWidget } from '@pestras/frontend/widgets/avatar';
+import { SessionFeatureModule } from '@pestras/frontend/features/session';
 
 
 
@@ -44,7 +45,8 @@ import { AvatarWidget } from '@pestras/frontend/widgets/avatar';
     PuiImageInput,
     PuiExportToPdfDirective,
     // Features
-    DataVizFeatureModule
+    DataVizFeatureModule,
+    SessionFeatureModule
   ],
   exports: [
     ReportsListView,

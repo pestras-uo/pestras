@@ -30,15 +30,30 @@
       <p class="f10 pi-2 text3">{{c['dataMenuDesc']}}</p>
     </div>
 
-    <a class="hover" (click)="nav(['/main/workspace'])" routerLinkActive="active">
+    <a
+      class="hover"
+      (click)="nav(['/main/workspace'])"
+      [title]="c['workspace']"
+      routerLinkActive="active"
+    >
       <i size="small" puiIcon="home"></i>
       <p class="full">{{c['workspace']}}</p>
     </a>
-    <a class="hover" (click)="nav(['/main/topics'])" routerLinkActive="active">
+    <a
+      class="hover"
+      (click)="nav(['/main/topics'])"
+      [title]="c['topics']"
+      routerLinkActive="active"
+    >
       <i size="small" puiIcon="topics"></i>
       <p class="full">{{c['topics']}}</p>
     </a>
-    <a class="hover" (click)="nav(['/main/dashboards'])" routerLinkActive="active">
+    <a
+      class="hover"
+      (click)="nav(['/main/dashboards'])"
+      [title]="c['dashboards']"
+      routerLinkActive="active"
+    >
       <i size="small" puiIcon="dashboard"></i>
       <p class="full">{{c['dashboards']}}</p>
     </a>
@@ -51,7 +66,12 @@
 
       <div class="short splitter"></div>
 
-      <a class="hover" (click)="nav(['/main/blueprints'])" routerLinkActive="active">
+      <a
+        class="hover"
+        (click)="nav(['/main/blueprints'])"
+        [title]="c['blueprints']"
+        routerLinkActive="active"
+      >
         <i size="small" puiIcon="blueprint"></i>
         <p class="full">{{c['blueprints']}}</p>
       </a>
@@ -65,24 +85,40 @@
 
       <div class="short splitter"></div>
 
-      <a class="hover" (click)="nav(['/main/regions'])" routerLinkActive="active">
+      <a
+        class="hover"
+        (click)="nav(['/main/regions'])"
+        [title]="c['regions']"
+        routerLinkActive="active"
+      >
         <i size="small" puiIcon="travel_explore"></i>
         <p class="full">{{c['regions']}}</p>
       </a>
-      <a class="hover" (click)="nav(['/main/orgunits'])" routerLinkActive="active">
+      <a
+        class="hover"
+        (click)="nav(['/main/orgunits'])"
+        [title]="c['orgunits']"
+        routerLinkActive="active"
+      >
         <i size="small" puiIcon="lan"></i>
         <p class="full">{{c['orgunits']}}</p>
       </a>
       <a
         *ngIf="'root' | inOrgunit"
         class="hover"
+        [title]="c['groups']"
         (click)="nav(['/main/groups'])"
         routerLinkActive="active"
       >
         <i size="small" puiIcon="military_tech"></i>
         <p class="full">{{c['groups']}}</p>
       </a>
-      <a class="hover" (click)="nav(['/main/users'])" routerLinkActive="active">
+      <a
+        class="hover"
+        (click)="nav(['/main/users'])"
+        [title]="c['users']"
+        routerLinkActive="active"
+      >
         <i size="small" puiIcon="group"></i>
         <p class="full">{{c['users']}}</p>
       </a>

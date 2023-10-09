@@ -64,7 +64,7 @@ export class DetailsPageComponent implements OnChanges {
   }
 
   openDialog(tmp: TemplateRef<any>) {
-    this.dialog.open(tmp);
+    this.dialogRef = this.dialog.open(tmp);
   }
 
   closeDialog() {

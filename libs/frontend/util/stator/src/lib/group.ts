@@ -268,21 +268,27 @@ export abstract class StatorGroupState<T extends Record<string, any> = any> {
           return of(data.get(filter) ?? null);
 
         return this._fetch(filter)
-          .pipe(map(doc => {
-            if (!doc) {
-              this._not_found[filter] = new Date();
-              return null;
-            }
+          .pipe(
+            map(doc => {
+              if (!doc) {
+                this._not_found[filter] = new Date();
+                return null;
+              }
 
-            delete this._not_found[filter];
+              delete this._not_found[filter];
 
-            if (!this._groupsTiming.has(doc[this.groupBy] as string))
-              this.selectGroup(doc[this.groupBy] as string)
-                .pipe(take(1))
-                .subscribe();
+              const dataMap = this._data.getValue();
 
-            return doc;
-          }));
+              dataMap.set(filter, doc);
+
+              this._data.next(dataMap);
+
+              return doc
+            })
+            // switchMap(() => this._data),
+            // gate(this.loading$, true),
+            // map(data => data.get(filter) ?? null)
+          );
       })
     );
   }

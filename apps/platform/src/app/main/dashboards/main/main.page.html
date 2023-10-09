@@ -2,15 +2,8 @@
   <header class="color-scheme-dark">
     <t-bg-widget></t-bg-widget>
 
-    <div class="container tight">
-      <div class="align-center">
-        <h1 class="weight-8 mbe-4 f1">{{c['dashboards']}}</h1>
-        <p class="text3 f6 w-15 mi-auto">
-          خسائر اللازمة ومطالبة حدة بل. الآخر الحلفاء أن غزو, إجلاء وتنامت عدد
-          مع. لقهر معركة لبلجيكا، بـ انه, ربع الأثنان المقيتة في, اقتصّت المحور
-          حدة.
-        </p>
-      </div>
+    <div class="container tight align-center">
+      <h1 class="weight-8 mbe-4 f1">{{c['dashboards']}}</h1>
     </div>
   </header>
 
@@ -42,8 +35,11 @@
         </div>
 
         <ng-container *ngIf="dashboards$ | async as dashboards">
-          <div class="card-body pi-3 pbe-0">
-            <table *ngIf="dashboards.results.length else noData">
+          <div class="card-body pi-0 pbe-0">
+            <table
+              class="bg-surface1"
+              *ngIf="dashboards.results.length else noData"
+            >
               <thead>
                 <tr>
                   <th class="w-2">#</th>
