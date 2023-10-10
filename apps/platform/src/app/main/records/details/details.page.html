@@ -1,77 +1,81 @@
-<app-side-menu
-  [view]="view"
-  (selects)="set($event)"
-  [topic]="topic"
-  [dataStore]="dataStore"
-></app-side-menu>
+<ng-container *ngIf="record$ | async as record">
+  <app-side-menu
+    [view]="view"
+    (selects)="set($event)"
+    [topic]="topic"
+    [dataStore]="dataStore"
+    [record]="record"
+    [state]="state"
+  ></app-side-menu>
 
-<main *ngIf="record$ | async as record">
-  <header *ngIf="mainField" class="bg-surface1 pb-10 pi-8 border-be">
-    <div class="container">
-      <p class="text-3 bold f9">{{dataStore.name}}</p>
-      <div class="toolbar">
-        <h1 class="f2 weight-8">
-          <app-field-value
-            [value]="record[mainField.name]"
-            [field]="mainField"
-          ></app-field-value>
-        </h1>
-        <div class="grow"></div>
-        <pestras-record-workflow-state
-          *ngIf="state"
-          [rState]="state"
-          [dataStore]="dataStore.serial"
-          [record]="record.serial"
-          [editable]="(record['owner'] | sessionIs) || ((dataStore.blueprint | blueprint | async)?.owner | sessionIs)"
-        ></pestras-record-workflow-state>
+  <main>
+    <header *ngIf="mainField" class="bg-surface1 pb-6 pi-4 border-be">
+      <div class="container narrow">
+        <p class="text-3 bold f9">{{dataStore.name}}</p>
+        <div class="toolbar">
+          <h1 class="f3 weight-8">
+            <app-field-value
+              [value]="record[mainField.name]"
+              [field]="mainField"
+            ></app-field-value>
+          </h1>
+          <div class="grow"></div>
+          <pestras-record-workflow-state
+            *ngIf="state"
+            [rState]="state"
+            [dataStore]="dataStore.serial"
+            [record]="record.serial"
+            [editable]="(record['owner'] | sessionIs) || ((dataStore.blueprint | blueprint | async)?.owner | sessionIs)"
+          ></pestras-record-workflow-state>
+        </div>
+        <p class="text-3 bold f9">
+          {{record.create_date | date: 'dd/MM/YYYY'}}
+        </p>
       </div>
-      <p class="text-3 bold f9">{{record.create_date | date: 'dd/MM/YYYY'}}</p>
+    </header>
+
+    <div class="pb-6 pi-4">
+      <div class="container  narrow">
+        <!-- data -->
+        <app-desc
+          *ngIf="view.name === 'details'"
+          [dataStore]="dataStore"
+          [record]="record"
+          [state]="state"
+        ></app-desc>
+
+        <!-- attachments -->
+        <app-attachments-list
+          *ngIf="view.name === 'attachments'"
+          [dataStore]="dataStore"
+          [record]="record"
+          [editable]="(record['owner'] | sessionIs) || ((dataStore.blueprint | blueprint | async)?.owner | sessionIs)"
+        ></app-attachments-list>
+
+        <!-- history -->
+        <pestras-record-history
+          *ngIf="view.name === 'history'"
+          [dataStore]="dataStore"
+          [record]="record.serial"
+          [topic]="topic"
+          (selects)="set($event)"
+        ></pestras-record-history>
+
+        <!-- comments -->
+        <pestras-record-comments
+          *ngIf="view.name === 'comments'"
+          [dataStore]="dataStore"
+          [record]="record"
+        ></pestras-record-comments>
+
+        <!-- sub data store -->
+        <app-sub-data-stores-records
+          *ngIf="view.name === 'subDataStores'"
+          [dataStore]="dataStore"
+          [options]="view.payload"
+          [record]="record"
+        ></app-sub-data-stores-records>
+      </div>
     </div>
-  </header>
-
-  <div class="pb-10 pi-8">
-    <div class="container">
-      <!-- data -->
-      <app-desc
-        *ngIf="view.name === 'details'"
-        [dataStore]="dataStore"
-        [record]="record"
-        [state]="state"
-      ></app-desc>
-
-      <!-- attachments -->
-      <app-attachments-list
-        *ngIf="view.name === 'attachments'"
-        [dataStore]="dataStore"
-        [record]="record"
-        [editable]="(record['owner'] | sessionIs) || ((dataStore.blueprint | blueprint | async)?.owner | sessionIs)"
-      ></app-attachments-list>
-
-      <!-- history -->
-      <pestras-record-history
-        *ngIf="view.name === 'history'"
-        [dataStore]="dataStore"
-        [record]="record.serial"
-        [topic]="topic"
-        (selects)="set($event)"
-      ></pestras-record-history>
-
-      <!-- comments -->
-           <pestras-record-comments
-        *ngIf="view.name === 'comments'"
-        [dataStore]="dataStore"
-        [record]="record"
-      ></pestras-record-comments>
-
-      
-
-      <!-- sub data store -->
-      <app-sub-data-stores-records
-        *ngIf="view.name === 'subDataStores'"
-        [dataStore]="dataStore"
-        [options]="view.payload"
-        [record]="record"
-      ></app-sub-data-stores-records>
-    </div>
-  </div>
-</main>
+  </main>
+</ng-container>

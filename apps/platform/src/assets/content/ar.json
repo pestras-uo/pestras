@@ -1,4 +1,5 @@
 {
+  "deleteRecord": "حذف السجل",
   "colorsTheme": "سمة الألوان",
   "colorsThemeList": [
     { "name": "الفاتح", "value": "light" },
