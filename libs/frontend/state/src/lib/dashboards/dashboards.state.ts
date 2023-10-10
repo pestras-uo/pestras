@@ -31,6 +31,10 @@ export class DashboardsState extends StatorGroupState<Dashboard> {
     return this.service.search(query);
   }
 
+  count() {
+    return this.service.count();
+  }
+
 
   // change
   // -----------------------------------------------------------------------------------------

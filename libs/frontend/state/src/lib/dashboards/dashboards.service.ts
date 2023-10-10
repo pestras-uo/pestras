@@ -33,6 +33,12 @@ export class DashboardsService {
     return this.http.post<DashboardsApi.Search.Response>(path, body);
   }
 
+  count() {
+    const path = injectURLPayload(this.envServ.env.api + DashboardsApi.Count.REQ_PATH);
+
+    return this.http.get<DashboardsApi.Count.Response>(path);
+  }
+
 
   // Create
   // ---------------------------------------------------------------------------------

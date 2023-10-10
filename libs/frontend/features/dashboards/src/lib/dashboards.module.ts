@@ -17,6 +17,8 @@ import { DashboardsPipe } from './pipes/dashboards.pipe';
 import { ContentViewsFeatureModule } from '@pestras/frontend/features/content-views';
 import { AvatarWidget } from '@pestras/frontend/widgets/avatar';
 import { SessionFeatureModule } from '@pestras/frontend/features/session';
+import { DashboardsCountPipe } from './pipes/dashboards-count.pipe';
+import { TopicsFeatureModule } from '@pestras/frontend/features/topics';
 
 
 
@@ -25,7 +27,8 @@ import { SessionFeatureModule } from '@pestras/frontend/features/session';
     TopicDashboardsListView,
     DashboardSlideComponent,
     DashboardPipe,
-    DashboardsPipe
+    DashboardsPipe,
+    DashboardsCountPipe
   ],
   imports: [
     // Angular
@@ -51,13 +54,15 @@ import { SessionFeatureModule } from '@pestras/frontend/features/session';
     DataVizFeatureModule,
     WorkspaceFeatureModule,
     ContentViewsFeatureModule,
-    SessionFeatureModule
+    SessionFeatureModule,
+    TopicsFeatureModule
   ],
   exports: [
     TopicDashboardsListView,
     DashboardSlideComponent,
     DashboardPipe,
-    DashboardsPipe
+    DashboardsPipe,
+    DashboardsCountPipe
   ]
 })
 export class DashboardsFeaturesModule { }

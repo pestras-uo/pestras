@@ -35,6 +35,8 @@ export class ChartForm implements OnInit {
 
   @Input()
   fcClass = '';
+  @Input()
+  blueprint: string | null = null;
 
   @Output()
   done = new EventEmitter<string | null>();
