@@ -1,146 +1,108 @@
-<ng-container *contra="let c; let dir = dir">
-  <header class="pi-7 pb-4 flex gap-2 align-items-center">
-    <button class="btn-small btn-round btn-icon" (click)="loc.back()">
-      <i
-        size="small"
-        color="primary"
-        [class.rotate-180]="dir === 'ltr'"
-        puiIcon="trending_flat"
-      ></i>
-    </button>
+<ng-container *contra="let c">
+  <header class="p-4 flex gap-2 align-items-center">
     <p class="f9 bold">{{c['list']}}</p>
   </header>
 
   <main class="list">
-    <div class="list-item" [class.active]="view.name === 'details'">
+    <div
+      class="list-item hover cursor-pointer p-4"
+      [class.active]="view.name === 'details'"
+      (click)="selects.emit({ name: 'details' })"
+    >
       <div class="flex gap-2">
         <i size="small" puiIcon="description"></i>
         <div>
-          <h4 class="mbe-1">{{c['desc']}}</h4>
+          <h5 class="mbe-1">{{c['desc']}}</h5>
           <p class="text3 f9">{{c['topicDetails']}}</p>
         </div>
       </div>
-
-      <div class="grow"></div>
-
-      <button
-        class="btn-icon btn-round btn-small"
-        (click)="selects.emit({ name: 'details' })"
-      >
-        <i
-          size="small"
-          [puiIcon]="dir === 'rtl' ? 'navigate_before' : 'navigate_next'"
-        ></i>
-      </button>
     </div>
 
     <div
       *ngIf="isTable"
-      class="list-item"
+      class="list-item hover cursor-pointer p-4"
       [class.active]="view.name === 'attachments'"
+      (click)="selects.emit({ name: 'attachments' })"
     >
       <div class="flex gap-2">
         <i size="small" puiIcon="attachments"></i>
         <div>
-          <h4 class="mbe-1">{{c['attachments']}}</h4>
+          <h5 class="mbe-1">{{c['attachments']}}</h5>
           <p class="text3 f9">{{c['attachmentsInfo']}}</p>
         </div>
       </div>
-
-      <div class="grow"></div>
-
-      <button
-        class="btn-icon btn-round btn-small"
-        (click)="selects.emit({ name: 'attachments' })"
-      >
-        <i
-          size="small"
-          [puiIcon]="dir === 'rtl' ? 'navigate_before' : 'navigate_next'"
-        ></i>
-      </button>
     </div>
 
     <div
       *ngIf="isTable"
-      class="list-item"
+      class="list-item hover cursor-pointer p-4"
       [class.active]="view.name === 'history'"
+      (click)="selects.emit({ name: 'history' })"
     >
       <div class="flex gap-2">
         <i size="small" puiIcon="history"></i>
         <div>
-          <h4 class="mbe-1">{{c['history']}}</h4>
+          <h5 class="mbe-1">{{c['history']}}</h5>
           <p class="text3 f9">{{c['historyInfo']}}</p>
         </div>
       </div>
-
-      <div class="grow"></div>
-
-      <button
-        class="btn-icon btn-round btn-small"
-        (click)="selects.emit({ name: 'history' })"
-      >
-        <i
-          size="small"
-          [puiIcon]="dir === 'rtl' ? 'navigate_before' : 'navigate_next'"
-        ></i>
-      </button>
     </div>
 
     <div
       *ngIf="isTable"
-      class="list-item"
+      class="list-item hover cursor-pointer p-4"
       [class.active]="view.name === 'comments'"
+      (click)="selects.emit({ name: 'comments' })"
     >
       <div class="flex gap-2">
         <i size="small" puiIcon="comments"></i>
         <div>
-          <h4 class="mbe-1">{{c['comments']}}</h4>
+          <h5 class="mbe-1">{{c['comments']}}</h5>
           <p class="text3 f9">{{c['commentsInfo']}}</p>
         </div>
       </div>
-
-      <div class="grow"></div>
-
-      <button
-        class="btn-icon btn-round btn-small"
-        (click)="selects.emit({ name: 'comments' })"
-      >
-        <i
-          size="small"
-          [puiIcon]="dir === 'rtl' ? 'navigate_before' : 'navigate_next'"
-        ></i>
-      </button>
     </div>
 
     <ng-container *ngIf="subDataStores.length">
       <div class="pi-7 pb-4 bg-surface2 border-be">
-        <h4>{{c['branches']}}</h4>
+        <h5>{{c['branches']}}</h5>
       </div>
 
       <div
         *ngFor="let ds of subDataStores; let i = index"
-        class="list-item"
+        class="list-item hover cursor-pointer p-4"
         [class.active]="view.name === 'subDataStores'"
+        (click)="selects.emit({ name: 'subDataStores', payload: i })"
       >
         <div class="flex gap-2">
           <i size="small" puiIcon="database"></i>
           <div>
-            <h4 class="mbe-1">{{ds.name}}</h4>
+            <h5 class="mbe-1">{{ds.name}}</h5>
           </div>
         </div>
-
-        <div class="grow"></div>
-
-        <button
-          class="btn-icon btn-round btn-small"
-          (click)="selects.emit({ name: 'subDataStores', payload: i })"
-        >
-          <i
-            size="small"
-            [puiIcon]="dir === 'rtl' ? 'navigate_before' : 'navigate_next'"
-          ></i>
-        </button>
       </div>
     </ng-container>
   </main>
+
+  <div
+    class="p-4 align-center bg-surface1"
+    *ngIf="deleteAllowed && ((record.owner | sessionIs) || ((dataStore.blueprint | blueprint | async)?.owner | sessionIs))"
+  >
+    <button class="btn-outline-danger btn-small" (click)="openDialog(confirmDelete)">
+      <i puiIcon="delete" size="tiny"></i>
+      {{c['delete']}}
+    </button>
+  </div>
+
+  <ng-template #confirmDelete>
+    <div class="card w-10 shadow-6">
+      <h4 class="card-header">{{c['deleteRecord']}}</h4>
+      <p class="card-body">{{c['confirmOperation']}}</p>
+      <div class="card-footer">
+        <button class="btn-round" (click)="closeDialog()">{{c['cancel']}}</button>
+        <button class="btn-danger btn-round" (click)="delete(c['errors'])">{{c['delete']}}</button>
+      </div>
+      <pui-preloader *ngIf="preloader"></pui-preloader>
+    </div>
+  </ng-template>
 </ng-container>

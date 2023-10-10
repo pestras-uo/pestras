@@ -1,4 +1,5 @@
 {
+  "deleteRecord": "Delete Record",
   "colorsTheme": "Colors Theme",
   "colorsThemeList": [{
       "name": "Light",
@@ -123,7 +124,7 @@
   "operaotr": "Compare Operator",
   "alias": "Alias Name",
   "addComment": "Add Comment",
-  "confirmRemoveComments"َ: "Are you sure ?",
+  "confirmRemoveComments": "Are you sure ?",
   "removeParam": "Remove Search Param",
   "updateParam": "Update Search Param",
   "addParam": "Add Search Param",

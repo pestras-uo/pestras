@@ -150,7 +150,7 @@ export const controller = {
       if (!ds)
         throw new HttpError(HttpCode.NOT_FOUND, 'dataStoreNotFound');
 
-      const src = `${isDraft ? DataRecordState.DRAFT : DataRecordState.PUBLISHED}_${req.params.serial}`;
+      const src = isDraft ? `${DataRecordState.DRAFT}_${req.params.serial}` : req.params.serial;
       const record = await dataRecordsModel.getBySerial(src, req.params.record);
 
       if (!record)
