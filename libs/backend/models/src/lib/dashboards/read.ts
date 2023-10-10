@@ -69,3 +69,7 @@ export async function titleExists(
     title, serial: { $nin: exclude ? [exclude] : [] }
   })) > 0;
 }
+
+export function count(this: DashboardsModel) {
+  return this.col.countDocuments({});
+}

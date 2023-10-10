@@ -2,10 +2,11 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @angular-eslint/component-class-suffix */
 /* eslint-disable @angular-eslint/component-selector */
-import { Component, HostBinding, Input, OnInit } from '@angular/core';
+import { Component, HostBinding, Input, OnChanges } from '@angular/core';
 import { AbstractControl, ControlValueAccessor, FormControl, NG_VALIDATORS, NG_VALUE_ACCESSOR, ValidationErrors } from '@angular/forms';
-import { Subscription, map, startWith, switchMap, take, tap } from 'rxjs';
+import { map, startWith, switchMap, take, tap } from 'rxjs';
 import { DataStoresState, BlueprintsState } from '@pestras/frontend/state';
+import { untilDestroyed } from '@pestras/frontend/ui';
 
 @Component({
   selector: 'app-data-store-input',
@@ -15,8 +16,8 @@ import { DataStoresState, BlueprintsState } from '@pestras/frontend/state';
     { provide: NG_VALIDATORS, multi: true, useExisting: DataStoreInput }
   ]
 })
-export class DataStoreInput implements OnInit, ControlValueAccessor {
-  private sub: Subscription | null = null;
+export class DataStoreInput implements OnChanges, ControlValueAccessor {
+  private ud = untilDestroyed();
 
   readonly bp = new FormControl('', { nonNullable: true });
   readonly ds = new FormControl('', { nonNullable: true });
@@ -39,15 +40,22 @@ export class DataStoreInput implements OnInit, ControlValueAccessor {
   hostClass = 'flex gap-4';
 
   @Input()
-  fcClass = ''
+  fcClass = '';
+  @Input()
+  blueprint: string | null = null;
 
   constructor(
     private state: DataStoresState,
     private bpsState: BlueprintsState
   ) { }
 
-  ngOnInit(): void {
-    this.sub = this.ds.valueChanges
+  ngOnChanges(): void {
+    console.log(this.blueprint);
+    if (this.blueprint)
+      this.bp.setValue(this.blueprint);
+
+    this.ds.valueChanges
+      .pipe(this.ud())
       .subscribe(v => {
         this.onChange(v ?? null);
         this.onTouched();
@@ -70,7 +78,9 @@ export class DataStoreInput implements OnInit, ControlValueAccessor {
         .pipe(take(1))
         .subscribe(ds => {
           if (ds) {
-            this.bp.setValue(ds.blueprint);
+            if (!this.blueprint)
+              this.bp.setValue(ds.blueprint);
+
             setTimeout(() => this.ds.setValue(ds.serial));
           }
         })

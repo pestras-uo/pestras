@@ -24,6 +24,9 @@ export namespace DashboardsApi {
   export type GetBySerialReq = Request<{ serial: string }>;
   export type GetBySerialRes = Response<Dashboard | null, UserSession>;
 
+  export type GetCountReq = Request;
+  export type GetCountRes = Response<number, UserSession>;
+
   // Create
   // -------------------------------------------------------------------------------
   export type CreateReq = Request<any, any, CreateDashboardInput>;
