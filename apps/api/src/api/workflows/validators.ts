@@ -1,4 +1,4 @@
-import { WorkflowAction, WorkflowStepAlgo } from "@pestras/shared/data-model";
+import { WorkflowState, workflowStepAlgo } from "@pestras/shared/data-model";
 import { Validall } from "@pestras/validall";
 
 export enum WorkflowValidators {
@@ -13,10 +13,7 @@ export enum WorkflowValidators {
 const DEFAULT_ACTION = 'WorkflowDefaultAction';
 
 new Validall(DEFAULT_ACTION, {
-  $in: [
-    WorkflowAction.APPROVE,
-    WorkflowAction.REJECT
-  ]
+  $in: ['approve', 'reject'] as WorkflowState[]
 });
 
 const STEPS = 'WorkflowSteps';
@@ -25,25 +22,15 @@ new Validall(STEPS, {
   $is: 'notEmpty',
   $each: {
     users: { $is:'notEmpty', $each: { $type: 'string' } },
-    algo: {
-      $enum: [
-        WorkflowStepAlgo.ANY,
-        WorkflowStepAlgo.ANY_ALL,
-        WorkflowStepAlgo.ANY_MOST,
-        WorkflowStepAlgo.ALL_ANY,
-        WorkflowStepAlgo.MOST,
-        WorkflowStepAlgo.MOST_ANY
-      ]
-    }
+    max_review_days: { $type: 'number', $gte: 1 },
+    default_action: { $ref: DEFAULT_ACTION },
+    algo: { $enum: [...workflowStepAlgo] }
   }
 })
 
 new Validall(WorkflowValidators.CREATE, {
   blueprint: { $type: 'string' },
   name: { $type: 'string' },
-  max_review_days: { $type: 'number', $gte: 1 },
-  default_action: { $ref: DEFAULT_ACTION },
-  cancelable: { $type: 'boolean' },
   steps: { $ref: STEPS }
 });
 

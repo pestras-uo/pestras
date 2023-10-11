@@ -1,4 +1,4 @@
-import { Workflow, WorkflowAction, WorkflowStepOptions } from "@pestras/shared/data-model";
+import { Workflow, WorkflowState, WorkflowStepOptions } from "@pestras/shared/data-model";
 import { Model } from "../../model";
 import { Serial } from "@pestras/shared/util";
 
@@ -19,9 +19,6 @@ export class WorkflowModel extends Model<Workflow> {
       serial: Serial.gen("WKF"),
       blueprint: input.blueprint,
       name: input.name,
-      cancelable: input.cancelable,
-      default_action: input.default_action,
-      max_review_days: input.max_review_days,
       steps: input.steps.map(s => ({ ...s, serial: Serial.gen("WFS") }))
     };
 
@@ -42,7 +39,7 @@ export class WorkflowModel extends Model<Workflow> {
     return true;
   }
 
-  async updateDefaultAction(serial: string, action: Exclude<WorkflowAction, WorkflowAction.REVIEW>) {
+  async updateDefaultAction(serial: string, action: Exclude<WorkflowState, 'review'>) {
     await this.col.updateOne({ serial }, { $set: { default_action: action } });
 
     return true;

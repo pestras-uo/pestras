@@ -12,7 +12,7 @@ export const recordWorkflowRoutes = Router()
   .get(
     '/state/:ds/:record',
     apiAuth(),
-    controller.getRecordWfState
+    controller.getRecordActiveWfState
   )
   .post(
     '/:ds/:record/:trigger',
@@ -20,17 +20,12 @@ export const recordWorkflowRoutes = Router()
     controller.publish
   )
   .put(
-    '/approve/:ds/:step',
+    '/approve/:ds/:record/:step',
     apiAuth([Role.ADMIN, Role.DATA_ENG, Role.AUTHOR]),
     controller.approve
   )
   .put(
-    '/reject/:ds/:step',
+    '/reject/:ds/:record/:step',
     apiAuth([Role.ADMIN, Role.DATA_ENG, Role.AUTHOR]),
-    controller.cancel
-  )
-  .delete(
-    '/:ds/:record',
-    apiAuth([Role.ADMIN, Role.DATA_ENG, Role.AUTHOR]),
-    controller.cancel
-  )
+    controller.reject
+  );

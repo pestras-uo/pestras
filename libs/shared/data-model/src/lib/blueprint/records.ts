@@ -1,8 +1,5 @@
-export enum DataRecordState {
-  PUBLISHED = 'published',
-  REVIEW = 'review',
-  DRAFT = 'draft'
-}
+export const dataRecordState = ['published', 'review', 'draft'];
+export type DataRecordState = typeof dataRecordState[number];
 
 export interface DataRecord {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -13,7 +10,7 @@ export interface TableDataRecord extends DataRecord {
   serial: string;
   // relations
   topic: string | null;
-  
+
   owner: string;
 
   // dates

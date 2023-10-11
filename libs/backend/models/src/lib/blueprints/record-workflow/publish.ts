@@ -1,14 +1,22 @@
-import { RecordWorkflow, WorkflowAction, WorkflowTriggers } from "@pestras/shared/data-model";
+import { RecordWorkflow, RecordWorkflowState, WorkflowTriggers } from "@pestras/shared/data-model";
 import { RecordWorkflowModel } from ".";
 import { HttpError, HttpCode } from "@pestras/backend/util";
 import { dataStoresModel, workflowModel } from "../../models";
+import { Serial } from "@pestras/shared/util";
 
 export async function publishRecord(
   this: RecordWorkflowModel,
   dsSerial: string,
   serial: string,
-  trigger: WorkflowTriggers
+  trigger: WorkflowTriggers,
+  msg?: string
 ) {
+  // check if currently has in review action
+  const activeRecordWf = await this.getRecordActiveWf(dsSerial, serial);
+
+  if (activeRecordWf)
+    throw new HttpError(HttpCode.FORBIDDEN, 'recordHasAnActiveWorkflowReview');
+
   const mainCol = this.db.collection(dsSerial);
   const reviewCol = this.db.collection(`review_${dsSerial}`);
   const draftCol = this.db.collection(`draft_${dsSerial}`);
@@ -26,25 +34,30 @@ export async function publishRecord(
 
   if (typeof ds.settings.workflow[trigger] === 'string') {
     const workflow = await workflowModel.getBySerial(ds.settings.workflow[trigger] as string);
-    const recordWorkFlowCol = this.db.collection<RecordWorkflow>(`workflow_${ds.serial}`);
+    const recordWorkFlowCol = this.db.collection<RecordWorkflowState>(`workflow_${ds.serial}`);
 
     if (!workflow)
       throw new HttpError(HttpCode.NOT_FOUND, 'workflowNotFound');
 
     const firstParty = workflow.steps[0];
-
-    const recordWorkFlow: RecordWorkflow = {
-      actions: firstParty.users.map(u => ({ user: u, action: WorkflowAction.REVIEW, date: new Date(), message: '' })),
-      record: serial,
+    const recordWorkflow: RecordWorkflow = {
+      serial: Serial.gen('RWF'),
+      trigger,
       workflow: workflow.serial,
-      step: firstParty.serial,
-      trigger: trigger,
-      action: WorkflowAction.REVIEW,
-      create_date: new Date(),
-      action_date: null
-    };
+      state: 'review',
+      start_date: new Date(),
+      end_date: null,
+      initMessage: msg ?? '',
+      steps: [{
+        actions: firstParty.users.map(u => ({ user: u, action: 'review', date: new Date(), message: '' })),
+        start_date: new Date(),
+        end_date: null,
+        state: 'review',
+        step: workflow.steps[0].serial
+      }]
+    }
 
-    await recordWorkFlowCol.insertOne(recordWorkFlow);
+    await recordWorkFlowCol.updateOne({ record }, { $push: { workflows: recordWorkflow } });
     await reviewCol.insertOne(record);
     await draftCol.deleteOne({ serial });
 

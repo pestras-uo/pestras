@@ -1,64 +1,76 @@
-import { DataRecordState, RecordWorkflow, TableDataRecord, User, WorkflowAction, getWorkflowStepAction } from "@pestras/shared/data-model";
+import { DataRecordState, RecordWorkflow, TableDataRecord, User, getWorkflowStepAction } from "@pestras/shared/data-model";
 import { RecordWorkflowModel } from ".";
 import { HttpError, HttpCode } from "@pestras/backend/util";
-import { dataStoresModel, workflowModel } from "../../models";
+import { workflowModel } from "../../models";
 
 export async function reject(
   this: RecordWorkflowModel,
   dsSerial: string,
+  recSerial: string,
   step: string,
   message: string,
   issuer: User
 ): Promise<DataRecordState> {
+  const date = new Date();
+  const activeWf = await this.getRecordActiveWf(dsSerial, recSerial);
   const recordWorkFlowCol = this.db.collection<RecordWorkflow>(`workflow_${dsSerial}`);
-  const ds = await dataStoresModel.getBySerial(dsSerial, { serial: 1, settings: 1 });
 
-  if (!ds)
-    throw new HttpError(HttpCode.NOT_FOUND, 'dataStoreNotFound');
+  if (!activeWf)
+    throw new HttpError(HttpCode.NOT_FOUND, 'recordWorkflowNotFound');
 
-  const wfStep = await this.getWfStep(dsSerial, step);
+  const wfStep = activeWf.steps.find(s => s.step === step);
 
   if (!wfStep)
-    throw new HttpError(HttpCode.NOT_FOUND, 'workflowStepNotFound');
+    throw new HttpError(HttpCode.NOT_FOUND, 'recordWorkflowStepNotFound');
 
   wfStep.actions = wfStep.actions.map(a =>
     a.user === issuer.serial
-      ? { ...a, action: WorkflowAction.REJECT }
+      ? { ...a, action: 'reject', date, message }
       : a
   );
 
-  const wf = await workflowModel.getBySerial(wfStep.workflow);
+  const wf = await workflowModel.getBySerial(activeWf.workflow);
 
   if (!wf)
     throw new HttpError(HttpCode.NOT_FOUND, 'workflowNotFound');
 
   const wfStepOpt = wf.steps.find(o => o.serial === step);
-  const stepState = wfStepOpt ? getWorkflowStepAction(wfStep.actions, wfStepOpt.algo) : WorkflowAction.REVIEW;
+  const stepState = wfStepOpt ? getWorkflowStepAction(wfStep.actions, wfStepOpt.algo) : 'review';
 
-  if (stepState === WorkflowAction.REJECT) {
+  if (stepState === 'reject') {
 
-    await recordWorkFlowCol.deleteMany({ record: wfStep.record });
+    await recordWorkFlowCol.updateOne(
+      { record: recSerial, 'steps.step': step },
+      {
+        $set: {
+          end_date: date,
+          state: 'reject',
+          'steps.$.actions': wfStep.actions,
+          'steps.$.end_date': date,
+          'steps.$.state': 'reject'
+        }
+      }
+    );
 
     // if was not delete trigger, put record back to draft 
-    if (wfStep.trigger !== "delete") {
-      const record = await this.db.collection<TableDataRecord>(`review_${dsSerial}`).findOne({ serial: wfStep.record });
+    if (activeWf.trigger !== "delete") {
+      const record = await this.db.collection<TableDataRecord>(`review_${dsSerial}`).findOne({ serial: recSerial });
 
       if (record) {
         await this.db.collection<TableDataRecord>(`draft_${dsSerial}`).insertOne(record);
-        await this.db.collection<TableDataRecord>(`review_${dsSerial}`).deleteOne({ serial: wfStep.record });
+        await this.db.collection<TableDataRecord>(`review_${dsSerial}`).deleteOne({ serial: recSerial });
       }
 
-      return DataRecordState.DRAFT;
+      return 'draft';
     }
 
-    return DataRecordState.PUBLISHED;
+    return 'published';
   }
 
-  await this.db.collection(`workflow_${dsSerial}`).updateOne({ step, 'actions.user': issuer.serial }, {
-    $set: {
-      'action.$': { user: issuer.serial, action: WorkflowAction.REJECT, date: new Date(), message }
-    }
-  });
+  await recordWorkFlowCol.updateOne(
+    { record: recSerial, 'steps.step': step },
+    { $set: { 'steps.$.actions': wfStep.actions } }
+  );
 
-  return DataRecordState.REVIEW;
+  return 'review';
 }

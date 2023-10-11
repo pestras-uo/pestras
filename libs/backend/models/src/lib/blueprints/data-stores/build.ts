@@ -30,7 +30,11 @@ export async function build(
       await this.dataDB.createCollection(`draft_${ds.serial}`);
       await this.dataDB.createCollection(`history_${ds.serial}`);
 
-      if (typeof ds.settings.workflow === 'string') {
+      if (
+        typeof ds.settings.workflow.create === 'string'
+        || typeof ds.settings.workflow.update === 'string'
+        || typeof ds.settings.workflow.delete === 'string'
+      ) {
         await this.dataDB.createCollection(`review_${ds.serial}`);
         await this.dataDB.createCollection(`workflow_${ds.serial}`);
       }

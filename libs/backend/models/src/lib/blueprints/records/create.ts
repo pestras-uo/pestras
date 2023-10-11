@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { DataStoreState, DataStoreType, parseValue, validateConstraint, validateValueType, User } from "@pestras/shared/data-model";
+import { DataStoreState, DataStoreType, parseValue, validateConstraint, validateValueType, User, RecordWorkflowState } from "@pestras/shared/data-model";
 import { DataRecordsModel } from ".";
 import { HttpError, HttpCode } from "@pestras/backend/util";
 import { dataStoresModel } from "../../models";
@@ -71,6 +71,16 @@ export async function create(
   entry.last_modified = date;
 
   await this.db.collection(`draft_${ds.serial}`).insertOne(entry);
+
+  if (
+    typeof ds.settings.workflow.create === 'string'
+    || typeof ds.settings.workflow.update === 'string'
+    || typeof ds.settings.workflow.delete === 'string'
+  )
+    await this.db.collection<RecordWorkflowState>(`workflow_${ds.serial}`).insertOne({
+      record: recSerial,
+      workflows: []
+    });
 
   return entry;
 }
