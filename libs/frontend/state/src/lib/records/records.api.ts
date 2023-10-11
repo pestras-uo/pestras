@@ -97,11 +97,13 @@ export namespace RecordsApi {
 
   // delete
   // --------------------------------------------------------------------------------------
-  // POST
+  // PUT
   export namespace Delete {
-    export const REQ_PATH = localBasePath + '/:serial/:draft';
+    export const REQ_PATH = localBasePath + '/delete/:serial/:draft';
 
     export interface Params { ds: string; serial: string; draft: string }
+
+    export interface Body { message: string }
 
     export type Response = boolean;
   }

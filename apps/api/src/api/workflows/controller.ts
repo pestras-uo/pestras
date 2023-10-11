@@ -36,30 +36,6 @@ export const controller = {
     }
   },
 
-  async updateMaxReviewDays(req: WorkflowApi.UpdateMaxReviewDaysReq, res: WorkflowApi.UpdateMaxReviewDaysRes, next: NextFunction) {
-    try {
-      res.json(await workflowModel.updateMaxReviewDays(req.params.serial, req.body.days));
-    } catch (error) {
-      next(error);
-    }
-  },
-
-  async updateDefaultAction(req: WorkflowApi.UpdateDefaultActionReq, res: WorkflowApi.UpdateDefaultActionRes, next: NextFunction) {
-    try {
-      res.json(await workflowModel.updateDefaultAction(req.params.serial, req.body.action));
-    } catch (error) {
-      next(error);
-    }
-  },
-
-  async updateCancelable(req: WorkflowApi.UpdateCancelableReq, res: WorkflowApi.UpdateCancelableRes, next: NextFunction) {
-    try {
-      res.json(await workflowModel.updateCancelable(req.params.serial, req.body.cancelable));
-    } catch (error) {
-      next(error);
-    }
-  },
-
   async updateSteps(req: WorkflowApi.UpdateStepsReq, res: WorkflowApi.UpdateStepsRes, next: NextFunction) {
     try {
       res.json(await workflowModel.updateSteps(req.params.serial, req.body.steps));

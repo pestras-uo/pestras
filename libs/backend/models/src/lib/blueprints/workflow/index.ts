@@ -1,4 +1,4 @@
-import { Workflow, WorkflowState, WorkflowStepOptions } from "@pestras/shared/data-model";
+import { Workflow, WorkflowStepOptions } from "@pestras/shared/data-model";
 import { Model } from "../../model";
 import { Serial } from "@pestras/shared/util";
 
@@ -29,24 +29,6 @@ export class WorkflowModel extends Model<Workflow> {
 
   async updateName(serial: string, name: string) {
     await this.col.updateOne({ serial }, { $set: { name } });
-
-    return true;
-  }
-
-  async updateMaxReviewDays(serial: string, days: number) {
-    await this.col.updateOne({ serial }, { $set: { max_review_days: days } });
-
-    return true;
-  }
-
-  async updateDefaultAction(serial: string, action: Exclude<WorkflowState, 'review'>) {
-    await this.col.updateOne({ serial }, { $set: { default_action: action } });
-
-    return true;
-  }
-
-  async updateCancelable(serial: string, cancelable: boolean) {
-    await this.col.updateOne({ serial }, { $set: { cancelable } });
 
     return true;
   }

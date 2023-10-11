@@ -81,9 +81,9 @@ export class RecordsService {
     return this.http.put<RecordsApi.RevertHistory.Response>(path, null);
   }
 
-  delete(params: RecordsApi.Delete.Params) {
+  delete(params: RecordsApi.Delete.Params, body: RecordsApi.Delete.Body) {
     const path = injectURLPayload(this.envServ.env.api + RecordsApi.Delete.REQ_PATH, params);
 
-    return this.http.delete<RecordsApi.Delete.Response>(path);
+    return this.http.put<RecordsApi.Delete.Response>(path, body);
   }
 }

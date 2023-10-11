@@ -4,9 +4,6 @@ import { Validall } from "@pestras/validall";
 export enum WorkflowValidators {
   CREATE = 'createWorkflow',
   UPDATE_NAME = 'updateWorkflowName',
-  UPDATE_MAX_REVIEW_DAYS = 'updateWorkflowMaxReviewDays',
-  UPDATE_DEFAULT_ACTION = 'updateWorkflowDefaultAction',
-  UPDATE_CANCELABLE = 'updateWorkflowCancelable',
   UPDATE_STEPS = 'updateWorkflowParties'
 }
 
@@ -36,18 +33,6 @@ new Validall(WorkflowValidators.CREATE, {
 
 new Validall(WorkflowValidators.UPDATE_NAME, {
   name: { $type: 'string' }
-});
-
-new Validall(WorkflowValidators.UPDATE_MAX_REVIEW_DAYS, {
-  days: { $type: 'number', $gte: 1 }
-});
-
-new Validall(WorkflowValidators.UPDATE_DEFAULT_ACTION, {
-  default_action: { $ref: DEFAULT_ACTION }
-});
-
-new Validall(WorkflowValidators.UPDATE_CANCELABLE, {
-  cancelable: { $type: "boolean" }
 });
 
 new Validall(WorkflowValidators.UPDATE_STEPS, {

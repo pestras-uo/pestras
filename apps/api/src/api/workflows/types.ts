@@ -20,15 +20,6 @@ export namespace WorkflowApi {
   export type UpdateNameReq = Request<{ serial: string; }, any, { name: string; }>;
   export type UpdateNameRes = Response<boolean, UserSession>;
   
-  export type UpdateMaxReviewDaysReq = Request<{ serial: string; }, any, { days: number; }>;
-  export type UpdateMaxReviewDaysRes = Response<boolean, UserSession>;
-  
-  export type UpdateDefaultActionReq = Request<{ serial: string; }, any, { action: 'approve' | 'reject' }>;
-  export type UpdateDefaultActionRes = Response<boolean, UserSession>;
-  
-  export type UpdateCancelableReq = Request<{ serial: string; }, any, { cancelable: boolean; }>;
-  export type UpdateCancelableRes = Response<boolean, UserSession>;
-  
   export type UpdateStepsReq = Request<{ serial: string; }, any, { steps: WorkflowStepOptions[]; }>;
   export type UpdateStepsRes = Response<boolean, UserSession>;
 }

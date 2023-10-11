@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-namespace */
-import { DataRecordState, RecordWorkflow, WorkflowTriggers } from "@pestras/shared/data-model";
+import { DataRecordState, RecordWorkflow, RecordWorkflowState, WorkflowTriggers } from "@pestras/shared/data-model";
 
 const basePath = '/records-workflow';
 
@@ -11,7 +11,7 @@ export namespace RecordsWorkflowApi {
 
     export interface Params { ds: string; record: string; }
 
-    export type Response = RecordWorkflow[];
+    export type Response = RecordWorkflowState;
   }
 
   // GET
@@ -30,15 +30,17 @@ export namespace RecordsWorkflowApi {
 
     export interface Params { ds: string; record: string; trigger: WorkflowTriggers }
 
+    export interface Body { message: string; }
+
     export type Response = boolean;
   }
 
 
   // PUT
   export namespace Approve {
-    export const REQ_PATH = basePath + '/approve/:ds/:step';
+    export const REQ_PATH = basePath + '/approve/:ds/:record/:step';
 
-    export interface Params { ds: string; step: string; }
+    export interface Params { ds: string; record: string, step: string; }
 
     export interface Body { message: string; }
 
@@ -48,22 +50,12 @@ export namespace RecordsWorkflowApi {
 
   // PUT
   export namespace Reject {
-    export const REQ_PATH = basePath + '/reject/:ds/:step';
+    export const REQ_PATH = basePath + '/reject/:record/:ds/:step';
 
-    export interface Params { ds: string; step: string; }
+    export interface Params { ds: string; record: string; step: string; }
 
     export interface Body { message: string; }
 
     export type Response = DataRecordState;
-  }
-
-
-  // DELETE
-  export namespace Cancel {
-    export const REQ_PATH = basePath + '/:ds/:record';
-
-    export interface Params { ds: string; record: string; }
-
-    export type Response = boolean;
   }
 }

@@ -36,24 +36,6 @@ export class WorkflowsService {
     return this.http.put<WorkflowsApi.UpdateName.Response>(path, body);
   }
 
-  updateMaxReviewDays(params: WorkflowsApi.UpdateMaxReviewDays.Params, body: WorkflowsApi.UpdateMaxReviewDays.Body) {
-    const path = injectURLPayload(this.envSrv.env.api + WorkflowsApi.UpdateMaxReviewDays.REQ_PATH, params);
-
-    return this.http.put<WorkflowsApi.UpdateMaxReviewDays.Response>(path, body);
-  }
-
-  updateDefaultAction(params: WorkflowsApi.UpdateDefaultAction.Params, body: WorkflowsApi.UpdateDefaultAction.Body) {
-    const path = injectURLPayload(this.envSrv.env.api + WorkflowsApi.UpdateDefaultAction.REQ_PATH, params);
-
-    return this.http.put<WorkflowsApi.UpdateDefaultAction.Response>(path, body);
-  }
-
-  updateCancelable(params: WorkflowsApi.UpdateCancelable.Params, body: WorkflowsApi.UpdateCancelable.Body) {
-    const path = injectURLPayload(this.envSrv.env.api + WorkflowsApi.UpdateCancelable.REQ_PATH, params);
-
-    return this.http.put<WorkflowsApi.UpdateCancelable.Response>(path, body);
-  }
-
   updateSteps(params: WorkflowsApi.UpdateSteps.Params, body: WorkflowsApi.UpdateSteps.Body) {
     const path = injectURLPayload(this.envSrv.env.api + WorkflowsApi.UpdateSteps.REQ_PATH, params);
 

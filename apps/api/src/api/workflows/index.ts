@@ -29,24 +29,6 @@ export const workflowsRouter = Router()
     controller.updateName
   )
   .put(
-    '/:serial/max-review-days',
-    apiAuth([Role.ADMIN, Role.DATA_ENG]),
-    validate(WorkflowValidators.UPDATE_MAX_REVIEW_DAYS),
-    controller.updateMaxReviewDays
-  )
-  .put(
-    '/:serial/default-action',
-    apiAuth([Role.ADMIN, Role.DATA_ENG]),
-    validate(WorkflowValidators.UPDATE_DEFAULT_ACTION),
-    controller.updateDefaultAction
-  )
-  .put(
-    '/:serial/cancelable',
-    apiAuth([Role.ADMIN, Role.DATA_ENG]),
-    validate(WorkflowValidators.UPDATE_CANCELABLE),
-    controller.updateCancelable
-  )
-  .put(
     '/:serial/steps',
     apiAuth([Role.ADMIN, Role.DATA_ENG]),
     validate(WorkflowValidators.UPDATE_STEPS),
