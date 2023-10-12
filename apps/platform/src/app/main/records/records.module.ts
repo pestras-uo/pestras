@@ -24,10 +24,17 @@ import { RecordsFeatureModule } from '@pestras/frontend/features/data-records';
 import { SessionFeatureModule } from '@pestras/frontend/features/session';
 import { BlueprintsFeatureModule } from '@pestras/frontend/features/blueprints';
 import { AttachmentsFeatureModule } from '@pestras/frontend/features/attachments';
-import { PuiIcon, PuiImageInput, PuiInfiniteScroll, PuiPreloaderModule, PuiSelectInput, PuiUtilPipesModule } from '@pestras/frontend/ui';
+import {
+  BreadcrumbModule,
+  PuiIcon,
+  PuiImageInput,
+  PuiInfiniteScroll,
+  PuiPreloaderModule,
+  PuiSelectInput,
+  PuiUtilPipesModule,
+} from '@pestras/frontend/ui';
 import { RecordsWorkflowFeatureModule } from '@pestras/frontend/features/records-workflow';
 import { CommentsViewComponent } from './views/comments/comments.view';
-
 
 @NgModule({
   declarations: [
@@ -39,7 +46,7 @@ import { CommentsViewComponent } from './views/comments/comments.view';
     HistoryViewComponent,
     CommentsViewComponent,
     UpdateFormPage,
-    SubDataStoresRecordsView
+    SubDataStoresRecordsView,
   ],
   imports: [
     CommonModule,
@@ -68,7 +75,9 @@ import { CommentsViewComponent } from './views/comments/comments.view';
     PuiIcon,
     PuiSelectInput,
     PuiImageInput,
-    PuiUtilPipesModule
-  ]
+    PuiUtilPipesModule,
+    //BreadCrumb Module:
+    BreadcrumbModule,
+  ],
 })
-export class RecordsModule { }
+export class RecordsModule {}

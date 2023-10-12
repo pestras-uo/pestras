@@ -1,55 +1,62 @@
 <ng-container *contra="let c">
   <ng-container *ngIf="client$ | async as client">
-
     <header class="bg-surface1 pi-8 border-be">
-
       <div class="container">
-
+        <h3 class="bold f8">
+          <app-breadcrumb [breadcrumbs]="breadcrumbs"> </app-breadcrumb>
+        </h3>
         <div class="toolbar gap-4">
           <div>
             <h1>{{client.client_name}}</h1>
             <p>{{client.serial}}</p>
           </div>
           <div class="grow"></div>
-          <button *ngIf="(blueprint.owner | sessionIs) || (blueprint.collaborators | sessionIs)"
-            class="btn-primary btn-round" (click)="openModal(edit)">
+          <button
+            *ngIf="(blueprint.owner | sessionIs) || (blueprint.collaborators | sessionIs)"
+            class="btn-primary btn-round"
+            (click)="openModal(edit)"
+          >
             <i size="small" puiIcon="edit"></i>
             {{c['update']}}
           </button>
         </div>
-
       </div>
-
     </header>
 
     <main class="pb-10 pi-8">
-
       <div class="container">
-
         <div class="card mbe-8">
           <div class="card-header">
             <h3>{{c['ipAllowedAddresses']}}</h3>
-            <button *ngIf="(blueprint.owner | sessionIs) || (blueprint.collaborators | sessionIs)"
-              class="btn-icon btn-small btn-round" (click)="openModal(addIpTmp)">
+            <button
+              *ngIf="(blueprint.owner | sessionIs) || (blueprint.collaborators | sessionIs)"
+              class="btn-icon btn-small btn-round"
+              (click)="openModal(addIpTmp)"
+            >
               <i puiIcon="add" size="small"></i>
             </button>
           </div>
-  
+
           <div class="card-body flex gap-2 flex-wrap">
             <p class="badge" *ngFor="let ip of client.ips; let i = index">
               {{ip}}
-              <i *ngIf="(blueprint.owner | sessionIs) || (blueprint.collaborators | sessionIs)" puiIcon="delete"
-                size="tiny" class="cursor-pointer" (click)="removeIp(c, ip)"></i>
+              <i
+                *ngIf="(blueprint.owner | sessionIs) || (blueprint.collaborators | sessionIs)"
+                puiIcon="delete"
+                size="tiny"
+                class="cursor-pointer"
+                (click)="removeIp(c, ip)"
+              ></i>
             </p>
           </div>
         </div>
-  
-        <app-data-stores [editable]="(blueprint.owner | sessionIs) || (blueprint.collaborators | sessionIs)"
-          [client]="client" [blueprint]="blueprint.serial"></app-data-stores>
 
+        <app-data-stores
+          [editable]="(blueprint.owner | sessionIs) || (blueprint.collaborators | sessionIs)"
+          [client]="client"
+          [blueprint]="blueprint.serial"
+        ></app-data-stores>
       </div>
-
-
     </main>
 
     <ng-template #edit>
@@ -59,14 +66,26 @@
         <div class="card-body">
           <label for="client-name">{{c['clientName']}}</label>
           <div class="fc">
-            <input #nameInput type="text" id="client-name" [value]="client.client_name">
+            <input
+              #nameInput
+              type="text"
+              id="client-name"
+              [value]="client.client_name"
+            />
           </div>
         </div>
 
         <div class="card-footer">
-          <button class="btn-round btn-outline" (click)="closeModal()">{{c['cancel']}}</button>
-          <button class="btn-round btn-primary" [disabled]="!nameInput.value"
-            (click)="update(c, nameInput.value)">{{c['update']}}</button>
+          <button class="btn-round btn-outline" (click)="closeModal()">
+            {{c['cancel']}}
+          </button>
+          <button
+            class="btn-round btn-primary"
+            [disabled]="!nameInput.value"
+            (click)="update(c, nameInput.value)"
+          >
+            {{c['update']}}
+          </button>
         </div>
 
         <pui-preloader *ngIf="preloader"></pui-preloader>
@@ -80,20 +99,25 @@
         <div class="card-body">
           <label for="ip">{{c['ipAddress']}}</label>
           <div class="fc">
-            <input #ipInput type="text" id="ip">
+            <input #ipInput type="text" id="ip" />
           </div>
         </div>
 
         <div class="card-footer">
-          <button class="btn-round btn-outline" (click)="closeModal()">{{c['cancel']}}</button>
-          <button class="btn-round btn-primary" [disabled]="!ipInput.value"
-            (click)="addIp(c, ipInput.value)">{{c['update']}}</button>
+          <button class="btn-round btn-outline" (click)="closeModal()">
+            {{c['cancel']}}
+          </button>
+          <button
+            class="btn-round btn-primary"
+            [disabled]="!ipInput.value"
+            (click)="addIp(c, ipInput.value)"
+          >
+            {{c['update']}}
+          </button>
         </div>
 
         <pui-preloader *ngIf="preloader"></pui-preloader>
-
       </div>
     </ng-template>
-
   </ng-container>
 </ng-container>

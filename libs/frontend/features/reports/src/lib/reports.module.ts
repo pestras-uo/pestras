@@ -47,6 +47,7 @@ import { SessionFeatureModule } from '@pestras/frontend/features/session';
     // Features
     DataVizFeatureModule,
     SessionFeatureModule
+    
   ],
   exports: [
     ReportsListView,

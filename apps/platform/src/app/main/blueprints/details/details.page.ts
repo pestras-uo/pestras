@@ -7,28 +7,37 @@ import { FormControl, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { BlueprintsState } from '@pestras/frontend/state';
 import { ToastService } from '@pestras/frontend/ui';
-import { Blueprint, DataStoreType, WorkspacePinType } from '@pestras/shared/data-model';
+import { ContraService } from '@pestras/frontend/util/contra';
+import {
+  Blueprint,
+  DataStoreType,
+  WorkspacePinType,
+} from '@pestras/shared/data-model';
+// eslint-disable-next-line @nx/enforce-module-boundaries
+import { BreadcrumbComponent } from 'libs/frontend/ui/src/lib/breadcrumb/breadcrumb.component';
 import { Observable, tap } from 'rxjs';
 
 @Component({
   selector: 'app-details',
   templateUrl: './details.page.html',
-  styles: [`
-    :host {
-      height: var(--main-height);
-      display: grid;
-      grid-template-columns: auto 1fr;
-    }
+  styles: [
+    `
+      :host {
+        height: var(--main-height);
+        display: grid;
+        grid-template-columns: auto 1fr;
+      }
 
-    main {
-      height: 100%;
-      overflow-y: auto;
-    }
-  `]
+      main {
+        height: 100%;
+        overflow-y: auto;
+      }
+    `,
+  ],
 })
 export class DetailsPage implements OnChanges {
   wsType = WorkspacePinType.BLUEPRINTS;
-  dsType = DataStoreType
+  dsType = DataStoreType;
 
   view = 'tables';
   dialogRef: DialogRef | null = null;
@@ -36,7 +45,10 @@ export class DetailsPage implements OnChanges {
 
   bp$!: Observable<Blueprint | null>;
 
-  readonly title = new FormControl('', { validators: Validators.required, nonNullable: true });
+  readonly title = new FormControl('', {
+    validators: Validators.required,
+    nonNullable: true,
+  });
 
   @Input({ required: true })
   serial!: string;
@@ -45,17 +57,42 @@ export class DetailsPage implements OnChanges {
     this.view = value ?? 'details';
   }
 
+  @Input()
+  breadcrumbs: { label: string; link: string }[] = [];
+
   constructor(
     private state: BlueprintsState,
     private dialog: Dialog,
     private toast: ToastService,
     private router: Router,
-    private route: ActivatedRoute
-  ) { }
+    private route: ActivatedRoute,
+    private contra: ContraService
+  ) {}
 
   ngOnChanges() {
-    this.bp$ = this.state.select(this.serial)
-      .pipe(tap(bp => this.title.setValue(bp?.name ?? '')));
+    this.bp$ = this.state
+      .select(this.serial)
+      .pipe(tap((bp) => this.title.setValue(bp?.name ?? '')));
+
+    const c = this.contra.content();
+
+    let link = '';
+
+    if (this.bp$) {
+      this.bp$.subscribe((bp) => {
+        if (bp) {
+          link = '/main/blueprints';
+          const breadcrumb = BreadcrumbComponent.breadCrumbFunc(
+            c['blueprint'],
+            bp.name,
+            this.serial,
+            link,
+            { active: this.serial }
+          );
+          this.breadcrumbs = breadcrumb;
+        }
+      });
+    }
   }
 
   set(menu: string) {
@@ -63,7 +100,7 @@ export class DetailsPage implements OnChanges {
   }
 
   openDialog(tmp: TemplateRef<any>) {
-    this.dialogRef = this.dialog.open(tmp)
+    this.dialogRef = this.dialog.open(tmp);
   }
 
   closeDialog() {
@@ -76,18 +113,19 @@ export class DetailsPage implements OnChanges {
   update(c: Record<string, any>) {
     this.preloader = true;
 
-    this.state.update(this.serial, this.title.value)
-      .subscribe({
-        next: () => {
-          this.toast.msg(c['success'].default, { type: 'success' });
-          this.closeDialog();
-        },
-        error: e => {
-          console.error(e);
+    this.state.update(this.serial, this.title.value).subscribe({
+      next: () => {
+        this.toast.msg(c['success'].default, { type: 'success' });
+        this.closeDialog();
+      },
+      error: (e) => {
+        console.error(e);
 
-          this.toast.msg(c['errors'][e?.error] || c['errors'].default, { type: 'error' });
-          this.preloader = false;
-        }
-      });
+        this.toast.msg(c['errors'][e?.error] || c['errors'].default, {
+          type: 'error',
+        });
+        this.preloader = false;
+      },
+    });
   }
 }

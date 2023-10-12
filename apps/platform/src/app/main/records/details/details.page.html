@@ -11,7 +11,15 @@
   <main>
     <header *ngIf="mainField" class="bg-surface1 pb-6 pi-4 border-be">
       <div class="container narrow">
+         <h3 class="bold f8">
+        <app-breadcrumb [breadcrumbs]="breadcrumbs">
+
+          
+        </app-breadcrumb>
+        
+        </h3>
         <p class="text-3 bold f9">{{dataStore.name}}</p>
+        
         <div class="toolbar">
           <h1 class="f3 weight-8">
             <app-field-value
@@ -35,7 +43,7 @@
     </header>
 
     <div class="pb-6 pi-4">
-      <div class="container  narrow">
+      <div class="container narrow">
         <!-- data -->
         <app-desc
           *ngIf="view.name === 'details'"

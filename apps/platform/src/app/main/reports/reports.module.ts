@@ -21,16 +21,20 @@ import { OrgunitsFeatureModule } from '@pestras/frontend/features/orgunits';
 import { UsersFeatureModule } from '@pestras/frontend/features/users';
 import { UsersGroupsFeatureModule } from '@pestras/frontend/features/users-groups';
 import { SessionFeatureModule } from '@pestras/frontend/features/session';
-import { PuiExportToPdfDirective, PuiIcon, PuiImageInput, PuiPreloaderModule, PuiSelectInput, PuiSideDrawerModule, PuiUtilPipesModule } from '@pestras/frontend/ui';
+import {
+  BreadcrumbModule,
+  PuiExportToPdfDirective,
+  PuiIcon,
+  PuiImageInput,
+  PuiPreloaderModule,
+  PuiSelectInput,
+  PuiSideDrawerModule,
+  PuiUtilPipesModule,
+} from '@pestras/frontend/ui';
 import { EntityAccessFeatureModule } from '@pestras/frontend/features/entity-access';
 
-
 @NgModule({
-  declarations: [
-    ReportsRouter,
-    DetailsPage,
-    SideMenuView
-  ],
+  declarations: [ReportsRouter, DetailsPage, SideMenuView],
   imports: [
     // angular
     CommonModule,
@@ -62,7 +66,9 @@ import { EntityAccessFeatureModule } from '@pestras/frontend/features/entity-acc
     PuiSideDrawerModule,
     PuiImageInput,
     PuiUtilPipesModule,
-    PuiExportToPdfDirective
-  ]
+    PuiExportToPdfDirective,
+    // BreadCrumb Module:
+    BreadcrumbModule,
+  ],
 })
-export class ReportsModule { }
+export class ReportsModule {}

@@ -12,10 +12,9 @@ import { SSEService } from '@pestras/frontend/state';
     </ng-container>
     <pui-side-drawer></pui-side-drawer>
     <pui-toast [trigger$]="toast.trig"></pui-toast>
-  `
+  `,
 })
 export class AppComponent {
-  
   constructor(
     protected contra: ContraService,
     protected readonly toast: ToastService,

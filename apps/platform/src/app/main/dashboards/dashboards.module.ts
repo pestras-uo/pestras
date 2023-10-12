@@ -11,6 +11,7 @@ import { DragDropModule } from '@angular/cdk/drag-drop';
 import { SideMenuViewComponent } from './views/side-menu/side-menu.view';
 import { ContraModule } from '@pestras/frontend/util/contra';
 import {
+  BreadcrumbModule,
   PuiIcon,
   PuiImageInput,
   PuiInfiniteScroll,
@@ -73,7 +74,9 @@ import { EntityAccessFeatureModule } from '@pestras/frontend/features/entity-acc
     UsersFeatureModule,
     UsersGroupsFeatureModule,
     SessionFeatureModule,
-    EntityAccessFeatureModule
+    EntityAccessFeatureModule,
+    //BreadCrumbModule
+    BreadcrumbModule,
   ],
 })
 export class DashboardsModule {}

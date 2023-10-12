@@ -8,6 +8,9 @@
   <main puiInfiniteScroll (reached)="pageBottomReached()" *contra="let c">
     <header class="bg-surface1 pb-10 pi-8 border-be">
       <div class="container">
+        <h3 class="bold f8">
+          <app-breadcrumb [breadcrumbs]="breadcrumbs"> </app-breadcrumb>
+        </h3>
         <p class="text-3 bold f9">
           {{(c['dataStoresTypes'] | arrayFind: findType : ds.type)?.name}}
         </p>

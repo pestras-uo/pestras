@@ -8,7 +8,13 @@ import { BlueprintsRouter } from './blueprints.router';
 import { SideMenuView } from './views/side-menu/side-menu.view';
 import { DetailsPage } from './details/details.page';
 import { ContraModule } from '@pestras/frontend/util/contra';
-import { PuiIcon, PuiPreloaderModule, PuiSelectInput, PuiUtilPipesModule } from '@pestras/frontend/ui';
+import {
+  BreadcrumbModule,
+  PuiIcon,
+  PuiPreloaderModule,
+  PuiSelectInput,
+  PuiUtilPipesModule,
+} from '@pestras/frontend/ui';
 import { NoDataPlaceholderWidget } from '@pestras/frontend/widgets/no-data-placeholder';
 import { DataStoresFeatureModule } from '@pestras/frontend/features/data-stores';
 import { CategoriesFeatureModule } from '@pestras/frontend/features/categories';
@@ -23,7 +29,6 @@ import { UsersFeatureModule } from '@pestras/frontend/features/users';
 import { CollaboratorsViewComponent } from './views/collaborators/collaborators.view';
 import { OrgunitsFeatureModule } from '@pestras/frontend/features/orgunits';
 
-
 @NgModule({
   declarations: [
     MainPage,
@@ -31,7 +36,7 @@ import { OrgunitsFeatureModule } from '@pestras/frontend/features/orgunits';
     BlueprintsListViewComponent,
     SideMenuView,
     DetailsPage,
-    CollaboratorsViewComponent
+    CollaboratorsViewComponent,
   ],
   imports: [
     // Angular
@@ -57,7 +62,9 @@ import { OrgunitsFeatureModule } from '@pestras/frontend/features/orgunits';
     ClientsApiFeatureModule,
     SessionFeatureModule,
     UsersFeatureModule,
-    OrgunitsFeatureModule
-  ]
+    OrgunitsFeatureModule,
+    //BreadCrumb SharedModule:
+    BreadcrumbModule,
+  ],
 })
-export class BlueprintsModule { }
+export class BlueprintsModule {}

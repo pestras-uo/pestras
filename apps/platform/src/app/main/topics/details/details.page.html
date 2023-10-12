@@ -2,7 +2,16 @@
   <main puiInfiniteScroll (reached)="pageBottomReached()" *contra="let c">
     <header class="bg-surface1 pbs-6 pi-4 border-be">
       <div class="container">
+        <h3 class="bold f8">
+        <app-breadcrumb [breadcrumbs]="breadcrumbs">
+
+          
+        </app-breadcrumb>
+        
+        </h3>
         <p class="bold text-3 f9">{{c['topic']}}</p>
+
+
         <div class="toolbar gap-2">
           <h1 class="f2 weight-8">{{t.name}}</h1>
 
