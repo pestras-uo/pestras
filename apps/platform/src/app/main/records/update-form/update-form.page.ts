@@ -82,7 +82,7 @@ export class UpdateFormPage implements OnInit {
     this.preloader = true;
 
     this.service.update(
-      { draft: this.state === DataRecordState.DRAFT ? 1 : 0, ds: this.dataStore.serial, serial: this.record['serial'] },
+      { draft: this.state === 'draft' ? "1" : "0", ds: this.dataStore.serial, serial: this.record['serial'] },
       this.form.getRawValue()
     )
       .subscribe({
@@ -90,7 +90,7 @@ export class UpdateFormPage implements OnInit {
           this.toast.msg(c['success'].default, { type: 'success' });
           this.router.navigate(
             ['/main/records', this.topic, this.dataStore.serial, this.record['serial']], 
-            { replaceUrl: true, queryParams: { state: DataRecordState.DRAFT } }
+            { replaceUrl: true, queryParams: { state: 'draft' } }
           );
         },
         error: e => {

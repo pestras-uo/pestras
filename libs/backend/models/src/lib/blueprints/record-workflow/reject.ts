@@ -40,16 +40,17 @@ export async function reject(
   if (stepState === 'reject') {
 
     await recordWorkFlowCol.updateOne(
-      { record: recSerial, 'steps.step': step },
+      { record: recSerial, 'workflows.serial': activeWf.serial },
       {
         $set: {
-          end_date: date,
-          state: 'reject',
-          'steps.$.actions': wfStep.actions,
-          'steps.$.end_date': date,
-          'steps.$.state': 'reject'
+          'workflows.$.end_date': date,
+          'workflows.$.state': 'reject',
+          'workflows.$.steps.$.actions': wfStep.actions,
+          'workflows.$.steps.$[step].end_date': date,
+          'workflows.$.steps.$[step].state': 'reject'
         }
-      }
+      },
+      { arrayFilters: [{ 'step.step': step }] }
     );
 
     // if was not delete trigger, put record back to draft 
@@ -68,8 +69,9 @@ export async function reject(
   }
 
   await recordWorkFlowCol.updateOne(
-    { record: recSerial, 'steps.step': step },
-    { $set: { 'steps.$.actions': wfStep.actions } }
+    { record: recSerial, 'workflows.serial': activeWf.serial },
+    { $set: { 'workflows.$.steps.$[step].actions': wfStep.actions } },
+    { arrayFilters: [{ 'step.step': step }] }
   );
 
   return 'review';

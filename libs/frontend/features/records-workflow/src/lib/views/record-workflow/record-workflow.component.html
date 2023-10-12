@@ -1,0 +1,124 @@
+<ng-container *contra="let c">
+  <ng-container *ngIf="workflow$ | async as wfs; else noData">
+    <h3>{{ c['requests'] }}</h3>
+    <div class="divider mb-4"></div>
+    <div class="accordion" *ngIf="wfs.workflows.length; else noData">
+      <div #card class="card mbe-4" *ngFor="let wf of wfs.workflows">
+        <div class="card-header">
+          <div>
+            <h4>{{ c['workflowTriggers'][wf.trigger] }}</h4>
+            <p class="text3 f10 bold">
+              {{ wf.start_date | date : 'dd-MM-yyyy' }}
+            </p>
+          </div>
+          <div class="grow"></div>
+          <button class="btn-icon btn-small btn-round">
+            <i [puiIcon]="icons[wf.state]" size="small"></i>
+          </button>
+          <button
+            class="btn-icon btn-small btn-round"
+            (click)="card.classList.toggle('active')"
+          >
+            <i size="small" puiIcon="arrow_drop_down"></i>
+          </button>
+        </div>
+
+        <div class="card-body pbs-0 pbe-2" *ngIf="wf.initMessage">
+          <div class="border p-4 radius-2">
+            <h5 class="mbe-2">{{c['remark']}}</h5>
+            <p>{{wf.initMessage}}</p>
+          </div>
+        </div>
+
+        <div class="card-body pbs-0">
+          <div
+            class="border p-4 radius-2"
+            [class.mbe-2]="!last"
+            *ngFor="let step of wf.steps; let i = index; let last = last"
+          >
+            <div class="toolbar mbe-2">
+              <div>
+                <h5>{{ c['step'] }} {{ i + 1 }}</h5>
+                <p class="text3 f10 bold">
+                  {{ step.start_date | date : 'dd-MM-yyyy' }}
+                </p>
+              </div>
+              <div class="grow"></div>
+              <button class="btn-icon btn-small btn-round">
+                <i [puiIcon]="icons[step.state]" size="small"></i>
+              </button>
+            </div>
+
+            <ng-container *ngFor="let a of step.actions; let aLast = last">
+              <div class="flex align-items-center gap-2">
+                <app-avatar [serial]="a.user" size="small"></app-avatar>
+                <div class="grow"></div>
+                <i
+                  *ngIf="a.user !== user || a.action !== 'review'"
+                  [puiIcon]="icons[a.action]"
+                  size="tiny"
+                ></i>
+                <ng-container *ngIf="a.user === user && a.action === 'review'">
+                  <button
+                    class="btn-icon btn-tiny btn-round btn-success"
+                    (click)="preAction = 'approve'"
+                  >
+                    <i puiIcon="check" size="tiny"></i>
+                  </button>
+                  <button
+                    class="btn-icon btn-tiny btn-round btn-danger"
+                    (click)="preAction = 'reject'"
+                  >
+                    <i puiIcon="close" size="tiny"></i>
+                  </button>
+                </ng-container>
+                <pui-preloader
+                  *ngIf="a.user === user && loading"
+                ></pui-preloader>
+              </div>
+              <p class="f9 bold text3 mbs-2" *ngIf="a.date">
+                {{ a.date | date : 'dd-MM-yyyy' }}
+              </p>
+              <p *ngIf="a.message" class="f9 text3">{{ a.message }}</p>
+              <div
+                class="flex gap-2 mbs-2"
+                *ngIf="a.user === user && preAction"
+              >
+                <div class="fc fc-small grow">
+                  <input #msg type="text" [placeholder]="c['comment']" />
+                </div>
+                <button
+                  *ngIf="preAction === 'approve'"
+                  class="btn-small btn-success"
+                  (click)="approve(step.step, msg.value)"
+                >
+                  {{ c['approve'] }}
+                </button>
+                <button
+                  *ngIf="preAction === 'reject'"
+                  class="btn-small btn-danger"
+                  (click)="reject(step.step, msg.value)"
+                >
+                  {{ c['reject'] }}
+                </button>
+                <button
+                  class="btn-small btn-outline"
+                  (click)="preAction = null"
+                >
+                  {{ c['cancel'] }}
+                </button>
+              </div>
+              <div *ngIf="!aLast" class="divider mb-2"></div>
+            </ng-container>
+          </div>
+        </div>
+      </div>
+    </div>
+  </ng-container>
+
+  <ng-template #noData>
+    <no-data-placeholder-widget>{{
+      c['noDataMsg']
+    }}</no-data-placeholder-widget>
+  </ng-template>
+</ng-container>

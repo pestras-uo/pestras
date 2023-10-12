@@ -58,7 +58,6 @@ export type WorkflowStepAlgo = typeof workflowStepAlgo[number];
 
 export interface WorkflowStepOptions {
   serial: string;
-  next_step: string | null;
   users: string[];
   algo: WorkflowStepAlgo;
   /** max days to wait for an action */

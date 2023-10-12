@@ -1,4 +1,4 @@
-export const dataRecordState = ['published', 'review', 'draft'];
+export const dataRecordState = ['published', 'review', 'draft'] as const;
 export type DataRecordState = typeof dataRecordState[number];
 
 export interface DataRecord {

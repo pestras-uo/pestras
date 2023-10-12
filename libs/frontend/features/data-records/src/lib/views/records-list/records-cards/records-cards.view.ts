@@ -76,7 +76,7 @@ export class RecordsCardView implements OnChanges, OnInit {
 
     this.skip = this.records.results.length;
 
-    const src = this.rState && this.rState !== DataRecordState.PUBLISHED ? `${this.rState}_${this.dataStore.serial}` : this.dataStore.serial;
+    const src = this.rState && this.rState !== 'published' ? `${this.rState}_${this.dataStore.serial}` : this.dataStore.serial;
 
     this.service.search(
       { ds: src },

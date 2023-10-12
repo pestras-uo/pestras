@@ -15,7 +15,7 @@ export namespace RecordsWorkflowApi {
   }
 
   // GET
-  export namespace GetRecordState {
+  export namespace GetRecordActiveWFState {
     export const REQ_PATH = basePath + '/state/:ds/:record';
 
     export interface Params { ds: string; record: string; }

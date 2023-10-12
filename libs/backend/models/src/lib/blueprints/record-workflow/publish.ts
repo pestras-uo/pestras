@@ -57,7 +57,7 @@ export async function publishRecord(
       }]
     }
 
-    await recordWorkFlowCol.updateOne({ record }, { $push: { workflows: recordWorkflow } });
+    await recordWorkFlowCol.updateOne({ record: record['serial'] }, { $push: { workflows: recordWorkflow } }, { upsert: true });
     await reviewCol.insertOne(record);
     await draftCol.deleteOne({ serial });
 

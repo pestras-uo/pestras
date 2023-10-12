@@ -74,16 +74,17 @@ export async function approve(
 
       await reviewCol.deleteOne({ serial: recSerial });
       await recordWorkFlowCol.updateOne(
-        { record: recSerial, 'steps.step': step },
+        { record: recSerial, 'workflows.serial': activeWf.serial },
         {
           $set: {
-            end_date: date,
-            state: 'approve',
-            'steps.$.actions': wfStep.actions,
-            'steps.$.end_date': date,
-            'steps.$.state': 'approve'
+            'workflows.$.end_date': date,
+            'workflows.$.state': 'approve',
+            'workflows.$.steps.$[step].actions': wfStep.actions,
+            'workflows.$.steps.$[step].end_date': date,
+            'workflows.$.steps.$[step].state': 'approve'
           }
-        }
+        },
+        { arrayFilters: [{ 'step.step': step }] }
       );
 
       return activeWf.trigger === 'delete' ? null : 'published';
@@ -92,15 +93,21 @@ export async function approve(
       const nextStep = wf.steps[currStepIndex + 1];
 
       await this.db.collection(`workflow_${dsSerial}`).updateOne(
-        { record: recSerial, 'steps.step': step },
+        { record: recSerial, 'workflows.serial': activeWf.serial },
         {
           $set: {
-            'steps.$.actions': wfStep.actions,
-            'steps.$.end_date': date,
-            'steps.$.state': 'approve'
-          },
+            'workflows.$.steps.$[step].actions': wfStep.actions,
+            'workflows.$.steps.$[step].end_date': date,
+            'workflows.$.steps.$[step].state': 'approve'
+          }
+        },
+        { arrayFilters: [{ 'step.step': step }] }
+      );
+      await this.db.collection(`workflow_${dsSerial}`).updateOne(
+        { record: recSerial, 'workflows.serial': activeWf.serial },
+        {
           $push: {
-            steps: {
+            'workflows.$.steps': {
               actions: nextStep.users.map(u => ({ user: u, action: 'review', date: null, message: '' })),
               step: nextStep.serial,
               state: 'review',
@@ -115,8 +122,9 @@ export async function approve(
   }
 
   await this.db.collection(`workflow_${dsSerial}`).updateOne(
-    { record: recSerial, 'steps.step': step },
-    { $set: { 'steps.$.actions': wfStep.actions } }
+    { record: recSerial, 'workflows.serial': activeWf.serial },
+    { $set: { 'workflows.$.steps.$[step].actions': wfStep.actions } },
+    { arrayFilters: [{ 'step.step': step }] }
   );
 
   return 'review';

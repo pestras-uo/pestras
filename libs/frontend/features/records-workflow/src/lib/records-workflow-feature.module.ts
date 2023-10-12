@@ -6,18 +6,25 @@ import { PuiDropdown, PuiIcon, PuiPreloaderModule } from '@pestras/frontend/ui';
 import { RecordWorkflowPipe } from './pipes/record-workflow.pipe';
 import { SessionFeatureModule } from '@pestras/frontend/features/session';
 import { AvatarWidget } from '@pestras/frontend/widgets/avatar';
+import { NoDataPlaceholderWidget } from '@pestras/frontend/widgets/no-data-placeholder';
 import { DialogModule } from '@angular/cdk/dialog';
 import { RouterModule } from '@angular/router';
+import { ReactiveFormsModule } from '@angular/forms';
+import { RecordActiveWorkflowPipe } from './pipes/record-active-workflow.pipe';
+import { RecordWorkflowViewComponent } from './views/record-workflow/record-workflow.component';
 
 @NgModule({
   declarations: [
     RecordWorkflowStateViewComponent,
-    RecordWorkflowPipe
+    RecordWorkflowViewComponent,
+    RecordWorkflowPipe,
+    RecordActiveWorkflowPipe
   ],
   imports: [
     // Angular
     CommonModule,
     RouterModule,
+    ReactiveFormsModule,
     // Util
     ContraModule,
     DialogModule,
@@ -28,8 +35,13 @@ import { RouterModule } from '@angular/router';
     // Features
     SessionFeatureModule,
     // widgets
-    AvatarWidget
+    AvatarWidget,
+    NoDataPlaceholderWidget
   ],
-  exports: [RecordWorkflowStateViewComponent]
+  exports: [
+    RecordWorkflowStateViewComponent,
+    RecordWorkflowViewComponent,
+    RecordActiveWorkflowPipe
+  ]
 })
 export class RecordsWorkflowFeatureModule {}

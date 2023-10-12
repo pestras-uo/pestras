@@ -18,10 +18,10 @@ export class RecordsWorkflowService {
     return this.http.get<RecordsWorkflowApi.GetByRecord.Response>(path);
   }
 
-  getRecordState(params: RecordsWorkflowApi.GetRecordState.Params) {
-    const path = injectURLPayload(this.envServ.env.api + RecordsWorkflowApi.GetRecordState.REQ_PATH, params);
+  getRecordActiveWF(params: RecordsWorkflowApi.GetRecordActiveWFState.Params) {
+    const path = injectURLPayload(this.envServ.env.api + RecordsWorkflowApi.GetRecordActiveWFState.REQ_PATH, params);
 
-    return this.http.get<RecordsWorkflowApi.GetRecordState.Response>(path);
+    return this.http.get<RecordsWorkflowApi.GetRecordActiveWFState.Response>(path);
   }
 
   publish(params: RecordsWorkflowApi.Publish.Params, body: RecordsWorkflowApi.Publish.Body) {

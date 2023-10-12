@@ -11,9 +11,6 @@ import { DialogModule } from '@angular/cdk/dialog';
 import { WorkflowNameViewComponent } from './views/workflow-name/workflow-name.view';
 import { WorkflowFormViewComponent } from './views/workflow-form/workflow-form.view';
 import { UsersFeatureModule } from '@pestras/frontend/features/users'
-import { WorkflowMaxReviewDaysViewComponent } from './views/workflow-max-review-days/workflow-max-review-days.view';
-import { WorkflowCanelableViewComponent } from './views/workflow-cancelable/workflow-cancelable.view';
-import { WorkflowDefaultActionViewComponent } from './views/workflow-default-action/workflow-default-action.view';
 import { WorkflowStepsViewComponent } from './views/workflow-steps/workflow-steps.view';
 import { WorkflowsPipe } from './pipes/workflows..pipe';
 
@@ -24,9 +21,6 @@ import { WorkflowsPipe } from './pipes/workflows..pipe';
     WorkflowFormViewComponent,
     WorkflowsListViewComponent,
     WorkflowNameViewComponent,
-    WorkflowMaxReviewDaysViewComponent,
-    WorkflowCanelableViewComponent,
-    WorkflowDefaultActionViewComponent,
     WorkflowStepsViewComponent,
     // pipes
     WorkflowsPipe

@@ -21,7 +21,6 @@ import { FormControl, Validators } from '@angular/forms';
 })
 export class RecordsListView implements OnChanges {
 
-  readonly rState = DataRecordState;
   readonly columnsControl = new FormControl<string[]>([], { validators: Validators.required, nonNullable: true });
 
   hasCardsView = false;
@@ -58,7 +57,7 @@ export class RecordsListView implements OnChanges {
 
   ngOnChanges() {
     this.isTable = this.dataStore.type === DataStoreType.TABLE;
-    this.tab = this.isTable ? (this.tab || DataRecordState.PUBLISHED): "";
+    this.tab = this.isTable ? (this.tab || 'published') : "";
     this.columnsControl.setValue(this.dataStore.fields.map(f => f.name));
     this.columns = this.columnsControl.value;
     this.query = this.prepareQuery();
@@ -66,9 +65,11 @@ export class RecordsListView implements OnChanges {
     const session = this.session.get();
 
     if (session)
-      this.canAdd = this.dataStore.collaborators.length
-        ? this.dataStore.collaborators.includes(session.serial)
-        : session.roles.includes(Role.AUTHOR);
+      this.canAdd = (
+          this.dataStore.collaborators.length
+          ? this.dataStore.collaborators.includes(session.serial)
+          : session.roles.includes(Role.AUTHOR)
+      );
 
     this.hasCardsView = !!this.dataStore.settings.card_view;
     this.hasTreeView = !!this.dataStore.settings.tree_view;
@@ -107,7 +108,7 @@ export class RecordsListView implements OnChanges {
   closeDialog(cancel = false) {
     this.dialogRef?.close();
     this.dialogRef = null;
-    
+
     if (cancel)
       this.columnsControl.setValue(this.columns);
     else
@@ -124,7 +125,7 @@ export class RecordsListView implements OnChanges {
     if (this.topic)
       query.topic = this.topic;
 
-    if (this.isTable && this.tab === DataRecordState.DRAFT)
+    if (this.isTable && this.tab === 'draft')
       query.owner = this.session.get('serial');
 
     // get user session
@@ -157,7 +158,7 @@ export class RecordsListView implements OnChanges {
   exportData() {
     this.exporting = true;
 
-    const src = this.tab && this.tab !== DataRecordState.PUBLISHED ? `${this.tab}_${this.dataStore.serial}` : this.dataStore.serial;
+    const src = this.tab && this.tab !== 'published' ? `${this.tab}_${this.dataStore.serial}` : this.dataStore.serial;
 
     this.service.search({ ds: src }, { ...this.query, limit: 0 })
       .subscribe({
