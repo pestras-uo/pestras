@@ -3,7 +3,7 @@ import { Component, EventEmitter, Input, Output } from "@angular/core";
 import { FormArray, FormControl, FormGroup, Validators } from "@angular/forms";
 import { WorkflowsState } from "libs/frontend/state/src/lib/workflows/workflows.state";
 import { WorkflowFormModel, WorkflowStepOptionsFormModel } from "./workflow-form.model";
-import { User, Workflow, WorkflowAction, WorkflowStepAlgo } from "@pestras/shared/data-model";
+import { User, Workflow, WorkflowStepAlgo } from "@pestras/shared/data-model";
 import { ToastService } from "@pestras/frontend/ui";
 
 @Component({
@@ -14,14 +14,13 @@ export class WorkflowFormViewComponent {
 
   readonly form = new FormGroup<WorkflowFormModel>({
     blueprint: new FormControl('', { nonNullable: true }),
-    cancelable: new FormControl(false, { nonNullable: true }),
-    default_action: new FormControl(WorkflowAction.APPROVE, { nonNullable: true }),
-    max_review_days: new FormControl(5, { nonNullable: true, validators: Validators.min(1) }),
     name: new FormControl('', { nonNullable: true, validators: Validators.required }),
     steps: new FormArray([new FormGroup<WorkflowStepOptionsFormModel>({
       serial: new FormControl('', { nonNullable: true }),
       users: new FormControl([], { nonNullable: true, validators: Validators.required }),
-      algo: new FormControl(WorkflowStepAlgo.ANY, { nonNullable: true })
+      algo: new FormControl('any', { nonNullable: true }),
+      default_action: new FormControl('approve', { nonNullable: true }),
+      max_review_days: new FormControl(5, { nonNullable: true, validators: Validators.min(1) })
     })])
   });
 
@@ -46,7 +45,9 @@ export class WorkflowFormViewComponent {
     this.steps.push(new FormGroup<WorkflowStepOptionsFormModel>({
       serial: new FormControl('', { nonNullable: true }),
       users: new FormControl([], { nonNullable: true, validators: Validators.required }),
-      algo: new FormControl(WorkflowStepAlgo.ANY, { nonNullable: true })
+      algo: new FormControl('any', { nonNullable: true }),
+      default_action: new FormControl('approve', { nonNullable: true }),
+      max_review_days: new FormControl(5, { nonNullable: true, validators: Validators.min(1) })
     }));
   }
 
@@ -55,7 +56,7 @@ export class WorkflowFormViewComponent {
   }
 
   filterAlgo(algo: { value: WorkflowStepAlgo }, users: string[]) {
-    return !!(users.length % 2 && algo.value !== WorkflowStepAlgo.MOST);
+    return !!(users.length % 2) || algo.value !== 'most';
   }
 
   create(c: Record<string, any>) {

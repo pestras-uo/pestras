@@ -37,6 +37,6 @@ export namespace RecordsApi {
 
   // delete
   // --------------------------------------------------------------------------------
-  export type DeleteReq = Request<{ serial: string; record: string; draft: string }>;
+  export type DeleteReq = Request<{ serial: string; record: string; draft: string }, any, { message: string; }>;
   export type DeleteRes = Response<boolean, UserSession>;
 }

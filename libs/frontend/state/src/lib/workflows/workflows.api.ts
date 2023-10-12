@@ -1,5 +1,5 @@
 import { CreateWorkflowInput } from "@pestras/backend/models";
-import { Workflow, WorkflowAction, WorkflowStepOptions } from "@pestras/shared/data-model";
+import { Workflow, WorkflowStepOptions } from "@pestras/shared/data-model";
 
 /* eslint-disable @typescript-eslint/no-namespace */
 const basePath = '/workflows';
@@ -41,39 +41,6 @@ export namespace WorkflowsApi {
     export interface Params { serial: string; }
 
     export interface Body { name: string; };
-
-    export type Response = boolean;
-  }
-
-  // PUT
-  export namespace UpdateMaxReviewDays {
-    export const REQ_PATH = basePath + '/:serial/max-review-days';
-
-    export interface Params { serial: string; }
-
-    export interface Body { days: number; };
-
-    export type Response = boolean;
-  }
-
-  // PUT
-  export namespace UpdateDefaultAction {
-    export const REQ_PATH = basePath + '/:serial/default-action';
-
-    export interface Params { serial: string; }
-
-    export interface Body { action: Exclude<WorkflowAction, WorkflowAction.REVIEW>; };
-
-    export type Response = boolean;
-  }
-
-  // PUT
-  export namespace UpdateCancelable {
-    export const REQ_PATH = basePath + '/:serial/cancelable';
-
-    export interface Params { serial: string; }
-
-    export interface Body { cancelable: boolean; };
 
     export type Response = boolean;
   }

@@ -2,7 +2,7 @@
 
   >.card {
 
-    .card-body {
+    >.card-body {
       height: 0;
       opacity: 0;
       overflow: hidden;
@@ -12,7 +12,7 @@
 
     &.active {
 
-      .card-body {
+      >.card-body {
         height: auto;
         padding-block: var(--padding);
         opacity: 1;

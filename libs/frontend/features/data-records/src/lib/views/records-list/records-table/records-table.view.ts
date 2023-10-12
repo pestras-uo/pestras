@@ -62,7 +62,7 @@ export class RecordsTableView implements OnInit {
         switchMap(([search, page, sort, select]) => {
           this.skip = (page - 1) * this.pageSize;
 
-          const src = this.rState && this.rState !== DataRecordState.PUBLISHED ? `${this.rState}_${this.dataStore.serial}` : this.dataStore.serial;
+          const src = this.rState && this.rState !== 'published' ? `${this.rState}_${this.dataStore.serial}` : this.dataStore.serial;
           
           return this.service.search({ ds: src }, {
             limit: this.pageSize,

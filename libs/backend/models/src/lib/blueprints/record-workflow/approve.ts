@@ -1,22 +1,29 @@
 import { RecordWorkflowModel } from ".";
 import { HttpError, HttpCode } from "@pestras/backend/util";
 import { dataRecordsModel, dataStoresModel, workflowModel } from "../../models";
-import { DataRecordState, RecordWorkflow, TableDataRecord, User, WorkflowAction, getWorkflowStepAction } from "@pestras/shared/data-model";
+import { DataRecordState, RecordWorkflow, TableDataRecord, User, getWorkflowStepAction } from "@pestras/shared/data-model";
 
 export async function approve(
   this: RecordWorkflowModel,
   dsSerial: string,
+  recSerial: string,
   step: string,
   message: string,
   issuer: User
 ): Promise<DataRecordState | null> {
-  const wfStep = await this.getWfStep(dsSerial, step);
+  const date = new Date();
+  const activeWf = await this.getRecordActiveWf(dsSerial, recSerial);
   const recordWorkFlowCol = this.db.collection<RecordWorkflow>(`workflow_${dsSerial}`);
 
-  if (!wfStep)
-    throw new HttpError(HttpCode.NOT_FOUND, 'workflowStepNotFound');
+  if (!activeWf)
+    throw new HttpError(HttpCode.NOT_FOUND, 'recordWorkflowNotFound');
 
-  const wf = await workflowModel.getBySerial(wfStep.workflow);
+  const wfStep = activeWf.steps.find(s => s.step === step);
+
+  if (!wfStep)
+    throw new HttpError(HttpCode.NOT_FOUND, 'recordWorkflowStepNotFound');
+
+  const wf = await workflowModel.getBySerial(activeWf.workflow);
 
   if (!wf)
     throw new HttpError(HttpCode.NOT_FOUND, 'workflowNotFound');
@@ -30,13 +37,13 @@ export async function approve(
 
   wfStep.actions = wfStep.actions.map(a =>
     a.user === issuer.serial
-      ? { ...a, action: WorkflowAction.APPROVE }
+      ? { ...a, action: 'approve', date, message }
       : a
   );
-  
+
   const stepState = getWorkflowStepAction(wfStep.actions, wfStepOpt.algo);
 
-  if (stepState === WorkflowAction.APPROVE) {
+  if (stepState === 'approve') {
 
     // is last step
     if (currStepIndex === wf.steps.length - 1) {
@@ -47,59 +54,78 @@ export async function approve(
 
       const mainCol = this.db.collection<TableDataRecord>(dsSerial);
       const reviewCol = this.db.collection<TableDataRecord>(`review_${dsSerial}`);
-      const record = await reviewCol.findOne({ serial: wfStep.record }, { projection: { _id: 0 } });
+      const record = await reviewCol.findOne({ serial: recSerial }, { projection: { _id: 0 } });
+
+      if (!record)
+        throw new HttpError(HttpCode.NOT_FOUND, 'recordNotFound');
 
       // push current state to history 
       if (ds.settings.history) {
-        const currState = await mainCol.findOne({ serial: wfStep.record });
+        const currState = await mainCol.findOne({ serial: recSerial });
 
         if (currState)
           dataRecordsModel.pushHistory(dsSerial, currState);
       }
 
-      if (!record)
-        throw new HttpError(HttpCode.NOT_FOUND, 'recordNotFound');
-
-      if (wfStep.trigger === 'delete')
-        await mainCol.deleteOne({ serial: wfStep.record });
+      if (activeWf.trigger === 'delete')
+        await mainCol.deleteOne({ serial: recSerial });
       else
-        await mainCol.replaceOne({ serial: wfStep.record }, record, { upsert: true });
+        await mainCol.replaceOne({ serial: recSerial }, record, { upsert: true });
 
-      await reviewCol.deleteOne({ serial: wfStep.record });
-      await recordWorkFlowCol.deleteMany({ record: wfStep.record });
+      await reviewCol.deleteOne({ serial: recSerial });
+      await recordWorkFlowCol.updateOne(
+        { record: recSerial, 'workflows.serial': activeWf.serial },
+        {
+          $set: {
+            'workflows.$.end_date': date,
+            'workflows.$.state': 'approve',
+            'workflows.$.steps.$[step].actions': wfStep.actions,
+            'workflows.$.steps.$[step].end_date': date,
+            'workflows.$.steps.$[step].state': 'approve'
+          }
+        },
+        { arrayFilters: [{ 'step.step': step }] }
+      );
 
-      return wfStep.trigger === 'delete' ? null : DataRecordState.PUBLISHED;
+      return activeWf.trigger === 'delete' ? null : 'published';
 
     } else {
-      await this.db.collection(`workflow_${dsSerial}`).updateOne({ step, 'actions.user': issuer.serial }, {
-        $set: {
-          action: WorkflowAction.APPROVE,
-          action_date: new Date(),
-          'actions.$': { user: issuer.serial, action: WorkflowAction.APPROVE, date: new Date(), message }
-        }
-      });
-
       const nextStep = wf.steps[currStepIndex + 1];
-      const recordWorkFlow: RecordWorkflow = {
-        actions: nextStep.users.map(u => ({ user: u, action: WorkflowAction.REVIEW, date: null, message: '' })),
-        record: wfStep.record,
-        workflow: wf.serial,
-        step: nextStep.serial,
-        trigger: wfStep.trigger,
-        action: stepState,
-        create_date: new Date(),
-        action_date: null
-      };
 
-      await recordWorkFlowCol.insertOne(recordWorkFlow);
+      await this.db.collection(`workflow_${dsSerial}`).updateOne(
+        { record: recSerial, 'workflows.serial': activeWf.serial },
+        {
+          $set: {
+            'workflows.$.steps.$[step].actions': wfStep.actions,
+            'workflows.$.steps.$[step].end_date': date,
+            'workflows.$.steps.$[step].state': 'approve'
+          }
+        },
+        { arrayFilters: [{ 'step.step': step }] }
+      );
+      await this.db.collection(`workflow_${dsSerial}`).updateOne(
+        { record: recSerial, 'workflows.serial': activeWf.serial },
+        {
+          $push: {
+            'workflows.$.steps': {
+              actions: nextStep.users.map(u => ({ user: u, action: 'review', date: null, message: '' })),
+              step: nextStep.serial,
+              state: 'review',
+              start_date: date,
+              end_date: null
+            }
+          }
+        });
 
-      return DataRecordState.REVIEW;
+      return 'review';
     }
   }
 
-  await this.db.collection(`workflow_${dsSerial}`).updateOne({ step, 'actions.user': issuer.serial }, {
-    $set: { 'action.$': { user: issuer.serial, action: WorkflowAction.APPROVE, date: new Date(), message } }
-  });
+  await this.db.collection(`workflow_${dsSerial}`).updateOne(
+    { record: recSerial, 'workflows.serial': activeWf.serial },
+    { $set: { 'workflows.$.steps.$[step].actions': wfStep.actions } },
+    { arrayFilters: [{ 'step.step': step }] }
+  );
 
-  return DataRecordState.REVIEW;
+  return 'review';
 }

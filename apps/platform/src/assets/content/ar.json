@@ -1,4 +1,12 @@
 {
+  "requests": "الطلبات",
+  "workflowTriggers": {
+    "create": "إضافة",
+    "update": "تعديل",
+    "delete": "حذف"
+  },
+  "remark": "ملاحظة",
+  "addRemark": "أضف ملاحظة",
   "deleteRecord": "حذف السجل",
   "colorsTheme": "سمة الألوان",
   "colorsThemeList": [
@@ -38,7 +46,7 @@
   ],
   "defaultActions": {
     "approve": "الموافقة",
-    "regect": "الرفض"
+    "reject": "الرفض"
   },
   "cancelable": "قابل للإلغاء",
   "maxReviewDays": "عدد الأيام الأقصى للمراجعة",

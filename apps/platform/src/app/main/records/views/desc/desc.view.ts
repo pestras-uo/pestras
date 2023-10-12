@@ -35,7 +35,7 @@ export class DescView implements OnChanges {
   ngOnChanges(): void {    
     this.isTable = this.dataStore.type === DataStoreType.TABLE;
     this.groups = [];
-    this.canUpdate = this.state === DataRecordState.DRAFT || (this.state === DataRecordState.PUBLISHED && !!this.dataStore.settings.workflow.update);
+    this.canUpdate = this.state === 'draft' || (this.state === 'published' && !!this.dataStore.settings.workflow.update);
 
     for (const field of this.dataStore.fields) {
 

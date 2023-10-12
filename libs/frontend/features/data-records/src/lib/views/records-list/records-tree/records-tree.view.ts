@@ -51,12 +51,12 @@ export class TreeViewView implements OnChanges {
   }
 
   loadCategory = (category: string, parents: Record<string, string>) => {
-    const src = this.rState && this.rState !== DataRecordState.PUBLISHED ? `${this.rState}_${this.dataStore.serial}` : this.dataStore.serial;
+    const src = this.rState && this.rState !== 'published' ? `${this.rState}_${this.dataStore.serial}` : this.dataStore.serial;
     return this.service.getCategoryValues({ ds: src }, { field: category, search: parents });
   }
 
   loadData = (parents: Record<string, string>): Observable<Record<string, any>[]> => {
-    const src = this.rState && this.rState !== DataRecordState.PUBLISHED ? `${this.rState}_${this.dataStore.serial}` : this.dataStore.serial;
+    const src = this.rState && this.rState !== 'published' ? `${this.rState}_${this.dataStore.serial}` : this.dataStore.serial;
     return this.service.search({ ds: src }, {
       limit: 0,
       skip: 0,

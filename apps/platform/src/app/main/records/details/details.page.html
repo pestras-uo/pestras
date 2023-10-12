@@ -35,7 +35,7 @@
     </header>
 
     <div class="pb-6 pi-4">
-      <div class="container  narrow">
+      <div class="container narrow">
         <!-- data -->
         <app-desc
           *ngIf="view.name === 'details'"
@@ -67,6 +67,15 @@
           [dataStore]="dataStore"
           [record]="record"
         ></pestras-record-comments>
+
+        <!-- comments -->
+        <pestras-record-workflow
+          *ngIf="view.name === 'workflow'"
+          [rState]="state"
+          [dataStore]="dataStore.serial"
+          [record]="record.serial"
+          [editable]="(record['owner'] | sessionIs) || ((dataStore.blueprint | blueprint | async)?.owner | sessionIs)"
+        ></pestras-record-workflow>
 
         <!-- sub data store -->
         <app-sub-data-stores-records

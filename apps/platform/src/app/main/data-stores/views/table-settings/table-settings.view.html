@@ -48,17 +48,17 @@
             <pui-check-input
               small
               [label]="c['allow']"
-              [formControl]="allowNewCtrl"
+              [formControl]="allowCreateCtrl"
             ></pui-check-input>
           </label>
           <div
-            [class.disabled]="allowNewCtrl.value"
+            [class.disabled]="allowCreateCtrl.value"
             class="fc fc-surface1 fc-outline"
           >
             <pui-select-input
               labelRef="wf-add"
               [list]="dataStore.blueprint | workflows | async | arrayMap: mapWorkflow"
-              formControlName="new"
+              formControlName="create"
             ></pui-select-input>
           </div>
         </div>

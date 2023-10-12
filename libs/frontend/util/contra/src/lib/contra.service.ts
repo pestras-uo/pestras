@@ -157,7 +157,8 @@ export class ContraService {
     return output;
   }
 
-  public fill(key: string, c: Record<string, any>, data?: Record<string, any>): string {
+  public fill(key: string, data: Record<string, any> = {}, resources: string[] = []): string {
+    const c = this.content(...resources);
     return strUtil.compile(c[key], c, data ?? {});
   }
 

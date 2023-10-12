@@ -7,7 +7,8 @@ export async function deleteRecod(
   this: DataRecordsModel,
   dsSerial: string,
   recordSerial: string,
-  draft: boolean
+  draft: boolean,
+  message?: string
 ) {
   const ds = await dataStoresModel.getBySerial(dsSerial, { serial: 1, type: 1, settings: 1 });
 
@@ -28,7 +29,7 @@ export async function deleteRecod(
 
   // if workflow applied on delete start workflow
   if (!draft && typeof ds.settings.workflow.delete === 'string') {
-    recordsWorkflowModel.publish(dsSerial, recordSerial, 'delete');
+    await recordsWorkflowModel.publish(dsSerial, recordSerial, 'delete', message);
 
     return true;
 
@@ -43,8 +44,8 @@ export async function deleteRecod(
     await this.db.collection(ds.serial).deleteOne({ serial: recordSerial });
     await this.db.collection(`draft_${ds.serial}`).deleteOne({ serial: recordSerial });
     await this.db.collection(`review_${ds.serial}`).deleteOne({ serial: recordSerial });
+    await this.db.collection(`workflow_${ds.serial}`).deleteOne({ record: recordSerial });
     await this.db.collection(`history_${ds.serial}`).deleteMany({ record: recordSerial });
-    await this.db.collection(`workflow_${ds.serial}`).deleteMany({ record: recordSerial });
   }
 
   return true;
