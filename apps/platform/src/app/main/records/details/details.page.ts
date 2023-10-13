@@ -88,7 +88,7 @@ export class DetailsPage implements OnChanges {
           link = `/main/topics/${record.topic}`;
           const breadcrumb = BreadcrumbComponent.breadCrumbFunc(
             c['records'],
-            record['title'] as string,
+            record[this.mainField!.name] as string,
             record['serial'] as string,
             link,
             { menu: 'main' }
