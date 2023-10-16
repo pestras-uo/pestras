@@ -58,7 +58,7 @@ export class DetailsPage implements OnChanges {
   }
 
   @Input()
-  breadcrumbs: { label: string; link: string }[] = [];
+  breadcrumbs: { label: string; link: string[] }[] = [];
 
   constructor(
     private state: BlueprintsState,

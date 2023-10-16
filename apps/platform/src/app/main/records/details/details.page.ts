@@ -40,7 +40,7 @@ export class DetailsPage implements OnChanges {
   mainField: Field | null = null;
 
   @Input()
-  breadcrumbs: { label: string; link: string }[] = [];
+  breadcrumbs: { label: string; link: string[] }[] = [];
 
   @Input()
   topic: string | null = null;

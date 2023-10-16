@@ -3,7 +3,7 @@
     <ng-container *ngIf="!last">
       <a
         class="breadcrumb-link"
-        [routerLink]="[breadcrumb.link]"
+        [routerLink]="breadcrumb.link"
         [queryParams]="breadcrumb.queryParams"
         >{{ breadcrumb.label }}</a
       >

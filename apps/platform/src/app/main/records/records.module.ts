@@ -35,6 +35,7 @@ import {
 } from '@pestras/frontend/ui';
 import { RecordsWorkflowFeatureModule } from '@pestras/frontend/features/records-workflow';
 import { CommentsViewComponent } from './views/comments/comments.view';
+import { AppBreadCrumbModule } from '@pestras/frontend/widgets/bread-crumb';
 
 @NgModule({
   declarations: [
@@ -57,6 +58,7 @@ import { CommentsViewComponent } from './views/comments/comments.view';
     NoDataPlaceholderWidget,
     QuillModule,
     AvatarWidget,
+    AppBreadCrumbModule,
     // util
     ContraModule,
     DialogModule,

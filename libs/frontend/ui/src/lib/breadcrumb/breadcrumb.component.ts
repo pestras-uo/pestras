@@ -1,4 +1,7 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input } from '@angular/core';
+import { IBreadCrumb } from './breadcrumb.interface';
+
+export { IBreadCrumb };
 
 @Component({
   // eslint-disable-next-line @angular-eslint/component-selector
@@ -8,7 +11,7 @@ import { Component, Input, OnInit } from '@angular/core';
 })
 export class BreadcrumbComponent {
   @Input()
-  breadcrumbs: any[] = []; // Make sure 'any[]' is the correct type for your breadcrumbs data.
+  breadcrumbs: IBreadCrumb[] = []; // Make sure 'any[]' is the correct type for your breadcrumbs data.
 
   static breadCrumbContent: any = [{}];
   // eslint-disable-next-line @typescript-eslint/no-empty-function

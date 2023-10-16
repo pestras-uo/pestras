@@ -42,7 +42,7 @@ export class ClientsApiPage implements OnChanges {
   serial!: string;
 
   @Input()
-  breadcrumbs: { label: string; link: string }[] = [];
+  breadcrumbs: { label: string; link: string[] }[] = [];
 
   constructor(
     private state: ClientApiState,

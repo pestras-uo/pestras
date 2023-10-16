@@ -1,5 +1,5 @@
-interface IBreadCrumb {
+export interface IBreadCrumb {
   label: string;
-  link: string;
-  queryParams?: { [key: string]: any };
+  link: string[];
+  queryParams?: { [key: string]: string };
 }

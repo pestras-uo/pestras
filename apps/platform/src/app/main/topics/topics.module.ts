@@ -21,6 +21,7 @@ import {
 } from '@pestras/frontend/ui';
 import { ContentViewsFeatureModule } from '@pestras/frontend/features/content-views';
 import { NoDataPlaceholderWidget } from '@pestras/frontend/widgets/no-data-placeholder';
+import { AppBreadCrumbModule } from '@pestras/frontend/widgets/bread-crumb';
 import { TopicsFeatureModule } from '@pestras/frontend/features/topics';
 import { DashboardsFeaturesModule } from '@pestras/frontend/features/dashboards';
 import { ReportsFeaturesModule } from '@pestras/frontend/features/reports';
@@ -62,6 +63,7 @@ import { TopicsListViewComponent } from './views/topics-list/topics-list.view';
     // Widgets
     ContentViewsFeatureModule,
     NoDataPlaceholderWidget,
+    AppBreadCrumbModule,
     // Features
     TopicsFeatureModule,
     DashboardsFeaturesModule,
@@ -77,6 +79,7 @@ import { TopicsListViewComponent } from './views/topics-list/topics-list.view';
     EntityAccessFeatureModule,
     //BreadCrumb SharedModule:
     BreadcrumbModule,
+    
   ],
 })
 export class TopicsModule {}

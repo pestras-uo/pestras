@@ -48,7 +48,7 @@ export class DataStoreDetailsPage implements OnChanges {
   menuValue: string | null = '';
 
   @Input()
-  breadcrumbs: { label: string; link: string }[] = [];
+  breadcrumbs: { label: string; link: string[] }[] = [];
   @Input()
   set menu(value: string) {
     this.view = value ?? 'details';

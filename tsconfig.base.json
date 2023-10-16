@@ -92,6 +92,9 @@
       "@pestras/frontend/widgets/avatar": [
         "libs/frontend/widgets/avatar/src/index.ts"
       ],
+      "@pestras/frontend/widgets/bread-crumb": [
+        "libs/frontend/widgets/app-bread-crumb/src/index.ts"
+      ],
       "@pestras/frontend/widgets/no-data-placeholder": [
         "libs/frontend/widgets/no-data-placeholder/src/index.ts"
       ],

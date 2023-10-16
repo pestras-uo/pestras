@@ -7,10 +7,7 @@ import { FormControl, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { TopicsState } from '@pestras/frontend/state';
 import { PubSubService, ToastService } from '@pestras/frontend/ui';
-import { ContraService } from '@pestras/frontend/util/contra';
 import { Topic, WorkspacePinType } from '@pestras/shared/data-model';
-// eslint-disable-next-line @nx/enforce-module-boundaries
-import { BreadcrumbComponent } from 'libs/frontend/ui/src/lib/breadcrumb/breadcrumb.component';
 import { Observable } from 'rxjs';
 
 @Component({
@@ -42,10 +39,7 @@ export class DetailsPage implements OnChanges {
   readonly title = new FormControl('', {
     validators: Validators.required,
     nonNullable: true,
-  });
-
-  @Input()
-  breadcrumbs: { label: string; link: string }[] = []; 
+  }); 
 
   @Input({ required: true })
   theme!: string;
@@ -66,8 +60,7 @@ export class DetailsPage implements OnChanges {
     private toast: ToastService,
     private pubSub: PubSubService,
     private router: Router,
-    private route: ActivatedRoute,
-    private contra: ContraService
+    private route: ActivatedRoute
   ) {}
 
   set(menu: string, ds?: string) {
@@ -81,24 +74,6 @@ export class DetailsPage implements OnChanges {
 
   ngOnChanges() {
     this.topic$ = this.state.select(this.serial, this.theme);
-
-    const link = `/main/topics`;
-
-    const c = this.contra.content();
-    if (this.topic$) {
-      this.topic$.subscribe((topic) => {
-        if (topic) {
-          const breadcrumb = BreadcrumbComponent.breadCrumbFunc(
-            c['topics'],
-            topic.name,
-            this.serial,
-            link,
-            { active: this.serial }
-          );
-          this.breadcrumbs = breadcrumb;
-        }
-      });
-    }
   }
 
   openDialog(tmp: TemplateRef<any>) {
