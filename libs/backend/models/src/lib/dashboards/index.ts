@@ -14,7 +14,7 @@ export class DashboardsModel extends Model<Dashboard> {
 
   // read
   // ------------------------------------------------------------------------
-  search: (query: Partial<ApiQuery<Dashboard>>) => Promise<ApiQueryResults<Dashboard>> = search.bind(this);
+  search: (query: Partial<ApiQuery<Dashboard>>, user: User) => Promise<ApiQueryResults<Dashboard>> = search.bind(this);
   getByTopic: (topic: string, user: User, projection?: any) => Promise<Dashboard[]> = getByTopic.bind(this);
   getBySerial: (serial: string, projection?: any) => Promise<Dashboard | null> = getBySerial.bind(this);
   exists: (serial: string) => Promise<boolean> = exists.bind(this);

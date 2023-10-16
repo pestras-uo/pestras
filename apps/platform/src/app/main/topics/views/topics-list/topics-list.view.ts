@@ -1,6 +1,7 @@
 import { Component, EventEmitter, Input, Output } from "@angular/core";
 import { FormControl } from "@angular/forms";
 import { TopicsState } from "@pestras/frontend/state";
+import { Role } from "@pestras/shared/data-model";
 import { debounceTime, map, startWith, switchMap, tap } from "rxjs";
 
 @Component({
@@ -9,6 +10,7 @@ import { debounceTime, map, startWith, switchMap, tap } from "rxjs";
   styleUrls: ['./topics-list.view.scss']
 })
 export class TopicsListViewComponent {
+  readonly roles = Role;
   protected readonly searchControl = new FormControl('', { nonNullable: true });
 
   readonly topics$ = this.state.selectGroup(null)

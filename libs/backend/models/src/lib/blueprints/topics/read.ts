@@ -4,33 +4,69 @@ import { TopicsModel } from ".";
 import { Filter } from "mongodb";
 
 export async function getByBlueprint(this: TopicsModel, bp: string, user: User) {
-  const query: Filter<Topic> = user.orgunit === "*"
-    ? { blueprin: bp }
+  const match: Filter<Topic> = user.orgunit === "*"
+    ? {}
     : {
-      blueprin: bp,
-      $and: [
-        { $or: [{ 'access.orgunits': { $size: 0 } }, { 'access.orgunits': user.orgunit }] },
-        { $or: [{ 'access.users': { $size: 0 } }, { 'access.users': user.serial }] },
-        { $or: [{ 'access.groups': { $size: 0 } }, { 'access.group': { $in: user.groups } }] }
+      $or: [
+        { owner: user.serial },
+        {
+          $and: [
+            { $or: [{ 'access.orgunits': { $size: 0 } }, { 'access.orgunits': user.orgunit }] },
+            { $or: [{ 'access.users': { $size: 0 } }, { 'access.users': user.serial }] },
+            { $or: [{ 'access.groups': { $size: 0 } }, { 'access.group': { $in: user.groups } }] }
+          ]
+        }
       ]
     };
 
-  return this.col.find(query).toArray();
+  return this.col.aggregate<Topic>([
+    { $match: { blueprin: bp } },
+    {
+      $lookup: {
+        from: 'entities_access',
+        localField: 'serial',
+        foreignField: 'entity',
+        as: "access"
+      }
+    },
+    { $unwind: '$access' },
+    { $match: match },
+    { $project: Object.assign({ access: 0, _id: 0 }) }
+    // { $project: projection || {} }
+  ]).toArray();
 }
 
 export async function getByParent(this: TopicsModel, parent: string, user: User) {
-  const query: Filter<Topic> = user.orgunit === "*"
-    ? { parent: parent ?? null }
+  const match: Filter<Topic> = user.orgunit === "*"
+    ? {}
     : {
-      parent: parent ?? null,
-      $and: [
-        { $or: [{ 'access.orgunits': { $size: 0 } }, { 'access.orgunits': user.orgunit }] },
-        { $or: [{ 'access.users': { $size: 0 } }, { 'access.users': user.serial }] },
-        { $or: [{ 'access.groups': { $size: 0 } }, { 'access.group': { $in: user.groups } }] }
+      $or: [
+        { owner: user.serial },
+        {
+          $and: [
+            { $or: [{ 'access.orgunits': { $size: 0 } }, { 'access.orgunits': user.orgunit }] },
+            { $or: [{ 'access.users': { $size: 0 } }, { 'access.users': user.serial }] },
+            { $or: [{ 'access.groups': { $size: 0 } }, { 'access.group': { $in: user.groups } }] }
+          ]
+        }
       ]
     };
 
-  return this.col.find(query).toArray();
+  return this.col.aggregate<Topic>([
+    { $match: { parent: parent ?? null } },
+    {
+      $lookup: {
+        from: 'entities_access',
+        localField: 'serial',
+        foreignField: 'entity',
+        as: "access"
+      }
+    },
+    { $unwind: '$access' },
+    { $match: match },
+    { $project: Object.assign({ access: 0, _id: 0 }) }
+    // { $project: projection || {} }
+  ]).toArray();
 }
 
 export async function getBySerial(this: TopicsModel, serial: string, projection?: any) {
