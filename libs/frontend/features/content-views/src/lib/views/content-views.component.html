@@ -1,29 +1,31 @@
 <ng-container *contra="let c">
   <ng-container *ngIf="content$ | async">
     <div class="toolbar gap-1 pb-4">
-      <h5 *ngIf="size === 'small' else defaultHeading">{{ c['desc'] }}</h5>
-      
+      <h5 *ngIf="size === 'small'; else defaultHeading">{{ c['desc'] }}</h5>
+
       <ng-template #defaultHeading>
         <h2>{{ c['desc'] }}</h2>
       </ng-template>
 
       <div class="grow"></div>
 
-      <button
-        *ngIf="views.length"
-        class="btn-icon btn-small btn-round"
-        [class.btn-success]="editMode"
-        (click)="editMode = !editMode"
-      >
-        <i size="small" puiIcon="edit"></i>
-      </button>
+      <ng-container *ngIf="editable">
+        <button
+          *ngIf="views.length"
+          class="btn-icon btn-small btn-round"
+          [class.btn-success]="editMode"
+          (click)="editMode = !editMode"
+        >
+          <i size="small" puiIcon="edit"></i>
+        </button>
 
-      <button
-        class="btn-icon btn-small btn-round"
-        (click)="openDialog(viewTmp)"
-      >
-        <i size="small" puiIcon="add"></i>
-      </button>
+        <button
+          class="btn-icon btn-small btn-round"
+          (click)="openDialog(viewTmp)"
+        >
+          <i size="small" puiIcon="add"></i>
+        </button>
+      </ng-container>
 
       <ng-content select=".action"></ng-content>
     </div>
@@ -64,7 +66,11 @@
           </h4>
 
           <ng-container *ngIf="view.content">
-            <p *ngIf="view.type === 'richText'" class="mbe-4" [innerHTML]="view.content"></p>
+            <p
+              *ngIf="view.type === 'richText'"
+              class="mbe-4"
+              [innerHTML]="view.content"
+            ></p>
 
             <img
               class="radius-2 mbe-4 mi-auto"
@@ -141,10 +147,7 @@
         <button class="btn-round" (click)="closeDialog()">
           {{ c['cancel'] }}
         </button>
-        <button
-          class="btn-round btn-primary"
-          [disabled]="form.invalid"
-        >
+        <button class="btn-round btn-primary" [disabled]="form.invalid">
           {{ c['add'] }}
         </button>
       </div>

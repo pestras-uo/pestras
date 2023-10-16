@@ -8,7 +8,7 @@ export const controller = {
   // -------------------------------------------------------------------------------
   async search(req: DashboardsApi.SearchReq, res: DashboardsApi.SearchRes, next: NextFunction) {
     try {
-      res.json(await dashboardsModel.search(req.body));
+      res.json(await dashboardsModel.search(req.body, res.locals.issuer));
 
     } catch (error) {
       next(error);

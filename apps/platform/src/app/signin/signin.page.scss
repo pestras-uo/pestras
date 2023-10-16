@@ -33,20 +33,21 @@
   }
 }
 
-@media screen and (max-width: 960px) {}
-
-@media screen and (max-width: 560px) {}
-
 @media screen and (max-width: 1280px) {
   .box {
-    height: 100%;
+    height: 100vh;
+    max-width: 100%;
   }
 
+  .login-section {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
 }
 
 .logo {
-  height: 48px;
-  border-radius: 8px;
+  height: 56px;
 }
 
 .small-logo {

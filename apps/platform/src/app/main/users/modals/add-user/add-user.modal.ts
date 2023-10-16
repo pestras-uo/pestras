@@ -18,7 +18,7 @@ export class AddUserModal implements OnInit {
   readonly ud = untilDestroyed();
   readonly form = this.fb.nonNullable.group({
     orgunit: ['', Validators.required],
-    username: ['', [Validators.required, Validators.pattern(/^[a-zA-Z0-9_\-.]{4,64}$/)]],
+    username: ['', [Validators.required, Validators.pattern(/^[a-zA-Z0-9_\-.]{4,64}$/), Validators.minLength(5)]],
     password: ['', [Validators.required, Validators.pattern(/^[a-zA-Z0-9!@#$%^&*-_=+.|<>:;'"()]{8,64}$/)]],
     roles: [[Role.GUEST], Validators.required],
     is_super: false,
