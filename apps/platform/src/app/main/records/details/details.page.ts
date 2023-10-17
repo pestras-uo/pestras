@@ -4,15 +4,12 @@
 import { Component, Input, OnChanges } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { RecordsService } from '@pestras/frontend/state';
-import { ContraService } from '@pestras/frontend/util/contra';
 import {
   DataRecordState,
   DataStore,
   Field,
   TableDataRecord,
 } from '@pestras/shared/data-model';
-// eslint-disable-next-line @nx/enforce-module-boundaries
-import { BreadcrumbComponent } from 'libs/frontend/ui/src/lib/breadcrumb/breadcrumb.component';
 import { Observable } from 'rxjs';
 
 @Component({
@@ -62,6 +59,7 @@ export class DetailsPage implements OnChanges {
 
   ngOnChanges() {
     this.view = { name: this.menu ?? 'details', payload: this.payload ?? null };
+    this.mainField = this.dataStore.fields.find(f => f.name === this.dataStore.settings.interface_field) ?? null;
 
     const src = this.state && this.state !== 'published' ? `${this.state}_${this.dataStore.serial}` : this.dataStore.serial;
     this.record$ = this.service.getBySerial({ ds: src, serial: this.record }) as Observable<TableDataRecord | null>;
