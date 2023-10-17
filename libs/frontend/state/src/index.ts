@@ -10,6 +10,11 @@ export { BlueprintResolver } from './lib/blueprints/blueprints.resolver';
 
 export { CategoriesService } from './lib/categories/categories.service';
 
+export { BlueprintsService } from './lib/blueprints/blueprints.service';
+export { DashboardsService } from './lib/dashboards/dashboards.service';
+export { ClientApiService } from './lib/client-api/client-api.service';
+export { ReportsService } from './lib/reports/reports.service';
+
 export { CommentsService } from './lib/comments/comments.service';
 
 export { ClientApiState } from './lib/client-api/client-api.state';

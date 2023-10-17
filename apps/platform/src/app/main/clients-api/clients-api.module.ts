@@ -9,7 +9,6 @@ import { DataStoresView } from './views/data-stores/data-stores.view';
 import { ParamsView } from './views/params/params.view';
 import { ContraModule } from '@pestras/frontend/util/contra';
 import {
-  BreadcrumbModule,
   PuiCheckInput,
   PuiIcon,
   PuiPreloaderModule,
@@ -20,6 +19,7 @@ import { NoDataPlaceholderWidget } from '@pestras/frontend/widgets/no-data-place
 import { DataStoresFeatureModule } from '@pestras/frontend/features/data-stores';
 import { BlueprintsFeatureModule } from '@pestras/frontend/features/blueprints';
 import { SessionFeatureModule } from '@pestras/frontend/features/session';
+import { AppBreadCrumbModule } from '@pestras/frontend/widgets/bread-crumb';
 
 @NgModule({
   declarations: [ClientsApiPage, DataStoresView, ParamsView],
@@ -43,9 +43,7 @@ import { SessionFeatureModule } from '@pestras/frontend/features/session';
     DataStoresFeatureModule,
     BlueprintsFeatureModule,
     SessionFeatureModule,
-
-    //BreadCrumb Module:
-    BreadcrumbModule,
+    AppBreadCrumbModule,
   ],
 })
 export class ClientsApiModule {}

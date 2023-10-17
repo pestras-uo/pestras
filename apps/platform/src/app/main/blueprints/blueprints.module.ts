@@ -9,7 +9,6 @@ import { SideMenuView } from './views/side-menu/side-menu.view';
 import { DetailsPage } from './details/details.page';
 import { ContraModule } from '@pestras/frontend/util/contra';
 import {
-  BreadcrumbModule,
   PuiIcon,
   PuiPreloaderModule,
   PuiSelectInput,
@@ -28,6 +27,7 @@ import { BlueprintsFeatureModule } from '@pestras/frontend/features/blueprints';
 import { UsersFeatureModule } from '@pestras/frontend/features/users';
 import { CollaboratorsViewComponent } from './views/collaborators/collaborators.view';
 import { OrgunitsFeatureModule } from '@pestras/frontend/features/orgunits';
+import { AppBreadCrumbModule } from '@pestras/frontend/widgets/bread-crumb';
 
 @NgModule({
   declarations: [
@@ -63,8 +63,7 @@ import { OrgunitsFeatureModule } from '@pestras/frontend/features/orgunits';
     SessionFeatureModule,
     UsersFeatureModule,
     OrgunitsFeatureModule,
-    //BreadCrumb SharedModule:
-    BreadcrumbModule,
+    AppBreadCrumbModule,
   ],
 })
 export class BlueprintsModule {}

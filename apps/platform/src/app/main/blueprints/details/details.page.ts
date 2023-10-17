@@ -13,8 +13,6 @@ import {
   DataStoreType,
   WorkspacePinType,
 } from '@pestras/shared/data-model';
-// eslint-disable-next-line @nx/enforce-module-boundaries
-import { BreadcrumbComponent } from 'libs/frontend/ui/src/lib/breadcrumb/breadcrumb.component';
 import { Observable, tap } from 'rxjs';
 
 @Component({
@@ -57,42 +55,21 @@ export class DetailsPage implements OnChanges {
     this.view = value ?? 'details';
   }
 
-  @Input()
-  breadcrumbs: { label: string; link: string[] }[] = [];
-
+  get menu(): string {
+    return this.view;
+  }
   constructor(
     private state: BlueprintsState,
     private dialog: Dialog,
     private toast: ToastService,
     private router: Router,
     private route: ActivatedRoute,
-    private contra: ContraService
   ) {}
 
   ngOnChanges() {
     this.bp$ = this.state
       .select(this.serial)
       .pipe(tap((bp) => this.title.setValue(bp?.name ?? '')));
-
-    const c = this.contra.content();
-
-    let link = '';
-
-    if (this.bp$) {
-      this.bp$.subscribe((bp) => {
-        if (bp) {
-          link = '/main/blueprints';
-          const breadcrumb = BreadcrumbComponent.breadCrumbFunc(
-            c['blueprint'],
-            bp.name,
-            this.serial,
-            link,
-            { active: this.serial }
-          );
-          this.breadcrumbs = breadcrumb;
-        }
-      });
-    }
   }
 
   set(menu: string) {

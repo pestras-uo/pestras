@@ -39,8 +39,6 @@ export class DetailsPage implements OnChanges {
   record$!: Observable<TableDataRecord | null>;
   mainField: Field | null = null;
 
-  @Input()
-  breadcrumbs: { label: string; link: string[] }[] = [];
 
   @Input()
   topic: string | null = null;
@@ -59,7 +57,7 @@ export class DetailsPage implements OnChanges {
     private service: RecordsService,
     private router: Router,
     private route: ActivatedRoute,
-    private contra: ContraService
+ 
   ) {}
 
   ngOnChanges() {
@@ -79,24 +77,7 @@ export class DetailsPage implements OnChanges {
       serial: this.record,
     }) as Observable<TableDataRecord | null>;
 
-    let link = ``;
-
-    const c = this.contra.content();
-    if (this.record$) {
-      this.record$.subscribe((record) => {
-        if (record) {
-          link = `/main/topics/${record.topic}`;
-          const breadcrumb = BreadcrumbComponent.breadCrumbFunc(
-            c['records'],
-            record[this.mainField!.name] as string,
-            record['serial'] as string,
-            link,
-            { menu: 'main' }
-          );
-          this.breadcrumbs = breadcrumb;
-        }
-      });
-    }
+   
   }
 
   set(view: { name: string; payload?: any }) {

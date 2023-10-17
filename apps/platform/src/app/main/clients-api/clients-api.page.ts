@@ -6,9 +6,6 @@ import { Component, Input, OnChanges, TemplateRef } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Blueprint, ClientApi } from '@pestras/shared/data-model';
 import { ClientApiState } from '@pestras/frontend/state';
-import { ContraService } from '@pestras/frontend/util/contra';
-// eslint-disable-next-line @nx/enforce-module-boundaries
-import { BreadcrumbComponent } from 'libs/frontend/ui/src/lib/breadcrumb/breadcrumb.component';
 
 @Component({
   selector: 'app-clients-api',
@@ -41,37 +38,12 @@ export class ClientsApiPage implements OnChanges {
   @Input({ required: true })
   serial!: string;
 
-  @Input()
-  breadcrumbs: { label: string; link: string[] }[] = [];
-
-  constructor(
-    private state: ClientApiState,
-    private dialog: Dialog,
-    private contra: ContraService
-  ) {}
+  constructor(private state: ClientApiState, private dialog: Dialog) {}
 
   ngOnChanges() {
     this.client$ = this.state.select(this.serial);
+    
 
-    let link = ``;
-
-    const c = this.contra.content();
-    if (this.client$) {
-      this.client$.subscribe((client) => {
-        link = `/main/blueprints/${this.blueprint.serial}`;
-
-        if (client) {
-          const breadcrumb = BreadcrumbComponent.breadCrumbFunc(
-            c['clientName'],
-            client.client_name,
-            this.blueprint.serial,
-            link,
-            { menu: 'export' }
-          );
-          this.breadcrumbs = breadcrumb;
-        }
-      });
-    }
   }
 
   openModal(modal: TemplateRef<any>) {

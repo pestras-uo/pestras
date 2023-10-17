@@ -27,7 +27,6 @@ import { RecordsFeatureModule } from '@pestras/frontend/features/data-records';
 import { SessionFeatureModule } from '@pestras/frontend/features/session';
 import { ContraModule } from '@pestras/frontend/util/contra';
 import {
-  BreadcrumbModule,
   PuiCheckInput,
   PuiHint,
   PuiIcon,
@@ -42,6 +41,7 @@ import { TBgWidget } from '@pestras/frontend/widgets/t-bg';
 import { NoDataPlaceholderWidget } from '@pestras/frontend/widgets/no-data-placeholder';
 import { AvatarWidget } from '@pestras/frontend/widgets/avatar';
 import { WorkflowsFeatureModule } from '@pestras/frontend/features/workflows';
+import { AppBreadCrumbModule } from '@pestras/frontend/widgets/bread-crumb';
 
 @NgModule({
   declarations: [
@@ -92,8 +92,7 @@ import { WorkflowsFeatureModule } from '@pestras/frontend/features/workflows';
     NoDataPlaceholderWidget,
     QuillModule,
     AvatarWidget,
-    //BreadCrumbModule:
-    BreadcrumbModule,
+    AppBreadCrumbModule,
   ],
 })
 export class DataStoresModule {}

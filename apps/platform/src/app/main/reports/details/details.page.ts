@@ -7,9 +7,7 @@ import { FormControl, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ReportsState } from '@pestras/frontend/state';
 import { ToastService } from '@pestras/frontend/ui';
-import { ContraService } from '@pestras/frontend/util/contra';
 import { Report, WorkspacePinType } from '@pestras/shared/data-model';
-import { BreadcrumbComponent } from 'libs/frontend/ui/src/lib/breadcrumb/breadcrumb.component';
 import { Observable, tap } from 'rxjs';
 
 @Component({
@@ -48,14 +46,12 @@ export class DetailsPage implements OnChanges {
   @Input({ required: true })
   serial!: string;
 
-  @Input()
-  breadcrumbs: { label: string; link: string[] }[] = [];
+
   @Input()
   set menu(value: string) {
     this.view = value ?? 'details';
   }
 
-  lastValueUrl = '';
 
   constructor(
     private state: ReportsState,
@@ -63,59 +59,12 @@ export class DetailsPage implements OnChanges {
     private readonly dialog: Dialog,
     private router: Router,
     private route: ActivatedRoute,
-    private contra: ContraService
   ) {}
 
   ngOnChanges() {
     this.report$ = this.state
       .select(this.serial, this.topic)
       .pipe(tap((d) => this.title.setValue(d?.title ?? '')));
-
-    //BreadCrumb logic :
-
-    //GET ID DASHBOARD FROM URL TO TEST
-    this.route.url.subscribe((segments) => {
-      // Extract before the last segment from the URL
-      this.lastValueUrl = segments[segments.length - 2].path;
-
-      console.log('Last segment value:', this.lastValueUrl);
-    });
-
-    let link = ``;
-
-    const c = this.contra.content();
-    if (this.report$) {
-      this.report$.subscribe((report) => {
-        if (report) {
-          //test from where I came to report :
-
-          console.log(this.topic);
-          console.log(this.lastValueUrl);
-          if (this.topic && this.topic === this.lastValueUrl) {
-            link = `/main/topics/${this.topic}`;
-            const breadcrumb = BreadcrumbComponent.breadCrumbFunc(
-              c['reports'],
-              report.title as string,
-              report.serial as string,
-              link,
-              { menu: 'reports' }
-            );
-            this.breadcrumbs = breadcrumb;
-          } else {
-            link = `/main/dashboards`;
-
-            const breadcrumb = BreadcrumbComponent.breadCrumbFunc(
-              c['dashboards'],
-              report.title,
-              report.serial,
-              link,
-              {}
-            );
-            this.breadcrumbs = breadcrumb;
-          }
-        }
-      });
-    }
   }
 
   set(menu: string) {

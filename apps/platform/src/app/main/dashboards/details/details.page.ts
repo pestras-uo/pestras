@@ -48,14 +48,11 @@ export class DetailsPageComponent implements OnChanges {
   @Input({ required: true })
   serial!: string;
 
-  @Input()
-  breadcrumbs: { label: string; link: string[] }[] = [];
-
+  
   @Input()
   set menu(value: string) {
     this.view = value ?? 'details';
   }
-  lastValueUrl = '';
 
   constructor(
     private state: DashboardsState,
@@ -63,7 +60,6 @@ export class DetailsPageComponent implements OnChanges {
     private toast: ToastService,
     private router: Router,
     private route: ActivatedRoute,
-    private contra: ContraService
   ) {}
 
   ngOnChanges() {
@@ -71,51 +67,9 @@ export class DetailsPageComponent implements OnChanges {
       .select(this.serial)
       .pipe(tap((d) => this.title.setValue(d?.title ?? '')));
 
-    //GET ID DASHBOARD FROM URL TO TEST
-    this.route.url.subscribe((segments) => {
-      // Extract before the last segment from the URL
-      this.lastValueUrl = segments[segments.length - 2].path;
-
-      console.log('Last segment value:', this.lastValueUrl);
-    });
-
-    //BreadCrumb logic :
-
-    let link = ``;
-
-    const c = this.contra.content();
-    if (this.dashboard$) {
-      this.dashboard$.subscribe((dashboard) => {
-        if (dashboard) {
-          //test from where I csame to dahsboard :
-
-          console.log(this.topic);
-          console.log(this.lastValueUrl);
-          if (this.topic && this.topic === this.lastValueUrl) {
-            link = `/main/topics/${this.topic}`;
-            const breadcrumb = BreadcrumbComponent.breadCrumbFunc(
-              c['topics'],
-              dashboard['title'] as string,
-              dashboard['serial'] as string,
-              link,
-              { menu: 'dashboards' }
-            );
-            this.breadcrumbs = breadcrumb;
-          } else {
-            link = `/main/dashboards`;
-
-            const breadcrumb = BreadcrumbComponent.breadCrumbFunc(
-              c['dashboards'],
-              dashboard.title,
-              this.serial,
-              link,
-              {}
-            );
-            this.breadcrumbs = breadcrumb;
-          }
-        }
-      });
-    }
+    
+      
+    
   }
 
   set(menu: string) {

@@ -10,9 +10,10 @@
     <header class="bg-surface1 pb-6 pi-4 border-be">
       <div class="container wider">
         <h3 class="bold f8">
-          <app-breadcrumb [breadcrumbs]="breadcrumbs"> </app-breadcrumb>
+          <pestras-bread-crumb-widget
+            page="dashboard"
+          ></pestras-bread-crumb-widget>
         </h3>
-        <p class="text-3 bold f9">{{d.create_date | date: 'dd/MM/YYYY'}}</p>
         <div class="toolbar mbe-2 gap-2">
           <h1 class="f3 weight-8">{{d.title}}</h1>
           <app-workspace-toggle-pin

@@ -11,7 +11,6 @@ import { DataStoresListView } from './views/data-stores-list/data-stores-list.vi
 import { MainPage } from './main/main.page';
 import { ContraModule } from '@pestras/frontend/util/contra';
 import {
-   BreadcrumbModule,
   PubSubModule,
   PuiIcon,
   PuiInfiniteScroll,
@@ -77,9 +76,6 @@ import { TopicsListViewComponent } from './views/topics-list/topics-list.view';
     SessionFeatureModule,
     BlueprintsFeatureModule,
     EntityAccessFeatureModule,
-    //BreadCrumb SharedModule:
-    BreadcrumbModule,
-    
   ],
 })
 export class TopicsModule {}

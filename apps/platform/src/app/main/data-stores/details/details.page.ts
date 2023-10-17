@@ -45,10 +45,7 @@ export class DataStoreDetailsPage implements OnChanges {
   preloader = false;
   dialogRef: DialogRef | null = null;
   canBuild = false;
-  menuValue: string | null = '';
 
-  @Input()
-  breadcrumbs: { label: string; link: string[] }[] = [];
   @Input()
   set menu(value: string) {
     this.view = value ?? 'details';
@@ -71,19 +68,7 @@ export class DataStoreDetailsPage implements OnChanges {
     private pubSub: PubSubService,
     private router: Router,
     private route: ActivatedRoute,
-    private contra: ContraService
   ) {}
-
-  //Get value of menu query params from url function:
-  public getValueMenuFromUrl() {
-    this.route.queryParamMap.subscribe((queryParams) => {
-      // Get the 'menu' parameter from the URL
-      this.menuValue = queryParams.get('menu');
-
-      // Now you can use this.menuValue in your component logic
-      console.log('Menu parameter value:', this.menuValue);
-    });
-  }
 
   ngOnChanges() {
     this.dataStore$ = this.state
@@ -97,24 +82,7 @@ export class DataStoreDetailsPage implements OnChanges {
         )
       );
 
-    const link = `/main/blueprints/${this.blueprint.serial}`;
-
-    const c = this.contra.content();
-
-    if (this.dataStore$) {
-      this.dataStore$.subscribe((dataStore) => {
-        if (dataStore) {
-          const breadcrumb = BreadcrumbComponent.breadCrumbFunc(
-            c['dataStore'],
-            dataStore.name,
-            this.serial,
-            link,
-            { menu: this.menuValue }
-          );
-          this.breadcrumbs = breadcrumb;
-        }
-      });
-    }
+   
   }
 
   set(menu: string) {

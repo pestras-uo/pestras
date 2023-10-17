@@ -25,7 +25,6 @@ import { SessionFeatureModule } from '@pestras/frontend/features/session';
 import { BlueprintsFeatureModule } from '@pestras/frontend/features/blueprints';
 import { AttachmentsFeatureModule } from '@pestras/frontend/features/attachments';
 import {
-  BreadcrumbModule,
   PuiIcon,
   PuiImageInput,
   PuiInfiniteScroll,
@@ -78,8 +77,7 @@ import { AppBreadCrumbModule } from '@pestras/frontend/widgets/bread-crumb';
     PuiSelectInput,
     PuiImageInput,
     PuiUtilPipesModule,
-    //BreadCrumb Module:
-    BreadcrumbModule,
+ 
   ],
 })
 export class RecordsModule {}
