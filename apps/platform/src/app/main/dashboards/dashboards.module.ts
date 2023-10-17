@@ -33,6 +33,7 @@ import { UsersGroupsFeatureModule } from '@pestras/frontend/features/users-group
 import { SessionFeatureModule } from '@pestras/frontend/features/session';
 import { MainPageComponent } from './main/main.page';
 import { EntityAccessFeatureModule } from '@pestras/frontend/features/entity-access';
+import { AppBreadCrumbModule } from '@pestras/frontend/widgets/bread-crumb';
 
 @NgModule({
   declarations: [
@@ -73,7 +74,9 @@ import { EntityAccessFeatureModule } from '@pestras/frontend/features/entity-acc
     UsersFeatureModule,
     UsersGroupsFeatureModule,
     SessionFeatureModule,
-    EntityAccessFeatureModule
+    EntityAccessFeatureModule,
+
+    AppBreadCrumbModule,
   ],
 })
 export class DashboardsModule {}

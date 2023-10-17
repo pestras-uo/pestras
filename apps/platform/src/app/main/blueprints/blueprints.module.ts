@@ -8,7 +8,12 @@ import { BlueprintsRouter } from './blueprints.router';
 import { SideMenuView } from './views/side-menu/side-menu.view';
 import { DetailsPage } from './details/details.page';
 import { ContraModule } from '@pestras/frontend/util/contra';
-import { PuiIcon, PuiPreloaderModule, PuiSelectInput, PuiUtilPipesModule } from '@pestras/frontend/ui';
+import {
+  PuiIcon,
+  PuiPreloaderModule,
+  PuiSelectInput,
+  PuiUtilPipesModule,
+} from '@pestras/frontend/ui';
 import { NoDataPlaceholderWidget } from '@pestras/frontend/widgets/no-data-placeholder';
 import { DataStoresFeatureModule } from '@pestras/frontend/features/data-stores';
 import { CategoriesFeatureModule } from '@pestras/frontend/features/categories';
@@ -22,7 +27,7 @@ import { BlueprintsFeatureModule } from '@pestras/frontend/features/blueprints';
 import { UsersFeatureModule } from '@pestras/frontend/features/users';
 import { CollaboratorsViewComponent } from './views/collaborators/collaborators.view';
 import { OrgunitsFeatureModule } from '@pestras/frontend/features/orgunits';
-
+import { AppBreadCrumbModule } from '@pestras/frontend/widgets/bread-crumb';
 
 @NgModule({
   declarations: [
@@ -31,7 +36,7 @@ import { OrgunitsFeatureModule } from '@pestras/frontend/features/orgunits';
     BlueprintsListViewComponent,
     SideMenuView,
     DetailsPage,
-    CollaboratorsViewComponent
+    CollaboratorsViewComponent,
   ],
   imports: [
     // Angular
@@ -57,7 +62,8 @@ import { OrgunitsFeatureModule } from '@pestras/frontend/features/orgunits';
     ClientsApiFeatureModule,
     SessionFeatureModule,
     UsersFeatureModule,
-    OrgunitsFeatureModule
-  ]
+    OrgunitsFeatureModule,
+    AppBreadCrumbModule,
+  ],
 })
-export class BlueprintsModule { }
+export class BlueprintsModule {}

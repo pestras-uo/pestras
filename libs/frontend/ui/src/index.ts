@@ -10,7 +10,6 @@ export * from './lib/click-outside/click-outside.directive';
 
 // drop down
 export * from './lib/dropdown/dropdown.component';
-;
 // file input
 export * from './lib/file-input/file-input.component';
 
@@ -104,6 +103,8 @@ export * from './lib/reactive';
 // forms utilty
 export * from './lib/form-validators';
 
+// export pdf
+export * from './lib/export-pdf/export-to-pdf.directive';
 
-// export pdf 
-    export * from "./lib/export-pdf/export-to-pdf.directive";
+// breadcrumb
+export * from './lib/breadcrumb/breadcrumb.module';

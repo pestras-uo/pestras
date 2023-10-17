@@ -10,24 +10,25 @@ import { ClientApiState } from '@pestras/frontend/state';
 @Component({
   selector: 'app-clients-api',
   templateUrl: './clients-api.page.html',
-  styles: [`
-    :host {
-      height: var(--main-height);
-      overflow-y: auto;
-    }
+  styles: [
+    `
+      :host {
+        height: var(--main-height);
+        overflow-y: auto;
+      }
 
-    header {
-      padding-block: 48px;
-      border-block-end: 1px solid var(--border1);
-    }
+      header {
+        padding-block: 48px;
+        border-block-end: 1px solid var(--border1);
+      }
 
-    main {
-      padding-block: 32px;
-    }
-  `]
+      main {
+        padding-block: 32px;
+      }
+    `,
+  ],
 })
 export class ClientsApiPage implements OnChanges {
-
   client$!: Observable<ClientApi | null>;
   preloader = false;
   dialogRef?: DialogRef;
@@ -37,13 +38,12 @@ export class ClientsApiPage implements OnChanges {
   @Input({ required: true })
   serial!: string;
 
-  constructor(
-    private state: ClientApiState,
-    private dialog: Dialog
-  ) { }
+  constructor(private state: ClientApiState, private dialog: Dialog) {}
 
   ngOnChanges() {
     this.client$ = this.state.select(this.serial);
+    
+
   }
 
   openModal(modal: TemplateRef<any>) {
@@ -58,39 +58,36 @@ export class ClientsApiPage implements OnChanges {
   update(c: Record<string, any>, value: string) {
     this.preloader = true;
 
-    this.state.update(this.serial, value)
-      .subscribe({
-        next: () => {
-          this.closeModal();
-        },
-        error: e => {
-          console.error(e);
-          this.closeModal();
-        }
-      });
+    this.state.update(this.serial, value).subscribe({
+      next: () => {
+        this.closeModal();
+      },
+      error: (e) => {
+        console.error(e);
+        this.closeModal();
+      },
+    });
   }
 
   removeIp(c: Record<string, any>, ip: string) {
-    this.state.removeIP(this.serial, ip)
-      .subscribe({
-        error: e => {
-          console.error(e);
-        }
-      });
+    this.state.removeIP(this.serial, ip).subscribe({
+      error: (e) => {
+        console.error(e);
+      },
+    });
   }
 
   addIp(c: Record<string, any>, value: string) {
     this.preloader = true;
 
-    this.state.addIP(this.serial, value)
-      .subscribe({
-        next: () => {
-          this.closeModal();
-        },
-        error: e => {
-          console.error(e);
-          this.closeModal();
-        }
-      });
+    this.state.addIP(this.serial, value).subscribe({
+      next: () => {
+        this.closeModal();
+      },
+      error: (e) => {
+        console.error(e);
+        this.closeModal();
+      },
+    });
   }
 }

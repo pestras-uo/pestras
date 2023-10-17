@@ -125,7 +125,6 @@ export class CommentsViewComponent implements OnInit {
         this.toast.msg(c['success'].default, { type: 'success' });
         const comment = this.comments.find((c) => c.serial == serial);
         if (comment) comment.text = text;
-        console.log(comment);
 
         this.closeModal();
       },

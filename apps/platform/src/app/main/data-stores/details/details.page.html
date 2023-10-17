@@ -8,9 +8,12 @@
   <main puiInfiniteScroll (reached)="pageBottomReached()" *contra="let c">
     <header class="bg-surface1 pb-10 pi-8 border-be">
       <div class="container">
-        <p class="text-3 bold f9">
-          {{(c['dataStoresTypes'] | arrayFind: findType : ds.type)?.name}}
-        </p>
+        <h3 class="bold f8">
+          <pestras-bread-crumb-widget
+            page="dataStore"
+          ></pestras-bread-crumb-widget>
+        </h3>
+
         <div class="toolbar gap-2">
           <h1 class="f2 weight-8">{{ds.name}}</h1>
 

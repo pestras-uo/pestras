@@ -8,7 +8,11 @@
   <main *contra="let c">
     <header class="bg-surface1 pb-10 pi-8 border-be">
       <div class="container">
-        <p class="text-3 bold f9">{{c['blueprint']}}</p>
+        <h3 class="bold f8">
+          <pestras-bread-crumb-widget
+            page="blueprint"
+          ></pestras-bread-crumb-widget>
+        </h3>
         <div class="toolbar gap-2">
           <h1 class="f2 weight-8">{{bp.name}}</h1>
 

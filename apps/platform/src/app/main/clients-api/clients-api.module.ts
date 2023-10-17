@@ -8,19 +8,21 @@ import { DialogModule } from '@angular/cdk/dialog';
 import { DataStoresView } from './views/data-stores/data-stores.view';
 import { ParamsView } from './views/params/params.view';
 import { ContraModule } from '@pestras/frontend/util/contra';
-import { PuiCheckInput, PuiIcon, PuiPreloaderModule, PuiSelectInput, PuiUtilPipesModule } from '@pestras/frontend/ui';
+import {
+  PuiCheckInput,
+  PuiIcon,
+  PuiPreloaderModule,
+  PuiSelectInput,
+  PuiUtilPipesModule,
+} from '@pestras/frontend/ui';
 import { NoDataPlaceholderWidget } from '@pestras/frontend/widgets/no-data-placeholder';
 import { DataStoresFeatureModule } from '@pestras/frontend/features/data-stores';
 import { BlueprintsFeatureModule } from '@pestras/frontend/features/blueprints';
 import { SessionFeatureModule } from '@pestras/frontend/features/session';
-
+import { AppBreadCrumbModule } from '@pestras/frontend/widgets/bread-crumb';
 
 @NgModule({
-  declarations: [
-    ClientsApiPage,
-    DataStoresView,
-    ParamsView
-  ],
+  declarations: [ClientsApiPage, DataStoresView, ParamsView],
   imports: [
     // Angular
     CommonModule,
@@ -40,7 +42,8 @@ import { SessionFeatureModule } from '@pestras/frontend/features/session';
     // features
     DataStoresFeatureModule,
     BlueprintsFeatureModule,
-    SessionFeatureModule
-  ]
+    SessionFeatureModule,
+    AppBreadCrumbModule,
+  ],
 })
-export class ClientsApiModule { }
+export class ClientsApiModule {}

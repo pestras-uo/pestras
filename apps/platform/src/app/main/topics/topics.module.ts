@@ -10,9 +10,17 @@ import { SideMenuView } from './views/side-menu/side-menu.view';
 import { DataStoresListView } from './views/data-stores-list/data-stores-list.view';
 import { MainPage } from './main/main.page';
 import { ContraModule } from '@pestras/frontend/util/contra';
-import { PubSubModule, PuiIcon, PuiInfiniteScroll, PuiPreloaderModule, PuiSelectInput, PuiUtilPipesModule } from '@pestras/frontend/ui';
+import {
+  PubSubModule,
+  PuiIcon,
+  PuiInfiniteScroll,
+  PuiPreloaderModule,
+  PuiSelectInput,
+  PuiUtilPipesModule,
+} from '@pestras/frontend/ui';
 import { ContentViewsFeatureModule } from '@pestras/frontend/features/content-views';
 import { NoDataPlaceholderWidget } from '@pestras/frontend/widgets/no-data-placeholder';
+import { AppBreadCrumbModule } from '@pestras/frontend/widgets/bread-crumb';
 import { TopicsFeatureModule } from '@pestras/frontend/features/topics';
 import { DashboardsFeaturesModule } from '@pestras/frontend/features/dashboards';
 import { ReportsFeaturesModule } from '@pestras/frontend/features/reports';
@@ -27,7 +35,6 @@ import { UsersGroupsFeatureModule } from '@pestras/frontend/features/users-group
 import { EntityAccessFeatureModule } from '@pestras/frontend/features/entity-access';
 import { TopicsListViewComponent } from './views/topics-list/topics-list.view';
 
-
 @NgModule({
   declarations: [
     TopicsRouterComponent,
@@ -35,7 +42,7 @@ import { TopicsListViewComponent } from './views/topics-list/topics-list.view';
     TopicsListViewComponent,
     SideMenuView,
     DataStoresListView,
-    MainPage
+    MainPage,
   ],
   imports: [
     // Angular
@@ -55,6 +62,7 @@ import { TopicsListViewComponent } from './views/topics-list/topics-list.view';
     // Widgets
     ContentViewsFeatureModule,
     NoDataPlaceholderWidget,
+    AppBreadCrumbModule,
     // Features
     TopicsFeatureModule,
     DashboardsFeaturesModule,
@@ -67,7 +75,7 @@ import { TopicsListViewComponent } from './views/topics-list/topics-list.view';
     UsersGroupsFeatureModule,
     SessionFeatureModule,
     BlueprintsFeatureModule,
-    EntityAccessFeatureModule
-  ]
+    EntityAccessFeatureModule,
+  ],
 })
-export class TopicsModule { }
+export class TopicsModule {}

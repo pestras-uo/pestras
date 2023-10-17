@@ -13,21 +13,22 @@ import { Observable, tap } from 'rxjs';
 @Component({
   selector: 'app-details',
   templateUrl: './details.page.html',
-  styles: [`
-    :host {
-      height: var(--main-height);
-      display: grid;
-      grid-template-columns: auto 1fr;
-    }
+  styles: [
+    `
+      :host {
+        height: var(--main-height);
+        display: grid;
+        grid-template-columns: auto 1fr;
+      }
 
-    main {
-      height: 100%;
-      overflow-y: auto;
-    }
-  `]
+      main {
+        height: 100%;
+        overflow-y: auto;
+      }
+    `,
+  ],
 })
 export class DetailsPage implements OnChanges {
-
   wsType = WorkspacePinType.REPORTS;
   view = 'details';
   preloader = false;
@@ -35,28 +36,35 @@ export class DetailsPage implements OnChanges {
 
   report$!: Observable<Report | null>;
 
-  readonly title = new FormControl('', { validators: Validators.required, nonNullable: true });
+  readonly title = new FormControl('', {
+    validators: Validators.required,
+    nonNullable: true,
+  });
 
   @Input({ required: true })
   topic!: string;
   @Input({ required: true })
   serial!: string;
+
+
   @Input()
   set menu(value: string) {
     this.view = value ?? 'details';
   }
+
 
   constructor(
     private state: ReportsState,
     private readonly toast: ToastService,
     private readonly dialog: Dialog,
     private router: Router,
-    private route: ActivatedRoute
-  ) { }
+    private route: ActivatedRoute,
+  ) {}
 
   ngOnChanges() {
-    this.report$ = this.state.select(this.serial, this.topic)
-      .pipe(tap(d => this.title.setValue(d?.title ?? '')));
+    this.report$ = this.state
+      .select(this.serial, this.topic)
+      .pipe(tap((d) => this.title.setValue(d?.title ?? '')));
   }
 
   set(menu: string) {
@@ -78,18 +86,19 @@ export class DetailsPage implements OnChanges {
   update(c: Record<string, any>, serial: string) {
     this.preloader = true;
 
-    this.state.update(serial, this.title.value)
-      .subscribe({
-        next: () => {
-          this.toast.msg(c['success'].default, { type: 'success' });
-          this.closeDialog();
-        },
-        error: e => {
-          console.error(e);
+    this.state.update(serial, this.title.value).subscribe({
+      next: () => {
+        this.toast.msg(c['success'].default, { type: 'success' });
+        this.closeDialog();
+      },
+      error: (e) => {
+        console.error(e);
 
-          this.toast.msg(c['errors'][e?.error] || c['errors'].default, { type: 'error' });
-          this.preloader = false;
-        }
-      });
+        this.toast.msg(c['errors'][e?.error] || c['errors'].default, {
+          type: 'error',
+        });
+        this.preloader = false;
+      },
+    });
   }
 }
