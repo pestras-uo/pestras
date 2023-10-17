@@ -47,8 +47,9 @@ export const recordsRoutes = Router({ mergeParams: true })
     apiAuth([Role.AUTHOR, Role.DATA_ENG]),
     controller.revertHistory
   )
-  .delete(
-    '/:record/:draft',
+  .put(
+    '/delete/:record/:draft',
     apiAuth([Role.ADMIN, Role.DATA_ENG]),
+    validate(RecordsValidators.DELETE),
     controller.delete
   )

@@ -64,10 +64,7 @@ export class DetailsPage implements OnChanges {
   ) {}
 
   set(menu: string, ds?: string) {
-    this.router.navigate([], {
-      relativeTo: this.route,
-      queryParams: { menu, ds: ds ?? '' },
-    });
+    this.router.navigate([], { relativeTo: this.route, queryParams: { menu, ds: ds ?? '' }, replaceUrl: true });
 
     if (menu !== 'dataStores') this.dataStore = null;
   }

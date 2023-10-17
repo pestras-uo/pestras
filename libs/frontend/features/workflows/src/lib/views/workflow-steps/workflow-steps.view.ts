@@ -45,14 +45,16 @@ export class WorkflowStepsViewComponent {
   }
 
   filterAlgo(algo: { value: WorkflowStepAlgo }, users: string[]) {
-    return !!(users.length % 2) || algo.value !== WorkflowStepAlgo.MOST;
+    return !!(users.length % 2) || algo.value !== 'most';
   }
 
   addStep(step?: WorkflowStepOptions) {
     this.steps.push(new FormGroup<WorkflowStepOptionsFormModel>({
       serial: new FormControl(step?.serial ?? '', { nonNullable: true }),
       users: new FormControl(step?.users ?? [], { nonNullable: true, validators: Validators.required }),
-      algo: new FormControl(step?.algo ?? WorkflowStepAlgo.ANY, { nonNullable: true })
+      default_action: new FormControl('reject', { nonNullable: true }),
+      max_review_days: new FormControl(3, { nonNullable: true, validators: Validators.required }),
+      algo: new FormControl(step?.algo ?? 'any', { nonNullable: true })
     }));
   }
 

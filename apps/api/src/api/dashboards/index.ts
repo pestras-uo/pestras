@@ -12,6 +12,11 @@ export const dashboardsRoutes = Router()
     controller.getByTopic
   )
   .get(
+    '/count',
+    apiAuth(),
+    controller.count
+  )
+  .get(
     '/:serial',
     apiAuth(),
     controller.getBySerial

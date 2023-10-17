@@ -1,5 +1,5 @@
 <ng-container *contra="let c">
-  <div class="grow">
+  <div *ngIf="!blueprint" class="grow">
     <label for="bp">{{c['blueprint']}}</label>
     <div [class]="'fc ' + fcClass" [class.disabled]="disabled">
       <pui-select-input *ngIf="bps$ | async as bps" labelRef="bp" [list]="bps" [formControl]="bp"></pui-select-input>

@@ -1,6 +1,6 @@
 import { Injectable } from "@angular/core";
 import { StatorChannel, StatorGroupState } from "@pestras/frontend/util/stator";
-import { Workflow, WorkflowAction, WorkflowStepOptions } from "@pestras/shared/data-model";
+import { Workflow, WorkflowStepOptions } from "@pestras/shared/data-model";
 import { WorkflowsService } from "./workflows.service";
 import { SessionEnd } from "../session/session.events";
 import { Observable, tap } from "rxjs";
@@ -35,21 +35,6 @@ export class WorkflowsState extends StatorGroupState<Workflow> {
   updateName(serial: string, name: string) {
     return this.service.updateName({ serial }, { name })
       .pipe(tap(() => this._update(serial, { name })));
-  }
-
-  updateMaxReviewDays(serial: string, days: number) {
-    return this.service.updateMaxReviewDays({ serial }, { days })
-      .pipe(tap(() => this._update(serial, { max_review_days: days })));
-  }
-
-  updateDefaultAction(serial: string, action: Exclude<WorkflowAction, WorkflowAction.REVIEW>) {
-    return this.service.updateDefaultAction({ serial }, { action })
-      .pipe(tap(() => this._update(serial, { default_action: action })))
-  }
-
-  updateCancelable(serial: string, cancelable: boolean) {
-    return this.service.updateCancelable({ serial }, { cancelable })
-      .pipe(tap(() => this._update(serial, { cancelable })))
   }
 
   updateSteps(serial: string, steps: WorkflowStepOptions[]) {

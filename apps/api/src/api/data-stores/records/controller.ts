@@ -3,7 +3,7 @@ import path from 'path';
 import config from "../../../config";
 import { RecordsApi } from "./types";
 import { HttpError, HttpCode } from "@pestras/backend/util";
-import { DataRecordState, DataStore, Field } from "@pestras/shared/data-model";
+import { DataStore, Field } from "@pestras/shared/data-model";
 import { NextFunction } from 'express';
 import { Serial } from "@pestras/shared/util";
 import { dataRecordsModel, dataStoresModel } from '@pestras/backend/models';
@@ -88,7 +88,7 @@ export const controller = {
       if (!ds)
         throw new HttpError(HttpCode.NOT_FOUND, 'dataStoreNotFound');
 
-      const src = `${draft ? DataRecordState.DRAFT : DataRecordState.PUBLISHED}_${req.params.serial}`
+      const src = draft ?  `'draft'_${req.params.serial}` : req.params.serial;
       const record = await dataRecordsModel.getBySerial(src, req.params.record);
       const imgsToRemove: string[] = [];
 
@@ -150,7 +150,7 @@ export const controller = {
       if (!ds)
         throw new HttpError(HttpCode.NOT_FOUND, 'dataStoreNotFound');
 
-      const src = isDraft ? `${DataRecordState.DRAFT}_${req.params.serial}` : req.params.serial;
+      const src = isDraft ? `'draft'_${req.params.serial}` : req.params.serial;
       const record = await dataRecordsModel.getBySerial(src, req.params.record);
 
       if (!record)
@@ -158,7 +158,7 @@ export const controller = {
 
       const fields = await dataStoresModel.getFields(req.params.serial);
 
-      res.json(await dataRecordsModel.delete(req.params.serial, req.params.record, isDraft));
+      res.json(await dataRecordsModel.delete(req.params.serial, req.params.record, isDraft, req.body.message));
 
       if (!isDraft && typeof ds.settings.workflow.delete !== 'string') {
         // remove images

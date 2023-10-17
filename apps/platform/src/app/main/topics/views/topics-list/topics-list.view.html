@@ -3,7 +3,7 @@
     <div class="toolbar mbe-4">
       <h3 class="weight-8">{{c['topics']}}</h3>
       <div class="grow"></div>
-      <button class="btn-icon btn-small btn-round" (click)="add.emit()">
+      <button *ngIf="[roles.ADMIN] | hasRoles" class="btn-icon btn-small btn-round" (click)="add.emit()">
         <i puiIcon="add" size="small"></i>
       </button>
     </div>

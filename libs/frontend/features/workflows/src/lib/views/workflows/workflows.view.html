@@ -1,41 +1,44 @@
 <ng-container *contra="let c">
-  <div *ngIf="(!isEmpty && !form) else noData">
-    <pestras-workflows-list
-      class="block"
-      [editable]="editable"
-      [blueprint]="blueprint"
-      [selected]="selected"
-      (selects)="this.selected = $event"
-      (add)="form = true"
-      (noData)="isEmpty = true"
-    ></pestras-workflows-list>
+  <ng-container *ngIf="list$ | async as list">
+    <div *ngIf="(list.length && !form) else noData">
+      <div class="toolbar mbe-4">
+        <h4>{{c['list']}}</h4>
+        <div class="grow"></div>
+        <button
+          *ngIf="editable"
+          class="btn-round btn-small btn-icon btn-primary"
+          (click)="this.form = true"
+        >
+          <i puiIcon="add" size="small"></i>
+        </button>
+      </div>
+      <div class="accordion">
+        <div *ngFor="let wf of list" class="mbe-2 card" #card>
+          <div class="card-header">
+            <h4>{{wf.name}}</h4>
+            <div class="grow"></div>
+            <button
+              *ngIf="editable"
+              class="btn-icon btn-tiny btn-round btn-success"
+              (click)="openDialog(editName, wf)"
+            >
+              <i puiIcon="edit" size="tiny"></i>
+            </button>
+            <button
+              class="btn-icon btn-small btn-round"
+              (click)="card.classList.toggle('active')"
+            >
+              <i size="small" puiIcon="arrow_drop_down"></i>
+            </button>
+          </div>
 
-    <div *ngIf="selected" class="w-100 block mbs-2 card shadow-2 p-8">
-      <pestras-workflow-name [wf]="selected"></pestras-workflow-name>
-
-      <div class="divider mb-6"></div>
-
-      <pestras-workflow-cancelable
-        [wf]="selected"
-      ></pestras-workflow-cancelable>
-
-      <div class="divider mb-6"></div>
-
-      <pestras-workflow-default-action
-        [wf]="selected"
-      ></pestras-workflow-default-action>
-
-      <div class="divider mb-6"></div>
-
-      <pestras-workflow-max-review-days
-        [wf]="selected"
-      ></pestras-workflow-max-review-days>
-
-      <div class="divider mb-6"></div>
-
-      <pestras-workflow-steps [wf]="selected"></pestras-workflow-steps>
+          <div class="card-body pbs-0">
+            <pestras-workflow-steps [wf]="wf"></pestras-workflow-steps>
+          </div>
+        </div>
+      </div>
     </div>
-  </div>
+  </ng-container>
 
   <ng-template #noData>
     <no-data-placeholder-widget
@@ -53,4 +56,34 @@
     (cancel)="form = false"
     (done)="form = false"
   ></pestras-workflow-form>
+
+  <ng-template #editName>
+    <div class="card shadow-6 w-10">
+      <h4 class="card-header">{{c['name']}}</h4>
+      <div class="card-body">
+        <div class="fc">
+          <input type="text" [formControl]="nameCtrl" />
+        </div>
+      </div>
+      <div class="card-footer">
+        <button
+          type="reset"
+          class="button btn-round btn-outline"
+          (click)="closeDialog()"
+        >
+          {{c['cancel']}}
+        </button>
+        <button
+          type="button"
+          class="button btn-round btn-primary"
+          [disabled]="nameCtrl.invalid"
+          (click)="updateName(c)"
+        >
+          {{c['update']}}
+        </button>
+      </div>
+
+      <pui-preloader *ngIf="loading"></pui-preloader>
+    </div>
+  </ng-template>
 </ng-container>

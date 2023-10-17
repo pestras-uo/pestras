@@ -5,18 +5,57 @@ import { Filter } from "mongodb";
 
 export async function search(
   this: DashboardsModel,
-  query: Partial<ApiQuery<Dashboard>>
+  query: Partial<ApiQuery<Dashboard>>,
+  user: User
 ) {
-  const count = await this.col.countDocuments(query.search as Filter<Dashboard>);
-  const results = await this.col.find(query.search as any, {
-    sort: query.sort ?? { _id: 1 },
-    skip: query.skip ?? 0,
-    limit: query.limit ?? 10,
-    projection: query.select || {}
-  })
-    .toArray();
 
-  return { count, results } as ApiQueryResults<Dashboard>;
+  const match: Filter<Dashboard> = user.orgunit === "*"
+    ? {}
+    : {
+      $or: [
+        { owner: user.serial },
+        {
+          $and: [
+            { $or: [{ 'access.orgunits': { $size: 0 } }, { 'access.orgunits': user.orgunit }] },
+            { $or: [{ 'access.users': { $size: 0 } }, { 'access.users': user.serial }] },
+            { $or: [{ 'access.groups': { $size: 0 } }, { 'access.group': { $in: user.groups } }] }
+          ]
+        }
+      ]
+    };
+
+  return (await this.col.aggregate([
+    { $match: query.search },
+    {
+      $lookup: {
+        from: 'entities_access',
+        localField: 'serial',
+        foreignField: 'entity',
+        as: "access"
+      }
+    },
+    { $unwind: '$access' },
+    { $match: match },
+    { $sort: query.sort || { serial: 1 } },
+    {
+      $facet: {
+        count: [{ $count: 'value' }],
+        results: [
+          { $skip: query.skip ?? 0 },
+          { $limit: query.limit ?? 10 },
+          { $project: Object.assign({ access: 0, _id: 0 }) }
+          // { $project: query.select || {} }
+        ]
+      }
+    },
+    { $unwind: '$count' },
+    {
+      $project: {
+        count: '$count.value',
+        results: '$results'
+      }
+    }
+  ]).toArray())[0] as ApiQueryResults<Dashboard>;
 }
 
 
@@ -25,20 +64,39 @@ export function getByTopic(
   this: DashboardsModel,
   topic: string,
   user: User,
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   projection?: any
 ) {
-  const query: Filter<Dashboard> = user.orgunit === "*"
-    ? { topic }
+  const match: Filter<Dashboard> = user.orgunit === "*"
+    ? {}
     : {
-      topic,
-      $and: [
-        { $or: [{ 'access.orgunits': { $size: 0 } }, { 'access.orgunits': user.orgunit }] },
-        { $or: [{ 'access.users': { $size: 0 } }, { 'access.users': user.serial }] },
-        { $or: [{ 'access.groups': { $size: 0 } }, { 'access.group': { $in: user.groups } }] }
+      $or: [
+        { owner: user.serial },
+        {
+          $and: [
+            { $or: [{ 'access.orgunits': { $size: 0 } }, { 'access.orgunits': user.orgunit }] },
+            { $or: [{ 'access.users': { $size: 0 } }, { 'access.users': user.serial }] },
+            { $or: [{ 'access.groups': { $size: 0 } }, { 'access.group': { $in: user.groups } }] }
+          ]
+        }
       ]
     };
 
-  return this.col.find(query, { projection }).toArray();
+  return this.col.aggregate<Dashboard>([
+    { $match: { topic } },
+    {
+      $lookup: {
+        from: 'entities_access',
+        localField: 'serial',
+        foreignField: 'entity',
+        as: "access"
+      }
+    },
+    { $unwind: '$access' },
+    { $match: match },
+    { $project: Object.assign({ access: 0, _id: 0 }) }
+    // { $project: projection || {} }
+  ]).toArray();
 }
 
 
@@ -68,4 +126,8 @@ export async function titleExists(
   return (await this.col.countDocuments({
     title, serial: { $nin: exclude ? [exclude] : [] }
   })) > 0;
+}
+
+export function count(this: DashboardsModel) {
+  return this.col.countDocuments({});
 }

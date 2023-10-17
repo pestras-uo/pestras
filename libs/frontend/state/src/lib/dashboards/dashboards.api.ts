@@ -38,6 +38,14 @@ export namespace DashboardsApi {
   }
 
 
+  // POST
+  export namespace Count {
+    export const REQ_PATH = basePath + '/count';
+
+    export type Response = number;
+  }
+
+
   // Create
   // ---------------------------------------------------------------------------------
   // POST

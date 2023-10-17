@@ -43,7 +43,6 @@
     <app-dashboard-slide
       *ngIf="active.dashboard | dashboard | async as d"
       [dashboard]="d"
-      [topic]="active.scope"
       [slideSerial]="active.slide"
       [headless]="true"
     ></app-dashboard-slide>

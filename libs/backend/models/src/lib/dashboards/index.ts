@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { ApiQuery, ApiQueryResults, Dashboard, DashboardSlide, DashboardSlideView, User } from "@pestras/shared/data-model";
 import { Model } from "../model";
-import { exists, getByTopic, getBySerial, search, titleExists } from "./read";
+import { exists, getByTopic, getBySerial, search, titleExists, count } from "./read";
 import { create, CreateDashboardInput } from "./create";
 import { update, UpdateDashboardInput } from "./update";
 import { addSlide, removeSlide, updateSlide, updateSlidesOrder, AddDashboardSlideInput, UpdateDashboardSlideInput } from "./slides";
@@ -14,11 +14,12 @@ export class DashboardsModel extends Model<Dashboard> {
 
   // read
   // ------------------------------------------------------------------------
-  search: (query: Partial<ApiQuery<Dashboard>>) => Promise<ApiQueryResults<Dashboard>> = search.bind(this);
+  search: (query: Partial<ApiQuery<Dashboard>>, user: User) => Promise<ApiQueryResults<Dashboard>> = search.bind(this);
   getByTopic: (topic: string, user: User, projection?: any) => Promise<Dashboard[]> = getByTopic.bind(this);
   getBySerial: (serial: string, projection?: any) => Promise<Dashboard | null> = getBySerial.bind(this);
   exists: (serial: string) => Promise<boolean> = exists.bind(this);
   titleExists: (title: string, exclude?: string) => Promise<boolean> = titleExists.bind(this);
+  count: () => Promise<number> = count.bind(this);
 
   // create
   // ------------------------------------------------------------------------

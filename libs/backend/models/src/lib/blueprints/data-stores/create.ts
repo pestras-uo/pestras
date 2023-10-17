@@ -26,7 +26,7 @@ export async function create(
       history: false,
       max_attachments_count: 0,
       static: false,
-      workflow: { delete: true, new: true, update: true },
+      workflow: { delete: true, create: true, update: true },
       card_view: null,
       tree_view: null
     },

@@ -73,6 +73,15 @@
           [record]="record"
         ></pestras-record-comments>
 
+        <!-- comments -->
+        <pestras-record-workflow
+          *ngIf="view.name === 'workflow'"
+          [rState]="state"
+          [dataStore]="dataStore.serial"
+          [record]="record.serial"
+          [editable]="(record['owner'] | sessionIs) || ((dataStore.blueprint | blueprint | async)?.owner | sessionIs)"
+        ></pestras-record-workflow>
+
         <!-- sub data store -->
         <app-sub-data-stores-records
           *ngIf="view.name === 'subDataStores'"

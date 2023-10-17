@@ -39,7 +39,6 @@ export class SlidesView implements OnInit, OnChanges {
   ) { }
 
   ngOnChanges(): void {
-    console.log(this.ws.owner);
     this.slides = this.ws.slides.map((s, i) => ({ name: s.name, value: i }));
   }
 

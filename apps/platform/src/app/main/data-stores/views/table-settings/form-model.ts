@@ -12,7 +12,7 @@ export interface SettingsForm {
 }
 
 export interface SettingsWorkflowFormModel {
-  new: FormControl<string | boolean>;
+  create: FormControl<string | boolean>;
   update: FormControl<string | boolean>;
   delete: FormControl<string | boolean>;
 }

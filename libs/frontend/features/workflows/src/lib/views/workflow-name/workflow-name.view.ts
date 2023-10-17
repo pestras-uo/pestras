@@ -8,7 +8,10 @@ import { WorkflowsState } from "libs/frontend/state/src/lib/workflows/workflows.
 
 @Component({
   selector: 'pestras-workflow-name',
-  templateUrl: './workflow-name.view.html'
+  templateUrl: './workflow-name.view.html',
+  styles: [`
+    :host { display: block; }
+  `]
 })
 export class WorkflowNameViewComponent implements OnChanges {
 

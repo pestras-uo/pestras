@@ -51,7 +51,7 @@ export class DetailsPage implements OnChanges {
   @Input()
   payload?: string;
   @Input()
-  state: DataRecordState | '' = '';
+  state: DataRecordState = "published";
 
   constructor(
     private service: RecordsService,
@@ -63,27 +63,11 @@ export class DetailsPage implements OnChanges {
   ngOnChanges() {
     this.view = { name: this.menu ?? 'details', payload: this.payload ?? null };
 
-    this.mainField =
-      this.dataStore.fields.find(
-        (f) => f.name === this.dataStore.settings.interface_field
-      ) ?? null;
-
-    const src =
-      this.state && this.state !== DataRecordState.PUBLISHED
-        ? `${this.state}_${this.dataStore.serial}`
-        : this.dataStore.serial;
-    this.record$ = this.service.getBySerial({
-      ds: src,
-      serial: this.record,
-    }) as Observable<TableDataRecord | null>;
-
-   
+    const src = this.state && this.state !== 'published' ? `${this.state}_${this.dataStore.serial}` : this.dataStore.serial;
+    this.record$ = this.service.getBySerial({ ds: src, serial: this.record }) as Observable<TableDataRecord | null>;
   }
 
   set(view: { name: string; payload?: any }) {
-    this.router.navigate([], {
-      relativeTo: this.route,
-      queryParams: { menu: view.name, payload: view.payload ?? '' },
-    });
+    this.router.navigate([], { relativeTo: this.route, queryParamsHandling: "merge", queryParams: { menu: view.name, payload: view.payload ?? '' } })
   }
 }

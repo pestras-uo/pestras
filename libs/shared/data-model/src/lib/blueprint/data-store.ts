@@ -67,12 +67,7 @@ export interface DataStoreTreeViewItemConfig {
  * true: by pass
  * false: not allowed
  */
-export interface WorkflowOptions {
-  new: string | boolean;
-  update: string | boolean;
-  delete: string | boolean;
-  reset: string | boolean;
-}
+export type WorkflowOptions = Record<WorkflowTriggers, string | boolean>;
 
 export interface DataStoreSettings {
   // General Settings

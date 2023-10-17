@@ -14,7 +14,7 @@ export class ReportsModel extends Model<Report> {
 
   // read
   // ------------------------------------------------------------------------
-  search: (query: Partial<ApiQuery<Report>>) => Promise<ApiQueryResults<Report>> = search.bind(this);
+  search: (query: Partial<ApiQuery<Report>>, user: User) => Promise<ApiQueryResults<Report>> = search.bind(this);
   getByTopic: (topic: string, user: User, projection?: any) => Promise<Report[]> = getByTopic.bind(this);
   getBySerial: (serial: string, projection?: any) => Promise<Report | null> = getBySerial.bind(this);
   exists: (serial: string) => Promise<boolean> = exists.bind(this);

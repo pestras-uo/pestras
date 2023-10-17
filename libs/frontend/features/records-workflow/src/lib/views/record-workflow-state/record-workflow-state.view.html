@@ -1,9 +1,9 @@
 <ng-container *contra="let c">
-  <p *ngIf="rState === drState.PUBLISHED" class="badge badge-success">
+  <p *ngIf="rState === 'published'" class="badge badge-success">
     {{c['approved']}}
   </p>
   <button
-    *ngIf="rState === drState.DRAFT"
+    *ngIf="rState === 'draft'"
     class="btn-round btn-primary"
     [disabled]="!editable"
     (click)="openDialog(publishTmp)"
@@ -11,100 +11,28 @@
     {{c['publish']}}
   </button>
 
-  <ng-container *ngIf="rState === drState.REVIEW">
+  <ng-container *ngIf="rState === 'review'">
     <button
-      #reviewBadge
       class="btn-round btn-outline"
-      (click)="workflowStack.show()"
+      (click)="toWorkflow()"
     >
       {{c['review']}}
-      <i puiIcon="arrow_drop_down" size="small"></i>
     </button>
-
-    <pui-dropdown #workflowStack [origin]="reviewBadge">
-      <div class="card shadow-4 w-10">
-        <div class="card-body p-0" *ngIf="rWorkflow | async as steps">
-          <ng-container
-            *ngFor="let step of steps; let last = last; let first = first"
-          >
-            <div class="card card-clear card-small" [class.mbe-2]="!last">
-              <div *ngIf="first" class="card-header">
-                <h5>{{c[step.trigger]}}</h5>
-                <div class="grow"></div>
-                <p class="f9">{{step.create_date | date: 'dd-MM-yyyy'}}</p>
-              </div>
-              <div class="card-body list">
-                <ng-container *ngFor="let a of step.actions; let aLast = last">
-                  <div class="flex align-items-center gap-2">
-                    <app-avatar [serial]="a.user" size="small"></app-avatar>
-                    <div class="grow"></div>
-                    <p *ngIf="a.date">{{a.date | date: 'dd-MM-yyyy'}}</p>
-                    <i
-                      *ngIf="a.user !== user || a.action !== wAction.REVIEW"
-                      [puiIcon]="icons[a.action]"
-                      size="tiny"
-                    ></i>
-                    <ng-container
-                      *ngIf="a.user === user && a.action === wAction.REVIEW"
-                    >
-                      <button
-                        class="btn-icon btn-tiny btn-round btn-success"
-                        (click)="preAction = wAction.APPROVE"
-                      >
-                        <i puiIcon="check" size="tiny"></i>
-                      </button>
-                      <button
-                        class="btn-icon btn-tiny btn-round btn-danger"
-                        (click)="preAction = wAction.REJECT"
-                      >
-                        <i puiIcon="close" size="tiny"></i>
-                      </button>
-                    </ng-container>
-                    <pui-preloader
-                      *ngIf="a.user === user && loading"
-                    ></pui-preloader>
-                  </div>
-                  <p *ngIf="a.message" class="f9 text3 mbs-2">{{a.message}}</p>
-                  <div class="flex gap-2 mbs-2" *ngIf="a.user === user && preAction">
-                    <div class="fc fc-small grow">
-                      <input #msg type="text" [placeholder]="c['comment']" />
-                    </div>
-                    <button
-                      *ngIf="preAction === wAction.APPROVE"
-                      class="btn-small btn-success"
-                      (click)="approve(step.step, msg.value)"
-                    >
-                      {{c['approve']}}
-                    </button>
-                    <button
-                      *ngIf="preAction === wAction.REJECT"
-                      class="btn-small btn-danger"
-                      (click)="reject(step.step, msg.value)"
-                    >
-                      {{c['reject']}}
-                    </button>
-                    <button
-                      class="btn-small btn-outline"
-                      (click)="preAction = null"
-                    >
-                      {{c['cancel']}}
-                    </button>
-                  </div>
-                  <div *ngIf="!aLast" class="divider mb-2"></div>
-                </ng-container>
-              </div>
-            </div>
-            <div *ngIf="!last" class="divider"></div>
-          </ng-container>
-        </div>
-      </div>
-    </pui-dropdown>
   </ng-container>
 
   <ng-template #publishTmp>
     <div class="card shadow-6 w-10">
       <h4 class="card-header">{{c['publish']}} {{c['record']}}</h4>
-      <p class="card-body">{{c['confirmPublish']}}</p>
+      <div class="card-body">
+        <label for="delete-message">{{c['addRemark']}}</label>
+        <div class="fc">
+          <input
+            type="text"
+            id="delete-message"
+            [formControl]="publishMessageCtrl"
+          />
+        </div>
+      </div>
       <div class="card-footer">
         <button class="btn-outline btn-round" (click)="closeDialog()">
           {{c['cancel']}}

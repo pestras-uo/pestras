@@ -6,7 +6,7 @@
       <div class="grow"></div>
 
       <app-workspace-toggle-slide
-        [input]="{ name: slide.title, slide: slide.serial, dashboard: dashboard.serial, scope: topic }"
+        [input]="{ name: slide.title, slide: slide.serial, dashboard: dashboard.serial, scope: dashboard.topic }"
       ></app-workspace-toggle-slide>
 
       <button
@@ -265,7 +265,10 @@
 
     <!-- set view data viz -->
     <ng-template #addDataViz>
-      <app-chart-form (done)="closeDrawer(c, $event)"></app-chart-form>
+      <app-chart-form
+        [blueprint]="(dashboard.topic | topic | async)?.blueprint ?? null"
+        (done)="closeDrawer(c, $event)"
+      ></app-chart-form>
     </ng-template>
   </div>
 </ng-container>

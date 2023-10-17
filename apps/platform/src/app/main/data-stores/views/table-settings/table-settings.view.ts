@@ -23,7 +23,7 @@ export class TableSettingsView implements OnChanges, OnInit {
   readonly form = new FormGroup<SettingsForm>({
     static: new FormControl<boolean>(false, { nonNullable: true }),
     workflow: new FormGroup({
-      new: new FormControl<string | boolean>(true, { nonNullable: true, validators: Validators.required }),
+      create: new FormControl<string | boolean>(true, { nonNullable: true, validators: Validators.required }),
       update: new FormControl<string | boolean>(true, { nonNullable: true, validators: Validators.required }),
       delete: new FormControl<string | boolean>(true, { nonNullable: true, validators: Validators.required })
     }),
@@ -33,7 +33,7 @@ export class TableSettingsView implements OnChanges, OnInit {
     sub_data_stores: new FormArray<FormGroup<SettingsFormSubDataStore>>([])
   });
 
-  readonly allowNewCtrl = new FormControl<boolean>(true);
+  readonly allowCreateCtrl = new FormControl<boolean>(true);
   readonly allowUpdateCtrl = new FormControl<boolean | null>(true);
   readonly allowDeleteCtrl = new FormControl<boolean | null>(true);
 
@@ -62,11 +62,11 @@ export class TableSettingsView implements OnChanges, OnInit {
       this.dataStore.settings.max_attachments_count ?? 0
     );
     
-    const allowNew = this.dataStore.settings.workflow.new === true;
+    const allowNew = this.dataStore.settings.workflow.create === true;
     const allowUpdate = typeof this.dataStore.settings.workflow.update === 'boolean' ? this.dataStore.settings.workflow.update : null;
     const allowDelete = typeof this.dataStore.settings.workflow.delete === 'boolean' ? this.dataStore.settings.workflow.delete : null;
     
-    this.allowNewCtrl.setValue(allowNew || false);
+    this.allowCreateCtrl.setValue(allowNew || false);
     this.allowUpdateCtrl.setValue(allowUpdate);
     this.allowDeleteCtrl.setValue(allowDelete);
 
@@ -114,9 +114,9 @@ export class TableSettingsView implements OnChanges, OnInit {
           : this.form.controls.sub_data_stores.clear()
       );
 
-    this.allowNewCtrl.valueChanges
+    this.allowCreateCtrl.valueChanges
       .pipe(this.ud())
-      .subscribe(value => this.form.controls.workflow.controls.new.setValue(value ? true : ""));
+      .subscribe(value => this.form.controls.workflow.controls.create.setValue(value ? true : ""));
 
     this.allowUpdateCtrl.valueChanges
       .pipe(this.ud())
