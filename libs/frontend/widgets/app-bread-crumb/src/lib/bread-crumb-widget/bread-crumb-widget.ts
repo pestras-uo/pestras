@@ -1,24 +1,19 @@
-import { Component, Input, OnChanges, Output } from '@angular/core';
+import { Component, Input, OnChanges } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import {
   BlueprintsState,
-  ClientApiService,
-  DashboardsService,
+  ClientApiState,
   DashboardsState,
   DataStoresState,
   RecordsService,
-  ReportsService,
+  ReportsState,
   TopicsState,
 } from '@pestras/frontend/state';
 import { untilDestroyed } from '@pestras/frontend/ui';
 import { ContraService } from '@pestras/frontend/util/contra';
 import { Blueprint, DataRecord, DataStore } from '@pestras/shared/data-model';
-import { link } from 'fs';
-import { BlueprintsService } from '@pestras/frontend/state';
-
-// eslint-disable-next-line @nx/enforce-module-boundaries
-import { IBreadCrumb } from 'libs/frontend/ui/src/lib/breadcrumb/breadcrumb.interface';
-import { combineLatest, last, map, switchMap } from 'rxjs';
+import { IBreadCrumb } from '@pestras/frontend/ui';
+import { combineLatest, map, switchMap } from 'rxjs';
 
 @Component({
   selector: 'pestras-bread-crumb-widget',
@@ -42,10 +37,8 @@ export class BreadCrumbWidgetComponent implements OnChanges {
     private dshState: DashboardsState,
     private blState: BlueprintsState,
     private recordsService: RecordsService,
-    private reportService: ReportsService,
-    private dashboardService: DashboardsService,
-    private blueprintService: BlueprintsService,
-    private clientService: ClientApiService
+    private reportsState: ReportsState,
+    private clientsApiState: ClientApiState
   ) {}
 
   ngOnChanges(): void {
@@ -140,6 +133,7 @@ export class BreadCrumbWidgetComponent implements OnChanges {
             ];
           });
       }
+
     } else if (this.page === 'blueprint') {
       // blueprint details page
       const serial = this.route.snapshot.paramMap.get('serial') ?? '';
@@ -165,15 +159,10 @@ export class BreadCrumbWidgetComponent implements OnChanges {
       const topicSerial = this.route.snapshot.paramMap.get('topic');
       const dshSerial = this.route.snapshot.paramMap.get('serial');
 
-      if (dshSerial && !topicSerial) {
-        combineLatest([
-          this.dshState.select(dshSerial ?? ''),
-          this.dashboardService.getBySerial({
-            serial: dshSerial ?? '',
-          }),
-        ])
+      if (!topicSerial) {
+        this.dshState.select(dshSerial ?? '')
           .pipe(this.ud())
-          .subscribe(([dsh, dashboard]) => {
+          .subscribe(dashboard => {
             this.levels = [
               { label: content['dashboards'], link: ['/main/dashboards'] },
 
@@ -187,15 +176,11 @@ export class BreadCrumbWidgetComponent implements OnChanges {
         const serial = this.route.snapshot.paramMap.get('topic') ?? '';
 
         combineLatest([
-          this.dshState.select(serial ?? ''),
-          this.topicsState.select(serial ?? ''),
-
-          this.dashboardService.getBySerial({
-            serial: dshSerial ?? '',
-          }),
+          this.dshState.select(dshSerial ?? ''),
+          this.topicsState.select(serial ?? '')
         ])
           .pipe(this.ud())
-          .subscribe(([dsh, tp,dashboard]) => {
+          .subscribe(([dashboard, tp]) => {
             this.levels = [
               { label: content['topics'], link: ['/main/topics'] },
 
@@ -220,13 +205,10 @@ export class BreadCrumbWidgetComponent implements OnChanges {
       if (topicSerial) {
         combineLatest([
           this.topicsState.select(topicSerial),
-          this.dsState.select(reportSerial ?? ''),
-          this.reportService.getBySerial({
-            serial: reportSerial ?? '',
-          }),
+          this.reportsState.select(reportSerial ?? '')
         ])
           .pipe(this.ud())
-          .subscribe(([topic, ds, rep]) => {
+          .subscribe(([topic, rep]) => {
             this.levels = [
               { label: content['topics'], link: ['/main/topics'] },
               {
@@ -241,45 +223,17 @@ export class BreadCrumbWidgetComponent implements OnChanges {
             ];
           });
 
-        // record details through blueprint and data stores
+      
       } else {
-        combineLatest([
-          this.dsState.select(this.lastValueUrl ?? ''),
-          this.reportService.getBySerial({
-            serial: reportSerial ?? '',
-          }),
-        ])
-          .pipe(
-            switchMap(([ds, record]) => {
-              return this.bpState
-                .select(ds?.blueprint ?? '')
-                .pipe(
-                  map(
-                    (bp) =>
-                      [bp, ds, record] as [Blueprint, DataStore, DataRecord]
-                  )
-                );
-            }),
-            this.ud()
-          )
-          .subscribe(([bp, ds, record]) => {
+        this.reportsState.select(reportSerial ?? '')
+          .pipe(this.ud())
+          .subscribe(report => {
             this.levels = [
-              { label: content['blueprints'], link: ['/main/blueprints'] },
+              { label: content['reports'], link: ['/main/reports'] },
+
               {
-                label: bp?.name ?? '',
-                link: ['/main/blueprints', ds?.blueprint ?? ''],
-              },
-              {
-                label: ds?.name ?? '',
-                link: [
-                  '/main/data-stores',
-                  ds?.blueprint ?? '',
-                  ds?.serial ?? '',
-                ],
-              },
-              {
-                label: record?.[ds?.settings.interface_field ?? ''],
-                link: [''],
+                label: report?.title || '',
+                link: ['/main/reports', reportSerial ?? ''],
               },
             ];
           });
@@ -290,10 +244,7 @@ export class BreadCrumbWidgetComponent implements OnChanges {
 
       combineLatest([
         this.blState.select(blSerial ?? ''),
-        this.dsState.select(dsSerial ?? ''),
-        this.blueprintService.getBySerial({
-          serial: dsSerial ?? '',
-        }),
+        this.dsState.select(dsSerial ?? '')
       ])
         .pipe(this.ud())
         .subscribe(([bl, ds]) => {
@@ -310,18 +261,15 @@ export class BreadCrumbWidgetComponent implements OnChanges {
           ];
         });
     } else if (this.page === 'clients-api') {
-      const dsSerial = this.route.snapshot.paramMap.get('serial') ?? '';
+      const clientApiSerial = this.route.snapshot.paramMap.get('serial') ?? '';
       const blSerial = this.route.snapshot.paramMap.get('blueprint');
 
       combineLatest([
         this.blState.select(blSerial ?? ''),
-        this.dsState.select(dsSerial ?? ''),
-        this.clientService.getBySerial({
-          serial: dsSerial ?? '',
-        }),
+        this.clientsApiState.select(clientApiSerial)
       ])
         .pipe(this.ud())
-        .subscribe(([bl, ds, client]) => {
+        .subscribe(([bl, client]) => {
           this.levels = [
             { label: content['blueprints'], link: ['/main/blueprints'] },
             {

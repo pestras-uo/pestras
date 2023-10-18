@@ -107,4 +107,5 @@ export * from './lib/form-validators';
 export * from './lib/export-pdf/export-to-pdf.directive';
 
 // breadcrumb
+export * from './lib/breadcrumb/breadcrumb.component';
 export * from './lib/breadcrumb/breadcrumb.module';
