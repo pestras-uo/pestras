@@ -29,7 +29,7 @@
         <td>{{i + 1}}</td>
         <td>{{param.field | fn: findField: dataStore.fields}}</td>
         <td>{{param.alias || c['none']}}</td>
-        <td>{{[param.operator, c] | fn : findOperator}}</td>
+        <td>{{param.operator | fn : findOperator: c}}</td>
         <td>
           <i *ngIf="param.required" puiIcon="check" size="small"></i>
           <i *ngIf="!param.required" puiIcon="close" size="small"></i>
