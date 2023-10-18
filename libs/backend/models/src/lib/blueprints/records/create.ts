@@ -11,7 +11,7 @@ export async function create(
   data: any,
   issuer: User
 ) {
-  const ds = await dataStoresModel.getBySerial(dsSerial, { serial: 1, type: 1, fields: 1, state: 1 });
+  const ds = await dataStoresModel.getBySerial(dsSerial, { serial: 1, type: 1, fields: 1, state: 1, settings: 1 });
 
   if (!ds)
     throw new HttpError(HttpCode.NOT_FOUND, 'dataStoreNotFound');
