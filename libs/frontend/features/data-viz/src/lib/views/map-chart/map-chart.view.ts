@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @angular-eslint/component-class-suffix */
 /* eslint-disable @angular-eslint/component-selector */
-import { Component, OnChanges, Input, ChangeDetectionStrategy } from '@angular/core';
+import { Component, OnChanges, Input, ChangeDetectionStrategy, booleanAttribute } from '@angular/core';
 import { BaseDataViz, DataRecord, Field, MapDataVizOptions, Region } from '@pestras/shared/data-model';
 import { RegionsState } from '@pestras/frontend/state';
 import { Serial } from '@pestras/shared/util';
@@ -21,9 +21,9 @@ export interface MapChartDataLoad {
   template: `
     <ng-container *ngIf="gMapService.mapApiLoaded$ | async">
       <ng-container *ngIf="payload$ | async as p">
-        <app-map-regions-chart *ngIf="conf.options.regions" [options]="conf.options.regions" [payload]="p"></app-map-regions-chart>
-        <app-map-pie-chart *ngIf="conf.options.pie" [options]="conf.options.pie" [payload]="p"></app-map-pie-chart>
-        <app-map-scatter-chart *ngIf="conf.options.scatter" [options]="conf.options.scatter" [payload]="p"></app-map-scatter-chart>
+        <app-map-regions-chart *ngIf="conf.options.regions" [options]="conf.options.regions" [payload]="p" [dark]="dark"></app-map-regions-chart>
+        <app-map-pie-chart *ngIf="conf.options.pie" [options]="conf.options.pie" [payload]="p" [dark]="dark"></app-map-pie-chart>
+        <app-map-scatter-chart *ngIf="conf.options.scatter" [options]="conf.options.scatter" [payload]="p" [dark]="dark"></app-map-scatter-chart>
       </ng-container>
     </ng-container>
   `,
@@ -40,6 +40,8 @@ export class MapChartView implements OnChanges {
   conf!: BaseDataViz<any>;
   @Input({ required: true })
   data!: ChartDataLoad;
+  @Input({ transform: booleanAttribute })
+  dark = false;
 
   constructor(
     private regionsState: RegionsState,

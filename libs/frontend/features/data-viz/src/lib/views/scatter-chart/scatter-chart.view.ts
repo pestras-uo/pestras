@@ -1,7 +1,7 @@
 /* eslint-disable @angular-eslint/component-class-suffix */
 /* eslint-disable @angular-eslint/component-selector */
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, booleanAttribute } from '@angular/core';
 import { EChartsOption, registerTransform, ScatterSeriesOption } from 'echarts';
 import { BaseDataViz, DataVizScatterSerie, Field, ScatterDataVizOptions } from '@pestras/shared/data-model';
 import * as estat from 'echarts-stat';
@@ -37,6 +37,8 @@ export class ScatterChartView implements OnInit {
   conf!: BaseDataViz<any>;
   @Input({ required: true })
   data!: ChartDataLoad;
+  @Input({ transform: booleanAttribute })
+  dark = false;
 
   constructor(
     private regionsState: RegionsState
@@ -176,12 +178,14 @@ export class ScatterChartView implements OnInit {
       },
       tooltip: {
         trigger: 'axis',
+        backgroundColor: this.dark ? '#224' : '#EEF',
         axisPointer: {
           type: 'cross'
         }
       },
       xAxis: {
         type: 'value',
+        axisLabel: { color: this.dark ? '#DDF' : '#335' },
         splitLine: {
           lineStyle: {
             type: 'dashed'
@@ -190,6 +194,7 @@ export class ScatterChartView implements OnInit {
       },
       yAxis: {
         type: 'value',
+        axisLabel: { color: this.dark ? '#DDF' : '#335' },
         splitLine: {
           lineStyle: {
             type: 'dashed'

@@ -2,7 +2,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @angular-eslint/component-class-suffix */
 /* eslint-disable @angular-eslint/component-selector */
-import { Component, OnChanges, Input } from '@angular/core';
+import { Component, OnChanges, Input, booleanAttribute } from '@angular/core';
 import { BaseDataViz, BoxplotDataVizOptions, Stats } from '@pestras/shared/data-model';
 import { EChartsOption } from 'echarts';
 import { ChartDataLoad } from '../../util';
@@ -25,6 +25,8 @@ export class BoxplotChartView implements OnChanges {
   conf!: BaseDataViz<any>;
   @Input({ required: true })
   data!: ChartDataLoad;
+  @Input({ transform: booleanAttribute })
+  dark = false;
 
   ngOnChanges() {
     const { seriesNames, source, stats } = this.init(this.conf.options);
@@ -87,6 +89,7 @@ export class BoxplotChartView implements OnChanges {
       ],
       tooltip: {
         trigger: 'item',
+        backgroundColor: this.dark ? '#224' : '#EEF',
         axisPointer: {
           type: 'shadow'
         },
@@ -120,24 +123,36 @@ export class BoxplotChartView implements OnChanges {
         },
         splitLine: {
           show: false
+        },
+        axisLabel: {
+          color: this.dark ? '#DDF' : '#335'
         }
       },
       yAxis: {
         type: 'value',
         splitArea: {
           show: true
+        },
+        axisLabel: {
+          color: this.dark ? '#DDF' : '#335'
         }
       },
       series: [
         {
           name: 'boxplot',
           type: 'boxplot',
-          datasetIndex: 1
+          datasetIndex: 1,
+          label: {
+            color: this.dark ? '#DDF' : '#335'
+          }
         },
         {
           name: 'outlier',
           type: 'scatter',
-          datasetIndex: 2
+          datasetIndex: 2,
+          label: {
+            color: this.dark ? '#DDF' : '#335'
+          }
         }
       ]
     }

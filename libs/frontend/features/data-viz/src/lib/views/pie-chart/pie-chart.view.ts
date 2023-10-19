@@ -50,6 +50,7 @@ export class PieChartView implements OnChanges {
     this.chartOptions = {
       textStyle: { fontFamily: 'Almarai' },
       tooltip: {
+        backgroundColor: this.dark ? '#224' : '#EEF',
         trigger: 'item',
         formatter: '<h5>{b}</h5><p class="f7">{c} - %{d}</p>'
       },
@@ -75,12 +76,6 @@ export class PieChartView implements OnChanges {
               // correct the percentage
               return param.name + ': ' + param.value + ' (' + (param?.percent || 0) + '%)';
             }
-          },
-          tooltip: {
-            backgroundColor: this.dark ? '#224' : '#EEF',
-            // textStyle: {
-            //   color: '#335'
-            // }
           },
           emphasis: {
             label: {

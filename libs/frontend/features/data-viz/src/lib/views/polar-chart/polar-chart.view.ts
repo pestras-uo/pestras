@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @angular-eslint/component-class-suffix */
 /* eslint-disable @angular-eslint/component-selector */
-import { Component, OnChanges, Input } from '@angular/core';
+import { Component, OnChanges, Input, booleanAttribute } from '@angular/core';
 import { BaseDataViz, PolarDataVizOptions } from '@pestras/shared/data-model';
 import { EChartsOption } from 'echarts';
 import { ChartDataLoad } from '../../util';
@@ -24,6 +24,8 @@ export class PolarChartView implements OnChanges {
   conf!: BaseDataViz<any>;
   @Input({ required: true })
   data!: ChartDataLoad;
+  @Input({ transform: booleanAttribute })
+  dark = false;
 
   ngOnChanges() {
     const { categories, values } = this.init(this.conf.options);
@@ -111,10 +113,12 @@ export class PolarChartView implements OnChanges {
         }
       },
       tooltip: {
-        trigger: 'axis'
+        trigger: 'axis',
+        backgroundColor: this.dark ? '#224' : '#EEF'
       },
       series: [
         {
+          label: { color: this.dark ? '#DDF' : '#335' },
           type: 'bar',
           showBackground: true,
           data: options.indicator

@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @angular-eslint/component-class-suffix */
 /* eslint-disable @angular-eslint/component-selector */
-import { Component, Input, OnChanges } from '@angular/core';
+import { Component, Input, OnChanges, booleanAttribute } from '@angular/core';
 import { MapChartDataLoad } from '../map-chart.view';
 import * as echarts from 'echarts';
 import { MapScatterDataVizOptions, lerp } from '@pestras/shared/data-model';
@@ -31,6 +31,8 @@ export class MapScatterChartView implements OnChanges {
   options!: MapScatterDataVizOptions;
   @Input({ required: true })
   payload!: MapChartDataLoad;
+  @Input({ transform: booleanAttribute })
+  dark = false;
 
   constructor(
     private contra: ContraService,
@@ -119,6 +121,7 @@ export class MapScatterChartView implements OnChanges {
       encode: {
         tooltip: 2
       },
+      label: { color: this.dark ? '#DDF' : '#335' },
       itemStyle: {
         shadowBlur: 1,
         shadowColor: '#111111'
@@ -155,6 +158,7 @@ export class MapScatterChartView implements OnChanges {
         fontFamily: 'Almarai'
       },
       tooltip: {
+        backgroundColor: this.dark ? '#224' : '#EEF',
         className: 'card shadow-4 card-small ' + this.contra.currLang?.dir,
         renderMode: 'html',
         padding: 0,

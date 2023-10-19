@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @angular-eslint/component-class-suffix */
 /* eslint-disable @angular-eslint/component-selector */
-import { Component, Input, OnChanges } from '@angular/core';
+import { Component, Input, OnChanges, booleanAttribute } from '@angular/core';
 import { BarDataVizOptions, BaseDataViz, Field } from '@pestras/shared/data-model';
 import { EChartsOption, BarSeriesOption, graphic } from 'echarts';
 import { ChartDataLoad } from '../../util';
@@ -30,6 +30,8 @@ export class BarChartView implements OnChanges {
   conf!: BaseDataViz<any>;
   @Input({ required: true })
   data!: ChartDataLoad;
+  @Input({ transform: booleanAttribute })
+  dark = false;
 
   ngOnChanges() {
     const { categories, series, valueFields } = this.init(this.conf.options);
@@ -78,7 +80,7 @@ export class BarChartView implements OnChanges {
         return "" + Math.round(+param.value);
       },
       fontSize: 16,
-      color: '#ffffff'
+      color: this.dark ? '#DDF' : '#335',
     }
 
     if (options.horizontal) {
@@ -98,14 +100,16 @@ export class BarChartView implements OnChanges {
         formatter: function (param: any) {
           return `
             <h4>${param.seriesName}</h4>
-            ${param.marker} <span style='margin-inline-end: 28px'>${param.name}</span> <strong>${Math.round(+param.value)}</strong>
+            <p>${param.marker} <span style='margin-inline-end: 28px'>${param.name}</span> <strong>${Math.round(+param.value)}</strong></p>
           `
         },
+        backgroundColor: this.dark ? '#224' : '#EEF',
         axisPointer: {
           type: 'shadow'
         }
       },
       legend: series.length > 1 ? {
+        textStyle: { color: this.dark ? '#DDF' : '#335' }
         // orient: 'vertical', 
         // left: 'right',
         // top: 'center'
@@ -118,11 +122,21 @@ export class BarChartView implements OnChanges {
         containLabel: true
       },
       xAxis: options.horizontal
-        ? { type: 'value', boundaryGap: [0.2, 0.2], alignTicks: true }
+        ? { 
+          type: 'value', 
+          boundaryGap: [0.2, 0.2], 
+          alignTicks: true,
+          axisLabel: {
+            color: this.dark ? '#DDF' : '#335'
+          }
+        }
         : {
           type: 'category',
           data: categories,
-          axisLabel: { rotate: 45 }
+          axisLabel: { 
+            rotate: 45,
+            color: this.dark ? '#DDF' : '#335'
+          }
         },
       yAxis:
         !options.horizontal
@@ -130,11 +144,17 @@ export class BarChartView implements OnChanges {
             type: 'value',
             boundaryGap: [0.2, 0.2],
             formatter: function (value: number) { return value + ' ' + f.unit },
-            alignTicks: true
+            alignTicks: true,
+            axisLabel: {
+              color: this.dark ? '#DDF' : '#335'
+            }
           }))
           : {
             type: 'category',
-            data: categories
+            data: categories,
+            axisLabel: {
+              color: this.dark ? '#DDF' : '#335'
+            }
           },
       series: series.map((s, i) => ({
         ...s,

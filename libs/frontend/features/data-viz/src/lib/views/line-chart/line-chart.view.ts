@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @angular-eslint/component-class-suffix */
 /* eslint-disable @angular-eslint/component-selector */
-import { Component, Input, OnChanges } from '@angular/core';
+import { Component, Input, OnChanges, booleanAttribute } from '@angular/core';
 import { LineDataVizOptions, BaseDataViz } from '@pestras/shared/data-model';
 import { EChartsOption, LineSeriesOption, graphic } from 'echarts';
 import { ChartDataLoad } from '../../util';
@@ -22,6 +22,8 @@ export class LineChartView implements OnChanges {
   conf!: BaseDataViz<any>;
   @Input({ required: true })
   data!: ChartDataLoad;
+  @Input({ transform: booleanAttribute })
+  dark = false;
 
   ngOnChanges() {
     const { xAxis, series } = this.init(this.conf.options);
@@ -45,6 +47,7 @@ export class LineChartView implements OnChanges {
         type: 'line',
         smooth: true,
         color: 'rgb(68, 210, 158)',
+        label: { color: this.dark ? '#DDF' : '#335' },
         symbol: options.area ? 'none' : '',
         name: s.serie_name || field.display_name,
         data: this.data.records.map(r => r[field.name]),
@@ -67,7 +70,11 @@ export class LineChartView implements OnChanges {
     })
       .filter(Boolean) as LineSeriesOption[];
 
-    const xAxis: any = { boundaryGap: false };
+    const xAxis: any = { 
+      boundaryGap: false,
+      axisLabel: { color: this.dark ? '#DDF' : '#335' },
+      lineStyle: { color: this.dark ? '#DDD' : '#666' }
+    };
 
     if (xField.type === 'date' || xField.type === 'datetime') {
       xAxis.type = 'time';
@@ -84,7 +91,14 @@ export class LineChartView implements OnChanges {
     this.chartOptions = {
       textStyle: { fontFamily: 'Almarai' },
       tooltip: {
-        trigger: 'axis'
+        trigger: 'axis',
+        backgroundColor: this.dark ? '#224' : '#EEF',
+        formatter: function (param: any) {
+          return `
+            <h4>${param[0].seriesName}</h4>
+            <p>${param[0].marker} <span style='margin-inline-end: 28px'>${param[0].name}</span> <strong>${Math.round(+param[0].value)}</strong></p>
+          `
+        }
       },
       grid: {
         left: '5%',
@@ -107,6 +121,7 @@ export class LineChartView implements OnChanges {
       xAxis: xAxis,
       yAxis: {
         type: 'value',
+        axisLabel: { color: this.dark ? '#DDF' : '#335' }
       },
       series
     };

@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @angular-eslint/component-class-suffix */
 /* eslint-disable @angular-eslint/component-selector */
-import { Component, OnChanges, Input } from '@angular/core';
+import { Component, OnChanges, Input, booleanAttribute } from '@angular/core';
 import { BaseDataViz, TimelineDataVizOptions, lerp } from '@pestras/shared/data-model';
 import { BarSeriesOption, EChartsOption } from 'echarts';
 import { ChartDataLoad } from '../../util';
@@ -22,6 +22,8 @@ export class TimelineChartView implements OnChanges {
   conf!: BaseDataViz<any>;
   @Input({ required: true })
   data!: ChartDataLoad;
+  @Input({ transform: booleanAttribute })
+  dark = false;
 
   ngOnChanges() {
     const { categories, startDates, endDates, indicators } = this.prepareDatasetsAndSeries(this.conf.options);
@@ -90,7 +92,7 @@ export class TimelineChartView implements OnChanges {
       color: "#4488CC",
       stack: 'a',
       label: {
-        color: '#FFFFFF',
+        color: this.dark ? '#DDF' : '#335',
         show: true,
         position: 'insideRight',
         formatter: (p: any) => {
@@ -132,7 +134,7 @@ export class TimelineChartView implements OnChanges {
         stack: 'b',
         barWidth: 20,
         label: {
-          color: '#FFFFFF',
+          color: this.dark ? '#DDF' : '#335',
           show: true,
           position: 'insideRight',
           formatter: function (p) {
@@ -162,6 +164,7 @@ export class TimelineChartView implements OnChanges {
     this.chartOptions = {
       tooltip: {
         trigger: 'axis',
+        backgroundColor: this.dark ? '#224' : '#EEF',
         axisPointer: {
           type: 'shadow'
         },
@@ -201,6 +204,7 @@ export class TimelineChartView implements OnChanges {
       },
       xAxis: {
         type: 'time',
+        axisLabel: { color: this.dark ? '#DDF' : '#335' },
         splitLine: {
           lineStyle: {
             type: 'dashed'
@@ -209,6 +213,7 @@ export class TimelineChartView implements OnChanges {
       },
       yAxis: {
         type: 'category',
+        axisLabel: { color: this.dark ? '#DDF' : '#335' },
         data: categories,
         splitLine: {
           lineStyle: {
