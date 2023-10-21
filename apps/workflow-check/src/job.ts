@@ -142,6 +142,16 @@ export async function job(conn: MongoClient) {
             }
             break;
           case 'approve':
+            // Update workflow step state to 'approve'
+            await updateWorkflowStep(
+              dataDb,
+              ds.serial,
+              aw.record,
+              reviewStep.step,
+              reviewStep.actions,
+              date,
+              'approve'
+            );
             if (isLastStep) {
               // Remove record from review and approve tables based on user action
               switch (userAction) {
