@@ -18,6 +18,12 @@ export class CategoriesService {
     return this.http.get<CategoriesApi.GetByParent.Response>(injectURLPayload(path));
   }
 
+  getByValue(params: CategoriesApi.GetByValue.Params) {
+    const path = injectURLPayload(this.envServ.env.api + CategoriesApi.GetByValue.path, params);
+
+    return this.http.get<CategoriesApi.GetByValue.Response>(injectURLPayload(path));
+  }
+
   getBySerial(params: CategoriesApi.GetBySerial.Params) {
     const path = injectURLPayload(this.envServ.env.api + CategoriesApi.GetBySerial.path, params);
 

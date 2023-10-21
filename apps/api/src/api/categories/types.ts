@@ -11,6 +11,9 @@ export namespace CategoriesApi {
   export type GetByParentReq = Request<{ serial: string; }>;
   export type GetByParentRes = Response<Category[], UserSession>;
 
+  export type GetByValueReq = Request<{ parent: string; value: string }>;
+  export type GetByValueRes = Response<Category, UserSession>;
+
   export type GetByIdReq = Request<{ serial: string }>;
   export type GetByIdRes = Response<Category | null, UserSession>;
 
