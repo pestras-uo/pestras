@@ -44,10 +44,21 @@ export class fieldValuePipe implements PipeTransform {
     if (entity.type === 'serial' && entity.ref_type === 'user')
       return this.usersState.select(value as string).pipe(map(c => c?.fullname || c?.username || null));
 
-    if (entity.type === 'category')
-      return Serial.isValid(value)
-        ? this.catsService.getBySerial(value).pipe(map(c => c?.title))
-        : of(value);
+    if (entity.type === 'category') {
+
+      if (Serial.isValid(value))
+        return this.catsService.getBySerial(value).pipe(map(c => c?.title));
+
+      if (typeof value === 'number') {
+        const parentSerial = entity.ref_to ?? null;
+        return parentSerial
+          ? this.catsService.getByValue({ parent: parentSerial, value })
+            .pipe(map(c => c?.title))
+          : of(value);
+      }
+
+      return of(value);
+    }
 
     if (entity.type === 'serial' && entity.ref_type === 'data_store' && entity.ref_to)
       return this.recordsService.getBySerial({ serial: value, ds: entity.ref_to })

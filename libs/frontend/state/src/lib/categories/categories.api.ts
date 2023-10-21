@@ -13,6 +13,15 @@ export namespace CategoriesApi {
   
     export type Response = Category[];
   }
+
+  // GET
+  export namespace GetByValue {
+    export const path = basePath + '/parent/:parent/value/:value';
+  
+    export interface Params { parent: string; value: number; }
+  
+    export type Response = Category | null;
+  }
   
   
   
