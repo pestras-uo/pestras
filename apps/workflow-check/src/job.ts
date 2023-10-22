@@ -72,6 +72,7 @@ export async function job(conn: MongoClient) {
         continue;
       }
 
+      // TODO: fetch from cache if exists else fetch from database
       // Fetch workflow definition based on serial
       const workflowDefinition = await sysDb
         .collection<Workflow>('workflows')
@@ -92,23 +93,27 @@ export async function job(conn: MongoClient) {
           (1000 * 60 * 60 * 24)
       );
 
+      // TODO: move inside @condition#1
       // Fetch step definition based on step serial
       const stepDefinition = workflowDefinition.steps.find(
         (step) => step.serial === reviewStep.step
       );
 
+      // TODO: move inside @condition#1
       if (!stepDefinition) continue;
 
       // Check if the current step is the last step in the workflow
       const isLastStep =
         currentStepIndex === workflowDefinition.steps.length - 1;
 
+      // @condition#1
       // Perform actions based on workflow settings and user action
       if (daysDifference > stepDefinition.max_review_days) {
-        const userAction = stateReview.trigger;
+        const wfTrigger = stateReview.trigger;
 
         switch (stepDefinition.default_action) {
           case 'reject':
+            // TODO: update step actions before updating workflow step.
             // Update workflow step state to 'reject'
             await updateWorkflowStep(
               dataDb,
@@ -121,7 +126,7 @@ export async function job(conn: MongoClient) {
             );
 
             // Perform action based on user action
-            switch (userAction) {
+            switch (wfTrigger) {
               case 'delete':
                 await moveRecordFromReviewToApprovalTable(
                   dataDb,
@@ -142,6 +147,7 @@ export async function job(conn: MongoClient) {
             }
             break;
           case 'approve':
+            // TODO: update step actions before updating workflow step.
             // Update workflow step state to 'approve'
             await updateWorkflowStep(
               dataDb,
@@ -154,7 +160,7 @@ export async function job(conn: MongoClient) {
             );
             if (isLastStep) {
               // Remove record from review and approve tables based on user action
-              switch (userAction) {
+              switch (wfTrigger) {
                 case 'delete':
                   await removeRecordFromReviewAndApproveTables(
                     dataDb,
@@ -174,6 +180,7 @@ export async function job(conn: MongoClient) {
                   break;
               }
             } else {
+              // TODO: aeguments are missed up!!
               // Add a new step with default state to the record workflow
               const nextStepDefinition =
                 workflowDefinition.steps[currentStepIndex + 1];
@@ -249,6 +256,7 @@ async function moveRecordFromReviewToApprovalTable(
   actions: UserWorkflowAction[],
   date: Date
 ) {
+  // TODO: none sence!!
   // Update workflow step state to 'reject'
   await updateWorkflowStep(
     db,
@@ -303,6 +311,7 @@ async function moveRecordToApproveTable(
   actions: UserWorkflowAction[],
   date: Date
 ) {
+  // TODO: none sence!!
   try {
     const result = await db.collection(`workflow_${dsSerial}`).updateOne(
       {
@@ -342,6 +351,7 @@ async function removeRecordFromReviewAndApproveTables(
   dsSerial: string,
   record: string
 ) {
+  // TODO: none sence!!
   try {
     const reviewResult = await db
       .collection(`workflow_${dsSerial}`)
@@ -390,7 +400,6 @@ async function addNewStepWithDefaultState(
   stepSerial: string,
   defaultState: string,
   actions: UserWorkflowAction[],
-
   date: Date
 ) {
   try {
