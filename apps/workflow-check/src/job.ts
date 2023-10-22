@@ -10,30 +10,31 @@ import {
 } from '@pestras/shared/data-model';
 
 //  Create a Map to store cached data---Optimization
-const dataCache: Map<string, RecordWorkflowState[]> = new Map();
+const dataCache: Map<string, Workflow> = new Map();
 
 /**
- * Function to fetch record workflow data from the database with caching.
+ * Function to fetch workflow definition data from the database with caching.
  * @param dataDb - Database connection object
  * @param dsSerial - Data store serial number
  */
-export async function getRecordWorkflow(dataDb: Db, dsSerial: string) {
+export async function getWorkFlowDefinition(sysDb: Db, stateReview) {
   // Check if data is in the cache
-  const cacheKey = `workflow_${dsSerial}`;
+  const cacheKey = 'workflow';
+
+  const workflowDefinition = await sysDb
+    .collection<Workflow>(cacheKey)
+    .findOne({ serial: stateReview });
+
   if (dataCache.has(cacheKey)) {
     return dataCache.get(cacheKey);
   }
 
   // If data is not in the cache, fetch it from the database
-  const workflowData = await dataDb
-    .collection<RecordWorkflowState>(cacheKey)
-    .find({})
-    .toArray();
 
   // Store data in the cache for future use
-  dataCache.set(cacheKey, workflowData);
+  dataCache.set(cacheKey, workflowDefinition);
 
-  return workflowData;
+  return workflowDefinition;
 }
 
 /**
@@ -63,8 +64,13 @@ export async function job(conn: MongoClient) {
   // Iterate through each data store with an activated workflow
   for (const ds of dataStores) {
     // Fetch active workflows for the current data store
-    const activeWorkflows = await getRecordWorkflow(dataDb, ds.serial);
 
+    // const activeWorkflows = await getRecordWorkflow(dataDb, ds.serial);
+
+    const activeWorkflows = await dataDb
+      .collection<RecordWorkflowState>(`workflow_${ds.serial}`)
+      .find({})
+      .toArray();
     // Iterate through active workflows
     for (const aw of activeWorkflows) {
       const stateReview = aw.workflows.find((w) => w.state === 'review');
@@ -72,11 +78,12 @@ export async function job(conn: MongoClient) {
         continue;
       }
 
-      // TODO: fetch from cache if exists else fetch from database
       // Fetch workflow definition based on serial
-      const workflowDefinition = await sysDb
-        .collection<Workflow>('workflows')
-        .findOne({ serial: stateReview.workflow });
+      //Caching
+      const workflowDefinition = await getWorkFlowDefinition(
+        sysDb,
+        stateReview.workflow
+      );
 
       if (!workflowDefinition) continue;
 
@@ -93,13 +100,11 @@ export async function job(conn: MongoClient) {
           (1000 * 60 * 60 * 24)
       );
 
-      // TODO: move inside @condition#1
       // Fetch step definition based on step serial
       const stepDefinition = workflowDefinition.steps.find(
         (step) => step.serial === reviewStep.step
       );
 
-      // TODO: move inside @condition#1
       if (!stepDefinition) continue;
 
       // Check if the current step is the last step in the workflow
@@ -113,14 +118,20 @@ export async function job(conn: MongoClient) {
 
         switch (stepDefinition.default_action) {
           case 'reject':
-            // TODO: update step actions before updating workflow step.
             // Update workflow step state to 'reject'
             await updateWorkflowStep(
               dataDb,
               ds.serial,
               aw.record,
               reviewStep.step,
-              reviewStep.actions,
+              reviewStep.actions.map((a) => {
+                return {
+                  ...a,
+                  action: 'reject',
+                  date: date,
+                  message: 'defaultRejectMessage',
+                };
+              }),
               date,
               'reject'
             );
@@ -128,14 +139,7 @@ export async function job(conn: MongoClient) {
             // Perform action based on user action
             switch (wfTrigger) {
               case 'delete':
-                await moveRecordFromReviewToApprovalTable(
-                  dataDb,
-                  ds.serial,
-                  aw.record,
-                  reviewStep.step,
-                  reviewStep.actions,
-                  date
-                );
+                await moveRecordToApproveTable(dataDb, ds.serial, aw.record);
                 break;
               default:
                 await moveRecordFromReviewToDraftTable(
@@ -147,14 +151,20 @@ export async function job(conn: MongoClient) {
             }
             break;
           case 'approve':
-            // TODO: update step actions before updating workflow step.
             // Update workflow step state to 'approve'
             await updateWorkflowStep(
               dataDb,
               ds.serial,
               aw.record,
               reviewStep.step,
-              reviewStep.actions,
+              reviewStep.actions.map((a) => {
+                return {
+                  ...a,
+                  action: 'approve',
+                  date: date,
+                  message: 'defaultApproveMessage',
+                };
+              }),
               date,
               'approve'
             );
@@ -169,18 +179,10 @@ export async function job(conn: MongoClient) {
                   );
                   break;
                 default:
-                  await moveRecordToApproveTable(
-                    dataDb,
-                    ds.serial,
-                    aw.record,
-                    reviewStep.step,
-                    reviewStep.actions,
-                    date
-                  );
+                  await moveRecordToApproveTable(dataDb, ds.serial, aw.record);
                   break;
               }
             } else {
-              // TODO: aeguments are missed up!!
               // Add a new step with default state to the record workflow
               const nextStepDefinition =
                 workflowDefinition.steps[currentStepIndex + 1];
@@ -189,8 +191,15 @@ export async function job(conn: MongoClient) {
                 ds.serial,
                 aw.record,
                 nextStepDefinition.serial,
-                reviewStep.step,
-                reviewStep.actions,
+
+                nextStepDefinition.users.map((user) => {
+                  return {
+                    user: user,
+                    action: 'review',
+                    date: null,
+                    message: '',
+                  };
+                }),
                 date
               );
             }
@@ -231,41 +240,12 @@ async function updateWorkflowStep(
       $set: {
         'workflows.$.end_date': date,
         'workflows.$.state': state,
-        'workflows.$.steps.$.actions': actions,
+        'workflows.$.steps.$[step].actions': actions,
         'workflows.$.steps.$[step].end_date': date,
         'workflows.$.steps.$[step].state': state,
       },
     },
     { arrayFilters: [{ 'step.step': stepSerial }] }
-  );
-}
-/**
- * Function to move a record from the review table to the approval table.
- * @param db - Database connection object
- * @param dsSerial - Data store serial number
- * @param record - Record identifier
- * @param stepSerial - Step serial number
- * @param actions - User workflow actions
- * @param date - Date object
- */
-async function moveRecordFromReviewToApprovalTable(
-  db: Db,
-  dsSerial: string,
-  record: string,
-  stepSerial: string,
-  actions: UserWorkflowAction[],
-  date: Date
-) {
-  // TODO: none sence!!
-  // Update workflow step state to 'reject'
-  await updateWorkflowStep(
-    db,
-    dsSerial,
-    record,
-    stepSerial,
-    actions,
-    date,
-    'reject'
   );
 }
 
@@ -306,37 +286,19 @@ async function moveRecordFromReviewToDraftTable(
 async function moveRecordToApproveTable(
   db: Db,
   dsSerial: string,
-  record: string,
-  stepSerial: string,
-  actions: UserWorkflowAction[],
-  date: Date
+  recSerial: string
 ) {
-  // TODO: none sence!!
-  try {
-    const result = await db.collection(`workflow_${dsSerial}`).updateOne(
-      {
-        record: record,
-        'workflows.serial': dsSerial,
-      },
-      {
-        $set: {
-          'workflows.$.steps.$[step].actions': actions,
-          'workflows.$.steps.$[step].end_date': date,
-          'workflows.$.steps.$[step].state': 'approve',
-        },
-      },
-      {
-        arrayFilters: [{ 'step.step': stepSerial }],
-      }
-    );
+  // Fetch the record from the review table
+  const record = await db
+    .collection<TableDataRecord>(`review_${dsSerial}`)
+    .findOne({ serial: recSerial });
 
-    if (result.modifiedCount === 1) {
-      console.log('Record moved to the approve table successfully.');
-    } else {
-      console.log('Failed to move record to the approve table.');
-    }
-  } catch (error) {
-    console.error('Error moving record to the approve table:', error);
+  // If the record is found, move it to the draft table
+  if (record) {
+    await db.collection<TableDataRecord>(dsSerial).insertOne(record);
+    await db
+      .collection<TableDataRecord>(`review_${dsSerial}`)
+      .deleteOne({ serial: recSerial });
   }
 }
 
@@ -351,31 +313,16 @@ async function removeRecordFromReviewAndApproveTables(
   dsSerial: string,
   record: string
 ) {
-  // TODO: none sence!!
   try {
-    const reviewResult = await db
-      .collection(`workflow_${dsSerial}`)
-      .findOneAndDelete({
-        record: record,
-        'workflows.serial': dsSerial,
-        'workflows.steps.state': 'review',
-      });
+    const reviewResult = await db.collection(`review_${dsSerial}`).deleteOne({
+      serial: record,
+    });
 
-    const approveResult = await db
-      .collection(`workflow_${dsSerial}`)
-      .findOneAndDelete({
-        record: record,
-        'workflows.serial': dsSerial,
-        'workflows.steps.state': 'approve',
-      });
+    const approveResult = await db.collection(dsSerial).deleteOne({
+      serial: record,
+    });
 
-    if (reviewResult.ok === 1 && approveResult.ok === 1) {
-      console.log(
-        'Record removed from review and approve tables successfully.'
-      );
-    } else {
-      console.log('Failed to remove record from review and approve tables.');
-    }
+    console.log('Record removed from review and approve tables successfully.');
   } catch (error) {
     console.error(
       'Error removing record from review and approve tables:',
@@ -398,14 +345,13 @@ async function addNewStepWithDefaultState(
   dsSerial: string,
   record: string,
   stepSerial: string,
-  defaultState: string,
   actions: UserWorkflowAction[],
   date: Date
 ) {
   try {
     const newStep = {
       step: stepSerial,
-      state: defaultState,
+      state: 'review',
       start_date: date,
       end_date: null,
       actions: actions,
