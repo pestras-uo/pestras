@@ -29,8 +29,6 @@ export async function getWorkFlowDefinition(sysDb: Db, stateReview) {
     return dataCache.get(cacheKey);
   }
 
-  // If data is not in the cache, fetch it from the database
-
   // Store data in the cache for future use
   dataCache.set(cacheKey, workflowDefinition);
 
@@ -71,6 +69,7 @@ export async function job(conn: MongoClient) {
       .collection<RecordWorkflowState>(`workflow_${ds.serial}`)
       .find({})
       .toArray();
+
     // Iterate through active workflows
     for (const aw of activeWorkflows) {
       const stateReview = aw.workflows.find((w) => w.state === 'review');
