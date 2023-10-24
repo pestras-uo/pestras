@@ -17,21 +17,17 @@ const dataCache: Map<string, Workflow> = new Map();
  * @param dataDb - Database connection object
  * @param dsSerial - Data store serial number
  */
-export async function getWorkFlowDefinition(sysDb: Db, stateReview) {
-  // Check if data is in the cache
-  const cacheKey = 'workflow';
-
-  const workflowDefinition = await sysDb
-    .collection<Workflow>(cacheKey)
+export async function getWorkFlowDefinition(sysDb: Db, stateReview: string) {
+  if (dataCache.has(stateReview)) {
+    return dataCache.get(stateReview) as Workflow; // as Workflow just to cast it.
+  }
+  const workflowDefinition: Workflow | null = await sysDb
+    .collection<Workflow>('workflow')
     .findOne({ serial: stateReview });
 
-  if (dataCache.has(cacheKey)) {
-    return dataCache.get(cacheKey);
+  if (workflowDefinition) {
+    dataCache.set(stateReview, workflowDefinition);
   }
-
-  // Store data in the cache for future use
-  dataCache.set(cacheKey, workflowDefinition);
-
   return workflowDefinition;
 }
 
