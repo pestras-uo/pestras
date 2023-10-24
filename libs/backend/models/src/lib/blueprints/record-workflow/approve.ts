@@ -1,7 +1,7 @@
 import { RecordWorkflowModel } from ".";
 import { HttpError, HttpCode } from "@pestras/backend/util";
-import { dataRecordsModel, dataStoresModel, workflowModel } from "../../models";
-import { DataRecordState, RecordWorkflow, TableDataRecord, User, getWorkflowStepAction } from "@pestras/shared/data-model";
+import { dataRecordsModel, dataStoresModel, notificationsModel, workflowModel } from "../../models";
+import { ApproveNotification, DataRecordState, RecordWorkflow, TableDataRecord, User, getWorkflowStepAction } from "@pestras/shared/data-model";
 
 export async function approve(
   this: RecordWorkflowModel,
@@ -42,6 +42,7 @@ export async function approve(
   );
 
   const stepState = getWorkflowStepAction(wfStep.actions, wfStepOpt.algo);
+  const reviewCol = this.db.collection<TableDataRecord>(`review_${dsSerial}`);
 
   if (stepState === 'approve') {
 
@@ -53,7 +54,6 @@ export async function approve(
         throw new HttpError(HttpCode.NOT_FOUND, 'dataStoreNotFound');
 
       const mainCol = this.db.collection<TableDataRecord>(dsSerial);
-      const reviewCol = this.db.collection<TableDataRecord>(`review_${dsSerial}`);
       const record = await reviewCol.findOne({ serial: recSerial }, { projection: { _id: 0 } });
 
       if (!record)
@@ -87,6 +87,17 @@ export async function approve(
         { arrayFilters: [{ 'step.step': step }] }
       );
 
+      await notificationsModel.notify<ApproveNotification>({
+        data_store: dsSerial,
+        date: new Date(),
+        record: record['serial'],
+        seen: null,
+        target: record['owner'],
+        topic: record['topic'] ?? null,
+        trigger: activeWf.trigger,
+        type: 'approve'
+      });
+
       return activeWf.trigger === 'delete' ? null : 'published';
 
     } else {
@@ -116,6 +127,19 @@ export async function approve(
             }
           }
         });
+
+      await notificationsModel.notifyMany<ApproveNotification>(nextStep.users.map(u => {
+        return {
+          data_store: dsSerial,
+          date: new Date(),
+          record: recSerial,
+          seen: null,
+          target: u,
+          topic: activeWf.topic,
+          trigger: activeWf.trigger,
+          type: 'approve'
+        }
+      }));
 
       return 'review';
     }

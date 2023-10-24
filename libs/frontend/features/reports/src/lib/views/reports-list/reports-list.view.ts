@@ -8,6 +8,7 @@ import { Report, Role } from '@pestras/shared/data-model';
 import { ToastService } from '@pestras/frontend/ui';
 import { ReportsState } from '@pestras/frontend/state';
 import { Observable } from 'rxjs';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-reports-list',
@@ -31,7 +32,8 @@ export class ReportsListView implements OnChanges {
   constructor(
     private state: ReportsState,
     private dialog: Dialog,
-    private toast: ToastService
+    private toast: ToastService,
+    private router: Router
   ) {}
 
   ngOnChanges(): void {
@@ -55,9 +57,10 @@ export class ReportsListView implements OnChanges {
 
     this.state.create(this.topic, this.title.value)
       .subscribe({
-        next: () => {
+        next: r => {
           this.toast.msg(c['success'].default, { type: 'success' });
           this.closeDialog();
+          this.router.navigate(['/main/reports', r.topic, r.serial]);
         },
         error: e => {
           console.error(e);

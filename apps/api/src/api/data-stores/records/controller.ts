@@ -158,7 +158,7 @@ export const controller = {
 
       const fields = await dataStoresModel.getFields(req.params.serial);
 
-      res.json(await dataRecordsModel.delete(req.params.serial, req.params.record, isDraft, req.body.message));
+      res.json(await dataRecordsModel.delete(req.params.serial, req.params.record, isDraft, res.locals.issuer, req.body.message));
 
       if (!isDraft && typeof ds.settings.workflow.delete !== 'string') {
         // remove images

@@ -47,6 +47,6 @@ export class DataRecordsModel extends Core {
 
   // delete
   // --------------------------------------------------------------------------------
-  delete: (ds: string, recordSerial: string, draft: boolean, message: string) => Promise<boolean> = deleteRecod.bind(this);
+  delete: (ds: string, recordSerial: string, draft: boolean, issuer: User, message: string) => Promise<boolean> = deleteRecod.bind(this);
 
 }

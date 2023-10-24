@@ -1,7 +1,7 @@
-import { DataRecordState, RecordWorkflow, TableDataRecord, User, getWorkflowStepAction } from "@pestras/shared/data-model";
+import { DataRecordState, RecordWorkflow, RejectNotification, TableDataRecord, User, getWorkflowStepAction } from "@pestras/shared/data-model";
 import { RecordWorkflowModel } from ".";
 import { HttpError, HttpCode } from "@pestras/backend/util";
-import { workflowModel } from "../../models";
+import { notificationsModel, workflowModel } from "../../models";
 
 export async function reject(
   this: RecordWorkflowModel,
@@ -60,10 +60,23 @@ export async function reject(
       if (record) {
         await this.db.collection<TableDataRecord>(`draft_${dsSerial}`).insertOne(record);
         await this.db.collection<TableDataRecord>(`review_${dsSerial}`).deleteOne({ serial: recSerial });
+        
+        await notificationsModel.notify<RejectNotification>({
+          data_store: dsSerial,
+          date: new Date(),
+          record: record['serial'],
+          seen: null,
+          target: record['owner'],
+          topic: record['topic'] ?? null,
+          trigger: activeWf.trigger,
+          type: 'reject'
+        });
       }
+
 
       return 'draft';
     }
+
 
     return 'published';
   }

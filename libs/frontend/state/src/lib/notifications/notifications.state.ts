@@ -22,12 +22,12 @@ export class NotificationsState extends StatorCollectionState<Notification> {
       .subscribe(() => this._clear());
   }
 
-  protected override _load(): Observable<Notification<null>[]> {
+  protected override _load(): Observable<Notification[]> {
     return this.service.getUnSeen();
   }
 
   setSeen(serial: string) {
     return this.service.setSeen({ serial })
-      .pipe(tap(() => this._update(serial, { seen_date: new Date() })));
+      .pipe(tap(() => this._update(serial, { seen: new Date() })));
   }
 }

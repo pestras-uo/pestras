@@ -1,9 +1,10 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { Model } from "../model";
 import { Notification } from "@pestras/shared/data-model";
 import { Serial } from '@pestras/shared/util';
 import { changeListener } from "./listener";
 
-export class NotificationsModel extends Model<Notification> {
+export class NotificationsModel extends Model<any> {
 
   constructor(
     db: string, 
@@ -19,7 +20,7 @@ export class NotificationsModel extends Model<Notification> {
   // getters
   // --------------------------------------------------------------------------------------
   getAll(user: string) {
-    return this.col.find({ user: user, seen: false }).toArray();
+    return this.col.find({ target: user, seen: null }).toArray();
   }
 
   async getBySerial(serial: string) {
@@ -28,7 +29,7 @@ export class NotificationsModel extends Model<Notification> {
 
   // create
   // --------------------------------------------------------------------------------------
-  async create(notification: Omit<Notification, 'serial'>) {
+  async notify<T extends Notification>(notification: Omit<T, 'serial'>) {
     const not: Notification = {
       serial: Serial.gen('NTF'),
       ...notification
@@ -39,7 +40,7 @@ export class NotificationsModel extends Model<Notification> {
     return not;
   }
 
-  async createMany(notifications: Omit<Notification, 'serial'>[]) {
+  async notifyMany<T extends Notification>(notifications: Omit<T, 'serial'>[]) {
     const list: Notification[] = []
 
     for (const notification of notifications)
@@ -54,7 +55,8 @@ export class NotificationsModel extends Model<Notification> {
   // update seen
   // --------------------------------------------------------------------------------------
   async setSeen(serial: string) {
-    await this.col.updateOne({ serial }, { $set: { seen: true } });
-    return true;
+    const date = new Date();
+    await this.col.updateOne({ serial }, { $set: { seen: date } });
+    return date;
   }
 }
