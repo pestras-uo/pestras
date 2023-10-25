@@ -22,21 +22,21 @@
       >
         <i size="tiny" puiIcon="delete"></i>
       </button>
-      <button
-        #favBtn
-        class="btn-icon btn-small btn-outline-danger btn-round"
-        (click)="favDD.show()"
-      >
-        <i size="tiny" puiIcon="favorite"></i>
-      </button>
-      <pui-dropdown #favDD [origin]="favBtn">
-        <div class="card card-small shadow-4 maxh-12 overflow-auto">
-          <div class="card-body">
-            <app-pins [ws]="ws"></app-pins>
-          </div>
-        </div>
-      </pui-dropdown>
     </ng-container>
+    <button
+      #favBtn
+      class="btn-icon btn-small btn-outline-danger btn-round"
+      (click)="favDD.show()"
+    >
+      <i size="tiny" puiIcon="favorite"></i>
+    </button>
+    <pui-dropdown #favDD [origin]="favBtn">
+      <div class="card card-small shadow-4 maxh-12 overflow-auto">
+        <div class="card-body">
+          <app-pins [ws]="ws"></app-pins>
+        </div>
+      </div>
+    </pui-dropdown>
   </div>
 
   <ng-container *ngIf="active else noData">
