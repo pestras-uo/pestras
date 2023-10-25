@@ -28,7 +28,7 @@
           <pestras-record-workflow-state
             *ngIf="state"
             [rState]="state"
-            [dataStore]="dataStore.serial"
+            [dataStore]="dataStore"
             [record]="record.serial"
             [editable]="(record['owner'] | sessionIs) || ((dataStore.blueprint | blueprint | async)?.owner | sessionIs)"
           ></pestras-record-workflow-state>

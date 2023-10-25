@@ -4,7 +4,7 @@ import { FormControl } from "@angular/forms";
 import { ActivatedRoute, Router } from "@angular/router";
 import { RecordsService, SessionState } from "@pestras/frontend/state";
 import { untilDestroyed } from "@pestras/frontend/ui";
-import { DataRecordState, RecordWorkflow, WorkflowState, WorkflowTriggers } from "@pestras/shared/data-model";
+import { DataRecordState, DataStore, RecordWorkflow, WorkflowState, WorkflowTriggers } from "@pestras/shared/data-model";
 import { RecordsWorkflowService } from "libs/frontend/state/src/lib/record-workflow/records-workflow.service";
 import { Observable } from "rxjs";
 
@@ -26,9 +26,11 @@ export class RecordWorkflowStateViewComponent implements OnChanges {
   loading = false;
   hasPublishedVersion = false;
   dialogRef: DialogRef | null = null;
+  hasWorkflow = false;
+  trigger!: WorkflowTriggers;
 
   @Input({ required: true })
-  dataStore!: string;
+  dataStore!: DataStore;
   @Input({ required: true })
   record!: string;
   @Input({ required: true })
@@ -48,12 +50,21 @@ export class RecordWorkflowStateViewComponent implements OnChanges {
   ngOnChanges(): void {
     this.getWorkflowStack();
 
+
+
     if (this.rState === 'published')
       this.hasPublishedVersion = true;
     else
-      this.recordsService.getBySerial({ ds: this.dataStore, serial: this.record })
+      this.recordsService.getBySerial({ ds: this.dataStore.serial, serial: this.record })
         .pipe(this.ud())
         .subscribe(res => this.hasPublishedVersion = !!res);
+
+    const hasCreateWorkflow = typeof this.dataStore.settings.workflow.create === 'string';
+    const hasUpdateWorkflow = typeof this.dataStore.settings.workflow.update === 'string';
+
+    this.trigger = this.hasPublishedVersion ? 'update' : 'create';
+    this.hasWorkflow = this.trigger === 'create' ? hasCreateWorkflow : hasUpdateWorkflow;
+
   }
 
   toWorkflow() {
@@ -71,20 +82,19 @@ export class RecordWorkflowStateViewComponent implements OnChanges {
   }
 
   getWorkflowStack() {
-    this.activeWF$ = this.service.getRecordActiveWF({ ds: this.dataStore, record: this.record,  });
+    this.activeWF$ = this.service.getRecordActiveWF({ ds: this.dataStore.serial, record: this.record, });
   }
 
   publish() {
-    const trigger: WorkflowTriggers = this.hasPublishedVersion ? 'update' : 'create';
-
-    this.loading = true;
     const message = this.publishMessageCtrl.value ?? '';
 
-    this.service.publish({ ds: this.dataStore, record: this.record, trigger }, { message })
+    this.loading = true;
+
+    this.service.publish({ ds: this.dataStore.serial, record: this.record, trigger: this.trigger }, { message })
       .subscribe({
         next: () => {
           this.getWorkflowStack();
-          this.router.navigate([], { relativeTo: this.route, queryParams: { state: 'review' } });
+          this.router.navigate([], { relativeTo: this.route, queryParams: { state: this.hasWorkflow ? 'review' : 'published' } });
           this.closeDialog();
         },
         error: error => {

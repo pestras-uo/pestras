@@ -24,14 +24,17 @@
     <div class="card shadow-6 w-10">
       <h4 class="card-header">{{c['publish']}} {{c['record']}}</h4>
       <div class="card-body">
-        <label for="delete-message">{{c['addRemark']}}</label>
-        <div class="fc">
-          <input
-            type="text"
-            id="delete-message"
-            [formControl]="publishMessageCtrl"
-          />
-        </div>
+        <p *ngIf="!hasWorkflow">{{c['confirmOperation']}}</p>
+        <ng-container *ngIf="hasWorkflow">
+          <label for="delete-message">{{c['addRemark']}}</label>
+          <div class="fc">
+            <input
+              type="text"
+              id="delete-message"
+              [formControl]="publishMessageCtrl"
+            />
+          </div>
+        </ng-container>
       </div>
       <div class="card-footer">
         <button class="btn-outline btn-round" (click)="closeDialog()">
