@@ -1,17 +1,16 @@
-import { CreateWorkflowInput } from "@pestras/backend/models";
-import { Workflow, WorkflowStepOptions } from "@pestras/shared/data-model";
+import { Workflow, WorkflowStepOptions } from '@pestras/shared/data-model';
 
 /* eslint-disable @typescript-eslint/no-namespace */
 const basePath = '/workflows';
 
 export namespace WorkflowsApi {
-  
-
   // GET
   export namespace GetBySerial {
     export const REQ_PATH = basePath + '/:serial';
 
-    export interface Params { serial: string; }
+    export interface Params {
+      serial: string;
+    }
 
     export type Response = Workflow | null;
   }
@@ -20,7 +19,9 @@ export namespace WorkflowsApi {
   export namespace GetByBlueprint {
     export const REQ_PATH = basePath + '/blueprint/:blueprint';
 
-    export interface Params { blueprint: string; }
+    export interface Params {
+      blueprint: string;
+    }
 
     export type Response = Workflow[];
   }
@@ -29,7 +30,7 @@ export namespace WorkflowsApi {
   export namespace Create {
     export const REQ_PATH = basePath;
 
-    export type Body = CreateWorkflowInput;
+    export type Body = Omit<Workflow, 'serial'>;
 
     export type Response = Workflow;
   }
@@ -38,9 +39,13 @@ export namespace WorkflowsApi {
   export namespace UpdateName {
     export const REQ_PATH = basePath + '/:serial/name';
 
-    export interface Params { serial: string; }
+    export interface Params {
+      serial: string;
+    }
 
-    export interface Body { name: string; };
+    export interface Body {
+      name: string;
+    }
 
     export type Response = boolean;
   }
@@ -49,9 +54,13 @@ export namespace WorkflowsApi {
   export namespace UpdateSteps {
     export const REQ_PATH = basePath + '/:serial/steps';
 
-    export interface Params { serial: string; }
+    export interface Params {
+      serial: string;
+    }
 
-    export interface Body { steps: WorkflowStepOptions[]; };
+    export interface Body {
+      steps: WorkflowStepOptions[];
+    }
 
     export type Response = boolean;
   }

@@ -4,7 +4,7 @@ const config = {
   prod: process.env.NODE_ENV === "production",
 
   // database
-  sysDb: process.env.SYS_SB,
+  sysDb: process.env.SYS_DB,
   adDb: process.env.AD_DB,
   dataDb: process.env.DATA_DB,
   dbUrl: process.env.DB_STR
