@@ -19,7 +19,7 @@ export class RecordWorkflowModel extends Core {
   getByRecord: (ds: string, record: string) => Promise<RecordWorkflowState | null> = getByRecord.bind(this);
   getRecordActiveWf: (ds: string, record: string) => Promise<RecordWorkflow | null> = getRecordActiveWf.bind(this);
 
-  publish: (ds: string, serial: string, trigger: WorkflowTriggers, msg?: string) => Promise<boolean> = publishRecord.bind(this);
+  publish: (ds: string, serial: string, trigger: WorkflowTriggers, issuer: User, msg?: string) => Promise<boolean> = publishRecord.bind(this);
   approve: (ds: string, serial: string, step: string, msg: string, issuer: User) => Promise<DataRecordState | null> = approve.bind(this);
   reject: (ds: string, serial: string, step: string, msg: string, issuer: User) => Promise<DataRecordState> = reject.bind(this);
 }

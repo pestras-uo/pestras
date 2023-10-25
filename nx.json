@@ -24,6 +24,7 @@
       ]
     }
   },
+  "neverConnectToCloud": true,
   "generators": {
     "@nx/angular:application": {
       "style": "scss",

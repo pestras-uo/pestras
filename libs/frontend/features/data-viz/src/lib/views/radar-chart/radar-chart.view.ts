@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @angular-eslint/component-class-suffix */
 /* eslint-disable @angular-eslint/component-selector */
-import { Component, OnChanges, Input } from '@angular/core';
+import { Component, OnChanges, Input, booleanAttribute } from '@angular/core';
 import { BaseDataViz, Field, RadarDataVizOptions } from '@pestras/shared/data-model';
 import { EChartsOption } from 'echarts';
 import { ChartDataLoad } from '../../util';
@@ -22,6 +22,8 @@ export class RadarChartView implements OnChanges {
   conf!: BaseDataViz<any>;
   @Input({ required: true })
   data!: ChartDataLoad;
+  @Input({ transform: booleanAttribute })
+  dark = false;
 
   ngOnChanges() {
     const { indicators, data } = this.init(this.conf.options);
@@ -70,15 +72,18 @@ export class RadarChartView implements OnChanges {
       legend: {},
       radar: {
         // shape: 'circle',
-        indicator: indicators
+        indicator: indicators,
+        axisLabel: { color: this.dark ? '#DDF' : '#335' }
       },
       tooltip: {
-        trigger: "item"
+        trigger: "item",
+        backgroundColor: this.dark ? '#224' : '#FFF'
       },
       series: [
         {
           type: 'radar',
-          data
+          data,
+          label: { color: this.dark ? '#DDF' : '#335' }
         }
       ]
     };

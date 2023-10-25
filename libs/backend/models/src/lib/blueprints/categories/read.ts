@@ -12,3 +12,7 @@ export async function getBySerial(this: CategoriesModel, serial: string, project
 export async function getByBlueprint(this: CategoriesModel, bp: string, projection?: Document) {
   return await this.col.find({ blueprint: bp }, { projection }).toArray();
 }
+
+export async function getByValue(this: CategoriesModel, parent: string, value: number) {
+  return this.col.findOne({ serial: { $regex: new RegExp(`_${parent}$`) }, value });
+}

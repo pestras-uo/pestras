@@ -1,4 +1,4 @@
-import { contentModel, dashboardsModel, dataVizModel, entityAccessModel } from "@pestras/backend/models";
+import { dashboardsModel, dataVizModel, entityAccessModel } from "@pestras/backend/models";
 import { DashboardsApi } from "./types";
 import { NextFunction } from 'express';
 
@@ -47,7 +47,7 @@ export const controller = {
   async create(req: DashboardsApi.CreateReq, res: DashboardsApi.CreateRes, next: NextFunction) {
     try {
       const db = await dashboardsModel.create(req.body, res.locals.issuer);
-      await contentModel.create(db.serial);
+
       await entityAccessModel.create(db.serial);
 
       res.json(db);
@@ -202,7 +202,6 @@ export const controller = {
 
       res.json(await dashboardsModel.delete(req.params.serial, res.locals.issuer));
 
-      contentModel.delete(req.params.serial);
       entityAccessModel.delete(req.params.serial);
 
     } catch (error) {

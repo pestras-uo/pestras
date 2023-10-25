@@ -7,12 +7,12 @@ import { UserSession } from "../../auth";
 export namespace NotificationsApi {
 
   export type GetReq = Request;
-  export type GetRes = Response<Notification<any>[], UserSession>;
+  export type GetRes = Response<Notification[], UserSession>;
   
   export type GetByIdReq = Request<{ serial: string }>;
-  export type GetByIdRes = Response<Notification<any> | null, UserSession>;
+  export type GetByIdRes = Response<Notification | null, UserSession>;
   
   export type SetSeenReq = Request<{ serial: string }>;
-  export type SetSeenRes = Response<boolean, UserSession>;
+  export type SetSeenRes = Response<Date, UserSession>;
   
 }

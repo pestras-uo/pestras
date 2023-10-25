@@ -5,7 +5,7 @@ import config from "../../config";
 import { HttpCode, HttpError } from "@pestras/backend/util";
 import { ReportViewType } from "@pestras/shared/data-model";
 import { NextFunction } from 'express';
-import { contentModel, dataVizModel, entityAccessModel, reportsModel } from "@pestras/backend/models";
+import { dataVizModel, entityAccessModel, reportsModel } from "@pestras/backend/models";
 
 export const controller = {
 
@@ -36,10 +36,9 @@ export const controller = {
     try {
       const report = await reportsModel.create(req.body, res.locals.issuer);
 
-      await contentModel.create(report.serial);
       await entityAccessModel.create(report.serial);
 
-      res.json();
+      res.json(report);
 
     } catch (error) {
       next(error);
@@ -208,7 +207,6 @@ export const controller = {
     try {
       res.json(await reportsModel.delete(req.params.serial, res.locals.issuer));
 
-      contentModel.delete(req.params.serial);
       entityAccessModel.delete(req.params.serial);
 
     } catch (error) {

@@ -1,7 +1,7 @@
-import { RecordWorkflow, RecordWorkflowState, WorkflowTriggers } from "@pestras/shared/data-model";
+import { EntityTypes, PublishNotification, RecordWorkflow, RecordWorkflowState, User, WorkflowTriggers } from "@pestras/shared/data-model";
 import { RecordWorkflowModel } from ".";
 import { HttpError, HttpCode } from "@pestras/backend/util";
-import { dataStoresModel, workflowModel } from "../../models";
+import { dataStoresModel, notificationsModel, workflowModel } from "../../models";
 import { Serial } from "@pestras/shared/util";
 
 export async function publishRecord(
@@ -9,6 +9,7 @@ export async function publishRecord(
   dsSerial: string,
   serial: string,
   trigger: WorkflowTriggers,
+  issuer: User,
   msg?: string
 ) {
   // check if currently has in review action
@@ -20,7 +21,7 @@ export async function publishRecord(
   const mainCol = this.db.collection(dsSerial);
   const reviewCol = this.db.collection(`review_${dsSerial}`);
   const draftCol = this.db.collection(`draft_${dsSerial}`);
-  const ds = await dataStoresModel.getBySerial(dsSerial, { serial: 1, settings: 1 });
+  const ds = await dataStoresModel.getBySerial(dsSerial, { serial: 1, settings: 1, blueprint: 1 });
 
   if (!ds)
     throw new HttpError(HttpCode.NOT_FOUND, 'dataStoreNotFound');
@@ -42,6 +43,8 @@ export async function publishRecord(
     const firstParty = workflow.steps[0];
     const recordWorkflow: RecordWorkflow = {
       serial: Serial.gen('RWF'),
+      issuer: issuer.serial,
+      topic: record['topic'] ?? null,
       trigger,
       workflow: workflow.serial,
       state: 'review',
@@ -60,6 +63,27 @@ export async function publishRecord(
     await recordWorkFlowCol.updateOne({ record: record['serial'] }, { $push: { workflows: recordWorkflow } }, { upsert: true });
     await reviewCol.insertOne(record);
     await draftCol.deleteOne({ serial });
+
+    this.channel.emitActivity({
+      create_date: new Date(),
+      entity: EntityTypes.RECORD,
+      issuer: issuer.serial,
+      method: 'publish',
+      serial: record['serial']
+    });
+
+    await notificationsModel.notifyMany<PublishNotification>(firstParty.users.map<Omit<PublishNotification, 'serial'>>(u => {
+      return {
+        target: u,
+        date: new Date(),
+        record: record['serial'],
+        trigger,
+        seen: null,
+        type: 'publish',
+        data_store: ds.serial,
+        topic: record['topic'] ?? null
+      };
+    }));
 
   } else if (!ds.settings.workflow[trigger]) {
     throw new HttpError(HttpCode.FORBIDDEN, `${trigger}NotAllowed`);

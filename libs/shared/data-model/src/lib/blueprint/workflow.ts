@@ -30,6 +30,8 @@ export interface RecordWorkflow {
   state: WorkflowState;
   start_date: Date;
   end_date: Date | null;
+  topic: string | null;
+  issuer: string;
   /** workflow deffinition serial */
   workflow: string;
   initMessage: string;
@@ -75,7 +77,6 @@ export interface WorkflowStepOptions {
 export interface Workflow {
   serial: string;
   blueprint: string;
-
   name: string;
 
   /** users to approve */

@@ -42,10 +42,10 @@
             >
               <thead>
                 <tr>
-                  <th class="w-2">#</th>
+                  <th class="index-col">#</th>
                   <th>{{c['title']}}</th>
                   <th>{{c['owner']}}</th>
-                  <th>{{c['createDate']}}</th>
+                  <th class="date-col">{{c['createDate']}}</th>
                 </tr>
               </thead>
               <tbody>
@@ -59,7 +59,7 @@
                   <td>
                     <app-avatar [serial]="ds.owner" size="small"></app-avatar>
                   </td>
-                  <td class="date-col w-3">
+                  <td class="date-col">
                     {{ds.create_date | date: 'dd-MM-yyyy'}}
                   </td>
                 </tr>

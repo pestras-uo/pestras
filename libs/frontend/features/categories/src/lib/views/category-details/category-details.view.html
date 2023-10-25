@@ -40,32 +40,32 @@
         <table *ngIf="branches.length else noData">
           <thead>
             <tr>
-              <th>#</th>
+              <th class="index-col">#</th>
               <th>{{c['title']}}</th>
-              <th>{{c['ordinal']}}</th>
+              <th class="icon-col">{{c['ordinal']}}</th>
               <th *ngIf="selected.ordinal">{{c['value']}}</th>
-              <th *ngIf="editable">{{c['edit']}}</th>
+              <th class="icon-col" *ngIf="editable">{{c['edit']}}</th>
             </tr>
           </thead>
           <tbody>
             <tr *ngFor="let item of branches let i = index">
-              <td class="w-1">{{skip + i + 1}}</td>
+              <td class="index-col">{{skip + i + 1}}</td>
               <td>{{item.title}}</td>
-              <td class="w-2">
+              <td class="icon-col">
                 <i
                   [puiIcon]="item.ordinal ? 'check' : 'close'"
                   size="small"
                 ></i>
               </td>
-              <td *ngIf="selected.ordinal" class="bold primary w-2">
+              <td *ngIf="selected.ordinal" class="num-col">
                 {{item.value}}
               </td>
-              <td *ngIf="editable" class="w-2">
+              <td class="icon-col" *ngIf="editable">
                 <button
-                  class="btn-icon btn-small btn-round"
+                  class="btn-icon btn-tiny btn-round btn-success"
                   (click)="openDialog(updateModal, item)"
                 >
-                  <i puiIcon="edit" size="small"></i>
+                  <i puiIcon="edit" size="tiny"></i>
                 </button>
               </td>
             </tr>

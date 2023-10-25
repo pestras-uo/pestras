@@ -1,4 +1,4 @@
-import { DataStoreType, TableDataRecord } from "@pestras/shared/data-model";
+import { DataStoreType, TableDataRecord, User } from "@pestras/shared/data-model";
 import { DataRecordsModel } from ".";
 import { HttpError, HttpCode } from "@pestras/backend/util";
 import { dataStoresModel, recordsWorkflowModel } from "../../models";
@@ -8,6 +8,7 @@ export async function deleteRecod(
   dsSerial: string,
   recordSerial: string,
   draft: boolean,
+  issuer: User,
   message?: string
 ) {
   const ds = await dataStoresModel.getBySerial(dsSerial, { serial: 1, type: 1, settings: 1 });
@@ -29,7 +30,7 @@ export async function deleteRecod(
 
   // if workflow applied on delete start workflow
   if (!draft && typeof ds.settings.workflow.delete === 'string') {
-    await recordsWorkflowModel.publish(dsSerial, recordSerial, 'delete', message);
+    await recordsWorkflowModel.publish(dsSerial, recordSerial, 'delete', issuer, message);
 
     return true;
 

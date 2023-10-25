@@ -12,6 +12,11 @@ export const categoriesRoutes = Router()
     CategorriesController.getByParent
   )
   .get(
+    '/parent/:parent/value/:value',
+    apiAuth(),
+    CategorriesController.getByValue
+  )
+  .get(
     '/:serial',
     apiAuth([Role.DATA_ENG]),
     CategorriesController.getBySerial

@@ -69,10 +69,10 @@ table {
     }
   }
 
-  th,
-  td {
-    min-width: 160px;
-  }
+  // th,
+  // td {
+  //   min-width: 160px;
+  // }
 
   tbody tr {
     border-block-end: 1px solid var(--border1);
@@ -95,11 +95,6 @@ table {
 
       >* {
         vertical-align: middle;
-      }
-
-      &.table-index {
-        width: 40px;
-        font-weight: bold;
       }
 
       &.bool:not(td.bool:last-child) {

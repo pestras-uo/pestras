@@ -13,6 +13,15 @@ export const CategorriesController = {
     }
   },
 
+  async getByValue(req: CategoriesApi.GetByValueReq, res: CategoriesApi.GetByValueRes, next: NextFunction) {
+    try {
+      res.json(await categoriesModel.getByValue(req.params.parent, +req.params.value));
+      
+    } catch (error) {
+      next(error);
+    }
+  },
+
   async getBySerial(req: CategoriesApi.GetByIdReq, res: CategoriesApi.GetByIdRes, next: NextFunction) {
     try {
       res.json(await categoriesModel.getBySerial(req.params.serial));

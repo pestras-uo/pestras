@@ -1,6 +1,6 @@
 /* eslint-disable @angular-eslint/component-class-suffix */
 /* eslint-disable @angular-eslint/component-selector */
-import { ChangeDetectionStrategy, Component, Input, OnChanges } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input, OnChanges, booleanAttribute } from '@angular/core';
 import { MapChartDataLoad } from '../map-chart.view';
 import * as echarts from 'echarts';
 import { MapRegionsDataVizOptions } from '@pestras/shared/data-model';
@@ -25,6 +25,8 @@ export class MapRegionsChartView implements OnChanges {
   options!: MapRegionsDataVizOptions;
   @Input({ required: true })
   payload!: MapChartDataLoad;
+  @Input({ transform: booleanAttribute })
+  dark = false;
 
   ngOnChanges() {
     const map = generateMapGeoJson(this.payload.regions);
@@ -56,7 +58,8 @@ export class MapRegionsChartView implements OnChanges {
       },
       tooltip: {
         trigger: 'item',
-        formatter: '{b}<br/>{c}'
+        backgroundColor: this.dark ? '#224' : '#FFF',
+        formatter: '<p>{b}<br/>{c}</p>'
       },
       visualMap: {
         min: Math.min(...data.map(d => d.value)),
@@ -73,11 +76,13 @@ export class MapRegionsChartView implements OnChanges {
           type: 'map',
           map: this.serial,
           label: {
+            // color: this.dark ? '#DDF' : '#335',
             show: true,
             fontSize: 12
           },
           itemStyle: {
-            borderWidth: 0
+            borderWidth: 0,
+            color: this.dark ? '#224' : '#EEF'
           },
           data
         }

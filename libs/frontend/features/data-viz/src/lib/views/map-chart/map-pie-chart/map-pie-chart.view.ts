@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @angular-eslint/component-class-suffix */
 /* eslint-disable @angular-eslint/component-selector */
-import { Component, Input, OnChanges } from '@angular/core';
+import { Component, Input, OnChanges, booleanAttribute } from '@angular/core';
 import { MapChartDataLoad } from '../map-chart.view';
 import * as echarts from 'echarts';
 import { DataRecord, MapPieDataVizOptions } from '@pestras/shared/data-model';
@@ -26,6 +26,8 @@ export class MapPieChartView implements OnChanges {
   options!: MapPieDataVizOptions;
   @Input({ required: true })
   payload!: MapChartDataLoad;
+  @Input({ transform: booleanAttribute })
+  dark = false;
 
   constructor(private regionsState: RegionsState) {}
 
@@ -66,6 +68,7 @@ export class MapPieChartView implements OnChanges {
         name: valueField.display_name,
         coordinateSystem: 'geo',
         tooltip: {
+          backgroundColor: this.dark ? '#224' : '#FFF',
           formatter: '{b}: {c} ({d}%)'
         },
         label: {
@@ -100,10 +103,13 @@ export class MapPieChartView implements OnChanges {
           areaColor: '#e7e8ea'
         },
         label: {
-          show: true
+          show: true,
+          color: this.dark ? '#DDF' : '#335'
         }
       },
-      tooltip: {},
+      tooltip: {
+        backgroundColor: this.dark ? '#224' : '#EEF'
+      },
       legend: {},
       series
     }

@@ -24,7 +24,7 @@ export const controller = {
 
   async publish(req: RecordWorkflowApis.PublishReq, res: RecordWorkflowApis.PublishRes, next: NextFunction) {
     try {
-      res.json(await recordsWorkflowModel.publish(req.params.ds, req.params.record, req.params.trigger, req.body.message));
+      res.json(await recordsWorkflowModel.publish(req.params.ds, req.params.record, req.params.trigger, res.locals.issuer, req.body.message));
 
     } catch (error) {
       next(error);
