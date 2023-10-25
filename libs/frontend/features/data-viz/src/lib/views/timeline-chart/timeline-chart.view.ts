@@ -164,7 +164,7 @@ export class TimelineChartView implements OnChanges {
     this.chartOptions = {
       tooltip: {
         trigger: 'axis',
-        backgroundColor: this.dark ? '#224' : '#EEF',
+        backgroundColor: this.dark ? '#224' : '#FFF',
         axisPointer: {
           type: 'shadow'
         },

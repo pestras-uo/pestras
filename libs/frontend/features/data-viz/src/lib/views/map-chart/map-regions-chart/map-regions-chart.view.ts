@@ -58,7 +58,7 @@ export class MapRegionsChartView implements OnChanges {
       },
       tooltip: {
         trigger: 'item',
-        backgroundColor: this.dark ? '#224' : '#EEF',
+        backgroundColor: this.dark ? '#224' : '#FFF',
         formatter: '<p>{b}<br/>{c}</p>'
       },
       visualMap: {

@@ -178,7 +178,7 @@ export class ScatterChartView implements OnInit {
       },
       tooltip: {
         trigger: 'axis',
-        backgroundColor: this.dark ? '#224' : '#EEF',
+        backgroundColor: this.dark ? '#224' : '#FFF',
         axisPointer: {
           type: 'cross'
         }

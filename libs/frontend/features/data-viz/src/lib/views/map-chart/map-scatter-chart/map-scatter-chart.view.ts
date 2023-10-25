@@ -158,7 +158,7 @@ export class MapScatterChartView implements OnChanges {
         fontFamily: 'Almarai'
       },
       tooltip: {
-        backgroundColor: this.dark ? '#224' : '#EEF',
+        backgroundColor: this.dark ? '#224' : '#FFF',
         className: 'card shadow-4 card-small ' + this.contra.currLang?.dir,
         renderMode: 'html',
         padding: 0,

@@ -103,7 +103,7 @@ export class BarChartView implements OnChanges {
             <p>${param.marker} <span style='margin-inline-end: 28px'>${param.name}</span> <strong>${Math.round(+param.value)}</strong></p>
           `
         },
-        backgroundColor: this.dark ? '#224' : '#EEF',
+        backgroundColor: this.dark ? '#224' : '#FFF',
         axisPointer: {
           type: 'shadow'
         }

@@ -77,7 +77,7 @@ export class RadarChartView implements OnChanges {
       },
       tooltip: {
         trigger: "item",
-        backgroundColor: this.dark ? '#224' : '#EEF'
+        backgroundColor: this.dark ? '#224' : '#FFF'
       },
       series: [
         {

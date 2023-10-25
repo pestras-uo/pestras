@@ -68,7 +68,7 @@ export class MapPieChartView implements OnChanges {
         name: valueField.display_name,
         coordinateSystem: 'geo',
         tooltip: {
-          backgroundColor: this.dark ? '#224' : '#EEF',
+          backgroundColor: this.dark ? '#224' : '#FFF',
           formatter: '{b}: {c} ({d}%)'
         },
         label: {

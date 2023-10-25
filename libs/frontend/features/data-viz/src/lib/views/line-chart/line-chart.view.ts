@@ -92,7 +92,7 @@ export class LineChartView implements OnChanges {
       textStyle: { fontFamily: 'Almarai' },
       tooltip: {
         trigger: 'axis',
-        backgroundColor: this.dark ? '#224' : '#EEF',
+        backgroundColor: this.dark ? '#224' : '#FFF',
         formatter: function (param: any) {
           return `
             <h4>${param[0].seriesName}</h4>

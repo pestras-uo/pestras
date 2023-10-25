@@ -114,7 +114,7 @@ export class PolarChartView implements OnChanges {
       },
       tooltip: {
         trigger: 'axis',
-        backgroundColor: this.dark ? '#224' : '#EEF'
+        backgroundColor: this.dark ? '#224' : '#FFF'
       },
       series: [
         {

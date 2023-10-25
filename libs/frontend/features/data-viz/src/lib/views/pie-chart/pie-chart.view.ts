@@ -50,7 +50,7 @@ export class PieChartView implements OnChanges {
     this.chartOptions = {
       textStyle: { fontFamily: 'Almarai' },
       tooltip: {
-        backgroundColor: this.dark ? '#224' : '#EEF',
+        backgroundColor: this.dark ? '#224' : '#FFF',
         trigger: 'item',
         formatter: '<h5>{b}</h5><p class="f7">{c} - %{d}</p>'
       },
