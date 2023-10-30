@@ -1,37 +1,29 @@
 <ng-container *contra="let c">
   <ng-container *ngIf="user$ | async as u">
-    <header class="bg-surface1 pi-8 border-be">
+    <header class="bg-surface1 p-4 border-be">
       <div class="container">
-        <div class="toolbar gap-4">
-          <div
-            class="avatar avatar-large"
-            [style.background-color]="10 | randomColor"
-          >
-            <img
-              *ngIf="u.avatar"
-              [src]="u.avatar | docsPath"
-              alt="uuser avatar"
-              class="org-logo"
-            />
-            <i
-              *ngIf="!u.avatar"
-              color="white"
-              size="large"
-              puiIcon="person"
-            ></i>
-          </div>
-
-          <div>
-            <h1 class="weight-8">{{u.fullname}}</h1>
-            <p class="primary f10" *ngIf="orgunit$ | async as org">
-              {{org.name}}
-            </p>
-          </div>
+        <div class="toolbar gap-2">
+          <app-avatar [serial]="u.serial" username size="large"></app-avatar>
+          <div class="grow"></div>
+          <ng-container *ngIf="canUpdate">
+            <button
+              class="color-scheme-dark btn-surface1 btn-round btn-small"
+              (click)="openModal(updatePasswordModal)"
+            >
+              {{c['updatePassword']}}
+            </button>
+            <button
+              class="btn-primary btn-round btn-small"
+              (click)="openModal(updateUsernameModal)"
+            >
+              {{c['updateUsername']}}
+            </button>
+          </ng-container>
         </div>
       </div>
     </header>
 
-    <main class="pi-8">
+    <main class="p-4">
       <div class="container">
         <div class="toolbar mbe-6">
           <h2 mbe>{{c['details']}}</h2>
@@ -43,6 +35,14 @@
               <i puiIcon="access"></i>
               <h3>{{c['personalInfo']}}</h3>
               <div class="grow"></div>
+              <div class="grow"></div>
+              <button
+                *ngIf="canUpdate"
+                class="btn-small btn-icon btn-round"
+                (click)="openModal(updateProfileModal)"
+              >
+                <i size="tiny" puiIcon="edit"></i>
+              </button>
             </div>
 
             <div class="card-body">
@@ -69,10 +69,10 @@
               <div class="grow"></div>
               <button
                 *ngIf="canUpdate"
-                class="btn-small btn-icon btn-round btn-outline"
+                class="btn-small btn-icon btn-round"
                 (click)="openModal(updateRolesModal)"
               >
-                <i size="small" puiIcon="edit"></i>
+                <i size="tiny" puiIcon="edit"></i>
               </button>
             </div>
 
@@ -143,6 +143,27 @@
         </section>
       </div>
     </main>
+
+    <ng-template #updateUsernameModal>
+      <pestras-update-username
+        [user]="u"
+        (closes)="closeModal()"
+      ></pestras-update-username>
+    </ng-template>
+
+    <ng-template #updatePasswordModal>
+      <pestras-update-password
+        [user]="u"
+        (closes)="closeModal()"
+      ></pestras-update-password>
+    </ng-template>
+
+    <ng-template #updateProfileModal>
+      <pestras-update-profile
+        [user]="u"
+        (closes)="closeModal()"
+      ></pestras-update-profile>
+    </ng-template>
 
     <ng-template #updateRolesModal>
       <app-update-roles [user]="u" (closes)="closeModal()"></app-update-roles>

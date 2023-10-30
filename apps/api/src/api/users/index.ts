@@ -22,11 +22,36 @@ export const usersRoutes = Router()
     validate(UserValidators.CREATE),
     UsersController.create
   )
+  // username
+  // --------------------------------------------------------------------------------------------------
+  .put(
+    '/:serial/username',
+    apiAuth([Role.ADMIN]),
+    validate(UserValidators.UPDATE_USERNAME),
+    UsersController.updateUsername
+  )
+  // password
+  // --------------------------------------------------------------------------------------------------
+  .put(
+    '/:serial/password',
+    apiAuth([Role.ADMIN]),
+    validate(UserValidators.UPDATE_PASSWORD),
+    UsersController.updatePassword
+  )
+  // profile
+  // --------------------------------------------------------------------------------------------------
+  .put(
+    '/:serial/profile',
+    apiAuth([Role.ADMIN]),
+    validate(UserValidators.UPDATE_PROFILE),
+    UsersController.updateProfile
+  )
   // roles
   // --------------------------------------------------------------------------------------------------
   .put(
     '/:serial/roles',
     apiAuth([Role.ADMIN]),
+    validate(UserValidators.UPDATE_ROLE),
     UsersController.updateRoles
   )
   // groups

@@ -49,6 +49,41 @@ export const UsersController = {
     }
   },
 
+  // username
+  // --------------------------------------------------------------------------------------------------
+  async updateUsername(req: UsersApi.UpdateUsernameReq, res: UsersApi.UpdateUsernameRes, next: NextFunction) {
+    try {
+      res.json(await usersModel.updateUsername(req.params.serial, req.body.username));
+      
+    } catch (error) {
+      next(error);
+    }
+  },
+
+  // profile
+  // --------------------------------------------------------------------------------------------------
+  async updateProfile(req: UsersApi.UpdateProfileReq, res: UsersApi.UpdateProfileRes, next: NextFunction) {
+    try {
+      res.json(await usersModel.updateProfile(req.params.serial, req.body.fullname, req.body.mobile, req.body.email));
+      
+    } catch (error) {
+      next(error);
+    }
+  },
+
+  // password
+  // --------------------------------------------------------------------------------------------------
+  async updatePassword(req: UsersApi.UpdatePasswordReq, res: UsersApi.UpdatePasswordRes, next: NextFunction) {
+    try {
+      const hashedPass = await argon.hash(req.body.password);
+
+      res.json(await authModel.updatePassword(req.params.serial, hashedPass));
+      
+    } catch (error) {
+      next(error);
+    }
+  },
+
   // groups
   // --------------------------------------------------------------------------------------------------
   async addGroup(req: UsersApi.AddGroupReq, res: UsersApi.AddGroupRes, next: NextFunction) {
