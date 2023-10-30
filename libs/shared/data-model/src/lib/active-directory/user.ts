@@ -6,7 +6,13 @@ export enum UserState {
   BY_PASS = 'by_pass'
 }
 
-export interface User {
+export interface UserProfile {
+  fullname: string;
+  email: string | null;
+  mobile: string | null;
+}
+
+export interface User extends UserProfile {
   serial: string;
   orgunit: string; // serial
   // unique
@@ -31,10 +37,6 @@ export interface User {
   state: UserState;
   
   avatar?: string | null; // image
-
-  fullname: string;
-  email: string | null;
-  mobile: string | null;
   
   create_date: Date;
   last_modified: Date;

@@ -6,7 +6,14 @@ import { UsersPage } from './users.page';
 
 import { ContraModule } from '@pestras/frontend/util/contra';
 import { ReactiveFormsModule } from '@angular/forms';
-import { PuiCheckInput, PuiIcon, PuiMultiSelectInput, PuiPreloaderModule, PuiSelectInput, PuiUtilPipesModule } from '@pestras/frontend/ui';
+import {
+  PuiCheckInput,
+  PuiIcon,
+  PuiMultiSelectInput,
+  PuiPreloaderModule,
+  PuiSelectInput,
+  PuiUtilPipesModule,
+} from '@pestras/frontend/ui';
 import { UsersListView } from './views/users-list/users-list.view';
 import { UserDetailsView } from './views/user-details/user-details.view';
 import { AvatarWidget } from '@pestras/frontend/widgets/avatar';
@@ -16,7 +23,9 @@ import { AddUserModal } from './modals/add-user/add-user.modal';
 import { DialogModule } from '@angular/cdk/dialog';
 import { UpdateRolesModal } from './modals/update-roles/update-roles.modal';
 import { NoDataPlaceholderWidget } from '@pestras/frontend/widgets/no-data-placeholder';
-
+import { UpdateUsernameComponent } from './modals/update-username/update-username.component';
+import { UpdatePasswordComponent } from './modals/update-password/update-password.component';
+import { UpdateProfileComponent } from './modals/update-profile/update-profile.component';
 
 @NgModule({
   declarations: [
@@ -25,7 +34,10 @@ import { NoDataPlaceholderWidget } from '@pestras/frontend/widgets/no-data-place
     UserDetailsView,
     UserActivityChart,
     AddUserModal,
-    UpdateRolesModal
+    UpdateRolesModal,
+    UpdateUsernameComponent,
+    UpdatePasswordComponent,
+    UpdateProfileComponent,
   ],
   imports: [
     // anguler
@@ -45,7 +57,7 @@ import { NoDataPlaceholderWidget } from '@pestras/frontend/widgets/no-data-place
     // widgets
     NgxEchartsModule,
     AvatarWidget,
-    NoDataPlaceholderWidget
-  ]
+    NoDataPlaceholderWidget,
+  ],
 })
-export class UsersModule { }
+export class UsersModule {}

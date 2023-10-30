@@ -28,6 +28,24 @@ export class UsersService {
     return this.http.post<UsersApi.Create.Response>(path, data);
   }
 
+  updateUsername(params: UsersApi.UpdateUsername.Params, body: UsersApi.UpdateUsername.Body) {
+    const path = injectURLPayload(this.envServ.env.api + UsersApi.UpdateUsername.path, params);
+
+    return this.http.put<UsersApi.UpdateUsername.Response>(path, body);
+  }
+
+  updatePassword(params: UsersApi.UpdatePassword.Params, body: UsersApi.UpdatePassword.Body) {
+    const path = injectURLPayload(this.envServ.env.api + UsersApi.UpdatePassword.path, params);
+
+    return this.http.put<UsersApi.UpdatePassword.Response>(path, body);
+  }
+
+  updateProfile(params: UsersApi.UpdateProfile.Params, body: UsersApi.UpdateProfile.Body) {
+    const path = injectURLPayload(this.envServ.env.api + UsersApi.UpdateProfile.path, params);
+
+    return this.http.put<UsersApi.UpdateProfile.Response>(path, body);
+  }
+
   updateRoles(params: UsersApi.UpdateRoles.Params, body: UsersApi.UpdateRoles.Body) {
     const path = injectURLPayload(this.envServ.env.api + UsersApi.UpdateRoles.path, params);
 

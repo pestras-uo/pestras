@@ -9,9 +9,7 @@ import { SessionState, UsersState } from '@pestras/frontend/state';
 
 @Component({
   selector: 'app-update-roles',
-  templateUrl: './update-roles.modal.html',
-  styles: [
-  ]
+  templateUrl: './update-roles.modal.html'
 })
 export class UpdateRolesModal implements OnInit {
   readonly ud = untilDestroyed();

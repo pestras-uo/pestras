@@ -25,6 +25,21 @@ export namespace UsersApi {
   export type UpdateRoleReq = Request<{ serial: string; }, any, UpdateUserRolesInput>;
   export type UpdateRoleRes = Response<Date, UserSession>;
   
+  // Username
+  // -------------------------------------------------------------------  
+  export type UpdateUsernameReq = Request<{ serial: string; }, any, { username: string; }>;
+  export type UpdateUsernameRes = Response<Date, UserSession>;
+  
+  // Password
+  // -------------------------------------------------------------------  
+  export type UpdatePasswordReq = Request<{ serial: string; }, any, { password: string; }>;
+  export type UpdatePasswordRes = Response<boolean, UserSession>;
+  
+  // Profile
+  // -------------------------------------------------------------------  
+  export type UpdateProfileReq = Request<{ serial: string; }, any, { fullname: string; email: string; mobile: string; }>;
+  export type UpdateProfileRes = Response<Date, UserSession>;
+  
   // Groups
   // -------------------------------------------------------------------  
   export type AddGroupReq = Request<{ serial: string; group: string }>;
