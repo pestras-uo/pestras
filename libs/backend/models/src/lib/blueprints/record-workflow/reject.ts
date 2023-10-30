@@ -61,6 +61,7 @@ export async function reject(
         await this.db.collection<TableDataRecord>(`draft_${dsSerial}`).insertOne(record);
         await this.db.collection<TableDataRecord>(`review_${dsSerial}`).deleteOne({ serial: recSerial });
         
+        // send notification to the owner about rejection
         await notificationsModel.notify<RejectNotification>({
           data_store: dsSerial,
           date: new Date(),
@@ -69,7 +70,8 @@ export async function reject(
           target: record['owner'],
           topic: record['topic'] ?? null,
           trigger: activeWf.trigger,
-          type: 'reject'
+          type: 'reject',
+          issuer: activeWf.issuer
         });
       }
 

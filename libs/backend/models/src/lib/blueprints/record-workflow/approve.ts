@@ -1,7 +1,7 @@
 import { RecordWorkflowModel } from ".";
 import { HttpError, HttpCode } from "@pestras/backend/util";
 import { dataRecordsModel, dataStoresModel, notificationsModel, workflowModel } from "../../models";
-import { ApproveNotification, DataRecordState, RecordWorkflow, TableDataRecord, User, getWorkflowStepAction } from "@pestras/shared/data-model";
+import { ApproveNotification, DataRecordState, PublishNotification, RecordWorkflow, TableDataRecord, User, getWorkflowStepAction } from "@pestras/shared/data-model";
 
 export async function approve(
   this: RecordWorkflowModel,
@@ -85,6 +85,7 @@ export async function approve(
         { arrayFilters: [{ 'step.step': step }] }
       );
 
+      // send notification to the owner about approval
       await notificationsModel.notify<ApproveNotification>({
         data_store: dsSerial,
         date: new Date(),
@@ -93,7 +94,8 @@ export async function approve(
         target: record['owner'],
         topic: record['topic'] ?? null,
         trigger: activeWf.trigger,
-        type: 'approve'
+        type: 'approve',
+        issuer: activeWf.issuer
       });
 
       return activeWf.trigger === 'delete' ? null : 'published';
@@ -131,7 +133,8 @@ export async function approve(
         }
       );
 
-      await notificationsModel.notifyMany<ApproveNotification>(nextStep.users.map(u => {
+      // send notification to all next step users about publish
+      await notificationsModel.notifyMany<PublishNotification>(nextStep.users.map(u => {
         return {
           data_store: dsSerial,
           date: new Date(),
@@ -140,7 +143,8 @@ export async function approve(
           target: u,
           topic: activeWf.topic,
           trigger: activeWf.trigger,
-          type: 'approve'
+          type: 'publish',
+          issuer: activeWf.issuer
         }
       }));
 

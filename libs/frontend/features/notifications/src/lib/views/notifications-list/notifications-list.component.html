@@ -1,0 +1,41 @@
+<ng-container *contra="let c">
+  <button class="btn-icon btn-round" (click)="openSideDrawer(list)">
+    <i puiIcon="notifications" size="small"></i>
+  </button>
+
+  <ng-template #list>
+    <div class="card h-fit card-clear w-10">
+      <div class="card-header">
+        <h4>{{ c['notifications'] }}</h4>
+
+        <button class="btn-small btn-round btn-icon" (click)="closeDrawer()">
+          <i puiIcon="close" size="small"></i>
+        </button>
+      </div>
+
+      <ng-container *ngIf="notifications$ | async as ns">
+        <div
+          *ngIf="ns.length; else noData"
+          class="card-body p-0 list list-actions"
+        >
+          <a *ngFor="let n of ns" class="list-item p-8">
+            <div>
+              <app-avatar [serial]="n.issuer"></app-avatar>
+              <ng-container [ngSwitch]="n.type">
+                <p *ngSwitchCase="'publish'">
+                  
+                </p>
+              </ng-container>
+            </div>
+          </a>
+        </div>
+      </ng-container>
+    </div>
+  </ng-template>
+
+  <ng-template #noData>
+    <no-data-placeholder-widget>{{
+      c['noNotificationsMsg']
+    }}</no-data-placeholder-widget>
+  </ng-template>
+</ng-container>

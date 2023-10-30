@@ -6,7 +6,7 @@ const basePath = '/notifications';
 export namespace NotificationsApi {
 
   // GET
-  export namespace GetUnseen {
+  export namespace GetAll {
     export const REQ_PATH = basePath;
     
     export type Response = Notification[];
@@ -18,6 +18,6 @@ export namespace NotificationsApi {
 
     export interface Params { serial: string; };
 
-    export type Response = boolean;
+    export type Response = string; // date
   }
 }

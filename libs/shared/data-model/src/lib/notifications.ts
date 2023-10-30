@@ -11,6 +11,7 @@ export interface Notification {
   seen: Date | null;
   target: string;
   date: Date;
+  issuer: string;
 }
 
 export interface PublishNotification extends Notification {

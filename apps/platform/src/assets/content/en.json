@@ -1,4 +1,11 @@
 {
+  "workflowNotificationsTypes": {
+    "create": "Add new record request",
+    "updage": "Update record request",
+    "delete": "Delete record request"
+  },
+  "noNotificationsMsg": "No notifications found",
+  "notifications": "Notifications",
   "requests": "Request",
   "workflowTriggers": {
     "create": "Create",

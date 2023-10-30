@@ -72,6 +72,7 @@ export async function publishRecord(
       serial: record['serial']
     });
 
+    // send notification to all next step users about publish
     await notificationsModel.notifyMany<PublishNotification>(firstParty.users.map<Omit<PublishNotification, 'serial'>>(u => {
       return {
         target: u,
@@ -81,7 +82,8 @@ export async function publishRecord(
         seen: null,
         type: 'publish',
         data_store: ds.serial,
-        topic: record['topic'] ?? null
+        topic: record['topic'] ?? null,
+        issuer: issuer.serial
       };
     }));
 

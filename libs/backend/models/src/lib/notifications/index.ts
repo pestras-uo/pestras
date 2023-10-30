@@ -2,7 +2,6 @@
 import { Model } from "../model";
 import { Notification } from "@pestras/shared/data-model";
 import { Serial } from '@pestras/shared/util';
-import { changeListener } from "./listener";
 
 export class NotificationsModel extends Model<any> {
 
@@ -14,7 +13,7 @@ export class NotificationsModel extends Model<any> {
   }
   
   protected override onConnect(): void {
-    changeListener.call(this);
+    // changeListener.call(this);
   }
 
   // getters

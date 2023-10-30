@@ -11,6 +11,7 @@ import { TopicsFeatureModule } from '@pestras/frontend/features/topics';
 import { ProfileModule } from './profile/profile.module';
 import { AvatarWidget } from '@pestras/frontend/widgets/avatar';
 import { WorkspaceFeatureModule } from '@pestras/frontend/features/workspace';
+import { NotificationsFeatureModule } from '@pestras/frontend/features/notifications';
 
 
 @NgModule({
@@ -37,6 +38,7 @@ import { WorkspaceFeatureModule } from '@pestras/frontend/features/workspace';
     SessionFeatureModule,
     TopicsFeatureModule,
     WorkspaceFeatureModule,
+    NotificationsFeatureModule,
     // pages
     ProfileModule
   ]

@@ -12,10 +12,10 @@ export class NotificationsService {
     private http: HttpClient
   ) { }
 
-  getUnSeen() {
-    const path = injectURLPayload(this.envServ.env.api + NotificationsApi.GetUnseen.REQ_PATH);
+  getAll() {
+    const path = injectURLPayload(this.envServ.env.api + NotificationsApi.GetAll.REQ_PATH);
 
-    return this.http.get<NotificationsApi.GetUnseen.Response>(path);
+    return this.http.get<NotificationsApi.GetAll.Response>(path);
   }
 
   setSeen(params: NotificationsApi.SetSeen.Params) {

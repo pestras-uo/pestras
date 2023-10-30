@@ -1,4 +1,11 @@
 {
+  "workflowNotificationsTypes": {
+    "create": "طلب إضافة سجل جديد",
+    "updage": "طلب تعديل سجل",
+    "delete": "طلب حذف سجل"
+  },
+  "noNotificationsMsg": "لا يوجد تنبيهات",
+  "notifications": "التنبيهات",
   "requests": "الطلبات",
   "workflowTriggers": {
     "create": "إضافة",
