@@ -14,7 +14,6 @@ export class ToggleTheme {
 
   toggleDarkMode(): void {
     this.isDarkMode = !this.isDarkMode;
-    // Call your service method to handle dark mode state change
     this.toggleThemeService.toggleDarkMode();
   }
 }

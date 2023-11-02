@@ -5,6 +5,8 @@
   justify-content: center;
   width: 100%;
   height: 100vh;
+
+
 }
 
 .box {
@@ -15,11 +17,22 @@
   background-color: var(--surface1);
   border-radius: 16px;
   overflow: hidden;
+
+  .color-scheme-dark &,
+  &.color-scheme-dark {
+    background-color: var(--surface2);
+  }
+
 }
 
 .banner {
   position: relative;
   background-color: var(--surface2);
+
+  .color-scheme-dark &,
+  &.color-scheme-dark {
+    background-color: var(--surface4);
+  }
 
   .p-logo {
     width: 56px;
@@ -43,6 +56,9 @@
     display: flex;
     flex-direction: column;
     justify-content: center;
+
+
+
   }
 }
 
