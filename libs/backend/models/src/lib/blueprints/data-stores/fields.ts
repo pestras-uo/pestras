@@ -10,6 +10,7 @@ import {
 } from "@pestras/shared/data-model";
 import { DataStoresModel } from ".";
 import { HttpError, HttpCode } from "@pestras/backend/util";
+import { categoriesModel } from "../../models";
 
 export async function addField(
   this: DataStoresModel,
@@ -41,11 +42,38 @@ export async function addField(
     throw new HttpError(HttpCode.CONFLICT, "fieldDisplayNameAlreadyExists");
 
   const newField = createField(field);
+  const newFields = [newField];
+
+  // check field type if it is category
+  if (newField.type === 'category') {
+    newField.cat_level = 1;
+
+    // - fetch category
+    const cat = await categoriesModel.getBySerial(field.ref_to, { levels: 1 });
+
+    // - check category level is greater than 1
+    if (cat.levels > 1) {
+      // make field required
+      newField.required = true;
+      
+      // - create new fields for each extra level over 1
+      for (let i = 2; i <= cat.levels; i++) {
+        // - each new field will have parent, name of: "$field.name_$level" and display_name of: "$field.name $level"
+        newFields.push(createField({
+          ...newField,
+          parent: `${newField.name}_${i - 1}`,
+          cat_level: i,
+          name: `${newField.name}_${i}`,
+          display_name: `${newField.display_name} ${i}`
+        }));
+      }
+    }
+  }
 
   await this.col.updateOne(
     { serial },
     {
-      $push: { fields: newField },
+      $push: { fields: { $each: newFields } },
       $set: { last_modified: date },
     }
   );

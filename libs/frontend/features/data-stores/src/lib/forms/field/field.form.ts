@@ -41,6 +41,7 @@ export class FieldForm implements OnInit {
     unit: new FormControl(null),
     ref_type: new FormControl(null),
     ref_to: new FormControl(null),
+    ref_level: new FormControl(null),
     length: new FormControl(1, {
       nonNullable: true,
       validators: Validators.required,

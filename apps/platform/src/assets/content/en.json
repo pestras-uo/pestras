@@ -1,4 +1,5 @@
 {
+  "levelsCount": "Levels Count",
   "requests": "Request",
   "workflowTriggers": {
     "create": "Create",

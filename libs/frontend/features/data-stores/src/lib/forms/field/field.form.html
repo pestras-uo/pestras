@@ -139,6 +139,13 @@
     ></pui-check-input>
   </div>
 
+  <ng-container *ngIf="typeField.value === 'int' || typeField.value === 'double'">
+    <label for="field-unit">{{c['unit']}}</label>
+    <div class="fc fc-outline fc-surface1 mbe-6">
+      <input type="text" id="field-unit" formControlName="unit">
+    </div>
+  </ng-container>
+
   <!--  default value -->
   <ng-container *ngIf="addDefault$ | async">
     <!-- boolean type -->

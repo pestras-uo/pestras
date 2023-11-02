@@ -1,4 +1,5 @@
 {
+  "levelsCount": "عدد المستويات",
   "requests": "الطلبات",
   "workflowTriggers": {
     "create": "إضافة",

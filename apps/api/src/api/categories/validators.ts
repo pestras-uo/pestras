@@ -12,6 +12,7 @@ new Validall(CategoriesValidators.CREATE, {
   title: { $type: 'string' },
   ordinal: { $cast: 'boolean' },
   value: { $or: [{ $type: 'string' }, { $type: 'number' }] },
+  levels: { $type: 'number', $nullable: true },
   parent: { $type: 'string', $nullable: true } 
 });
 

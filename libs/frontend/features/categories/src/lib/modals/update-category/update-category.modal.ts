@@ -27,7 +27,7 @@ export class UpdateCategoryModal implements OnInit {
   category!: Category;
 
   @Output()
-  closes = new EventEmitter<Category | null>();
+  closes = new EventEmitter<boolean>();
 
   constructor(
     private service: CategoriesService,
@@ -49,7 +49,7 @@ export class UpdateCategoryModal implements OnInit {
       .subscribe({
         next: () => {
           this.toast.msg(c['success'].default, { type: 'success' });
-          this.closes.emit(this.category);
+          this.closes.emit(true);
         },
         error: e => {
           console.error(e);
