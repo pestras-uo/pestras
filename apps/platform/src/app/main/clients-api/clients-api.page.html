@@ -1,9 +1,11 @@
 <ng-container *contra="let c">
   <ng-container *ngIf="client$ | async as client">
-    <header class="bg-surface1 pi-8 border-be">
+    <header class="bg-surface3 pi-8 border-be">
       <div class="container">
         <h3 class="bold f8">
-          <pestras-bread-crumb-widget page='clients-api'></pestras-bread-crumb-widget>
+          <pestras-bread-crumb-widget
+            page="clients-api"
+          ></pestras-bread-crumb-widget>
         </h3>
         <div class="toolbar gap-4">
           <div>
