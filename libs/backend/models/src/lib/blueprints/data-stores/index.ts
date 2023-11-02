@@ -73,7 +73,7 @@ export class DataStoresModel extends Model<DataStore> {
 
   // fields
   // --------------------------------------------------------------------------------------
-  addField: (serial: string, field: Field, issuer: User) => Promise<Date> = addField.bind(this);
+  addField: (serial: string, field: Field, issuer: User) => Promise<Field[]> = addField.bind(this);
   updateField: (serial: string, field: string, input: UpdateFieldInput, issuer: User) => Promise<Date> = updateField.bind(this);
   updateFieldConfig: (serial: string, field: string, input: UpdateFieldConfigInput, issuer: User) => Promise<Date> = updateFieldConfig.bind(this);
   setFieldConstraint: (serial: string, field: string, constrinat: ValueConstraint | null, issuer: User) => Promise<Date> = setFieldConstraint.bind(this);

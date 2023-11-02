@@ -83,7 +83,7 @@ export async function addField(
   if (ds.state !== DataStoreState.BUILD)
     await this.dataDB
       .collection(ds.serial)
-      .updateMany({}, { $set: { [field.name]: field.default ?? null } });
+      .updateMany({}, { $set: newFields.reduce((update, curr) => ({ ...update, [curr.name]: null }), {}) });
 
   this.channel.emitActivity({
     issuer: issuer.serial,
@@ -97,7 +97,7 @@ export async function addField(
     roles: [Role.ADMIN, Role.DATA_ENG]
   });
 
-  return date;
+  return newFields;
 }
 
 export type UpdateFieldInput = Pick<Field, "display_name" | "group" | "desc">;

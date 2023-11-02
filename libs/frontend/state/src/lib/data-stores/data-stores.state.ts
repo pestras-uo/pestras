@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { Injectable } from "@angular/core";
-import { DataStore, DataStoreState, WebServiceConfig, createField } from "@pestras/shared/data-model";
+import { DataStore, DataStoreState, WebServiceConfig } from "@pestras/shared/data-model";
 import { StatorChannel, StatorGroupState } from "@pestras/frontend/util/stator";
 import { DataStoresService } from "./data-stores.service";
 import { DataStoresApi } from "./data-stores.api";
@@ -174,11 +174,11 @@ export class DataStoresState extends StatorGroupState<DataStore> {
   addField(serial: string, data: DataStoresApi.AddField.Body) {
     return this.service.addField({ serial }, data)
       .pipe(
-        tap(date => this._update(serial, ds => {
+        tap(fields => this._update(serial, ds => {
           return {
             ...ds,
-            fields: ds.fields.concat(createField(data)),
-            last_modified: new Date(date)
+            fields: ds.fields.concat(fields),
+            last_modified: new Date()
           }
         })),
         map(() => this.get(serial)?.fields.find(f => f.name === data.name) ?? null)
