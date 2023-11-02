@@ -10,14 +10,21 @@ const colors = ['#55DD88', '#FFBB55', '#FF4455'];
 
 @Component({
   selector: 'app-polar-chart',
-  template: '<div *ngIf="chartOptions" echarts [options]="chartOptions" class="chart"></div>',
-  styles: [`
-    :host { display: block; height: 100%; }
-    .chart { height: 100%; }
-  `]
+  template:
+    '<div *ngIf="chartOptions" echarts [options]="chartOptions" class="chart"></div>',
+  styles: [
+    `
+      :host {
+        display: block;
+        height: 100%;
+      }
+      .chart {
+        height: 100%;
+      }
+    `,
+  ],
 })
 export class PolarChartView implements OnChanges {
-
   chartOptions!: EChartsOption;
 
   @Input({ required: true })
@@ -34,14 +41,22 @@ export class PolarChartView implements OnChanges {
   }
 
   init(options: PolarDataVizOptions) {
-    const valueField = this.data.fields.find(f => f.name === options.value_field);
-    const catField = this.data.fields.find(f => f.name === options.category_field);
+    const valueField = this.data.fields.find(
+      (f) => f.name === options.value_field
+    );
+    const catField = this.data.fields.find(
+      (f) => f.name === options.category_field
+    );
 
     if (!valueField)
-      throw new Error(`value field not found (${options.value_field}): polar chart`);
+      throw new Error(
+        `value field not found (${options.value_field}): polar chart`
+      );
 
     if (!catField)
-      throw new Error(`category field not found (${options.category_field}): polar chart`);
+      throw new Error(
+        `category field not found (${options.category_field}): polar chart`
+      );
 
     const categories: string[] = [];
     const values: number[] = [];
@@ -54,24 +69,17 @@ export class PolarChartView implements OnChanges {
     return { categories, values };
   }
 
-
-
   private getColor(value: number, reverse: boolean) {
-    if (value <= 33)
-      return reverse ? colors[2] : colors[0];
+    if (value <= 33) return reverse ? colors[2] : colors[0];
 
-    if (value <= 66)
-      return colors[1];
+    if (value <= 66) return colors[1];
 
     return reverse ? colors[0] : colors[2];
   }
 
-
-
   getInnerRadius(count: number) {
     return Math.round(100 / count) + '%';
   }
-
 
   render(options: PolarDataVizOptions, categories: string[], values: number[]) {
     this.chartOptions = {
@@ -80,20 +88,20 @@ export class PolarChartView implements OnChanges {
         max: 100,
         axisLabel: {
           fontSize: 18,
-          fontWeight: 'bold'
+          fontWeight: 'bold',
         },
         axisTick: {
-          show: false
+          show: false,
         },
         axisLine: {
-          show: false
+          show: false,
         },
         splitLine: {
-          show: false
-        }
+          show: false,
+        },
       },
       polar: {
-        radius: [this.getInnerRadius(values.length), '80%']
+        radius: [this.getInnerRadius(values.length), '80%'],
       },
       radiusAxis: {
         type: 'category',
@@ -103,18 +111,18 @@ export class PolarChartView implements OnChanges {
           fontSize: 16,
           fontWeight: 'bold',
           color: '#FFF',
-          padding: [0, -12, 0, 0]
+          padding: [0, -12, 0, 0],
         },
         axisTick: {
-          show: false
+          show: false,
         },
         axisLine: {
-          show: false
-        }
+          show: false,
+        },
       },
       tooltip: {
         trigger: 'axis',
-        backgroundColor: this.dark ? '#224' : '#FFF'
+        backgroundColor: this.dark ? '#224' : '#FFF',
       },
       series: [
         {
@@ -122,15 +130,20 @@ export class PolarChartView implements OnChanges {
           type: 'bar',
           showBackground: true,
           data: options.indicator
-            ? values.map(d => ({ value: d, itemStyle: { color: this.getColor(d, options.reverse_indicator) } }))
+            ? values.map((d) => ({
+                value: d,
+                itemStyle: {
+                  color: this.getColor(d, options.reverse_indicator),
+                },
+              }))
             : values,
           coordinateSystem: 'polar',
           roundCap: true,
           emphasis: {
-            focus: 'series'
-          }
-        }
-      ]
+            focus: 'series',
+          },
+        },
+      ],
     };
   }
 }

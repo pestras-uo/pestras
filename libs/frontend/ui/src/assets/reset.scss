@@ -160,11 +160,13 @@ summary,
 }
 
 // input placeholder
-::-webkit-input-placeholder { /* Edge */
+::-webkit-input-placeholder {
+  /* Edge */
   font-size: 0.85rem;
 }
 
-:-ms-input-placeholder { /* Internet Explorer 10-11 */
+:-ms-input-placeholder {
+  /* Internet Explorer 10-11 */
   font-size: 0.85rem;
 }
 

@@ -2,7 +2,17 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule } from '@angular/forms';
 import { ContraModule } from '@pestras/frontend/util/contra';
-import { PuiCheckInput, PuiGoogleMapModule, PuiIcon, PuiMultiSelectInput, PuiPreloaderModule, PuiSelectInput, PuiTableModule, PuiUtilPipesModule } from '@pestras/frontend/ui';
+import {
+  PuiCheckInput,
+  PuiGoogleMapModule,
+  PuiIcon,
+  PuiMultiSelectInput,
+  PuiPreloaderModule,
+  PuiSelectInput,
+  PuiTableModule,
+  PuiUtilPipesModule,
+  ToggleTheme,
+} from '@pestras/frontend/ui';
 import { HierarchicalForm } from './forms/hierarchical/hierarchical.form';
 import { MapForm } from './forms/map/map.form';
 import { RadarForm } from './forms/radar/radar.form';
@@ -44,8 +54,6 @@ import { CategoriesFeatureModule } from '@pestras/frontend/features/categories';
 import { EnvModule } from '@pestras/frontend/env';
 import { NoDataPlaceholderWidget } from '@pestras/frontend/widgets/no-data-placeholder';
 
-
-
 @NgModule({
   declarations: [
     HierarchicalForm,
@@ -80,8 +88,10 @@ import { NoDataPlaceholderWidget } from '@pestras/frontend/widgets/no-data-place
     GroupForm,
     LimitForm,
     SortForm,
-    TransposeForm
+    TransposeForm,
   ],
+  providers: [ToggleTheme],
+
   imports: [
     // Angular
     CommonModule,
@@ -105,7 +115,7 @@ import { NoDataPlaceholderWidget } from '@pestras/frontend/widgets/no-data-place
     RecordsFeatureModule,
     CategoriesFeatureModule,
     // widgets
-    NoDataPlaceholderWidget
+    NoDataPlaceholderWidget,
   ],
   exports: [
     BarChartView,
@@ -120,7 +130,7 @@ import { NoDataPlaceholderWidget } from '@pestras/frontend/widgets/no-data-place
     BoxplotChartView,
     PolarChartView,
     ChartForm,
-    ChartView
-  ]
+    ChartView,
+  ],
 })
 export class DataVizFeatureModule {}

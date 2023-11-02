@@ -23,6 +23,8 @@ import { Observable } from 'rxjs';
         height: var(--main-height);
         overflow-y: auto;
       }
+
+     
     `,
   ],
 })
@@ -35,11 +37,10 @@ export class DetailsPage implements OnChanges {
 
   topic$!: Observable<Topic | null>;
 
- 
   readonly title = new FormControl('', {
     validators: Validators.required,
     nonNullable: true,
-  }); 
+  });
 
   @Input({ required: true })
   theme!: string;
@@ -64,7 +65,11 @@ export class DetailsPage implements OnChanges {
   ) {}
 
   set(menu: string, ds?: string) {
-    this.router.navigate([], { relativeTo: this.route, queryParams: { menu, ds: ds ?? '' }, replaceUrl: true });
+    this.router.navigate([], {
+      relativeTo: this.route,
+      queryParams: { menu, ds: ds ?? '' },
+      replaceUrl: true,
+    });
 
     if (menu !== 'dataStores') this.dataStore = null;
   }

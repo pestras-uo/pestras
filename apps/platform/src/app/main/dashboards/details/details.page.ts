@@ -48,7 +48,6 @@ export class DetailsPageComponent implements OnChanges {
   @Input({ required: true })
   serial!: string;
 
-  
   @Input()
   set menu(value: string) {
     this.view = value ?? 'details';
@@ -59,17 +58,13 @@ export class DetailsPageComponent implements OnChanges {
     private dialog: Dialog,
     private toast: ToastService,
     private router: Router,
-    private route: ActivatedRoute,
+    private route: ActivatedRoute
   ) {}
 
   ngOnChanges() {
     this.dashboard$ = this.state
       .select(this.serial)
       .pipe(tap((d) => this.title.setValue(d?.title ?? '')));
-
-    
-      
-    
   }
 
   set(menu: string) {

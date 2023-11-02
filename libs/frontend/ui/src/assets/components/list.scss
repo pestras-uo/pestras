@@ -24,6 +24,19 @@
   &.list-actions>.list-item {
     --hover-color: var(--surface1);
 
+    .color-scheme-dark &,
+    &.color-scheme-dark {
+      --hover-color: var(--surface2);
+
+    }
+
+
+    .color-scheme-dark &,
+    &.color-scheme-dark {
+      background-color: var(--surface4);
+
+    }
+
     cursor: pointer;
     transition: background-color 250ms;
 
@@ -45,6 +58,7 @@
     content: "";
     position: absolute;
     background-color: var(--primary);
+
     width: 4px;
     height: 100%;
     inset-inline-start: 0;

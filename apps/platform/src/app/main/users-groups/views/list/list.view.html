@@ -1,5 +1,5 @@
 <ng-container *contra="let c; let dir=dir">
-  <header class="p-4">
+  <header class="bg-surface3 p-4">
     <div class="toolbar mbe-4">
       <h3 class="weight-8">{{c['usersGroups']}}</h3>
       <div class="grow"></div>
@@ -21,7 +21,7 @@
   <div class="list" *ngIf="groups$ | async as groups">
     <ng-container *ngIf="groups.length else noData">
       <div
-        class="list-item hover cursor-pointer p-4"
+        class="list-item hover cursor-pointer p-4 "
         [class.active]="selected === group.serial"
         *ngFor="let group of groups"
         (click)="this.selects.emit(group.serial)"

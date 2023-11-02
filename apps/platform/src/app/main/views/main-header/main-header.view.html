@@ -21,6 +21,8 @@
     <i size="small" puiIcon="inbox"></i>
   </button> -->
 
+  <toggle-theme></toggle-theme>
+
   <ng-container *ngIf="null | contraLang | async as lang">
     <button #langBtn class="btn-icon btn-round" (click)="langDD.show()">
       <i size="small" puiIcon="language"></i>

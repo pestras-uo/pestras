@@ -1,8 +1,6 @@
 <ng-container *contra="let c">
   <ng-container *ngIf="region$ | async as region">
-
-    <header class="bg-surface1 pi-8 border-be">
-
+    <header class="bg-surface3 pi-8 border-be">
       <div class="container">
         <div class="toolbar gap-4">
           <div>
@@ -12,35 +10,46 @@
 
           <div class="grow"></div>
 
-          <button class="color-scheme-dark btn-surface1 btn-round" (click)="openModal(updateCoordsModal)">
+          <button
+            class="color-scheme-dark btn-surface1 btn-round"
+            (click)="openModal(updateCoordsModal)"
+          >
             <i size="small" color="white" puiIcon="draw_fill"></i>
             {{c['newCoords']}}
           </button>
 
-          <button class="btn-primary btn-round" (click)="openModal(updateModal)">
+          <button
+            class="btn-primary btn-round"
+            (click)="openModal(updateModal)"
+          >
             <i color="white" size="small" puiIcon="edit_fill"></i>
             {{c['update']}}
           </button>
-
         </div>
       </div>
-
     </header>
 
     <main>
-
-      <pui-google-map [position]="region.location" [zoom]="zoom" [markers]="[{ position: region.location, label: region.name }]"
-        [polygon]="polygon"></pui-google-map>
-
+      <pui-google-map
+        [position]="region.location"
+        [zoom]="zoom"
+        [markers]="[{ position: region.location, label: region.name }]"
+        [polygon]="polygon"
+      ></pui-google-map>
     </main>
 
     <ng-template #updateModal>
-      <app-update-region [region]="region" (closes)="closeModal()"></app-update-region>
+      <app-update-region
+        [region]="region"
+        (closes)="closeModal()"
+      ></app-update-region>
     </ng-template>
 
     <ng-template #updateCoordsModal>
-      <app-update-coords [region]="region" (closes)="closeModal()"></app-update-coords>
+      <app-update-coords
+        [region]="region"
+        (closes)="closeModal()"
+      ></app-update-coords>
     </ng-template>
-
   </ng-container>
 </ng-container>

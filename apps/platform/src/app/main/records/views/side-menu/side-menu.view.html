@@ -19,7 +19,6 @@
     </div>
 
     <ng-container *ngIf="isTable">
-
       <div
         class="list-item hover cursor-pointer p-4"
         [class.active]="view.name === 'attachments'"
@@ -33,7 +32,7 @@
           </div>
         </div>
       </div>
-  
+
       <div
         class="list-item hover cursor-pointer p-4"
         [class.active]="view.name === 'history'"
@@ -75,10 +74,7 @@
           </div>
         </div>
       </div>
-
     </ng-container>
-
-
 
     <ng-container *ngIf="subDataStores.length">
       <div class="pi-7 pb-4 bg-surface2 border-be">
@@ -102,7 +98,7 @@
   </main>
 
   <div
-    class="p-4 align-center bg-surface1"
+    class="p-4 align-center bg-surface3"
     *ngIf="deleteAllowed && (record.serial | recordActiveWF: dataStore.serial | async) === null && ((record.owner | sessionIs) || ((dataStore.blueprint | blueprint | async)?.owner | sessionIs))"
   >
     <button

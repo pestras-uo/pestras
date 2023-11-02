@@ -8,7 +8,14 @@ table {
   border-collapse: collapse;
   border-radius: 8px;
   overflow-y: auto;
+
   border-spacing: 0;
+
+  .color-scheme-dark &,
+  &.color-scheme-dark {
+    background-color: var(--surface4);
+
+  }
 
   &.no-collapse {
     border-collapse: unset;
@@ -79,6 +86,13 @@ table {
 
     &:nth-child(odd) {
       background-color: var(--surface2);
+
+      .color-scheme-dark &,
+      &.color-scheme-dark {
+        background-color: var(--surface4);
+
+      }
+
     }
 
     &:last-child {

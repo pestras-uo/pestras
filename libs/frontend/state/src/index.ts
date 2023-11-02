@@ -9,7 +9,6 @@ export { BlueprintsState } from './lib/blueprints/blueprints.state';
 export { BlueprintResolver } from './lib/blueprints/blueprints.resolver';
 
 export { CategoriesService } from './lib/categories/categories.service';
-
 export { BlueprintsService } from './lib/blueprints/blueprints.service';
 export { DashboardsService } from './lib/dashboards/dashboards.service';
 export { ClientApiService } from './lib/client-api/client-api.service';
