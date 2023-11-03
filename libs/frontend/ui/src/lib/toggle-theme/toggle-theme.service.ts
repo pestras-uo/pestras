@@ -34,6 +34,8 @@ export class ToggleThemeService {
     }
   }
 
+
+  
   private saveDarkModeState(isDarkMode: boolean) {
     localStorage.setItem(this.localStorageKey, JSON.stringify(isDarkMode));
   }
