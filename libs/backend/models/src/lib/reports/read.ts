@@ -9,16 +9,6 @@ export async function search(
   query: Partial<ApiQuery<Report>>,
   user: User
 ) {
-  // const count = await this.col.countDocuments(query.search as Filter<Report>);
-  // const results = await this.col.find(query.search as any, {
-  //   sort: query.sort ?? { _id: 1 },
-  //   skip: query.skip ?? 0,
-  //   limit: query.limit ?? 10,
-  //   projection: query.select || {}
-  // })
-  //   .toArray();
-
-  // return { count, results } as ApiQueryResults<Report>;
 
   const match: Filter<Report> = user.orgunit === "*"
     ? {}
@@ -26,10 +16,17 @@ export async function search(
       $or: [
         { owner: user.serial },
         {
-          $and: [
-            { $or: [{ 'access.orgunits': { $size: 0 } }, { 'access.orgunits': user.orgunit }] },
-            { $or: [{ 'access.users': { $size: 0 } }, { 'access.users': user.serial }] },
-            { $or: [{ 'access.groups': { $size: 0 } }, { 'access.group': { $in: user.groups } }] }
+          $or: [
+            {
+              $and: [
+                { 'access.orgunits': { $size: 0 } },
+                { 'access.users': { $size: 0 } },
+                { 'access.groups': { $size: 0 } }
+              ],
+            },
+            { 'access.orgunits': user.orgunit },
+            { 'access.users': user.serial },
+            { 'access.group': { $in: user.groups } }
           ]
         }
       ]
@@ -83,10 +80,17 @@ export function getByTopic(
       $or: [
         { owner: user.serial },
         {
-          $and: [
-            { $or: [{ 'access.orgunits': { $size: 0 } }, { 'access.orgunits': user.orgunit }] },
-            { $or: [{ 'access.users': { $size: 0 } }, { 'access.users': user.serial }] },
-            { $or: [{ 'access.groups': { $size: 0 } }, { 'access.group': { $in: user.groups } }] }
+          $or: [
+            {
+              $and: [
+                { 'access.orgunits': { $size: 0 } },
+                { 'access.users': { $size: 0 } },
+                { 'access.groups': { $size: 0 } }
+              ],
+            },
+            { 'access.orgunits': user.orgunit },
+            { 'access.users': user.serial },
+            { 'access.group': { $in: user.groups } }
           ]
         }
       ]
