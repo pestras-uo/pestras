@@ -5,10 +5,17 @@
   display: grid;
   grid-template-rows: auto 1fr;
   border-inline-end: 1px solid var(--border1);
+
+  .color-scheme-dark &,
+  &.color-scheme-dark {
+    background-color: var(--surface4);
+  }
+
 }
 
-.list {
-  overflow-y: auto;
-  background-color: var(--surface3); // previous surface1
 
-}
+// .list {
+//   overflow-y: auto;
+//   background-color: var(--surface1); // previous surface1
+
+// }

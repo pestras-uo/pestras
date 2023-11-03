@@ -9,9 +9,14 @@ import { Observable } from 'rxjs';
   selector: 'app-topics-list',
   templateUrl: './topics-list.view.html',
   styles: [
-  ]
+    ` header {
+        .color-scheme-dark &,
+        &.color-scheme-dark {
+          background-color: var(--surface3);
+        }`,
+  ],
 })
-export class TopicsListView implements OnChanges {  
+export class TopicsListView implements OnChanges {
   readonly roles = Role;
 
   topics$!: Observable<Topic[]>;
@@ -20,9 +25,7 @@ export class TopicsListView implements OnChanges {
   @Input({ required: true })
   parent!: string | null;
 
-  constructor(
-    private state: TopicsState
-  ) {}
+  constructor(private state: TopicsState) {}
 
   ngOnChanges() {
     this.topics$ = this.state.selectGroup(this.parent);

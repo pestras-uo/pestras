@@ -61,7 +61,7 @@ export class PuiGoogleMap implements OnInit {
 
   // Output event
   @Output() pick = new Subject<google.maps.LatLngLiteral | null>();
-  isDarkMode = false;
+  themeState = false;
 
   constructor(
     private readonly mapService: GoogleMapService,
@@ -69,15 +69,15 @@ export class PuiGoogleMap implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.toggleThemeService.isDarkMode$.subscribe((isDarkMode) => {
-      this.isDarkMode = isDarkMode;
+    this.toggleThemeService.darkModeToggled.subscribe((themeState) => {
+      this.themeState = themeState;
 
       // Initializing map options
       this.options = {
         disableDefaultUI: false,
         keyboardShortcuts: false,
         fullscreenControl: false,
-        styles: isDarkMode ? mapStyleDark : mapStyle,
+        styles: themeState ? mapStyleDark : mapStyle,
         zoomControl: this.zoomControl,
         controlSize: 24,
       };

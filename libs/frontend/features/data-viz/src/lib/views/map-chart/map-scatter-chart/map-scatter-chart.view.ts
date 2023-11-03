@@ -54,6 +54,10 @@ export class MapScatterChartView implements OnChanges {
   ) {}
 
   ngOnChanges() {
+    this.toggleThemeServ.isDarkMode$.subscribe((isDarkMode) => {
+      this.isDarkMode = isDarkMode;
+    });
+
     if (this.payload.regions.length) {
       this.zoom = Math.max(...this.payload.regions.map((r) => r.zoom));
 
@@ -184,88 +188,85 @@ export class MapScatterChartView implements OnChanges {
 
     const docsPath = this.envServ.env.docs;
 
-    this.toggleThemeServ.isDarkMode$.subscribe((isDarkMode) => {
-      this.isDarkMode = isDarkMode;
-      this.chartOptions = {
-        textStyle: {
-          fontFamily: 'Almarai',
+    this.chartOptions = {
+      textStyle: {
+        fontFamily: 'Almarai',
+      },
+      tooltip: {
+        backgroundColor: this.dark ? '#224' : '#FFF',
+        className: 'card shadow-4 card-small ' + this.contra.currLang?.dir,
+        renderMode: 'html',
+        padding: 0,
+        borderWidth: 0,
+        borderRadius: 16,
+        shadowBlur: 0,
+        extraCssText: 'white-space: normal;',
+        enterable: true,
+        hideDelay: 100,
+        showDelay: 100,
+        formatter: function (param: any) {
+          if (options.tooltip?.body.length) {
+            const serial = param.value[3];
+            const record = serial
+              ? payload.records.find(
+                  (r) => r['serial'] === serial || r['_id'] === serial
+                )
+              : null;
+
+            if (record)
+              return recordToolTip(
+                payload.fields,
+                options.tooltip,
+                record,
+                docsPath
+              );
+          }
+
+          return `${param.marker}\t<strong>${param.value[2]}</strong>`;
         },
-        tooltip: {
-          backgroundColor: this.dark ? '#224' : '#FFF',
-          className: 'card shadow-4 card-small ' + this.contra.currLang?.dir,
-          renderMode: 'html',
-          padding: 0,
-          borderWidth: 0,
-          borderRadius: 16,
-          shadowBlur: 0,
-          extraCssText: 'white-space: normal;',
-          enterable: true,
-          hideDelay: 100,
-          showDelay: 100,
-          formatter: function (param: any) {
-            if (options.tooltip?.body.length) {
-              const serial = param.value[3];
-              const record = serial
-                ? payload.records.find(
-                    (r) => r['serial'] === serial || r['_id'] === serial
-                  )
-                : null;
-
-              if (record)
-                return recordToolTip(
-                  payload.fields,
-                  options.tooltip,
-                  record,
-                  docsPath
-                );
-            }
-
-            return `${param.marker}\t<strong>${param.value[2]}</strong>`;
+      },
+      gmap: options.google_map
+        ? {
+            center: this.center ?? [35.910937982131884, 31.96232549914046],
+            zoom: this.zoom,
+            renderOnMoving: true,
+            echartsLayerZIndex: 2019,
+            roam: true,
+            styles: this.isDarkMode ? mapStyleDark : mapStyle,
+            disableDefaultUI: false,
+            keyboardShortcuts: false,
+            fullscreenControl: false,
+          }
+        : null,
+      visualMap: [
+        {
+          show: false,
+          type: 'piecewise',
+          min: 0,
+          max: 100,
+          dimension: 2, // the fourth dimension of series.data (i.e. value[3]) is mapped
+          seriesIndex: 0, // The fourth series is mapped.
+          inRange: {
+            // The visual configuration in the selected range
+            color: ['green', 'orange', 'red'], // A list of colors that defines the graph color mapping
           },
+          outOfRange: {},
         },
-        gmap: options.google_map
-          ? {
-              center: this.center ?? [35.910937982131884, 31.96232549914046],
-              zoom: this.zoom,
-              renderOnMoving: true,
-              echartsLayerZIndex: 2019,
-              roam: true,
-              styles: isDarkMode ? mapStyleDark : mapStyle,
-              disableDefaultUI: false,
-              keyboardShortcuts: false,
-              fullscreenControl: false,
-            }
-          : null,
-        visualMap: [
-          {
-            show: false,
-            type: 'piecewise',
-            min: 0,
-            max: 100,
-            dimension: 2, // the fourth dimension of series.data (i.e. value[3]) is mapped
-            seriesIndex: 0, // The fourth series is mapped.
-            inRange: {
-              // The visual configuration in the selected range
-              color: ['green', 'orange', 'red'], // A list of colors that defines the graph color mapping
+        // ...
+      ],
+      geo: !options.google_map
+        ? {
+            tooltip: {
+              show: true,
             },
-            outOfRange: {},
-          },
-          // ...
-        ],
-        geo: !options.google_map
-          ? {
-              tooltip: {
-                show: true,
-              },
-              map: this.mapSerial,
-              roam: true,
-              label: {
-                show: true,
-              },
-            }
-          : undefined,
-        series,
-      };
-    });
+            map: this.mapSerial,
+            roam: true,
+            label: {
+              show: true,
+            },
+          }
+        : undefined,
+      series,
+    };
   }
 }

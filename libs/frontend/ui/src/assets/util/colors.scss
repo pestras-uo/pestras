@@ -174,6 +174,12 @@
 .bg-surface1 {
   background-color: var(--surface1);
   color: var(--text2);
+
+  .color-scheme-dark &,
+  &.color-scheme-dark {
+    background-color: var(--surface3);
+
+  }
 }
 
 .bg-surface2 {

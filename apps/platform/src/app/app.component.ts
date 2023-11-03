@@ -7,7 +7,9 @@ import { SSEService } from '@pestras/frontend/state';
 @Component({
   selector: 'pestras-root',
   template: `
+
     <ng-container *preloader="contra.loading$ | async">
+      
       <router-outlet></router-outlet>
     </ng-container>
     <pui-side-drawer></pui-side-drawer>

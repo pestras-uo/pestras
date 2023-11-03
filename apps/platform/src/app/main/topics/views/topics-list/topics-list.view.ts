@@ -1,15 +1,16 @@
-import { Component, EventEmitter, Input, Output } from "@angular/core";
-import { FormControl } from "@angular/forms";
-import { TopicsState } from "@pestras/frontend/state";
-import { Role } from "@pestras/shared/data-model";
-import { debounceTime, map, startWith, switchMap, tap } from "rxjs";
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { FormControl } from '@angular/forms';
+import { TopicsState } from '@pestras/frontend/state';
+import { ToggleThemeService } from '@pestras/frontend/ui';
+import { Role } from '@pestras/shared/data-model';
+import { debounceTime, map, startWith, switchMap, tap } from 'rxjs';
 
 @Component({
   selector: 'pestras-topics-list',
   templateUrl: './topics-list.view.html',
   styleUrls: ['./topics-list.view.scss'],
 })
-export class TopicsListViewComponent {
+export class TopicsListViewComponent implements OnInit {
   readonly roles = Role;
   protected readonly searchControl = new FormControl('', { nonNullable: true });
 
@@ -37,5 +38,21 @@ export class TopicsListViewComponent {
   @Output()
   add = new EventEmitter();
 
-  constructor(private state: TopicsState) {}
+  @Input()
+  stateTheme!: boolean;
+
+  constructor(
+    private state: TopicsState,
+    private toggleThemeService: ToggleThemeService
+  ) {}
+
+  ngOnInit() {
+    this.toggleThemeService.darkModeToggled.subscribe((isDarkMode: boolean) => {
+      if (isDarkMode) {
+        this.stateTheme = true;
+      } else {
+        this.stateTheme = false;
+      }
+    });
+  }
 }

@@ -7,7 +7,15 @@ import { EnvModule } from '@pestras/frontend/env';
 import { ContraModule } from '@pestras/frontend/util/contra';
 import { StatorModule } from '@pestras/frontend/util/stator';
 import { SessionState, StateModule } from '@pestras/frontend/state';
-import { PubSubModule, PuiGoogleMapModule, PuiIcon, PuiPreloaderModule, PuiSideDrawerModule, PuiToastModule, PuiUtilPipesModule } from '@pestras/frontend/ui';
+import {
+  PubSubModule,
+  PuiGoogleMapModule,
+  PuiIcon,
+  PuiPreloaderModule,
+  PuiSideDrawerModule,
+  PuiToastModule,
+  PuiUtilPipesModule,
+} from '@pestras/frontend/ui';
 import { QuillModule } from 'ngx-quill';
 import { environment } from '../environments/environment';
 import { initApp } from './app.initializer';
@@ -23,22 +31,22 @@ import { NgxEchartsModule } from 'ngx-echarts';
     BrowserModule,
     RouterModule.forRoot(appRoutes, {
       initialNavigation: 'enabledBlocking',
-      bindToComponentInputs: true
+      bindToComponentInputs: true,
     }),
     ContraModule.forRoot({
       languages: [
         { name: 'العربية', dir: 'rtl', key: 'ar' },
-        { name: 'English', dir: 'ltr', key: 'en' }
+        { name: 'English', dir: 'ltr', key: 'en' },
       ],
       resources: [
-        { name: 'content', path: '/assets/content', expireMS: 1000 * 60 * 60 }
-      ]
+        { name: 'content', path: '/assets/content', expireMS: 1000 * 60 * 60 },
+      ],
     }),
     EnvModule.forRoot(environment),
     StatorModule.forRoot({ development: environment.env === 'production' }),
     StateModule.forRoot(),
     NgxEchartsModule.forRoot({
-      echarts: () => import('echarts')
+      echarts: () => import('echarts'),
     }),
     PubSubModule.forRoot(),
     PuiIcon.forRoot('assets/svg'),
@@ -52,21 +60,36 @@ import { NgxEchartsModule } from 'ngx-echarts';
         toolbar: [
           [{ header: [3, 4, 5, 6, false] }],
           ['bold', 'italic', 'underline', 'strike'],
-          [{ 'list': 'ordered' }, { 'list': 'bullet' }, { 'indent': '-1' }, { 'indent': '+1' }],
+          [
+            { list: 'ordered' },
+            { list: 'bullet' },
+            { indent: '-1' },
+            { indent: '+1' },
+          ],
           ['link'],
-          [{ 'align': [] }, { 'direction': 'rtl' }],
+          [{ align: [] }, { direction: 'rtl' }],
           ['blockquote', 'code-block', 'formula', 'script'],
           ['clean'],
-        ]
-      }
+        ],
+      },
     }),
     SigninPage,
-    MainModule
+    MainModule,
   ],
   providers: [
-    { provide: APP_INITIALIZER, useFactory: initApp, deps: [SessionState], multi: true },
-    { provide: HTTP_INTERCEPTORS, useClass: AppInterceptor, deps: [SessionState], multi: true }
+    {
+      provide: APP_INITIALIZER,
+      useFactory: initApp,
+      deps: [SessionState],
+      multi: true,
+    },
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: AppInterceptor,
+      deps: [SessionState],
+      multi: true,
+    },
   ],
   bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}

@@ -11,14 +11,9 @@ header {
   padding: 16px;
 }
 
-.list {
-  overflow-y: auto;
 
-  .color-scheme-dark &,
-  &.color-scheme-dark {
-    background-color: var(--surface3);
-  }
-}
+
+
 
 .list-item {
   padding: 16px;

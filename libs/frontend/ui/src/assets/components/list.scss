@@ -1,5 +1,14 @@
 :where(.list) {
 
+  overflow-y: auto;
+  background-color: var(--surface1);
+
+  .color-scheme-dark &,
+  &.color-scheme-dark {
+    background-color: var(--surface3);
+  }
+
+
   > :where(.list-item) {
     position: relative;
     display: flex;
@@ -9,10 +18,17 @@
     background-color: transparent;
     border-block-end: 1px solid var(--border1);
 
+    .color-scheme-dark &,
+    &.color-scheme-dark {
+      background-color: var(--surface3);
+    }
+
+
     &:last-of-type {
       border-block-end: none;
     }
   }
+
 
   &.list-clean {
     >.list-item {

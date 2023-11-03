@@ -23,8 +23,6 @@ import { Observable } from 'rxjs';
         height: var(--main-height);
         overflow-y: auto;
       }
-
-     
     `,
   ],
 })
