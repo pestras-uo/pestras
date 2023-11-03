@@ -55,7 +55,7 @@ export async function addField(
     if (cat.levels > 1) {
       // make field required
       newField.required = true;
-      
+
       // - create new fields for each extra level over 1
       for (let i = 2; i <= cat.levels; i++) {
         // - each new field will have parent, name of: "$field.name_$level" and display_name of: "$field.name $level"
@@ -267,7 +267,7 @@ export async function setFieldConstraint(
 export async function removeField(
   this: DataStoresModel,
   serial: string,
-  field: string,
+  fieldName: string,
   issuer: User
 ) {
   const date = new Date();
@@ -289,14 +289,23 @@ export async function removeField(
   if (dataStore.type !== DataStoreType.TABLE)
     throw new HttpError(HttpCode.FORBIDDEN, "notAllowedDataStoreType");
 
-  const f = dataStore.fields.find((f) => f.name === field);
+  const field = dataStore.fields.find((f) => f.name === fieldName);
 
-  if (!f) return date;
+  if (!field) return date;
+
+  const names = [fieldName];
+
+  if (field.type === 'category') {
+    dataStore.fields.forEach(f => {
+      if (f.ref_to === field.ref_to)
+        names.push(f.name);
+    })
+  }
 
   await this.col.updateOne(
     { serial },
     {
-      $pull: { fields: { name: field } },
+      $pull: { fields: { name: { $in: names } } },
       $set: { last_modified: date },
     }
   );
@@ -307,7 +316,7 @@ export async function removeField(
     method: 'removeField',
     serial,
     entity: EntityTypes.DATA_STORE,
-    payload: { field },
+    payload: { field: fieldName },
   }, {
     orgunits: [issuer.orgunit],
     roles: [Role.ADMIN, Role.DATA_ENG]

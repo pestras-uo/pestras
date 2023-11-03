@@ -37,6 +37,7 @@
           [addNew]="true"
           [list]="groups"
           formControlName="group"
+          [disabled]="!!field && !!field.parent"
         ></pui-select-input>
       </div>
     </div>

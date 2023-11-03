@@ -11,7 +11,8 @@ export interface FieldFormModel {
   unit: FormControl<string | null>,
   ref_type: FormControl<ReferenceTypes | null>;
   ref_to: FormControl<string | null>;
-  ref_level: FormControl<number | null>;
+  cat_level: FormControl<number | null>;
+  parent: FormControl<string | null>;
   length: FormControl<number>;
   mime: FormControl<string[]>;
   required: FormControl<boolean>;

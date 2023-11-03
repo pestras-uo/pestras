@@ -20,10 +20,24 @@
 
     <div class="card-body">
       <div *ngFor="let field of fields; let last = last" [class.mbe-6]="!last">
-        <app-field-value-input
-          [field]="field"
-          [formControlName]="field.name"
-        ></app-field-value-input>
+        <ng-container
+          *ngIf="field.type === 'category' && field.parent else normalField"
+        >
+          <app-field-value-input
+            [disabled]="!form.controls[field.parent].value"
+            [field]="field"
+            [formControlName]="field.name"
+            [record]="form.value"
+          ></app-field-value-input>
+        </ng-container>
+
+        <ng-template #normalField>
+          <app-field-value-input
+            [field]="field"
+            [formControlName]="field.name"
+            [record]="form.value"
+          ></app-field-value-input>
+        </ng-template>
       </div>
     </div>
 

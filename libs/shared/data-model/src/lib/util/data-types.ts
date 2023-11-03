@@ -137,9 +137,10 @@ export function getInitTypedEntityValue(entity: TypedEntity) {
   switch (entity.type) {
     case 'boolean':
       return false;
-    case 'category':
     case 'string':
     case 'region':
+    case 'category':
+    case 'serial':
       return "";
     case 'date':
     case 'datetime':
@@ -153,7 +154,5 @@ export function getInitTypedEntityValue(entity: TypedEntity) {
       return "";
     case 'location':
       return null;
-    case 'serial':
-      return "";
   }
 }
