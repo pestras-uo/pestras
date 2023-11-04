@@ -9,7 +9,12 @@ import {
 } from '@pestras/shared/data-model';
 import { EChartsOption, BarSeriesOption, graphic } from 'echarts';
 import { ChartDataLoad } from '../../util';
-import { ToggleThemeService } from '@pestras/frontend/ui';
+import {
+  ToggleThemeService,
+  mapStyle,
+  mapStyleDark,
+} from '@pestras/frontend/ui';
+import { BehaviorSubject, map } from 'rxjs';
 
 const colors = [
   ['#83bff6', '#188df0', '#188df0'],
@@ -23,7 +28,7 @@ const colors = [
 @Component({
   selector: 'app-bar-chart',
   template:
-    '<div *ngIf="chartOptions" echarts [options]="chartOptions" class="chart"></div>',
+    '<div *ngIf="(getIsDarkMode$() | async) as isDarkMode and chartOptions"   echarts [options]="chartOptions" class="chart"></div>',
   styles: [
     `
       :host {
@@ -46,17 +51,31 @@ export class BarChartView implements OnChanges {
   @Input({ transform: booleanAttribute })
   dark = false;
 
+  private isDarkModeSubject = new BehaviorSubject<boolean>(false);
+  public isDarkMode$ = this.isDarkModeSubject.asObservable();
   constructor(private toggleThemeServ: ToggleThemeService) {}
 
-  ngOnChanges() {
-    const { categories, series, valueFields } = this.init(this.conf.options);
-
-    this.render(
-      this.conf.options,
-      categories as string[],
-      series,
-      valueFields as Field[]
+  public getIsDarkMode$() {
+    return this.isDarkMode$.pipe(
+      map((isDarkMode) => {
+        return isDarkMode ? mapStyleDark : mapStyle;
+      })
     );
+  }
+
+  ngOnChanges() {
+    this.toggleThemeServ.isDarkMode$.subscribe((isDarkMode) => {
+      this.isDarkModeSubject.next(isDarkMode);
+    });
+    const { categories, series, valueFields } = this.init(this.conf.options);
+    this.toggleThemeServ.isDarkMode$.subscribe((isDarkMode) => {
+      this.render(
+        this.conf.options,
+        categories as string[],
+        series,
+        valueFields as Field[]
+      );
+    });
   }
 
   private init(options: BarDataVizOptions) {
@@ -89,9 +108,11 @@ export class BarChartView implements OnChanges {
         data,
         yAxisIndex: i,
       };
+      
     });
 
     return { categories, series, valueFields };
+   
   }
 
   /**
@@ -234,5 +255,7 @@ export class BarChartView implements OnChanges {
         },
       })),
     };
+  
+
   }
 }
