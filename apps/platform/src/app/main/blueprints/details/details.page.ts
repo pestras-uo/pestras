@@ -31,11 +31,7 @@ import { Observable, tap } from 'rxjs';
         overflow-y: auto;
       }
 
-      header {
-        &.color-scheme-dark {
-          background-color: var(--surface3);
-        }
-      }
+    
     `,
   ],
 })

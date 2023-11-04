@@ -12,7 +12,10 @@ import { ActivitiesState } from '@pestras/frontend/state';
   `,
   styles: [`
     :host { height: 100%; }
-    .chart { height: 100%; }
+    .chart { height: 100%;
+    
+    
+    }
   `]
 })
 export class UserActivityChart implements OnChanges {
