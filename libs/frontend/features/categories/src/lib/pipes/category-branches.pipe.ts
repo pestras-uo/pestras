@@ -11,16 +11,16 @@ export class CategoryBranchesPipe implements PipeTransform {
 
   constructor(private service: CategoriesService) { }
 
-  transform(root: string | null, level = 1, parent?: string): Observable<Category[]> {
+  transform(root: string | null, level: number | null = 1, parent?: string): Observable<Category[]> {
     if (!root)
       return of([]);
 
     if (level === 1 || !parent)
-      return this.service.getByParent({ serial: root, level });
+      return this.service.getByParent({ serial: root, level: level ?? 1 });
 
     return this.service.getByParent({ serial: root, level: -1 })
       .pipe(map(cats => {
-        const parentCat = cats.find(c => c.value === parent && c.level === level - 1);
+        const parentCat = cats.find(c => c.value === parent && c.level === (level ?? 1) - 1);
 
         if (!parentCat)
           return [];

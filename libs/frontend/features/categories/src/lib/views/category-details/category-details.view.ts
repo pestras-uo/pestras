@@ -50,7 +50,7 @@ export class CategoryDetailsView implements OnChanges {
   }
 
   setBranches() {
-    this.branches$ = this.service.getByParent({ serial: this.parent.serial })
+    this.branches$ = this.service.getByParent({ serial: this.parent.serial, level: this.parent.level + 1 })
       .pipe(
         map(cats => cats.filter(cat => Serial.countLevels(cat.serial) === this.selected.length + 1)),
         switchMap(cats => {

@@ -23,7 +23,7 @@ export async function create(
     ordinal: input.ordinal,
     value: input.value,
     levels: input.levels,
-    level: Serial.countLevels(input.parent),
+    level: Serial.countLevels(input.parent ?? ''),
     create_date: date,
     last_modified: date
   });

@@ -45,14 +45,17 @@ export async function addField(
   const newFields = [newField];
 
   // check field type if it is category
-  if (newField.type === 'category') {
+  if (newField.type === 'category' && newField.ref_to) {
     newField.cat_level = 1;
 
     // - fetch category
-    const cat = await categoriesModel.getBySerial(field.ref_to, { levels: 1 });
+    const cat = await categoriesModel.getBySerial(newField.ref_to, { levels: 1 });
+
+    if (!cat)
+      throw new HttpError(HttpCode.NOT_FOUND, 'categoryNotFound');
 
     // - check category level is greater than 1
-    if (cat.levels > 1) {
+    if (cat.levels && cat.levels > 1) {
       // make field required
       newField.required = true;
 
@@ -61,7 +64,7 @@ export async function addField(
         // - each new field will have parent, name of: "$field.name_$level" and display_name of: "$field.name $level"
         newFields.push(createField({
           ...newField,
-          parent: `${newField.name}_${i - 1}`,
+          parent: i === 2 ? `${newField.name}` : `${newField.name}_${i - 1}`,
           cat_level: i,
           name: `${newField.name}_${i}`,
           display_name: `${newField.display_name} ${i}`

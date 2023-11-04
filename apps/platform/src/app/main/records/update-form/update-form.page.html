@@ -1,14 +1,5 @@
 <div class="container tight" *contra="let c; let dir = dir">
   <header class="mbs-16 mbe-10">
-    <a class="flex gap-4 mbe-6" routerLink="..">
-      <i
-        color="primary"
-        [class.rotate-180]="dir === 'ltr'"
-        puiIcon="trending_flat"
-      ></i>
-      <span class="bold">{{c['backTo']}} {{c['record']}}</span>
-    </a>
-
     <h1 class="weight-8 f2">
       <span>{{c['update']}}</span>
       {{dataStore.name}}
@@ -20,16 +11,15 @@
 
     <div class="card-body">
       <div *ngFor="let field of fields; let last = last" [class.mbe-6]="!last">
-        <ng-container
+        <div [class.disabled]="!form.controls[field.parent].value"
           *ngIf="field.type === 'category' && field.parent else normalField"
         >
           <app-field-value-input
-            [disabled]="!form.controls[field.parent].value"
             [field]="field"
             [formControlName]="field.name"
             [record]="form.value"
           ></app-field-value-input>
-        </ng-container>
+        </div>
 
         <ng-template #normalField>
           <app-field-value-input

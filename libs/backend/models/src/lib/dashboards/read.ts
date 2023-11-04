@@ -15,19 +15,15 @@ export async function search(
       $or: [
         { owner: user.serial },
         {
-          $or: [
-            {
-              $and: [
-                { 'access.orgunits': { $size: 0 } },
-                { 'access.users': { $size: 0 } },
-                { 'access.groups': { $size: 0 } }
-              ],
-            },
-            { 'access.orgunits': user.orgunit },
-            { 'access.users': user.serial },
-            { 'access.group': { $in: user.groups } }
-          ]
-        }
+          $and: [
+            { 'access.orgunits': { $size: 0 } },
+            { 'access.users': { $size: 0 } },
+            { 'access.groups': { $size: 0 } }
+          ],
+        },
+        { 'access.orgunits': user.orgunit },
+        { 'access.users': user.serial },
+        { 'access.group': { $in: user.groups } }
       ]
     };
 
@@ -80,19 +76,15 @@ export function getByTopic(
       $or: [
         { owner: user.serial },
         {
-          $or: [
-            {
-              $and: [
-                { 'access.orgunits': { $size: 0 } },
-                { 'access.users': { $size: 0 } },
-                { 'access.groups': { $size: 0 } }
-              ],
-            },
-            { 'access.orgunits': user.orgunit },
-            { 'access.users': user.serial },
-            { 'access.group': { $in: user.groups } }
-          ]
-        }
+          $and: [
+            { 'access.orgunits': { $size: 0 } },
+            { 'access.users': { $size: 0 } },
+            { 'access.groups': { $size: 0 } }
+          ],
+        },
+        { 'access.orgunits': user.orgunit },
+        { 'access.users': user.serial },
+        { 'access.group': { $in: user.groups } }
       ]
     };
 
