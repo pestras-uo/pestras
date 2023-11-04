@@ -2,10 +2,11 @@ import { ModuleWithProviders, NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ToggleTheme } from './toggle-theme.component';
 import { ToggleThemeService } from './toggle-theme.service';
+import { PuiIcon } from '../icon/icon.directive';
 
 @NgModule({
   declarations: [ToggleTheme],
-  imports: [CommonModule],
+  imports: [CommonModule, PuiIcon],
   exports: [ToggleTheme],
 })
 export class ToggleThemeModule {

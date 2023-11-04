@@ -1,4 +1,4 @@
-import { Injectable, EventEmitter } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 
 @Injectable({
@@ -6,18 +6,16 @@ import { BehaviorSubject, Observable } from 'rxjs';
 })
 export class ToggleThemeService {
   private readonly localStorageKey = 'darkMode';
+
   public isDarkModeSubject = new BehaviorSubject<boolean>(
     this.loadDarkModeState()
   );
   isDarkMode$: Observable<boolean> = this.isDarkModeSubject.asObservable();
 
-  darkModeToggled: EventEmitter<boolean> = new EventEmitter<boolean>();
-
   constructor() {
     this.isDarkModeSubject.subscribe((isDarkMode) => {
       this.updateBodyClass(isDarkMode);
       this.saveDarkModeState(isDarkMode);
-      this.darkModeToggled.emit(isDarkMode); // Emit event when dark mode is toggled
     });
   }
 
@@ -34,8 +32,6 @@ export class ToggleThemeService {
     }
   }
 
-
-  
   private saveDarkModeState(isDarkMode: boolean) {
     localStorage.setItem(this.localStorageKey, JSON.stringify(isDarkMode));
   }

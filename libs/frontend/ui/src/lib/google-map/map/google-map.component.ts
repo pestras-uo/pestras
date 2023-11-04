@@ -8,7 +8,7 @@ import {
 } from '@angular/core';
 import { GoogleMap } from '@angular/google-maps';
 import { mapStyle, mapStyleDark } from '../map.style'; // Importing map styles
-import { Subject } from 'rxjs';
+import { BehaviorSubject, Subject, map } from 'rxjs';
 import { GoogleMapService } from '../google-map.service';
 import { ToggleThemeService } from '../../toggle-theme/toggle-theme.service';
 
@@ -65,19 +65,29 @@ export class PuiGoogleMap implements OnInit {
 
   constructor(
     private readonly mapService: GoogleMapService,
-    private readonly toggleThemeService: ToggleThemeService
+    private readonly toggleThemeServ: ToggleThemeService
   ) {}
 
+  private isDarkModeSubject = new BehaviorSubject<boolean>(false);
+  public isDarkMode$ = this.isDarkModeSubject.asObservable();
+  public getIsDarkMode$() {
+    return this.isDarkMode$.pipe(
+      map((isdm) => {
+        return isdm ? mapStyleDark : mapStyle;
+      })
+    );
+  }
+
   ngOnInit(): void {
-    this.toggleThemeService.darkModeToggled.subscribe((themeState) => {
-      this.themeState = themeState;
+    this.toggleThemeServ.isDarkMode$.subscribe((isDarkMode) => {
+      this.isDarkModeSubject.next(isDarkMode);
 
       // Initializing map options
       this.options = {
         disableDefaultUI: false,
         keyboardShortcuts: false,
         fullscreenControl: false,
-        styles: themeState ? mapStyleDark : mapStyle,
+        styles: isDarkMode ? mapStyleDark : mapStyle,
         zoomControl: this.zoomControl,
         controlSize: 24,
       };

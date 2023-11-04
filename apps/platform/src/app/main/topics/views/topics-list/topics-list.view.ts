@@ -10,7 +10,7 @@ import { debounceTime, map, startWith, switchMap, tap } from 'rxjs';
   templateUrl: './topics-list.view.html',
   styleUrls: ['./topics-list.view.scss'],
 })
-export class TopicsListViewComponent implements OnInit {
+export class TopicsListViewComponent {
   readonly roles = Role;
   protected readonly searchControl = new FormControl('', { nonNullable: true });
 
@@ -38,21 +38,8 @@ export class TopicsListViewComponent implements OnInit {
   @Output()
   add = new EventEmitter();
 
-  @Input()
-  stateTheme!: boolean;
-
   constructor(
     private state: TopicsState,
     private toggleThemeService: ToggleThemeService
   ) {}
-
-  ngOnInit() {
-    this.toggleThemeService.darkModeToggled.subscribe((isDarkMode: boolean) => {
-      if (isDarkMode) {
-        this.stateTheme = true;
-      } else {
-        this.stateTheme = false;
-      }
-    });
-  }
 }

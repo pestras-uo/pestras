@@ -9,7 +9,6 @@ import {
   PuiDropdown,
   PuiIcon,
   PuiPreloaderModule,
-  ToggleTheme,
   ToggleThemeModule,
 } from '@pestras/frontend/ui';
 import { SessionFeatureModule } from '@pestras/frontend/features/session';

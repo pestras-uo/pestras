@@ -8,13 +8,7 @@ import { Observable } from 'rxjs';
 @Component({
   selector: 'app-topics-list',
   templateUrl: './topics-list.view.html',
-  styles: [
-    ` header {
-        .color-scheme-dark &,
-        &.color-scheme-dark {
-          background-color: var(--surface3);
-        }`,
-  ],
+  styles: [``],
 })
 export class TopicsListView implements OnChanges {
   readonly roles = Role;
