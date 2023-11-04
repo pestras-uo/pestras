@@ -9,7 +9,7 @@
   width: fit-content;
   margin-block-end: 32px;
   pointer-events: none;
-  
+
   &.active {
     pointer-events: auto;
   }
@@ -17,7 +17,7 @@
   .toast {
     display: flex;
     align-items: stretch;
-    box-shadow: 0 10px 20px -5px rgba(0,0,0,0.4);
+    box-shadow: 0 10px 20px -5px rgba(0, 0, 0, 0.4);
     opacity: 0;
     overflow: hidden;
     border-radius: 8px;
@@ -25,6 +25,11 @@
     max-width: 400px;
     margin-block-end: 8px;
     transition: opacity 250ms;
+
+    .color-scheme-dark &,
+    &.color-scheme-dark {
+      background-color: var(--surface4);
+    }
 
     &.active {
       opacity: 1;
