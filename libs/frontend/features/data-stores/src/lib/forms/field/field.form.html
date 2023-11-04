@@ -29,7 +29,7 @@
     </div>
 
     <!-- group -->
-    <div class="grow">
+    <div class="grow" *ngIf="!field || !field.parent">
       <label for="field-group">{{c['group']}}</label>
       <div class="fc fc-outline fc-surface1">
         <pui-select-input
@@ -42,186 +42,205 @@
     </div>
   </div>
 
-  <div class="divider mb-8"></div>
+  <ng-container *ngIf="!field || !field.parent">
+    <div class="divider mb-8"></div>
 
-  <!-- type -->
-  <h3 class="mbe-2">{{c['type']}}</h3>
-  <p class="text3 mbe-6">{{c['typeInfo']}}</p>
+    <!-- type -->
+    <h3 class="mbe-2">{{c['type']}}</h3>
+    <p class="text3 mbe-6">{{c['typeInfo']}}</p>
 
-  <label for="field-type">{{c['type']}}</label>
-  <div class="fc fc-outline fc-surface1">
-    <pui-select-input
-      labelRef="field-type"
-      [list]="c['fieldTypesList'] | arraySlice: 1"
-      formControlName="type"
-    ></pui-select-input>
-  </div>
-
-  <ng-container *ngIf="typeField.value === 'serial'">
-    <label class="mbs-4" for="field-ref-type">{{c['referenceType']}}</label>
-    <div class="fc fc-outline fc-surface1 mbe-6">
+    <label for="field-type">{{c['type']}}</label>
+    <div class="fc fc-outline fc-surface1">
       <pui-select-input
-        [list]="c['referenceTypesList']"
-        formControlName="ref_type"
-        labelRef="field-ref-type"
+        labelRef="field-type"
+        [list]="c['fieldTypesList'] | arraySlice: 1"
+        formControlName="type"
       ></pui-select-input>
     </div>
 
-    <!-- Select Data Store -->
-    <ng-container *ngIf="refTypeControl.value === 'data_store'">
-      <label class="mbs-4" for="field-ref-to">{{c['dataStore']}}</label>
+    <ng-container *ngIf="typeField.value === 'serial'">
+      <label class="mbs-4" for="field-ref-type">{{c['referenceType']}}</label>
       <div class="fc fc-outline fc-surface1 mbe-6">
         <pui-select-input
-          [list]="dataStore.blueprint | blueprintDataStores | async | arrayMap: mapDs"
+          [list]="c['referenceTypesList']"
+          formControlName="ref_type"
+          labelRef="field-ref-type"
+        ></pui-select-input>
+      </div>
+
+      <!-- Select Data Store -->
+      <ng-container *ngIf="refTypeControl.value === 'data_store'">
+        <label class="mbs-4" for="field-ref-to">{{c['dataStore']}}</label>
+        <div class="fc fc-outline fc-surface1 mbe-6">
+          <pui-select-input
+            [list]="dataStore.blueprint | blueprintDataStores | async | arrayMap: mapDs"
+            formControlName="ref_to"
+          ></pui-select-input>
+        </div>
+      </ng-container>
+    </ng-container>
+
+    <pui-check-input
+      *ngIf="typeField.value === 'string'"
+      class="mbs-4"
+      [label]="c['richText']"
+      (change)="toggleKind(!!$event, kind.RICH_TEXT)"
+    ></pui-check-input>
+
+    <!-- Select Category -->
+    <ng-container *ngIf="typeField.value === 'category'">
+      <pui-check-input
+        class="mbs-4"
+        [label]="c['ordinal']"
+        (change)="toggleKind(!!$event, kind.ORDINAL)"
+      ></pui-check-input>
+
+      <label class="mbs-4" for="field-category"> {{c['branchOf']}} </label>
+      <div class="fc fc-outline fc-surface1">
+        <pui-select-input
+          labelRef="field-category"
+          [list]="dataStore.blueprint | bpCategories: kindControl.value === kind.ORDINAL | async | arrayMap: mapCategory"
           formControlName="ref_to"
         ></pui-select-input>
       </div>
     </ng-container>
-  </ng-container>
 
-  <pui-check-input
-    *ngIf="typeField.value === 'string'"
-    class="mbs-4"
-    [label]="c['richText']"
-    (change)="toggleKind(!!$event, kind.RICH_TEXT)"
-  ></pui-check-input>
+    <div class="divider mb-8"></div>
 
-  <!-- Select Category -->
-  <ng-container *ngIf="typeField.value === 'category'">
-    <pui-check-input
-      class="mbs-4"
-      [label]="c['ordinal']"
-      (change)="toggleKind(!!$event, kind.ORDINAL)"
-    ></pui-check-input>
+    <h3 class="mbe-2">{{c['attributes']}}</h3>
+    <p class="text3 mbe-6">{{c['attributesInfo']}}</p>
 
-    <label class="mbs-4" for="field-category"> {{c['branchOf']}} </label>
-    <div class="fc fc-outline fc-surface1">
-      <pui-select-input
-        labelRef="field-category"
-        [list]="dataStore.blueprint | bpCategories: kindControl.value === kind.ORDINAL | async | arrayMap: mapCategory"
-        formControlName="ref_to"
-      ></pui-select-input>
+    <div class="flex gap-4 mbe-6">
+      <!-- initial -->
+      <pui-check-input
+        class="grow"
+        [label]="c['initial']"
+        formControlName="initial"
+      ></pui-check-input>
+
+      <!-- required -->
+      <pui-check-input
+        class="grow"
+        [label]="c['required']"
+        formControlName="required"
+      ></pui-check-input>
+
+      <!-- unique -->
+      <pui-check-input
+        class="grow"
+        [label]="c['unique']"
+        formControlName="unique"
+      ></pui-check-input>
+
+      <!-- constant -->
+      <pui-check-input
+        class="grow"
+        [label]="c['constant']"
+        formControlName="constant"
+      ></pui-check-input>
     </div>
-  </ng-container>
 
-  <div class="divider mb-8"></div>
-
-  <h3 class="mbe-2">{{c['attributes']}}</h3>
-  <p class="text3 mbe-6">{{c['attributesInfo']}}</p>
-
-  <div class="flex gap-4 mbe-6">
-    <!-- initial -->
-    <pui-check-input
-      class="grow"
-      [label]="c['initial']"
-      formControlName="initial"
-    ></pui-check-input>
-
-    <!-- required -->
-    <pui-check-input
-      class="grow"
-      [label]="c['required']"
-      formControlName="required"
-    ></pui-check-input>
-
-    <!-- unique -->
-    <pui-check-input
-      class="grow"
-      [label]="c['unique']"
-      formControlName="unique"
-    ></pui-check-input>
-
-    <!-- constant -->
-    <pui-check-input
-      class="grow"
-      [label]="c['constant']"
-      formControlName="constant"
-    ></pui-check-input>
-  </div>
-
-  <!--  default value -->
-  <ng-container *ngIf="addDefault$ | async">
-    <!-- boolean type -->
-    <pui-check-input
-      *ngIf="typeField.value === 'boolean'"
-      [label]="c['defaultValue']"
-      formControlName="default"
-    ></pui-check-input>
-
-    <label *ngIf="typeField.value !== 'boolean'" for=""
-      >{{c['defaultValue']}}</label
+    <ng-container
+      *ngIf="typeField.value === 'int' || typeField.value === 'double'"
     >
-
-    <!-- string type -->
-    <ng-container *ngIf="typeField.value === 'string'">
-      <!--  normal text -->
-      <div
-        *ngIf="kindControl.value !== kind.RICH_TEXT"
-        class="fc fc-outline fc-surface1 mbe-6"
-      >
-        <input type="text" id="field-default-value" formControlName="default" />
+      <label for="field-unit">{{c['unit']}}</label>
+      <div class="fc fc-outline fc-surface1 mbe-6">
+        <input type="text" id="field-unit" formControlName="unit" />
       </div>
-      <!-- rich text -->
-      <quill-editor
-        *ngIf="kindControl.value === kind.RICH_TEXT"
-        class="quill-surface1 quill-outline mbe-6"
-        [placeholder]="c['desc']"
-        formControlName="default"
-      ></quill-editor>
     </ng-container>
 
-    <!-- number type -->
-    <div
-      *ngIf="typeField.value === 'int' || typeField.value === 'double'"
-      class="fc fc-outline fc-surface1 mbe-6"
-    >
-      <input type="number" id="field-default-value" formControlName="default" />
-    </div>
+    <!--  default value -->
+    <ng-container *ngIf="addDefault$ | async">
+      <!-- boolean type -->
+      <pui-check-input
+        *ngIf="typeField.value === 'boolean'"
+        [label]="c['defaultValue']"
+        formControlName="default"
+      ></pui-check-input>
 
-    <!-- date type -->
-    <div
-      *ngIf="typeField.value === 'date' || typeField.value === 'datetime'"
-      class="fc fc-outline fc-surface1 mbe-6"
-    >
-      <input type="date" id="field-default-value" formControlName="default" />
-    </div>
+      <label *ngIf="typeField.value !== 'boolean'" for=""
+        >{{c['defaultValue']}}</label
+      >
 
-    <!-- category -->
-    <div
-      *ngIf="typeField.value === 'category'"
-      class="fc fc-outline fc-surface1 mbe-6"
-    >
+      <!-- string type -->
+      <ng-container *ngIf="typeField.value === 'string'">
+        <!--  normal text -->
+        <div
+          *ngIf="kindControl.value !== kind.RICH_TEXT"
+          class="fc fc-outline fc-surface1 mbe-6"
+        >
+          <input
+            type="text"
+            id="field-default-value"
+            formControlName="default"
+          />
+        </div>
+        <!-- rich text -->
+        <quill-editor
+          *ngIf="kindControl.value === kind.RICH_TEXT"
+          class="quill-surface1 quill-outline mbe-6"
+          [placeholder]="c['desc']"
+          formControlName="default"
+        ></quill-editor>
+      </ng-container>
+
+      <!-- number type -->
+      <div
+        *ngIf="typeField.value === 'int' || typeField.value === 'double'"
+        class="fc fc-outline fc-surface1 mbe-6"
+      >
+        <input
+          type="number"
+          id="field-default-value"
+          formControlName="default"
+        />
+      </div>
+
+      <!-- date type -->
+      <div
+        *ngIf="typeField.value === 'date' || typeField.value === 'datetime'"
+        class="fc fc-outline fc-surface1 mbe-6"
+      >
+        <input type="date" id="field-default-value" formControlName="default" />
+      </div>
+
+      <!-- category -->
+      <div
+        *ngIf="typeField.value === 'category'"
+        class="fc fc-outline fc-surface1 mbe-6"
+      >
+        <pui-select-input
+          labelRef="field-default-value"
+          [list]="refToControl.value | categoryBranches | async | arrayMap: mapCategory"
+          formControlName="default"
+        ></pui-select-input>
+      </div>
+
+      <!-- region -->
       <pui-select-input
+        *ngIf="typeField.value === 'region'"
         labelRef="field-default-value"
-        [list]="refToControl.value | categoryBranches | async | arrayMap: mapCategory"
+        [list]="'' | regions | async | arrayMap: mapRegion"
         formControlName="default"
       ></pui-select-input>
-    </div>
 
-    <!-- region -->
-    <pui-select-input
-      *ngIf="typeField.value === 'region'"
-      labelRef="field-default-value"
-      [list]="'' | regions | async | arrayMap: mapRegion"
-      formControlName="default"
-    ></pui-select-input>
+      <!-- Location -->
+      <pui-location-input
+        *ngIf="typeField.value === 'location'"
+        formControlName="default"
+      ></pui-location-input>
+    </ng-container>
 
-    <!-- Location -->
-    <pui-location-input
-      *ngIf="typeField.value === 'location'"
-      formControlName="default"
-    ></pui-location-input>
+    <div class="divider mb-8"></div>
+
+    <h3 class="mbe-2">{{c['desc']}}</h3>
+
+    <quill-editor
+      class="quill-surface1 quill-outline"
+      [placeholder]="c['desc']"
+      formControlName="desc"
+    ></quill-editor>
   </ng-container>
-
-  <div class="divider mb-8"></div>
-
-  <h3 class="mbe-2">{{c['desc']}}</h3>
-
-  <quill-editor
-    class="quill-surface1 quill-outline"
-    [placeholder]="c['desc']"
-    formControlName="desc"
-  ></quill-editor>
 
   <div class="divider mb-8"></div>
 

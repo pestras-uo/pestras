@@ -203,7 +203,7 @@ export namespace DataStoresApi {
 
     export type Body = Omit<Field, 'constraint' | 'system' | 'automated'>;
 
-    export type Response = string; // date
+    export type Response = Field[];
   }
 
   // PUT

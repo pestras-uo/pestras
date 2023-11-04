@@ -3,7 +3,7 @@ import { Serial } from '@pestras/shared/util';
 import { CategoriesModel } from ".";
 import { HttpError, HttpCode } from "@pestras/backend/util";
 
-export type CreateCategoryInput = Pick<Category, 'title' | 'blueprint' | 'ordinal' | 'value'> & { parent: string | null };
+export type CreateCategoryInput = Pick<Category, 'title' | 'blueprint' | 'ordinal' | 'value' | 'levels'> & { parent: string | null };
 
 export async function create(
   this: CategoriesModel,
@@ -22,6 +22,8 @@ export async function create(
     blueprint: input.blueprint,
     ordinal: input.ordinal,
     value: input.value,
+    levels: input.levels,
+    level: Serial.countLevels(input.parent ?? ''),
     create_date: date,
     last_modified: date
   });

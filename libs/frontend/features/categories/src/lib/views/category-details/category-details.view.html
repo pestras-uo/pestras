@@ -1,112 +1,86 @@
-<ng-container *contra="let c">
-  <header class="toolbar gap-4 mbe-8">
-    <div class="grow">
-      <p *ngIf="selected.ordinal" class="primary bold">{{c['ordinal']}}</p>
-      <p *ngIf="!selected.ordinal" class="primary bold">{{c['_category']}}</p>
-      <h3>{{selected.title}}</h3>
+<main *contra="let c">
+  <div
+    class="card"
+    *ngIf="branches$ | async as branches"
+  >
+    <div class="card-header">
+      <div>
+        <a (click)="selects.emit([])">{{c['all']}}</a>
+        <ng-container *ngFor="let cat of selected; let i = index; let last = last" (click)="selects">
+          <span class="bold pi-1">/</span>
+          <a class="bold" *ngIf="!last" (click)="selects.emit(selected.slice(0, i + 1))">{{cat.title}}</a>
+          <span class="bold" *ngIf="last">{{cat.title}}</span>
+        </ng-container>
+      </div>
+      <div class="grow"></div>
+      <div class="fc fc-round w-6">
+        <input
+          type="search"
+          [placeholder]="c['search']"
+          [formControl]="search"
+        />
+        <i puiIcon="search" size="small"></i>
+      </div>
+      <button class="btn-icon btn-round" (click)="openDialog($event, addModal)">
+        <i puiIcon="add" size="small"></i>
+      </button>
     </div>
 
-    <button
-      *ngIf="editable"
-      class="btn-icon btn-round"
-      (click)="openDialog(updateModal, selected)"
-    >
-      <i class="bg-white" size="small" puiIcon="edit_fill"></i>
-    </button>
-  </header>
+    <div class="card-body">
+      <table *ngIf="branches.length else noData">
+        <thead>
+          <tr>
+            <th class="index-col">#</th>
+            <th>{{c['title']}}</th>
+            <th class="icon-col">{{c['ordinal']}}</th>
+            <th *ngIf="parent.ordinal">{{c['value']}}</th>
+            <th class="icon-col" *ngIf="editable">{{c['edit']}}</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let item of branches let i = index" [class.row-hover]="!isLastLevel" (click)="goToBranch(item)">
+            <td class="index-col">{{i + 1}}</td>
+            <td>{{item.title}}</td>
+            <td class="icon-col">
+              <i [puiIcon]="item.ordinal ? 'check' : 'close'" size="small"></i>
+            </td>
+            <td *ngIf="parent.ordinal" class="num-col">{{item.value}}</td>
+            <td class="icon-col" *ngIf="editable">
+              <button
+                class="btn-icon btn-tiny btn-round btn-success"
+                (click)="openDialog($event, updateModal, item)"
+              >
+                <i puiIcon="edit" size="tiny"></i>
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
 
-  <main>
-    <div
-      class="card"
-      *ngIf="selected.serial | categoryBranches | async | arrayFilter: filterBranches: search.value | fn: sliceBranches: page$.value as branches"
-    >
-      <div class="card-header">
-        <h4>{{c['branches']}}</h4>
-        <div class="grow"></div>
-        <div class="fc fc-round w-6">
-          <input
-            type="search"
-            [placeholder]="c['search']"
-            [formControl]="search"
-          />
-          <i puiIcon="search" size="small"></i>
-        </div>
-        <button class="btn-icon btn-round" (click)="openDialog(addModal)">
-          <i puiIcon="add"></i>
-        </button>
-      </div>
-
-      <div class="card-body">
-        <table *ngIf="branches.length else noData">
-          <thead>
-            <tr>
-              <th class="index-col">#</th>
-              <th>{{c['title']}}</th>
-              <th class="icon-col">{{c['ordinal']}}</th>
-              <th *ngIf="selected.ordinal">{{c['value']}}</th>
-              <th class="icon-col" *ngIf="editable">{{c['edit']}}</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr *ngFor="let item of branches let i = index">
-              <td class="index-col">{{skip + i + 1}}</td>
-              <td>{{item.title}}</td>
-              <td class="icon-col">
-                <i
-                  [puiIcon]="item.ordinal ? 'check' : 'close'"
-                  size="small"
-                ></i>
-              </td>
-              <td *ngIf="selected.ordinal" class="num-col">
-                {{item.value}}
-              </td>
-              <td class="icon-col" *ngIf="editable">
-                <button
-                  class="btn-icon btn-tiny btn-round btn-success"
-                  (click)="openDialog(updateModal, item)"
-                >
-                  <i puiIcon="edit" size="tiny"></i>
-                </button>
-              </td>
-            </tr>
-          </tbody>
-        </table>
-
-        <ng-template #noData>
-          <no-data-placeholder-widget
-            [small]="true"
-            [showAction]="editable"
-            [actionName]="c['addNew']"
-            (action)="openDialog(addModal)"
-            >{{c['noDataMsg']}}</no-data-placeholder-widget
-          >
-        </ng-template>
-      </div>
-
-      <div *ngIf="branches.length" class="card-footer">
-        <div class="grow"></div>
-        <pui-table-pagination
-          [count]="count"
-          [pageSize]="pageSize"
-          (selects)="page$.next($event)"
-        ></pui-table-pagination>
-        <div class="grow"></div>
-      </div>
+      <ng-template #noData>
+        <no-data-placeholder-widget
+          [small]="true"
+          [showAction]="editable"
+          [actionName]="c['addNew']"
+          (action)="openDialog($event, addModal)"
+          >{{c['noDataMsg']}}</no-data-placeholder-widget
+        >
+      </ng-template>
     </div>
-  </main>
+  </div>
 
   <ng-template #addModal>
     <app-add-category
       [bp]="bp"
-      [parent]="selected"
-      (closes)="closeDialog()"
+      [parent]="parent"
+      (closes)="closeDialog($event)"
     ></app-add-category>
   </ng-template>
 
   <ng-template #updateModal let-data>
     <app-update-category
       [category]="data"
-      (closes)="closeDialog()"
+      (closes)="closeDialog($event)"
     ></app-update-category>
   </ng-template>
-</ng-container>
+</main>

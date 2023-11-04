@@ -1,29 +1,87 @@
 <ng-container *contra="let c; let dir=dir">
-  <ng-container *ngIf="bp | bpCategories | async as categories">
-    <div class="grid cols-3 gap-4" *ngIf="categories.length; else noData">
-      <div class="card" *ngFor="let cat of categories">
-        <h3 class="card-header">{{cat.title}}</h3>
-        <div class="card-body">
-          <p *ngIf="cat.ordinal" class="f9 text3">{{c['ordinal']}}</p>
-          <p *ngIf="!cat.ordinal" class="f9 text3">{{c['_category']}}</p>
-          <p class="f10 bold text-3">
-            {{cat.create_date | date: 'dd/MM/YYYY'}}
-          </p>
+  <ng-container
+    *ngIf="categories$ | async as categories"
+  >
+    <div class="card">
+      <div class="card-header">
+        <h3>{{ c['categories'] }}</h3>
+        <div class="grow"></div>
+        <div class="fc fc-round w-6">
+          <input
+            type="search"
+            [placeholder]="c['search']"
+            [formControl]="search"
+          />
+          <i puiIcon="search" size="small"></i>
         </div>
-        <div class="card-footer">
-          <button class="btn-round btn-outline" (click)="selects.emit(cat)">
-            {{c['continue']}}
-          </button>
-        </div>
+        <button
+          *ngIf="editable"
+          class="btn-round btn-icon"
+          (click)="openDialog($event, addModal)"
+        >
+          <i puiIcon="add" size="small"></i>
+        </button>
+      </div>
+      <div class="card-body">
+        <table *ngIf="categories.length; else noData">
+          <thead>
+            <tr>
+              <th class="index-col">#</th>
+              <th>{{c['title']}}</th>
+              <th>{{c['levels']}}</th>
+              <th class="icon-col">{{c['ordinal']}}</th>
+              <th class="icon-col" *ngIf="editable">{{c['edit']}}</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr
+              class="row-hover"
+              *ngFor="let item of categories let i = index"
+              (click)="selects.emit(item)"
+            >
+              <td class="index-col">{{i + 1}}</td>
+              <td class="bold">{{item.title}}</td>
+              <td>{{item.levels ?? 1}}</td>
+              <td class="icon-col">
+                <i
+                  [puiIcon]="item.ordinal ? 'check' : 'close'"
+                  size="small"
+                ></i>
+              </td>
+              <td class="icon-col" *ngIf="editable">
+                <button
+                  class="btn-icon btn-tiny btn-round btn-success"
+                  (click)="openDialog($event, updateModal, item)"
+                >
+                  <i puiIcon="edit" size="tiny"></i>
+                </button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
       </div>
     </div>
   </ng-container>
+  
+  <ng-template #addModal>
+    <app-add-category
+      [bp]="bp"
+      (closes)="closeDialog($event)"
+    ></app-add-category>
+  </ng-template>
+
+  <ng-template #updateModal let-data>
+    <app-update-category
+      [category]="data"
+      (closes)="closeDialog($event)"
+    ></app-update-category>
+  </ng-template>
 
   <ng-template #noData>
     <no-data-placeholder-widget
       [showAction]="editable"
       [actionName]="c['addNew']"
-      (action)="add.emit()"
+      (action)="openDialog($event, addModal)"
       >{{c['noDataMsg']}}</no-data-placeholder-widget
     >
   </ng-template>

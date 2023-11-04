@@ -10,6 +10,7 @@ import {
 } from "@pestras/shared/data-model";
 import { DataStoresModel } from ".";
 import { HttpError, HttpCode } from "@pestras/backend/util";
+import { categoriesModel } from "../../models";
 
 export async function addField(
   this: DataStoresModel,
@@ -41,11 +42,41 @@ export async function addField(
     throw new HttpError(HttpCode.CONFLICT, "fieldDisplayNameAlreadyExists");
 
   const newField = createField(field);
+  const newFields = [newField];
+
+  // check field type if it is category
+  if (newField.type === 'category' && newField.ref_to) {
+    newField.cat_level = 1;
+
+    // - fetch category
+    const cat = await categoriesModel.getBySerial(newField.ref_to, { levels: 1 });
+
+    if (!cat)
+      throw new HttpError(HttpCode.NOT_FOUND, 'categoryNotFound');
+
+    // - check category level is greater than 1
+    if (cat.levels && cat.levels > 1) {
+      // make field required
+      newField.required = true;
+
+      // - create new fields for each extra level over 1
+      for (let i = 2; i <= cat.levels; i++) {
+        // - each new field will have parent, name of: "$field.name_$level" and display_name of: "$field.name $level"
+        newFields.push(createField({
+          ...newField,
+          parent: i === 2 ? `${newField.name}` : `${newField.name}_${i - 1}`,
+          cat_level: i,
+          name: `${newField.name}_${i}`,
+          display_name: `${newField.display_name} ${i}`
+        }));
+      }
+    }
+  }
 
   await this.col.updateOne(
     { serial },
     {
-      $push: { fields: newField },
+      $push: { fields: { $each: newFields } },
       $set: { last_modified: date },
     }
   );
@@ -55,7 +86,7 @@ export async function addField(
   if (ds.state !== DataStoreState.BUILD)
     await this.dataDB
       .collection(ds.serial)
-      .updateMany({}, { $set: { [field.name]: field.default ?? null } });
+      .updateMany({}, { $set: newFields.reduce((update, curr) => ({ ...update, [curr.name]: null }), {}) });
 
   this.channel.emitActivity({
     issuer: issuer.serial,
@@ -69,7 +100,7 @@ export async function addField(
     roles: [Role.ADMIN, Role.DATA_ENG]
   });
 
-  return date;
+  return newFields;
 }
 
 export type UpdateFieldInput = Pick<Field, "display_name" | "group" | "desc">;
@@ -239,7 +270,7 @@ export async function setFieldConstraint(
 export async function removeField(
   this: DataStoresModel,
   serial: string,
-  field: string,
+  fieldName: string,
   issuer: User
 ) {
   const date = new Date();
@@ -261,14 +292,23 @@ export async function removeField(
   if (dataStore.type !== DataStoreType.TABLE)
     throw new HttpError(HttpCode.FORBIDDEN, "notAllowedDataStoreType");
 
-  const f = dataStore.fields.find((f) => f.name === field);
+  const field = dataStore.fields.find((f) => f.name === fieldName);
 
-  if (!f) return date;
+  if (!field) return date;
+
+  const names = [fieldName];
+
+  if (field.type === 'category') {
+    dataStore.fields.forEach(f => {
+      if (f.ref_to === field.ref_to)
+        names.push(f.name);
+    })
+  }
 
   await this.col.updateOne(
     { serial },
     {
-      $pull: { fields: { name: field } },
+      $pull: { fields: { name: { $in: names } } },
       $set: { last_modified: date },
     }
   );
@@ -279,7 +319,7 @@ export async function removeField(
     method: 'removeField',
     serial,
     entity: EntityTypes.DATA_STORE,
-    payload: { field },
+    payload: { field: fieldName },
   }, {
     orgunits: [issuer.orgunit],
     roles: [Role.ADMIN, Role.DATA_ENG]
