@@ -12,9 +12,6 @@ export async function update(
 ) {
   const date = new Date();
 
-  if (await this.titleExists(input.title, serial))
-    throw new HttpError(HttpCode.CONFLICT, 'titleAlreadyExists');
-
   const cat = await this.getBySerial(serial);
 
   if (!cat)
