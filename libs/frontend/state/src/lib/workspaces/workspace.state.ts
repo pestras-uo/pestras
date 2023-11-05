@@ -35,36 +35,36 @@ export class WorkspaceState extends StatorObjectState<Workspace> {
 
   addGroup(name: string) {
     return this.service.addGroup({ name })
-      .pipe(tap(serial => this._set('groups', state => state.groups.concat({ serial, name }))));
+      .pipe(tap(serial => this._set('groups', state => state.groups.concat({ serial, name }), 'replace')));
   }
 
   updateGroup(group: string, name: string) {
     return this.service.updateGroup({ group }, { name })
-      .pipe(tap(() => this._set('groups', state => state.groups.map(g => g.serial === group ? { ...g, name } : g))));
+      .pipe(tap(() => this._set('groups', state => state.groups.map(g => g.serial === group ? { ...g, name } : g), 'replace')));
   }
 
   removeGroup(group: string) {
     return this.service.removeGroup({ group })
-      .pipe(tap(() => this._set('groups', state => state.groups.filter(g => g.serial !== group))));
+      .pipe(tap(() => this._set('groups', state => state.groups.filter(g => g.serial !== group), 'replace')));
   }
 
   addPin(pin: WorkspaceApi.AddPin.Body) {
     return this.service.addPin(pin)
-      .pipe(tap(() => this._set('pins', state => state.pins.concat(pin))));
+      .pipe(tap(() => this._set('pins', state => state.pins.concat(pin), 'replace')));
   }
 
   removePin(pin: string) {
     return this.service.removePin({ pin })
-      .pipe(tap(() => this._set('pins', state => state.pins.filter(p => p.serial !== pin))));
+      .pipe(tap(() => this._set('pins', state => state.pins.filter(p => p.serial !== pin), 'replace')));
   }
 
   addSlide(slide: WorkspaceApi.AddSlide.Body) {
     return this.service.addSlide(slide)
-      .pipe(tap(() => this._set('slides', state => state.slides.concat(slide))));
+      .pipe(tap(() => this._set('slides', state => state.slides.concat(slide), 'replace')));
   }
 
   removeSlide(slide: string) {
     return this.service.removeSlide({ slide })
-      .pipe(tap(() => this._set('slides', state => state.slides.filter(p => p.slide !== slide))));
+      .pipe(tap(() => this._set('slides', state => state.slides.filter(p => p.slide !== slide), 'replace')));
   }
 }

@@ -28,7 +28,7 @@ export class TopicsState extends StatorGroupState<Topic> {
 
   create(data: TopicsApi.Create.Body) {
     return this.service.create(data)
-      .pipe(tap(bpi => this._insert(bpi)));
+      .pipe(tap(t => this._insert(t)));
   }
 
   update(serial: string, name: string) {

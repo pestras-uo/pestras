@@ -20,7 +20,7 @@ export class AddUserModal implements OnInit {
     orgunit: ['', Validators.required],
     username: ['', [Validators.required, Validators.pattern(/^[a-zA-Z0-9_\-.]{4,64}$/), Validators.minLength(5)]],
     password: ['', [Validators.required, Validators.pattern(/^[a-zA-Z0-9!@#$%^&*-_=+.|<>:;'"()]{8,64}$/)]],
-    roles: [[Role.GUEST], Validators.required],
+    roles: [[Role.VIEWER], Validators.required],
     is_super: false,
     fullname: ['', [Validators.required]],
     email: ['', Validators.email],
@@ -59,18 +59,18 @@ export class AddUserModal implements OnInit {
       .subscribe(org => {
         if (org === this.session.get()?.serial) {
           if (this.session.get()?.is_super)
-            this.roles = [Role.ADMIN, Role.DATA_ENG, Role.REPORTER, Role.AUTHOR, Role.GUEST].map(r => {
+            this.roles = [Role.ADMIN, Role.DATA_ENG, Role.REPORTER, Role.AUTHOR, Role.VIEWER].map(r => {
               return { name: r, value: r };
             });
           else {
-            this.roles = [Role.DATA_ENG, Role.REPORTER, Role.AUTHOR, Role.GUEST].map(r => {
+            this.roles = [Role.DATA_ENG, Role.REPORTER, Role.AUTHOR, Role.VIEWER].map(r => {
               return { name: r, value: r };
             });
             this.form.controls.roles.setValue(this.form.controls.roles.value.filter(r => r === Role.ADMIN));
           }
 
         } else
-          this.roles = [Role.ADMIN, Role.DATA_ENG, Role.REPORTER, Role.AUTHOR, Role.GUEST].map(r => {
+          this.roles = [Role.ADMIN, Role.DATA_ENG, Role.REPORTER, Role.AUTHOR, Role.VIEWER].map(r => {
             return { name: r, value: r };
           });
       });
