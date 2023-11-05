@@ -11,7 +11,6 @@ import { GoogleMap } from '@angular/google-maps';
 import { mapStyle, mapStyleDark } from '../map.style'; // Importing map styles
 import { Subject } from 'rxjs';
 import { GoogleMapService } from '../google-map.service';
-import { ToggleThemeService } from '../../toggle-theme/toggle-theme.service';
 
 // Interface for marker input data
 export interface PuiMapMarkerInput {

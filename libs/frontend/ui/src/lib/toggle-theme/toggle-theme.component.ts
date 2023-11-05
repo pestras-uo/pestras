@@ -7,15 +7,19 @@ import { map } from 'rxjs';
 
 @Component({
   selector: 'toggle-theme',
-  templateUrl: './toggle-theme.component.html',
-  styleUrls: ['./toggle-theme.component.scss'],
+  templateUrl: './toggle-theme.component.html'
 })
 export class ToggleTheme {
-  constructor(private toggleThemeService: ToggleThemeService) {}
+  readonly icons = {
+    light: '🌙',
+    dark: '☀️'
+  };
 
   isDarkMode$ = this.toggleThemeService.isDarkMode$.pipe(
-    map((isdark) => (isdark ? 'dark' : 'light'))
+    map((isDark) => (isDark ? 'dark' : 'light') as 'light' | 'dark')
   );
+
+  constructor(private toggleThemeService: ToggleThemeService) { }
 
   toggleDarkMode(): void {
     this.toggleThemeService.toggleDarkMode();

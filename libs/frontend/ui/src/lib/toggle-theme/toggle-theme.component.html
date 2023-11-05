@@ -1,8 +1,7 @@
 <button
   class="btn-icon btn-round"
-  *ngIf="isDarkMode$ | async as isDarkMode"
+  *ngIf="isDarkMode$ | async as theme"
   (click)="toggleDarkMode()"
 >
-  <span *ngIf="isDarkMode">🌙</span>
-  <span *ngIf="!isDarkMode">☀️</span>
+  <span>{{icons[theme]}}</span>
 </button>

@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @angular-eslint/component-class-suffix */
 /* eslint-disable @angular-eslint/component-selector */
 import { Component, Input, OnChanges, booleanAttribute } from '@angular/core';
@@ -47,7 +48,7 @@ export class MapScatterChartView implements OnChanges {
 
   constructor(
     private contra: ContraService,
-    private envServ: EnvService,
+    private envServ: EnvService
   ) {}
 
   ngOnChanges() {
@@ -60,10 +61,10 @@ export class MapScatterChartView implements OnChanges {
       }
     }
 
-    const map = generateMapGeoJson(this.payload.regions);
+    const map = generateMapGeoJson(this.payload.regions) as any;
     const data = this.prepareData(this.options, this.payload);
 
-    echarts.registerMap(this.mapSerial, map as any);
+    echarts.registerMap(this.mapSerial, map);
     this.render(this.options, data.list, data.effect, data.size);
   }
 
@@ -180,6 +181,7 @@ export class MapScatterChartView implements OnChanges {
     }
 
     const docsPath = this.envServ.env.docs;
+    const content = this.contra.content();
 
     this.chartOptions = {
       textStyle: {
@@ -208,6 +210,7 @@ export class MapScatterChartView implements OnChanges {
 
             if (record)
               return recordToolTip(
+                content,
                 payload.fields,
                 options.tooltip,
                 record,

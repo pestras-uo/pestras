@@ -95,7 +95,7 @@ export function groupRecords2D<T extends Record<string, any>>(data: T[], by: [st
   return output;
 }
 
-export function recordToolTip(fields: Field[], options: MapScatterTooltopOptions, record: DataRecord, docsPath: string) {
+export function recordToolTip(content: Record<string, any>, fields: Field[], options: MapScatterTooltopOptions, record: DataRecord, docsPath: string) {
   const banner = options.image ? fields.find(f => f.name === options.image) : null;
   const title = options.heading ? fields.find(f => f.name === options.heading) : null;
   const customFields = fields.filter(f => !f.system);
@@ -149,7 +149,7 @@ export function recordToolTip(fields: Field[], options: MapScatterTooltopOptions
         <div class="card-footer">
           <p>${record[region.name]}</p>
           <div class="grow"></div>
-          <a class="btn btn-round btn-small btn-primary" target="_blank" href="https://www.google.com/maps/search/?api=1&query=${loc.lat},${loc.lng}">الموقع</a>
+          <a class="btn btn-round btn-small btn-primary" target="_blank" href="https://www.google.com/maps/search/?api=1&query=${loc.lat},${loc.lng}">${content['location']}</a>
         </div>
       `;
   }
