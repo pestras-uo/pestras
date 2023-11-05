@@ -17,6 +17,7 @@ export class AddCategoryModal implements OnInit {
     title: ['', [Validators.required, Validators.minLength(3)]],
     ordinal: false,
     value: this.fb.nonNullable.control<string | number>(''),
+    levels: this.fb.nonNullable.control<number>(1, [Validators.min(1)]),
     parent: this.fb.control('')
   });
 
@@ -30,7 +31,7 @@ export class AddCategoryModal implements OnInit {
   parent?: Category;
 
   @Output()
-  closes = new EventEmitter<Category | null>();
+  closes = new EventEmitter<boolean>();
 
   constructor(
     private service: CategoriesService,
@@ -54,9 +55,9 @@ export class AddCategoryModal implements OnInit {
 
     this.service.create(data)
       .subscribe({
-        next: cat => {
+        next: () => {
           this.toast.msg(c['success'].categoryAdd, { type: 'success' });
-          this.closes.emit(cat);
+          this.closes.emit(true);
         },
         error: e => {
           console.error(e);

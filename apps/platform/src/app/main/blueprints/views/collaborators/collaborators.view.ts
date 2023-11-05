@@ -3,7 +3,7 @@ import { Component, Input, TemplateRef } from "@angular/core";
 import { FormControl, Validators } from "@angular/forms";
 import { BlueprintsState } from "@pestras/frontend/state";
 import { ToastService } from "@pestras/frontend/ui";
-import { Blueprint, User } from "@pestras/shared/data-model";
+import { Blueprint, Role, User } from "@pestras/shared/data-model";
 
 @Component({
   selector: 'pestras-blueprint-collaborators',
@@ -28,7 +28,7 @@ export class CollaboratorsViewComponent {
   ) {}
 
   filterUsers = (user: User) => {
-    return !this.blueprint.collaborators.includes(user.serial) && user.serial !== this.blueprint.owner;
+    return !this.blueprint.collaborators.includes(user.serial) && user.serial !== this.blueprint.owner && user.roles.includes(Role.DATA_ENG);
   }
 
   mapUser(user: User) {

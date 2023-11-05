@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { Category, User } from "@pestras/shared/data-model"
 import { Model } from "../../model";
 import { create, CreateCategoryInput } from './create';
@@ -12,10 +13,10 @@ export class CategoriesModel extends Model<Category> {
 
   // read
   // -----------------------------------------------------------------------------------
-  getByParent: (parent: string) => Promise<Category[]> = getByParent.bind(this);
+  getByParent: (parent: string, level?: number) => Promise<Category[]> = getByParent.bind(this);
   getByValue: (parent: string, value: number) => Promise<Category | null> = getByValue.bind(this);
-  getBySerial: (serial: string, projection?: Document) => Promise<Category | null> = getBySerial.bind(this);
-  getByBlueprint: (bp: string, projection?: Document) => Promise<Category[]> = getByBlueprint.bind(this);
+  getBySerial: (serial: string, projection?: Record<string, any>) => Promise<Category | null> = getBySerial.bind(this);
+  getByBlueprint: (bp: string, projection?: Record<string, any>) => Promise<Category[]> = getByBlueprint.bind(this);
 
   // util
   // ------------------------------------------------------------------------------------

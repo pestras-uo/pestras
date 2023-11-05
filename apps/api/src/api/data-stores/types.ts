@@ -101,7 +101,7 @@ export namespace DataStoreApi {
   // --------------------------------------------------------------------------------------
   export const ADD_FIELD_REQ_PATH = "/:serial/fields";
   export type AddFieldReq = Request<{ serial: string; }, any, Field>;
-  export type AddFieldRes = Response<Date, UserSession>;
+  export type AddFieldRes = Response<Field[], UserSession>;
 
   export const UPDATE_FIELD_REQ_PATH = "/:serial/fields/:field";
   export type UpdateFieldReq = Request<{ serial: string; field: string; }, any, UpdateFieldInput>;

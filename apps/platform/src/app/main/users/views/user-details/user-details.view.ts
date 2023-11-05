@@ -6,6 +6,7 @@ import { Orgunit, Role, User } from '@pestras/shared/data-model';
 import { OrgunitsState, UsersState, SessionState } from '@pestras/frontend/state';
 import { Observable, filter, switchMap, tap } from 'rxjs';
 import { Dialog, DialogRef } from '@angular/cdk/dialog';
+import { Serial } from '@pestras/shared/util';
 
 @Component({
   selector: 'app-user-details',
@@ -38,7 +39,10 @@ export class UserDetailsView implements OnChanges {
           return;
 
         const session = this.session.get();
-        this.canUpdate = session?.orgunit !== user.orgunit || (session.is_super && !user.is_super) || (!user.roles.includes(Role.ADMIN));
+        if (!session)
+          return;
+
+        this.canUpdate = Serial.isBranch(user.orgunit, session.orgunit, !user.roles.includes(Role.ADMIN) || session.is_super);
       }))
 
     this.orgunit$ = this.user$

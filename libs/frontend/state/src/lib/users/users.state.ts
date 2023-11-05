@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { EntityTypes, Role, User } from '@pestras/shared/data-model';
+import { EntityTypes, Role, User, UserProfile } from '@pestras/shared/data-model';
 import { StatorChannel, StatorCollectionState } from '@pestras/frontend/util/stator';
 import { SessionChange, SessionEnd, SessionStart } from '../session/session.events';
 import { UsersService } from './users.service';
@@ -70,6 +70,20 @@ export class UsersState extends StatorCollectionState<User> {
   create(data: UsersApi.Create.Body) {
     return this.service.create(data)
       .pipe(tap(res => this._insert(res)));
+  }
+
+  updateUsername(serial: string, username: string) {
+    return this.service.updateUsername({ serial }, { username })
+      .pipe(tap(res => this._update(serial, { username, last_modified: new Date(res) })));
+  }
+
+  updatePassword(serial: string, password: string) {
+    return this.service.updatePassword({ serial }, { password })
+  }
+
+  updateProfile(serial: string, profile: UserProfile) {
+    return this.service.updateProfile({ serial }, profile)
+      .pipe(tap(res => this._update(serial, { ...profile, last_modified: new Date(res) })));
   }
 
   updateRoles(serial: string, roles: Role[], is_super: boolean) {

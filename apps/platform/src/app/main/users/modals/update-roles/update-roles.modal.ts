@@ -9,9 +9,7 @@ import { SessionState, UsersState } from '@pestras/frontend/state';
 
 @Component({
   selector: 'app-update-roles',
-  templateUrl: './update-roles.modal.html',
-  styles: [
-  ]
+  templateUrl: './update-roles.modal.html'
 })
 export class UpdateRolesModal implements OnInit {
   readonly ud = untilDestroyed();
@@ -38,7 +36,7 @@ export class UpdateRolesModal implements OnInit {
 
   ngOnInit(): void {
     const session = this.session.get();
-    let roles: Role[] = [Role.ADMIN, Role.DATA_ENG, Role.REPORTER, Role.AUTHOR, Role.GUEST];
+    let roles: Role[] = [Role.ADMIN, Role.DATA_ENG, Role.REPORTER, Role.AUTHOR, Role.VIEWER];
 
     if (this.user.orgunit === this.session.get()?.orgunit && !session?.is_super)
       roles = roles.slice(1);

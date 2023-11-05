@@ -7,8 +7,15 @@
     <i *ngIf="!u.avatar" color="white" puiIcon="person"></i>
   </div>
 
-  <div *ngIf="!imageOnly" [class.align-start]="!vertical" [class.align-center]="vertical">
-    <p class="text1 bold">{{u.fullname}}</p>
+  <div
+    *ngIf="!imageOnly"
+    [class.align-start]="!vertical"
+    [class.align-center]="vertical"
+  >
+    <p class="text1 bold">
+      {{u.fullname}}
+      <span *ngIf="username" class="badge badge-small badge-primary">{{u.username}}</span>
+    </p>
     <p class="f10 text3">{{orgunit$ | async}}</p>
   </div>
 </ng-container>

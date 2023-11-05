@@ -4,7 +4,7 @@
 /* eslint-disable @angular-eslint/component-selector */
 import { Component, Input, OnChanges, ViewChild, ElementRef, SimpleChanges, OnInit } from '@angular/core';
 import { AbstractControl, ControlValueAccessor, FormControl, NG_VALIDATORS, NG_VALUE_ACCESSOR, ValidationErrors, Validators } from '@angular/forms';
-import { Category, Field, Orgunit, Region, Topic, TypeKind, User } from '@pestras/shared/data-model';
+import { Category, DataRecord, Field, Orgunit, Region, Topic, TypeKind, User } from '@pestras/shared/data-model';
 import { untilDestroyed } from '@pestras/frontend/ui';
 
 @Component({
@@ -35,6 +35,8 @@ export class FieldInputForm implements OnChanges, OnInit, ControlValueAccessor {
   field!: Field;
   @Input()
   multi = false;
+  @Input()
+  record?: DataRecord;
 
   ngOnChanges(change: SimpleChanges) {
 

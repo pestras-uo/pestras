@@ -43,6 +43,9 @@ export interface TypedEntity {
   unit: string | null;
   ref_type: ReferenceTypes | null;
   ref_to: string | null;
+  /** for nested categories */
+  cat_level: number | null,
+  parent: string | null;
   length: number;
   mime: string[];
 }
@@ -54,6 +57,8 @@ const defaultTypedEntity: TypedEntity = {
   kind: TypeKind.NONE,
   ref_type: null,
   ref_to: null,
+  cat_level: null,
+  parent: null,
   unit: null,
   mime: [],
   length: 1
@@ -132,9 +137,10 @@ export function getInitTypedEntityValue(entity: TypedEntity) {
   switch (entity.type) {
     case 'boolean':
       return false;
-    case 'category':
     case 'string':
     case 'region':
+    case 'category':
+    case 'serial':
       return "";
     case 'date':
     case 'datetime':
@@ -148,7 +154,5 @@ export function getInitTypedEntityValue(entity: TypedEntity) {
       return "";
     case 'location':
       return null;
-    case 'serial':
-      return "";
   }
 }

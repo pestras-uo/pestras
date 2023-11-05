@@ -11,11 +11,14 @@ export async function getByBlueprint(this: TopicsModel, bp: string, user: User) 
         { owner: user.serial },
         {
           $and: [
-            { $or: [{ 'access.orgunits': { $size: 0 } }, { 'access.orgunits': user.orgunit }] },
-            { $or: [{ 'access.users': { $size: 0 } }, { 'access.users': user.serial }] },
-            { $or: [{ 'access.groups': { $size: 0 } }, { 'access.group': { $in: user.groups } }] }
-          ]
-        }
+            { 'access.orgunits': { $size: 0 } },
+            { 'access.users': { $size: 0 } },
+            { 'access.groups': { $size: 0 } }
+          ],
+        },
+        { 'access.orgunits': user.orgunit },
+        { 'access.users': user.serial },
+        { 'access.group': { $in: user.groups } }
       ]
     };
 
@@ -44,11 +47,14 @@ export async function getByParent(this: TopicsModel, parent: string, user: User)
         { owner: user.serial },
         {
           $and: [
-            { $or: [{ 'access.orgunits': { $size: 0 } }, { 'access.orgunits': user.orgunit }] },
-            { $or: [{ 'access.users': { $size: 0 } }, { 'access.users': user.serial }] },
-            { $or: [{ 'access.groups': { $size: 0 } }, { 'access.group': { $in: user.groups } }] }
-          ]
-        }
+            { 'access.orgunits': { $size: 0 } },
+            { 'access.users': { $size: 0 } },
+            { 'access.groups': { $size: 0 } }
+          ],
+        },
+        { 'access.orgunits': user.orgunit },
+        { 'access.users': user.serial },
+        { 'access.group': { $in: user.groups } }
       ]
     };
 

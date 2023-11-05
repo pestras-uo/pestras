@@ -6,7 +6,7 @@ export const CategorriesController = {
 
   async getByParent(req: CategoriesApi.GetByParentReq, res: CategoriesApi.GetByParentRes, next: NextFunction) {
     try {
-      res.json(await categoriesModel.getByParent(req.params.serial));
+      res.json(await categoriesModel.getByParent(req.params.serial, +req.params.level));
       
     } catch (error) {
       next(error);
