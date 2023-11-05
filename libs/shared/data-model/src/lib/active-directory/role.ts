@@ -3,5 +3,5 @@ export enum Role {
   DATA_ENG = "data_engineer", // data stores
   AUTHOR = "author", // records entry,
   REPORTER = 'reporter',
-  GUEST = "guest"
+  VIEWER = "viewer"
 }

@@ -11,10 +11,10 @@ new Validall(Validators.PASSWORD, { $type: 'string', $regex: passwordRegex, $mes
 
 new Validall(Validators.FULLNAME, { $type: 'string', $message: 'invalidUsername' });
 
-new Validall(Validators.ROLE, { $type: 'string', $in: [Role.AUTHOR, Role.DATA_ENG, Role.REPORTER, Role.GUEST], $message: 'invalidRole' });
+new Validall(Validators.ROLE, { $type: 'string', $in: [Role.AUTHOR, Role.DATA_ENG, Role.REPORTER, Role.VIEWER], $message: 'invalidRole' });
 
 new Validall(Validators.FULL_ROLES, {
-  $type: 'string', $in: [Role.ADMIN, Role.AUTHOR, Role.DATA_ENG, Role.REPORTER, Role.GUEST], $message: 'invalidRole'
+  $type: 'string', $in: [Role.ADMIN, Role.AUTHOR, Role.DATA_ENG, Role.REPORTER, Role.VIEWER], $message: 'invalidRole'
 });
 
 new Validall(Validators.ROLES, {

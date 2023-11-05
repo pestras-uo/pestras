@@ -140,7 +140,7 @@
             >
             </pui-select-input>
           </div>
-          <div class="fc" *ngIf="type === 'users'">
+          <div class="fc" *ngIf="type === 'user'">
             <pui-select-input
               *ngIf="'' | users | async | arrayFilter: filterEntity: access?.users: true | arrayMap: mapEntity as users"
               [list]="users"
@@ -149,7 +149,7 @@
             >
             </pui-select-input>
           </div>
-          <div class="fc" *ngIf="type === 'groups'">
+          <div class="fc" *ngIf="type === 'group'">
             <pui-select-input
               *ngIf="'' | usersGroups | async | arrayFilter: filterEntity: access?.groups: true | arrayMap: mapEntity as groups"
               [list]="groups"

@@ -36,7 +36,7 @@ export class UpdateRolesModal implements OnInit {
 
   ngOnInit(): void {
     const session = this.session.get();
-    let roles: Role[] = [Role.ADMIN, Role.DATA_ENG, Role.REPORTER, Role.AUTHOR, Role.GUEST];
+    let roles: Role[] = [Role.ADMIN, Role.DATA_ENG, Role.REPORTER, Role.AUTHOR, Role.VIEWER];
 
     if (this.user.orgunit === this.session.get()?.orgunit && !session?.is_super)
       roles = roles.slice(1);

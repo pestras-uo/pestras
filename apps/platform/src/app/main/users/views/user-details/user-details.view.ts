@@ -2,7 +2,7 @@
 /* eslint-disable @angular-eslint/component-class-suffix */
 /* eslint-disable @angular-eslint/component-selector */
 import { Component, Input, OnChanges, TemplateRef } from '@angular/core';
-import { Orgunit, User } from '@pestras/shared/data-model';
+import { Orgunit, Role, User } from '@pestras/shared/data-model';
 import { OrgunitsState, UsersState, SessionState } from '@pestras/frontend/state';
 import { Observable, filter, switchMap, tap } from 'rxjs';
 import { Dialog, DialogRef } from '@angular/cdk/dialog';
@@ -42,7 +42,7 @@ export class UserDetailsView implements OnChanges {
         if (!session)
           return;
 
-        this.canUpdate = Serial.isBranch(user.orgunit, session.orgunit, session.is_super);
+        this.canUpdate = Serial.isBranch(user.orgunit, session.orgunit, !user.roles.includes(Role.ADMIN) || session.is_super);
       }))
 
     this.orgunit$ = this.user$

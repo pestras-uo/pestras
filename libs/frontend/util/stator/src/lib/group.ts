@@ -85,7 +85,7 @@ export abstract class StatorGroupState<T extends Record<string, any> = any> {
 
     const dataMap = this._data.getValue();
 
-    if (!doc || !this._id(doc) || !doc[this.groupBy])
+    if (!doc || !this._id(doc) || doc[this.groupBy] === undefined)
       return;
 
     this.selectGroup(doc[this.groupBy] as string)
