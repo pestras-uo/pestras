@@ -1,9 +1,9 @@
 <ng-container *ngIf="ready$ | async">
 
-<ng-container *ngIf="(ready$ | async) as isReady">
-  <google-map #map [options]="options" [zoom]="zoom" (mapDrag)="drag()" (mapDragend)="dragend()"
-              [ngClass]="{ 'dark-mode': (getIsDarkMode$() | async) && isReady }">
-    
+  <google-map #map
+  [dark]="dark"
+  [options]="options" [zoom]="zoom" (mapDrag)="drag()" (mapDragend)="dragend()">
+
     <map-marker *ngIf="mode === 'pick'" [position]="pickMarkerPosition"
       icon="assets/imgs/location-accent-icon.png"></map-marker>
 

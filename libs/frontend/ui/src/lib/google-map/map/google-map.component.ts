@@ -4,11 +4,12 @@ import {
   Input,
   Output,
   ChangeDetectionStrategy,
-  OnInit,
+  booleanAttribute,
+  OnChanges,
 } from '@angular/core';
 import { GoogleMap } from '@angular/google-maps';
 import { mapStyle, mapStyleDark } from '../map.style'; // Importing map styles
-import { BehaviorSubject, Subject, map } from 'rxjs';
+import { Subject } from 'rxjs';
 import { GoogleMapService } from '../google-map.service';
 import { ToggleThemeService } from '../../toggle-theme/toggle-theme.service';
 
@@ -33,7 +34,7 @@ export interface PuiMapPolygonOptions {
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 // eslint-disable-next-line @angular-eslint/component-class-suffix
-export class PuiGoogleMap implements OnInit {
+export class PuiGoogleMap implements OnChanges {
   private readonly defaultPosition: google.maps.LatLngLiteral = {
     lat: 31.96232549914046,
     lng: 35.910937982131884,
@@ -61,49 +62,35 @@ export class PuiGoogleMap implements OnInit {
 
   // Output event
   @Output() pick = new Subject<google.maps.LatLngLiteral | null>();
-  themeState = false;
 
   constructor(
     private readonly mapService: GoogleMapService,
-    private readonly toggleThemeServ: ToggleThemeService
+    private readonly toggleThemeService: ToggleThemeService
   ) {}
+  @Input({ transform: booleanAttribute })
+  dark = false;
+  ngOnChanges(): void {
+    // Initializing map options
+    this.options = {
+      disableDefaultUI: false,
+      keyboardShortcuts: false,
+      fullscreenControl: false,
+      styles: this.dark ? mapStyleDark : mapStyle,
+      zoomControl: this.zoomControl,
+      controlSize: 24,
+    };
 
-  private isDarkModeSubject = new BehaviorSubject<boolean>(false);
-  public isDarkMode$ = this.isDarkModeSubject.asObservable();
-  public getIsDarkMode$() {
-    return this.isDarkMode$.pipe(
-      map((isdm) => {
-        return isdm ? mapStyleDark : mapStyle;
-      })
-    );
-  }
+    // Setting initial map position
+    if (this.position) {
+      this.options.center = this.position;
+      this.pickMarkerPosition = this.position;
+    } else {
+      this.options.center = this.defaultPosition;
+      this.pickMarkerPosition = this.defaultPosition;
+    }
 
-  ngOnInit(): void {
-    this.toggleThemeServ.isDarkMode$.subscribe((isDarkMode) => {
-      this.isDarkModeSubject.next(isDarkMode);
-
-      // Initializing map options
-      this.options = {
-        disableDefaultUI: false,
-        keyboardShortcuts: false,
-        fullscreenControl: false,
-        styles: isDarkMode ? mapStyleDark : mapStyle,
-        zoomControl: this.zoomControl,
-        controlSize: 24,
-      };
-
-      // Setting initial map position
-      if (this.position) {
-        this.options.center = this.position;
-        this.pickMarkerPosition = this.position;
-      } else {
-        this.options.center = this.defaultPosition;
-        this.pickMarkerPosition = this.defaultPosition;
-      }
-
-      // Getting user's current position
-      this.getCurrentPos();
-    });
+    // Getting user's current position
+    this.getCurrentPos();
   }
 
   // Function to get current geolocation

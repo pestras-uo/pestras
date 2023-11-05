@@ -5,8 +5,6 @@ import { MapChartDataLoad } from '../map-chart.view';
 import * as echarts from 'echarts';
 import { MapScatterDataVizOptions, lerp } from '@pestras/shared/data-model';
 import { generateMapGeoJson, recordToolTip } from '../../../util';
-import { BehaviorSubject, Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
 
 import {
   ToggleThemeService,
@@ -21,13 +19,12 @@ import { EnvService } from '@pestras/frontend/env';
 @Component({
   selector: 'app-map-scatter-chart',
   template:
-    '<div #chart *ngIf="(getIsDarkMode$() | async) as isDarkMode" echarts [options]="chartOptions" class="chart"></div>',
+    '<div #chart  echarts [options]="chartOptions" class="chart"></div>',
   styles: [
     `
       :host {
         display: block;
         height: 100%;
-     
       }
       .chart {
         height: 100%;
@@ -48,10 +45,6 @@ export class MapScatterChartView implements OnChanges {
   payload!: MapChartDataLoad;
   @Input({ transform: booleanAttribute })
   dark = false;
-  isDarkMode = false;
-
-  private isDarkModeSubject = new BehaviorSubject<boolean>(false);
-  public isDarkMode$ = this.isDarkModeSubject.asObservable();
 
   constructor(
     private contra: ContraService,
@@ -59,19 +52,7 @@ export class MapScatterChartView implements OnChanges {
     private toggleThemeServ: ToggleThemeService
   ) {}
 
-  public getIsDarkMode$(): Observable<echarts.EChartsOption[]> {
-    return this.isDarkMode$.pipe(
-      map((isDarkMode) => {
-        return isDarkMode ? mapStyleDark : mapStyle;
-      })
-    );
-  }
-
   ngOnChanges() {
-    this.toggleThemeServ.isDarkMode$.subscribe((isDarkMode) => {
-      this.isDarkModeSubject.next(isDarkMode);
-    });
-
     if (this.payload.regions.length) {
       this.zoom = Math.max(...this.payload.regions.map((r) => r.zoom));
 
@@ -157,131 +138,130 @@ export class MapScatterChartView implements OnChanges {
   ) {
     const series: any[] = [];
     const payload = this.payload;
-    this.isDarkMode$.subscribe((isDarkMode) => {
+
+    series.push({
+      type: 'scatter',
+      coordinateSystem: options.google_map ? 'gmap' : 'geo',
+      geoIndex: 0,
+      symbolSize: size
+        ? function (params: number[]) {
+            return lerp(params[2], [size.min, size.max], [10, 40]);
+          }
+        : 20,
+      encode: {
+        tooltip: 2,
+      },
+      label: { color: this.dark ? '#DDF' : '#335' },
+      itemStyle: {
+        shadowBlur: 1,
+        shadowColor: '#111111',
+      },
+      data: list,
+    });
+
+    if (effect?.length > 0) {
       series.push({
-        type: 'scatter',
+        type: 'effectScatter',
         coordinateSystem: options.google_map ? 'gmap' : 'geo',
         geoIndex: 0,
         symbolSize: size
           ? function (params: number[]) {
-              return lerp(params[2], [size.min, size.max], [10, 40]);
+              return lerp(params[2], [size.min, size.max], [10, 25]);
             }
-          : 20,
+          : 23,
         encode: {
           tooltip: 2,
         },
-        label: { color: this.dark ? '#DDF' : '#335' },
         itemStyle: {
-          shadowBlur: 1,
-          shadowColor: '#111111',
+          color: 'red',
+          shadowBlur: 3,
+          shadowColor: '#222222',
         },
-        data: list,
+        data: effect,
       });
+    }
 
-      if (effect?.length > 0) {
-        series.push({
-          type: 'effectScatter',
-          coordinateSystem: options.google_map ? 'gmap' : 'geo',
-          geoIndex: 0,
-          symbolSize: size
-            ? function (params: number[]) {
-                return lerp(params[2], [size.min, size.max], [10, 25]);
-              }
-            : 23,
-          encode: {
-            tooltip: 2,
-          },
-          itemStyle: {
-            color: 'red',
-            shadowBlur: 3,
-            shadowColor: '#222222',
-          },
-          data: effect,
-        });
-      }
+    const docsPath = this.envServ.env.docs;
 
-      const docsPath = this.envServ.env.docs;
+    this.chartOptions = {
+      textStyle: {
+        fontFamily: 'Almarai',
+      },
+      tooltip: {
+        backgroundColor: this.dark ? '#224' : '#FFF',
+        className: 'card shadow-4 card-small ' + this.contra.currLang?.dir,
+        renderMode: 'html',
+        padding: 0,
+        borderWidth: 0,
+        borderRadius: 16,
+        shadowBlur: 0,
+        extraCssText: 'white-space: normal;',
+        enterable: true,
+        hideDelay: 100,
+        showDelay: 100,
+        formatter: function (param: any) {
+          if (options.tooltip?.body.length) {
+            const serial = param.value[3];
+            const record = serial
+              ? payload.records.find(
+                  (r) => r['serial'] === serial || r['_id'] === serial
+                )
+              : null;
 
-      this.chartOptions = {
-        textStyle: {
-          fontFamily: 'Almarai',
+            if (record)
+              return recordToolTip(
+                payload.fields,
+                options.tooltip,
+                record,
+                docsPath
+              );
+          }
+
+          return `${param.marker}\t<strong>${param.value[2]}</strong>`;
         },
-        tooltip: {
-          backgroundColor: this.dark ? '#224' : '#FFF',
-          className: 'card shadow-4 card-small ' + this.contra.currLang?.dir,
-          renderMode: 'html',
-          padding: 0,
-          borderWidth: 0,
-          borderRadius: 16,
-          shadowBlur: 0,
-          extraCssText: 'white-space: normal;',
-          enterable: true,
-          hideDelay: 100,
-          showDelay: 100,
-          formatter: function (param: any) {
-            if (options.tooltip?.body.length) {
-              const serial = param.value[3];
-              const record = serial
-                ? payload.records.find(
-                    (r) => r['serial'] === serial || r['_id'] === serial
-                  )
-                : null;
-
-              if (record)
-                return recordToolTip(
-                  payload.fields,
-                  options.tooltip,
-                  record,
-                  docsPath
-                );
-            }
-
-            return `${param.marker}\t<strong>${param.value[2]}</strong>`;
+      },
+      gmap: options.google_map
+        ? {
+            center: this.center ?? [35.910937982131884, 31.96232549914046],
+            zoom: this.zoom,
+            renderOnMoving: true,
+            echartsLayerZIndex: 2019,
+            roam: true,
+            styles: this.dark ? mapStyleDark : mapStyle,
+            disableDefaultUI: false,
+            keyboardShortcuts: false,
+            fullscreenControl: false,
+          }
+        : null,
+      visualMap: [
+        {
+          show: false,
+          type: 'piecewise',
+          min: 0,
+          max: 100,
+          dimension: 2, // the fourth dimension of series.data (i.e. value[3]) is mapped
+          seriesIndex: 0, // The fourth series is mapped.
+          inRange: {
+            // The visual configuration in the selected range
+            color: ['green', 'orange', 'red'], // A list of colors that defines the graph color mapping
           },
+          outOfRange: {},
         },
-        gmap: options.google_map
-          ? {
-              center: this.center ?? [35.910937982131884, 31.96232549914046],
-              zoom: this.zoom,
-              renderOnMoving: true,
-              echartsLayerZIndex: 2019,
-              roam: true,
-              styles: isDarkMode ? mapStyleDark : mapStyle,
-              disableDefaultUI: false,
-              keyboardShortcuts: false,
-              fullscreenControl: false,
-            }
-          : null,
-        visualMap: [
-          {
-            show: false,
-            type: 'piecewise',
-            min: 0,
-            max: 100,
-            dimension: 2, // the fourth dimension of series.data (i.e. value[3]) is mapped
-            seriesIndex: 0, // The fourth series is mapped.
-            inRange: {
-              // The visual configuration in the selected range
-              color: ['green', 'orange', 'red'], // A list of colors that defines the graph color mapping
+        // ...
+      ],
+      geo: !options.google_map
+        ? {
+            tooltip: {
+              show: true,
             },
-            outOfRange: {},
-          },
-          // ...
-        ],
-        geo: !options.google_map
-          ? {
-              tooltip: {
-                show: true,
-              },
-              map: this.mapSerial,
-              roam: true,
-              label: {
-                show: true,
-              },
-            }
-          : undefined,
-        series,
-      };
-    });
+            map: this.mapSerial,
+            roam: true,
+            label: {
+              show: true,
+            },
+          }
+        : undefined,
+      series,
+    };
   }
 }

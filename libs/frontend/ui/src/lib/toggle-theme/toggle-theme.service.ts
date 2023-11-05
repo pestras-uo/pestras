@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { BehaviorSubject, Observable, tap } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -10,14 +10,16 @@ export class ToggleThemeService {
   public isDarkModeSubject = new BehaviorSubject<boolean>(
     this.loadDarkModeState()
   );
-  isDarkMode$: Observable<boolean> = this.isDarkModeSubject.asObservable();
 
   constructor() {
-    this.isDarkModeSubject.subscribe((isDarkMode) => {
+    this.isDarkModeSubject.next(this.loadDarkModeState());
+  }
+  isDarkMode$: Observable<boolean> = this.isDarkModeSubject.pipe(
+    tap((isDarkMode) => {
       this.updateBodyClass(isDarkMode);
       this.saveDarkModeState(isDarkMode);
-    });
-  }
+    })
+  );
 
   toggleDarkMode() {
     const isDarkMode = !this.isDarkModeSubject.value;

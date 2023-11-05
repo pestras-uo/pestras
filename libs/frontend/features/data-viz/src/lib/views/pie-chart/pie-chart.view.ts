@@ -5,17 +5,12 @@ import { Component, Input, OnChanges, booleanAttribute } from '@angular/core';
 import { BaseDataViz, PieDataVizOptions } from '@pestras/shared/data-model';
 import { EChartsOption } from 'echarts';
 import { ChartDataLoad } from '../../util';
-import {
-  ToggleThemeService,
-  mapStyle,
-  mapStyleDark,
-} from '@pestras/frontend/ui';
-import { BehaviorSubject, map } from 'rxjs';
+import { ToggleThemeService } from '@pestras/frontend/ui';
 
 @Component({
   selector: 'app-pie-chart',
   template:
-    '<div *ngIf="(getIsDarkMode$() | async) as isDarkMode and chartOptions"   echarts [options]="chartOptions" class="chart"></div>',
+    '<div *ngIf="chartOptions"   echarts [options]="chartOptions" class="chart"></div>',
   styles: [
     `
       :host {
@@ -38,23 +33,9 @@ export class PieChartView implements OnChanges {
   @Input({ transform: booleanAttribute })
   dark = false;
 
-  private isDarkModeSubject = new BehaviorSubject<boolean>(false);
-  public isDarkMode$ = this.isDarkModeSubject.asObservable();
-
   constructor(private toggleThemeServ: ToggleThemeService) {}
 
-  public getIsDarkMode$() {
-    return this.isDarkMode$.pipe(
-      map((isDarkMode) => {
-        return isDarkMode ? mapStyleDark : mapStyle;
-      })
-    );
-  }
-
   ngOnChanges() {
-    this.toggleThemeServ.isDarkMode$.subscribe((isDarkMode) => {
-      this.isDarkModeSubject.next(isDarkMode);
-    });
     this.renderPieChart(this.conf.options, this.init(this.conf.options));
   }
 
@@ -90,58 +71,56 @@ export class PieChartView implements OnChanges {
     options: PieDataVizOptions,
     data: { name: string; value: number }[]
   ) {
-    this.toggleThemeServ.isDarkMode$.subscribe((isDarkMode) => {
-      this.chartOptions = {
-        textStyle: { fontFamily: 'Almarai' },
-        tooltip: {
-          backgroundColor: this.dark ? '#224' : '#FFF',
-          trigger: 'item',
-          formatter: '<h5>{b}</h5><p class="f7">{c} - %{d}</p>',
-        },
-        grid: {
-          top: 0,
-          bottom: 0,
-        },
-        series: [
-          {
-            type: 'pie',
-            radius: [options.doughnut ? '30%' : '0%', '70%'],
-            avoidLabelOverlap: false,
-            itemStyle: {
-              borderRadius: 10,
-              borderWidth: 2,
-            },
-            label: {
-              position: 'outer',
-              alignTo: 'labelLine',
-              color: this.dark || isDarkMode ? '#DDF' : '#335',
-              show: true,
-              formatter(param) {
-                // correct the percentage
-                return (
-                  param.name +
-                  ': ' +
-                  param.value +
-                  ' (' +
-                  (param?.percent || 0) +
-                  '%)'
-                );
-              },
-            },
-            emphasis: {
-              label: {
-                show: true,
-                fontSize: 20,
-                fontWeight: 'bold',
-              },
-            },
-            labelLine: {
-              show: true,
-            },
-            data,
+    this.chartOptions = {
+      textStyle: { fontFamily: 'Almarai' },
+      tooltip: {
+        backgroundColor: this.dark ? '#224' : '#FFF',
+        trigger: 'item',
+        formatter: '<h5>{b}</h5><p class="f7">{c} - %{d}</p>',
+      },
+      grid: {
+        top: 0,
+        bottom: 0,
+      },
+      series: [
+        {
+          type: 'pie',
+          radius: [options.doughnut ? '30%' : '0%', '70%'],
+          avoidLabelOverlap: false,
+          itemStyle: {
+            borderRadius: 10,
+            borderWidth: 2,
           },
-        ],
-      };
-    });
+          label: {
+            position: 'outer',
+            alignTo: 'labelLine',
+            color: this.dark ? '#DDF' : '#335',
+            show: true,
+            formatter(param) {
+              // correct the percentage
+              return (
+                param.name +
+                ': ' +
+                param.value +
+                ' (' +
+                (param?.percent || 0) +
+                '%)'
+              );
+            },
+          },
+          emphasis: {
+            label: {
+              show: true,
+              fontSize: 20,
+              fontWeight: 'bold',
+            },
+          },
+          labelLine: {
+            show: true,
+          },
+          data,
+        },
+      ],
+    };
   }
 }

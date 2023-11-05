@@ -59,7 +59,7 @@ export class LineChartView implements OnChanges {
           color: 'rgb(68, 210, 158)',
           label: {
             color:
-              this.dark || this.toggleThemeServ.isDarkModeSubject.value
+             this.dark
                 ? '#DDF'
                 : '#335',
           },
@@ -94,13 +94,13 @@ export class LineChartView implements OnChanges {
       boundaryGap: false,
       axisLabel: {
         color:
-          this.dark || this.toggleThemeServ.isDarkModeSubject.value
+         this.dark
             ? '#DDF'
             : '#335',
       },
       lineStyle: {
         color:
-          this.dark || this.toggleThemeServ.isDarkModeSubject.value
+         this.dark
             ? '#DDD'
             : '#666',
       },
@@ -157,7 +157,7 @@ export class LineChartView implements OnChanges {
         type: 'value',
         axisLabel: {
           color:
-            this.dark || this.toggleThemeServ.isDarkModeSubject.value
+           this.dark
               ? '#DDF'
               : '#335',
         },

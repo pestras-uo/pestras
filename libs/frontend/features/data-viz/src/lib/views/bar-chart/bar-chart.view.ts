@@ -9,12 +9,7 @@ import {
 } from '@pestras/shared/data-model';
 import { EChartsOption, BarSeriesOption, graphic } from 'echarts';
 import { ChartDataLoad } from '../../util';
-import {
-  ToggleThemeService,
-  mapStyle,
-  mapStyleDark,
-} from '@pestras/frontend/ui';
-import { BehaviorSubject, map } from 'rxjs';
+import { ToggleThemeService } from '@pestras/frontend/ui';
 
 const colors = [
   ['#83bff6', '#188df0', '#188df0'],
@@ -28,7 +23,7 @@ const colors = [
 @Component({
   selector: 'app-bar-chart',
   template:
-    '<div *ngIf="(getIsDarkMode$() | async) as isDarkMode and chartOptions"   echarts [options]="chartOptions" class="chart"></div>',
+    '<div *ngIf="chartOptions"   echarts [options]="chartOptions" class="chart"></div>',
   styles: [
     `
       :host {
@@ -51,31 +46,16 @@ export class BarChartView implements OnChanges {
   @Input({ transform: booleanAttribute })
   dark = false;
 
-  private isDarkModeSubject = new BehaviorSubject<boolean>(false);
-  public isDarkMode$ = this.isDarkModeSubject.asObservable();
   constructor(private toggleThemeServ: ToggleThemeService) {}
 
-  public getIsDarkMode$() {
-    return this.isDarkMode$.pipe(
-      map((isDarkMode) => {
-        return isDarkMode ? mapStyleDark : mapStyle;
-      })
-    );
-  }
-
   ngOnChanges() {
-    this.toggleThemeServ.isDarkMode$.subscribe((isDarkMode) => {
-      this.isDarkModeSubject.next(isDarkMode);
-    });
     const { categories, series, valueFields } = this.init(this.conf.options);
-    this.toggleThemeServ.isDarkMode$.subscribe((isDarkMode) => {
-      this.render(
-        this.conf.options,
-        categories as string[],
-        series,
-        valueFields as Field[]
-      );
-    });
+    this.render(
+      this.conf.options,
+      categories as string[],
+      series,
+      valueFields as Field[]
+    );
   }
 
   private init(options: BarDataVizOptions) {
@@ -108,11 +88,9 @@ export class BarChartView implements OnChanges {
         data,
         yAxisIndex: i,
       };
-      
     });
 
     return { categories, series, valueFields };
-   
   }
 
   /**
@@ -132,10 +110,7 @@ export class BarChartView implements OnChanges {
         return '' + Math.round(+param.value);
       },
       fontSize: 16,
-      color:
-        this.dark || this.toggleThemeServ.isDarkModeSubject.value
-          ? '#DDF'
-          : '#335',
+      color: this.dark ? '#DDF' : '#335',
     };
 
     if (options.horizontal) {
@@ -169,10 +144,7 @@ export class BarChartView implements OnChanges {
         series.length > 1
           ? {
               textStyle: {
-                color:
-                  this.dark || this.toggleThemeServ.isDarkModeSubject.value
-                    ? '#DDF'
-                    : '#335',
+                color: this.dark ? '#DDF' : '#335',
               },
               // orient: 'vertical',
               // left: 'right',
@@ -192,10 +164,7 @@ export class BarChartView implements OnChanges {
             boundaryGap: [0.2, 0.2],
             alignTicks: true,
             axisLabel: {
-              color:
-                this.dark || this.toggleThemeServ.isDarkModeSubject.value
-                  ? '#DDF'
-                  : '#335',
+              color: this.dark ? '#DDF' : '#335',
             },
           }
         : {
@@ -203,10 +172,7 @@ export class BarChartView implements OnChanges {
             data: categories,
             axisLabel: {
               rotate: 45,
-              color:
-                this.dark || this.toggleThemeServ.isDarkModeSubject.value
-                  ? '#DDF'
-                  : '#335',
+              color: this.dark ? '#DDF' : '#335',
             },
           },
       yAxis: !options.horizontal
@@ -218,20 +184,14 @@ export class BarChartView implements OnChanges {
             },
             alignTicks: true,
             axisLabel: {
-              color:
-                this.dark || this.toggleThemeServ.isDarkModeSubject.value
-                  ? '#DDF'
-                  : '#335',
+              color: this.dark ? '#DDF' : '#335',
             },
           }))
         : {
             type: 'category',
             data: categories,
             axisLabel: {
-              color:
-                this.dark || this.toggleThemeServ.isDarkModeSubject.value
-                  ? '#DDF'
-                  : '#335',
+              color: this.dark ? '#DDF' : '#335',
             },
           },
       series: series.map((s, i) => ({
@@ -255,7 +215,5 @@ export class BarChartView implements OnChanges {
         },
       })),
     };
-  
-
   }
 }

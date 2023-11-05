@@ -1,11 +1,18 @@
-import { NgModule } from '@angular/core';
+import {  NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule } from '@angular/forms';
 
 import { RegionsRoutingModule } from './regions-routing.module';
 import { RegionsPage } from './regions.page';
 import { RegionsListView } from './views/regions-list/regions-list.view';
-import { PuiFileInput, PuiGoogleMapModule, PuiIcon, PuiPreloaderModule, PuiSelectInput, PuiUtilPipesModule } from '@pestras/frontend/ui';
+import {
+  PuiFileInput,
+  PuiGoogleMapModule,
+  PuiIcon,
+  PuiPreloaderModule,
+  PuiSelectInput,
+  PuiUtilPipesModule,
+} from '@pestras/frontend/ui';
 import { ContraModule } from '@pestras/frontend/util/contra';
 import { NoDataPlaceholderWidget } from '@pestras/frontend/widgets/no-data-placeholder';
 import { AddRegionModal } from './modals/add-region/add-region.modal';
@@ -16,7 +23,6 @@ import { DialogModule } from '@angular/cdk/dialog';
 import { SessionFeatureModule } from '@pestras/frontend/features/session';
 import { RegionsFeatureModule } from '@pestras/frontend/features/regions';
 
-
 @NgModule({
   declarations: [
     RegionsPage,
@@ -24,7 +30,7 @@ import { RegionsFeatureModule } from '@pestras/frontend/features/regions';
     AddRegionModal,
     RegionDetailsView,
     UpdateRegionModal,
-    UpdateCoordsModal
+    UpdateCoordsModal,
   ],
   imports: [
     CommonModule,
@@ -40,7 +46,7 @@ import { RegionsFeatureModule } from '@pestras/frontend/features/regions';
     PuiFileInput,
     SessionFeatureModule,
     RegionsFeatureModule,
-    PuiUtilPipesModule
-  ]
+    PuiUtilPipesModule,
+  ],
 })
-export class RegionsModule { }
+export class RegionsModule {}

@@ -11,12 +11,20 @@
   width: 100%;
   background-color: #FFF;
 
+  .color-scheme-dark &,
+  &.color-scheme-dark {
+    background-color: var(--surface3);
+
+  }
+
   &.bg-surface2 {
     background-color: var(--surface2);
   }
+
   &.bg-surface3 {
     background-color: var(--surface3);
   }
+
   &.transparent {
     background-color: transparent;
   }

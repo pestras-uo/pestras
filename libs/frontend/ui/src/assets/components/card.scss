@@ -11,6 +11,7 @@
   .color-scheme-dark &,
   &.color-scheme-dark {
     background-color: var(--surface4);
+    box-shadow: none;
   }
 
   @include boxShadow(1);
@@ -51,7 +52,7 @@
   &.card-small {
     --padding: 16px;
 
-   
+
 
   }
 
@@ -183,7 +184,7 @@
     align-items: center;
     gap: 8px;
     background-color: var(--surface2);
-    border-radius: 0 0 16px 16px;
+    border-radius: 0 0 8px 8px;
 
     &.bordered {
       border-block-start: 1px solid var(--border1);

@@ -1,6 +1,12 @@
 /* eslint-disable @angular-eslint/component-class-suffix */
 /* eslint-disable @angular-eslint/component-selector */
-import { ChangeDetectionStrategy, Component, Input, OnChanges, booleanAttribute } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  Input,
+  OnChanges,
+  booleanAttribute,
+} from '@angular/core';
 import { MapChartDataLoad } from '../map-chart.view';
 import * as echarts from 'echarts';
 import { MapRegionsDataVizOptions } from '@pestras/shared/data-model';
@@ -9,15 +15,22 @@ import { Serial } from '@pestras/shared/util';
 
 @Component({
   selector: 'app-map-regions-chart',
-  template: '<div *ngIf="chartOptions" echarts [options]="chartOptions" class="chart"></div>',
-  styles: [`
-    :host { display: block; height: 100%; }
-    .chart { height: 100%; }
-  `],
-  changeDetection: ChangeDetectionStrategy.OnPush
+  template: '',
+  styles: [
+    `
+      :host {
+        display: block;
+        height: 100%;
+      }
+      .chart {
+        height: 100%;
+      }
+    `,
+  ],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class MapRegionsChartView implements OnChanges {
-  serial = Serial.gen("MAP");
+  serial = Serial.gen('MAP');
 
   chartOptions!: echarts.EChartsOption;
 
@@ -33,43 +46,57 @@ export class MapRegionsChartView implements OnChanges {
     const data = this.init(this.options);
 
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    echarts.registerMap(this.serial, map as any)
+    echarts.registerMap(this.serial, map as any);
     this.render(this.options, data);
   }
 
   init(options: MapRegionsDataVizOptions) {
-    const valueField = this.payload.fields.find(f => f.name === options.value_field);
+    const valueField = this.payload.fields.find(
+      (f) => f.name === options.value_field
+    );
 
     if (!valueField)
-      throw new Error(`value field not found (${options.value_field}): map regions chart`);
+      throw new Error(
+        `value field not found (${options.value_field}): map regions chart`
+      );
 
-    const regionField = this.payload.fields.find(f => f.name === options.region_field);
+    const regionField = this.payload.fields.find(
+      (f) => f.name === options.region_field
+    );
 
     if (!regionField)
-      throw new Error(`region field not found (${options.region_field}): map regions chart`);
-      
-    return this.payload.records.map(r => ({ name: r[regionField.name] as string, value: r[valueField.name] as number }));
+      throw new Error(
+        `region field not found (${options.region_field}): map regions chart`
+      );
+
+    return this.payload.records.map((r) => ({
+      name: r[regionField.name] as string,
+      value: r[valueField.name] as number,
+    }));
   }
 
-  render(options: MapRegionsDataVizOptions, data: { name: string; value: number; }[]) {
+  render(
+    options: MapRegionsDataVizOptions,
+    data: { name: string; value: number }[]
+  ) {
     this.chartOptions = {
       textStyle: {
-        fontFamily: 'Almarai'
+        fontFamily: 'Almarai',
       },
       tooltip: {
         trigger: 'item',
         backgroundColor: this.dark ? '#224' : '#FFF',
-        formatter: '<p>{b}<br/>{c}</p>'
+        formatter: '<p>{b}<br/>{c}</p>',
       },
       visualMap: {
-        min: Math.min(...data.map(d => d.value)),
-        max: Math.max(...data.map(d => d.value)),
+        min: Math.min(...data.map((d) => d.value)),
+        max: Math.max(...data.map((d) => d.value)),
         // text: ['High', 'Low'],
         realtime: false,
         calculable: true,
         inRange: {
-          color: options.color_range
-        }
+          color: options.color_range,
+        },
       },
       series: [
         {
@@ -78,15 +105,15 @@ export class MapRegionsChartView implements OnChanges {
           label: {
             // color: this.dark ? '#DDF' : '#335',
             show: true,
-            fontSize: 12
+            fontSize: 12,
           },
           itemStyle: {
             borderWidth: 0,
-            color: this.dark ? '#224' : '#EEF'
+            color: this.dark ? '#224' : '#EEF',
           },
-          data
-        }
-      ]
-    }
+          data,
+        },
+      ],
+    };
   }
 }

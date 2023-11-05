@@ -24,7 +24,6 @@ import {
 } from '@pestras/frontend/state';
 import { Observable, switchMap, forkJoin, filter, take, map, tap } from 'rxjs';
 import { ChartDataLoad } from '../../util';
-import { ToggleTheme } from '@pestras/frontend/ui';
 
 @Component({
   selector: 'app-chart',
@@ -53,7 +52,6 @@ export class ChartView implements OnChanges {
 
   ngOnChanges(): void {
     this.options$ = this.state.select(this.serial);
-
 
     this.data$ = this.options$.pipe(
       filter(Boolean),

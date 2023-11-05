@@ -81,11 +81,11 @@
           </ng-container>
         </div>
 
-        <div class="card-body">
+        <div class="card-body" *ngIf="theme$ | async as theme">
           <app-chart
             *ngIf="view.data_viz; else noDataViz"
             [serial]="view.data_viz"
-            [dark]="view.mode === 'dark'"
+            [dark]="theme  ==='dark' || view.mode === 'dark'"
           ></app-chart>
 
           <ng-template #noDataViz>

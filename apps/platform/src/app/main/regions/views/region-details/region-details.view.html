@@ -30,12 +30,15 @@
     </header>
 
     <main>
-      <pui-google-map
-        [position]="region.location"
-        [zoom]="zoom"
-        [markers]="[{ position: region.location, label: region.name }]"
-        [polygon]="polygon"
-      ></pui-google-map>
+      <ng-container *ngIf="theme$ | async as theme">
+        <pui-google-map
+          [position]="region.location"
+          [dark]="theme  ==='dark'"
+          [zoom]="zoom"
+          [markers]="[{ position: region.location, label: region.name }]"
+          [polygon]="polygon"
+        ></pui-google-map
+      ></ng-container>
     </main>
 
     <ng-template #updateModal>

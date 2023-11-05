@@ -3,6 +3,7 @@
 
 import { Component } from '@angular/core';
 import { ToggleThemeService } from './toggle-theme.service';
+import { map } from 'rxjs';
 
 @Component({
   selector: 'toggle-theme',
@@ -10,11 +11,13 @@ import { ToggleThemeService } from './toggle-theme.service';
   styleUrls: ['./toggle-theme.component.scss'],
 })
 export class ToggleTheme {
-  isDarkMode = false;
   constructor(private toggleThemeService: ToggleThemeService) {}
 
+  isDarkMode$ = this.toggleThemeService.isDarkMode$.pipe(
+    map((isdark) => (isdark ? 'dark' : 'light'))
+  );
+
   toggleDarkMode(): void {
-    this.isDarkMode = !this.isDarkMode;
     this.toggleThemeService.toggleDarkMode();
   }
 }

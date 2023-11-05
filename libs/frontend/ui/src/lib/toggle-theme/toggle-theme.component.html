@@ -1,7 +1,8 @@
-<button class="btn-icon btn-round" (click)="toggleDarkMode()">
+<button
+  class="btn-icon btn-round"
+  *ngIf="isDarkMode$ | async as isDarkMode"
+  (click)="toggleDarkMode()"
+>
   <span *ngIf="isDarkMode">🌙</span>
   <span *ngIf="!isDarkMode">☀️</span>
 </button>
-
-
-
