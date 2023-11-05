@@ -1,5 +1,4 @@
 :host {
-  background-color: var(--surface2);
   width: 240px;
   height: var(--main-height);
   display: grid;
@@ -7,14 +6,14 @@
   border-inline-end: 1px solid var(--border1);
 }
 
+
 header {
   padding: 16px;
 }
 
-.list {
-  overflow-y: auto;
-  background-color: var(--surface1);
-}
+
+
+
 
 .list-item {
   padding: 16px;

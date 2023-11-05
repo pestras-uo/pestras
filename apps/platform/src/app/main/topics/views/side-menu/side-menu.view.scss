@@ -9,5 +9,12 @@
     background-color: var(--surface1);
     overflow-y: auto;
   }
-}
 
+  header {
+
+    .color-scheme-dark &,
+    &.color-scheme-dark {
+      background-color: var(--surface3);
+    }
+  }
+}

@@ -9,6 +9,11 @@ header {
   position: relative;
   padding-block: 48px;
   border-block-end: 1px solid var(--border1);
+
+  .color-scheme-dark &,
+  &.color-scheme-dark {
+    background-color: var(--surface4);
+  }
 }
 
 main {

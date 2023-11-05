@@ -33,13 +33,22 @@
 
 .rtl {
   direction: rtl !important;
+     .color-scheme-dark &,
+     &.color-scheme-dark {
+       background-color: var(--surface4);
+     }
 }
 .ltr {
   direction: ltr !important;
+     .color-scheme-dark &,
+     &.color-scheme-dark {
+       background-color: var(--surface4);
+     }
 }
 
 .align-center {
   text-align: center !important;
+
 }
 .align-start {
   text-align: start !important;

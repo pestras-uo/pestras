@@ -17,20 +17,40 @@
 .ql-toolbar {
   direction: ltr !important;
   background-color: var(--surface3);
+
+  .color-scheme-dark &,
+  &.color-scheme-dark {
+
+    background-color: var(--surface4);
+  }
+
   border-radius: 8px 8px 0 0;
 }
 
 quill-editor {
   width: 100%;
   border: 2px solid var(--surface3);
+
+  .color-scheme-dark &,
+  &.color-scheme-dark {
+
+    border: 2px solid var(--border1);
+  }
+
   border-radius: 8px;
 
   &.quill-outline {
     border-color: var(--surface4);
+
+
   }
 
   &.quill-surface1 .ql-container {
     background-color: var(--surface1);
+
+
+
+
   }
 }
 
@@ -45,6 +65,14 @@ quill-editor .ql-container {
   min-height: 240px;
   border-radius: 0 0 8px 8px;
   background-color: var(--surface3);
+
+  .color-scheme-dark &,
+  &.color-scheme-dark {
+
+    background-color: var(--surface4);
+  }
+
+
 
 }
 
@@ -62,4 +90,10 @@ quill-editor:focus-within {
 
 .ql-editor p {
   line-height: 1.8;
+
+  .color-scheme-dark &,
+  &.color-scheme-dark {
+
+    color: var(--surface1);
+  }
 }

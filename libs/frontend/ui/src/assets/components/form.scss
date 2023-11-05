@@ -20,7 +20,7 @@
 :where(.fc) {
   --control-height: 40px;
   --font-size: 1rem;
-  
+
   position: relative;
   display: flex;
   gap: 8px;
@@ -28,8 +28,16 @@
   justify-content: space-between;
   background-color: var(--surface3);
   border: 2px solid var(--surface3);
+
+  .color-scheme-dark &,
+  &.color-scheme-dark {
+    border: 1px solid var(--border1);
+    background-color: var(--surface4);
+  }
+
   border-radius: 8px;
-  transition: background-color 250ms, width 250ms ease-out;
+  transition: background-color 250ms,
+  width 250ms ease-out;
   padding-inline: 8px;
   min-height: var(--control-height);
   font-size: var(--font-size);
@@ -115,6 +123,10 @@
     background-color: transparent;
     flex-grow: 1;
     min-height: calc(var(--control-height) - 4px);
+
+
+
+
 
     &:focus,
     &:active {
@@ -251,7 +263,7 @@
 
 :where(.fc-switch) {
   --control-height: 40px;
-  
+
   min-height: var(--control-height);
   border-radius: 8px;
   display: flex;
@@ -265,7 +277,7 @@
     background-color: var(--surface1);
     border: 2px solid var(--surface1);
   }
-  
+
   &.fc-outline {
     border-color: var(--border1)
   }
@@ -280,7 +292,7 @@
     padding-inline: 8px;
     flex-grow: 1;
     transition: background-color 250ms;
-    
+
     &.active {
       font-weight: bold;
       background-color: var(--primary);

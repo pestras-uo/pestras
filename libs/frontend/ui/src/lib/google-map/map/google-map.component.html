@@ -1,6 +1,8 @@
 <ng-container *ngIf="ready$ | async">
 
-  <google-map #map [options]="options" [zoom]="zoom" (mapDrag)="drag()" (mapDragend)="dragend()">
+  <google-map #map
+  [dark]="dark"
+  [options]="options" [zoom]="zoom" (mapDrag)="drag()" (mapDragend)="dragend()">
 
     <map-marker *ngIf="mode === 'pick'" [position]="pickMarkerPosition"
       icon="assets/imgs/location-accent-icon.png"></map-marker>

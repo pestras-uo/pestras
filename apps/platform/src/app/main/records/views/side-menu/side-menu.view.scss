@@ -8,5 +8,11 @@
   main {
     background-color: var(--surface1);
     overflow-y: auto;
+
+    .color-scheme-dark &,
+    &.color-scheme-dark {
+      background-color: var(--surface3);
+
+    }
   }
 }

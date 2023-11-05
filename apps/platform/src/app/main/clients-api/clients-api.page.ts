@@ -20,6 +20,10 @@ import { ClientApiState } from '@pestras/frontend/state';
       header {
         padding-block: 48px;
         border-block-end: 1px solid var(--border1);
+        .color-scheme-dark &,
+        &.color-scheme-dark {
+          background-color: var(--surface3);
+        }
       }
 
       main {
@@ -42,8 +46,6 @@ export class ClientsApiPage implements OnChanges {
 
   ngOnChanges() {
     this.client$ = this.state.select(this.serial);
-    
-
   }
 
   openModal(modal: TemplateRef<any>) {

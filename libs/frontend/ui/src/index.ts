@@ -109,3 +109,9 @@ export * from './lib/export-pdf/export-to-pdf.directive';
 // breadcrumb
 export * from './lib/breadcrumb/breadcrumb.component';
 export * from './lib/breadcrumb/breadcrumb.module';
+
+//toggle theme
+
+export * from './lib/toggle-theme/toggle-theme.component';
+export * from './lib/toggle-theme/toggle-theme.service';
+export * from './lib/toggle-theme/toggle-theme.module';

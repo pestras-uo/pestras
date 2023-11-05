@@ -1,5 +1,5 @@
 <ng-container *contra="let c">
-  <header class="p-4">
+  <header class="bg-surface1 p-4">
     <div class="toolbar mbe-4">
       <h3 class="weight-8">{{c['regions']}}</h3>
       <div class="grow"></div>
@@ -24,7 +24,7 @@
   >
     <ng-container *ngIf="regions.length else noData">
       <div
-        class="list-item hover cursor-pointer p-4"
+        class="list-item hover cursor-pointer bg-surface3 p-4"
         [class.active]="selected === region.serial"
         *ngFor="let region of regions"
         (click)="this.selects.emit(region.serial)"

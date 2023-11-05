@@ -8,8 +8,10 @@
   flex-direction: column;
   overflow: hidden;
 
+  .color-scheme-dark &,
   &.color-scheme-dark {
-    background-color: var(--surface2);
+    background-color: var(--surface4);
+    box-shadow: none;
   }
 
   @include boxShadow(1);
@@ -27,6 +29,8 @@
       0 19.2px 14.4px hsl(var(--surface-shadow) / calc(var(--shadow-strength) + 0.15)),
       0 38.4px 28.8px hsl(var(--surface-shadow) / calc(var(--shadow-strength) + 0.21)),
       0 76.8px 57.6px hsl(var(--surface-shadow) / var(--shadow-strength));
+
+
 
     .card-body {
       overflow-y: auto;
@@ -47,6 +51,9 @@
 
   &.card-small {
     --padding: 16px;
+
+
+
   }
 
   :where(.card-header) {
@@ -177,7 +184,7 @@
     align-items: center;
     gap: 8px;
     background-color: var(--surface2);
-    border-radius: 0 0 16px 16px;
+    border-radius: 0 0 8px 8px;
 
     &.bordered {
       border-block-start: 1px solid var(--border1);

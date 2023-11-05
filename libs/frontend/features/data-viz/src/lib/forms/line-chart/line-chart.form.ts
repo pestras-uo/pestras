@@ -20,6 +20,7 @@ import { untilDestroyed } from '@pestras/frontend/ui';
 })
 export class LineChartForm implements OnInit, ControlValueAccessor {
 
+
   private ud = untilDestroyed();
 
   readonly form = this.fb.nonNullable.group({
@@ -43,7 +44,7 @@ export class LineChartForm implements OnInit, ControlValueAccessor {
   @Input()
   fcClass = '';
 
-  constructor(private fb: FormBuilder) { }
+  constructor(private fb: FormBuilder,) { }
 
   ngOnInit(): void {
     this.form.valueChanges

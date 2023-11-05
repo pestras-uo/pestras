@@ -1,4 +1,10 @@
 :host {
   background-color: var(--surface3);
   padding-inline: 28px;
+
+  .color-scheme-dark &,
+  &.color-scheme-dark {
+    background-color: var(--surface1-dark);
+  }
+
 }

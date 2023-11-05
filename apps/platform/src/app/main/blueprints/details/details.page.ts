@@ -30,6 +30,8 @@ import { Observable, tap } from 'rxjs';
         height: 100%;
         overflow-y: auto;
       }
+
+    
     `,
   ],
 })
@@ -63,7 +65,7 @@ export class DetailsPage implements OnChanges {
     private dialog: Dialog,
     private toast: ToastService,
     private router: Router,
-    private route: ActivatedRoute,
+    private route: ActivatedRoute
   ) {}
 
   ngOnChanges() {

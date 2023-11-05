@@ -4,7 +4,14 @@ import { TopicDashboardsListView } from './views/topics-dashboards-list/topics-d
 import { RouterModule } from '@angular/router';
 import { NoDataPlaceholderWidget } from '@pestras/frontend/widgets/no-data-placeholder';
 import { ReactiveFormsModule } from '@angular/forms';
-import { PuiCheckInput, PuiIcon, PuiPreloaderModule, PuiSelectInput, PuiUtilPipesModule } from '@pestras/frontend/ui';
+import {
+  PuiCheckInput,
+  PuiIcon,
+  PuiPreloaderModule,
+  PuiSelectInput,
+  PuiUtilPipesModule,
+  ToggleThemeModule,
+} from '@pestras/frontend/ui';
 import { DialogModule } from '@angular/cdk/dialog';
 import { DashboardSlideComponent } from './views/dashboard-slide/dashboard-slide.view';
 import { DragDropModule } from '@angular/cdk/drag-drop';
@@ -20,15 +27,13 @@ import { SessionFeatureModule } from '@pestras/frontend/features/session';
 import { DashboardsCountPipe } from './pipes/dashboards-count.pipe';
 import { TopicsFeatureModule } from '@pestras/frontend/features/topics';
 
-
-
 @NgModule({
   declarations: [
     TopicDashboardsListView,
     DashboardSlideComponent,
     DashboardPipe,
     DashboardsPipe,
-    DashboardsCountPipe
+    DashboardsCountPipe,
   ],
   imports: [
     // Angular
@@ -55,14 +60,17 @@ import { TopicsFeatureModule } from '@pestras/frontend/features/topics';
     WorkspaceFeatureModule,
     ContentViewsFeatureModule,
     SessionFeatureModule,
-    TopicsFeatureModule
+    TopicsFeatureModule,
+
+    //toggleTheme
+    ToggleThemeModule,
   ],
   exports: [
     TopicDashboardsListView,
     DashboardSlideComponent,
     DashboardPipe,
     DashboardsPipe,
-    DashboardsCountPipe
-  ]
+    DashboardsCountPipe,
+  ],
 })
-export class DashboardsFeaturesModule { }
+export class DashboardsFeaturesModule {}

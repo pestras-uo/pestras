@@ -1,8 +1,8 @@
-import { Component, EventEmitter, Input, Output } from "@angular/core";
-import { FormControl } from "@angular/forms";
-import { TopicsState } from "@pestras/frontend/state";
-import { Role } from "@pestras/shared/data-model";
-import { debounceTime, map, startWith, switchMap, tap } from "rxjs";
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { FormControl } from '@angular/forms';
+import { TopicsState } from '@pestras/frontend/state';
+import { Role } from '@pestras/shared/data-model';
+import { debounceTime, map, startWith, switchMap, tap } from 'rxjs';
 
 @Component({
   selector: 'pestras-topics-list',

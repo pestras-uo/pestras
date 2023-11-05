@@ -11,6 +11,13 @@
     padding: 16px;
   }
 
+  .color-scheme-dark &,
+  &.color-scheme-dark {
+    background-color: var(--surface1);
+  }
+
+
+
   .full,
   .close {
     opacity: 1;

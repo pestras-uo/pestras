@@ -4,26 +4,38 @@ import { Dialog, DialogRef } from '@angular/cdk/dialog';
 import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
 import { Component, Input, OnChanges, TemplateRef } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
-import { Dashboard, DashboardSlide, DashboardSlideView, DashboardViewSize } from '@pestras/shared/data-model';
-import { ToastService, PuiSideDrawer } from '@pestras/frontend/ui';
+import {
+  Dashboard,
+  DashboardSlide,
+  DashboardSlideView,
+  DashboardViewSize,
+} from '@pestras/shared/data-model';
+import {
+  ToastService,
+  PuiSideDrawer,
+  ToggleThemeService,
+} from '@pestras/frontend/ui';
 import { DashboardsState } from '@pestras/frontend/state';
+import { map } from 'rxjs';
 
 @Component({
   selector: 'app-dashboard-slide',
   templateUrl: './dashboard-slide.view.html',
-  styleUrls: ['./dashboard-slide.view.scss']
+  styleUrls: ['./dashboard-slide.view.scss'],
 })
 export class DashboardSlideComponent implements OnChanges {
-
   readonly form = this.fb.nonNullable.group({
     title: ['', Validators.required],
-    slide:'',
+    slide: '',
     data_viz: '',
     size: this.fb.nonNullable.group({
       x: this.fb.nonNullable.control<DashboardViewSize['x']>(4),
-      y: this.fb.nonNullable.control<DashboardViewSize['y']>(1)
+      y: this.fb.nonNullable.control<DashboardViewSize['y']>(1),
     }),
-    mode: this.fb.nonNullable.control<'light' | 'dark'>('light', Validators.required),
+    mode: this.fb.nonNullable.control<'light' | 'dark'>(
+      'light',
+      Validators.required
+    ),
   });
 
   dialogRef: DialogRef | null = null;
@@ -33,7 +45,7 @@ export class DashboardSlideComponent implements OnChanges {
   views: DashboardSlideView[] = [];
   editingView: string | null = null;
   fullscreen = false;
-  viewsOrder: string[] = []
+  viewsOrder: string[] = [];
 
   @Input({ required: true })
   dashboard!: Dashboard;
@@ -45,23 +57,30 @@ export class DashboardSlideComponent implements OnChanges {
   headless = false;
   @Input()
   editable = false;
+  
+
+  theme$ = this.toggleThemeService.isDarkMode$.pipe(
+    map((isdark) => (isdark ? 'dark' : 'light'))
+  );
 
   constructor(
     private state: DashboardsState,
     private fb: FormBuilder,
     private dialog: Dialog,
     private sideDrawer: PuiSideDrawer,
-    private toast: ToastService
-  ) { }
+    private toast: ToastService,
+    protected toggleThemeService: ToggleThemeService
+  ) {}
 
   ngOnChanges(): void {
-    this.slide = this.dashboard.slides.find(t => t.serial === this.slideSerial) ?? null;
+    this.slide =
+      this.dashboard.slides.find((t) => t.serial === this.slideSerial) ?? null;
 
     if (this.slide) {
       this.viewsOrder = [...this.slide.views_order];
 
       this.views = this.viewsOrder
-        .map(o => this.dashboard.views.find(v => v.serial === o))
+        .map((o) => this.dashboard.views.find((v) => v.serial === o))
         .filter(Boolean) as DashboardSlideView[];
     }
   }
@@ -69,12 +88,9 @@ export class DashboardSlideComponent implements OnChanges {
   async toggleFullScreen(elem: HTMLElement) {
     if (!this.fullscreen) {
       if (elem.requestFullscreen)
-        await elem.requestFullscreen()
-          .then(() => this.fullscreen = true);
-
+        await elem.requestFullscreen().then(() => (this.fullscreen = true));
     } else {
-      await document.exitFullscreen()
-        .then(() => this.fullscreen = false);
+      await document.exitFullscreen().then(() => (this.fullscreen = false));
     }
   }
 
@@ -109,25 +125,30 @@ export class DashboardSlideComponent implements OnChanges {
 
     if (prevOrder.some((el, i) => el !== this.viewsOrder[i])) {
       this.views = this.viewsOrder
-        .map(o => this.dashboard.views.find(v => v.serial === o))
+        .map((o) => this.dashboard.views.find((v) => v.serial === o))
         .filter(Boolean) as DashboardSlideView[];
-        
-      this.updateOrder()
+
+      this.updateOrder();
     }
   }
 
   updateOrder() {
     this.preloader = true;
 
-    this.state.updateViewsOrder(this.dashboard.serial, this.slideSerial, this.viewsOrder)
+    this.state
+      .updateViewsOrder(
+        this.dashboard.serial,
+        this.slideSerial,
+        this.viewsOrder
+      )
       .subscribe({
         next: () => {
           this.preloader = false;
         },
-        error: e => {
+        error: (e) => {
           console.error(e);
           this.preloader = false;
-        }
+        },
       });
   }
 
@@ -136,18 +157,21 @@ export class DashboardSlideComponent implements OnChanges {
 
     this.form.controls.slide.setValue(this.slideSerial);
 
-    this.state.addView(this.dashboard.serial, this.form.getRawValue())
+    this.state
+      .addView(this.dashboard.serial, this.form.getRawValue())
       .subscribe({
         next: () => {
           this.toast.msg(c['success'].default, { type: 'success' });
           this.closeDialog();
         },
-        error: e => {
+        error: (e) => {
           console.error(e);
 
-          this.toast.msg(c['errors'][e?.error] || c['errors'].default, { type: 'error' });
+          this.toast.msg(c['errors'][e?.error] || c['errors'].default, {
+            type: 'error',
+          });
           this.preloader = false;
-        }
+        },
       });
   }
 
@@ -156,41 +180,45 @@ export class DashboardSlideComponent implements OnChanges {
 
     const data = this.form.getRawValue();
 
-    this.state.updateView(this.dashboard.serial, serial, {
-      title: data.title,
-      size: data.size,
-      mode: data.mode
-    })
+    this.state
+      .updateView(this.dashboard.serial, serial, {
+        title: data.title,
+        size: data.size,
+        mode: data.mode,
+      })
       .subscribe({
         next: () => {
           this.toast.msg(c['success'].default, { type: 'success' });
           this.closeDialog();
         },
-        error: e => {
+        error: (e) => {
           console.error(e);
 
-          this.toast.msg(c['errors'][e?.error] || c['errors'].default, { type: 'error' });
+          this.toast.msg(c['errors'][e?.error] || c['errors'].default, {
+            type: 'error',
+          });
           this.preloader = false;
-        }
+        },
       });
   }
 
   removeView(c: Record<string, any>, serial: string) {
     this.preloader = true;
 
-    this.state.removeView(this.dashboard.serial, serial)
-      .subscribe({
-        next: () => {
-          this.toast.msg(c['success'].default, { type: 'success' });
-          this.closeDialog();
-        },
-        error: e => {
-          console.error(e);
+    this.state.removeView(this.dashboard.serial, serial).subscribe({
+      next: () => {
+        this.toast.msg(c['success'].default, { type: 'success' });
+        this.closeDialog();
+      },
+      error: (e) => {
+        console.error(e);
 
-          this.toast.msg(c['errors'][e?.error] || c['errors'].default, { type: 'error' });
-          this.preloader = false;
-        }
-      });
+        this.toast.msg(c['errors'][e?.error] || c['errors'].default, {
+          type: 'error',
+        });
+        this.preloader = false;
+      },
+    });
   }
 
   openSideDrawer(tmp: TemplateRef<any>, view: string) {
@@ -201,25 +229,27 @@ export class DashboardSlideComponent implements OnChanges {
   closeDrawer(c: Record<string, any>, serial: string | null) {
     this.sideDrawer.close();
 
-    if (!serial || !this.editingView)
-      return;
+    if (!serial || !this.editingView) return;
 
     this.preloader = true;
 
-    this.state.setViewDataViz(this.dashboard.serial, this.editingView, serial)
+    this.state
+      .setViewDataViz(this.dashboard.serial, this.editingView, serial)
       .subscribe({
         next: () => {
           this.toast.msg(c['success'].default, { type: 'success' });
           this.editingView = null;
           this.preloader = false;
         },
-        error: e => {
+        error: (e) => {
           console.error(e);
 
-          this.toast.msg(c['errors'][e?.error] || c['errors'].default, { type: 'error' });
+          this.toast.msg(c['errors'][e?.error] || c['errors'].default, {
+            type: 'error',
+          });
           this.editingView = null;
           this.preloader = false;
-        }
-      })
+        },
+      });
   }
 }
