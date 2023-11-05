@@ -5,7 +5,6 @@ import { Component, Input, OnChanges, booleanAttribute } from '@angular/core';
 import { BaseDataViz, PieDataVizOptions } from '@pestras/shared/data-model';
 import { EChartsOption } from 'echarts';
 import { ChartDataLoad } from '../../util';
-import { ToggleThemeService } from '@pestras/frontend/ui';
 
 @Component({
   selector: 'app-pie-chart',
@@ -33,7 +32,6 @@ export class PieChartView implements OnChanges {
   @Input({ transform: booleanAttribute })
   dark = false;
 
-  constructor(private toggleThemeServ: ToggleThemeService) {}
 
   ngOnChanges() {
     this.renderPieChart(this.conf.options, this.init(this.conf.options));

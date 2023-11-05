@@ -11,7 +11,6 @@ import {
   PuiSelectInput,
   PuiTableModule,
   PuiUtilPipesModule,
-  ToggleTheme,
 } from '@pestras/frontend/ui';
 import { HierarchicalForm } from './forms/hierarchical/hierarchical.form';
 import { MapForm } from './forms/map/map.form';
@@ -90,7 +89,6 @@ import { NoDataPlaceholderWidget } from '@pestras/frontend/widgets/no-data-place
     SortForm,
     TransposeForm,
   ],
-  providers: [ToggleTheme],
 
   imports: [
     // Angular

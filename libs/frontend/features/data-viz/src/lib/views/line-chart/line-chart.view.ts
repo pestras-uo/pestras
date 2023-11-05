@@ -5,7 +5,6 @@ import { Component, Input, OnChanges, booleanAttribute } from '@angular/core';
 import { LineDataVizOptions, BaseDataViz } from '@pestras/shared/data-model';
 import { EChartsOption, LineSeriesOption, graphic } from 'echarts';
 import { ChartDataLoad } from '../../util';
-import { ToggleThemeService } from '@pestras/frontend/ui';
 
 @Component({
   selector: 'app-line-chart',
@@ -39,7 +38,6 @@ export class LineChartView implements OnChanges {
     this.render(xAxis, series);
   }
 
-  constructor(private toggleThemeServ: ToggleThemeService) {}
 
   init(options: LineDataVizOptions) {
     const xField = this.data.fields.find((f) => f.name === options.x);

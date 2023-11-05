@@ -39,7 +39,6 @@ import { WorkspaceFeatureModule } from '@pestras/frontend/features/workspace';
     WorkspaceFeatureModule,
     // pages
     ProfileModule,
-    //toggle theme (dark/light)
 
     ToggleThemeModule,
   ],

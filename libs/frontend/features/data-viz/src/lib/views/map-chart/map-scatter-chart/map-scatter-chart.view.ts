@@ -7,7 +7,6 @@ import { MapScatterDataVizOptions, lerp } from '@pestras/shared/data-model';
 import { generateMapGeoJson, recordToolTip } from '../../../util';
 
 import {
-  ToggleThemeService,
   mapStyle,
   mapStyleDark,
 } from '@pestras/frontend/ui';
@@ -49,7 +48,6 @@ export class MapScatterChartView implements OnChanges {
   constructor(
     private contra: ContraService,
     private envServ: EnvService,
-    private toggleThemeServ: ToggleThemeService
   ) {}
 
   ngOnChanges() {

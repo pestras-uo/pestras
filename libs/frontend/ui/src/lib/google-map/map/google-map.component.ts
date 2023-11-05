@@ -65,7 +65,6 @@ export class PuiGoogleMap implements OnChanges {
 
   constructor(
     private readonly mapService: GoogleMapService,
-    private readonly toggleThemeService: ToggleThemeService
   ) {}
   @Input({ transform: booleanAttribute })
   dark = false;

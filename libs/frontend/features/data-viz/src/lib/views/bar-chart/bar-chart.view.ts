@@ -9,7 +9,6 @@ import {
 } from '@pestras/shared/data-model';
 import { EChartsOption, BarSeriesOption, graphic } from 'echarts';
 import { ChartDataLoad } from '../../util';
-import { ToggleThemeService } from '@pestras/frontend/ui';
 
 const colors = [
   ['#83bff6', '#188df0', '#188df0'],
@@ -45,8 +44,6 @@ export class BarChartView implements OnChanges {
   data!: ChartDataLoad;
   @Input({ transform: booleanAttribute })
   dark = false;
-
-  constructor(private toggleThemeServ: ToggleThemeService) {}
 
   ngOnChanges() {
     const { categories, series, valueFields } = this.init(this.conf.options);
