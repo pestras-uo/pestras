@@ -40,60 +40,6 @@
 
         <div *ngIf="!last" class="divider mb-2"></div>
       </ng-container>
-
-      <!-- <div class="card card-small">
-        <div class="card-header cursor-pointer" (click)="toggleDropdown()">
-          <h4>{{active?.name ?? c['data']}}</h4>
-          <div class="grow"></div>
-          <i size="small" puiIcon="arrow_drop_down"></i>
-        </div>
-        <div *ngIf="showDropdown">
-          <ul class="card-body list list-actions p-0">
-            <ng-container *ngFor="let ds of datastores">
-              <li
-                class="list-item hover-surface2 pi-4"
-                [class.active]="active === ds"
-                (click)="active = ds"
-              >
-                <h5>{{ds.name}}</h5>
-              </li>
-              <ng-container *ngIf="active === ds">
-                <li class="list-item" (click)="tab = 'data'">
-                  <p
-                    class="pis-8 pie-4 f9 bold"
-                    [class.primary]="tab === 'data'"
-                  >
-                    {{c['data']}}
-                  </p>
-                </li>
-                <li class="list-item" (click)="tab = 'details'">
-                  <p
-                    class="pis-8 pie-4 f9 bold"
-                    [class.primary]="tab === 'details'"
-                  >
-                    {{c['desc']}}
-                  </p>
-                </li>
-              </ng-container>
-            </ng-container>
-          </ul>
-        </div>
-      </div> -->
-
-      <!-- <ng-container *ngIf="active">
-        <app-records-list
-          *ngIf="tab === 'data'"
-          [topic]="topic"
-          [dataStore]="active"
-          headless
-        ></app-records-list>
-
-        <app-content-views
-          *ngIf="tab === 'details'"
-          [entity]="active.serial"
-          size="small"
-        ></app-content-views>
-      </ng-container> -->
     </main>
 
     <ng-template #noData>

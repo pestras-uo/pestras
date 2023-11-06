@@ -6,7 +6,7 @@ export function getSystemFields(blueprint: string): Array<Field> {
       name: 'serial',
       display_name: 'serial',
       type: 'serial',
-      group: '_id',
+      group: '_sys',
       system: true,
       constant: true,
       required: true
@@ -16,7 +16,7 @@ export function getSystemFields(blueprint: string): Array<Field> {
       display_name: 'owner',
       type: 'serial',
       ref_type: 'user',
-      group: '_owner',
+      group: '_sys',
       system: true,
       constant: true,
       required: true
@@ -28,13 +28,13 @@ export function getSystemFields(blueprint: string): Array<Field> {
       system: true,
       constant: true,
       required: true,
-      group: '_meta'
+      group: '_sys'
     }),
     createField({
       name: "last_modified",
       display_name: "last_modified",
       type: 'datetime',
-      group: '_meta',
+      group: '_sys',
       system: true
     }),
     createField({
@@ -43,7 +43,7 @@ export function getSystemFields(blueprint: string): Array<Field> {
       type: 'serial',
       ref_type: 'topic',
       ref_to: blueprint,
-      group: '_topic',
+      group: '_sys',
       system: true,
       constant: true,
       required: true
