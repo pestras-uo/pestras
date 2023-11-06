@@ -59,7 +59,7 @@ new Validall(DataStoreValidators.SET_TABLE_SETTINGS, {
   interface_field: { $type: 'string' },
   static: { $cast: "boolean", $default: false },
   workflow: {
-    new: { $or: [{ $type: 'boolean' }, { $type: 'string' }] },
+    create: { $or: [{ $type: 'boolean' }, { $type: 'string' }] },
     update: { $or: [{ $type: 'boolean' }, { $type: 'string' }] },
     delete: { $or: [{ $type: 'boolean' }, { $type: 'string' }] }
   },
