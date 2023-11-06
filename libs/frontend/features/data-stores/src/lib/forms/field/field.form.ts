@@ -127,6 +127,7 @@ export class FieldForm implements OnInit {
   }
 
   toggleKind(checked: boolean, value: TypeKind) {
+    console.log(checked, value);
     checked
       ? this.form.controls.kind.setValue(value)
       : this.form.controls.kind.setValue(TypeKind.NONE);

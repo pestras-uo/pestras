@@ -84,7 +84,7 @@
       *ngIf="typeField.value === 'string'"
       class="mbs-4"
       [label]="c['richText']"
-      (change)="toggleKind(!!$event, kind.RICH_TEXT)"
+      (changes)="toggleKind(!!$event, kind.RICH_TEXT)"
     ></pui-check-input>
 
     <!-- Select Category -->
@@ -92,7 +92,7 @@
       <pui-check-input
         class="mbs-4"
         [label]="c['ordinal']"
-        (change)="toggleKind(!!$event, kind.ORDINAL)"
+        (changes)="toggleKind(!!$event, kind.ORDINAL)"
       ></pui-check-input>
 
       <label class="mbs-4" for="field-category"> {{c['branchOf']}} </label>

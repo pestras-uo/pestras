@@ -3,7 +3,7 @@ import { Validall } from "@pestras/validall";
 import { Validators } from ".";
 
 const passwordRegex = /^[a-zA-Z0-9!@#$%^&*-_=+.|<>:;'"()]{8,64}$/;
-const usernameRegex = /^[a-zA-Z0-9_\-.]{4,64}$/;
+const usernameRegex = /^[a-zA-Z][a-zA-Z0-9_\-.]{4,64}$/;
 
 new Validall(Validators.USERNAME, { $type: 'string', $regex: usernameRegex, $message: 'invalidUsername' });
 
