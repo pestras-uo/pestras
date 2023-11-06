@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @angular-eslint/component-class-suffix */
 /* eslint-disable @angular-eslint/component-selector */
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnChanges } from '@angular/core';
 import { DataRecord, DataRecordState, DataStore, Field, TypeKind, TypesNames } from '@pestras/shared/data-model';
 import { RecordsService } from '@pestras/frontend/state';
 import { Router } from '@angular/router';
@@ -11,7 +11,7 @@ import { BehaviorSubject, Observable, combineLatest, distinctUntilChanged, map, 
   selector: 'app-records-table-view',
   templateUrl: './records-table.view.html'
 })
-export class RecordsTableView implements OnInit {
+export class RecordsTableView implements OnChanges {
 
   readonly page$ = new BehaviorSubject<number>(1);
   readonly search$ = new BehaviorSubject<any>(null);
@@ -46,7 +46,7 @@ export class RecordsTableView implements OnInit {
     private router: Router
   ) { }
 
-  ngOnInit(): void {
+  ngOnChanges(): void {
     this.fields = this.dataStore.fields.filter(f => {
       return !['unknown', 'image', 'file'].includes(f.type) && f.kind !== TypeKind.RICH_TEXT && f.name !== 'serial';
     });
