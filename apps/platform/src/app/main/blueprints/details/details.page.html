@@ -48,7 +48,7 @@
         <app-data-stores-list
           *ngIf="view === 'tables'"
           [title]="c['tables']"
-          [blueprint]="serial"
+          [blueprint]="bp"
           [type]="dsType.TABLE"
           [static]="true"
           [editable]="([bp.owner] | sessionIs) || (bp.collaborators | sessionIs)"
@@ -58,7 +58,7 @@
         <app-data-stores-list
           *ngIf="view === 'aggr'"
           [title]="c['aggr']"
-          [blueprint]="serial"
+          [blueprint]="bp"
           [type]="dsType.AGGREGATIONAL"
           [editable]="([bp.owner] | sessionIs) || (bp.collaborators | sessionIs)"
         ></app-data-stores-list>
@@ -67,7 +67,7 @@
         <app-data-stores-list
           *ngIf="view === 'import'"
           [title]="c['importData']"
-          [blueprint]="serial"
+          [blueprint]="bp"
           [type]="dsType.WEB_SERVICE"
           [editable]="([bp.owner] | sessionIs) || (bp.collaborators | sessionIs)"
         ></app-data-stores-list>

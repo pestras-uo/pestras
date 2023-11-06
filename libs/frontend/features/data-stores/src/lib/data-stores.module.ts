@@ -26,6 +26,8 @@ import { TopicsFeatureModule } from '@pestras/frontend/features/topics';
 import { FieldConstraintModal } from './modals/field-constraint/field-constraint.modal';
 import { FieldConstraintsView } from './views/field-constraints/field-constraints.view';
 import { GoogleMapLinkPipe } from './pipes/googleMapLink.pipe';
+import { ContentViewsFeatureModule } from '@pestras/frontend/features/content-views';
+import { SessionFeatureModule } from '@pestras/frontend/features/session';
 
 
 
@@ -77,7 +79,9 @@ import { GoogleMapLinkPipe } from './pipes/googleMapLink.pipe';
     RegionsFeatureModule, 
     OrgunitsFeatureModule, 
     UsersFeatureModule,
-    TopicsFeatureModule
+    TopicsFeatureModule,
+    ContentViewsFeatureModule,
+    SessionFeatureModule
   ],
   providers: [DatePipe],
   exports: [

@@ -22,8 +22,6 @@
   }
 
   .list-item {
-    padding: 16px;
-
     &.active {
       padding-inline-start: 23px;
 
@@ -31,7 +29,7 @@
         background-color: var(--primary);
       }
 
-      h4 {
+      h5 {
         color: var(--primary);
       }
     }

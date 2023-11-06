@@ -36,6 +36,16 @@ table {
     inset-block-end: 0;
   }
 
+  tr th,
+  tr:not(:last-child) td {
+    border-block-end: 1px solid var(--border1);
+  }
+
+  th:not(:last-child),
+  td:not(:last-child) {
+    border-inline-end: 1px solid var(--border1);
+  }
+
   tfoot tr:not(:last-child) {
     border-block-end: 1px solid var(--border2);
   }
@@ -75,11 +85,6 @@ table {
       }
     }
   }
-
-  // th,
-  // td {
-  //   min-width: 160px;
-  // }
 
   tbody tr {
     border-block-end: 1px solid var(--border1);

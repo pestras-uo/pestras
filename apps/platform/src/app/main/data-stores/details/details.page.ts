@@ -7,7 +7,6 @@ import { FormControl, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { DataStoresState } from '@pestras/frontend/state';
 import { PubSubService, ToastService } from '@pestras/frontend/ui';
-import { ContraService } from '@pestras/frontend/util/contra';
 import {
   Blueprint,
   DataStore,
@@ -16,7 +15,6 @@ import {
   Role,
 } from '@pestras/shared/data-model';
 // eslint-disable-next-line @nx/enforce-module-boundaries
-import { BreadcrumbComponent } from 'libs/frontend/ui/src/lib/breadcrumb/breadcrumb.component';
 import { Observable, tap } from 'rxjs';
 
 @Component({
@@ -40,7 +38,7 @@ import { Observable, tap } from 'rxjs';
 export class DataStoreDetailsPage implements OnChanges {
   readonly roles = Role;
 
-  view = 'details';
+  view = 'data';
   dataStore$!: Observable<DataStore | null>;
   preloader = false;
   dialogRef: DialogRef | null = null;

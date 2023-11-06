@@ -7,7 +7,6 @@ import { FormControl, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { BlueprintsState } from '@pestras/frontend/state';
 import { ToastService } from '@pestras/frontend/ui';
-import { ContraService } from '@pestras/frontend/util/contra';
 import {
   Blueprint,
   DataStoreType,

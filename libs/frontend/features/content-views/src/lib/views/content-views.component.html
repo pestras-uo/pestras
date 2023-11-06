@@ -1,6 +1,6 @@
 <ng-container *contra="let c">
   <ng-container *ngIf="content$ | async">
-    <div class="toolbar gap-1 pb-4">
+    <div class="toolbar gap-1">
       <h5 *ngIf="size === 'small'; else defaultHeading">{{ c['desc'] }}</h5>
 
       <ng-template #defaultHeading>
@@ -30,7 +30,7 @@
       <ng-content select=".action"></ng-content>
     </div>
 
-    <div class="divider mbe-8"></div>
+    <div class="divider mb-4"></div>
 
     <div cdkDropList (cdkDropListDropped)="drop($event)">
       <ng-container *ngIf="views.length; else noViews">

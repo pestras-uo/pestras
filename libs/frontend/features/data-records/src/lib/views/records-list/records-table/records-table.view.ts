@@ -24,6 +24,7 @@ export class RecordsTableView implements OnInit {
   records$!: Observable<DataRecord[]>;
   fields!: Field[];
   preloader = false;
+  groups!: { group: string, fields: Field[] }[];
 
   @Input({ required: true })
   dataStore!: DataStore;
@@ -50,6 +51,22 @@ export class RecordsTableView implements OnInit {
       return !['unknown', 'image', 'file'].includes(f.type) && f.kind !== TypeKind.RICH_TEXT && f.name !== 'serial';
     });
 
+    const groups = this.fields.reduce((groups, f) => {
+      const g = groups.get(f.group);
+
+      if (g)
+        g.push(f);
+      else
+        groups.set(f.group, [f]);
+
+      return groups;
+
+    }, new Map<string, Field[]>());
+
+    this.groups = [];
+    
+    for (const [group, fields] of groups.entries())
+      this.groups.push({ group, fields });
 
     this.records$ = combineLatest([
       this.search$,

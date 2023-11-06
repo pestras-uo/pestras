@@ -6,7 +6,7 @@
   ></pestras-topics-list>
 
   <div class="topic-details" *ngIf="selected | topic | async as topic">
-    <header class="bg-surface1 p-4 border-be">
+    <header class="bg-surface1 pi-4 pb-6 border-be">
       <div class="container tight">
         <div class="toolbar gap-4">
           <div>
@@ -21,7 +21,7 @@
       </div>
     </header>
 
-    <main class="p-4">
+    <main class="pi-4 pb-8">
       <div class="container tight">
         <app-content-views
           [entity]="topic.serial"

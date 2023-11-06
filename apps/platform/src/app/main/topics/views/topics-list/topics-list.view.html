@@ -22,11 +22,11 @@
     </div>
   </header>
 
-  <div class="list" *ngIf="topics$ | async as topics">
+  <div class="list list-actions" *ngIf="topics$ | async as topics">
     <ng-container *ngIf="topics.length else noData">
       <div
         *ngFor="let topic of topics"
-        class="list-item hover cursor-pointer"
+        class="list-item"
         [class.active]="selected === topic.serial"
         (click)="selects.emit(topic.serial)"
       >

@@ -14,18 +14,29 @@
   <div class="divider mbs-4 mbe-8"></div>
 
   <ng-container *ngIf="datastores$ | async as datastores">
-    <div class="grid cols-3 gap-4" *ngIf="datastores.length; else noData">
-      <div class="card" *ngFor="let ds of datastores">
-        <div class="card-body">
-          <h3>{{ds.name}}</h3>
-          <p>{{ds.create_date | date: 'dd/MM/YYYY'}}</p>
-        </div>
-        <div class="card-footer">
+    <div class="accordion" *ngIf="datastores.length; else noData">
+      <div #card class="card mbe-4" *ngFor="let ds of datastores; let first = first" [class.active]="first">
+        <div class="card-header">
+          <div>
+            <h3>{{ds.name}}</h3>
+            <p>{{ds.create_date | date: 'dd/MM/YYYY'}}</p>
+          </div>
+          <div class="grow"></div>
+          <button class="btn-icon btn-round" (click)="card.classList.toggle('active')">
+            <i puiIcon="info" size="small"></i>
+          </button>
           <a
+            class="btn btn-round btn-primary"
             [routerLink]="['/main/data-stores', ds.blueprint, ds.serial]"
-            class="btn btn-outline btn-round"
             >{{c['continue']}}</a
           >
+        </div>
+        <div class="card-body pbs-0">
+          <app-content-views
+            [entity]="ds.serial"
+            size="small"
+            [editable]="(blueprint.owner | sessionIs) || (blueprint.collaborators | sessionIs)"
+          ></app-content-views>
         </div>
       </div>
     </div>

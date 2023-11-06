@@ -4,26 +4,53 @@
       <table *ngIf="records.length else noData">
         <thead>
           <tr>
-            <th class="w-2">#</th>
-            <th *ngFor="let field of fields | arrayFilter: filterFields: (columns$ | async)">
-              <pui-table-th [sortable]="field.type | fn: sortable" [key]="field.name" (sort)="onSort($event)">
-                {{field.system ? c[field.display_name] : field.display_name}}
-              </pui-table-th>
+            <th class="index-col" rowspan="2">#</th>
+            <th
+              *ngFor="let group of groups"
+              [attr.colspan]="group.fields.length"
+              class="align-center weight-9"
+            >
+              {{c[group.group] || group.group}}
             </th>
+          </tr>
+          <tr>
+            <ng-container *ngFor="let group of groups">
+              <th
+                *ngFor="let field of group.fields | arrayFilter: filterFields: (columns$ | async)"
+              >
+                <pui-table-th
+                  [sortable]="field.type | fn: sortable"
+                  [key]="field.name"
+                  (sort)="onSort($event)"
+                >
+                  {{field.system ? c[field.display_name] : field.display_name}}
+                </pui-table-th>
+              </th>
+            </ng-container>
           </tr>
         </thead>
         <tbody>
-          <tr *ngFor="let item of records; let i = index" class="hover cursor-pointer" (click)="tryVisit(item)">
+          <tr
+            *ngFor="let item of records; let i = index"
+            class="hover cursor-pointer"
+            (click)="tryVisit(item)"
+          >
             <td>{{skip + i + 1}}</td>
-            <td *ngFor="let field of fields | arrayFilter: filterFields: (columns$ | async)">
-              <app-field-value *ngIf="!preloader"
-                [class.success]="field.type === 'datetime' || field.type === 'date'"
-                [class.primary]="field.type === 'int' || field.type === 'double'"
-                [field]="field"
-                [value]="item[field.name]"
-                locationAsLink
-              ></app-field-value>
-            </td>
+            <ng-container *ngFor="let group of groups">
+              <td
+                *ngFor="let field of group.fields | arrayFilter: filterFields: (columns$ | async)"
+              >
+                <app-field-value
+                  *ngIf="!preloader"
+                  [class.date-col]="field.type === 'datetime' || field.type === 'date'"
+                  [class.num-col]="field.type === 'int' || field.type === 'double'"
+                  [class.icon-col]="field.type === 'boolean'"
+                  [field]="field"
+                  [value]="item[field.name]"
+                  locationAsLink
+                ></app-field-value>
+              </td>
+            </ng-container>
           </tr>
         </tbody>
       </table>

@@ -40,8 +40,8 @@
   --scroller-thumb-light: hsla(0, 0%, 0%, 0.1);
   --scroller-thumb-hover-light: hsla(0, 0%, 0%, 0.15);
 
-  --border1-light: hsla(0 0% 0% / 10%);
-  --border2-light: hsla(0 0% 0% / 20%);
+  --border1-light: hsla(0, 0%, 88%);
+  --border2-light: rgb(194, 194, 194);
 
 
 
@@ -79,8 +79,8 @@
   --scroller-thumb-dark: hsla(0, 0%, 100%, 0.171);
   --scroller-thumb-hover-dark: hsla(0, 0%, 100%, 0.253);
 
-  --border1-dark: hsla(0 100% 100% / 10%);
-  --border2-dark: hsla(0 100% 100% / 20%);
+  --border1-dark: rgb(51, 51, 51);
+  --border2-dark: rgb(80, 80, 80);
 
 
   --success: hsl(150 75% 45%);

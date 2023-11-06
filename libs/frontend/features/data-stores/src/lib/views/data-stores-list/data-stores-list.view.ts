@@ -2,7 +2,7 @@
 /* eslint-disable @angular-eslint/component-class-suffix */
 /* eslint-disable @angular-eslint/component-selector */
 import { Component, Input, OnChanges, TemplateRef } from '@angular/core';
-import { DataStore, DataStoreType } from '@pestras/shared/data-model';
+import { Blueprint, DataStore, DataStoreType } from '@pestras/shared/data-model';
 import { Dialog, DialogRef } from '@angular/cdk/dialog';
 import { ToastService } from '@pestras/frontend/ui';
 import { Observable, map } from 'rxjs';
@@ -29,7 +29,7 @@ export class DataStoresListView implements OnChanges {
   preloader = false;
 
   @Input({ required: true })
-  blueprint!: string;
+  blueprint!: Blueprint;
   @Input()
   type: DataStoreType | null = null;
   @Input()
@@ -49,7 +49,7 @@ export class DataStoresListView implements OnChanges {
   ngOnChanges(): void {
     this.type && this.form.controls.type.setValue(this.type);
 
-    this.datastores$ = this.state.selectGroup(this.blueprint)
+    this.datastores$ = this.state.selectGroup(this.blueprint.serial)
       .pipe(map(list => list.filter(ds => {
         if (this.type && ds.type !== this.type)
           return false;
@@ -76,7 +76,7 @@ export class DataStoresListView implements OnChanges {
   add(c: Record<string, any>) {
     this.preloader = true;
     
-    this.form.controls.blueprint.setValue(this.blueprint);
+    this.form.controls.blueprint.setValue(this.blueprint.serial);
 
     this.state.create(this.form.getRawValue())
       .subscribe({

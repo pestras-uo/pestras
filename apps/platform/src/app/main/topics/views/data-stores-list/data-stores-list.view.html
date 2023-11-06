@@ -2,15 +2,53 @@
   <ng-container
     *ngIf="blueprint | blueprintDataStores: [types.TABLE] | async | fn: setDefaultActive as datastores"
   >
-    <main *ngIf="datastores.length else noData">
-      <div class="card card-small">
+    <main class="accordion" *ngIf="datastores.length else noData">
+      <ng-container *ngFor="let ds of datastores; let last = last">
+        <div #card class="card card-clear mbe-4" [class.active]="active === ds">
+          <div class="card-header pi-0">
+            <h3>{{ds.name}}</h3>
+            <div class="grow"></div>
+            <button
+              class="btn-icon btn-round"
+              (click)="active = ds; tab = 'details'"
+            >
+              <i puiIcon="info" size="small"></i>
+            </button>
+            <button
+              class="btn-round btn-primary"
+              (click)="active = ds; tab = 'data'"
+            >
+              {{c['data']}}
+            </button>
+          </div>
+
+          <div *ngIf="active" class="card-body p-0">
+            <app-records-list
+              *ngIf="tab === 'data'"
+              [topic]="topic"
+              [dataStore]="active"
+              headless
+            ></app-records-list>
+
+            <app-content-views
+              *ngIf="tab === 'details'"
+              [entity]="active.serial"
+              size="small"
+            ></app-content-views>
+          </div>
+        </div>
+
+        <div *ngIf="!last" class="divider mb-2"></div>
+      </ng-container>
+
+      <!-- <div class="card card-small">
         <div class="card-header cursor-pointer" (click)="toggleDropdown()">
           <h4>{{active?.name ?? c['data']}}</h4>
           <div class="grow"></div>
           <i size="small" puiIcon="arrow_drop_down"></i>
         </div>
         <div *ngIf="showDropdown">
-          <ul class="card-body list list-actions p-0 ">
+          <ul class="card-body list list-actions p-0">
             <ng-container *ngFor="let ds of datastores">
               <li
                 class="list-item hover-surface2 pi-4"
@@ -40,9 +78,9 @@
             </ng-container>
           </ul>
         </div>
-      </div>
+      </div> -->
 
-      <ng-container *ngIf="active">
+      <!-- <ng-container *ngIf="active">
         <app-records-list
           *ngIf="tab === 'data'"
           [topic]="topic"
@@ -55,7 +93,7 @@
           [entity]="active.serial"
           size="small"
         ></app-content-views>
-      </ng-container>
+      </ng-container> -->
     </main>
 
     <ng-template #noData>
