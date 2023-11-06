@@ -88,7 +88,7 @@ export const controller = {
       if (!ds)
         throw new HttpError(HttpCode.NOT_FOUND, 'dataStoreNotFound');
 
-      const src = draft ?  `'draft'_${req.params.serial}` : req.params.serial;
+      const src = draft ?  `draft_${req.params.serial}` : req.params.serial;
       const record = await dataRecordsModel.getBySerial(src, req.params.record);
       const imgsToRemove: string[] = [];
 
