@@ -11,11 +11,13 @@
   <div class="card-body">
     <ng-container *ngIf="!parent">
       <label for="cat-type">{{c['type']}}</label>
-      <pui-select-input
-        labelRef="cat-type"
-        [list]="c['categoryTypesList']"
-        formControlName="type"
-      ></pui-select-input>
+      <div class="fc">
+        <pui-select-input
+          labelRef="cat-type"
+          [list]="c['categoryTypesList']"
+          formControlName="type"
+        ></pui-select-input>
+      </div>
     </ng-container>
 
     <label class="mbs-4" for="title">{{c['title']}}</label>
@@ -65,7 +67,7 @@
       </div>
     </div>
 
-    <ng-container *ngIf="!parent">
+    <ng-container *ngIf="!parent && type.value === 'nominal'">
       <label class="mbs-4" for="cat-levels">{{c['levelsCount']}}</label>
       <div class="fc">
         <input type="number" formControlName="levels" id="cat-levels" />
