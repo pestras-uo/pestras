@@ -9,11 +9,14 @@
   </div>
 
   <div class="card-body">
-    <pui-check-input
-      *ngIf="!parent"
-      [label]="c['ordinal']"
-      formControlName="ordinal"
-    ></pui-check-input>
+    <ng-container *ngIf="!parent">
+      <label for="cat-type">{{c['type']}}</label>
+      <pui-select-input
+        labelRef="cat-type"
+        [list]="c['categoryTypesList']"
+        formControlName="type"
+      ></pui-select-input>
+    </ng-container>
 
     <label class="mbs-4" for="title">{{c['title']}}</label>
     <div class="fc">
@@ -25,32 +28,53 @@
       />
     </div>
 
-    <ng-container *ngIf="ordinal.value && parent">
+    <ng-container *ngIf="type.value === 'ordinal' && parent">
       <label class="mbs-4" for="value">{{c['value']}}</label>
       <div class="fc">
         <input
           id="value"
           type="number"
           autocomplete="off"
-          formControlName="value"
+          [formControl]="ordinalValue"
         />
       </div>
     </ng-container>
 
+    <div class="flex gap-4" *ngIf="type.value === 'ordinal_range' && parent">
+      <div class="grow">
+        <label class="mbs-4" for="from-value">{{c['from']}}</label>
+        <div class="fc">
+          <input
+            id="from-value"
+            type="number"
+            autocomplete="off"
+            [formControl]="ordinalRangeStart"
+          />
+        </div>
+      </div>
+      <div class="grow">
+        <label class="mbs-4" for="end-value">{{c['to']}}</label>
+        <div class="fc">
+          <input
+            id="end-value"
+            type="number"
+            autocomplete="off"
+            [formControl]="ordinalRangeEnd"
+          />
+        </div>
+      </div>
+    </div>
+
     <ng-container *ngIf="!parent">
       <label class="mbs-4" for="cat-levels">{{c['levelsCount']}}</label>
       <div class="fc">
-        <input type="number" formControlName="levels" id="cat-levels">
+        <input type="number" formControlName="levels" id="cat-levels" />
       </div>
     </ng-container>
   </div>
 
   <div class="card-footer">
-    <button
-      class="btn-outline btn-round"
-      type="reset"
-      (click)="closes.emit()"
-    >
+    <button class="btn-outline btn-round" type="reset" (click)="closes.emit()">
       {{c['cancel']}}
     </button>
     <button

@@ -1,5 +1,16 @@
 {
+  "categoryTypesList": [
+    { "name": "إسمي", "value": "nominal" },
+    { "name": "ترتيبي", "value": "ordinal" },
+    { "name": "نطاق ترتيبي", "value": "ordinal_range" }
+  ],
+  "categoryTypes": {
+    "nominal": "إسمي",
+    "ordinal": "ترتيبي",
+    "ordinal_range": "نطاق ترتيبي"
+  },
   "_sys": "النظام",
+  "level": "المستوى",
   "levelsCount": "عدد المستويات",
   "requests": "الطلبات",
   "workflowTriggers": {

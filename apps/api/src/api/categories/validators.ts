@@ -1,3 +1,4 @@
+import { categoryTypes } from '@pestras/shared/data-model';
 import { Validall } from '@pestras/validall';
 
 export enum CategoriesValidators {
@@ -10,14 +11,14 @@ export enum CategoriesValidators {
 new Validall(CategoriesValidators.CREATE, {
   blueprint: { $type: 'string' },
   title: { $type: 'string' },
-  ordinal: { $cast: 'boolean' },
-  value: { $or: [{ $type: 'string' }, { $type: 'number' }] },
+  type: { $in: categoryTypes },
+  value: { $or: [{ $type: 'string' }, { $type: 'number' }, { $tuple: [{ $type: 'number' }, { $type: 'number' }] }] },
   levels: { $type: 'number', $nullable: true },
-  parent: { $type: 'string', $nullable: true } 
+  parent: { $type: 'string', $nullable: true }
 });
 
 new Validall(CategoriesValidators.UPDATE, {
   title: { $type: 'string' },
-  ordinal: { $cast: 'boolean' },
-  value: { $or: [{ $type: 'string' }, { $type: 'number' }] },
+  type: { $in: categoryTypes },
+  value: { $or: [{ $type: 'string' }, { $type: 'number' }, { $tuple: [{ $type: 'number' }, { $type: 'number' }] }] },
 });

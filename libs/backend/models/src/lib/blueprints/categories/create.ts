@@ -2,7 +2,7 @@ import { Category, EntityTypes, User } from "@pestras/shared/data-model";
 import { Serial } from '@pestras/shared/util';
 import { CategoriesModel } from ".";
 
-export type CreateCategoryInput = Pick<Category, 'title' | 'blueprint' | 'ordinal' | 'value' | 'levels'> & { parent: string | null };
+export type CreateCategoryInput = Pick<Category, 'title' | 'blueprint' | 'type' | 'value' | 'levels'> & { parent: string | null };
 
 export async function create(
   this: CategoriesModel,
@@ -16,10 +16,10 @@ export async function create(
     serial,
     title: input.title,
     blueprint: input.blueprint,
-    ordinal: input.ordinal,
+    type: input.type,
     value: input.value,
     levels: input.levels,
-    level: input.parent ? Serial.countLevels(input.parent) : 0,
+    level: Serial.countLevels(input.parent),
     create_date: date,
     last_modified: date
   });
