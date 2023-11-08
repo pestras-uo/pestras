@@ -68,8 +68,8 @@ export class TransposeForm implements OnInit, ControlValueAccessor {
   }
 
   filterGroupFields(field: Field) {
-    return ['int', 'double', 'boolean', 'ordinal', 'category', 'region'].includes(field.type)
-      || (field.type === 'string' && field.kind === TypeKind.NONE)
+    return ['int', 'double', 'category', 'region', 'boolean', 'string'].includes(field.type)
+      && ![TypeKind.RICH_TEXT, TypeKind.RANGE].includes(field.kind);
   }
 
   filterCalcFields(field: Field) {

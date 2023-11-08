@@ -104,7 +104,7 @@ export class MapForm implements OnInit, ControlValueAccessor {
   }
 
   filterValueField(field: Field) {
-    return ['int', 'double', 'ordinal'].includes(field.type);
+    return ['int', 'double'].includes(field.type) || (field.type === 'category' && field.kind !== TypeKind.NONE);
   }
 
   filterTooltipImageField(field: Field) {
@@ -120,8 +120,8 @@ export class MapForm implements OnInit, ControlValueAccessor {
   }
 
   filterCatField(field: Field) {
-    return !['serial', 'unknown', 'string'].includes(field.type)
-      || (field.type === 'string' && field.kind === TypeKind.NONE);
+    return !['serial', 'unknown'].includes(field.type)
+      && ![TypeKind.RICH_TEXT, TypeKind.RANGE].includes(field.kind);
   }
 
   filterRegionField(field: Field) {

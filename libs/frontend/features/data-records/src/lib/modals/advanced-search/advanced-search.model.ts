@@ -59,7 +59,7 @@ const fieldQueryBuilder: { [key: string]: (field: Field, values: any[], inverse:
     if (field.kind === TypeKind.RANGE)
       return !inverse
         ? { $or: values[0].map((v: [number, number]) => ({ [field.name]: { $gte: v[0], $lte: v[1] } })) }
-        : { $and: values[0].map((v: [number, number]) => ({ [field.name]: { $lt: v[0], $gt: v[1] } })) }
+        : { $and: values[0].map((v: [number, number]) => ({ $or: [{ [field.name]: { $lt: v[0] } }, { [field.name]: { $gt: v[1] } }] })) }
 
     return !inverse
       ? { [field.name]: { $in: values[0] } }

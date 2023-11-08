@@ -1,9 +1,11 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { parseValue } from "../../../util";
+import { TypeKind, TypedEntity, parseValue } from "../../../util";
 
 export const dataVizFilterOperators = ['eq', 'ne', 'gt', 'gte', 'lt', 'lte'] as const;
+export const dataVizRangeFilterOperators = ['inRange', 'outRange', 'aboveRange', 'aboveOrInRange', 'belowRange', 'belowOrInRange'] as const;
 
 export type DataVizFilterOperator = typeof dataVizFilterOperators[number];
+export type DataVizRangeFilterOperator = typeof dataVizRangeFilterOperators[number];
 
 export interface DataVizFilter {
   field: string;
@@ -17,19 +19,46 @@ export interface DataVizFilters {
   filters: DataVizFilter[];
 }
 
-export function dataVizFilterData<T extends Record<string, any>>(data: T[], opt: DataVizFilters): T[] {
+const rangeFilterOperatorsMap: Record<DataVizFilterOperator, DataVizRangeFilterOperator> = {
+  eq: 'inRange',
+  ne: 'outRange',
+  gt: 'aboveRange',
+  gte: 'aboveOrInRange',
+  lt: 'belowRange',
+  lte: 'belowOrInRange'
+}
+
+export function dataVizFilterData<T extends Record<string, any>>(data: T[], opt: DataVizFilters, fields: TypedEntity[]): T[] {
   return opt.filters && opt.filters.length
     ? opt.any
-      ? data.filter(r => opt.filters.some(f => dataVizFilters[f.operator](r[f.field], f.value)))
-      : data.filter(r => opt.filters.every(f => dataVizFilters[f.operator](r[f.field], f.value)))
+      ? data.filter(r => opt.filters.some(f => {
+        const field = fields.find(field => field.name === f.field);
+
+        return field && field.kind === TypeKind.RANGE
+          ? dataVizFilters[rangeFilterOperatorsMap[f.operator]](r[f.field], f.value)
+          : dataVizFilters[f.operator](r[f.field], f.value)
+      }))
+      : data.filter(r => opt.filters.every(f => {
+        const field = fields.find(field => field.name === f.field);
+
+        return field && field.kind === TypeKind.RANGE
+          ? dataVizFilters[rangeFilterOperatorsMap[f.operator]](r[f.field], f.value)
+          : dataVizFilters[f.operator](r[f.field], f.value)
+      }))
     : data;
 }
 
-export const dataVizFilters: Record<DataVizFilterOperator, (v1: any, v2: any) => boolean> = {
+export const dataVizFilters: Record<DataVizFilterOperator | DataVizRangeFilterOperator, (v1: any, v2: any) => boolean> = {
   eq: (v1: any, v2: any) => parseValue(v1) === parseValue(v2),
   ne: (v1: any, v2: any) => parseValue(v1) !== parseValue(v2),
   gt: (v1: any, v2: any) => v1 > v2,
   gte: (v1: any, v2: any) => v1 >= v2,
   lt: (v1: any, v2: any) => v1 < v2,
   lte: (v1: any, v2: any) => v1 <= v2,
+  inRange: (v1: any, v2: any) => v1 >= v2[0] && v1 <= v2[1],
+  outRange: (v1: any, v2: any) => v1 < v2[0] || v1 > v2[1],
+  aboveRange: (v1: any, v2: any) => v1 > v2[1],
+  aboveOrInRange: (v1: any, v2: any) => v1 >= v2[1],
+  belowRange: (v1: any, v2: any) => v1 < v2[0],
+  belowOrInRange: (v1: any, v2: any) => v1 <= v2[0]
 }

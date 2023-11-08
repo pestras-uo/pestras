@@ -4,7 +4,7 @@
 /* eslint-disable @angular-eslint/component-selector */
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { NG_VALIDATORS, NG_VALUE_ACCESSOR, FormGroup, ControlValueAccessor, FormControl, Validators, AbstractControl, ValidationErrors } from '@angular/forms';
-import { MinmaxOperationOptions, TypedEntity } from '@pestras/shared/data-model';
+import { MinmaxOperationOptions, TypeKind, TypedEntity } from '@pestras/shared/data-model';
 import { Serial } from '@pestras/shared/util';
 import { untilDestroyed } from '@pestras/frontend/ui';
 
@@ -64,11 +64,11 @@ export class MinmaxOperationForm implements OnInit, ControlValueAccessor {
   }
 
   filterInputField(field: TypedEntity) {
-    return ['int', 'double', 'ordinal'].includes(field.type);
+    return ['int', 'double'].includes(field.type) || (field.type === 'category' && field.kind !== TypeKind.NONE);
   }
 
   filterLimitField(field: TypedEntity) {
-    return ['int', 'double', 'ordinal'].includes(field.type);
+    return ['int', 'double'].includes(field.type) || (field.type === 'category' && field.kind !== TypeKind.NONE);
   }
 
   mapField(field: TypedEntity) {

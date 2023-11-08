@@ -67,7 +67,7 @@ export class HierarchicalForm implements OnInit, ControlValueAccessor {
   }
 
   filterValueField(field: Field) {
-    return ['int', 'double', 'ordinal'].includes(field.type);
+    return ['int', 'double'].includes(field.type) || (field.type === 'category' && field.kind !== TypeKind.NONE);
   }
 
   addColor(color?: string) {

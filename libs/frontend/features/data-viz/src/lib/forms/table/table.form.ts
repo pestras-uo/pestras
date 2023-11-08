@@ -4,7 +4,7 @@
 /* eslint-disable @angular-eslint/component-selector */
 import { Component, Input, OnInit } from '@angular/core';
 import { AbstractControl, FormBuilder, NG_VALIDATORS, NG_VALUE_ACCESSOR, ValidationErrors, Validators } from '@angular/forms';
-import { Field, TableDataVizOptions } from '@pestras/shared/data-model';
+import { Field, TableDataVizOptions, TypeKind } from '@pestras/shared/data-model';
 import { untilDestroyed } from '@pestras/frontend/ui';
 
 @Component({
@@ -64,7 +64,7 @@ export class TableForm implements OnInit {
   }
 
   filterValueField(field: Field) {
-    return ['int', 'double', 'ordinal'].includes(field.type);
+    return ['int', 'double'].includes(field.type) || (field.type === 'category' && field.kind !== TypeKind.NONE);
   }
 
   // ControlValueAccessor interface
