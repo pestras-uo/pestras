@@ -15,39 +15,21 @@ import {
   selector: 'pui-password-input',
   template: `
     <div [formGroup]="parentForm">
-      <div class="input-wrapper">
+      <div class="">
         <i
-          class="cursor-pointer flex-col icon"
+          class="float-end"
           size="small"
           (click)="togglePasswordVisibility()"
           [puiIcon]="showPassword ? 'eye' : 'eye-slash'"
         ></i>
-        <input
-          type="{{ showPassword ? 'text' : 'password' }}"
-          formControlName="{{ formControlName }}"
-        />
       </div>
+      <input
+        type="{{ showPassword ? 'text' : 'password' }}"
+        formControlName="{{ formControlName }}"
+      />
     </div>
   `,
-  styles: [
-    `
-      .input-wrapper {
-        position: relative;
-        display: inline-flex;
-        align-items: center;
-      }
-
-      .password-input {
-        padding-right: 30px; /* Adjust this value to leave space for the icon */
-      }
-
-      .icon {
-        position: absolute;
-        right: 8px; /* Adjust this value to control the distance from the right edge of the input */
-        cursor: pointer;
-      }
-    `,
-  ],
+  styles: [``],
   providers: [
     {
       provide: NG_VALUE_ACCESSOR,
