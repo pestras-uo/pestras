@@ -4,7 +4,7 @@
 /* eslint-disable @angular-eslint/component-selector */
 import { Component, Input, Output, OnInit, EventEmitter } from '@angular/core';
 import { NG_VALUE_ACCESSOR, NG_VALIDATORS, ControlValueAccessor, FormBuilder, Validators, ValidatorFn, AbstractControl, ValidationErrors } from '@angular/forms';
-import { MathExprOperation, MathExprOperationOptions, TypedEntity } from '@pestras/shared/data-model';
+import { MathExprOperation, MathExprOperationOptions, TypeKind, TypedEntity } from '@pestras/shared/data-model';
 import { Serial } from '@pestras/shared/util';
 import { untilDestroyed } from '@pestras/frontend/ui';
 
@@ -57,7 +57,7 @@ export class MathExprOperationForm implements OnInit, ControlValueAccessor {
   }
 
   filterField(field: TypedEntity) {
-    return ['int', 'double', 'ordinal'].includes(field.type)
+    return ['int', 'double'].includes(field.type) || (field.type === 'category' && field.kind !== TypeKind.NONE);
   }
 
   mapField(field: TypedEntity) {

@@ -32,8 +32,10 @@
           <tr>
             <th class="index-col">#</th>
             <th>{{c['title']}}</th>
-            <th class="icon-col">{{c['ordinal']}}</th>
-            <th *ngIf="parent.ordinal">{{c['value']}}</th>
+            <th>{{c['level']}}</th>
+            <th class="icon-col">{{c['type']}}</th>
+            <th *ngIf="parent.type === 'ordinal'">{{c['value']}}</th>
+            <th *ngIf="parent.type === 'ordinal_range'">{{c['range']}}</th>
             <th class="icon-col" *ngIf="editable">{{c['edit']}}</th>
           </tr>
         </thead>
@@ -41,10 +43,10 @@
           <tr *ngFor="let item of branches let i = index" [class.row-hover]="!isLastLevel" (click)="goToBranch(item)">
             <td class="index-col">{{i + 1}}</td>
             <td>{{item.title}}</td>
-            <td class="icon-col">
-              <i [puiIcon]="item.ordinal ? 'check' : 'close'" size="small"></i>
-            </td>
-            <td *ngIf="parent.ordinal" class="num-col">{{item.value}}</td>
+            <td>{{item.level}}</td>
+            <td>{{c['categoryTypes'][item.type]}}</td>
+            <td *ngIf="parent.type === 'ordinal'" class="num-col">{{item.value}}</td>
+            <td *ngIf="parent.type === 'ordinal_range'" class="num-col">{{item.value[0]}} {{c['to']}} {{item.value[1]}}</td>
             <td class="icon-col" *ngIf="editable">
               <button
                 class="btn-icon btn-tiny btn-round btn-success"

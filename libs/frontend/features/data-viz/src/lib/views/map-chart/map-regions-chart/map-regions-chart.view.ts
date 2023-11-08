@@ -15,7 +15,7 @@ import { Serial } from '@pestras/shared/util';
 
 @Component({
   selector: 'app-map-regions-chart',
-  template: '',
+  template: '<div #chart  echarts [options]="chartOptions" class="chart"></div>',
   styles: [
     `
       :host {

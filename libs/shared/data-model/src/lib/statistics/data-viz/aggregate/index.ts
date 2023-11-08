@@ -20,7 +20,7 @@ export function aggrRecords<T extends Record<string, any>>(fields: TypedEntity[]
   const outputData = pipeline.reduce((result: any[], curr: DataVizAggrStage) => {
 
     if (curr.type === 'filter')
-      return dataVizFilterData(result, curr);
+      return dataVizFilterData(result, curr, fields);
 
     if (curr.type === 'group') {
       outputFields = groupRecordsFields(outputFields, curr);

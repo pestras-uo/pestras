@@ -52,7 +52,7 @@ export namespace CategoriesApi {
   export namespace Create {
     export const path = basePath + '';
   
-    export type Body = Pick<Category, 'title' | 'blueprint' | 'ordinal' | 'value' | 'levels'> & { parent: string | null };
+    export type Body = Pick<Category, 'title' | 'blueprint' | 'type' | 'value' | 'levels'> & { parent: string | null };
   
     export type Response = Category;
   }
@@ -66,7 +66,7 @@ export namespace CategoriesApi {
   
     export interface Params { serial: string };
   
-    export type Body = Pick<Category, 'title' | 'value' | 'ordinal'>;
+    export type Body = Pick<Category, 'title' | 'value' | 'type'>;
   
     export type Response = string; // date
   }  

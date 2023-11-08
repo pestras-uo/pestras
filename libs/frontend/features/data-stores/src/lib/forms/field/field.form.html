@@ -88,22 +88,32 @@
     ></pui-check-input>
 
     <!-- Select Category -->
-    <ng-container *ngIf="typeField.value === 'category'">
-      <pui-check-input
-        class="mbs-4"
-        [label]="c['ordinal']"
-        (changes)="toggleKind(!!$event, kind.ORDINAL)"
-      ></pui-check-input>
-
-      <label class="mbs-4" for="field-category"> {{c['branchOf']}} </label>
-      <div class="fc fc-outline fc-surface1">
-        <pui-select-input
-          labelRef="field-category"
-          [list]="dataStore.blueprint | bpCategories: kindControl.value === kind.ORDINAL | async | arrayMap: mapCategory"
-          formControlName="ref_to"
-        ></pui-select-input>
+    <div
+      class="flex align-items-center gap-4 mbs-4"
+      *ngIf="typeField.value === 'category'"
+    >
+      <div class="grow">
+        <label for="cat-type">{{c['type']}}</label>
+        <div class="fc fc-outline fc-surface1">
+          <pui-select-input
+            labelRef="cat-type"
+            [list]="c['categoryTypesList']"
+            [formControl]="catTypeControl"
+          ></pui-select-input>
+        </div>
       </div>
-    </ng-container>
+
+      <div class="grow">
+        <label for="field-category"> {{c['branchOf']}} </label>
+        <div class="fc fc-outline fc-surface1">
+          <pui-select-input
+            labelRef="field-category"
+            [list]="dataStore.blueprint | bpCategories: catTypeControl.value | async | arrayMap: mapCategory"
+            formControlName="ref_to"
+          ></pui-select-input>
+        </div>
+      </div>
+    </div>
 
     <div class="divider mb-8"></div>
 
@@ -209,11 +219,20 @@
         *ngIf="typeField.value === 'category'"
         class="fc fc-outline fc-surface1 mbe-6"
       >
-        <pui-select-input
-          labelRef="field-default-value"
-          [list]="refToControl.value | categoryBranches | async | arrayMap: mapCategory"
+        <input
+          *ngIf="catTypeControl.value === 'ordinal_range' else nominalCatDefault"
+          type="number"
           formControlName="default"
-        ></pui-select-input>
+          id="field-default-value"
+        />
+
+        <ng-template #nominalCatDefault>
+          <pui-select-input
+            labelRef="field-default-value"
+            [list]="refToControl.value | categoryBranches | async | arrayMap: mapCategory"
+            formControlName="default"
+          ></pui-select-input>
+        </ng-template>
       </div>
 
       <!-- region -->

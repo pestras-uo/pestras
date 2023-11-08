@@ -31,6 +31,7 @@ export type ReferenceTypes = typeof referenceTypes[number];
 export enum TypeKind {
   NONE = 'none',
   ORDINAL = 'ordinal',
+  RANGE = 'range',
   RICH_TEXT = 'rich_text',
   LINK = 'link'
 }
@@ -84,7 +85,7 @@ export function validateValueType(value: any, entity: TypedEntity): any {
     return null;
 
   if (entity.type === 'category')
-    return entity.kind === TypeKind.ORDINAL ? castTypedEntityValue(value, 'int') : castTypedEntityValue(value, 'category');
+    return entity.kind === TypeKind.ORDINAL || TypeKind.RANGE ? castTypedEntityValue(value, 'int') : castTypedEntityValue(value, 'category');
 
   return castTypedEntityValue(value, entity.type) as any;
 }

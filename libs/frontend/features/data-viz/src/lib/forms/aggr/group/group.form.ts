@@ -81,8 +81,8 @@ export class GroupForm implements OnInit, ControlValueAccessor {
   }
 
   filterGroupFields(field: Field) {
-    return ['int', 'double', 'ordinal', 'category', 'region', 'boolean'].includes(field.type)
-      || (field.type === 'string' && field.kind !== TypeKind.RICH_TEXT)
+    return ['int', 'double', 'category', 'region', 'boolean', 'string'].includes(field.type)
+      && ![TypeKind.RICH_TEXT, TypeKind.RANGE].includes(field.kind);
   }
 
   filterCalcFields(field: Field) {

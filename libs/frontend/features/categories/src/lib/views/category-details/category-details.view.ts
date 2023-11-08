@@ -23,7 +23,7 @@ export class CategoryDetailsView implements OnChanges {
   levels!: number;
   isLastLevel!: boolean;
 
-  branches$!: Observable<Category[]>;
+  branches$!: Observable<any[]>;
 
   parent!: Category;
 

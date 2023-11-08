@@ -4,7 +4,6 @@ import { DatePipe } from '@angular/common';
 import { Observable, of, map, switchMap } from 'rxjs'
 import { RegionsState, OrgunitsState, UsersState, DataStoresState, CategoriesService, TopicsState, RecordsService } from '@pestras/frontend/state';
 import { TypedEntity } from '@pestras/shared/data-model';
-import { Serial } from '@pestras/shared/util';
 
 @Pipe({
   name: 'fieldValue'
@@ -45,16 +44,19 @@ export class fieldValuePipe implements PipeTransform {
       return this.usersState.select(value as string).pipe(map(c => c?.fullname || c?.username || null));
 
     if (entity.type === 'category') {
+      if (typeof value === 'number' && entity.ref_to) {
+        if (entity.kind === 'range')
+          return this.catsService.getByParent({ serial: entity.ref_to, level: 1 })
+            .pipe(map(list => {
+              return list.find(c => {
+                const v = c.value as [number, number];
+                return v[0] <= value && v[1] >= value
+              })?.title ?? '';
+            }));
 
-      if (Serial.isValid(value))
-        return this.catsService.getBySerial(value).pipe(map(c => c?.title));
-
-      if (typeof value === 'number') {
-        const parentSerial = entity.ref_to ?? null;
-        return parentSerial
-          ? this.catsService.getByValue({ parent: parentSerial, value })
+        else
+          return this.catsService.getByValue({ parent: entity.ref_to, value })
             .pipe(map(c => c?.title))
-          : of(value);
       }
 
       return of(value);

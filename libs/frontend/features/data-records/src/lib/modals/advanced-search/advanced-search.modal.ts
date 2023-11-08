@@ -27,10 +27,11 @@ export class AdvancedSearchModal implements OnInit {
     this.fieldsList = this.fields
       .filter(f =>
         !['unknown', 'location', 'image', 'file'].includes(f.type) &&
-        [TypeKind.NONE, TypeKind.ORDINAL].includes(f.kind) && !f.system
+        [TypeKind.NONE, TypeKind.ORDINAL, TypeKind.RANGE].includes(f.kind) && !f.system
       )
       .map(f => {
         const options = this.filters?.find(ff => ff.field.name === f.name) ?? null;
+        
         return {
           field: f,
           controls: fieldControlsBuilder[f.type](options?.values),

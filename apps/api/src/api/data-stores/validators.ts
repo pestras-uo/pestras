@@ -180,7 +180,7 @@ new Validall(DataStoreValidators.ADD_FIELD, {
   ref_type: { $enum: [...referenceTypes], $nullable: true },
   ref_to: { $type: "string", $nullable: true },
   kind: {
-    $enum: [TypeKind.NONE, TypeKind.LINK, TypeKind.ORDINAL, TypeKind.RICH_TEXT],
+    $enum: [TypeKind.NONE, TypeKind.LINK, TypeKind.ORDINAL, TypeKind.RANGE, TypeKind.RICH_TEXT],
     $default: TypeKind.NONE,
   },
 });

@@ -2,10 +2,10 @@
 /* eslint-disable @angular-eslint/component-class-suffix */
 /* eslint-disable @angular-eslint/component-selector */
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { FormBuilder, Validators } from '@angular/forms';
-import { Category } from '@pestras/shared/data-model';
+import { FormBuilder, FormControl, Validators } from '@angular/forms';
+import { Category, CategoryType } from '@pestras/shared/data-model';
 import { Serial } from '@pestras/shared/util';
-import { ToastService } from '@pestras/frontend/ui';
+import { ToastService, untilDestroyed } from '@pestras/frontend/ui';
 import { CategoriesService } from '@pestras/frontend/state';
 
 @Component({
@@ -13,13 +13,22 @@ import { CategoriesService } from '@pestras/frontend/state';
   templateUrl: './update-category.modal.html'
 })
 export class UpdateCategoryModal implements OnInit {
+  private ud = untilDestroyed();
+
+  readonly ordinalValue = new FormControl<number>(0, { nonNullable: true, validators: Validators.required });
+  readonly ordinalRangeStart = new FormControl<number>(0, { nonNullable: true, validators: Validators.required });
+  readonly ordinalRangeEnd = new FormControl<number>(0, { nonNullable: true, validators: Validators.required });
 
   readonly form = this.fb.nonNullable.group({
     title: ['', [Validators.required, Validators.minLength(3)]],
-    ordinal: false,
-    value: this.fb.nonNullable.control<string | number>('', { validators: Validators.required })
+    type: this.fb.control<CategoryType>('nominal', { nonNullable: true, validators: Validators.required }),
+    value: this.fb.nonNullable.control<string | number | [number, number]>('', { validators: Validators.required })
   });
-  
+
+  readonly type = this.form.controls.type;
+  readonly title = this.form.controls.title;
+  readonly value = this.form.controls.value;
+
   preloader = false;
   isRoot = false;
 
@@ -38,8 +47,45 @@ export class UpdateCategoryModal implements OnInit {
   ngOnInit(): void {
     this.isRoot = Serial.isRoot(this.category.serial);
     this.form.controls.title.setValue(this.category.title);
-    this.form.controls.ordinal.setValue(this.category.ordinal);
+    this.form.controls.type.setValue(this.category.type);
     this.form.controls.value.setValue(this.category.value);
+
+    this.title.valueChanges
+      .pipe(this.ud())
+      .subscribe(v => {
+        if (this.type.value === 'nominal' || this.isRoot)
+          this.value.setValue(v);
+      });
+
+    if (!this.isRoot) {
+      if (this.type.value === 'ordinal')
+        this.ordinalValue.setValue(this.value.value as number);
+      else if (this.type.value === 'ordinal_range') {
+        this.ordinalRangeStart.setValue((this.value.value as [number, number])[0]);
+        this.ordinalRangeEnd.setValue((this.value.value as [number, number])[1]);
+      }
+
+      this.ordinalValue.valueChanges
+        .pipe(this.ud())
+        .subscribe(v => {
+          if (this.type.value === 'ordinal')
+            this.value.setValue(v);
+        });
+
+      this.ordinalRangeStart.valueChanges
+        .pipe(this.ud())
+        .subscribe(v => {
+          if (this.type.value === 'ordinal_range')
+            this.value.setValue([v, this.ordinalRangeEnd.value]);
+        });
+
+      this.ordinalRangeEnd.valueChanges
+        .pipe(this.ud())
+        .subscribe(v => {
+          if (this.type.value === 'ordinal_range')
+            this.value.setValue([this.ordinalRangeStart.value, v]);
+        });
+    }
   }
 
   update(c: Record<string, any>) {

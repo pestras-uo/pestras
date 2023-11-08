@@ -4,7 +4,7 @@
 /* eslint-disable @angular-eslint/component-selector */
 import { Component, Input, Output, OnInit, EventEmitter } from '@angular/core';
 import { NG_VALUE_ACCESSOR, NG_VALIDATORS, ControlValueAccessor, FormBuilder, Validators, AbstractControl, ValidationErrors } from '@angular/forms';
-import { GroupStageOptions, CumulateMethod, TypedEntity, ValueModifier, IAggrPiplineStage, AggrStageTypes, GroupStageCumulateMethod } from '@pestras/shared/data-model';
+import { GroupStageOptions, CumulateMethod, TypedEntity, ValueModifier, IAggrPiplineStage, AggrStageTypes, GroupStageCumulateMethod, TypeKind } from '@pestras/shared/data-model';
 import { Serial } from '@pestras/shared/util';
 import { untilDestroyed } from '@pestras/frontend/ui';
 
@@ -72,7 +72,7 @@ export class GroupStageForm implements OnInit, ControlValueAccessor {
   }
 
   filterGroupField(field: TypedEntity) {
-    return !['serial', 'unknown'].includes(field.type);
+    return !['serial', 'unknown'].includes(field.type) && field.kind !== TypeKind.RANGE;
   }
 
   filterField(field: TypedEntity) {

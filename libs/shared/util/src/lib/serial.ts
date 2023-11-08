@@ -14,8 +14,8 @@ export class Serial {
     return this.countLevels(serial) === 1;
   }
 
-  static countLevels(serial: string) {
-    return serial.split(this.separator).length;
+  static countLevels(serial: string | null) {
+    return serial ? serial.split(this.separator).length : 0;
   }
 
   static getRoot(serial: string) {
