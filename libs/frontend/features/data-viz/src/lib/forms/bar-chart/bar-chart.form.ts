@@ -55,8 +55,8 @@ export class BarChartForm implements OnInit, ControlValueAccessor {
   }
 
   filterCatField(field: Field) {
-    return !['serial', 'unknown', 'string'].includes(field.type)
-      || (field.type === 'string' && field.kind === TypeKind.NONE);
+    return !['serial', 'unknown'].includes(field.type)
+      && ![TypeKind.RICH_TEXT, TypeKind.RANGE].includes(field.kind);
   }
 
   // ControlValueAccessor interface

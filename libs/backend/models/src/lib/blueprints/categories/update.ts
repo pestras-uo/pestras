@@ -2,7 +2,7 @@ import { Category, EntityTypes } from "@pestras/shared/data-model";
 import { CategoriesModel } from ".";
 import { HttpError, HttpCode } from "@pestras/backend/util";
 
-export type UpdateCategoryInput = Pick<Category, 'title' | 'value' | 'ordinal'>;
+export type UpdateCategoryInput = Pick<Category, 'title' | 'value' | 'type'>;
 
 export async function update(
   this: CategoriesModel,
@@ -17,7 +17,7 @@ export async function update(
   if (!cat)
     throw new HttpError(HttpCode.NOT_FOUND, 'categoryNotFound');
 
-  if (cat.ordinal !== input.ordinal) {
+  if (cat.type !== input.type) {
     if (await (this.col.countDocuments({ serial: new RegExp(`_${serial}$`)})) > 0)
       throw new HttpError(HttpCode.FORBIDDEN, 'changeOrdinalNotAllowed');
   }

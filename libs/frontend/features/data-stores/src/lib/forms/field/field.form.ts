@@ -3,8 +3,8 @@
 /* eslint-disable @angular-eslint/component-selector */
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { DataStore, Region, Field, Category, TypeKind } from '@pestras/shared/data-model';
-import { ToastService } from '@pestras/frontend/ui';
+import { DataStore, Region, Field, Category, TypeKind, CategoryType } from '@pestras/shared/data-model';
+import { ToastService, untilDestroyed } from '@pestras/frontend/ui';
 import { DataStoresState } from '@pestras/frontend/state';
 import { Observable, combineLatest, map, startWith } from 'rxjs';
 import { FieldFormModel } from './form-model';
@@ -15,7 +15,10 @@ import { objUtil } from '@pestras/shared/util';
   templateUrl: './field.form.html',
 })
 export class FieldForm implements OnInit {
+  private ud = untilDestroyed();
+
   readonly kind = TypeKind;
+  readonly catTypeControl = new FormControl<CategoryType>('nominal', { nonNullable: true });
 
   readonly form = new FormGroup<FieldFormModel>({
     name: new FormControl('', {
@@ -111,7 +114,7 @@ export class FieldForm implements OnInit {
   constructor(
     private readonly state: DataStoresState,
     private readonly toast: ToastService
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.groups = [
@@ -124,6 +127,16 @@ export class FieldForm implements OnInit {
       this.form.setValue(
         objUtil.omit(this.field, ['system', 'automated', 'constraint'])
       );
+
+    this.typeField.valueChanges
+      .pipe(this.ud())
+      .subscribe(() => {
+        this.catTypeControl.setValue('nominal');
+      });
+
+    this.catTypeControl.valueChanges
+      .pipe(this.ud())
+      .subscribe(t => this.kindControl.setValue(t === 'nominal' ? TypeKind.NONE : t === 'ordinal' ? TypeKind.ORDINAL : TypeKind.RANGE));
   }
 
   toggleKind(checked: boolean, value: TypeKind) {
@@ -155,10 +168,10 @@ export class FieldForm implements OnInit {
     const data = this.form.getRawValue();
     const req: Observable<Field | string | null> = this.field
       ? this.state.updateFieldConfig(
-          this.dataStore.serial,
-          this.field.name,
-          data
-        )
+        this.dataStore.serial,
+        this.field.name,
+        data
+      )
       : this.state.addField(this.dataStore.serial, data);
 
     req.subscribe({

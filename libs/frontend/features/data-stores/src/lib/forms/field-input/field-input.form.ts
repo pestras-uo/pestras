@@ -2,7 +2,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @angular-eslint/component-class-suffix */
 /* eslint-disable @angular-eslint/component-selector */
-import { Component, Input, OnChanges, ViewChild, ElementRef, SimpleChanges, OnInit } from '@angular/core';
+import { Component, Input, OnChanges, ViewChild, ElementRef, SimpleChanges, OnInit, booleanAttribute } from '@angular/core';
 import { AbstractControl, ControlValueAccessor, FormControl, NG_VALIDATORS, NG_VALUE_ACCESSOR, ValidationErrors, Validators } from '@angular/forms';
 import { Category, DataRecord, Field, Orgunit, Region, Topic, TypeKind, User } from '@pestras/shared/data-model';
 import { untilDestroyed } from '@pestras/frontend/ui';
@@ -37,6 +37,8 @@ export class FieldInputForm implements OnChanges, OnInit, ControlValueAccessor {
   multi = false;
   @Input()
   record?: DataRecord;
+  @Input({ transform: booleanAttribute })
+  search = false;
 
   ngOnChanges(change: SimpleChanges) {
 

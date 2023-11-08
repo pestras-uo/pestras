@@ -29,7 +29,7 @@
               <th class="index-col">#</th>
               <th>{{c['title']}}</th>
               <th>{{c['levels']}}</th>
-              <th class="icon-col">{{c['ordinal']}}</th>
+              <th>{{c['type']}}</th>
               <th class="icon-col" *ngIf="editable">{{c['edit']}}</th>
             </tr>
           </thead>
@@ -42,12 +42,7 @@
               <td class="index-col">{{i + 1}}</td>
               <td class="bold">{{item.title}}</td>
               <td>{{item.levels ?? 1}}</td>
-              <td class="icon-col">
-                <i
-                  [puiIcon]="item.ordinal ? 'check' : 'close'"
-                  size="small"
-                ></i>
-              </td>
+              <td>{{c['categoryTypes'][item.type]}}</td>
               <td class="icon-col" *ngIf="editable">
                 <button
                   class="btn-icon btn-tiny btn-round btn-success"

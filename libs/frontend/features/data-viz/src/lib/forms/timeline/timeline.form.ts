@@ -21,7 +21,7 @@ import { untilDestroyed } from '@pestras/frontend/ui';
 export class TimelineForm implements OnInit, ControlValueAccessor {
 
   private ud = untilDestroyed();
-  
+
   readonly form = this.fb.nonNullable.group({
     category_field: ['', Validators.required],
     start_field: ['', Validators.required],
@@ -45,7 +45,7 @@ export class TimelineForm implements OnInit, ControlValueAccessor {
       .subscribe(() => {
         setTimeout(() => {
           const value = this.form.getRawValue();
-  
+
           this.onChange(value);
           !this.touched && (this.touched = true) && this.onTouched();
         });
@@ -57,8 +57,8 @@ export class TimelineForm implements OnInit, ControlValueAccessor {
   }
 
   filterCatField(field: Field) {
-    return !['serial', 'unknown', 'string'].includes(field.type)
-      || (field.type === 'string' && field.kind === TypeKind.NONE);
+    return !['serial', 'unknown'].includes(field.type)
+      && ![TypeKind.RICH_TEXT, TypeKind.RANGE].includes(field.kind);
   }
 
   filterDateField(field: Field) {
@@ -66,8 +66,7 @@ export class TimelineForm implements OnInit, ControlValueAccessor {
   }
 
   filterNumericField(field: Field) {
-    return field.type === 'int'
-      || field.type === 'double'
+    return field.type === 'int' || field.type === 'double'
   }
 
   // ControlValueAccessor interface

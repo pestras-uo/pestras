@@ -19,7 +19,7 @@
       />
     </div>
 
-    <ng-container *ngIf="category.ordinal && !isRoot">
+    <ng-container *ngIf="type.value === 'ordinal' && !isRoot">
       <label for="value">{{c['value']}}</label>
       <div class="fc">
         <input
@@ -30,6 +30,31 @@
         />
       </div>
     </ng-container>
+
+    <div class="flex gap-4" *ngIf="type.value === 'ordinal_range' && !isRoot">
+      <div class="grow">
+        <label class="mbs-4" for="from-value">{{c['from']}}</label>
+        <div class="fc">
+          <input
+            id="from-value"
+            type="number"
+            autocomplete="off"
+            [formControl]="ordinalRangeStart"
+          />
+        </div>
+      </div>
+      <div class="grow">
+        <label class="mbs-4" for="end-value">{{c['to']}}</label>
+        <div class="fc">
+          <input
+            id="end-value"
+            type="number"
+            autocomplete="off"
+            [formControl]="ordinalRangeEnd"
+          />
+        </div>
+      </div>
+    </div>
   </div>
 
   <div class="card-footer">

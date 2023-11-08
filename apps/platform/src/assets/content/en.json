@@ -1,5 +1,16 @@
 {
+  "categoryTypesList": [
+    { "name": "Nominal", "value": "nominal" },
+    { "name": "Ordinal", "value": "ordinal" },
+    { "name": "Ordinal Range", "value": "ordinal_range" }
+  ],
+  "categoryTypes": {
+    "nominal": "Nominal",
+    "ordinal": "Ordinal",
+    "ordinal_range": "Ordinal Range"
+  },
   "_sys": "System",
+  "level": "Level",
   "levelsCount": "Levels Count",
   "requests": "Request",
   "workflowTriggers": {
