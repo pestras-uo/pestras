@@ -1096,7 +1096,9 @@
     "reportNotFound": "التقرير غير موجود",
 
 
-    "groupAlreadyExists": "المجموعة موجودة بالفعل"
+    "groupAlreadyExists": "المجموعة موجودة بالفعل",
+    "emailRequired":"البريد الإلكتروني إلزامي",
+    "VerifyPhone":"الرجاء التثبت من رقم الهاتف"
 
 
 

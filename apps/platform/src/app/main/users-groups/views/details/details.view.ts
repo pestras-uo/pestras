@@ -99,7 +99,7 @@ export class DetailsView implements OnChanges {
       error: (e) => {
         console.error(e);
 
-        this.toast.msg(c['errors'][e?.error] || c['errors'].default, {
+        this.toast.msg(c['errors'][e?.error] || c['errors'].nameRequired, {
           type: 'error',
         });
         this.preloader = false;

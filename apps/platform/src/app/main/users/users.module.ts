@@ -10,6 +10,7 @@ import {
   PuiCheckInput,
   PuiIcon,
   PuiMultiSelectInput,
+  PuiPasswordInputModule,
   PuiPreloaderModule,
   PuiSelectInput,
   PuiUtilPipesModule,
@@ -58,6 +59,9 @@ import { UpdateProfileComponent } from './modals/update-profile/update-profile.c
     NgxEchartsModule,
     AvatarWidget,
     NoDataPlaceholderWidget,
+
+    // Password input --eye
+    PuiPasswordInputModule,
   ],
 })
 export class UsersModule {}
