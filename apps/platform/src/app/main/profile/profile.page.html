@@ -107,20 +107,35 @@
         >
           <label for="currPassword">{{c['currPassword']}}</label>
           <div class="fc fc-surface1 fc-outline mbe-4">
-            <pui-password-input
-              formControlName="currentPassword"
+            <input
+              #pass1
+              type="password"
               id="currPassword"
-              [parentForm]="personalForm"
-            ></pui-password-input>
+              formControlName="currentPassword"
+            />
+            <i
+              [togglePasswordVisibility]="pass1"
+              class="cursor-pointer"
+              #tpv1="tpv"
+              [puiIcon]="tpv1.isPasswordVisible ? 'eye' : 'eye-slash'"
+            ></i>
           </div>
 
           <label for="newPassword">{{c['newPassword']}}</label>
           <div class="fc fc-surface1 fc-outline mbe-4">
-            <pui-password-input
-              formControlName="newPassword"
+            <input
+              #pass2
+              type="password"
               id="newPassword"
-              [parentForm]="personalForm"
-            ></pui-password-input>
+              formControlName="newPassword"
+            />
+
+            <i
+              [togglePasswordVisibility]="pass2"
+              class="cursor-pointer"
+              #tpv2="tpv"
+              [puiIcon]="tpv2.isPasswordVisible ? 'eye' : 'eye-slash'"
+            ></i>
           </div>
 
           <div class="flex gap-2">

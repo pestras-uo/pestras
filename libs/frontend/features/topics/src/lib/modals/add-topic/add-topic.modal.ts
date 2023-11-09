@@ -51,7 +51,9 @@ export class AddTopicModal {
         error: e => {
           console.error(e);
 
-          this.toast.msg(c['errors'][e?.error] || c['errors'].default, { type: 'error' });
+          this.toast.msg(c['errors'][e?.error] || c['errors'].topicAddError, {
+            type: 'error',
+          });
           this.preloader = false;
         }
       });

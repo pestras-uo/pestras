@@ -1,8 +1,16 @@
 {
-  "categoryTypesList": [
-    { "name": "Nominal", "value": "nominal" },
-    { "name": "Ordinal", "value": "ordinal" },
-    { "name": "Ordinal Range", "value": "ordinal_range" }
+  "categoryTypesList": [{
+      "name": "Nominal",
+      "value": "nominal"
+    },
+    {
+      "name": "Ordinal",
+      "value": "ordinal"
+    },
+    {
+      "name": "Ordinal Range",
+      "value": "ordinal_range"
+    }
   ],
   "categoryTypes": {
     "nominal": "Nominal",
@@ -1007,8 +1015,17 @@
     "File too large": "File size exceeds file size limit",
     "fieldNotFound": "Field not found",
     "summaryRequired": "Blueprint summary is required",
+    "topicAddError": "An error occurred while creating the topic.",
+
     "nameRequired": "Name is required!",
+    "displayNameRequired": "Display name is required!",
+    "groupRequired": "Type group is required!",
+    "refToRequired": "Reference To is required!",
+
+
     "titleRequired": "Title is required!",
+    "subTitleRequired": "Sub title is required!",
+
     "userNotFound": "User Not Found!",
     "username": "Username is required!",
     "password": "Password is required!",

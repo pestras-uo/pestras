@@ -116,6 +116,5 @@ export * from './lib/toggle-theme/toggle-theme.component';
 export * from './lib/toggle-theme/toggle-theme.service';
 export * from './lib/toggle-theme/toggle-theme.module';
 
-//password input
-export * from './lib/password-input/password-input.component';
-export * from './lib/password-input/password-input.module';
+//toggle password
+export * from './lib/password-toggle-visibility/password-toggle-visibility.directive';

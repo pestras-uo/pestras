@@ -10,10 +10,10 @@ import {
   PuiCheckInput,
   PuiIcon,
   PuiMultiSelectInput,
-  PuiPasswordInputModule,
   PuiPreloaderModule,
   PuiSelectInput,
   PuiUtilPipesModule,
+  togglePasswordVisibilityDirective,
 } from '@pestras/frontend/ui';
 import { UsersListView } from './views/users-list/users-list.view';
 import { UserDetailsView } from './views/user-details/user-details.view';
@@ -39,6 +39,7 @@ import { UpdateProfileComponent } from './modals/update-profile/update-profile.c
     UpdateUsernameComponent,
     UpdatePasswordComponent,
     UpdateProfileComponent,
+    togglePasswordVisibilityDirective,
   ],
   imports: [
     // anguler
@@ -59,9 +60,6 @@ import { UpdateProfileComponent } from './modals/update-profile/update-profile.c
     NgxEchartsModule,
     AvatarWidget,
     NoDataPlaceholderWidget,
-
-    // Password input --eye
-    PuiPasswordInputModule,
   ],
 })
 export class UsersModule {}

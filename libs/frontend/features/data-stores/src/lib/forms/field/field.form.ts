@@ -3,7 +3,14 @@
 /* eslint-disable @angular-eslint/component-selector */
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { DataStore, Region, Field, Category, TypeKind, CategoryType } from '@pestras/shared/data-model';
+import {
+  DataStore,
+  Region,
+  Field,
+  Category,
+  TypeKind,
+  CategoryType,
+} from '@pestras/shared/data-model';
 import { ToastService, untilDestroyed } from '@pestras/frontend/ui';
 import { DataStoresState } from '@pestras/frontend/state';
 import { Observable, combineLatest, map, startWith } from 'rxjs';
@@ -18,7 +25,9 @@ export class FieldForm implements OnInit {
   private ud = untilDestroyed();
 
   readonly kind = TypeKind;
-  readonly catTypeControl = new FormControl<CategoryType>('nominal', { nonNullable: true });
+  readonly catTypeControl = new FormControl<CategoryType>('nominal', {
+    nonNullable: true,
+  });
 
   readonly form = new FormGroup<FieldFormModel>({
     name: new FormControl('', {
@@ -74,6 +83,7 @@ export class FieldForm implements OnInit {
   readonly typeField = this.form.controls.type;
   readonly kindControl = this.form.controls.kind;
   readonly refTypeControl = this.form.controls.ref_type;
+
   readonly refToControl = this.form.controls.ref_to;
   readonly addDefault$ = combineLatest([
     this.form.controls.required.valueChanges.pipe(
@@ -91,10 +101,7 @@ export class FieldForm implements OnInit {
   ]).pipe(
     map(
       (inp) =>
-        !inp[0] &&
-        !inp[1] &&
-        !inp[2] &&
-        !['image', 'serial'].includes(inp[3])
+        !inp[0] && !inp[1] && !inp[2] && !['image', 'serial'].includes(inp[3])
     )
   );
 
@@ -114,7 +121,7 @@ export class FieldForm implements OnInit {
   constructor(
     private readonly state: DataStoresState,
     private readonly toast: ToastService
-  ) { }
+  ) {}
 
   ngOnInit(): void {
     this.groups = [
@@ -128,19 +135,58 @@ export class FieldForm implements OnInit {
         objUtil.omit(this.field, ['system', 'automated', 'constraint'])
       );
 
-    this.typeField.valueChanges
-      .pipe(this.ud())
-      .subscribe(() => {
-        this.catTypeControl.setValue('nominal');
-      });
+    this.typeField.valueChanges.pipe(this.ud()).subscribe(() => {
+      this.catTypeControl.setValue('nominal');
+    });
 
     this.catTypeControl.valueChanges
       .pipe(this.ud())
-      .subscribe(t => this.kindControl.setValue(t === 'nominal' ? TypeKind.NONE : t === 'ordinal' ? TypeKind.ORDINAL : TypeKind.RANGE));
+      .subscribe((t) =>
+        this.kindControl.setValue(
+          t === 'nominal'
+            ? TypeKind.NONE
+            : t === 'ordinal'
+            ? TypeKind.ORDINAL
+            : TypeKind.RANGE
+        )
+      );
+  }
+  checkType(data: any) {
+    const refToControl = this.form.get('ref_to');
+
+    if (data.type === 'category' || data.type === 'serial') {
+      refToControl?.setValidators([Validators.required]);
+    } else {
+      refToControl?.clearValidators();
+      refToControl?.setValue(null);
+    }
+
+    // Update the validation status of the control
+    refToControl?.updateValueAndValidity();
+
+    // Mark the control as touched and dirty
+    refToControl?.markAsTouched();
+    refToControl?.markAsDirty();
+  }
+
+  onInputChange() {
+    const groupControl = this.form.get('group');
+    if (groupControl) {
+      groupControl.markAsTouched(); // Mark the control as touched when input event occurs
+    }
+  }
+
+  onInputTypeChange() {
+    const typeControl = this.form.get('type');
+    if (typeControl) {
+      typeControl.markAsTouched();
+      this.checkType({ type: typeControl.value });
+    }
   }
 
   toggleKind(checked: boolean, value: TypeKind) {
     console.log(checked, value);
+
     checked
       ? this.form.controls.kind.setValue(value)
       : this.form.controls.kind.setValue(TypeKind.NONE);
@@ -161,17 +207,17 @@ export class FieldForm implements OnInit {
   mapField(field: Field) {
     return { name: field.display_name, value: field.name };
   }
-
   submit(c: Record<string, any>) {
     this.preloader = true;
 
     const data = this.form.getRawValue();
+
     const req: Observable<Field | string | null> = this.field
       ? this.state.updateFieldConfig(
-        this.dataStore.serial,
-        this.field.name,
-        data
-      )
+          this.dataStore.serial,
+          this.field.name,
+          data
+        )
       : this.state.addField(this.dataStore.serial, data);
 
     req.subscribe({

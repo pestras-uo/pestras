@@ -5,15 +5,15 @@ import { ReactiveFormsModule } from '@angular/forms';
 import {
   PuiIcon,
   PuiImageInput,
-  PuiPasswordInputModule,
   PuiPreloaderModule,
+  togglePasswordVisibilityDirective,
 } from '@pestras/frontend/ui';
 import { AvatarWidget } from '@pestras/frontend/widgets/avatar';
 import { DialogModule } from '@angular/cdk/dialog';
 import { ContraModule } from '@pestras/frontend/util/contra';
 
 @NgModule({
-  declarations: [ProfilePage],
+  declarations: [ProfilePage, togglePasswordVisibilityDirective],
   imports: [
     CommonModule,
     ReactiveFormsModule,
@@ -23,7 +23,6 @@ import { ContraModule } from '@pestras/frontend/util/contra';
     PuiImageInput,
     AvatarWidget,
     DialogModule,
-    PuiPasswordInputModule,
   ],
   exports: [ProfilePage],
 })

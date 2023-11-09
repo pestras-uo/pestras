@@ -1,8 +1,16 @@
 {
-  "categoryTypesList": [
-    { "name": "إسمي", "value": "nominal" },
-    { "name": "ترتيبي", "value": "ordinal" },
-    { "name": "نطاق ترتيبي", "value": "ordinal_range" }
+  "categoryTypesList": [{
+      "name": "إسمي",
+      "value": "nominal"
+    },
+    {
+      "name": "ترتيبي",
+      "value": "ordinal"
+    },
+    {
+      "name": "نطاق ترتيبي",
+      "value": "ordinal_range"
+    }
   ],
   "categoryTypes": {
     "nominal": "إسمي",
@@ -1009,7 +1017,14 @@
     "fieldNotFound": "الحقل غير موجود",
     "summaryRequired": "الرجاء إدخال الملخص للنموذج",
     "nameRequired": "الإسم إلزامي",
-    "titleRequired": "الإسم إلزامي!",
+    "topicAddError": "حدثت مشكلة في إنشاء الموضوع",
+    "displayNameRequired": " مسمى العرض إلزامي",
+    "groupRequired": "نوع المجموعة إلزامي",
+    "refToRequired": "المرجع إلى إلزامي",
+    "titleRequired": "العنوان إلزامي!",
+    "subTitleRequired": "العنوان الفرعي إلزامي!",
+
+
     "userNotFound": "المستخدم غير موجود",
     "username": "الرجاء التحقق من اسم المستخدم",
     "password": "الرجاء التحقق من كلمة المرور",
@@ -1048,7 +1063,7 @@
     "fileNotFound": "الملف غير موجود",
     "imageNotFound": "الصورة غير موجودة",
     "userIsInactive": "المستخدم غير نشط",
-    "userAuthNotFound": "بيانات المصادقة للمستخدم غير موجودة",
+    "useruthNotFound": "بيانات المصادقة للمستخدم غير موجودة",
 
     "invalidTokenType": "نوع الرمز غير صالح",
     "tokenExpired": "انتهت صلاحية الرمز",
@@ -1058,7 +1073,6 @@
     "invalidTokenData": "بيانات الرمز غير صالحة",
     "unauthorizedRole": "غير مسموح بالوصول بناءً على الدور",
     "orgunitNotFound": "الوحدة التنظيمية غير موجودة",
-
     "subCategoriesFound": "تم العثور على فئات فرعية",
     "categoryNotFound": "الفئة غير موجودة",
     "changeOrdinalNotAllowed": "غير مسموح بتغيير الترتيب",
@@ -1066,7 +1080,6 @@
     "clientApiNotFound": "واجهة العميل غير موجودة",
     "clientApiDataStoreOptionsNotFound": "خيارات مخزن بيانات واجهة العميل غير موجودة",
     "aliasAlreadyInUse": "الاسم المستعار قيد الاستخدام بالفعل",
-
     "dataStoreIsInactive": "مخزن البيانات غير نشط",
     "notAllowedDataStoreType": "نوع مخزن البيانات غير مسموح به",
     "noFieldsFoundInInitState": "لا توجد حقول موجودة في الحالة الابتدائية",
@@ -1079,13 +1092,7 @@
     "joinDataStoreNotBuilt": "مخزن البيانات المندمج لم يتم بناؤه بعد",
     "fieldNameAlreadyExists": "اسم الحقل موجود بالفعل",
     "fieldDisplayNameAlreadyExists": "اسم العرض للحقل موجود بالفعل",
-
-
-
-
     "WebServiceConfigNotAvailableYet": "تكوين خدمة الويب غير متاح حالياً",
-
-
     "recordWorkflowNotFound": "تدفق السجل غير موجود",
     "recordWorkflowStepNotFound": "خطوة تدفق السجل غير موجودة",
     "workflowNotFound": "سير العمل غير موجود",
@@ -1108,8 +1115,8 @@
 
 
     "groupAlreadyExists": "المجموعة موجودة بالفعل",
-    "emailRequired":"البريد الإلكتروني إلزامي",
-    "VerifyPhone":"الرجاء التثبت من رقم الهاتف"
+    "emailRequired": "البريد الإلكتروني إلزامي",
+    "VerifyPhone": "الرجاء التثبت من رقم الهاتف"
 
 
 
@@ -1390,6 +1397,7 @@
   "confirmRequest": "هل أنت متأكد من طلبك؟",
   "confirmOperation": "هل أنت متأكد من العملية؟",
   "addField": "حقل جديد",
+
   "ordinal": "ترتيبي",
   "value": "القيمة",
   "entryDate": "تاريخ الإدخال",

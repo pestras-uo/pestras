@@ -8,6 +8,7 @@ import { User } from '@pestras/shared/data-model';
 @Component({
   selector: 'pestras-update-password',
   templateUrl: './update-password.component.html',
+  
 })
 export class UpdatePasswordComponent {
   readonly form = new FormGroup({

@@ -38,7 +38,7 @@ import { WorkspaceFeatureModule } from '@pestras/frontend/features/workspace';
     TopicsFeatureModule,
     WorkspaceFeatureModule,
     // pages
-    ProfileModule,
+    //ProfileModule,
 
     ToggleThemeModule,
   ],
