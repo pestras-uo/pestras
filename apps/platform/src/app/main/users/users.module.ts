@@ -39,7 +39,6 @@ import { UpdateProfileComponent } from './modals/update-profile/update-profile.c
     UpdateUsernameComponent,
     UpdatePasswordComponent,
     UpdateProfileComponent,
-    togglePasswordVisibilityDirective,
   ],
   imports: [
     // anguler
@@ -60,6 +59,7 @@ import { UpdateProfileComponent } from './modals/update-profile/update-profile.c
     NgxEchartsModule,
     AvatarWidget,
     NoDataPlaceholderWidget,
+    togglePasswordVisibilityDirective,
   ],
 })
 export class UsersModule {}

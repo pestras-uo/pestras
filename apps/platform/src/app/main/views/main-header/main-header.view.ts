@@ -8,19 +8,17 @@ import { Role } from '@pestras/shared/data-model';
 @Component({
   selector: 'main-header',
   templateUrl: './main-header.view.html',
-  styleUrls: ['./main-header.view.scss']
+  styleUrls: ['./main-header.view.scss'],
 })
 export class MainHeaderView {
   readonly roles = Role;
 
   dialogRef: DialogRef | null = null;
 
-  constructor(
-    private dialog: Dialog
-  ) { }
+  constructor(private dialog: Dialog) {}
 
   openDialog(tmp: TemplateRef<any>) {
-    this.dialogRef = this.dialog.open(tmp)
+    this.dialogRef = this.dialog.open(tmp);
   }
 
   closeDialog() {

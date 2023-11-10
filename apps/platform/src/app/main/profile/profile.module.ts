@@ -13,9 +13,10 @@ import { DialogModule } from '@angular/cdk/dialog';
 import { ContraModule } from '@pestras/frontend/util/contra';
 
 @NgModule({
-  declarations: [ProfilePage, togglePasswordVisibilityDirective],
+  declarations: [ProfilePage],
   imports: [
     CommonModule,
+    togglePasswordVisibilityDirective,
     ReactiveFormsModule,
     ContraModule,
     PuiPreloaderModule,

@@ -4,6 +4,7 @@ import { Directive, ElementRef, HostListener, Input } from '@angular/core';
 @Directive({
   selector: '[togglePasswordVisibility]',
   exportAs: 'tpv',
+  standalone: true,
 })
 export class togglePasswordVisibilityDirective {
   public isPasswordVisible = false;
