@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import { DataVizAggrStage, DataVizTypes } from "../statistics";
 import { IAggrPiplineStage } from "../util";
 import { Field } from './fields';
 import { WebServiceConfig } from './web-service';
@@ -35,13 +37,31 @@ export interface DataStore {
   aggr: AggregationDataStoreConfig | null;
   web_service: WebServiceConfig | null;
 
+  relateions: SubDataStore[];
   collaborators: string[]; // authors
 
   create_date: Date;
   last_modified: Date;
 }
 
-export interface SubDataStores {
+// Relations
+// ----------------------------------------------------------------------------------
+export interface RelationChart<T = any> {
+  aggregate: DataVizAggrStage[];
+  type: DataVizTypes;
+  options: T;
+}
+
+export interface SubDataStoreChart {
+  serial: string;
+  title: string;
+  width: number;
+  height: number;
+  options: RelationChart;
+}
+
+export interface SubDataStore {
+  serial: string;
   /** display name */
   name: string;
   data_store: string;
@@ -49,14 +69,20 @@ export interface SubDataStores {
     local_field: string;
     foreign_field: string;
   };
+  charts: SubDataStoreChart[];
+  charts_order: string[];
 }
 
+// Card View Config
+// ----------------------------------------------------------------------------------
 export interface DataStoreCardViewConfig {
   title: string;
   image: string | null;
   details: string[];
 }
 
+// Tree View Config
+// ----------------------------------------------------------------------------------
 export interface DataStoreTreeViewItemConfig {
   field: string;
   display_field: string | null;
@@ -66,6 +92,7 @@ export interface DataStoreTreeViewItemConfig {
  * string: workflow name
  * true: by pass
  * false: not allowed
+ * -----------------------------------------------------------------------------------
  */
 export type WorkflowOptions = Record<WorkflowTriggers, string | boolean>;
 
@@ -76,8 +103,6 @@ export interface DataStoreSettings {
   interface_field: string;
   card_view: DataStoreCardViewConfig | null;
   tree_view: DataStoreTreeViewItemConfig[] | null;
-  // joins
-  sub_data_stores: SubDataStores[];
 
   // table type only settings
   // ------------------------------------------------------------------------------------

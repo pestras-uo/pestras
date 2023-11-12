@@ -2,7 +2,7 @@
 /* eslint-disable @typescript-eslint/no-namespace */
 import { Request, Response } from "express";
 import { UserSession } from "../../auth";
-import { CreateDataStoreInput, SetWebServiceConfigInput, UpdateFieldConfigInput, UpdateFieldInput } from "@pestras/backend/models";
+import { CreateDataStoreInput, SetWebServiceConfigInput, UpdateFieldConfigInput, UpdateFieldInput, AddRelationChartInput, AddRelationInput, UpdateRelationChartInput, UpdateRelationInput } from "@pestras/backend/models";
 import {
   DataStore,
   ApiQuery,
@@ -13,7 +13,8 @@ import {
   ValueConstraint,
   WebServiceSelection,
   Field,
-  DataStoreSettings
+  DataStoreSettings,
+  SubDataStore
 } from "@pestras/shared/data-model";
 
 export namespace DataStoreApi {
@@ -122,6 +123,36 @@ export namespace DataStoreApi {
   export const REMOVE_FIELD_REQ_PATH = "/:serial/fields/:field";
   export type RemopveFieldReq = Request<{ serial: string; field: string; }>;
   export type RemopveFieldRes = Response<Date, UserSession>;
+
+  // relations
+  // --------------------------------------------------------------------------------------
+  export const ADD_RELATION_REQ_PATH = "/:serial/relations";
+  export type AddRelationReq = Request<{ serial: string; }, any, AddRelationInput>;
+  export type AddRelationRes = Response<SubDataStore, UserSession>;
+
+  export const UPDATE_RELATION_REQ_PATH = "/:serial/relations/:rSerial";
+  export type UpdateRelationReq = Request<{ serial: string; rSerial: string; }, any, UpdateRelationInput>;
+  export type UpdateRelationRes = Response<boolean, UserSession>;
+
+  export const ADD_RELATION_CHART_REQ_PATH = "/:serial/relations/:rSerial/charts";
+  export type AddRelationChartReq = Request<{ serial: string; rSerial: string; }, any, AddRelationChartInput>;
+  export type AddRelationChartRes = Response<string, UserSession>;
+
+  export const REORDER_RELATION_CHARTS_REQ_PATH = "/:serial/relations/:rSerial/reorder";
+  export type ReorderRelationChartsReq = Request<{ serial: string; rSerial: string; }, any, { order: string[]; }>;
+  export type ReorderRelationChartsRes = Response<boolean, UserSession>;
+
+  export const UPDATE_RELATION_CHART_REQ_PATH = "/:serial/relations/:rSerial/charts/:cSerial";
+  export type UpdateRelationChartReq = Request<{ serial: string; rSerial: string; cSerial: string; }, any, UpdateRelationChartInput>;
+  export type UpdateRelationChartRes = Response<boolean, UserSession>;
+
+  export const REMOVE_RELATION_CHART_REQ_PATH = "/:serial/relations/:rSerial/charts/:cSerial";
+  export type RemoveRelationChartReq = Request<{ serial: string; rSerial: string; cSerial: string; }>;
+  export type RemoveRelationChartRes = Response<boolean, UserSession>;
+
+  export const REMOVE_RELATION_REQ_PATH = "/:serial/relations/:rSerial";
+  export type RemoveRelationReq = Request<{ serial: string; rSerial: string; }>;
+  export type RemoveRelationRes = Response<boolean, UserSession>;
 
   // update collaborators
   // --------------------------------------------------------------------------------------
