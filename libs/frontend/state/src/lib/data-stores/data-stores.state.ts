@@ -241,6 +241,91 @@ export class DataStoresState extends StatorGroupState<DataStore> {
   }
 
 
+  // relations
+  // --------------------------------------------------------------------------------------
+  addRelation(serial: string, input: DataStoresApi.AddRelation.Body) {
+    return this.service.addRelation({ serial }, input)
+      .pipe(tap(r => this._update(serial, ds => {
+        return {
+          ...ds,
+          relateions: ds.relateions.concat(r)
+        };
+      })));
+  }
+
+  updateRelation(serial: string, rSerial: string, input: DataStoresApi.UpdateRelation.Body) {
+    return this.service.updateRelation({ serial, rSerial }, input)
+      .pipe(tap(() => this._update(serial, ds => {
+        return {
+          ...ds,
+          relateions: ds.relateions.map(r => r.serial === rSerial ? { ...r, ...input } : r)
+        };
+      })));
+  }
+
+  addRelationChart(serial: string, rSerial: string, input: DataStoresApi.AddRelationChart.Body) {
+    return this.service.addRelationChart({ serial, rSerial }, input)
+      .pipe(tap(ser => this._update(serial, ds => {
+        return {
+          ...ds,
+          relateions: ds.relateions.map(r => r.serial === rSerial
+            ? { ...r, charts: r.charts.concat({ ...input, serial: ser }), charts_order: r.charts_order.concat(ser) }
+            : r
+          )
+        };
+      })));
+  }
+
+  updateRelationChart(serial: string, rSerial: string, cSerial: string, input: DataStoresApi.UpdateRelationChart.Body) {
+    return this.service.updateRelationChart({ serial, rSerial, cSerial }, input)
+      .pipe(tap(() => this._update(serial, ds => {
+        return {
+          ...ds,
+          relateions: ds.relateions.map(r => r.serial === rSerial
+            ? { ...r, charts: r.charts.map(c => c.serial === cSerial ? { ...c, ...input } : c) }
+            : r
+          )
+        };
+      })));
+  }
+
+  reorderRelationCharts(serial: string, rSerial: string, order: string[]) {
+    return this.service.reorderRelationCharts({ serial, rSerial }, { order })
+      .pipe(tap(() => this._update(serial, ds => {
+        return {
+          ...ds,
+          relateions: ds.relateions.map(r => r.serial === rSerial
+            ? { ...r, charts_order: order }
+            : r
+          )
+        };
+      })));
+  }
+
+  removeRelationChart(serial: string, rSerial: string, cSerial: string) {
+    return this.service.removeRelationChart({ serial, rSerial, cSerial })
+      .pipe(tap(() => this._update(serial, ds => {
+        return {
+          ...ds,
+          relateions: ds.relateions.map(r => r.serial === rSerial
+            ? { ...r, charts: r.charts.filter(c => c.serial !== cSerial), charts_order: r.charts_order.filter(s => s !== cSerial) }
+            : r
+          )
+        };
+      })));
+  }
+
+  removeRelation(serial: string, rSerial: string) {
+    return this.service.removeRelation({ serial, rSerial })
+      .pipe(tap(() => this._update(serial, ds => {
+        return {
+          ...ds,
+          relateions: ds.relateions.filter(r => r.serial !== rSerial)
+        };
+      })));
+  }
+
+
   // owner & collaborators
   // --------------------------------------------------------------------------------------
   addCollaborator(serial: string, collaborator: string) {

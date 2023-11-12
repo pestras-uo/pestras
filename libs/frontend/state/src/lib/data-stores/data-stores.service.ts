@@ -10,7 +10,7 @@ export class DataStoresService {
   constructor(
     private envServ: EnvService,
     private readonly http: HttpClient
-  ) {}
+  ) { }
 
   // read
   // ------------------------------------------------------------------------------------------
@@ -204,6 +204,51 @@ export class DataStoresService {
     const path = injectURLPayload(this.envServ.env.api + DataStoresApi.RemoveField.REQ_PATH, params);
 
     return this.http.delete<DataStoresApi.RemoveField.Response>(path);
+  }
+
+
+  // relations
+  // ------------------------------------------------------------------------------------------
+  addRelation(params: DataStoresApi.AddRelation.Params, body: DataStoresApi.AddRelation.Body) {
+    const path = injectURLPayload(this.envServ.env.api + DataStoresApi.AddRelation.REQ_PATH, params);
+
+    return this.http.post<DataStoresApi.AddRelation.Response>(path, body);
+  }
+
+  updateRelation(params: DataStoresApi.UpdateRelation.Params, body: DataStoresApi.UpdateRelation.Body) {
+    const path = injectURLPayload(this.envServ.env.api + DataStoresApi.UpdateRelation.REQ_PATH, params);
+
+    return this.http.put<DataStoresApi.UpdateRelation.Response>(path, body);
+  }
+
+  addRelationChart(params: DataStoresApi.AddRelationChart.Params, body: DataStoresApi.AddRelationChart.Body) {
+    const path = injectURLPayload(this.envServ.env.api + DataStoresApi.AddRelationChart.REQ_PATH, params);
+
+    return this.http.post<DataStoresApi.AddRelationChart.Response>(path, body);
+  }
+
+  updateRelationChart(params: DataStoresApi.UpdateRelationChart.Params, body: DataStoresApi.UpdateRelationChart.Body) {
+    const path = injectURLPayload(this.envServ.env.api + DataStoresApi.UpdateRelationChart.REQ_PATH, params);
+
+    return this.http.put<DataStoresApi.UpdateRelationChart.Response>(path, body);
+  }
+
+  reorderRelationCharts(params: DataStoresApi.ReorderRelationCharts.Params, body: DataStoresApi.ReorderRelationCharts.Body) {
+    const path = injectURLPayload(this.envServ.env.api + DataStoresApi.ReorderRelationCharts.REQ_PATH, params);
+
+    return this.http.put<DataStoresApi.ReorderRelationCharts.Response>(path, body);
+  }
+
+  removeRelationChart(params: DataStoresApi.RemoveRelationChart.Params) {
+    const path = injectURLPayload(this.envServ.env.api + DataStoresApi.RemoveRelationChart.REQ_PATH, params);
+
+    return this.http.delete<DataStoresApi.RemoveRelationChart.Response>(path);
+  }
+
+  removeRelation(params: DataStoresApi.RemoveRelation.Params) {
+    const path = injectURLPayload(this.envServ.env.api + DataStoresApi.RemoveRelation.REQ_PATH, params);
+
+    return this.http.delete<DataStoresApi.RemoveRelation.Response>(path);
   }
 
 

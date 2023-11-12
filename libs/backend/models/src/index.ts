@@ -17,7 +17,16 @@ export {
   UpdateDashboardSlideInput,
   UpdateDashbaordViewInput
 } from "./lib/dashboards";
-export { CreateDataStoreInput, SetWebServiceConfigInput, UpdateFieldConfigInput, UpdateFieldInput } from "./lib/blueprints/data-stores";
+export { 
+  CreateDataStoreInput, 
+  SetWebServiceConfigInput, 
+  UpdateFieldConfigInput, 
+  UpdateFieldInput,
+  AddRelationInput,
+  UpdateRelationInput,
+  AddRelationChartInput,
+  UpdateRelationChartInput
+} from "./lib/blueprints/data-stores";
 export { UpdateDataVizInput, CreateDataVizInput } from "./lib/data-viz";
 export { CreateOrgunitInput, UpdateOrgunitInput } from "./lib/active-directory/orgunits";
 export { CreateRegionInput, UpdateRegionInput } from "./lib/active-directory/regions";
