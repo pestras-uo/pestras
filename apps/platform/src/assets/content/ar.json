@@ -1,8 +1,16 @@
 {
-  "categoryTypesList": [
-    { "name": "إسمي", "value": "nominal" },
-    { "name": "ترتيبي", "value": "ordinal" },
-    { "name": "نطاق ترتيبي", "value": "ordinal_range" }
+  "categoryTypesList": [{
+      "name": "إسمي",
+      "value": "nominal"
+    },
+    {
+      "name": "ترتيبي",
+      "value": "ordinal"
+    },
+    {
+      "name": "نطاق ترتيبي",
+      "value": "ordinal_range"
+    }
   ],
   "categoryTypes": {
     "nominal": "إسمي",
@@ -22,9 +30,14 @@
   "addRemark": "أضف ملاحظة",
   "deleteRecord": "حذف السجل",
   "colorsTheme": "سمة الألوان",
-  "colorsThemeList": [
-    { "name": "الفاتح", "value": "light" },
-    { "name": "الغامق", "value": "dark" }
+  "colorsThemeList": [{
+      "name": "الفاتح",
+      "value": "light"
+    },
+    {
+      "name": "الغامق",
+      "value": "dark"
+    }
   ],
   "new": "إضافة",
   "reject": "رفض",
@@ -34,13 +47,30 @@
   "allow": "سماح",
   "step": "الخطوة",
   "algo": "الخوارزمية",
-  "algoList": [
-    { "name": "الموافقة: واحد على الأقل - الرفض: واحد على الأقل", "value": "any" },
-    { "name": "الموافقة: واحد على الأقل - الرفض: الجميع", "value": "any_all" },
-    { "name": "الموافقة: الجميع - الرفض: واحد على الأقل", "value": "all_any" },
-    { "name": "الموافقة: واحد على الأقل - الرفض: الأغلبية", "value": "any_most" },
-    { "name": "الموافقة: الأغلبية - الرفض: واحد على الأقل", "value": "most_any" },
-    { "name": "الموافقة: الأغلبية - الرفض: الأغلبية", "value": "most" }
+  "algoList": [{
+      "name": "الموافقة: واحد على الأقل - الرفض: واحد على الأقل",
+      "value": "any"
+    },
+    {
+      "name": "الموافقة: واحد على الأقل - الرفض: الجميع",
+      "value": "any_all"
+    },
+    {
+      "name": "الموافقة: الجميع - الرفض: واحد على الأقل",
+      "value": "all_any"
+    },
+    {
+      "name": "الموافقة: واحد على الأقل - الرفض: الأغلبية",
+      "value": "any_most"
+    },
+    {
+      "name": "الموافقة: الأغلبية - الرفض: واحد على الأقل",
+      "value": "most_any"
+    },
+    {
+      "name": "الموافقة: الأغلبية - الرفض: الأغلبية",
+      "value": "most"
+    }
   ],
   "algos": {
     "any": "الموافقة: واحد على الأقل - الرفض: واحد على الأقل",
@@ -53,9 +83,14 @@
   "steps": "الخطوات",
   "defaultAction": "الإجراء الإفتراضي",
   "defaultActionInfo": "في حال تخطي عدد الأيام الأقصى للمراجعة",
-  "defaultActionList": [
-    { "name": "الموافقة", "value": "approve" },
-    { "name": "الرفض", "value": "reject" }
+  "defaultActionList": [{
+      "name": "الموافقة",
+      "value": "approve"
+    },
+    {
+      "name": "الرفض",
+      "value": "reject"
+    }
   ],
   "defaultActions": {
     "approve": "الموافقة",
@@ -131,22 +166,49 @@
   "clientName": "اسم العميل",
   "clientsList": "قائمة العملاء",
   "recordsPerPage": "عدد السجلات في الصفحة",
-  "contentViewTypes": [
-    { "name": "نص منسق", "value": "richText" },
-    { "name": "صورة", "value": "image" }
+  "contentViewTypes": [{
+      "name": "نص منسق",
+      "value": "richText"
+    },
+    {
+      "name": "صورة",
+      "value": "image"
+    }
   ],
-  "reportViewTypes": [
-    { "name": "نص منسق", "value": "richText" },
-    { "name": "صورة", "value": "image" },
-    { "name": "تصوير بيانات", "value": "dataViz" }
+  "reportViewTypes": [{
+      "name": "نص منسق",
+      "value": "richText"
+    },
+    {
+      "name": "صورة",
+      "value": "image"
+    },
+    {
+      "name": "تصوير بيانات",
+      "value": "dataViz"
+    }
   ],
   "calcFields": "حساب الحقول",
-  "dataVizStages": [
-    { "name": "تصفية", "value": "filter" },
-    { "name": "تجميع", "value": "group" },
-    { "name": "تحديد العدد", "value": "limit" },
-    { "name": "ترتيب", "value": "sort" },
-    { "name": "تحويل قيم إلى حقول", "value": "transpose" }
+  "dataVizStages": [{
+      "name": "تصفية",
+      "value": "filter"
+    },
+    {
+      "name": "تجميع",
+      "value": "group"
+    },
+    {
+      "name": "تحديد العدد",
+      "value": "limit"
+    },
+    {
+      "name": "ترتيب",
+      "value": "sort"
+    },
+    {
+      "name": "تحويل قيم إلى حقول",
+      "value": "transpose"
+    }
   ],
   "selectOperation": "اختر عملية",
   "modifyRecords": "تعديل السجلات",
@@ -162,30 +224,79 @@
   "groupFields": "حقول التجميع",
   "logical": "منطقي",
   "groupMethod": "طريقة التجميع",
-  "statisticsMethods": [
-    { "name": "أول قيمة", "value": "first" },
-    { "name": "آخر قيمة", "value": "last" },
-    { "name": "العدد", "value": "count" },
-    { "name": "أقل قيمة", "value": "min" },
-    { "name": "أعلى قيمة", "value": "max" },
-    { "name": "مجال القيم", "value": "range" },
-    { "name": "المجموع", "value": "sum" },
-    { "name": "المعدل", "value": "mean" },
-    { "name": "قيمة الربع الأول", "value": "q1" },
-    { "name": "القيمة المتوسطة", "value": "medean" },
-    { "name": "قيمة الربع الثالث", "value": "q3" },
-    { "name": "النطاق الربيعي", "value": "iqr" },
-    { "name": "التباين", "value": "variance" },
-    { "name": "الانحراف المعياري", "value": "std" },
-    { "name": "القيمة السائدة", "value": "mode" },
-    { "name": "انحراف القيم", "value": "skewness" },
-    { "name": "مدى التفرط", "value": "kurtosis" }
+  "statisticsMethods": [{
+      "name": "أول قيمة",
+      "value": "first"
+    },
+    {
+      "name": "آخر قيمة",
+      "value": "last"
+    },
+    {
+      "name": "العدد",
+      "value": "count"
+    },
+    {
+      "name": "أقل قيمة",
+      "value": "min"
+    },
+    {
+      "name": "أعلى قيمة",
+      "value": "max"
+    },
+    {
+      "name": "مجال القيم",
+      "value": "range"
+    },
+    {
+      "name": "المجموع",
+      "value": "sum"
+    },
+    {
+      "name": "المعدل",
+      "value": "mean"
+    },
+    {
+      "name": "قيمة الربع الأول",
+      "value": "q1"
+    },
+    {
+      "name": "القيمة المتوسطة",
+      "value": "medean"
+    },
+    {
+      "name": "قيمة الربع الثالث",
+      "value": "q3"
+    },
+    {
+      "name": "النطاق الربيعي",
+      "value": "iqr"
+    },
+    {
+      "name": "التباين",
+      "value": "variance"
+    },
+    {
+      "name": "الانحراف المعياري",
+      "value": "std"
+    },
+    {
+      "name": "القيمة السائدة",
+      "value": "mode"
+    },
+    {
+      "name": "انحراف القيم",
+      "value": "skewness"
+    },
+    {
+      "name": "مدى التفرط",
+      "value": "kurtosis"
+    }
   ],
   "_minutes": "دقائق",
   "showInternalRegions": "عرض المناطق الداخلية",
   "selectMap": "اختر خريطة",
-  "dataVizFilterOperators": [
-    {
+  "dataVizFilterOperators": [{
       "name": "يساوي",
       "value": "$eq"
     },
@@ -241,8 +352,7 @@
   "polynomialOrder": "عدد الحدود",
   "useRegression": "تفعيل حساب الإرتباط",
   "regressionType": "نوع الإرتباط",
-  "regressionTypes": [
-    {
+  "regressionTypes": [{
       "name": "خطي",
       "value": "linear"
     },
@@ -268,8 +378,7 @@
   "valueField": "حقل القيمة",
   "regionField": "حقل المنطقة",
   "mapType": "نوع الخريطة",
-  "mapTypesList": [
-    {
+  "mapTypesList": [{
       "name": "تصنيف مناطق",
       "value": "regions"
     },
@@ -284,8 +393,7 @@
   ],
   "area": "مساحي",
   "markPoints": "تحديد النقاط",
-  "markPointsList": [
-    {
+  "markPointsList": [{
       "name": "المعدل",
       "value": "average"
     },
@@ -299,8 +407,7 @@
     }
   ],
   "markLines": "تحديد الخطوط",
-  "markLinesList": [
-    {
+  "markLinesList": [{
       "name": "المعدل",
       "value": "average"
     },
@@ -317,8 +424,7 @@
   "colorsRange": "نطاق الألوان",
   "sizeField": "حقل القياس",
   "nameField": "حقل التسمية",
-  "chartTypes": [
-    {
+  "chartTypes": [{
       "name": "عمودي أو أفقي",
       "value": "bar"
     },
@@ -374,8 +480,7 @@
   "deleteView": "حذف نافذة",
   "viewSize": "حجم النافذة",
   "width": "العرض",
-  "viewWidthSizes": [
-    {
+  "viewWidthSizes": [{
       "name": "ربع الشاشة",
       "value": 3
     },
@@ -401,8 +506,7 @@
     }
   ],
   "height": "الطول",
-  "viewHeightSizes": [
-    {
+  "viewHeightSizes": [{
       "name": "ربع الشاشة",
       "value": 1
     },
@@ -424,8 +528,7 @@
   "viewSettingsInfo": "تحديد الحقول وتفاصيل الإظهار",
   "viewDetails": "بيانات العرض",
   "viewDetailsInfo": "تحديد العنوان ومصدر البيانات ونوع الإظهار",
-  "dataVizTypes": [
-    {
+  "dataVizTypes": [{
       "name": "تصنيفي",
       "value": "categorical"
     },
@@ -479,7 +582,7 @@
   "image": "الصورة",
   "addImage": "إضافة صورة",
   "attachment": "المرفق",
-  "addAttachment": "إضافة مرفق",  
+  "addAttachment": "إضافة مرفق",
   "comments": "التعليقات",
   "addComment": "اضافة تعليق",
   "commentsInfo": "تعليقات على الموضوع من بقية المستخدمين",
@@ -533,8 +636,7 @@
   "pestras": "نظام بسترس",
   "mapFields": "توحيد الحقول",
   "welcomeMsg": "تخطيط إستراتيجي، إدارة مخاطر، مؤشرات قياس، تحليل بيانات وغيرها من الأنظمة في منصة واحدة",
-  "aggrStages": [
-    {
+  "aggrStages": [{
       "name": "تجزئة حقل",
       "value": "bucket",
       "desc": "يصنف المستندات الواردة إلى عدد محدد من المجموعات ، تسمى الحاويات ، بناءً على تعبير محدد"
@@ -607,8 +709,7 @@
   ],
   "outputs": "المخرجات",
   "chooseField": "اختر حقل",
-  "createFieldOptions": [
-    {
+  "createFieldOptions": [{
       "name": "يدوي",
       "value": 1
     },
@@ -621,8 +722,7 @@
       "value": 3
     }
   ],
-  "setStageOperations": [
-    {
+  "setStageOperations": [{
       "name": "تحويل",
       "value": "convert"
     },
@@ -655,8 +755,7 @@
       "value": "switch"
     }
   ],
-  "fillOptions": [
-    {
+  "fillOptions": [{
       "name": "قيمة",
       "value": null
     },
@@ -669,8 +768,7 @@
       "value": "locf"
     }
   ],
-  "orderOptions": [
-    {
+  "orderOptions": [{
       "name": "تنازلي",
       "value": -1
     },
@@ -683,8 +781,7 @@
   "roundPlace": "الفاصلة العشرية",
   "onNullValue": "القيمة في حالة عدم توفر قيمة للمدخل",
   "onErrorValue": "القيمة في حالة الخطأ",
-  "convertOptionTypes": [
-    {
+  "convertOptionTypes": [{
       "name": "رقم صحيح",
       "value": "int"
     },
@@ -804,8 +901,7 @@
   "cumulationEnd": "نهاية التراكم",
   "partition": "التقسيم",
   "partitions": "التقسيمات",
-  "cumulateOperations": [
-    {
+  "cumulateOperations": [{
       "name": "تجميع",
       "value": "sum"
     },
@@ -850,8 +946,7 @@
   "maximum": "الحد الأعلى",
   "omit": "حذف السجل",
   "allFields": "جميع الخانات",
-  "castOptions": [
-    {
+  "castOptions": [{
       "name": "نص",
       "value": "string"
     },
@@ -922,7 +1017,14 @@
     "fieldNotFound": "الحقل غير موجود",
     "summaryRequired": "الرجاء إدخال الملخص للنموذج",
     "nameRequired": "الإسم إلزامي",
-    "titleRequired": "الإسم إلزامي!",
+    "topicAddError": "حدثت مشكلة في إنشاء الموضوع",
+    "displayNameRequired": " مسمى العرض إلزامي",
+    "groupRequired": "نوع المجموعة إلزامي",
+    "refToRequired": "المرجع إلى إلزامي",
+    "titleRequired": "العنوان إلزامي!",
+    "subTitleRequired": "العنوان الفرعي إلزامي!",
+
+
     "userNotFound": "المستخدم غير موجود",
     "username": "الرجاء التحقق من اسم المستخدم",
     "password": "الرجاء التحقق من كلمة المرور",
@@ -947,7 +1049,78 @@
     "heightTooLarge": "طول الصورة كبير",
     "widthTooSmall": "عرض الصورة صغير",
     "heightTooSmall": "طول الصورة صغير",
-    "countExceed": "عدد الملفات أكثر من الحد"
+    "countExceed": "عدد الملفات أكثر من الحد",
+
+
+
+
+    "errorUploadingAvatar": "خطأ أثناء رفع الصورة الرمزية",
+    "attachmentNotFound": "المرفق غير موجود",
+    "blueprintNotFound": "التصميم الأساسي غير موجود",
+    "viewNotFound": "العرض غير موجود",
+    "dataStoreNotFound": "مخزن البيانات غير موجود",
+    "recordNotFound": "السجل غير موجود",
+    "fileNotFound": "الملف غير موجود",
+    "imageNotFound": "الصورة غير موجودة",
+    "userIsInactive": "المستخدم غير نشط",
+    "useruthNotFound": "بيانات المصادقة للمستخدم غير موجودة",
+
+    "invalidTokenType": "نوع الرمز غير صالح",
+    "tokenExpired": "انتهت صلاحية الرمز",
+    "tokenRequired": "الرمز مطلوب",
+    "invalidExpired": "الرمز منتهي الصلاحية",
+    "invalidToken": "الرمز غير صالح",
+    "invalidTokenData": "بيانات الرمز غير صالحة",
+    "unauthorizedRole": "غير مسموح بالوصول بناءً على الدور",
+    "orgunitNotFound": "الوحدة التنظيمية غير موجودة",
+    "subCategoriesFound": "تم العثور على فئات فرعية",
+    "categoryNotFound": "الفئة غير موجودة",
+    "changeOrdinalNotAllowed": "غير مسموح بتغيير الترتيب",
+    "clientNotFound": "العميل غير موجود",
+    "clientApiNotFound": "واجهة العميل غير موجودة",
+    "clientApiDataStoreOptionsNotFound": "خيارات مخزن بيانات واجهة العميل غير موجودة",
+    "aliasAlreadyInUse": "الاسم المستعار قيد الاستخدام بالفعل",
+    "dataStoreIsInactive": "مخزن البيانات غير نشط",
+    "notAllowedDataStoreType": "نوع مخزن البيانات غير مسموح به",
+    "noFieldsFoundInInitState": "لا توجد حقول موجودة في الحالة الابتدائية",
+    "dataStoreAlreadyBuilt": "مخزن البيانات تم بناؤه بالفعل",
+    "dataStoreHosNoFieldsDefined": "مخزن البيانات لا يحتوي على حقول محددة",
+    "aggrNotProvided": "التجميع غير مقدم",
+    "srcDataStoreNotFound": "مخزن البيانات المصدر غير موجود",
+    "srcDataStoreNotBuilt": "مخزن البيانات المصدر لم يتم بناؤه بعد",
+    "joinDataStoreNotFound": "مخزن البيانات المندمج غير موجود",
+    "joinDataStoreNotBuilt": "مخزن البيانات المندمج لم يتم بناؤه بعد",
+    "fieldNameAlreadyExists": "اسم الحقل موجود بالفعل",
+    "fieldDisplayNameAlreadyExists": "اسم العرض للحقل موجود بالفعل",
+    "WebServiceConfigNotAvailableYet": "تكوين خدمة الويب غير متاح حالياً",
+    "recordWorkflowNotFound": "تدفق السجل غير موجود",
+    "recordWorkflowStepNotFound": "خطوة تدفق السجل غير موجودة",
+    "workflowNotFound": "سير العمل غير موجود",
+    "workflowStepDefNotFound": "تعريف خطوة السير العمل غير موجود",
+    "recordHasAnActiveWorkflowReview": "السجل لديه استعراض سير العمل النشط",
+    "unsupportedDataStoreType": "نوع مخزن البيانات غير مدعوم",
+    "dataStoreNotBuiltYet": "مخزن البيانات لم يُبن بعد",
+    "workflowStepNotAllowed": "خطوة السير العمل غير مسموح بها",
+    "valueAlreadyExists": "القيمة موجودة بالفعل",
+    "deleteRecordNotAllowed": "غير مسموح بحذف السجل",
+    "historyNotFound": "السجل غير موجود",
+
+
+    "unauthorizedOwner": "غير مصرح للمالك",
+    "updateNotAllowed": "غير مسموح بالتحديث",
+    "commentNotFound": "التعليق غير موجود",
+    "titleAlreadyExissts": "العنوان موجود بالفعل",
+    "dashboardNotFound": "لوحة التحكم غير موجودة",
+    "reportNotFound": "التقرير غير موجود",
+
+
+    "groupAlreadyExists": "المجموعة موجودة بالفعل",
+    "emailRequired": "البريد الإلكتروني إلزامي",
+    "VerifyPhone": "الرجاء التثبت من رقم الهاتف"
+
+
+
+
   },
   "success": {
     "blueprintAdd": "تم إضافة النموذج بنجاح",
@@ -1079,8 +1252,7 @@
   "manualEntry": "إدخال يدوي",
   "aggregational": "تجميعي",
   "aggregationSettings": "إعدادات التجميع",
-  "dataStoresTypes": [
-    {
+  "dataStoresTypes": [{
       "value": "table",
       "name": "جدول"
     },
@@ -1095,8 +1267,7 @@
   ],
   "updateInterval": "فترات التحديث",
   "intervals": "الفترات",
-  "intervalsList": [
-    {
+  "intervalsList": [{
       "name": "لا يوجد",
       "value": 0
     },
@@ -1134,8 +1305,7 @@
   "displayName": "مسمى العرض",
   "isSystem": "النظام",
   "unit": "وحدة القياس",
-  "fieldTypesList": [
-    {
+  "fieldTypesList": [{
       "name": "غير معروف",
       "value": "unknown"
     },
@@ -1199,8 +1369,7 @@
     "image": "صورة"
   },
   "referenceType": "نوع الإسناد",
-  "referenceTypesList": [
-    {
+  "referenceTypesList": [{
       "name": "مخزن بيانات",
       "value": "data_store"
     },
@@ -1228,6 +1397,7 @@
   "confirmRequest": "هل أنت متأكد من طلبك؟",
   "confirmOperation": "هل أنت متأكد من العملية؟",
   "addField": "حقل جديد",
+
   "ordinal": "ترتيبي",
   "value": "القيمة",
   "entryDate": "تاريخ الإدخال",
@@ -1237,8 +1407,7 @@
   "updateWsConfig": "تعديل إعدادات خدمة الويب",
   "resourceUri": "رابط الخدمة",
   "httpMethod": "طريقة الطلب",
-  "httpMethods": [
-    {
+  "httpMethods": [{
       "name": "GET",
       "value": "get"
     },
@@ -1275,8 +1444,7 @@
   "use": "استخدام",
   "usernameAndPassword": "اسم المستخدم وكلمة المرور",
   "contentType": "نوع المحتوى المرسل",
-  "httpContentTypes": [
-    {
+  "httpContentTypes": [{
       "name": "JSON",
       "value": "application/json"
     },
@@ -1286,8 +1454,7 @@
     }
   ],
   "acceptContent": "نوع المحتوى العائد",
-  "acceptContentTypes": [
-    {
+  "acceptContentTypes": [{
       "name": "JSON",
       "value": "application/json"
     },
@@ -1305,8 +1472,7 @@
   "modifyDate": "نعديل التاريخ",
   "queryDest": "طريقة التضمين",
   "body": "محتوى",
-  "queryDests": [
-    {
+  "queryDests": [{
       "name": "بحث",
       "value": "search"
     },
@@ -1320,8 +1486,7 @@
     }
   ],
   "usage": "الإستخدام",
-  "usages": [
-    {
+  "usages": [{
       "name": "الطلبات اللاحقة",
       "value": 0
     },
@@ -1345,8 +1510,7 @@
   "submit": "تثبيت",
   "noFieldsFound": "لا يوجد خانات متاحة في مخزن البيانات",
   "constraintsOperator": "المقارن",
-  "constraintsOperators": [
-    {
+  "constraintsOperators": [{
       "name": "يساوي",
       "value": "$eq"
     },
@@ -1391,8 +1555,7 @@
       "value": "$regex"
     }
   ],
-  "filterOperators": [
-    {
+  "filterOperators": [{
       "name": "يساوي",
       "value": "$eq"
     },
@@ -1433,8 +1596,7 @@
   "inputModifiers": "تعديل قيمة المدخل",
   "valueModifier": "معدل القيمة",
   "compareToModifier": "معدل قيمة المقارنة",
-  "valueModifiers": [
-    {
+  "valueModifiers": [{
       "name": "رقم صحيح",
       "value": "int"
     },
@@ -1510,8 +1672,7 @@
   "formula": "المعادلة",
   "cumsum": "تراكمي",
   "dateUnit": "وحدة تاريخ",
-  "dateUnitsList": [
-    {
+  "dateUnitsList": [{
       "value": "year",
       "name": "سنة"
     },
@@ -1538,8 +1699,7 @@
   "to": "إلى",
   "removeConstraint": "إزالة مقارنة",
   "confirmRemoveConstraint": "هل أنت متأكد منإزالة المقارنة؟",
-  "computeTypes": [
-    {
+  "computeTypes": [{
       "name": "شرطي",
       "value": "switch"
     },
@@ -1598,8 +1758,7 @@
   ],
   "timespan": "المدة الزمنية",
   "priority": "الأولوية",
-  "measureLevels": [
-    {
+  "measureLevels": [{
       "name": "منخفضة جدا",
       "value": 0
     },

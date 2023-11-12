@@ -110,7 +110,6 @@
         </div>
       </div>
     </div>
-
     <p
       *ngIf="form.controls['username'].invalid && (form.controls['username'].dirty || form.controls['username'].touched)"
       class="note note-danger f10 mbe-4"
@@ -130,6 +129,18 @@
       class="note note-danger f10"
     >
       {{c['errors'].fullnameRequired}}
+    </p>
+    <p
+      *ngIf="form.controls['email'].invalid && (form.controls['email'].dirty || form.controls['email'].touched)"
+      class="note note-danger f10"
+    >
+      {{c['errors'].emailRequired}}
+    </p>
+    <p
+      *ngIf="form.controls['mobile'].invalid && (form.controls['mobile'].dirty || form.controls['mobile'].touched)"
+      class="note note-danger f10"
+    >
+      {{c['errors'].VerifyPhone}}
     </p>
   </div>
 

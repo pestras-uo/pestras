@@ -13,6 +13,7 @@ import {
   PuiPreloaderModule,
   PuiSelectInput,
   PuiUtilPipesModule,
+  togglePasswordVisibilityDirective,
 } from '@pestras/frontend/ui';
 import { UsersListView } from './views/users-list/users-list.view';
 import { UserDetailsView } from './views/user-details/user-details.view';
@@ -58,6 +59,7 @@ import { UpdateProfileComponent } from './modals/update-profile/update-profile.c
     NgxEchartsModule,
     AvatarWidget,
     NoDataPlaceholderWidget,
+    togglePasswordVisibilityDirective,
   ],
 })
 export class UsersModule {}

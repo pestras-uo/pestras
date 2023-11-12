@@ -23,12 +23,12 @@
 
   <div class="flex">
     <toggle-theme></toggle-theme>
-  
+
     <ng-container *ngIf="null | contraLang | async as lang">
       <button #langBtn class="btn-icon btn-round" (click)="langDD.show()">
         <i size="small" puiIcon="language"></i>
       </button>
-  
+
       <pui-dropdown #langDD [origin]="langBtn">
         <div class="card card-small w-4 shadow-4" contraLang #contra="contra">
           <div class="card-body list list-actions p-0">

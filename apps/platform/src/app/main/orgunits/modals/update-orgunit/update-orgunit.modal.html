@@ -41,6 +41,17 @@
         formControlName="regions"
       ></pui-multi-select-input>
     </div>
+    <div class="mb-3">
+      <p
+        *ngIf="
+              form.controls['name'].invalid &&
+              (form.controls['name'].dirty || form.controls['name'].touched)
+            "
+        class="note note-danger f10 mbe-4"
+      >
+        {{ c['errors'].nameRequired }}
+      </p>
+    </div>
   </div>
 
   <div class="card-footer">
