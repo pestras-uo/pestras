@@ -18,7 +18,7 @@ export async function create(
     collaborators: [],
     create_date: date,
     last_modified: date,
-    relateions: [],
+    relations: [],
     fields: data.type === DataStoreType.TABLE ? getSystemFields(data.blueprint) : [],
     is_active: true,
     settings: {

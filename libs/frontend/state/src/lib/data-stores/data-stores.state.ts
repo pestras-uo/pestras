@@ -248,7 +248,7 @@ export class DataStoresState extends StatorGroupState<DataStore> {
       .pipe(tap(r => this._update(serial, ds => {
         return {
           ...ds,
-          relateions: ds.relateions.concat(r)
+          relations: ds.relations.concat(r)
         };
       })));
   }
@@ -258,7 +258,7 @@ export class DataStoresState extends StatorGroupState<DataStore> {
       .pipe(tap(() => this._update(serial, ds => {
         return {
           ...ds,
-          relateions: ds.relateions.map(r => r.serial === rSerial ? { ...r, ...input } : r)
+          relations: ds.relations.map(r => r.serial === rSerial ? { ...r, ...input } : r)
         };
       })));
   }
@@ -268,7 +268,7 @@ export class DataStoresState extends StatorGroupState<DataStore> {
       .pipe(tap(ser => this._update(serial, ds => {
         return {
           ...ds,
-          relateions: ds.relateions.map(r => r.serial === rSerial
+          relations: ds.relations.map(r => r.serial === rSerial
             ? { ...r, charts: r.charts.concat({ ...input, serial: ser }), charts_order: r.charts_order.concat(ser) }
             : r
           )
@@ -281,7 +281,7 @@ export class DataStoresState extends StatorGroupState<DataStore> {
       .pipe(tap(() => this._update(serial, ds => {
         return {
           ...ds,
-          relateions: ds.relateions.map(r => r.serial === rSerial
+          relations: ds.relations.map(r => r.serial === rSerial
             ? { ...r, charts: r.charts.map(c => c.serial === cSerial ? { ...c, ...input } : c) }
             : r
           )
@@ -294,7 +294,7 @@ export class DataStoresState extends StatorGroupState<DataStore> {
       .pipe(tap(() => this._update(serial, ds => {
         return {
           ...ds,
-          relateions: ds.relateions.map(r => r.serial === rSerial
+          relations: ds.relations.map(r => r.serial === rSerial
             ? { ...r, charts_order: order }
             : r
           )
@@ -307,7 +307,7 @@ export class DataStoresState extends StatorGroupState<DataStore> {
       .pipe(tap(() => this._update(serial, ds => {
         return {
           ...ds,
-          relateions: ds.relateions.map(r => r.serial === rSerial
+          relations: ds.relations.map(r => r.serial === rSerial
             ? { ...r, charts: r.charts.filter(c => c.serial !== cSerial), charts_order: r.charts_order.filter(s => s !== cSerial) }
             : r
           )
@@ -320,7 +320,7 @@ export class DataStoresState extends StatorGroupState<DataStore> {
       .pipe(tap(() => this._update(serial, ds => {
         return {
           ...ds,
-          relateions: ds.relateions.filter(r => r.serial !== rSerial)
+          relations: ds.relations.filter(r => r.serial !== rSerial)
         };
       })));
   }

@@ -6,7 +6,7 @@ import { Pipe, PipeTransform } from '@angular/core';
 })
 export class FnPipe implements PipeTransform {
 
-  transform<T>(input: any, fn: (...args: any[]) => T, ...extra: any[]): any {
+  transform<T>(input: any, fn: (...args: any[]) => T, ...extra: any[]): T {
     return fn(input, ...extra);
   }
 

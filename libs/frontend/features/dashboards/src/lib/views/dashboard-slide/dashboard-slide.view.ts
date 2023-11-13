@@ -221,7 +221,7 @@ export class DashboardSlideComponent implements OnChanges {
     });
   }
 
-  openSideDrawer(tmp: TemplateRef<any>, view: string) {
+  openSideDrawer(tmp: TemplateRef<unknown>, view: string) {
     this.editingView = view;
     this.sideDrawer.attach(tmp);
   }

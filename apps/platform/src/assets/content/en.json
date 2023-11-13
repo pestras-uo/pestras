@@ -1,4 +1,9 @@
 {
+  "charts": "Charts",
+  "deleteRelation": "Delete Relation",
+  "editRelation": "Update Relation",
+  "addRelation": "Add Relation",
+  "relationOptions": "Relation Options",
   "categoryTypesList": [{
       "name": "Nominal",
       "value": "nominal"

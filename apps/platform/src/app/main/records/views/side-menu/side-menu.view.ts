@@ -8,7 +8,7 @@ import { FormControl } from '@angular/forms';
 import { Router } from '@angular/router';
 import { RecordsService } from '@pestras/frontend/state';
 import { ToastService } from '@pestras/frontend/ui';
-import { DataRecordState, DataStore, DataStoreType, SubDataStores, TableDataRecord, WorkflowTriggers } from '@pestras/shared/data-model';
+import { DataRecordState, DataStore, DataStoreType, SubDataStore, TableDataRecord, WorkflowTriggers } from '@pestras/shared/data-model';
 
 @Component({
   selector: 'app-side-menu',
@@ -19,7 +19,7 @@ export class SideMenuView implements OnChanges {
 
   readonly deleteMsgCtrl = new FormControl<string>('');
 
-  subDataStores!: SubDataStores[];
+  subDataStores!: SubDataStore[];
   isTable!: boolean;
   deleteAllowed = false;
   dialogRef: DialogRef | null = null;
@@ -53,7 +53,7 @@ export class SideMenuView implements OnChanges {
     this.isTable = this.dataStore.type === DataStoreType.TABLE;
     this.workflowEnabled = Object.keys(this.dataStore.settings.workflow).some(k => typeof this.dataStore.settings.workflow[k as WorkflowTriggers] === 'string');
     this.includeDeleteMsg = typeof this.dataStore.settings.workflow.delete === 'string';
-    this.subDataStores = this.dataStore.settings.sub_data_stores;
+    this.subDataStores = this.dataStore.relations;
     this.deleteAllowed = this.state === 'draft' || !!this.dataStore.settings.workflow.delete;
   }
 

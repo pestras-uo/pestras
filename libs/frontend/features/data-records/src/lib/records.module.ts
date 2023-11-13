@@ -20,6 +20,7 @@ import { RecordsCardView } from './views/records-list/records-cards/records-card
 import { RecordsTableView } from './views/records-list/records-table/records-table.view';
 import { TreeViewView } from './views/records-list/records-tree/records-tree.view';
 import { RecordsListView } from './views/records-list/records-list.view';
+import { RecordsSearchPipe } from './pipes/records-search.pipe';
 
 
 
@@ -33,7 +34,8 @@ import { RecordsListView } from './views/records-list/records-list.view';
     RecordsCardView,
     RecordsTableView,
     TreeViewView,
-    RecordsListView
+    RecordsListView,
+    RecordsSearchPipe
   ],
   imports: [
     CommonModule,
@@ -67,7 +69,8 @@ import { RecordsListView } from './views/records-list/records-list.view';
     RecordsPipe,
     QueryRecordsPipe,
     RecordCardView,
-    RecordsListView
+    RecordsListView,
+    RecordsSearchPipe
   ]
 })
 export class RecordsFeatureModule { }

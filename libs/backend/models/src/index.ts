@@ -28,7 +28,6 @@ export {
   UpdateRelationChartInput
 } from "./lib/blueprints/data-stores";
 export { UpdateDataVizInput, CreateDataVizInput } from "./lib/data-viz";
-export { CreateOrgunitInput, UpdateOrgunitInput } from "./lib/active-directory/orgunits";
 export { CreateRegionInput, UpdateRegionInput } from "./lib/active-directory/regions";
 export { UpdateReportInput, UpdateReportViewInput, CreateReportInput } from "./lib/reports";
 export { CreateTopicInput, UpdateTopicInput } from "./lib/blueprints/topics";

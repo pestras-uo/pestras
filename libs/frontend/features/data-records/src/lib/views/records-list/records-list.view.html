@@ -1,5 +1,5 @@
 <ng-container *contra="let c">
-  <div *ngIf="!headless" class="toolbar">
+  <div *ngIf="!headless" class="toolbar mbe-4">
     <h2>{{c['records']}}</h2>
 
     <div class="grow"></div>
@@ -10,8 +10,6 @@
   </div>
 
   <ng-container *ngIf="!isTable">
-    <div class="divider mbs-4 mbe-8"></div>
-
     <ng-container [ngTemplateOutlet]="recordsTmp"></ng-container>
   </ng-container>
 

@@ -20,7 +20,7 @@ export async function addRelation(
     ...input
   };
 
-  await this.col.updateOne({ serial }, { $push: { relateions: relation } });
+  await this.col.updateOne({ serial }, { $push: { relations: relation } });
 
   return relation;
 }
@@ -35,10 +35,10 @@ export async function updateRelation(
   rSerial: string,
   input: UpdateRelationInput
 ) {
-  await this.col.updateOne({ serial, 'relateions.serial': rSerial }, {
+  await this.col.updateOne({ serial, 'relations.serial': rSerial }, {
     $set: {
-      'relateions.$.name': input.name,
-      'relateions.$.on': input.on
+      'relations.$.name': input.name,
+      'relations.$.on': input.on
     }
   });
 
@@ -60,10 +60,10 @@ export async function addRelationChart(
     ...input
   };
 
-  await this.col.updateOne({ serial, 'relateions.serial': rSerial }, {
+  await this.col.updateOne({ serial, 'relations.serial': rSerial }, {
     $push: {
-      'relateions.$.charts_order': chart.serial,
-      'relateions.$.charts': chart
+      'relations.$.charts_order': chart.serial,
+      'relations.$.charts': chart
     }
   });
 
@@ -83,12 +83,12 @@ export async function updateRelationChart(
 ) {
 
   await this.col.updateOne(
-    { serial, 'relateions.serial': rSerial },
+    { serial, 'relations.serial': rSerial },
     {
       $set: {
-        'relateions.$.charts.$[chart].title': input.title,
-        'relateions.$.charts.$[chart].width': input.width,
-        'relateions.$.charts.$[chart].height': input.height
+        'relations.$.charts.$[chart].title': input.title,
+        'relations.$.charts.$[chart].width': input.width,
+        'relations.$.charts.$[chart].height': input.height
       }
     },
     { arrayFilters: [{ 'chart.serial': cSerial }] }
@@ -107,8 +107,8 @@ export async function reorderRelationCharts(
 ) {
 
   await this.col.updateOne(
-    { serial, 'relateions.serial': rSerial },
-    { $set: { 'relateions.$.charts_order': order } }
+    { serial, 'relations.serial': rSerial },
+    { $set: { 'relations.$.charts_order': order } }
   );
 
   return true;
@@ -124,11 +124,11 @@ export async function removeRelationChart(
 ) {
 
   await this.col.updateOne(
-    { serial, 'relateions.serial': rSerial },
+    { serial, 'relations.serial': rSerial },
     {
       $pull: {
-        'relateions.$.charts_order': cSerial,
-        'relateions.$.charts': { serial: cSerial },
+        'relations.$.charts_order': cSerial,
+        'relations.$.charts': { serial: cSerial },
       }
     }
   );
@@ -146,7 +146,7 @@ export async function removeRelation(
 
   await this.col.updateOne(
     { serial },
-    { $pull: { relateions: { serial: rSerial } } }
+    { $pull: { relations: { serial: rSerial } } }
   );
 
   return true;

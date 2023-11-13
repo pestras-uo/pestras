@@ -37,7 +37,7 @@ export interface DataStore {
   aggr: AggregationDataStoreConfig | null;
   web_service: WebServiceConfig | null;
 
-  relateions: SubDataStore[];
+  relations: SubDataStore[];
   collaborators: string[]; // authors
 
   create_date: Date;
