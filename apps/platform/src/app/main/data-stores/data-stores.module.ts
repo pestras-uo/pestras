@@ -47,6 +47,9 @@ import { RelationsSettingsComponent } from './views/relations-settings/relations
 import { AddRelationModalComponent } from './modals/add-relation/add-relation.modal.component';
 import { AddRelationChartModalComponent } from './modals/add-relation-chart/add-relation-chart.modal.component';
 import { DataVizFeatureModule } from '@pestras/frontend/features/data-viz';
+import { EditRelationModalComponent } from './modals/edit-relation/edit-relation.modal.component';
+import { EditRelationChartModalComponent } from './modals/edit-relation-chart/edit-relation-chart.modal.component';
+import { DragDropModule } from '@angular/cdk/drag-drop';
 
 @NgModule({
   declarations: [
@@ -66,7 +69,9 @@ import { DataVizFeatureModule } from '@pestras/frontend/features/data-viz';
     RecordsView,
     RelationsSettingsComponent,
     AddRelationModalComponent,
-    AddRelationChartModalComponent
+    AddRelationChartModalComponent,
+    EditRelationModalComponent,
+    EditRelationChartModalComponent
   ],
   imports: [
     // Angular
@@ -86,6 +91,7 @@ import { DataVizFeatureModule } from '@pestras/frontend/features/data-viz';
     ContraModule,
     PuiUtilPipesModule,
     DialogModule,
+    DragDropModule,
     // PUI
     PuiIcon,
     PuiPreloaderModule,

@@ -510,8 +510,27 @@
       "value": 12
     }
   ],
+  "chartWidthSizes": [
+    {
+      "name": "Quarter of Screen Width",
+      "value": 3
+    },
+    {
+      "name": "Half of Screen Width",
+      "value": 6
+    },
+    {
+      "name": "Three Quarters of Screen Width",
+      "value": 9
+    },
+    {
+      "name": "Full Screen Width",
+      "value": 12
+    }
+  ],
   "height": "Height",
-  "viewHeightSizes": [{
+  "viewHeightSizes": [
+    {
       "name": "Quarter of Screen Height",
       "value": 1
     },
@@ -522,6 +541,16 @@
     {
       "name": "Three Quarters of Screen Height",
       "value": 3
+    },
+    {
+      "name": "Full Screen Height",
+      "value": 4
+    }
+  ],
+  "chartHeightSizes": [
+    {
+      "name": "Half of Screen Height",
+      "value": 2
     },
     {
       "name": "Full Screen Height",

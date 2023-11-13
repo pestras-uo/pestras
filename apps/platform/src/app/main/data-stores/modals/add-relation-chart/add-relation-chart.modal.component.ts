@@ -15,8 +15,8 @@ export class AddRelationChartModalComponent implements OnInit {
 
   readonly form = new FormGroup({
     title: new FormControl<string>('', { nonNullable: true, validators: Validators.required }),
-    width: new FormControl<DashboardViewSize['x']>(4, { nonNullable: true, validators: Validators.required }),
-    height: new FormControl<DashboardViewSize['y']>(1, { nonNullable: true, validators: Validators.required }),
+    width: new FormControl<DashboardViewSize['x']>(3, { nonNullable: true, validators: Validators.required }),
+    height: new FormControl<DashboardViewSize['y']>(2, { nonNullable: true, validators: Validators.required }),
     options: new FormGroup({
       aggregate: new FormControl<any[]>([], { nonNullable: true }),
       type: new FormControl<DataVizTypes>(DataVizTypes.PIE, { nonNullable: true, validators: Validators.required }),

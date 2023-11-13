@@ -485,7 +485,8 @@
   "deleteView": "حذف نافذة",
   "viewSize": "حجم النافذة",
   "width": "العرض",
-  "viewWidthSizes": [{
+  "viewWidthSizes": [
+    {
       "name": "ربع الشاشة",
       "value": 3
     },
@@ -510,8 +511,27 @@
       "value": 12
     }
   ],
+  "chartWidthSizes": [
+    {
+      "name": "ربع الشاشة",
+      "value": 3
+    },
+    {
+      "name": "نصف الشاشة",
+      "value": 6
+    },
+    {
+      "name": "ثلاثة أرباع الشاشة",
+      "value": 9
+    },
+    {
+      "name": "كامل الشاشة",
+      "value": 12
+    }
+  ],
   "height": "الطول",
-  "viewHeightSizes": [{
+  "viewHeightSizes": [
+    {
       "name": "ربع الشاشة",
       "value": 1
     },
@@ -522,6 +542,16 @@
     {
       "name": "ثلاثة أرباع الشاشة",
       "value": 3
+    },
+    {
+      "name": "كامل الشاشة",
+      "value": 4
+    }
+  ],
+  "chartHeightSizes": [
+    {
+      "name": "نصف الشاشة",
+      "value": 2
     },
     {
       "name": "كامل الشاشة",

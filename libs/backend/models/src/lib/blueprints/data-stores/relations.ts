@@ -67,7 +67,7 @@ export async function addRelationChart(
     }
   });
 
-  return serial;
+  return chart.serial;
 }
 
 // Update Relation Chart
