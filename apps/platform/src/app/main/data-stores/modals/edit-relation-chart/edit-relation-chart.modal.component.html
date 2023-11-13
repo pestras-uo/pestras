@@ -1,0 +1,48 @@
+<form class="card w-15 shadow-6" *contra="let c" [formGroup]="form">
+  <h3 class="card-header">{{ c['addDataViz'] }}</h3>
+
+  <div class="card-body">
+    <label for="chart-title">{{ c['title'] }}</label>
+    <div class="fc mbe-4">
+      <input type="text" formControlName="title" id="chart-title" />
+    </div>
+
+    <div class="flex gap-4 align-items-center mbe-4">
+      <div class="grow">
+        <label for="view-width">{{ c['width'] }}</label>
+        <div class="fc">
+          <pui-select-input
+            labelRef="view-width"
+            formControlName="width"
+            [list]="c['chartWidthSizes']"
+          ></pui-select-input>
+        </div>
+      </div>
+      <div class="grow">
+        <label for="view-height">{{ c['height'] }}</label>
+        <div class="fc">
+          <pui-select-input
+            labelRef="view-height"
+            formControlName="height"
+            [list]="c['chartHeightSizes']"
+          ></pui-select-input>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card-footer">
+    <button class="btn-round" type="button" (click)="closes.emit()">
+      {{ c['cancel'] }}
+    </button>
+    <button
+      class="btn-primary btn-round"
+      (click)="edit(c)"
+      [disabled]="form.invalid"
+    >
+      {{ c['submit'] }}
+    </button>
+  </div>
+
+  <pui-preloader *ngIf="preloader"></pui-preloader>
+</form>
