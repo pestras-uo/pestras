@@ -50,7 +50,6 @@
         *ngFor="let view of views; trackBy: trackBySerial"
         class="card overflow-visible card-small"
         [class]="'x' + view.size.x + ' y' + view.size.y"
-        [class.color-scheme-dark]="view.mode === 'dark'"
         cdkDragBoundary=".views"
         cdkDrag
         [cdkDragDisabled]="!reorder"
@@ -85,7 +84,7 @@
           <app-chart
             *ngIf="view.data_viz; else noDataViz"
             [serial]="view.data_viz"
-            [dark]="theme  ==='dark' || view.mode === 'dark'"
+            [dark]="theme  ==='dark'"
           ></app-chart>
 
           <ng-template #noDataViz>

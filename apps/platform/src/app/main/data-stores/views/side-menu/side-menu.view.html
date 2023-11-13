@@ -36,6 +36,22 @@
       </div>
     </div>
 
+    <!-- Data Store Relations -->
+    <!-- ------------------------------------------------------------------------------------------ -->
+    <div
+      class="list-item p-4"
+      [class.active]="view === 'settings'"
+      (click)="selects.emit('relations')"
+    >
+      <div class="flex gap-2">
+        <i size="small" puiIcon="relations"></i>
+        <div>
+          <h5 class="line-height-8">{{c['relations']}}</h5>
+          <p class="text3 f9">{{c['dataStoreBranchesDeffinition']}}</p>
+        </div>
+      </div>
+    </div>
+
     <!-- Data Store Web Service -->
     <!-- ------------------------------------------------------------------------------------------ -->
     <div

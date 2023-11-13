@@ -1,0 +1,114 @@
+<ng-container *contra="let c">
+  <div class="toolbar mbe-6">
+    <h2>{{c['relations']}}</h2>
+    <div class="grow"></div>
+    <button
+      *ngIf="editable"
+      class="btn-small btn-icon btn-round"
+      (click)="openDialog(addRel)"
+    >
+      <i puiIcon="add" size="small"></i>
+    </button>
+  </div>
+
+  <div *ngIf="dataStore.relations.length else noData" class="accordion">
+    <div #card class="card mbe-4" *ngFor="let rel of dataStore.relations">
+      <div class="card-header">
+        <h3>{{rel.name}}</h3>
+        <div class="grow"></div>
+        <button *ngIf="editable" class="btn-small btn-icon btn-round">
+          <i puiIcon="edit" size="small"></i>
+        </button>
+        <button
+          class="btn-small btn-icon btn-round"
+          (click)="card.classList.toggle('active')"
+        >
+          <i puiIcon="arrow_drop_down" size="small"></i>
+        </button>
+      </div>
+
+      <div class="card-body pbs-0">
+        <h4 class="mbe-4">{{c['relationOptions']}}</h4>
+
+        <div
+          class="flex align-items-center justify-content-space-between mbe-4"
+        >
+          <div>
+            <h5>{{c['dataStore']}}</h5>
+            <p>{{(rel.data_store | dataStore | async)?.name}}</p>
+          </div>
+          <div>
+            <h5>{{c['localField']}}</h5>
+            <p>{{rel.on.local_field}}</p>
+          </div>
+          <div>
+            <h5>{{c['foreignField']}}</h5>
+            <p>{{rel.on.foreign_field}}</p>
+          </div>
+        </div>
+
+        <div class="toolbar mbe-4">
+          <h4>{{c['charts']}}</h4>
+          <div class="grow"></div>
+          <button
+            *ngIf="editable"
+            class="btn-small btn-icon btn-round"
+            (click)="openDrawer(addChart, rel)"
+          >
+            <i puiIcon="add" size="small"></i>
+          </button>
+        </div>
+        <div class="card card-clear bordered card-small">
+          <div
+            class="card-body charts-view"
+            *ngIf="rel.charts.length else noDataSmall"
+          >
+            <div
+              *ngFor="let c of (rel | fn: getCharts)"
+              [class]="'x' + c.width + ' y' + c.height"
+            >
+              <div class="p-4 align-center">
+                <h4 class="mbe-2">{{c.title}}</h4>
+                <div class="flex gap-1">
+                  <button *ngIf="editable" class="btn-icon btn-tiny btn-round btn-success">
+                    <i puiIcon="edit" size="tiny"></i>
+                  </button>
+                  <button *ngIf="editable" class="btn-icon btn-tiny btn-round btn-danger">
+                    <i puiIcon="delete" size="tiny"></i>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <ng-template #noDataSmall>
+    <no-data-placeholder-widget small
+      >{{c['noDataMsg']}}</no-data-placeholder-widget
+    >
+  </ng-template>
+
+  <ng-template #noData>
+    <no-data-placeholder-widget>{{c['noDataMsg']}}</no-data-placeholder-widget>
+  </ng-template>
+
+  <ng-template #addRel>
+    <pestras-add-relation-modal
+      [dataStore]="dataStore"
+      (closes)="closeDialog()"
+    ></pestras-add-relation-modal>
+  </ng-template>
+
+  <ng-template #addChart let-relation>
+    <pestras-add-relation-chart-modal
+      *ngIf="relationCtx!.data_store | dataStore | async as ds"
+      [dsSerial]="dataStore.serial"
+      [dataStore]="ds"
+      [relation]="relationCtx!"
+      (closes)="closeDrawer()"
+    ></pestras-add-relation-chart-modal>
+  </ng-template>
+</ng-container>

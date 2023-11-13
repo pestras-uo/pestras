@@ -8,7 +8,6 @@ export interface SettingsForm {
   max_attachments_count: FormControl<number>;
   card_view?: FormGroup<SettingsFormCardView>;
   tree_view?: FormArray<FormGroup<SettingsFormTreeView>>;
-  sub_data_stores: FormArray<FormGroup<SettingsFormSubDataStore>>;
 }
 
 export interface SettingsWorkflowFormModel {
@@ -21,17 +20,6 @@ export interface SettingsFormCardView {
   title: FormControl<string>;
   image: FormControl<string | null>;
   details: FormControl<string[]>;
-}
-
-export interface SettingsFormSubDataStore {
-  name: FormControl<string>;
-  data_store: FormControl<string>;
-  on: FormGroup<SettingsFormSubDataStoreOn>;
-}
-
-export interface SettingsFormSubDataStoreOn {
-  local_field: FormControl<string>;
-  foreign_field: FormControl<string>;
 }
 
 export interface SettingsFormTreeView {

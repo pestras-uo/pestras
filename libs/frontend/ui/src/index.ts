@@ -120,6 +120,6 @@ export * from './lib/toggle-theme/toggle-theme.module';
 export * from './lib/password-toggle-visibility/password-toggle-visibility.directive';
 
 //fontsize
-export * from './lib/font-size/Font-size.service';
-export * from './lib/font-size/font-size.component';
-export * from './lib/font-size/font-size.module';
+// export * from './lib/font-size/Font-size.service';
+// export * from './lib/font-size/font-size.component';
+// export * from './lib/font-size/font-size.module';

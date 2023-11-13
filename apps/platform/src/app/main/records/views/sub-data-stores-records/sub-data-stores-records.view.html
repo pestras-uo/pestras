@@ -1,3 +1,104 @@
-<ng-container *ngIf="subDataStore$ | async as sds">
-  <app-records-list [dataStore]="sds" [search]="search"></app-records-list>
+<ng-container *contra="let c">
+  <ng-container *ngIf="subDataStore$ | async as sds">
+    <app-records-list [dataStore]="sds" [search]="search"></app-records-list>
+
+    <div class="divider mb-8"></div>
+
+    <h2 class="mbe-4">{{c['charts']}}</h2>
+
+    <div *ngIf="relation.charts.length else noData" class="charts-view">
+      <ng-container *ngFor="let c of relation | fn: getCharts">
+        <!-- get data store fields -->
+        <ng-container
+          *ngIf="relation.data_store | dataStoreFields | async as fields"
+        >
+          <!-- get data store records -->
+          <ng-container
+            *ngIf="relation.data_store | searchRecords: search | async as records"
+          >
+            <!-- aggregate records -->
+            <div
+              class="card overflow-visible card-small"
+              [class]="'x' + c.width + ' y' + c.height"
+              *ngIf="c | fn: aggregate: fields: records as data"
+            >
+              <div class="card-header">{{c.title}}</div>
+              <div class="card-body" *ngIf="theme$ | async as theme">
+                <ng-container [ngSwitch]="c.options.type">
+                  <app-bar-chart
+                    *ngSwitchCase="'bar'"
+                    [conf]="c.options"
+                    [data]="data"
+                    [dark]="theme === 'dark'"
+                  ></app-bar-chart>
+                  <app-boxplot-chart
+                    *ngSwitchCase="'boxplot'"
+                    [conf]="c.options"
+                    [data]="data"
+                    [dark]="theme === 'dark'"
+                  ></app-boxplot-chart>
+                  <app-hierarchical-chart
+                    *ngSwitchCase="'hierarchical'"
+                    [conf]="c.options"
+                    [data]="data"
+                  ></app-hierarchical-chart>
+                  <app-line-chart
+                    *ngSwitchCase="'line'"
+                    [conf]="c.options"
+                    [data]="data"
+                    [dark]="theme === 'dark'"
+                  ></app-line-chart>
+                  <app-map-chart
+                    *ngSwitchCase="'map'"
+                    [conf]="c.options"
+                    [data]="data"
+                    [dark]="theme === 'dark'"
+                  ></app-map-chart>
+                  <app-pie-chart
+                    *ngSwitchCase="'pie'"
+                    [conf]="c.options"
+                    [data]="data"
+                    [dark]="theme === 'dark'"
+                  ></app-pie-chart>
+                  <app-polar-chart
+                    *ngSwitchCase="'polar'"
+                    [conf]="c.options"
+                    [data]="data"
+                    [dark]="theme === 'dark'"
+                  ></app-polar-chart>
+                  <app-radar-chart
+                    *ngSwitchCase="'radar'"
+                    [conf]="c.options"
+                    [data]="data"
+                    [dark]="theme === 'dark'"
+                  ></app-radar-chart>
+                  <app-scatter-chart
+                    *ngSwitchCase="'scatter'"
+                    [conf]="c.options"
+                    [data]="data"
+                    [dark]="theme === 'dark'"
+                  ></app-scatter-chart>
+                  <app-table-view
+                    *ngSwitchCase="'table'"
+                    [conf]="c.options"
+                    [data]="data"
+                  ></app-table-view>
+                  <app-timeline-chart
+                    *ngSwitchCase="'timeline'"
+                    [conf]="c.options"
+                    [data]="data"
+                    [dark]="theme === 'dark'"
+                  ></app-timeline-chart>
+                </ng-container>
+              </div>
+            </div>
+          </ng-container>
+        </ng-container>
+      </ng-container>
+    </div>
+  </ng-container>
+
+  <ng-template #noData>
+    <no-data-placeholder-widget>{{c['noData']}}</no-data-placeholder-widget>
+  </ng-template>
 </ng-container>

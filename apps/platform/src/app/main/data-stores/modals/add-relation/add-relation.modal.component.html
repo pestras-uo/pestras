@@ -1,0 +1,67 @@
+<form
+  [formGroup]="form"
+  (ngSubmit)="add(c)"
+  class="card shadow-6 w-15"
+  *contra="let c"
+>
+  <h4 class="card-header">{{ c['addRelation'] }}</h4>
+
+  <div class="card-body">
+    <label for="rel_name">{{ c['name'] }}</label>
+    <div class="fc mbe-4">
+      <input type="text" formControlName="name" id="rel-name" />
+    </div>
+
+    <label for="rel-ds">{{ c['dataStore'] }}</label>
+    <div class="fc mbe-4">
+      <pui-select-input
+        [list]="
+          dataStore.blueprint
+            | blueprintDataStores
+            | async
+            | arrayMap : mapDataStore
+        "
+        labelRef="rel-ds"
+        formControlName="data_store"
+      ></pui-select-input>
+    </div>
+
+    <h5 class="mbe-4">{{ c['join'] }}</h5>
+    <div
+      class="flex gap-4 align-items-center"
+      [class.disabled]="!ds.value"
+      formGroupName="on"
+    >
+      <div class="grow">
+        <label for="rel-local-field">{{ c['localField'] }}</label>
+        <div class="fc">
+          <pui-select-input
+            [list]="dataStore.fields | arrayMap : mapField"
+            labelRef="rel-local-field"
+            formControlName="local_field"
+          ></pui-select-input>
+        </div>
+      </div>
+
+      <div class="grow">
+        <label for="rel-foreign-field">{{ c['foreignField'] }}</label>
+        <div class="fc">
+          <pui-select-input
+            [list]="ds.value | dataStoreFields | async | arrayMap : mapField"
+            labelRef="rel-foreign-field"
+            formControlName="foreign_field"
+          ></pui-select-input>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card-footer">
+    <button class="btn-round" type="button" (click)="(closes.emit)">
+      {{ c['cancel'] }}
+    </button>
+    <button class="btn-round btn-primary" [disabled]="form.invalid" type="submit">{{ c['add'] }}</button>
+  </div>
+
+  <pui-preloader *ngIf="preloader"></pui-preloader>
+</form>

@@ -26,7 +26,7 @@ export class LineChartView implements OnChanges {
   chartOptions!: EChartsOption;
 
   @Input({ required: true })
-  conf!: BaseDataViz<any>;
+  conf!: Pick<BaseDataViz<any>, 'aggregate' | 'options' | 'type'>;
   @Input({ required: true })
   data!: ChartDataLoad;
   @Input({ transform: booleanAttribute })

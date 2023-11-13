@@ -1,4 +1,9 @@
 {
+  "charts": "الإحصاءات",
+  "deleteRelation": "حذف ارتباط",
+  "editRelation": "تعديل ارتباط",
+  "addRelation": "إضافة ارتباط",
+  "relationOptions": "إعدادات الإرتباط",
   "categoryTypesList": [{
       "name": "إسمي",
       "value": "nominal"

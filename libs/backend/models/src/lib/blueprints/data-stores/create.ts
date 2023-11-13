@@ -18,11 +18,11 @@ export async function create(
     collaborators: [],
     create_date: date,
     last_modified: date,
+    relations: [],
     fields: data.type === DataStoreType.TABLE ? getSystemFields(data.blueprint) : [],
     is_active: true,
     settings: {
       interface_field: 'serial',
-      sub_data_stores: [],
       history: false,
       max_attachments_count: 0,
       static: false,

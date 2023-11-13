@@ -1,10 +1,9 @@
 import { Injectable } from "@angular/core";
-import { EntityTypes, Orgunit } from "@pestras/shared/data-model";
+import { EntityTypes, Orgunit, OrgunitsApi } from "@pestras/shared/data-model";
 import { OrgunitsService } from "./orgunits.service";
 import { SessionEnd, SessionStart } from "../session/session.events";
 import { Observable, filter, tap } from "rxjs";
 import { StatorChannel, StatorCollectionState } from "@pestras/frontend/util/stator";
-import { OrgunitsApi } from "./orgunits.api";
 import { SSEActivity } from "../sse/sse.events";
 
 @Injectable({ providedIn: 'root' })

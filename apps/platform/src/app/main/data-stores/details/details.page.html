@@ -60,6 +60,12 @@
           [editable]="(blueprint.owner | sessionIs) || (blueprint.collaborators | sessionIs)"
         ></app-table-settings>
 
+        <pestras-relation-settings
+          *ngIf="view === 'relations'"
+          [dataStore]="ds"
+          [editable]="(blueprint.owner | sessionIs) || (blueprint.collaborators | sessionIs)"
+        ></pestras-relation-settings>
+
         <app-aggregation-settings
           *ngIf="view === 'aggregation'"
           [dataStore]="ds"

@@ -152,6 +152,46 @@ export const dataStoresRoutes = Router()
     apiAuth([Role.DATA_ENG]),
     controller.removeField
   )
+  .post(
+    DataStoreApi.ADD_RELATION_REQ_PATH,
+    apiAuth([Role.DATA_ENG]),
+    validate(DataStoreValidators.ADD_RELATION),
+    controller.addRelation
+  )
+  .put(
+    DataStoreApi.UPDATE_RELATION_REQ_PATH,
+    apiAuth([Role.DATA_ENG]),
+    validate(DataStoreValidators.UPDATE_RELATION),
+    controller.updateRelation
+  )
+  .post(
+    DataStoreApi.ADD_RELATION_CHART_REQ_PATH,
+    apiAuth([Role.DATA_ENG]),
+    validate(DataStoreValidators.ADD_RELATION_CHART),
+    controller.addRelationChart
+  )
+  .put(
+    DataStoreApi.UPDATE_RELATION_CHART_REQ_PATH,
+    apiAuth([Role.DATA_ENG]),
+    validate(DataStoreValidators.UPDATE_RELATION_CHART),
+    controller.updateRelationChart
+  )
+  .put(
+    DataStoreApi.REORDER_RELATION_CHARTS_REQ_PATH,
+    apiAuth([Role.DATA_ENG]),
+    validate(DataStoreValidators.REORDER_RELATION_CHARTS),
+    controller.reorderRelationCharts
+  )
+  .delete(
+    DataStoreApi.REMOVE_RELATION_CHART_REQ_PATH,
+    apiAuth([Role.DATA_ENG]),
+    controller.removeRelationChart
+  )
+  .delete(
+    DataStoreApi.REMOVE_RELATION_REQ_PATH,
+    apiAuth([Role.DATA_ENG]),
+    controller.removeRelation
+  )
   // update collaborators
   // --------------------------------------------------------------------------------------
   .post(

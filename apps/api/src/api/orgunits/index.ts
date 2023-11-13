@@ -1,4 +1,4 @@
-import { Role } from "@pestras/shared/data-model";
+import { OrgunitsApi, Role } from "@pestras/shared/data-model";
 import { Router } from "express";
 import { apiAuth } from "../../middlewares/auth";
 import { logoUpload } from "../../middlewares/upload";
@@ -7,41 +7,41 @@ import { OrgunitsController } from "./controller";
 import { OrgunitsValidators } from "./validators";
 
 export const orgunitRoutes = Router()
-  .get(
-    '/',
+  [OrgunitsApi.GetAll.REQ_METHOD](
+    OrgunitsApi.GetAll.REQ_PATH,
     apiAuth(),
     OrgunitsController.getAll
   )
-  .get(
-    '/:serial',
+  [OrgunitsApi.GetBySerial.REQ_METHOD](
+    OrgunitsApi.GetBySerial.REQ_PATH,
     apiAuth([Role.ADMIN]),
-    OrgunitsController.get
+    OrgunitsController.getBySerial
   )
-  .post(
-    '/',
+  [OrgunitsApi.Create.REQ_METHOD](
+    OrgunitsApi.Create.REQ_PATH,
     apiAuth([Role.ADMIN]),
     validate(OrgunitsValidators.CREATE),
     OrgunitsController.create
   )
-  .put(
-    '/:serial',
+  [OrgunitsApi.Update.REQ_METHOD](
+    OrgunitsApi.Update.REQ_PATH,
     apiAuth([Role.ADMIN]),
     validate(OrgunitsValidators.UPDATE),
     OrgunitsController.update
   )
-  .post(
-    '/:serial/logo',
+  [OrgunitsApi.UpdateLogo.REQ_METHOD](
+    OrgunitsApi.UpdateLogo.REQ_PATH,
     apiAuth([Role.ADMIN]),
     logoUpload.single('logo'),
     OrgunitsController.updateLogo
   )
-  .delete(
-    '/:serial/logo',
+  [OrgunitsApi.RemoveLogo.REQ_METHOD](
+    OrgunitsApi.RemoveLogo.REQ_PATH,
     apiAuth([Role.ADMIN]),
     OrgunitsController.removeLogo
   )
-  .put(
-    '/:serial/regions',
+  [OrgunitsApi.UpdateRegions.REQ_METHOD](
+    OrgunitsApi.UpdateRegions.REQ_PATH,
     apiAuth([Role.ADMIN]),
     validate(OrgunitsValidators.UPDATE_REGIONS),
     OrgunitsController.updateRegions
