@@ -37,7 +37,12 @@ export class OrgunitsListView implements OnInit {
       .pipe(
         startWith(''),
         debounceTime(300),
-        switchMap(search => this.state.selectMany(o => o.is_partner === this.isPartners && (o.serial !== '*' && Serial.countLevels(o.serial) === 1) && (!search || o.name.includes(search)))),
+        switchMap(search => this.state.selectMany(o => {
+          if (o.is_partner !== this.isPartners || (search && !o.name.includes(search)))
+            return false;
+
+          return this.isPartners === true ? Serial.countLevels(o.serial) === 1 : o.serial !== '*';
+        })),
         map(list => this.session.get()?.orgunit === '*'
           ? list
           : list.filter(o => Serial.isBranch(o.serial, this.session.get()?.orgunit ?? '', true))
