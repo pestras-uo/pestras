@@ -40,7 +40,7 @@ export namespace OrgunitsApi {
 
     export const REQ_METHOD = HTTP_METHOD.POST;
 
-    export type Body = Pick<Orgunit, 'name' | 'class' | 'regions'> & { parent: string | null; };
+    export type Body = Pick<Orgunit, 'name' | 'is_partner' | 'class' | 'regions'> & { parent: string | null; };
 
     export type Response = Orgunit;
   }

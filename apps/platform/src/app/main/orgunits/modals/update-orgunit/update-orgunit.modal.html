@@ -5,7 +5,8 @@
   (ngSubmit)="update(c)"
 >
   <div class="card-header">
-    <h3>{{c['addOrgunit']}}</h3>
+    <h3 *ngIf="!isPartner">{{c['updateOrgunit']}}</h3>
+    <h3 *ngIf="isPartner">{{c['updatePartner']}}</h3>
   </div>
 
   <div class="card-body">

@@ -18,10 +18,10 @@
     </div>
   </header>
 
-  <div class="list" *ngIf="groups$ | async as groups">
+  <div class="list list-actions" *ngIf="groups$ | async as groups">
     <ng-container *ngIf="groups.length else noData">
       <div
-        class="list-item hover cursor-pointer p-4"
+        class="list-item p-4"
         [class.active]="selected === group.serial"
         *ngFor="let group of groups"
         (click)="this.selects.emit(group.serial)"

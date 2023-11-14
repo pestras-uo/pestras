@@ -104,14 +104,13 @@
         <p class="full">{{c['orgunits']}}</p>
       </a>
       <a
-        *ngIf="'root' | inOrgunit"
         class="hover"
-        [title]="c['groups']"
-        (click)="nav(['/main/groups'])"
+        (click)="nav(['/main/partners'], { isPartners: 1 })"
+        [title]="c['partners']"
         routerLinkActive="active"
       >
-        <i size="small" puiIcon="military_tech"></i>
-        <p class="full">{{c['groups']}}</p>
+        <i size="small" puiIcon="partners"></i>
+        <p class="full">{{c['partners']}}</p>
       </a>
       <a
         class="hover"
@@ -121,6 +120,16 @@
       >
         <i size="small" puiIcon="group"></i>
         <p class="full">{{c['users']}}</p>
+      </a>
+      <a
+        *ngIf="'root' | inOrgunit"
+        class="hover"
+        [title]="c['groups']"
+        (click)="nav(['/main/groups'])"
+        routerLinkActive="active"
+      >
+        <i size="small" puiIcon="military_tech"></i>
+        <p class="full">{{c['groups']}}</p>
       </a>
     </ng-container>
   </nav>

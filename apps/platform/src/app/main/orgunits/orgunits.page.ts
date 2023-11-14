@@ -1,19 +1,19 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @angular-eslint/component-class-suffix */
 /* eslint-disable @angular-eslint/component-selector */
-import { Component, Input, TemplateRef } from '@angular/core';
+import { Component, Input, TemplateRef, booleanAttribute } from '@angular/core';
 import { Dialog, DialogRef } from "@angular/cdk/dialog";
 import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-orgunits',
   template: `
-    <app-orgunits-list [selected]="selected" (selects)="set($event)" (add)="openModal(modal)"></app-orgunits-list>
+    <app-orgunits-list [selected]="selected" (selects)="set($event)" [isPartners]="isPartners" (add)="openModal(modal)"></app-orgunits-list>
 
-    <app-orgunit-details [serial]="selected" (selects)="set($event)" (add)="openModal(modal, $event)"></app-orgunit-details>
+    <app-orgunit-details [serial]="selected" (selects)="set($event)" [isPartners]="isPartners" (add)="openModal(modal, $event)"></app-orgunit-details>
 
     <ng-template #modal let-data>
-      <app-create-orgunit [parent]="data" (closes)="closeModal()"></app-create-orgunit>
+      <app-create-orgunit [parent]="data" [isPartner]="isPartners" (closes)="closeModal()"></app-create-orgunit>
     </ng-template>
   `,
   styles: [`
@@ -30,6 +30,8 @@ export class OrgunitsPage {
   dialogRef?: DialogRef;
   selected = "";
 
+  @Input({ transform: booleanAttribute })
+  isPartners!: boolean;
   @Input()
   set orgunit(value: string) {
     this.selected = value ?? '';
@@ -42,7 +44,7 @@ export class OrgunitsPage {
   ) { }
 
   set(serial: string) {
-    this.router.navigate([], { relativeTo: this.route, queryParams: { orgunit: serial } });
+    this.router.navigate([], { relativeTo: this.route, queryParams: { orgunit: serial }, queryParamsHandling: 'merge' });
   }
 
   openModal(modal: TemplateRef<any>, parent?: string) {

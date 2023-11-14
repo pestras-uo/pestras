@@ -19,12 +19,12 @@
   </header>
 
   <div
-    class="list"
+    class="list list-actions"
     *ngIf="searchControl.value | userRegions | async | fn: selectFirst as regions"
   >
     <ng-container *ngIf="regions.length else noData">
       <div
-        class="list-item hover cursor-pointer bg-surface3 p-4"
+        class="list-item p-4"
         [class.active]="selected === region.serial"
         *ngFor="let region of regions"
         (click)="this.selects.emit(region.serial)"

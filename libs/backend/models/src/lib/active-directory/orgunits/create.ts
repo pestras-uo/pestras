@@ -8,6 +8,7 @@ export async function create(this: OrgunitsModel, input: OrgunitsApi.Create.Body
   const orgunit: Orgunit = {
     serial: Serial.gen("ORG", input.parent ?? ''),
     name: input.name,
+    is_partner: input.is_partner,
     class: input.class,
     logo: null,
     regions: input.regions,

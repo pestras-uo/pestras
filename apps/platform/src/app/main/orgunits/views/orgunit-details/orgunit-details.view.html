@@ -45,9 +45,6 @@
 
     <main class="pi-8">
       <div class="container" *ngIf="branches$ | async as branches">
-        <!-- <div class="toolbar mbe-6">
-          <h2 mbe>{{c['branchesOrgunits']}}</h2>
-        </div> -->
 
         <div class="grid cols-1 gap-4 mbe-8">
           <pestras-orgunits-table
@@ -93,6 +90,7 @@
 
     <ng-template #updateModal>
       <app-update-orgunit
+        [isPartner]="isPartners"
         [orgunit]="orgunit"
         (closes)="closeModal()"
       ></app-update-orgunit>
