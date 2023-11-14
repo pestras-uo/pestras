@@ -5,10 +5,8 @@ import { FormControl, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { DashboardsState } from '@pestras/frontend/state';
 import { ToastService } from '@pestras/frontend/ui';
-import { ContraService } from '@pestras/frontend/util/contra';
 import { Dashboard, WorkspacePinType } from '@pestras/shared/data-model';
 // eslint-disable-next-line @nx/enforce-module-boundaries
-import { BreadcrumbComponent } from 'libs/frontend/ui/src/lib/breadcrumb/breadcrumb.component';
 import { Observable, tap } from 'rxjs';
 
 @Component({

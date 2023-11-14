@@ -1,0 +1,34 @@
+<form class="flex gap-4 align-items-end" [formGroup]="form" *contra="let c">
+  <div class="grow">
+    <label for="row-field">{{c['rowField']}}</label>
+    <div [class]="'fc mbe-4 ' + fcClass">
+      <pui-select-input
+        labelRef="row-field"
+        formControlName="row_field"
+        [list]="dsFields | arrayFilter: filterCatField | arrayMap: mapField"
+      ></pui-select-input>
+    </div>
+  </div>
+
+  <div class="grow">
+    <label for="column-field">{{c['columnField']}}</label>
+    <div [class]="'fc mbe-4 ' + fcClass">
+      <pui-select-input
+        labelRef="column-field"
+        formControlName="column_field"
+        [list]="dsFields | arrayFilter: filterCatField | arrayMap: mapField"
+      ></pui-select-input>
+    </div>
+  </div>
+
+  <div class="grow">
+    <label for="value-field">{{c['valueField']}}</label>
+    <div [class]="'fc mbe-4 ' + fcClass">
+      <pui-select-input
+        labelRef="value-field"
+        formControlName="value_field"
+        [list]="dsFields | arrayFilter: filterCatField | arrayMap: mapField"
+      ></pui-select-input>
+    </div>
+  </div>
+</form>

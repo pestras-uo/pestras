@@ -36,6 +36,14 @@
         [data]="data"
         [dark]="dark"
       ></app-pie-chart>
+      <app-heatmap-chart
+        *ngSwitchCase="'heatmap'"
+        [conf]="options"
+        [data]="data"
+        [dark]="dark"
+      >
+      </app-heatmap-chart>
+
       <app-polar-chart
         *ngSwitchCase="'polar'"
         [conf]="options"

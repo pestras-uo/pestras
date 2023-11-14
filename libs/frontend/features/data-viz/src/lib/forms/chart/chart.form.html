@@ -68,6 +68,13 @@
         [fcClass]="fcClass"
         formControlName="options"
       ></app-pie-chart-form>
+
+      <app-heatmap-chart-form
+        *ngIf="type.value === 'heatmap'"
+        [dsFields]="fields"
+        [fcClass]="fcClass"
+        formControlName="options"
+      ></app-heatmap-chart-form>
       <app-polar-chart-form
         *ngIf="type.value === 'polar'"
         [dsFields]="fields"

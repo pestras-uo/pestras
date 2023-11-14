@@ -52,6 +52,8 @@ import { RecordsFeatureModule } from '@pestras/frontend/features/data-records';
 import { CategoriesFeatureModule } from '@pestras/frontend/features/categories';
 import { EnvModule } from '@pestras/frontend/env';
 import { NoDataPlaceholderWidget } from '@pestras/frontend/widgets/no-data-placeholder';
+import { HeatmapForm } from './forms/heatmap-chart/heatmap-chart.form';
+import { HeatmapChartView } from './views/heatmap-chart/heatmap-chart.view';
 
 @NgModule({
   declarations: [
@@ -77,6 +79,8 @@ import { NoDataPlaceholderWidget } from '@pestras/frontend/widgets/no-data-place
     BarChartForm,
     PieChartForm,
     BoxplotChartForm,
+    HeatmapForm,
+    HeatmapChartView,
     LineChartForm,
     PolarChartForm,
     ScatterChartForm,
@@ -125,6 +129,7 @@ import { NoDataPlaceholderWidget } from '@pestras/frontend/widgets/no-data-place
     TimelineChartView,
     MapChartView,
     PieChartView,
+    HeatmapChartView,
     BoxplotChartView,
     PolarChartView,
     ChartForm,

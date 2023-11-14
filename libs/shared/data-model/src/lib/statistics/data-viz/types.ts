@@ -1,10 +1,10 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { DataVizAggrStage } from "./aggregate";
+import { DataVizAggrStage } from './aggregate';
 
 export enum DataVizTypes {
   //  - field types: Category, Ordinal or Boolean
   //  - calculations: percentages
-  //  - visualizations: 
+  //  - visualizations:
   //    - 1 var: bar, pie and donut chart
   //    - 2 vars: marimeko, stacked bar, negative stack bar, and polar area chart
   //    - 3+ vars: stacked bar
@@ -27,7 +27,7 @@ export enum DataVizTypes {
   HIERARCHICAL = 'hierarchical',
   // Map chart with different colors regions
   // may include sub series
-  //  - field types: 
+  //  - field types:
   //    - map colors: Numeric or Ordinal
   //    - sub series:
   //      - scatter:
@@ -55,10 +55,13 @@ export enum DataVizTypes {
   // Display timespans between two dates or times
   // - field types: Date, Datetime or time
   // - visualizations: Timespan or waterfall chart
-  TIMELINE = 'timeline'
+  TIMELINE = 'timeline',
+
+  //  - visualizations: HeatMap Chart
+  HEATMAP = 'heatmap',
 }
 
-export interface BaseDataViz<T = any>  {
+export interface BaseDataViz<T = any> {
   serial: string;
   data_store: string;
   aggregate: DataVizAggrStage[];

@@ -1,5 +1,4 @@
-import { BaseDataViz, DataVizTypes } from "./types";
-
+import { BaseDataViz, DataVizTypes } from './types';
 
 export interface BarDataViz extends BaseDataViz<BarDataVizOptions> {
   type: DataVizTypes.BAR;
@@ -16,7 +15,7 @@ export interface BarDataVizOptions {
    * ### Value Fields
    * - Each field (column) represents a serie
    * - Each row represents a bar
-   * 
+   *
    * #### Supported Types:
    * - int
    * - double
