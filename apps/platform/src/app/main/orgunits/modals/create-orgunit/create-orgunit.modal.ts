@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @angular-eslint/component-class-suffix */
 /* eslint-disable @angular-eslint/component-selector */
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output, booleanAttribute } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { Region } from '@pestras/shared/data-model';
 import { ToastService } from '@pestras/frontend/ui';
@@ -13,7 +13,7 @@ import { Serial } from '@pestras/shared/util';
   selector: 'app-create-orgunit',
   templateUrl: './create-orgunit.modal.html'
 })
-export class CreateOrgunitModal {
+export class CreateOrgunitModal implements OnInit {
   readonly parents$ = this.state.data$.pipe(
     map(list => list.filter(o => o.serial !== "*")),
     map(list => this.session.get()?.orgunit === '*'
@@ -39,6 +39,7 @@ export class CreateOrgunitModal {
 
   readonly form = this.fb.nonNullable.group({
     name: ['', [Validators.required, Validators.minLength(3)]],
+    is_partner: false,
     class: ['', Validators.required],
     regions: this.fb.nonNullable.control<string[]>([]),
     parent: ''
@@ -46,6 +47,8 @@ export class CreateOrgunitModal {
 
   preloader = false;
 
+  @Input({ transform: booleanAttribute })
+  isPartner!: boolean;
   @Input()
   parent: string | null = null;
 
@@ -58,6 +61,10 @@ export class CreateOrgunitModal {
     private fb: FormBuilder,
     private toast: ToastService
   ) { }
+
+  ngOnInit(): void {
+    this.form.controls.is_partner.setValue(this.isPartner);
+  }
 
   mapRegion(region: Region) {
     return { name: region.name, value: region.serial };

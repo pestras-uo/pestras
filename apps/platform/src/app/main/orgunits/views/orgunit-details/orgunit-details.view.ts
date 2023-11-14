@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @angular-eslint/component-class-suffix */
 /* eslint-disable @angular-eslint/component-selector */
-import { Component, EventEmitter, Input, OnChanges, Output, TemplateRef } from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, Output, TemplateRef, booleanAttribute } from '@angular/core';
 import { Orgunit } from '@pestras/shared/data-model';
 import { ContraService } from '@pestras/frontend/util/contra';
 import { OrgunitsState } from '@pestras/frontend/state';
@@ -20,6 +20,8 @@ export class OrgunitDetailsView implements OnChanges {
 
   dialogRef: DialogRef | null = null;
 
+  @Input({ transform: booleanAttribute })
+  isPartners!: boolean;
   @Input({ required: true })
   serial!: string;
 

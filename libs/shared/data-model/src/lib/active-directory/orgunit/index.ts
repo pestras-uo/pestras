@@ -1,6 +1,7 @@
 export interface Orgunit {
   serial: string; 
   name: string;
+  is_partner: boolean;
   logo: string | null;
   regions: string[];
   class: string;

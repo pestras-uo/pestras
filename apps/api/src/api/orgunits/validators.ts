@@ -9,6 +9,7 @@ export enum OrgunitsValidators {
 
 new Validall(OrgunitsValidators.CREATE, {
   name: { $type: 'string' },
+  is_partner: { $type: 'boolean' },
   class: { $type: 'string', $message: 'invalidOrgunitClass' },
   parent: { $default: '', $type: 'string', $message: 'invalidParentSerial' },
   regions: { $default: [], $each: { $type: 'string' } }

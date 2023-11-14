@@ -1,4 +1,9 @@
 {
+  "deletePartner": "حذف الشريك",
+  "updatePartner": "تعديل بيانات شريك",
+  "addPartner": "إضافة شريك",
+  "partner": "الشريك",
+  "partners": "الشركاء",
   "charts": "الإحصاءات",
   "deleteRelation": "حذف ارتباط",
   "editRelation": "تعديل ارتباط",
