@@ -1,29 +1,24 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @angular-eslint/component-class-suffix */
 /* eslint-disable @angular-eslint/component-selector */
+import { Component, Input, OnChanges } from '@angular/core';
 import {
   BaseDataViz,
-  DataVizTypes,
-  Field,
+  HeatmapDataPoint,
   HeatmapDataVizOptions,
 } from '@pestras/shared/data-model';
-import { Component, Input, OnChanges, booleanAttribute } from '@angular/core';
-import { EChartsOption, graphic } from 'echarts';
+import { EChartsOption } from 'echarts';
 import { ChartDataLoad } from '../../util';
-
-const colors = [
-  ['#83bff6', '#188df0', '#188df0'],
-  ['#83e6af', '#18e08d', '#18e08d'],
-  ['#e683af', '#e0188d', '#e0188d'],
-  ['#e6af83', '#e08d18', '#e08d18'],
-  ['#bf83f6', '#d818f0', '#d818f0'],
-  ['#83afe6', '#188de0', '#188de0'],
-];
 
 @Component({
   selector: 'app-heatmap-chart',
-  template:
-    '<div *ngIf="chartOptions" echarts [options]="chartOptions" class="chart"></div>',
+  template: `
+    <div
+      *ngIf="chartOptions"
+      echarts
+      [options]="chartOptions"
+      class="chart"
+    ></div>
+  `,
   styles: [
     `
       :host {
@@ -39,163 +34,106 @@ const colors = [
 export class HeatmapChartView implements OnChanges {
   chartOptions!: EChartsOption;
 
-  @Input({ required: true })
-  conf!: BaseDataViz<any>;
-  @Input({ required: true })
-  data!: ChartDataLoad;
-  @Input({ transform: booleanAttribute })
-  dark = false;
+  @Input() conf!: BaseDataViz<HeatmapDataVizOptions>;
+  @Input() data!: ChartDataLoad;
+  @Input() dark = false;
 
   ngOnChanges() {
-    const { categories, series, valueFields } = this.init(
-      this.conf.options as HeatmapDataVizOptions
-    );
-    this.render(
-      this.conf.options as HeatmapDataVizOptions,
-      categories as string[],
-      series,
-      valueFields as Field[]
-    );
+    this.renderHeatmap(this.init(this.conf.options));
   }
-  private init(options: HeatmapDataVizOptions) {
-    const catField = this.data.fields.find((f) => f.name === options.row_field);
-    const valueFields = [options.value_field].map((vf) =>
-      this.data.fields.find((f) => f.name === vf)
+
+  init(options: HeatmapDataVizOptions) {
+    const xField = this.data.fields.find(
+      (f) => f.name === options.x_axis_field
+    );
+    const yField = this.data.fields.find(
+      (f) => f.name === options.y_axis_field
     );
 
-    if (!catField) {
+    if (!xField) {
       throw new Error(
-        `category field not found (${options.row_field}): heatmap chart`
+        `x-axis field not found (${options.x_axis_field}): heatmap chart`
       );
     }
 
-    if (!valueFields[0]) {
+    if (!yField) {
       throw new Error(
-        `value field not found (${options.value_field}): heatmap chart`
+        `y-axis field not found (${options.y_axis_field}): heatmap chart`
       );
     }
-    const categories = this.data.records.map((r) => r[catField.name]);
-    const series = valueFields.map((vf, i) => {
-      const data = this.data.records
-        .map((r, index) => [index, i, vf ? r[vf.name] : null])
-        .filter((val) => val[2] !== null);
 
-      return {
-        type: 'heatmap',
-        data,
-      };
-    });
-
-    return { categories, series, valueFields };
+    return this.data.records.map((record) => ({
+      xValue: record[xField.name] ?? xField.display_name,
+      yValue: record[yField.name] ?? xField.display_name,
+      value: record[options.value_field],
+    }));
   }
 
-  render(
-    options: HeatmapDataVizOptions,
-    categories: string[],
-    series: any[],
-    valueFields: Field[]
-  ) {
-    const labelOptions: any = {
-      show: true,
-      formatter: function (param: any) {
-        return '' + Math.round(+param.value[2]);
-      },
-      fontSize: 16,
-      color: this.dark ? '#DDF' : '#335',
-    };
-
-    if (options.heatmap_orientation === 'horizontal') {
-      labelOptions.position = [10, '25%'];
-    } else {
-      labelOptions.align = 'left';
-      labelOptions.rotate = 90;
-      labelOptions.verticalAlign = 'middle';
-      labelOptions.position = 'insideBottom';
-      labelOptions.distance = 15;
-    }
+  renderHeatmap(data: HeatmapDataPoint[]) {
+    const xValues = data.map((item: HeatmapDataPoint) => item.xValue);
+    const yValues = data.map((item: HeatmapDataPoint) => item.yValue);
+    const cellValues = data.map((item: HeatmapDataPoint) => item.value);
 
     this.chartOptions = {
-      textStyle: { fontFamily: 'Almarai' },
-      tooltip: {
-        trigger: 'item',
-        formatter: function (param: any) {
-          return `
-            <h4>${param.seriesName}</h4>
-            <p>${param.marker} <span style='margin-inline-end: 28px'>${
-            param.name
-          }</span> <strong>${Math.round(+param.value[2])}</strong></p>
-          `;
+      xAxis: {
+        type: 'category',
+        splitArea: {
+          show: true,
         },
-        backgroundColor: this.dark ? '#224' : '#FFF',
-        axisPointer: {
-          type: 'shadow',
+        data: [...new Set(xValues)] as string[],
+        axisLabel: {
+          color: this.dark ? '#DDF' : '#335',
+
+          rotate: -45,
         },
       },
-      legend:
-        series.length > 1
-          ? {
-              textStyle: {
-                color: this.dark ? '#DDF' : '#335',
-              },
-            }
-          : undefined,
-      grid: {
-        top: series.length > 1 ? '8%' : '3%',
-        left: '3%',
-        right: '3%',
-        bottom: '3%',
-        containLabel: true,
+      yAxis: {
+        type: 'category',
+        splitArea: {
+          show: true,
+        },
+        axisLabel: {
+          color: this.dark ? '#DDF' : '#335',
+          rotate: 0,
+        },
+        data: [...new Set(yValues)] as string[],
       },
-      xAxis: options.heatmap_orientation?.includes('horizontal')
-        ? {
-            type: 'category',
-            data: categories,
-            axisLabel: {
-              rotate: 45,
-              color: this.dark ? '#DDF' : '#335',
-            },
-          }
-        : {
-            type: 'category',
-            data: categories,
-            axisLabel: {
-              color: this.dark ? '#DDF' : '#335',
-            },
-          },
-      yAxis: !options.heatmap_orientation?.includes('vertical')
-        ? {
-            type: 'category',
-            data: categories,
-            axisLabel: {
-              color: this.dark ? '#DDF' : '#335',
-            },
-          }
-        : undefined,
       visualMap: {
-        type: 'continuous',
-        min: Math.min(...this.data.records.map((r) => r[valueFields[0].name])), // Assuming you're using only the first valueField
-        max: Math.max(...this.data.records.map((r) => r[valueFields[0].name])), // Assuming you're using only the first valueField
+        min: Math.min(...cellValues),
+        max: Math.max(...cellValues),
         calculable: true,
         orient: 'horizontal',
         left: 'center',
-        bottom: '15%',
+        top: 'top',
         inRange: {
-          color: this.dark ? ['#DDF', '#335'] : ['#335', '#DDF'],
+          color: ['#e0ffff', '#006edd'],
         },
       },
-
-      series: series.map((s, i) => ({
-        ...s,
-        label: labelOptions,
-        emphasis: {
-          itemStyle: {
-            color: new graphic.LinearGradient(0, 0, 0, 1, [
-              { offset: 0, color: colors[i][2] },
-              { offset: 0.7, color: colors[i][1] },
-              { offset: 1, color: colors[i][0] },
-            ]),
-          },
+      tooltip: {
+        position: 'top',
+        formatter: (params: any) => {
+          return ` ${params.value[0]} : ${params.value[2]}`;
         },
+      },
+      grid: {
+        height: '50%',
+        bottom: '30%',
+        left: '15%',
+        right: '10%',
+      },
+      series: data.map((item: HeatmapDataPoint) => ({
+        type: 'heatmap',
+        data: [[item.xValue, item.yValue, item.value]],
+        label: {
+          show: true,
+        },
+        // itemStyle: {
+        //   color: new graphic.LinearGradient(0, 0, 0, 1, [
+        //     { offset: 0, color: '#FF0000' },
+        //     { offset: 0.5, color: '#00FF00' },
+        //     { offset: 1, color: '#0000FF' },
+        //   ]),
+        // },
       })),
     };
   }

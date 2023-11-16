@@ -1,8 +1,6 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
-/* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @angular-eslint/component-class-suffix */
 /* eslint-disable @angular-eslint/component-selector */
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import {
   AbstractControl,
   ControlValueAccessor,
@@ -12,13 +10,16 @@ import {
   ValidationErrors,
   Validators,
 } from '@angular/forms';
-import { HeatmapDataVizOptions } from '@pestras/shared/data-model';
-import { Field, TypeKind } from '@pestras/shared/data-model';
+import {
+  Field,
+  HeatmapDataVizOptions,
+  TypeKind,
+} from '@pestras/shared/data-model';
 import { untilDestroyed } from '@pestras/frontend/ui';
 
 @Component({
-  selector: 'app-heatmap-chart-form', // Change the selector
-  templateUrl: './heatmap-chart.form.html', // Create a new template
+  selector: 'app-heatmap-chart-form', 
+  templateUrl: './heatmap-chart.form.html',
   styles: [
     `
       :host {
@@ -27,7 +28,7 @@ import { untilDestroyed } from '@pestras/frontend/ui';
     `,
   ],
   providers: [
-    { provide: NG_VALUE_ACCESSOR, multi: true, useExisting: HeatmapForm },
+    { provide: NG_VALUE_ACCESSOR, multi: true, useExisting: HeatmapForm }, 
     { provide: NG_VALIDATORS, multi: true, useExisting: HeatmapForm },
   ],
 })
@@ -35,9 +36,9 @@ export class HeatmapForm implements OnInit, ControlValueAccessor {
   private ud = untilDestroyed();
 
   readonly form = this.fb.nonNullable.group({
-    value_field: ['', Validators.required], // Change to a single value field
-    row_field: ['', Validators.required], // Add row field
-    column_field: ['', Validators.required], // Add column field
+    value_field: ['', Validators.required],
+    x_axis_field: ['', Validators.required],
+    y_axis_field: ['', Validators.required],
   });
 
   disabled = false;
@@ -72,6 +73,13 @@ export class HeatmapForm implements OnInit, ControlValueAccessor {
     );
   }
 
+  filterValueField(field: Field) {
+    return (
+      ['number', 'int', 'double'].includes(field.type) ||
+      (field.type === 'category' && field.kind !== TypeKind.NONE)
+    );
+  }
+
   // ControlValueAccessor interface
   // --------------------------------------------------------------
   private onChange = (_: any) => {
@@ -82,9 +90,9 @@ export class HeatmapForm implements OnInit, ControlValueAccessor {
   };
 
   writeValue(options: HeatmapDataVizOptions): void {
+    this.form.controls.x_axis_field.setValue(options?.x_axis_field || ''); 
+    this.form.controls.y_axis_field.setValue(options?.y_axis_field || ''); 
     this.form.controls.value_field.setValue(options?.value_field || '');
-    this.form.controls.row_field.setValue(options?.row_field || '');
-    this.form.controls.column_field.setValue(options?.column_field || '');
   }
 
   registerOnChange(fn: any): void {

@@ -1,33 +1,32 @@
-<form class="flex gap-4 align-items-end" [formGroup]="form" *contra="let c">
+<form class="flex gap-2 align-items-end" [formGroup]="form" *contra="let c">
   <div class="grow">
-    <label for="row-field">{{c['rowField']}}</label>
-    <div [class]="'fc mbe-4 ' + fcClass">
+    <label for="x-axis-field">{{c['xField']}}</label>
+    <div [class]="'fc ' + fcClass">
       <pui-select-input
-        labelRef="row-field"
-        formControlName="row_field"
+        labelRef="x-axis-field"
+        formControlName="x_axis_field"
         [list]="dsFields | arrayFilter: filterCatField | arrayMap: mapField"
       ></pui-select-input>
     </div>
   </div>
 
   <div class="grow">
-    <label for="column-field">{{c['columnField']}}</label>
-    <div [class]="'fc mbe-4 ' + fcClass">
+    <label for="y-axis-field">{{c['yField']}}</label>
+    <div [class]="'fc ' + fcClass">
       <pui-select-input
-        labelRef="column-field"
-        formControlName="column_field"
+        labelRef="y-axis-field"
+        formControlName="y_axis_field"
         [list]="dsFields | arrayFilter: filterCatField | arrayMap: mapField"
       ></pui-select-input>
     </div>
   </div>
-
   <div class="grow">
     <label for="value-field">{{c['valueField']}}</label>
-    <div [class]="'fc mbe-4 ' + fcClass">
+    <div [class]="'fc ' + fcClass">
       <pui-select-input
         labelRef="value-field"
         formControlName="value_field"
-        [list]="dsFields | arrayFilter: filterCatField | arrayMap: mapField"
+        [list]="dsFields | arrayFilter: filterValueField | arrayMap: mapField"
       ></pui-select-input>
     </div>
   </div>

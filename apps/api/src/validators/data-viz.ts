@@ -246,9 +246,8 @@ new Validall(HEATMAP, {
   type: { $equals: DataVizTypes.HEATMAP },
   options: {
     value_field: { $type: 'string' },
-    row_field: { $type: 'string' },
-    column_field: { $type: 'string' },
-    heatmap_orientation: { $enum: ['horizontal', 'vertical'], $nullable: true },
+    x_axis_field: { $type: 'string' },
+    y_axis_field: { $type: 'string' },
   },
 });
 

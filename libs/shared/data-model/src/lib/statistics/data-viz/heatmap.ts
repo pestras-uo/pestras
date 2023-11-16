@@ -1,35 +1,53 @@
+// Importing necessary types
 import { BaseDataViz, DataVizTypes } from './types';
 
+// Defining the HeatmapDataViz interface that extends BaseDataViz
 export interface HeatmapDataViz extends BaseDataViz<HeatmapDataVizOptions> {
-  type: DataVizTypes.HEATMAP;
+  type: DataVizTypes.HEATMAP; // Correcting the type to HEATMAP
 }
 
 /**
  * ### Heatmap Data Viz Options
  * #### Visualization:
- * - Heatmap chart
+ * - Cartesian heatmap chart
  */
 export interface HeatmapDataVizOptions {
   /**
-   * ### Value Field
-   * - Each field (column) represents a data point in the heatmap
-   * - Values determine the color intensity in the heatmap
+   * ### X-Axis Field
+   * - Represents values on the X-axis.
    *
    * #### Supported Types:
    * - int
    * - double
    * - number
    */
-  value_field: string;
+  x_axis_field: string;
+
   /**
-   * ### Row Field
-   * - Each row represents a row in the heatmap
+   * ### Y-Axis Field
+   * - Represents values on the Y-axis.
+   *
+   * #### Supported Types:
+   * - int
+   * - double
+   * - number
    */
-  row_field: string;
+  y_axis_field: string;
+
   /**
-   * ### Column Field
-   * - Each column represents a column in the heatmap
+   * ### Value Field
+   * - Represents the intensity of the heatmap at each coordinate.
+   *
+   * #### Supported Types:
+   * - int
+   * - double
+   * - number
    */
-  column_field: string;
-  heatmap_orientation?: 'horizontal' | 'vertical';
+  value_field: 'string'; // Update the data type to reflect numerical values
+}
+
+export interface HeatmapDataPoint {
+  xValue: string;
+  yValue: string;
+  value: number;
 }
