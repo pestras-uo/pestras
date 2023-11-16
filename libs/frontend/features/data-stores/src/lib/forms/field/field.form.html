@@ -11,7 +11,13 @@
     <!-- name -->
     <div class="grow">
       <label for="field-name">{{c['name']}}</label>
-      <div class="fc fc-outline fc-surface1">
+      <div
+        class="fc fc-outline fc-surface1"
+        [class.invalid]="
+        form.controls['name'].invalid &&
+        (form.controls['name'].dirty || form.controls['name'].touched)
+      "
+      >
         <input type="text" id="field-name" formControlName="name" />
       </div>
     </div>
@@ -19,7 +25,13 @@
     <!-- display name -->
     <div class="grow">
       <label for="field-diplay-name">{{c['displayName']}}</label>
-      <div class="fc fc-outline fc-surface1">
+      <div
+        class="fc fc-outline fc-surface1"
+        [class.invalid]="
+        form.controls['display_name'].invalid &&
+        (form.controls['display_name'].dirty || form.controls['display_name'].touched)
+      "
+      >
         <input
           type="text"
           id="field-diplay-name"
@@ -31,12 +43,19 @@
     <!-- group -->
     <div class="grow" *ngIf="!field || !field.parent">
       <label for="field-group">{{c['group']}}</label>
-      <div class="fc fc-outline fc-surface1">
+      <div
+        class="fc fc-outline fc-surface1"
+        [class.invalid]="
+        form.controls['group'].invalid &&
+        (form.controls['group'].dirty || form.controls['group'].touched)
+      "
+      >
         <pui-select-input
           labelRef="field-group"
           [addNew]="true"
           [list]="groups"
           formControlName="group"
+          (input)="onInputChange()"
         ></pui-select-input>
       </div>
     </div>
@@ -75,7 +94,12 @@
           <pui-select-input
             [list]="dataStore.blueprint | blueprintDataStores | async | arrayMap: mapDs"
             formControlName="ref_to"
+            (input)="onInputTypeChange()"
           ></pui-select-input>
+          <div
+            *ngIf="form.controls['ref_to'].hasError('required') 
+            && (form.controls['ref_to'].dirty || form.controls['ref_to'].touched)"
+          ></div>
         </div>
       </ng-container>
     </ng-container>
@@ -110,7 +134,16 @@
             labelRef="field-category"
             [list]="dataStore.blueprint | bpCategories: catTypeControl.value | async | arrayMap: mapCategory"
             formControlName="ref_to"
+            (input)="onInputTypeChange()"
           ></pui-select-input>
+          <div
+            class="fc fc-outline fc-surface1"
+            [class.invalid]="
+        form.controls['ref_to'].invalid &&
+        (form.controls['ref_to'].dirty || form.controls['ref_to'].touched)
+      "
+            class="note note-danger f10 mbe-4"
+          ></div>
         </div>
       </div>
     </div>
@@ -260,7 +293,51 @@
       formControlName="desc"
     ></quill-editor>
   </ng-container>
+  <div class="mb-3">
+    <p
+      *ngIf="
+          form.controls['name'].invalid &&
+          (form.controls['name'].dirty || form.controls['name'].touched)
+        "
+      class="note note-danger f10 mbe-4"
+    >
+      {{ c['errors'].nameRequired }}
+    </p>
+    <p
+      *ngIf="
+          form.controls['display_name'].invalid &&
+          (form.controls['display_name'].dirty || form.controls['display_name'].touched)
+        "
+      class="note note-danger f10 mbe-4"
+    >
+      {{ c['errors'].displayNameRequired }}
+    </p>
 
+    <p
+      *ngIf="form.get('group')!.hasError('required') && 
+               (form.get('group')!.dirty || form.get('group')!.touched)"
+      class="note note-danger f10 mbe-4"
+    >
+      {{ c['errors'].groupRequired }}
+    </p>
+    <p
+      *ngIf="form.get('ref_to')!.hasError('required') && 
+               (form.get('ref_to')!.dirty || form.get('group')!.touched)"
+      class="note note-danger f10 mbe-4"
+    >
+      {{ c['errors'].refToRequired }}
+    </p>
+
+    <!-- <p
+      *ngIf="
+          form.controls['group'].invalid &&
+          (form.controls['group'].dirty || form.controls['group'].touched)
+        "
+      class="note note-danger f10 mbe-4"
+    >
+      {{ c['errors'].groupRequired }}
+    </p> -->
+  </div>
   <div class="divider mb-8"></div>
 
   <div class="flex align-items-center gap-2">

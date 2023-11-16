@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { AggregationDataStoreConfig, DataStore, DataStoreSettings, DataStoreState, Field, User, ValueConstraint, WSAuth, WSQueryOptions, WebServiceSelection } from "@pestras/shared/data-model";
+import { AggregationDataStoreConfig, DataStore, DataStoreSettings, DataStoreState, Field, SubDataStore, User, ValueConstraint, WSAuth, WSQueryOptions, WebServiceSelection } from "@pestras/shared/data-model";
 import { Model } from "../../model";
 import { Db } from "mongodb";
 import { exists, getByBlueprint, getBySerial, getFields, search } from "./read";
@@ -12,8 +12,18 @@ import { addField, removeField, setFieldConstraint, updateField, updateFieldConf
 import { addCollaborator, removeCollaborator } from "./collaborators";
 import { setActivation } from "./activation";
 import { build, buildView } from "./build";
+import { AddRelationChartInput, AddRelationInput, UpdateRelationChartInput, UpdateRelationInput, addRelation, addRelationChart, removeRelation, removeRelationChart, reorderRelationCharts, updateRelation, updateRelationChart } from "./relations";
 
-export { CreateDataStoreInput, SetWebServiceConfigInput, UpdateFieldConfigInput, UpdateFieldInput };
+export { 
+  CreateDataStoreInput, 
+  SetWebServiceConfigInput, 
+  UpdateFieldConfigInput, 
+  UpdateFieldInput,
+  AddRelationChartInput,
+  AddRelationInput,
+  UpdateRelationChartInput,
+  UpdateRelationInput
+};
 
 export class DataStoresModel extends Model<DataStore> {
   protected dataDB!: Db;
@@ -78,6 +88,17 @@ export class DataStoresModel extends Model<DataStore> {
   updateFieldConfig: (serial: string, field: string, input: UpdateFieldConfigInput, issuer: User) => Promise<Date> = updateFieldConfig.bind(this);
   setFieldConstraint: (serial: string, field: string, constrinat: ValueConstraint | null, issuer: User) => Promise<Date> = setFieldConstraint.bind(this);
   removeField: (serial: string, field: string, issuer: User) => Promise<Date> = removeField.bind(this);
+
+
+  // relations
+  // --------------------------------------------------------------------------------------
+  addRelation: (serial: string, input: AddRelationInput) => Promise<SubDataStore> = addRelation.bind(this);
+  updateRelation: (serial: string, rSerial: string, input: UpdateRelationInput) => Promise<boolean> = updateRelation.bind(this);
+  addRelationChart: (serial: string, rSerial: string, input: AddRelationChartInput) => Promise<string> = addRelationChart.bind(this);
+  updateRelationChart: (serial: string, rSerial: string, cSerial: string, input: UpdateRelationChartInput) => Promise<boolean> = updateRelationChart.bind(this);
+  reorderRelationCharts: (serial: string, rSerial: string, order: string[]) => Promise<boolean> = reorderRelationCharts.bind(this);
+  removeRelationChart: (serial: string, rSerial: string, cSerial: string) => Promise<boolean> = removeRelationChart.bind(this);
+  removeRelation: (serial: string, rSerial: string) => Promise<boolean> = removeRelation.bind(this);
 
   // collaborators
   // ---------------------------------------------------------------------------------

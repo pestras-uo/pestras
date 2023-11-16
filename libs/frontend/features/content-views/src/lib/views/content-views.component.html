@@ -141,6 +141,37 @@
             formControlName="content"
           ></quill-editor>
         </ng-container>
+        <div class="mb-3">
+          <p
+            *ngIf="
+              form.controls['title'].invalid &&
+              (form.controls['title'].dirty || form.controls['title'].touched)
+            "
+            class="note note-danger f10 mbe-4"
+          >
+            {{ c['errors'].titleRequired }}
+          </p>
+       
+          <!-- <p
+            *ngIf="
+              form.controls['type'].invalid &&
+              (form.controls['type'].dirty || form.controls['type'].touched)
+            "
+            class="note note-danger f10 mbe-4"
+          >
+            {{ c['errors'].title }}
+          </p>
+          <p
+            *ngIf="
+              form.controls['content'].invalid &&
+              (form.controls['content'].dirty ||
+                form.controls['content'].touched)
+            "
+            class="note note-danger f10 mbe-4"
+          >
+            {{ c['errors'].title }}
+          </p> -->
+        </div>
       </div>
 
       <div class="card-footer">

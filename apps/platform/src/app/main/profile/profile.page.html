@@ -1,15 +1,17 @@
 <ng-container *contra="let c">
-
   <ng-container *ngIf="user$ | async as user">
-
     <header class="bg-surface1 pb-10 pi-8 border-be">
-
       <div class="container tight">
-
         <div class="toolbar">
-          <app-avatar [serial]="user.serial" src="session" size="large"></app-avatar>
+          <app-avatar
+            [serial]="user.serial"
+            src="session"
+            size="large"
+          ></app-avatar>
           <div class="grow"></div>
-          <button class="btn-primary btn-round" (click)="openModal(updateAvtr)">{{c['changeAvatar']}}</button>
+          <button class="btn-primary btn-round" (click)="openModal(updateAvtr)">
+            {{c['changeAvatar']}}
+          </button>
         </div>
       </div>
 
@@ -19,88 +21,139 @@
 
           <div class="card-body">
             <label for="avatar-input">{{c['chooseImage']}}</label>
-            <pui-image-input labelRef="avatar-input" accept=".jpg,.jpeg,.webp,.png" [newWidth]="512"
-              [formControl]="avatarControl"></pui-image-input>
+            <pui-image-input
+              labelRef="avatar-input"
+              accept=".jpg,.jpeg,.webp,.png"
+              [newWidth]="512"
+              [formControl]="avatarControl"
+            ></pui-image-input>
           </div>
 
           <div class="card-footer">
-            <button class="btn-outline btn-round" (click)="closeModal()">{{c['cancel']}}</button>
-            <button class="btn-primary btn-round" (click)="updateAvatar(c)">{{c['update']}}</button>
+            <button class="btn-outline btn-round" (click)="closeModal()">
+              {{c['cancel']}}
+            </button>
+            <button class="btn-primary btn-round" (click)="updateAvatar(c)">
+              {{c['update']}}
+            </button>
           </div>
-
         </div>
       </ng-template>
-
     </header>
 
     <main class="pb-10 pi-8">
-
       <div class="container tight">
-
         <h2 class="mbe-6">{{c['details']}}</h2>
 
         <h4 class="mbe-4">{{c['signinInfo']}}</h4>
 
         <label for="username">{{c['username']}}</label>
         <div class="fc fc-surface1 fc-outline mbe-4">
-          <input type="text" id="username" [formControl]="usernameControl">
+          <input type="text" id="username" [formControl]="usernameControl" />
         </div>
 
-        <button class="btn-round btn-primary" [disabled]="usernameControl.invalid"
-          (click)="updateUsername(c)">{{c['update']}}</button>
+        <button
+          class="btn-round btn-primary"
+          [disabled]="usernameControl.invalid"
+          (click)="updateUsername(c)"
+        >
+          {{c['update']}}
+        </button>
 
         <div class="divider mb-6"></div>
 
         <h4 class="mbe-4">{{c['personalInfo']}}</h4>
 
         <form [formGroup]="personalForm" (ngSubmit)="updatePersonalInfo(c)">
-
           <label for="fullname">{{c['fullname']}}</label>
           <div class="fc fc-surface1 fc-outline mbe-4">
-            <input type="text" id="fullname" formControlName="fullname">
+            <input type="text" id="fullname" formControlName="fullname" />
           </div>
 
           <label for="email">{{c['email']}}</label>
           <div class="fc fc-surface1 fc-outline mbe-4">
-            <input type="email" id="email" formControlName="email">
+            <input type="email" id="email" formControlName="email" />
           </div>
 
           <label for="mobile">{{c['mobile']}}</label>
           <div class="fc fc-surface1 fc-outline mbe-4">
-            <input type="text" id="mobile" formControlName="mobile">
+            <input type="text" id="mobile" formControlName="mobile" />
           </div>
 
-          <button class="btn-round btn-primary" [disabled]="personalForm.invalid">{{c['update']}}</button>
+          <button
+            class="btn-round btn-primary"
+            [disabled]="personalForm.invalid"
+          >
+            {{c['update']}}
+          </button>
         </form>
 
         <div class="divider mb-6"></div>
 
         <h4 class="mbe-4">{{c['password']}}</h4>
 
-        <button *ngIf="!updatePasswordForm" class="btn-round btn-outline-danger"
-          (click)="updatePasswordForm = true">{{c['updatePassword']}}</button>
+        <button
+          *ngIf="!updatePasswordForm"
+          class="btn-round btn-outline-danger"
+          (click)="updatePasswordForm = true"
+        >
+          {{c['updatePassword']}}
+        </button>
 
-        <form *ngIf="updatePasswordForm" [formGroup]="passwordForm" (ngSubmit)="updatePassword(c)">
-
+        <form
+          *ngIf="updatePasswordForm"
+          [formGroup]="passwordForm"
+          (ngSubmit)="updatePassword(c)"
+        >
           <label for="currPassword">{{c['currPassword']}}</label>
           <div class="fc fc-surface1 fc-outline mbe-4">
-            <input type="password" id="currPassword" formControlName="currentPassword">
+            <input
+              #pass1
+              type="password"
+              id="currPassword"
+              formControlName="currentPassword"
+            />
+            <i
+              [togglePasswordVisibility]="pass1"
+              class="cursor-pointer"
+              #tpv1="tpv"
+              [puiIcon]="tpv1.isPasswordVisible ? 'eye' : 'eye-slash'"
+            ></i>
           </div>
 
           <label for="newPassword">{{c['newPassword']}}</label>
           <div class="fc fc-surface1 fc-outline mbe-4">
-            <input type="password" id="newPassword" formControlName="newPassword">
+            <input
+              #pass2
+              type="password"
+              id="newPassword"
+              formControlName="newPassword"
+            />
+
+            <i
+              [togglePasswordVisibility]="pass2"
+              class="cursor-pointer"
+              #tpv2="tpv"
+              [puiIcon]="tpv2.isPasswordVisible ? 'eye' : 'eye-slash'"
+            ></i>
           </div>
 
           <div class="flex gap-2">
-            <button class="btn-round btn-outline" (click)="updatePasswordForm = false">{{c['cancel']}}</button>
-            <button class="btn-round btn-primary" [disabled]="passwordForm.invalid">{{c['update']}}</button>
+            <button
+              class="btn-round btn-outline"
+              (click)="updatePasswordForm = false"
+            >
+              {{c['cancel']}}
+            </button>
+            <button
+              class="btn-round btn-primary"
+              [disabled]="passwordForm.invalid"
+            >
+              {{c['update']}}
+            </button>
           </div>
         </form>
       </div>
-
     </main>
-
   </ng-container>
-
 </ng-container>

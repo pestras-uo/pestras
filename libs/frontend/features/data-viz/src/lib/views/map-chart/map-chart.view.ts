@@ -68,7 +68,7 @@ export class MapChartView implements OnChanges {
   payload$!: Observable<MapChartDataLoad>;
 
   @Input({ required: true })
-  conf!: BaseDataViz<any>;
+  conf!: Pick<BaseDataViz<any>, 'aggregate' | 'options' | 'type'>;
   @Input({ required: true })
   data!: ChartDataLoad;
   @Input({ transform: booleanAttribute })

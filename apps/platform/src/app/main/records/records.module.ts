@@ -35,6 +35,7 @@ import {
 import { RecordsWorkflowFeatureModule } from '@pestras/frontend/features/records-workflow';
 import { CommentsViewComponent } from './views/comments/comments.view';
 import { AppBreadCrumbModule } from '@pestras/frontend/widgets/bread-crumb';
+import { DataVizFeatureModule } from '@pestras/frontend/features/data-viz';
 
 @NgModule({
   declarations: [
@@ -70,6 +71,7 @@ import { AppBreadCrumbModule } from '@pestras/frontend/widgets/bread-crumb';
     SessionFeatureModule,
     BlueprintsFeatureModule,
     RecordsWorkflowFeatureModule,
+    DataVizFeatureModule,
     // PUI
     PuiInfiniteScroll,
     PuiPreloaderModule,

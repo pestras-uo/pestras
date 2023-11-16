@@ -1,15 +1,14 @@
-import { EntityTypes, Orgunit } from "@pestras/shared/data-model";
+import { EntityTypes, Orgunit, OrgunitsApi } from "@pestras/shared/data-model";
 import { Serial } from '@pestras/shared/util';
 import { OrgunitsModel } from ".";
 
-export type CreateOrgunitInput = Pick<Orgunit, 'name' | 'class' | 'regions'> & { parent?: string; };
-
-export async function create(this: OrgunitsModel, input: CreateOrgunitInput, issuer: string) {
+export async function create(this: OrgunitsModel, input: OrgunitsApi.Create.Body, issuer: string) {
   const date = new Date();
 
   const orgunit: Orgunit = {
-    serial: Serial.gen("ORG", input.parent),
+    serial: Serial.gen("ORG", input.parent ?? ''),
     name: input.name,
+    is_partner: input.is_partner,
     class: input.class,
     logo: null,
     regions: input.regions,

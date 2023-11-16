@@ -229,6 +229,71 @@ export const controller = {
     }
   },
 
+  // update relations
+  // --------------------------------------------------------------------------------------
+  async addRelation(req: DataStoreApi.AddRelationReq, res: DataStoreApi.AddRelationRes, next: NextFunction) {
+    try {
+      res.json(await dataStoresModel.addRelation(req.params.serial, req.body));
+      
+    } catch (error) {
+      next(error);
+    }
+  },
+
+  async updateRelation(req: DataStoreApi.UpdateRelationReq, res: DataStoreApi.UpdateRelationRes, next: NextFunction) {
+    try {
+      res.json(await dataStoresModel.updateRelation(req.params.serial, req.params.rSerial, req.body));
+      
+    } catch (error) {
+      next(error);
+    }
+  },
+
+  async addRelationChart(req: DataStoreApi.AddRelationChartReq, res: DataStoreApi.AddRelationChartRes, next: NextFunction) {
+    try {
+      res.json(await dataStoresModel.addRelationChart(req.params.serial, req.params.rSerial, req.body));
+      
+    } catch (error) {
+      next(error);
+    }
+  },
+
+  async reorderRelationCharts(req: DataStoreApi.ReorderRelationChartsReq, res: DataStoreApi.ReorderRelationChartsRes, next: NextFunction) {
+    try {
+      res.json(await dataStoresModel.reorderRelationCharts(req.params.serial, req.params.rSerial, req.body.order));
+      
+    } catch (error) {
+      next(error);
+    }
+  },
+
+  async updateRelationChart(req: DataStoreApi.UpdateRelationChartReq, res: DataStoreApi.UpdateRelationChartRes, next: NextFunction) {
+    try {
+      res.json(await dataStoresModel.updateRelationChart(req.params.serial, req.params.rSerial, req.params.cSerial, req.body));
+      
+    } catch (error) {
+      next(error);
+    }
+  },
+
+  async removeRelationChart(req: DataStoreApi.RemoveRelationChartReq, res: DataStoreApi.RemoveRelationChartRes, next: NextFunction) {
+    try {
+      res.json(await dataStoresModel.removeRelationChart(req.params.serial, req.params.rSerial, req.params.cSerial));
+      
+    } catch (error) {
+      next(error);
+    }
+  },
+
+  async removeRelation(req: DataStoreApi.RemoveRelationReq, res: DataStoreApi.RemoveRelationRes, next: NextFunction) {
+    try {
+      res.json(await dataStoresModel.removeRelation(req.params.serial, req.params.rSerial));
+      
+    } catch (error) {
+      next(error);
+    }
+  },
+
   // update activation
   // --------------------------------------------------------------------------------------
   async setActivation(req: DataStoreApi.SetActivationReq, res: DataStoreApi.SetActivationRes, next: NextFunction) {

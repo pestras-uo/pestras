@@ -1,8 +1,27 @@
 {
+  "deletePartner": "Delete Partner",
+  "updatePartner": "Update Partner",
+  "addPartner": "Add New Partner",
+  "partner": "Partner",
+  "partners": "Partners",
+  "charts": "Charts",
+  "deleteRelation": "Delete Relation",
+  "editRelation": "Update Relation",
+  "addRelation": "Add Relation",
+  "relationOptions": "Relation Options",
   "categoryTypesList": [
-    { "name": "Nominal", "value": "nominal" },
-    { "name": "Ordinal", "value": "ordinal" },
-    { "name": "Ordinal Range", "value": "ordinal_range" }
+    {
+      "name": "Nominal",
+      "value": "nominal"
+    },
+    {
+      "name": "Ordinal",
+      "value": "ordinal"
+    },
+    {
+      "name": "Ordinal Range",
+      "value": "ordinal_range"
+    }
   ],
   "categoryTypes": {
     "nominal": "Nominal",
@@ -512,6 +531,24 @@
       "value": 12
     }
   ],
+  "chartWidthSizes": [
+    {
+      "name": "Quarter of Screen Width",
+      "value": 3
+    },
+    {
+      "name": "Half of Screen Width",
+      "value": 6
+    },
+    {
+      "name": "Three Quarters of Screen Width",
+      "value": 9
+    },
+    {
+      "name": "Full Screen Width",
+      "value": 12
+    }
+  ],
   "height": "Height",
   "viewHeightSizes": [
     {
@@ -525,6 +562,16 @@
     {
       "name": "Three Quarters of Screen Height",
       "value": 3
+    },
+    {
+      "name": "Full Screen Height",
+      "value": 4
+    }
+  ],
+  "chartHeightSizes": [
+    {
+      "name": "Half of Screen Height",
+      "value": 2
     },
     {
       "name": "Full Screen Height",
@@ -1032,8 +1079,16 @@
     "File too large": "File size exceeds file size limit",
     "fieldNotFound": "Field not found",
     "summaryRequired": "Blueprint summary is required",
+    "topicAddError": "An error occurred while creating the topic.",
+
     "nameRequired": "Name is required!",
+    "displayNameRequired": "Display name is required!",
+    "groupRequired": "Type group is required!",
+    "refToRequired": "Reference To is required!",
+
     "titleRequired": "Title is required!",
+    "subTitleRequired": "Sub title is required!",
+
     "userNotFound": "User Not Found!",
     "username": "Username is required!",
     "password": "Password is required!",
@@ -1059,7 +1114,69 @@
     "heightTooLarge": "Image height too large",
     "widthTooSmall": "Image width too small",
     "heightTooSmall": "Image height too small",
-    "countExceed": "Too many files"
+    "countExceed": "Too many files",
+
+    "errorUploadingAvatar": "Error uploading avatar",
+    "attachmentNotFound": "Attachment not found",
+    "blueprintNotFound": "Blueprint not found",
+    "viewNotFound": "View not found",
+    "dataStoreNotFound": "Data store not found",
+    "recordNotFound": "Record not found",
+    "fileNotFound": "File not found",
+    "imageNotFound": "Image not found",
+    "userIsInactive": "User is inactive",
+    "userAuthNotFound": "User authentication data not found",
+    "invalidTokenType": "Invalid token type",
+    "tokenExpired": "Token expired",
+    "tokenRequired": "Token is required",
+    "invalidExpired": "Invalid expired token",
+    "invalidToken": "Invalid token",
+    "invalidTokenData": "Invalid token data",
+    "unauthorizedRole": "Unauthorized access based on role",
+    "orgunitNotFound": "Organization unit not found",
+
+    "subCategoriesFound": "Subcategories found",
+    "categoryNotFound": "Category not found",
+    "changeOrdinalNotAllowed": "Changing ordinal not allowed",
+    "clientNotFound": "Client not found",
+    "clientApiNotFound": "Client API not found",
+    "clientApiDataStoreOptionsNotFound": "Client API data store options not found",
+    "aliasAlreadyInUse": "Alias already in use",
+
+    "dataStoreIsInactive": "Data store is inactive",
+    "notAllowedDataStoreType": "Not allowed data store type",
+    "noFieldsFoundInInitState": "No fields found in initial state",
+    "dataStoreAlreadyBuilt": "Data store already built",
+    "dataStoreHosNoFieldsDefined": "Data store has no fields defined",
+    "aggrNotProvided": "Aggregation not provided",
+    "srcDataStoreNotFound": "Source data store not found",
+    "srcDataStoreNotBuilt": "Source data store not built yet",
+    "joinDataStoreNotFound": "Join data store not found",
+    "joinDataStoreNotBuilt": "Join data store not built yet",
+    "fieldNameAlreadyExists": "Field name already exists",
+    "fieldDisplayNameAlreadyExists": "Field display name already exists",
+    "WebServiceConfigNotAvailableYet": "Web service configuration not available yet",
+
+    "recordWorkflowNotFound": "Record workflow not found",
+    "recordWorkflowStepNotFound": "Record workflow step not found",
+    "workflowNotFound": "Workflow not found",
+    "workflowStepDefNotFound": "Workflow step definition not found",
+    "recordHasAnActiveWorkflowReview": "Record has an active workflow review",
+    "unsupportedDataStoreType": "Unsupported data store type",
+    "dataStoreNotBuiltYet": "Data store not built yet",
+    "workflowStepNotAllowed": "Workflow step not allowed",
+    "valueAlreadyExists": "Value already exists",
+    "deleteRecordNotAllowed": "Delete record not allowed",
+    "historyNotFound": "History not found",
+
+    "unauthorizedOwner": "Unauthorized owner",
+    "updateNotAllowed": "Update not allowed",
+    "commentNotFound": "Comment not found",
+    "titleAlreadyExissts": "Title already exists",
+    "dashboardNotFound": "Dashboard not found",
+    "reportNotFound": "Report not found",
+
+    "groupAlreadyExists": "Group already exists"
   },
   "success": {
     "blueprintAdd": "Blueprint added successfully",

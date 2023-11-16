@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @angular-eslint/component-class-suffix */
 /* eslint-disable @angular-eslint/component-selector */
-import { Component, EventEmitter, Input, Output, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, Output, OnInit, booleanAttribute } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { Orgunit, Region } from '@pestras/shared/data-model';
 import { ToastService } from '@pestras/frontend/ui';
@@ -23,6 +23,8 @@ export class UpdateOrgunitModal implements OnInit {
   
   preloader = false;
 
+  @Input({ transform: booleanAttribute })
+  isPartner!: boolean;
   @Input({ required: true })
   orgunit!: Orgunit;
 

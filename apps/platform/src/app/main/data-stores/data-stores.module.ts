@@ -34,6 +34,7 @@ import {
   PuiMultiSelectInput,
   PuiPreloaderModule,
   PuiSelectInput,
+  PuiSideDrawerModule,
   PuiTableModule,
   PuiUtilPipesModule,
 } from '@pestras/frontend/ui';
@@ -42,6 +43,13 @@ import { NoDataPlaceholderWidget } from '@pestras/frontend/widgets/no-data-place
 import { AvatarWidget } from '@pestras/frontend/widgets/avatar';
 import { WorkflowsFeatureModule } from '@pestras/frontend/features/workflows';
 import { AppBreadCrumbModule } from '@pestras/frontend/widgets/bread-crumb';
+import { RelationsSettingsComponent } from './views/relations-settings/relations-settings.view';
+import { AddRelationModalComponent } from './modals/add-relation/add-relation.modal.component';
+import { AddRelationChartModalComponent } from './modals/add-relation-chart/add-relation-chart.modal.component';
+import { DataVizFeatureModule } from '@pestras/frontend/features/data-viz';
+import { EditRelationModalComponent } from './modals/edit-relation/edit-relation.modal.component';
+import { EditRelationChartModalComponent } from './modals/edit-relation-chart/edit-relation-chart.modal.component';
+import { DragDropModule } from '@angular/cdk/drag-drop';
 
 @NgModule({
   declarations: [
@@ -59,6 +67,11 @@ import { AppBreadCrumbModule } from '@pestras/frontend/widgets/bread-crumb';
     ParamsView,
     SelectionView,
     RecordsView,
+    RelationsSettingsComponent,
+    AddRelationModalComponent,
+    AddRelationChartModalComponent,
+    EditRelationModalComponent,
+    EditRelationChartModalComponent
   ],
   imports: [
     // Angular
@@ -73,10 +86,12 @@ import { AppBreadCrumbModule } from '@pestras/frontend/widgets/bread-crumb';
     RecordsFeatureModule,
     SessionFeatureModule,
     WorkflowsFeatureModule,
+    DataVizFeatureModule,
     // Util
     ContraModule,
     PuiUtilPipesModule,
     DialogModule,
+    DragDropModule,
     // PUI
     PuiIcon,
     PuiPreloaderModule,
@@ -87,6 +102,7 @@ import { AppBreadCrumbModule } from '@pestras/frontend/widgets/bread-crumb';
     PuiCheckInput,
     PuiTableModule,
     PuiInfiniteScroll,
+    PuiSideDrawerModule,
     // Widgets
     TBgWidget,
     NoDataPlaceholderWidget,

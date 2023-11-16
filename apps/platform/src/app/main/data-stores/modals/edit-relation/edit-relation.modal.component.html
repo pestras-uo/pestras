@@ -1,0 +1,52 @@
+<form
+  [formGroup]="form"
+  (ngSubmit)="add(c)"
+  class="card shadow-6 w-15"
+  *contra="let c"
+>
+  <h4 class="card-header">{{ c['editRelation'] }}</h4>
+
+  <div class="card-body">
+    <label for="rel_name">{{ c['name'] }}</label>
+    <div class="fc mbe-4">
+      <input type="text" formControlName="name" id="rel-name" />
+    </div>
+
+    <h5 class="mbe-4">{{ c['join'] }}</h5>
+    <div
+      class="flex gap-4 align-items-center"
+      formGroupName="on"
+    >
+      <div class="grow">
+        <label for="rel-local-field">{{ c['localField'] }}</label>
+        <div class="fc">
+          <pui-select-input
+            [list]="dataStore.fields | arrayMap : mapField"
+            labelRef="rel-local-field"
+            formControlName="local_field"
+          ></pui-select-input>
+        </div>
+      </div>
+
+      <div class="grow">
+        <label for="rel-foreign-field">{{ c['foreignField'] }}</label>
+        <div class="fc">
+          <pui-select-input
+            [list]="relation.data_store | dataStoreFields | async | arrayMap : mapField"
+            labelRef="rel-foreign-field"
+            formControlName="foreign_field"
+          ></pui-select-input>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card-footer">
+    <button class="btn-round" type="button" (click)="closes.emit()">
+      {{ c['cancel'] }}
+    </button>
+    <button class="btn-round btn-primary" [disabled]="form.invalid" type="submit">{{ c['update'] }}</button>
+  </div>
+
+  <pui-preloader *ngIf="preloader"></pui-preloader>
+</form>

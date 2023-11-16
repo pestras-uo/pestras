@@ -11,6 +11,7 @@ export const appRoutes: Route[] = [
       { path: 'workspace', loadChildren: () => import('./main/workspace/workspace.module').then(m => m.WorkspaceModule) },
       // // administration
       { path: 'orgunits', loadChildren: () => import('./main/orgunits/orgunits.module').then(m => m.OrgunitsModule) },
+      { path: 'partners', loadChildren: () => import('./main/orgunits/orgunits.module').then(m => m.OrgunitsModule) },
       { path: 'users', loadChildren: () => import('./main/users/users.module').then(m => m.UsersModule) },
       { path: 'regions', loadChildren: () => import('./main/regions/regions.module').then(m => m.RegionsModule) },
       { path: 'groups', loadChildren: () => import('./main/users-groups/groups.module').then(m => m.GroupsModule) },

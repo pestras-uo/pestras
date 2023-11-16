@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-namespace */
-import { DataStore, WebServiceConfig, WSQueryOptions, AggregationDataStoreConfig, Field, ValueConstraint, WebServiceSelection, DataStoreSettings } from '@pestras/shared/data-model';
+import { DataStore, WebServiceConfig, WSQueryOptions, AggregationDataStoreConfig, Field, ValueConstraint, WebServiceSelection, DataStoreSettings, SubDataStore, SubDataStoreChart } from '@pestras/shared/data-model';
 
 export const basePath = `/data-stores`;
 
@@ -255,6 +255,82 @@ export namespace DataStoresApi {
     export interface Params { serial: string; field: string; }
 
     export type Response = string; // date
+  }
+
+
+  // relations
+  // --------------------------------------------------------------------------------------
+  // POST
+  export namespace AddRelation {
+    export const REQ_PATH = `${basePath}/:serial/relations`;
+
+    export interface Params { serial: string; }
+
+    export type Body = Pick<SubDataStore, 'name' | 'data_store' | 'on'>;
+
+    export type Response = SubDataStore;
+  }
+
+  // PUT
+  export namespace UpdateRelation {
+    export const REQ_PATH = `${basePath}/:serial/relations/:rSerial`;
+
+    export interface Params { serial: string; rSerial: string; }
+
+    export type Body = Pick<SubDataStore, 'name' | 'on'>;
+
+    export type Response = boolean;
+  }
+
+  // POST
+  export namespace AddRelationChart {
+    export const REQ_PATH = `${basePath}/:serial/relations/:rSerial/charts`;
+
+    export interface Params { serial: string; rSerial: string; }
+
+    export type Body = Omit<SubDataStoreChart, 'serial'>;
+
+    export type Response = string;
+  }
+
+  // PUT
+  export namespace UpdateRelationChart {
+    export const REQ_PATH = `${basePath}/:serial/relations/:rSerial/charts/:cSerial`;
+
+    export interface Params { serial: string; rSerial: string; cSerial: string; }
+
+    export type Body = Pick<SubDataStoreChart, 'title' | 'width' | 'height'>;
+
+    export type Response = boolean;
+  }
+
+  // PUT
+  export namespace ReorderRelationCharts {
+    export const REQ_PATH = `${basePath}/:serial/relations/:rSerial/reorder`;
+
+    export interface Params { serial: string; rSerial: string; }
+
+    export interface Body { order: string[]; };
+
+    export type Response = boolean;
+  }
+
+  // DELETE
+  export namespace RemoveRelationChart {
+    export const REQ_PATH = `${basePath}/:serial/relations/:rSerial/charts/:cSerial`;
+
+    export interface Params { serial: string; rSerial: string; cSerial: string; }
+
+    export type Response = boolean;
+  }
+
+  // DELETE
+  export namespace RemoveRelation {
+    export const REQ_PATH = `${basePath}/:serial/relations/:rSerial`;
+
+    export interface Params { serial: string; rSerial: string; }
+
+    export type Response = boolean;
   }
 
 

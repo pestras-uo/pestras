@@ -1,0 +1,128 @@
+<form class="card w-25 h-fit card-clear" *contra="let c" [formGroup]="form">
+  <h3 class="card-header">{{ c['addDataViz'] }}</h3>
+
+  <div class="card-body">
+    <label for="chart-title">{{ c['title'] }}</label>
+    <div class="fc mbe-4">
+      <input type="text" formControlName="title" id="chart-title" />
+    </div>
+
+    <div class="flex gap-4 align-items-center mbe-4">
+      <div class="grow">
+        <label for="view-width">{{ c['width'] }}</label>
+        <div class="fc">
+          <pui-select-input
+            labelRef="view-width"
+            formControlName="width"
+            [list]="c['chartWidthSizes']"
+          ></pui-select-input>
+        </div>
+      </div>
+      <div class="grow">
+        <label for="view-height">{{ c['height'] }}</label>
+        <div class="fc">
+          <pui-select-input
+            labelRef="view-height"
+            formControlName="height"
+            [list]="c['chartHeightSizes']"
+          ></pui-select-input>
+        </div>
+      </div>
+    </div>
+
+    <ng-container
+      formGroupName="options"
+      *ngIf="dataStore.serial | records | async as records"
+    >
+      <app-aggr
+        class="mbe-4"
+        [dataStore]="dataStore"
+        [records]="records"
+        formControlName="aggregate"
+        (fieldsChange)="fieldsChange($event)"
+      ></app-aggr>
+
+      <h4 class="mbe-4">{{ c['viewSettings'] }}</h4>
+
+      <label for="type">{{ c['type'] }}</label>
+      <div class="fc mbe-4">
+        <pui-select-input
+          labelRef="type"
+          formControlName="type"
+          [list]="c['chartTypes']"
+        ></pui-select-input>
+      </div>
+
+      <app-bar-chart-form
+        *ngIf="chartType.value === 'bar'"
+        [dsFields]="fields"
+        formControlName="options"
+      ></app-bar-chart-form>
+      <app-boxplot-chart-form
+        *ngIf="chartType.value === 'boxplot'"
+        [dsFields]="fields"
+        formControlName="options"
+      ></app-boxplot-chart-form>
+      <app-hierarchical-chart-form
+        *ngIf="chartType.value === 'hierarchical'"
+        [dsFields]="fields"
+        formControlName="options"
+      ></app-hierarchical-chart-form>
+      <app-line-chart-form
+        *ngIf="chartType.value === 'line'"
+        [dsFields]="fields"
+        formControlName="options"
+      ></app-line-chart-form>
+      <app-map-chart-form
+        *ngIf="chartType.value === 'map'"
+        [dsFields]="fields"
+        formControlName="options"
+      ></app-map-chart-form>
+      <app-pie-chart-form
+        *ngIf="chartType.value === 'pie'"
+        [dsFields]="fields"
+        formControlName="options"
+      ></app-pie-chart-form>
+      <app-polar-chart-form
+        *ngIf="chartType.value === 'polar'"
+        [dsFields]="fields"
+        formControlName="options"
+      ></app-polar-chart-form>
+      <app-radar-chart-form
+        *ngIf="chartType.value === 'radar'"
+        [dsFields]="fields"
+        formControlName="options"
+      ></app-radar-chart-form>
+      <app-scatter-chart-form
+        *ngIf="chartType.value === 'scatter'"
+        [dsFields]="fields"
+        formControlName="options"
+      ></app-scatter-chart-form>
+      <app-table-form
+        *ngIf="chartType.value === 'table'"
+        [dsFields]="fields"
+        formControlName="options"
+      ></app-table-form>
+      <app-timeline-chart-form
+        *ngIf="chartType.value === 'timeline'"
+        [dsFields]="fields"
+        formControlName="options"
+      ></app-timeline-chart-form>
+    </ng-container>
+  </div>
+
+  <div class="card-footer">
+    <button class="btn-round" type="button" (click)="closes.emit()">
+      {{ c['cancel'] }}
+    </button>
+    <button
+      class="btn-primary btn-round"
+      (click)="add(c)"
+      [disabled]="form.invalid"
+    >
+      {{ c['submit'] }}
+    </button>
+  </div>
+
+  <pui-preloader *ngIf="preloader"></pui-preloader>
+</form>

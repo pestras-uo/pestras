@@ -1,0 +1,211 @@
+<ng-container *contra="let c">
+  <div class="toolbar mbe-6">
+    <h2>{{c['relations']}}</h2>
+    <div class="grow"></div>
+    <button
+      *ngIf="editable"
+      class="btn-small btn-icon btn-round"
+      (click)="openDialog(addRel)"
+    >
+      <i puiIcon="add" size="small"></i>
+    </button>
+  </div>
+
+  <div *ngIf="dataStore.relations.length else noData" class="accordion">
+    <div
+      #card
+      class="card mbe-4"
+      *ngFor="let rel of dataStore.relations; let index = index"
+    >
+      <div class="card-header">
+        <h3>{{rel.name}}</h3>
+        <div class="grow"></div>
+        <button
+          *ngIf="editable"
+          class="btn-tiny btn-icon btn-round"
+          (click)="openDialog(editRel, rel)"
+        >
+          <i puiIcon="edit" size="tiny"></i>
+        </button>
+        <button
+          *ngIf="editable"
+          class="btn-tiny btn-icon btn-round"
+          (click)="openDialog(deleteRel, rel)"
+        >
+          <i puiIcon="delete" size="tiny"></i>
+        </button>
+        <button
+          class="btn-tiny btn-icon btn-round"
+          (click)="card.classList.toggle('active')"
+        >
+          <i puiIcon="arrow_drop_down" size="small"></i>
+        </button>
+      </div>
+
+      <div class="card-body pbs-0">
+        <h4 class="mbe-4">{{c['relationOptions']}}</h4>
+
+        <div
+          class="flex align-items-center justify-content-space-between mbe-4"
+        >
+          <div>
+            <h5>{{c['dataStore']}}</h5>
+            <p>{{(rel.data_store | dataStore | async)?.name}}</p>
+          </div>
+          <div>
+            <h5>{{c['localField']}}</h5>
+            <p>{{rel.on.local_field}}</p>
+          </div>
+          <div>
+            <h5>{{c['foreignField']}}</h5>
+            <p>{{rel.on.foreign_field}}</p>
+          </div>
+        </div>
+
+        <div class="toolbar mbe-4">
+          <h4>{{c['charts']}}</h4>
+          <div class="grow"></div>
+          <button
+            *ngIf="editable"
+            class="btn-small btn-icon btn-round"
+            (click)="openDrawer(addChart, rel)"
+          >
+            <i puiIcon="add" size="small"></i>
+          </button>
+          <button
+            *ngIf="editable"
+            class="btn-icon btn-tiny btn-round"
+            [class.btn-success]="reorder"
+            (click)="reorder = !reorder"
+          >
+            <i size="tiny" puiIcon="reorder"></i>
+          </button>
+        </div>
+        <div class="card card-clear bordered card-small">
+          <div
+            class="card-body charts-view"
+            [id]="'chart-views-' + index"
+            *ngIf="rel.charts.length else noDataSmall"
+            cdkDropList
+            (cdkDropListDropped)="drop($event, index)"
+          >
+            <div
+              *ngFor="let c of (viewsOrder[index] | fn: getCharts: index)"
+              [class]="'x' + c.width + ' y' + c.height"
+              [cdkDragBoundary]="'#chart-views-' + index"
+              cdkDrag
+              [cdkDragDisabled]="!reorder"
+            >
+              <div class="p-4 align-center">
+                <h4 class="mbe-2">{{c.title}}</h4>
+                <div class="flex justify-content-center gap-1">
+                  <button
+                    *ngIf="reorder"
+                    cdkDragHandle
+                    class="btn-icon btn-tiny btn-round"
+                  >
+                    <i size="tiny" puiIcon="drag"></i>
+                  </button>
+                  <button
+                    *ngIf="editable"
+                    class="btn-icon btn-tiny btn-round btn-success"
+                    (click)="openDialog(editChart, rel, c)"
+                  >
+                    <i puiIcon="edit" size="tiny"></i>
+                  </button>
+                  <button
+                    *ngIf="editable"
+                    class="btn-icon btn-tiny btn-round btn-danger"
+                    (click)="openDialog(deletechart, rel, c)"
+                  >
+                    <i puiIcon="delete" size="tiny"></i>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <ng-template #noDataSmall>
+    <no-data-placeholder-widget small
+      >{{c['noDataMsg']}}</no-data-placeholder-widget
+    >
+  </ng-template>
+
+  <ng-template #noData>
+    <no-data-placeholder-widget>{{c['noDataMsg']}}</no-data-placeholder-widget>
+  </ng-template>
+
+  <ng-template #addRel>
+    <pestras-add-relation-modal
+      [dataStore]="dataStore"
+      (closes)="closeDialog()"
+    ></pestras-add-relation-modal>
+  </ng-template>
+
+  <ng-template #editRel let-data>
+    <pestras-edit-relation-modal
+      [dataStore]="dataStore"
+      [relation]="data.relation"
+      (closes)="closeDialog()"
+    ></pestras-edit-relation-modal>
+  </ng-template>
+
+  <ng-template #deleteRel let-data>
+    <div class="card shadow-6 w-10">
+      <h4 class="card-header">{{c['deleteRelation']}}</h4>
+      <p class="card-body">{{c['confirmOperation']}}</p>
+      <div class="card-footer">
+        <button class="btn-round" (click)="closeDialog()">
+          {{c['cancel']}}
+        </button>
+        <button
+          class="btn-round btn-danger"
+          (click)="removeRelation(c, data.relation.serial)"
+        >
+          {{c['delete']}}
+        </button>
+      </div>
+    </div>
+  </ng-template>
+
+  <ng-template #addChart>
+    <pestras-add-relation-chart-modal
+      *ngIf="relationCtx!.data_store | dataStore | async as ds"
+      [dsSerial]="dataStore.serial"
+      [dataStore]="ds"
+      [relation]="relationCtx!"
+      (closes)="closeDrawer()"
+    ></pestras-add-relation-chart-modal>
+  </ng-template>
+
+  <ng-template #editChart let-data>
+    <pestras-edit-relation-chart-modal
+      [dsSerial]="dataStore.serial"
+      [relation]="data.relation"
+      [chart]="data.chart"
+      (closes)="closeDialog()"
+    ></pestras-edit-relation-chart-modal>
+  </ng-template>
+
+  <ng-template #deletechart let-data>
+    <div class="card shadow-6 w-10">
+      <h4 class="card-header">{{c['delete']}}</h4>
+      <p class="card-body">{{c['confirmOperation']}}</p>
+      <div class="card-footer">
+        <button class="btn-round" (click)="closeDialog()">
+          {{c['cancel']}}
+        </button>
+        <button
+          class="btn-round btn-danger"
+          (click)="removeChart(c, data.relation.serial, data.chart.serial)"
+        >
+          {{c['delete']}}
+        </button>
+      </div>
+    </div>
+  </ng-template>
+</ng-container>

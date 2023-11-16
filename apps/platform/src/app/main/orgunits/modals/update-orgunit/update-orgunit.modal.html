@@ -5,7 +5,8 @@
   (ngSubmit)="update(c)"
 >
   <div class="card-header">
-    <h3>{{c['addOrgunit']}}</h3>
+    <h3 *ngIf="!isPartner">{{c['updateOrgunit']}}</h3>
+    <h3 *ngIf="isPartner">{{c['updatePartner']}}</h3>
   </div>
 
   <div class="card-body">
@@ -40,6 +41,17 @@
         [list]="'' | userRegions | async | arrayMap: mapRegion"
         formControlName="regions"
       ></pui-multi-select-input>
+    </div>
+    <div class="mb-3">
+      <p
+        *ngIf="
+              form.controls['name'].invalid &&
+              (form.controls['name'].dirty || form.controls['name'].touched)
+            "
+        class="note note-danger f10 mbe-4"
+      >
+        {{ c['errors'].nameRequired }}
+      </p>
     </div>
   </div>
 

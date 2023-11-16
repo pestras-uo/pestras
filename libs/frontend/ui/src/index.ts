@@ -115,3 +115,11 @@ export * from './lib/breadcrumb/breadcrumb.module';
 export * from './lib/toggle-theme/toggle-theme.component';
 export * from './lib/toggle-theme/toggle-theme.service';
 export * from './lib/toggle-theme/toggle-theme.module';
+
+//toggle password
+export * from './lib/password-toggle-visibility/password-toggle-visibility.directive';
+
+//fontsize
+// export * from './lib/font-size/Font-size.service';
+// export * from './lib/font-size/font-size.component';
+// export * from './lib/font-size/font-size.module';

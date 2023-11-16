@@ -23,6 +23,11 @@ export enum DataStoreValidators {
   UPDATE_FIELD = "updateField",
   UPDATE_FIELD_CONFIG = "updateFieldConfig",
   FIELD_CONSTRAINT = "fieldConstraint",
+  ADD_RELATION = 'addDataStoreRelation',
+  UPDATE_RELATION = 'updateDataStoreRelation',
+  ADD_RELATION_CHART = 'addDataStoreRelationChart',
+  UPDATE_RELATION_CHART = 'updateDataStoreRelationChart',
+  REORDER_RELATION_CHARTS = 'reorderDataStoreRelationCharts',
 }
 
 new Validall(DataStoreValidators.CREATE, {
@@ -79,17 +84,7 @@ new Validall(DataStoreValidators.SET_TABLE_SETTINGS, {
       field: { $type: 'string' },
       display_field: { $type: 'string', $nullable: true }
     }
-  },
-  sub_data_stores: {
-    $each: {
-      name: { $type: "string" },
-      data_store: { $type: "string" },
-      on: {
-        local_field: { $type: "string" },
-        foreign_field: { $type: "string" },
-      },
-    },
-  },
+  }
 });
 
 new Validall(DataStoreValidators.WEB_SERVICE, {
@@ -197,4 +192,38 @@ new Validall(DataStoreValidators.UPDATE_FIELD_CONFIG, {
 
 new Validall(DataStoreValidators.FIELD_CONSTRAINT, {
   $ref: Validators.CONSTRAINT_OPTIONS,
+});
+
+new Validall(DataStoreValidators.ADD_RELATION, {
+  name: { $type: 'string' },
+  data_store: { $type: 'string' },
+  on: {
+    local_field: { $type: "string" },
+    foreign_field: { $type: "string" },
+  }
+});
+
+new Validall(DataStoreValidators.UPDATE_RELATION, {
+  name: { $type: 'string' },
+  on: {
+    local_field: { $type: "string" },
+    foreign_field: { $type: "string" },
+  }
+});
+
+new Validall(DataStoreValidators.ADD_RELATION_CHART, {
+  title: { $type: 'string' },
+  width: { $enum: [3,4,6,8,9,12] },
+  height: { $enum: [1,2,3,4] },
+  options: { $ref: Validators.DATA_VIZ }
+});
+
+new Validall(DataStoreValidators.UPDATE_RELATION_CHART, {
+  title: { $type: 'string' },
+  width: { $enum: [3,4,6,8,9,12] },
+  height: { $enum: [1,2,3,4] }
+});
+
+new Validall(DataStoreValidators.REORDER_RELATION_CHARTS, {
+  order: { $each: { $type: 'string' } },
 });

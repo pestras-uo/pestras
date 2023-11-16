@@ -1,4 +1,14 @@
 {
+  "deletePartner": "حذف الشريك",
+  "updatePartner": "تعديل بيانات شريك",
+  "addPartner": "إضافة شريك",
+  "partner": "الشريك",
+  "partners": "الشركاء",
+  "charts": "الإحصاءات",
+  "deleteRelation": "حذف ارتباط",
+  "editRelation": "تعديل ارتباط",
+  "addRelation": "إضافة ارتباط",
+  "relationOptions": "إعدادات الإرتباط",
   "categoryTypesList": [{
       "name": "إسمي",
       "value": "nominal"
@@ -511,6 +521,24 @@
       "value": 12
     }
   ],
+  "chartWidthSizes": [
+    {
+      "name": "ربع الشاشة",
+      "value": 3
+    },
+    {
+      "name": "نصف الشاشة",
+      "value": 6
+    },
+    {
+      "name": "ثلاثة أرباع الشاشة",
+      "value": 9
+    },
+    {
+      "name": "كامل الشاشة",
+      "value": 12
+    }
+  ],
   "height": "الطول",
   "viewHeightSizes": [{
       "name": "ربع الشاشة",
@@ -523,6 +551,16 @@
     {
       "name": "ثلاثة أرباع الشاشة",
       "value": 3
+    },
+    {
+      "name": "كامل الشاشة",
+      "value": 4
+    }
+  ],
+  "chartHeightSizes": [
+    {
+      "name": "نصف الشاشة",
+      "value": 2
     },
     {
       "name": "كامل الشاشة",
@@ -1026,7 +1064,14 @@
     "fieldNotFound": "الحقل غير موجود",
     "summaryRequired": "الرجاء إدخال الملخص للنموذج",
     "nameRequired": "الإسم إلزامي",
-    "titleRequired": "الإسم إلزامي!",
+    "topicAddError": "حدثت مشكلة في إنشاء الموضوع",
+    "displayNameRequired": " مسمى العرض إلزامي",
+    "groupRequired": "نوع المجموعة إلزامي",
+    "refToRequired": "المرجع إلى إلزامي",
+    "titleRequired": "العنوان إلزامي!",
+    "subTitleRequired": "العنوان الفرعي إلزامي!",
+
+
     "userNotFound": "المستخدم غير موجود",
     "username": "الرجاء التحقق من اسم المستخدم",
     "password": "الرجاء التحقق من كلمة المرور",
@@ -1051,7 +1096,78 @@
     "heightTooLarge": "طول الصورة كبير",
     "widthTooSmall": "عرض الصورة صغير",
     "heightTooSmall": "طول الصورة صغير",
-    "countExceed": "عدد الملفات أكثر من الحد"
+    "countExceed": "عدد الملفات أكثر من الحد",
+
+
+
+
+    "errorUploadingAvatar": "خطأ أثناء رفع الصورة الرمزية",
+    "attachmentNotFound": "المرفق غير موجود",
+    "blueprintNotFound": "التصميم الأساسي غير موجود",
+    "viewNotFound": "العرض غير موجود",
+    "dataStoreNotFound": "مخزن البيانات غير موجود",
+    "recordNotFound": "السجل غير موجود",
+    "fileNotFound": "الملف غير موجود",
+    "imageNotFound": "الصورة غير موجودة",
+    "userIsInactive": "المستخدم غير نشط",
+    "useruthNotFound": "بيانات المصادقة للمستخدم غير موجودة",
+
+    "invalidTokenType": "نوع الرمز غير صالح",
+    "tokenExpired": "انتهت صلاحية الرمز",
+    "tokenRequired": "الرمز مطلوب",
+    "invalidExpired": "الرمز منتهي الصلاحية",
+    "invalidToken": "الرمز غير صالح",
+    "invalidTokenData": "بيانات الرمز غير صالحة",
+    "unauthorizedRole": "غير مسموح بالوصول بناءً على الدور",
+    "orgunitNotFound": "الوحدة التنظيمية غير موجودة",
+    "subCategoriesFound": "تم العثور على فئات فرعية",
+    "categoryNotFound": "الفئة غير موجودة",
+    "changeOrdinalNotAllowed": "غير مسموح بتغيير الترتيب",
+    "clientNotFound": "العميل غير موجود",
+    "clientApiNotFound": "واجهة العميل غير موجودة",
+    "clientApiDataStoreOptionsNotFound": "خيارات مخزن بيانات واجهة العميل غير موجودة",
+    "aliasAlreadyInUse": "الاسم المستعار قيد الاستخدام بالفعل",
+    "dataStoreIsInactive": "مخزن البيانات غير نشط",
+    "notAllowedDataStoreType": "نوع مخزن البيانات غير مسموح به",
+    "noFieldsFoundInInitState": "لا توجد حقول موجودة في الحالة الابتدائية",
+    "dataStoreAlreadyBuilt": "مخزن البيانات تم بناؤه بالفعل",
+    "dataStoreHosNoFieldsDefined": "مخزن البيانات لا يحتوي على حقول محددة",
+    "aggrNotProvided": "التجميع غير مقدم",
+    "srcDataStoreNotFound": "مخزن البيانات المصدر غير موجود",
+    "srcDataStoreNotBuilt": "مخزن البيانات المصدر لم يتم بناؤه بعد",
+    "joinDataStoreNotFound": "مخزن البيانات المندمج غير موجود",
+    "joinDataStoreNotBuilt": "مخزن البيانات المندمج لم يتم بناؤه بعد",
+    "fieldNameAlreadyExists": "اسم الحقل موجود بالفعل",
+    "fieldDisplayNameAlreadyExists": "اسم العرض للحقل موجود بالفعل",
+    "WebServiceConfigNotAvailableYet": "تكوين خدمة الويب غير متاح حالياً",
+    "recordWorkflowNotFound": "تدفق السجل غير موجود",
+    "recordWorkflowStepNotFound": "خطوة تدفق السجل غير موجودة",
+    "workflowNotFound": "سير العمل غير موجود",
+    "workflowStepDefNotFound": "تعريف خطوة السير العمل غير موجود",
+    "recordHasAnActiveWorkflowReview": "السجل لديه استعراض سير العمل النشط",
+    "unsupportedDataStoreType": "نوع مخزن البيانات غير مدعوم",
+    "dataStoreNotBuiltYet": "مخزن البيانات لم يُبن بعد",
+    "workflowStepNotAllowed": "خطوة السير العمل غير مسموح بها",
+    "valueAlreadyExists": "القيمة موجودة بالفعل",
+    "deleteRecordNotAllowed": "غير مسموح بحذف السجل",
+    "historyNotFound": "السجل غير موجود",
+
+
+    "unauthorizedOwner": "غير مصرح للمالك",
+    "updateNotAllowed": "غير مسموح بالتحديث",
+    "commentNotFound": "التعليق غير موجود",
+    "titleAlreadyExissts": "العنوان موجود بالفعل",
+    "dashboardNotFound": "لوحة التحكم غير موجودة",
+    "reportNotFound": "التقرير غير موجود",
+
+
+    "groupAlreadyExists": "المجموعة موجودة بالفعل",
+    "emailRequired": "البريد الإلكتروني إلزامي",
+    "VerifyPhone": "الرجاء التثبت من رقم الهاتف"
+
+
+
+
   },
   "success": {
     "blueprintAdd": "تم إضافة النموذج بنجاح",
@@ -1328,6 +1444,7 @@
   "confirmRequest": "هل أنت متأكد من طلبك؟",
   "confirmOperation": "هل أنت متأكد من العملية؟",
   "addField": "حقل جديد",
+
   "ordinal": "ترتيبي",
   "value": "القيمة",
   "entryDate": "تاريخ الإدخال",

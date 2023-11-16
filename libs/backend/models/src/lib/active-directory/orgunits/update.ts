@@ -1,10 +1,8 @@
-import { EntityTypes, Orgunit } from "@pestras/shared/data-model";
+import { EntityTypes, OrgunitsApi } from "@pestras/shared/data-model";
 import { OrgunitsModel } from ".";
 import { HttpError, HttpCode } from "@pestras/backend/util";
 
-export type UpdateOrgunitInput = Pick<Orgunit, 'name' | 'class'>;
-
-export async function update(this: OrgunitsModel, serial: string, input: UpdateOrgunitInput, issuer: string) {
+export async function update(this: OrgunitsModel, serial: string, input: OrgunitsApi.Update.Body, issuer: string) {
   const date = new Date();
 
   await this.col.updateOne(

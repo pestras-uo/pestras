@@ -32,8 +32,8 @@ export class DrawerView {
     private router: Router
   ) { }
 
-  nav(url: string[]) {
-    this.router.navigate(url)
+  nav(url: string[], query = {}) {
+    this.router.navigate(url, { queryParams: query });
     this.full = false;
   }
 

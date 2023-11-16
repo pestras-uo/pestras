@@ -1,6 +1,7 @@
 export * from './lib/pipes/query-records.pipe';
 export * from './lib/pipes/record.pipe';
 export * from './lib/pipes/records.pipe';
+export * from './lib/pipes/records-search.pipe';
 export * from './lib/modals/advanced-search/advanced-search.modal';
 export * from './lib/views/record-card/record-card.view';
 export * from './lib/views/records-list/records-cards/records-cards.view';

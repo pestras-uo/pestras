@@ -20,7 +20,7 @@ export class OrgunitsTableView implements OnChanges {
 
   @HostBinding('class')
   hostClass = 'card h-fit';
-
+  
   @Input({ required: true })
   parent!: string;
 

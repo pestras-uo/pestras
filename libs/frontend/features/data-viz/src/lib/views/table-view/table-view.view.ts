@@ -24,7 +24,7 @@ export class TableViewView implements OnChanges {
   fields!: Field[];
 
   @Input({ required: true })
-  conf!: BaseDataViz<any>;
+  conf!: Pick<BaseDataViz<any>, 'aggregate' | 'options' | 'type'>;
   @Input({ required: true })
   data!: ChartDataLoad;
 
