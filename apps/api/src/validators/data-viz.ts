@@ -1,7 +1,11 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { Validall } from "@pestras/validall";
-import { Validators } from ".";
-import { DataVizTypes, Stats, dataVizFilterOperators } from "@pestras/shared/data-model";
+import { Validall } from '@pestras/validall';
+import { Validators } from '.';
+import {
+  DataVizTypes,
+  Stats,
+  dataVizFilterOperators,
+} from '@pestras/shared/data-model';
 
 // Bar
 // -----------------------------------------------------------------------------
@@ -12,12 +16,9 @@ new Validall(BAR, {
   options: {
     category_field: { $type: 'string' },
     value_fields: { $is: 'notEmpty', $each: { $type: 'string' } },
-    horizontal: { $cast: 'boolean', $default: false }
-  }
+    horizontal: { $cast: 'boolean', $default: false },
+  },
 });
-
-
-
 
 // Box Plot
 // -----------------------------------------------------------------------------
@@ -26,11 +27,9 @@ const BOXPLOT = 'boxplotDataViz';
 new Validall(BOXPLOT, {
   type: { $equals: DataVizTypes.BOXPLOT },
   options: {
-    value_fields: { $is: 'notEmpty', $each: { $type: 'string' } }
-  }
+    value_fields: { $is: 'notEmpty', $each: { $type: 'string' } },
+  },
 });
-
-
 
 // hierarchical
 // -----------------------------------------------------------------------------
@@ -39,14 +38,20 @@ const HIERARCHICAL = 'hierarchicalDataViz';
 new Validall(HIERARCHICAL, {
   type: { $equals: DataVizTypes.HIERARCHICAL },
   options: {
-    name_field: { $type: 'string', $message: 'invalidHierarchicalSeriesNameField' },
-    size_field: { $type: 'string', $message: 'invalidHierarchicalSeriesSizeField' },
-    color_range: { $default: [], $each: { $type: 'string', $message: 'invalidHierarchicalColorRangeItem' } }
-  }
+    name_field: {
+      $type: 'string',
+      $message: 'invalidHierarchicalSeriesNameField',
+    },
+    size_field: {
+      $type: 'string',
+      $message: 'invalidHierarchicalSeriesSizeField',
+    },
+    color_range: {
+      $default: [],
+      $each: { $type: 'string', $message: 'invalidHierarchicalColorRangeItem' },
+    },
+  },
 });
-
-
-
 
 // Line
 // -----------------------------------------------------------------------------
@@ -61,15 +66,19 @@ new Validall(LINE, {
       $each: {
         serie_name: { $nullable: true, $type: 'string' },
         y: { $type: 'string' },
-        mark_lines: { $nullable: true, $each: { $enum: ['average', 'min', 'max'] } },
-        mark_points: { $nullable: true, $each: { $enum: ['average', 'min', 'max'] } }
-      }
+        mark_lines: {
+          $nullable: true,
+          $each: { $enum: ['average', 'min', 'max'] },
+        },
+        mark_points: {
+          $nullable: true,
+          $each: { $enum: ['average', 'min', 'max'] },
+        },
+      },
     },
-    area: { $cast: 'boolean', $default: false }
-  }
+    area: { $cast: 'boolean', $default: false },
+  },
 });
-
-
 
 // map
 // -----------------------------------------------------------------------------
@@ -82,16 +91,16 @@ new Validall(MAP, {
       $nullable: true,
       $props: {
         region: { $type: 'string' },
-        only_children: { $cast: 'boolean' }
-      }
+        only_children: { $cast: 'boolean' },
+      },
     },
     regions: {
       $nullable: true,
       $props: {
         region_field: { $type: 'string' },
         value_field: { $type: 'string' },
-        color_range: { $each: { $type: 'string' } }
-      }
+        color_range: { $each: { $type: 'string' } },
+      },
     },
     scatter: {
       $nullable: true,
@@ -105,8 +114,8 @@ new Validall(MAP, {
           image: { $type: 'string', $nullable: true },
           heading: { $type: 'string', $nullable: true },
           body: { $default: [], $each: { $type: 'string' } },
-        }
-      }
+        },
+      },
     },
     pie: {
       $nullable: true,
@@ -114,13 +123,11 @@ new Validall(MAP, {
         category_field: { $type: 'string' },
         value_field: { $type: 'string' },
         loc_field: { $type: 'string' },
-        doughnut: { $cast: 'boolean', $default: false }
-      }
-    }
-  }
+        doughnut: { $cast: 'boolean', $default: false },
+      },
+    },
+  },
 });
-
-
 
 // Pie
 // -----------------------------------------------------------------------------
@@ -131,11 +138,9 @@ new Validall(PIE, {
   options: {
     category_field: { $type: 'string' },
     value_field: { $type: 'string' },
-    doughnut: { $cast: 'boolean', $default: false }
-  }
+    doughnut: { $cast: 'boolean', $default: false },
+  },
 });
-
-
 
 // Polar
 // -----------------------------------------------------------------------------
@@ -147,11 +152,9 @@ new Validall(POLAR, {
     category_field: { $type: 'string' },
     value_field: { $type: 'string' },
     indicator: { $cast: 'boolean', $default: false },
-    reverse_indicator: { $cast: 'boolean', $default: false }
-  }
+    reverse_indicator: { $cast: 'boolean', $default: false },
+  },
 });
-
-
 
 // Radar
 // -----------------------------------------------------------------------------
@@ -161,11 +164,9 @@ new Validall(RADAR, {
   type: { $equals: DataVizTypes.RADAR },
   options: {
     category_field: { $type: 'string' },
-    value_fields: { $is: 'notEmpty', $each: { $type: 'string' } }
-  }
+    value_fields: { $is: 'notEmpty', $each: { $type: 'string' } },
+  },
 });
-
-
 
 // Scatter
 // -----------------------------------------------------------------------------
@@ -185,23 +186,21 @@ new Validall(SCATTER, {
           $props: {
             field: { $type: 'string' },
             min: { $nullable: true, $type: 'number' },
-            max: { $nullable: true, $type: 'number' }
-          }
+            max: { $nullable: true, $type: 'number' },
+          },
         },
-      }
+      },
     },
     regression: {
       $nullable: true,
       $props: {
         type: { $enum: ['linear', 'logarithmic', 'exponential', 'polynomial'] },
-        order: { $nullable: true, $type: 'number' }
-      }
+        order: { $nullable: true, $type: 'number' },
+      },
     },
-    cluster: { $nullable: true, $type: 'number' }
-  }
+    cluster: { $nullable: true, $type: 'number' },
+  },
 });
-
-
 
 // table
 // -----------------------------------------------------------------------------
@@ -218,14 +217,12 @@ new Validall(TABLE, {
         levels: {
           orange: { $type: 'number' },
           red: { $type: 'number' },
-          blink: { $nullable: true, $type: 'number' }
-        }
-      }
-    }
-  }
+          blink: { $nullable: true, $type: 'number' },
+        },
+      },
+    },
+  },
 });
-
-
 
 // timeline
 // -----------------------------------------------------------------------------
@@ -237,11 +234,22 @@ new Validall(TIMELINE, {
     category_field: { $type: 'string' },
     start_field: { $type: 'string' },
     end_field: { $type: 'string' },
-    indicator: { $nullable: true, $type: 'string' }
-  }
+    indicator: { $nullable: true, $type: 'string' },
+  },
 });
 
+// Heatmap
+// -----------------------------------------------------------------------------
+const HEATMAP = 'heatmapDataViz';
 
+new Validall(HEATMAP, {
+  type: { $equals: DataVizTypes.HEATMAP },
+  options: {
+    value_field: { $type: 'string' },
+    x_axis_field: { $type: 'string' },
+    y_axis_field: { $type: 'string' },
+  },
+});
 
 // Data Viz
 // -----------------------------------------------------------------------------
@@ -251,64 +259,70 @@ new Validall(Validators.DATA_VIZ, {
     aggregate: {
       $nullable: true,
       $each: {
-        $or: [{
-          // filter
-          type: { $equals: 'filter' },
-          any: { $cast: 'boolean' },
-          filters: {
-            $each: {
-              field: { $type: 'string' },
-              operator: { $enum: dataVizFilterOperators as any }
-            }
-          }
-        }, {
-          type: { $equals: 'group' },
-          count_name: { $type: 'string' },
-          count_display_name: { $type: 'string', $nullable: true },
-          by: {
-            $is: 'notEmpty',
-            $each: {
-              name: { $type: 'string' },
-              logical: { $cast: 'boolean' },
-              logical_name: { $type: 'string', $nullable: true },
-              logical_display_name: { $type: 'string', $nullable: true },
-              true_value: { $nullable: true },
-              false_value: { $nullable: true }
-            }
+        $or: [
+          {
+            // filter
+            type: { $equals: 'filter' },
+            any: { $cast: 'boolean' },
+            filters: {
+              $each: {
+                field: { $type: 'string' },
+                operator: { $enum: dataVizFilterOperators as any },
+              },
+            },
           },
-          calc: {
-            $is: 'notEmpty',
-            $each: {
-              name: { $type: 'string' },
-              method: { $enum: Stats.descriptiveStatsProps as any },
-              new_name: { $type: 'string' },
-              display_name: { $type: 'string', $nullable: true }
-            }
-          }
-        }, {
-          type: { $equals: 'limit' },
-          count: { $type: 'number', $gt: 0 },
-          end: { $cast: 'boolean' }
-        }, {
-          type: { $equals: 'sort' },
-          fields: {
-            $is: 'notEmpty',
-            $each: {
-              name: { $type: 'string' },
-              desc: { $cast: 'boolean' }
-            }
-          }
-        }, {
-          type: { $equals: 'transpose' },
-          name: { $type: 'string' },
-          logical: { $cast: 'boolean' },
-          target: { $type: 'string' },
-          method: { $enum: Stats.descriptiveStatsProps as any },
-          true_value: { $nullable: true },
-          false_value: { $nullable: true }
-        }]
-      }
-    }
+          {
+            type: { $equals: 'group' },
+            count_name: { $type: 'string' },
+            count_display_name: { $type: 'string', $nullable: true },
+            by: {
+              $is: 'notEmpty',
+              $each: {
+                name: { $type: 'string' },
+                logical: { $cast: 'boolean' },
+                logical_name: { $type: 'string', $nullable: true },
+                logical_display_name: { $type: 'string', $nullable: true },
+                true_value: { $nullable: true },
+                false_value: { $nullable: true },
+              },
+            },
+            calc: {
+              $is: 'notEmpty',
+              $each: {
+                name: { $type: 'string' },
+                method: { $enum: Stats.descriptiveStatsProps as any },
+                new_name: { $type: 'string' },
+                display_name: { $type: 'string', $nullable: true },
+              },
+            },
+          },
+          {
+            type: { $equals: 'limit' },
+            count: { $type: 'number', $gt: 0 },
+            end: { $cast: 'boolean' },
+          },
+          {
+            type: { $equals: 'sort' },
+            fields: {
+              $is: 'notEmpty',
+              $each: {
+                name: { $type: 'string' },
+                desc: { $cast: 'boolean' },
+              },
+            },
+          },
+          {
+            type: { $equals: 'transpose' },
+            name: { $type: 'string' },
+            logical: { $cast: 'boolean' },
+            target: { $type: 'string' },
+            method: { $enum: Stats.descriptiveStatsProps as any },
+            true_value: { $nullable: true },
+            false_value: { $nullable: true },
+          },
+        ],
+      },
+    },
   },
   $or: [
     { $ref: BAR },
@@ -321,6 +335,7 @@ new Validall(Validators.DATA_VIZ, {
     { $ref: RADAR },
     { $ref: SCATTER },
     { $ref: TABLE },
-    { $ref: TIMELINE }
-  ]
+    { $ref: TIMELINE },
+    { $ref: HEATMAP },
+  ],
 });

@@ -70,7 +70,8 @@ function singleGroup(data: any[], options: DataVizGroup, index: number) {
 
   if (options.by.length > index + 1) {
     for (const [key, list] of map.entries())
-      output.push(...singleGroup(list, options, index + 1).map(v => ({ ...v, [by.name]: key })));
+      output.push(...singleGroup(list, options, index + 1)
+        .map(v => ({ ...v, [by.name]: key })));
   } else
     for (const [key, list] of map.entries())
       output.push({ ...calcList(list, options), [groupName]: key });

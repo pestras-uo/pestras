@@ -48,6 +48,13 @@
                     [data]="data"
                     [dark]="theme === 'dark'"
                   ></app-line-chart>
+                  <app-heatmap-chart
+                    *ngSwitchCase="'heatmap'"
+                    [conf]="c.options"
+                    [data]="data"
+                    [dark]="theme === 'dark'"
+                  >
+                  </app-heatmap-chart>
                   <app-map-chart
                     *ngSwitchCase="'map'"
                     [conf]="c.options"

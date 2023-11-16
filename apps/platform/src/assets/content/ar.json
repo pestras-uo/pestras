@@ -355,6 +355,7 @@
   "minSize": "القيمة الأدني للقياس",
   "useSize": "تحجيم النقاط",
   "yFields": "حقول القيم العامودية",
+  "yField": "حقل القيمة العامودية",
   "xField": "حقل القيمة الأفقية",
   "clusterCounts": "عدد المجموعات",
   "useCluster": "تفعيل حساب المجموعات المتقاربة",
@@ -459,6 +460,11 @@
       "value": "pie"
     },
     {
+      "name": "خريطة الحرارة",
+      "value": "heatmap"
+    },
+
+    {
       "name": "إنجاز",
       "value": "polar"
     },
@@ -490,8 +496,7 @@
   "deleteView": "حذف نافذة",
   "viewSize": "حجم النافذة",
   "width": "العرض",
-  "viewWidthSizes": [
-    {
+  "viewWidthSizes": [{
       "name": "ربع الشاشة",
       "value": 3
     },
@@ -535,8 +540,7 @@
     }
   ],
   "height": "الطول",
-  "viewHeightSizes": [
-    {
+  "viewHeightSizes": [{
       "name": "ربع الشاشة",
       "value": 1
     },
@@ -603,6 +607,9 @@
     {
       "name": "مخطط زمني",
       "value": "timeline"
+    }, {
+      "name": "خريطة الحرارة",
+      "value": "heatmap"
     }
   ],
   "removeSlide": "إزالة الشاشة",

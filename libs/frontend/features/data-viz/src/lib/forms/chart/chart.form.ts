@@ -46,7 +46,6 @@ export class ChartForm implements OnInit {
     private state: DataVizState,
     private toast: ToastService
   ) { }
-
   ngOnInit(): void {
     this.form.controls.type.valueChanges
       .pipe(

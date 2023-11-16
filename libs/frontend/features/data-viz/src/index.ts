@@ -31,4 +31,7 @@ export * from './lib/views/radar-chart/radar-chart.view';
 export * from './lib/views/scatter-chart/scatter-chart.view';
 export * from './lib/views/table-view/table-view.view';
 export * from './lib/views/timeline-chart/timeline-chart.view';
+export * from './lib/forms/heatmap-chart/heatmap-chart.form';
+export * from './lib/views/heatmap-chart/heatmap-chart.view';
+
 export * from './lib/data-viz.module';

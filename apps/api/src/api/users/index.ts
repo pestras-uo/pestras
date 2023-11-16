@@ -1,21 +1,13 @@
-import { Role } from "@pestras/shared/data-model";
-import { Router } from "express";
-import { apiAuth } from "../../middlewares/auth";
-import { validate } from "../../middlewares/validate";
-import { UsersController } from "./controller";
-import { UserValidators } from "./validators";
+import { Role } from '@pestras/shared/data-model';
+import { Router } from 'express';
+import { apiAuth } from '../../middlewares/auth';
+import { validate } from '../../middlewares/validate';
+import { UsersController } from './controller';
+import { UserValidators } from './validators';
 
 export const usersRoutes = Router()
-  .get(
-    '/',
-    apiAuth(),
-    UsersController.getAll
-  )
-  .get(
-    '/:serial',
-    apiAuth(),
-    UsersController.getBySerial
-  )
+  .get('/', apiAuth(), UsersController.getAll)
+  .get('/:serial', apiAuth(), UsersController.getBySerial)
   .post(
     '/',
     apiAuth([Role.ADMIN]),

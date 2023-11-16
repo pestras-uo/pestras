@@ -11,3 +11,4 @@ export * from './radar';
 export * from './scatter';
 export * from './table';
 export * from './timeline';
+export * from './heatmap';

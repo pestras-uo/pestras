@@ -7,7 +7,7 @@ export interface DashboardSlideView {
   serial: string;
   slide: string;
   title: string;
-  data_viz: string;
+    data_viz: string;
   mode: 'light' | 'dark';
   size: DashboardViewSize;
 }
