@@ -35,7 +35,7 @@ import { ChartDataLoad } from '../../util';
 export class HeatmapChartView implements OnChanges {
   chartOptions!: EChartsOption;
 
-  @Input() conf!: BaseDataViz<HeatmapDataVizOptions>;
+  @Input() conf!: Pick<BaseDataViz<any>, 'aggregate' | 'options' | 'type'>;
   @Input() data!: ChartDataLoad;
   @Input() dark = false;
 

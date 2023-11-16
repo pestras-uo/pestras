@@ -73,6 +73,11 @@
         [dsFields]="fields"
         formControlName="options"
       ></app-line-chart-form>
+      <app-heatmap-chart-form
+        *ngIf="chartType.value === 'heatmap'"
+        [dsFields]="fields"
+        formControlName="options"
+      ></app-heatmap-chart-form>
       <app-map-chart-form
         *ngIf="chartType.value === 'map'"
         [dsFields]="fields"

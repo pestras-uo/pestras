@@ -153,7 +153,8 @@ import { HeatmapChartView } from './views/heatmap-chart/heatmap-chart.view';
     GroupForm,
     LimitForm,
     SortForm,
-    TransposeForm
+    TransposeForm,
+    HeatmapForm
   ],
 })
 export class DataVizFeatureModule {}
