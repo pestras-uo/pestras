@@ -345,6 +345,7 @@
   "minSize": "Min Size Value",
   "useSize": "Reflect Size",
   "yFields": "Y Axiz Fields",
+  "yField": "Y Axiz Field",
   "xField": "X Axis Field",
   "clusterCounts": "Clusters Count",
   "useCluster": "Enable Clustering",

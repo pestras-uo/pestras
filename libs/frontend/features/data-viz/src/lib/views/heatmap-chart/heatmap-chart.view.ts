@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @angular-eslint/component-class-suffix */
 /* eslint-disable @angular-eslint/component-selector */
 import { Component, Input, OnChanges } from '@angular/core';
@@ -70,9 +71,12 @@ export class HeatmapChartView implements OnChanges {
   }
 
   renderHeatmap(data: HeatmapDataPoint[]) {
-    const xValues = data.map((item: HeatmapDataPoint) => item.xValue);
-    const yValues = data.map((item: HeatmapDataPoint) => item.yValue);
-    const cellValues = data.map((item: HeatmapDataPoint) => item.value);
+    const minMax = data.reduce((mm: number[], c) => {
+      return [
+        Math.min(mm[0], c.value),
+        Math.max(mm[1], c.value),
+      ]
+    }, [Infinity, -Infinity]);
 
     this.chartOptions = {
       xAxis: {
@@ -80,10 +84,10 @@ export class HeatmapChartView implements OnChanges {
         splitArea: {
           show: true,
         },
-        data: [...new Set(xValues)] as string[],
+        data: [...new Set(data.map((item: HeatmapDataPoint) => item.xValue))],
         axisLabel: {
           color: this.dark ? '#DDF' : '#335',
-
+          fontWeight: 'bold',
           rotate: -45,
         },
       },
@@ -95,12 +99,13 @@ export class HeatmapChartView implements OnChanges {
         axisLabel: {
           color: this.dark ? '#DDF' : '#335',
           rotate: 0,
+          fontWeight: 'bold'
         },
-        data: [...new Set(yValues)] as string[],
+        data: [...new Set(data.map((item: HeatmapDataPoint) => item.yValue))],
       },
       visualMap: {
-        min: Math.min(...cellValues),
-        max: Math.max(...cellValues),
+        min: minMax[0],
+        max: minMax[1],
         calculable: true,
         orient: 'horizontal',
         left: 'center',
@@ -112,29 +117,38 @@ export class HeatmapChartView implements OnChanges {
       tooltip: {
         position: 'top',
         formatter: (params: any) => {
-          return ` ${params.value[0]} : ${params.value[2]}`;
+          return ` ${params.value[0]} : ${params.value[1]} : ${params.value[2]}`;
         },
       },
       grid: {
-        height: '50%',
-        bottom: '30%',
-        left: '15%',
-        right: '10%',
+        top: '10%',
       },
-      series: data.map((item: HeatmapDataPoint) => ({
+      series: {
         type: 'heatmap',
-        data: [[item.xValue, item.yValue, item.value]],
+        data: data.map(v => [v.xValue, v.yValue, v.value]),
         label: {
           show: true,
         },
-        // itemStyle: {
-        //   color: new graphic.LinearGradient(0, 0, 0, 1, [
-        //     { offset: 0, color: '#FF0000' },
-        //     { offset: 0.5, color: '#00FF00' },
-        //     { offset: 1, color: '#0000FF' },
-        //   ]),
-        // },
-      })),
+        emphasis: {
+          itemStyle: {
+            shadowBlur: 10,
+            shadowColor: 'rgba(0, 0, 0, 0.5)'
+          }
+        }
+      },
+      // series: data.map((item: HeatmapDataPoint) => ({
+      //   type: 'heatmap',
+      //   data: [[item.xValue, item.yValue, item.value]],
+      //   label: {
+      //     show: true,
+      //   },
+      //   emphasis: {
+      //     itemStyle: {
+      //       shadowBlur: 10,
+      //       shadowColor: 'rgba(0, 0, 0, 0.5)'
+      //     }
+      //   }
+      // })),
     };
   }
 }
