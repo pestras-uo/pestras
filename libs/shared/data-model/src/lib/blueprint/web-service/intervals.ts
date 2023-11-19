@@ -1,4 +1,5 @@
 export enum Interval {
+  ON_DEMAND = -1,
   NONE = 0,
   MONTHLY = 1,
   QUARTERLY = 3,

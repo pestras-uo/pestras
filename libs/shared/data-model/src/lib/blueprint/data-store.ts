@@ -100,6 +100,7 @@ export interface DataStoreSettings {
   // General Settings
   // ------------------------------------------------------------------------------------
   // field used in UI when joining tables
+  primary_field: string | null;
   interface_field: string;
   card_view: DataStoreCardViewConfig | null;
   tree_view: DataStoreTreeViewItemConfig[] | null;

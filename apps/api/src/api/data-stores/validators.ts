@@ -109,12 +109,19 @@ new Validall(DataStoreValidators.WEB_SERVICE, {
     $type: "string",
     $enum: ["application/json", "text/xml", "text/csv"],
   },
-  intervals: { $type: "number", $enum: [0, 1, 3, 6, 12] },
+  intervals: { $type: "number", $enum: [-1, 0, 1, 3, 6, 12] },
   fetch_day: {
     $default: 1,
     $type: "number",
     $message: "invalidFetchDayOption",
   },
+  pagination: {
+    $nullable: true,
+    $props: {
+      skip: { $type: 'string' },
+      limit: { $type: 'string' }
+    }
+  }
 });
 
 new Validall(DataStoreValidators.WEB_SERVICE_AUTH, {
