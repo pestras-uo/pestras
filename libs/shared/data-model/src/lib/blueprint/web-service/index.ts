@@ -1,4 +1,4 @@
-import { Interval } from "../../util";
+import { Interval } from "./intervals";
 import { WSQueryOptions } from "./query-options";
 import { WebServiceSelection } from "./selection";
 
@@ -6,6 +6,7 @@ export * from './analyse-data-types';
 export * from './query-options';
 export * from './selection';
 export * from './log';
+export * from './intervals';
 
 export interface WSAuth {
   username: string;
@@ -21,6 +22,11 @@ export enum WSAccept {
   JSON = 'application/json',
   XML = 'text/xml',
   CSV = 'text/csv'
+}
+
+export interface WebServicePagination {
+  skip: string;
+  limit: string;
 }
 
 
@@ -41,4 +47,5 @@ export interface WebServiceConfig {
   intervals: Interval;
   fetch_day: number;
   selection: WebServiceSelection[];
+  pagination: WebServicePagination | null;
 }

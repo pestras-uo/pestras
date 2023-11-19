@@ -22,6 +22,7 @@ export async function create(
     fields: data.type === DataStoreType.TABLE ? getSystemFields(data.blueprint) : [],
     is_active: true,
     settings: {
+      primary_field: data.type === DataStoreType.TABLE ? 'serial' : null,
       interface_field: 'serial',
       history: false,
       max_attachments_count: 0,

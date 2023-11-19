@@ -70,10 +70,38 @@
     ></pui-select-input>
   </div>
 
-  <label for="fetch-day">{{c['fetchDay']}}</label>
-  <div class="fc fc-surface1 fc-outline">
-    <input type="text" id="fetch-day" formControlName="fetch_day" />
-  </div>
+  <ng-container *ngIf="interval.value > 0">
+    <label for="fetch-day">{{c['fetchDay']}}</label>
+    <div class="fc fc-surface1 fc-outline">
+      <input type="text" id="fetch-day" formControlName="fetch_day" />
+    </div>
+  </ng-container>
+
+  <pui-check-input
+    *ngIf="interval.value === -1"
+    class="mbs-6"
+    [formControl]="paginationOn"
+    [label]="c['enablePagination']"
+  ></pui-check-input>
+
+  <ng-container *ngIf="paginationOn.value">
+    <h4 class="mb-6">{{c['paginationInputs']}}</h4>
+
+    <div class="flex gap-4" formGroupName="pagination">
+      <div class="grow">
+        <label for="pagination-skip">{{c['skipField']}}</label>
+        <div class="fc fc-surface1 fc-outline">
+          <input type="text" id="pagination-skip" formControlName="skip" />
+        </div>
+      </div>
+      <div class="grow">
+        <label for="pagination-limit">{{c['limitField']}}</label>
+        <div class="fc fc-surface1 fc-outline">
+          <input type="text" id="pagination-limit" formControlName="limit" />
+        </div>
+      </div>
+    </div>
+  </ng-container>
 
   <div class="divider mb-6"></div>
 

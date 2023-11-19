@@ -29,7 +29,8 @@ export class TableSettingsView implements OnChanges, OnInit {
     }),
     history: new FormControl<boolean>(false, { nonNullable: true }),
     max_attachments_count: new FormControl<number>(0, { nonNullable: true }),
-    interface_field: new FormControl('serial', { nonNullable: true })
+    interface_field: new FormControl('serial', { nonNullable: true }),
+    primary_field: new FormControl(null)
   });
 
   readonly allowCreateCtrl = new FormControl<boolean>(true);
@@ -53,6 +54,7 @@ export class TableSettingsView implements OnChanges, OnInit {
   ) { }
 
   ngOnChanges(): void {
+    this.form.controls.primary_field.setValue(this.dataStore.settings.primary_field ?? null);
     this.form.controls.interface_field.setValue(this.dataStore.settings.interface_field ?? 'serial');
     this.form.controls.workflow.setValue(this.dataStore.settings.workflow);
     this.form.controls.static.setValue(!!this.dataStore.settings.static);
@@ -177,6 +179,7 @@ export class TableSettingsView implements OnChanges, OnInit {
 
     const data = this.form.getRawValue();
     const payload: DataStoreSettings = {
+      primary_field: data.primary_field,
       interface_field: data.interface_field,
       static: data.static,
       workflow: data.workflow,

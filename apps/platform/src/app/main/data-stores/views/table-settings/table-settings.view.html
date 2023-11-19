@@ -13,6 +13,17 @@
   >
     <h4 class="mbe-6">{{c['data']}}</h4>
 
+    <ng-container *ngIf="dataStore.type !== 'table'">
+      <label for="primary-field">{{c['primaryField']}}</label>
+      <div class="fc fc-surface1 fc-outline mbe-6">
+        <pui-select-input
+          [list]="dataStore.fields | arrayMap: mapField"
+          labelRef="primary-field"
+          formControlName="primary_field"
+        ></pui-select-input>
+      </div>
+    </ng-container>
+
     <label for="interface-field">{{c['interfaceField']}}</label>
     <div class="fc fc-surface1 fc-outline mbe-6">
       <pui-select-input

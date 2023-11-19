@@ -48,7 +48,8 @@ export async function setWebServiceConfig(
     headers: [],
     payload: [],
     selection: [],
-    initialized: false
+    initialized: false,
+    pagination: null
   }, input);
 
   await this.col.updateOne(
