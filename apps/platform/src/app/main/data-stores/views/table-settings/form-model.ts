@@ -1,6 +1,7 @@
 import { FormArray, FormControl, FormGroup } from "@angular/forms";
 
 export interface SettingsForm {
+  primary_field: FormControl<string | null>;
   interface_field: FormControl<string>;
   static: FormControl<boolean>;
   workflow: FormGroup<SettingsWorkflowFormModel>;

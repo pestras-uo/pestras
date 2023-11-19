@@ -6,21 +6,26 @@ import axios, { AxiosRequestConfig } from 'axios';
 
 export async function generateWebServiceRequest(ds: DataStore, payload: RequestPayload) {
 
+  const settings = ds.web_service;
+
+  if (!settings)
+    throw new Error("dataStore web service settings not found")
+
   const reqConfig: AxiosRequestConfig = {
     headers: {
-      'Content-Type': ds.web_service.content_type,
-      'Accept': ds.web_service.accept,
-      ...ds.web_service.headers
+      'Content-Type': settings.content_type,
+      'Accept': settings.accept,
+      ...settings.headers
     } as any
   };
 
-  if (ds.web_service.auth)
-    reqConfig.auth = ds.web_service.auth;
+  if (settings.auth)
+    reqConfig.auth = settings.auth;
 
-  const url = injectURLPayload(ds.web_service.resource_uri, payload.params, payload.search);
-  const res = ds.web_service.method === "get"
+  const url = injectURLPayload(settings.resource_uri, payload.params, payload.search);
+  const res = settings.method === "get"
     ? await axios.get(url, reqConfig)
     : await axios.post(url, reqConfig, payload.body);
 
-  return objUtil.getValueFromPath(ds.web_service.data_path ?? '', res.data);
+  return objUtil.getValueFromPath(settings.data_path ?? '', res.data);
 }

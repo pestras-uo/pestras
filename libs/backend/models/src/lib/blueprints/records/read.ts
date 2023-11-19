@@ -16,8 +16,8 @@ export async function search(
   if (!ds)
     throw new HttpError(HttpCode.NOT_FOUND, 'dataStoreNotFound');
 
-  if (ds.type === DataStoreType.WEB_SERVICE && ds.web_service.intervals === Interval.ON_DEMAND) {
-    const payload = generateRequestPayload(ds, query.skip, query.limit);
+  if (ds.type === DataStoreType.WEB_SERVICE && ds.web_service?.intervals === Interval.ON_DEMAND) {
+    const payload = generateRequestPayload(ds, query.skip ?? undefined, query.limit ?? undefined);
     const data = await generateWebServiceRequest(ds, payload);
     const results = generateResponseData(data, ds);
 

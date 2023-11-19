@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { AggrPipeline, DataStore, MergeStage, OutStage, castTypedEntityValue, selectionsToPipeline } from "@pestras/shared/data-model";
+import { AggrPipeline, DataStore, MergeStage, OutStage, WebServiceSelection, castTypedEntityValue, selectionsToPipeline } from "@pestras/shared/data-model";
 
 export function generateResponseAggrPipeline(data: any, ds: DataStore) {
   const stages = selectionsToPipeline(data.settings.selection);
@@ -9,17 +9,14 @@ export function generateResponseAggrPipeline(data: any, ds: DataStore) {
     pipeline.add(new OutStage({ coll: ds.serial, db: null }, []));
   else
     pipeline.add(new MergeStage({
-      into: ds.serial,
-      whenMatched: 'replace',
-      whenNotMatched: 'insert',
-      on: null
+      into: ds.serial
     }));
 
   return pipeline;
 }
 
 export function generateResponseData(data: any[], ds: DataStore) {
-  const selection = ds.web_service.selection;
+  const selection = ds.web_service?.selection as WebServiceSelection[];
 
   return data.map(item => {
     const outItem: any = {};

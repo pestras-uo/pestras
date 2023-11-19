@@ -6,6 +6,9 @@ export function generateRequestPayload(dataStore: DataStore, skip?: number, limi
 
   const settings = dataStore.web_service;
 
+  if (!settings)
+    throw new Error("dataStore web service settings not found")
+
   const bodyParams: Record<string, unknown> = {};
   const searchParams: Record<string, string> = {};
   const pathParams: Record<string, string> = {};
