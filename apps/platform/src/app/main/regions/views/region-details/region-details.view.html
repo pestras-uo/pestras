@@ -4,8 +4,16 @@
       <div class="container fit">
         <div class="toolbar gap-4">
           <div>
-            <p class="primary bold">{{region.type}}</p>
-            <h1 class="weight-8">{{region.name}}</h1>
+            <div>
+              <a class="bold" routerLink="/main/regions">{{c['all']}}</a>
+              <ng-container *ngFor="let p of breadcrumb">
+              / <a class="bold" routerLink="/main/regions" [queryParams]="{ region: p.serial }">{{p.name}}</a>
+              </ng-container>
+            </div>
+            <h1 class="weight-8">
+              {{region.name}}
+            </h1>
+            <p class="badge badge-small badge-primary mbs-2">{{region.type}}</p>
           </div>
 
           <div class="grow"></div>

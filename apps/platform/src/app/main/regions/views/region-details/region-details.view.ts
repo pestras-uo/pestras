@@ -7,6 +7,7 @@ import { RegionsState } from '@pestras/frontend/state';
 import { Observable, map, tap } from 'rxjs';
 import { PuiMapPolygonOptions, ToggleThemeService } from '@pestras/frontend/ui';
 import { Dialog, DialogRef } from '@angular/cdk/dialog';
+import { Serial } from '@pestras/shared/util';
 
 @Component({
   selector: 'app-region-details',
@@ -19,6 +20,8 @@ export class RegionDetailsView implements OnChanges {
   region$!: Observable<Region | null>;
 
   polygon: PuiMapPolygonOptions | null = null;
+
+  breadcrumb: { name: string; serial: string; }[] = [];
 
   zoom = 13;
 
@@ -33,12 +36,14 @@ export class RegionDetailsView implements OnChanges {
     private readonly state: RegionsState,
     private readonly dialog: Dialog,
     protected toggleThemeService: ToggleThemeService
-  ) {}
+  ) { }
 
   ngOnChanges(): void {
     this.region$ = this.state.select(this.serial).pipe(
       tap((r) => {
         if (r) {
+          this.fillBreadCrumb(r);
+
           this.zoom = r.zoom ?? 13;
 
           if (r.coords?.coordinates) {
@@ -63,6 +68,21 @@ export class RegionDetailsView implements OnChanges {
         }
       })
     );
+  }
+
+  fillBreadCrumb(region: Region) {
+    this.breadcrumb = [];
+    let parent = Serial.getParent(region.serial);
+
+    while (parent) {
+      console.log(parent);
+      this.breadcrumb.push({
+        name: this.state.get(parent)?.name ?? '',
+        serial: parent
+      });
+
+      parent = Serial.getParent(parent);
+    }
   }
 
   openModal(ref: TemplateRef<any>, data?: any) {
