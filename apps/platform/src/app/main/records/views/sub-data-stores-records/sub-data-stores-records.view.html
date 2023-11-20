@@ -23,7 +23,7 @@
               *ngIf="c | fn: aggregate: fields: records as data"
             >
               <div class="card-header">{{c.title}}</div>
-              <div class="card-body" *ngIf="theme$ | async as theme">
+              <div class="card-body" *ngIf="themeService.theme$ | async as theme">
                 <ng-container [ngSwitch]="c.options.type">
                   <app-bar-chart
                     *ngSwitchCase="'bar'"

@@ -38,7 +38,7 @@
     </header>
 
     <main>
-      <ng-container *ngIf="theme$ | async as theme">
+      <ng-container *ngIf="hemeService.theme$ | async as theme">
         <pui-google-map
           [position]="region.location"
           [zoom]="zoom"

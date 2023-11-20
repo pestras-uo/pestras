@@ -2,8 +2,7 @@
 /* eslint-disable @angular-eslint/component-selector */
 
 import { Component } from '@angular/core';
-import { ToggleThemeService } from './toggle-theme.service';
-import { map } from 'rxjs';
+import { ThemeService } from './toggle-theme.service';
 
 @Component({
   selector: 'toggle-theme',
@@ -15,13 +14,9 @@ export class ToggleTheme {
     dark: '☀️'
   };
 
-  isDarkMode$ = this.toggleThemeService.isDarkMode$.pipe(
-    map((isDark) => (isDark ? 'dark' : 'light') as 'light' | 'dark')
-  );
-
-  constructor(private toggleThemeService: ToggleThemeService) { }
+  constructor(protected themeService: ThemeService) { }
 
   toggleDarkMode(): void {
-    this.toggleThemeService.toggleDarkMode();
+    this.themeService.toggleDarkMode();
   }
 }

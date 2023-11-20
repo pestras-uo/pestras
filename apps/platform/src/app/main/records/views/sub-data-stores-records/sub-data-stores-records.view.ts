@@ -3,9 +3,9 @@
 /* eslint-disable @angular-eslint/component-selector */
 import { Component, Input, OnChanges } from '@angular/core';
 import { DataStoresState, RegionsState } from '@pestras/frontend/state';
-import { ToggleThemeService } from '@pestras/frontend/ui';
+import { ThemeService } from '@pestras/frontend/ui';
 import { DataRecord, DataStore, DataStoreType, Field, SubDataStore, SubDataStoreChart, TableDataRecord, aggrRecords, createField } from '@pestras/shared/data-model';
-import { Observable, map } from 'rxjs';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-sub-data-stores-records',
@@ -27,14 +27,10 @@ export class SubDataStoresRecordsView implements OnChanges {
   @Input({ required: true })
   record!: DataRecord;
 
-  theme$ = this.toggleThemeService.isDarkMode$.pipe(
-    map((isdark) => (isdark ? 'dark' : 'light'))
-  );
-
   constructor(
     private dsState: DataStoresState,
     private regionsState: RegionsState,
-    protected toggleThemeService: ToggleThemeService
+    protected themeService: ThemeService
   ) { }
 
   ngOnChanges() {
