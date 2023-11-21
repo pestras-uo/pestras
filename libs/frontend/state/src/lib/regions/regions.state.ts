@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
-import { EntityTypes, Region } from '@pestras/shared/data-model';
+import { EntityTypes, Region, RegionsApi } from '@pestras/shared/data-model';
 import { tap, filter } from 'rxjs';
-import { RegionsApi } from './regions.api';
 import { StatorChannel, StatorCollectionState } from '@pestras/frontend/util/stator';
 import { RegionsService } from './regions.service';
 import { SessionEnd, SessionStart } from '../session/session.events';

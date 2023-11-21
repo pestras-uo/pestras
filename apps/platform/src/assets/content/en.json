@@ -1,4 +1,7 @@
 {
+  "layers": "Layers",
+  "gisMaps": "ArcGIS Maps",
+  "googleMaps": "Google Maps",
   "primaryField": "Primary Field",
   "skipParam": "Skip Param",
   "limitParam": "Limit Param",

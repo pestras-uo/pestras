@@ -4,7 +4,11 @@ import { Validators } from "../../validators";
 export enum RegionsValidators {
   CREATE = 'createRegion',
   UPDATE = 'updateRegion',
-  UPDATE_COORDS = 'updateRegionCoords'
+  UPDATE_COORDS = 'updateRegionCoords',
+  ADD_GIS_MAP = 'addRegionGisMap',
+  UPDATE_GIS_MAP = 'updateRegionGisMap',
+  ADD_GIS_MAP_LAYER = 'addRegionGisMapLayer',
+  UPDATE_GIS_MAP_LAYER = 'updateRegionGisMapLayer',
 }
 
 const COORDS = 'coordsSchema';
@@ -45,5 +49,32 @@ new Validall(RegionsValidators.UPDATE_COORDS, {
       }
     }
   }
-})
+});
+
+new Validall(RegionsValidators.ADD_GIS_MAP, {
+  name: { $type: 'string' },
+  apiKey: { $type: 'string' },
+  portal: { $type: 'string' },
+  id: { $type: 'string' },
+  basemap: { $type: 'string' }
+});
+
+new Validall(RegionsValidators.UPDATE_GIS_MAP, {
+  $ref: RegionsValidators.ADD_GIS_MAP
+});
+
+
+new Validall(RegionsValidators.ADD_GIS_MAP_LAYER, {
+  $props: {
+    name: { $type: 'string' },
+  },
+  $or: [
+    { id: { $type: 'string' } },
+    { url: { $type: 'string' } }
+  ]
+});
+
+new Validall(RegionsValidators.UPDATE_GIS_MAP_LAYER, {
+  $ref: RegionsValidators.ADD_GIS_MAP_LAYER
+});
 

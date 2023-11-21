@@ -1,30 +1,30 @@
 <ng-container *contra="let c">
   <ng-container *ngIf="region$ | async as region">
-    <header class="bg-surface1 pi-8 border-be">
+    <header class="bg-surface1 pbs-6 pi-8 border-be">
       <div class="container fit">
-        <div class="toolbar gap-4">
+        <div class="toolbar gap-4 mbe-6">
           <div>
             <div>
               <a class="bold" routerLink="/main/regions">{{c['all']}}</a>
               <ng-container *ngFor="let p of breadcrumb">
-              / <a class="bold" routerLink="/main/regions" [queryParams]="{ region: p.serial }">{{p.name}}</a>
+                /
+                <a
+                  class="bold"
+                  routerLink="/main/regions"
+                  [queryParams]="{ region: p.serial }"
+                  >{{p.name}}</a
+                >
               </ng-container>
             </div>
-            <h1 class="weight-8">
+            <h1 class="flex gap-2 weight-8">
               {{region.name}}
+              <span class="badge badge-small badge-primary mbs-2"
+                >{{region.type}}</span
+              >
             </h1>
-            <p class="badge badge-small badge-primary mbs-2">{{region.type}}</p>
           </div>
 
           <div class="grow"></div>
-
-          <button
-            class="color-scheme-dark btn-surface1 btn-round"
-            (click)="openModal(updateCoordsModal)"
-          >
-            <i size="small" color="white" puiIcon="draw_fill"></i>
-            {{c['newCoords']}}
-          </button>
 
           <button
             class="btn-primary btn-round"
@@ -34,10 +34,23 @@
             {{c['update']}}
           </button>
         </div>
+
+        <div class="tabs-bar">
+          <h5
+            class="tab"
+            [class.active]="tab === 'google'"
+            (click)="tab = 'google'"
+          >
+            {{c['googleMaps']}}
+          </h5>
+          <h5 class="tab" [class.active]="tab === 'gis'" (click)="tab = 'gis'">
+            {{c['gisMaps']}}
+          </h5>
+        </div>
       </div>
     </header>
 
-    <main>
+    <section *ngIf="tab === 'google'">
       <ng-container *ngIf="hemeService.theme$ | async as theme">
         <pui-google-map
           [position]="region.location"
@@ -46,7 +59,74 @@
           [polygon]="polygon"
         ></pui-google-map
       ></ng-container>
-    </main>
+
+      <button
+        class="coords-btn color-scheme-dark btn-surface1 btn-round"
+        (click)="openModal(updateCoordsModal)"
+      >
+        <i size="small" color="white" puiIcon="draw_fill"></i>
+        {{c['newCoords']}}
+      </button>
+    </section>
+
+    <section class="flex align-items-stretch" *ngIf="tab === 'gis'">
+      <div class="gis-maps w-8 border-ie">
+        <div class="toolbar p-5 border-be">
+          <h4>{{c['maps']}}</h4>
+          <div class="grow"></div>
+          <button class="btn-icon btn-tiny btn-round btn-primary">
+            <i puiIcon="add" size="tiny"></i>
+          </button>
+        </div>
+
+        <div class="list list-actions" *ngIf="region.gis.length else noGisData">
+          <ng-container *ngFor="let m of region.gis">
+            <div
+              class="list-item p-5"
+              [class.active]="gisMap === m.serial"
+              (click)="gisMap = m.serial"
+            >
+              <p class="bold">{{m.name}}</p>
+              <button class="btn-tiny btn-icon btn-round">
+                <i puiIcon="edit" size="tiny"></i>
+              </button>
+            </div>
+            <ng-container *ngIf="gisMap === m.serial">
+              <div class="toolbar pb-4 pis-7 pie-5 border-be">
+                <h5>{{c['layers']}}</h5>
+                <div class="grow"></div>
+                <button class="btn-icon btn-tiny btn-round btn-primary">
+                  <i puiIcon="add_layer" size="tiny"></i>
+                </button>
+              </div>
+
+              <div class="list" *ngIf="m.layers.length else noGisData">
+                <div
+                  class="list-item pb-4 pis-7 pie-5"
+                  *ngFor="let layer of m.layers"
+                >
+                  <div class="fc-checkbox">
+                    <input [id]="layer.serial" type="checkbox" />
+                    <label [for]="layer.serial">{{layer.name}}</label>
+                  </div>
+                  <button class="btn-tiny btn-icon btn-round">
+                    <i puiIcon="edit" size="tiny"></i>
+                  </button>
+                </div>
+              </div>
+            </ng-container>
+          </ng-container>
+        </div>
+      </div>
+
+      <div class="grow gis map-view"></div>
+    </section>
+
+    <ng-template #noGisData>
+      <no-data-placeholder-widget small
+        >{{c['noDataMsg']}}</no-data-placeholder-widget
+      >
+    </ng-template>
 
     <ng-template #updateModal>
       <app-update-region

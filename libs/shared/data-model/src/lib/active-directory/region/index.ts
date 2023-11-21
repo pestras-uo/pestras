@@ -6,12 +6,14 @@ export interface RegionCoords {
 }
 
 export interface GISMapFeatureLayer {
+  serial: string;
   name: string;
   id: string | null;
   url: string | null;
 }
 
 export interface GISMapConfig {
+  serial: string;
   name: string;
   apiKey: string | null;
   id: string;
@@ -32,3 +34,5 @@ export interface Region {
   create_date: Date;
   last_modified: Date;
 }
+
+export * from './api';

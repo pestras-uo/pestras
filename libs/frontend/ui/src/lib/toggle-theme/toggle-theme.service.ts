@@ -19,6 +19,10 @@ export class ThemeService {
     shareReplay(1)
   );
 
+  constructor() {
+    this.theme.next(this.loadThemeState());
+  }
+
   toggleDarkMode() {
     this.theme.next(this.theme.value === 'dark' ? 'light' : 'dark');
   }
@@ -34,10 +38,10 @@ export class ThemeService {
   }
 
   private saveThemeState(theme: ThemeName) {
-    localStorage.setItem(this.localStorageKey, JSON.stringify(theme));
+    localStorage.setItem(this.localStorageKey, theme);
   }
 
-  private loadDarkModeState(): ThemeName {
+  private loadThemeState(): ThemeName {
     return localStorage.getItem(this.localStorageKey) as ThemeName ?? 'light';
   }
 }

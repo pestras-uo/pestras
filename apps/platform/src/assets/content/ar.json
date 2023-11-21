@@ -1,4 +1,7 @@
 {
+  "layers": "الطبقات",
+  "gisMaps": "خرائط ArcGIS",
+  "googleMaps": "خرائط جوجل",
   "primaryField": "الحقل الأساسي",
   "skipParam": "خانة التجاوز",
   "limitParam": "خانة تقييد العدد",

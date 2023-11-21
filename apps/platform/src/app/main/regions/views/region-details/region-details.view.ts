@@ -18,12 +18,11 @@ export class RegionDetailsView implements OnChanges {
   private dialogRef: DialogRef | null = null;
 
   region$!: Observable<Region | null>;
-
   polygon: PuiMapPolygonOptions | null = null;
-
   breadcrumb: { name: string; serial: string; }[] = [];
-
   zoom = 13;
+  tab = 'google';
+  gisMap = '';
 
   @Input({ required: true })
   serial!: string;

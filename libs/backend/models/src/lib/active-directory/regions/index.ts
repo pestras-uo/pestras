@@ -1,11 +1,10 @@
-import { Region, RegionCoords } from "@pestras/shared/data-model";
+import { GISMapConfig, Region, RegionsApi } from "@pestras/shared/data-model";
 import { Model } from "../../model";
 import { getAll, getBySerial } from "./read";
 import { nameExists } from "./util";
-import { create, CreateRegionInput } from "./create";
-import { update, updateCoords, UpdateRegionInput } from "./update";
-
-export { CreateRegionInput, UpdateRegionInput }
+import { create } from "./create";
+import { update, updateCoords } from "./update";
+import { addGisMap, addGisMapLayer, removeGisMap, removeGisMapLayer, updateGisMap, updateGisMapLayer } from "./gis";
 
 export class RegionsModel extends Model<Region> {
 
@@ -18,12 +17,24 @@ export class RegionsModel extends Model<Region> {
   // ------------------------------------------------------------------------------------
   nameExists: (name: string, exclude?: string) => Promise<boolean> = nameExists.bind(this);
 
-  // create
+  // create, update
   // ------------------------------------------------------------------------------------
-  create: (data: CreateRegionInput, issuer: string) => Promise<Region> = create.bind(this);
+  create: (data: RegionsApi.Create.Body, issuer: string) => Promise<Region> = create.bind(this);
+  update: (serial: string, input: RegionsApi.Update.Body, issuer: string) => Promise<Date> = update.bind(this);
 
-  // update
+  // update coordsd
   // ------------------------------------------------------------------------------------
-  update: (serial: string, input: UpdateRegionInput, issuer: string) => Promise<Date> = update.bind(this);
-  updateCoords: (serial: string, input: RegionCoords, issuer: string) => Promise<Date> = updateCoords.bind(this);
+  updateCoords: (serial: string, input: RegionsApi.UpdateCoords.Body, issuer: string) => Promise<Date> = updateCoords.bind(this);
+
+  // gis maps
+  // ------------------------------------------------------------------------------------
+  addGisMap: (serial: string, input: RegionsApi.AddGisMap.Body) => Promise<GISMapConfig> = addGisMap.bind(this);
+  updateGisMap: (serial: string, mapSerial: string, input: RegionsApi.UpdateGisMap.Body) => Promise<boolean> = updateGisMap.bind(this);
+  removeGisMap: (serial: string, mapSerial: string) => Promise<boolean> = removeGisMap.bind(this);
+
+  // gis maps layers
+  // ------------------------------------------------------------------------------------
+  addGisMapLayer: (serial: string, mapSerial: string, input: RegionsApi.AddGisMapLayer.Body) => Promise<string> = addGisMapLayer.bind(this);
+  updateGisMapLayer: (serial: string, mapSerial: string, layerSerial: string, input: RegionsApi.UpdateGisMapLayer.Body) => Promise<boolean> = updateGisMapLayer.bind(this);
+  removeGisMapLayer: (serial: string, mapSerial: string, layerSerial: string) => Promise<boolean> = removeGisMapLayer.bind(this);
 }

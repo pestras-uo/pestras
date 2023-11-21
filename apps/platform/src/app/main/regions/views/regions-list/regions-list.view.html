@@ -3,7 +3,7 @@
     <div class="toolbar mbe-4">
       <h3 class="weight-8">{{c['regions']}}</h3>
       <div class="grow"></div>
-      <button class="btn-icon btn-small btn-icon" (click)="openModal(addModal)">
+      <button class="btn-icon btn-small btn-primary btn-round" (click)="openModal(addModal)">
         <i puiIcon="add" size="small"></i>
       </button>
     </div>
@@ -37,6 +37,7 @@
       <no-data-placeholder-widget
         [actionName]="c['addNew']"
         (action)="openModal(addModal)"
+        small
         >{{c['noDataMsg']}}</no-data-placeholder-widget
       >
     </ng-template>
