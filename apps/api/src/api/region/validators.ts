@@ -7,6 +7,7 @@ export enum RegionsValidators {
   UPDATE_COORDS = 'updateRegionCoords',
   ADD_GIS_MAP = 'addRegionGisMap',
   UPDATE_GIS_MAP = 'updateRegionGisMap',
+  UPDATE_GIS_MAP_API_KEY = 'updateRegionGisMapApiKey',
   ADD_GIS_MAP_LAYER = 'addRegionGisMapLayer',
   UPDATE_GIS_MAP_LAYER = 'updateRegionGisMapLayer',
 }
@@ -60,9 +61,15 @@ new Validall(RegionsValidators.ADD_GIS_MAP, {
 });
 
 new Validall(RegionsValidators.UPDATE_GIS_MAP, {
-  $ref: RegionsValidators.ADD_GIS_MAP
+  name: { $type: 'string' },
+  portal: { $type: 'string' },
+  id: { $type: 'string' },
+  basemap: { $type: 'string' }
 });
 
+new Validall(RegionsValidators.UPDATE_GIS_MAP_API_KEY, {
+  apiKey: { $type: 'string' }
+});
 
 new Validall(RegionsValidators.ADD_GIS_MAP_LAYER, {
   $props: {

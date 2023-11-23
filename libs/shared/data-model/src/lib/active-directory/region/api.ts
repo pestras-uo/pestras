@@ -75,7 +75,17 @@ export namespace RegionsApi {
     export const REQ_METHOD = HTTP_METHOD.PUT;
 
     export type Params = { serial: string; map: string; }
-    export type Body = Pick<GISMapConfig, 'name' | 'apiKey' | 'basemap' | 'id' | 'portal'>;
+    export type Body = Pick<GISMapConfig, 'name' | 'basemap' | 'id' | 'portal'>;
+    export type Response = boolean;
+  }
+
+  export namespace UpdateGisMapApiKey {
+    export const REQ_PATH = "/:serial/gis-map/:map/api-key";
+    export const REQ_FULL_PATH = basePath + REQ_PATH;
+    export const REQ_METHOD = HTTP_METHOD.PUT;
+
+    export type Params = { serial: string; map: string; }
+    export type Body = { apiKey: string | null };
     export type Response = boolean;
   }
 

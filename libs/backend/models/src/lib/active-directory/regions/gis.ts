@@ -28,13 +28,24 @@ export async function updateGisMap(
 
   await this.col.updateOne({ serial, 'gis.serial': mapSerial }, {
     $set: {
-      'gis.$.apiKey': input.apiKey,
       'gis.$.basemap': input.basemap,
       'gis.$.name': input.name,
       'gis.$.id': input.id,
       'gis.$.portal': input.portal
     }
   });
+
+  return true;
+}
+
+export async function updateGisMapApiKey(
+  this: RegionsModel,
+  serial: string,
+  mapSerial: string,
+  apiKey: string
+) {
+
+  await this.col.updateOne({ serial, 'gis.serial': mapSerial }, { $set: { 'gis.$.apiKey': apiKey } });
 
   return true;
 }

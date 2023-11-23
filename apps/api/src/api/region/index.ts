@@ -54,6 +54,12 @@ export const regionsRoutes = Router()
   validate(RegionsValidators.UPDATE_GIS_MAP),
   controller.updateGisMap
 )
+[RegionsApi.UpdateGisMapApiKey.REQ_METHOD](
+  RegionsApi.UpdateGisMapApiKey.REQ_PATH,
+  apiAuth([Role.ADMIN]),
+  validate(RegionsValidators.UPDATE_GIS_MAP_API_KEY),
+  controller.updateGisMapApiKey
+)
 [RegionsApi.RemoveGisMap.REQ_METHOD](
   RegionsApi.RemoveGisMap.REQ_PATH,
   apiAuth([Role.ADMIN]),

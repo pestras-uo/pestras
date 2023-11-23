@@ -1,0 +1,77 @@
+<div class="card shadow-6 w-10" *contra="let c">
+  <h4 class="card-header">{{ c['updateGisMap'] }}</h4>
+
+  <div class="card-tabs">
+    <h5 class="tab" [class.active]="tab === 'update'" (click)="tab = 'update'">
+      {{ c['data'] }}
+    </h5>
+    <h5 class="tab" [class.active]="tab === 'apiKey'" (click)="tab = 'apiKey'">
+      {{ c['apiKey'] }}
+    </h5>
+  </div>
+
+  <div class="card-body p-0">
+    <form
+      class="card clard-clear"
+      [formGroup]="updateForm"
+      *ngIf="tab === 'update'"
+      (ngSubmit)="update(c)"
+    >
+      <div class="card-body">
+        <label for="map-name">{{ c['name'] }}</label>
+        <div class="fc mbe-4">
+          <input type="text" id="map-name" formControlName="name" />
+        </div>
+
+        <label for="map-id">{{ c['mapId'] }}</label>
+        <div class="fc mbe-4">
+          <input type="text" id="map-id" formControlName="id" />
+        </div>
+
+        <label for="map-portal">{{ c['portalUrl'] }}</label>
+        <div class="fc mbe-4">
+          <input type="text" id="map-portal" formControlName="portal" />
+        </div>
+
+        <label for="map-basemap">{{ c['basemap'] }}</label>
+        <div class="fc mbe-4">
+          <input type="text" id="map-basemap" formControlName="basemap" />
+        </div>
+      </div>
+
+      <div class="card-footer">
+        <button class="btn-round" type="reset" (click)="closes.emit()">
+          {{ c['cancel'] }}
+        </button>
+        <button class="btn-round btn-primary" [disabled]="updateForm.invalid">
+          {{ c['update'] }}
+        </button>
+      </div>
+    </form>
+
+    <form
+      class="card clard-clear"
+      [formGroup]="apiKeyForm"
+      *ngIf="tab === 'apiKey'"
+      (ngSubmit)="updateApiKey(c)"
+    >
+      <div class="card-body">
+        <label for="map-apiKey">{{ c['apiKey'] }}</label>
+        <div class="fc">
+          <input type="password" id="map-apiKey" formControlName="apiKey" />
+        </div>
+      </div>
+
+      <div class="card-footer">
+        <button class="btn-round" type="reset" (click)="closes.emit()">
+          {{ c['cancel'] }}
+        </button>
+        <button class="btn-round btn-primary" [disabled]="updateForm.invalid">
+          {{ c['update'] }}
+        </button>
+      </div>
+    </form>
+  </div>
+
+  <pui-preloader *ngIf="preloader"></pui-preloader>
+</div>

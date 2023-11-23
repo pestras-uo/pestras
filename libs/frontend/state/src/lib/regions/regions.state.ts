@@ -52,6 +52,8 @@ export class RegionsState extends StatorCollectionState<Region> {
       .pipe(tap(res => res && this._upsert(res)));
   }
 
+  // create, update
+  // -------------------------------------------------------------------------------------------------------
   create(data: RegionsApi.Create.Body) {
     return this.service.create(data)
       .pipe(tap(res => this._insert(res)));
@@ -62,8 +64,73 @@ export class RegionsState extends StatorCollectionState<Region> {
       .pipe(tap(res => this._update(params.serial, { ...data, last_modified: new Date(res) })));
   }
 
+  // boundry coords
+  // -------------------------------------------------------------------------------------------------------
   updateCoords(params: RegionsApi.UpdateCoords.Params, data: RegionsApi.UpdateCoords.Body) {
     return this.service.updateCoords(params, data)
       .pipe(tap(res => this._update(params.serial, { coords: data, last_modified: new Date(res) })));
+  }
+
+  // gis map
+  // -------------------------------------------------------------------------------------------------------
+  addGisMap(serial: string, data: RegionsApi.AddGisMap.Body) {
+    return this.service.addGisMap({ serial }, data)
+      .pipe(tap(map => this._update(serial, r => ({ ...r, gis: r.gis.concat(map) }))))
+  }
+
+  updateGisMap(serial: string, mapSerial: string, data: RegionsApi.UpdateGisMap.Body) {
+    return this.service.updateGisMap({ serial, map: mapSerial }, data)
+      .pipe(tap(() => this._update(serial, r => ({
+        ...r,
+        gis: r.gis.map(m => m.serial === mapSerial ? { ...m, ...data } : m)
+      }))));
+  }
+
+  updateGisMapApiKey(serial: string, mapSerial: string, key: string | null) {
+    return this.service.updateGisMapApiKey({ serial, map: mapSerial }, { apiKey: key })
+      .pipe(tap(() => this._update(serial, r => ({
+        ...r,
+        gis: r.gis.map(m => m.serial === mapSerial ? { ...m, apiKey: key } : m)
+      }))));
+  }
+
+  removeGisMap(serial: string, mapSerial: string) {
+    return this.service.removeGisMap({ serial, map: mapSerial })
+      .pipe(tap(() => this._update(serial, r => ({
+        ...r,
+        gis: r.gis.filter(m => m.serial !== mapSerial)
+      }))));
+  }
+
+  // gis map layer
+  // -------------------------------------------------------------------------------------------------------
+  addGisMapLayer(serial: string, mapSerial: string, data: RegionsApi.AddGisMapLayer.Body) {
+    return this.service.addGisMapLayer({ serial, map: mapSerial }, data)
+      .pipe(tap(layerSerial => this._update(serial, r => ({
+        ...r,
+        gis: r.gis.map(m => m.serial === mapSerial ? { ...m, layers: m.layers.concat({ ...data, serial: layerSerial }) } : m)
+      }))));
+  }
+
+  updateGisMapLayer(serial: string, mapSerial: string, layerSerial: string, data: RegionsApi.UpdateGisMapLayer.Body) {
+    return this.service.updateGisMapLayer({ serial, map: mapSerial, layer: layerSerial }, data)
+      .pipe(tap(() => this._update(serial, r => ({
+        ...r,
+        gis: r.gis.map(m => m.serial === mapSerial
+          ? {
+            ...m, layers: m.layers.map(l => l.serial === layerSerial ? { ...l, ...data } : l)
+          }
+          : m
+        )
+      }
+      ))));
+  }
+
+  removeGisMapLayer(serial: string, mapSerial: string, layer: string) {
+    return this.service.removeGisMapLayer({ serial, map: mapSerial, layer })
+      .pipe(tap(() => this._update(serial, r => ({
+        ...r,
+        gis: r.gis.map(m => m.serial === mapSerial ? { ...m, layers: m.layers.filter(l => l.serial !== layer) } : m)
+      }))));
   }
 }

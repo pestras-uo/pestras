@@ -1,0 +1,149 @@
+<section *contra="let c" class="flex align-items-stretch">
+  <div class="gis-maps w-8 border-ie">
+    <div class="toolbar p-5 border-be">
+      <h4>{{ c['maps'] }}</h4>
+      <div class="grow"></div>
+      <button
+        class="btn-icon btn-tiny btn-round btn-primary"
+        (click)="openDialog(addMapTmp)"
+      >
+        <i puiIcon="add" size="tiny"></i>
+      </button>
+    </div>
+
+    <div class="list list-actions" *ngIf="region.gis.length; else noGisData">
+      <ng-container *ngFor="let m of region.gis">
+        <div
+          class="list-item p-5"
+          [class.active]="gisMap === m.serial"
+          (click)="gisMap = m.serial"
+        >
+          <p class="bold">{{ m.name }}</p>
+          <button
+            class="btn-tiny btn-icon btn-round"
+            (click)="openDialog(updateMapTmp, m)"
+          >
+            <i puiIcon="edit" size="tiny"></i>
+          </button>
+          <button
+            class="btn-tiny btn-icon btn-round"
+            (click)="openDialog(removeMap, m)"
+          >
+            <i puiIcon="delete" color="danger" size="tiny"></i>
+          </button>
+        </div>
+
+        <ng-container *ngIf="gisMap === m.serial">
+          <div class="toolbar pb-4 pis-7 pie-5 border-be">
+            <h5>{{ c['layers'] }}</h5>
+            <div class="grow"></div>
+            <button
+              class="btn-icon btn-tiny btn-round btn-primary"
+              (click)="openDialog(addLayer, m)"
+            >
+              <i puiIcon="add_layer" size="tiny"></i>
+            </button>
+          </div>
+
+          <div class="list" *ngIf="m.layers.length; else noGisData">
+            <div
+              class="list-item pb-4 pis-7 pie-5"
+              *ngFor="let layer of m.layers"
+            >
+              <div class="fc-checkbox">
+                <input [id]="layer.serial" type="checkbox" />
+                <label [for]="layer.serial">{{ layer.name }}</label>
+              </div>
+              <button
+                class="btn-tiny btn-icon btn-round"
+                (click)="openDialog(updateLayer, m, layer)"
+              >
+                <i puiIcon="edit" size="tiny"></i>
+              </button>
+              <button
+                class="btn-tiny btn-icon btn-round"
+                (click)="openDialog(removeLayer, m, layer)"
+              >
+                <i puiIcon="delete" color="danger" size="tiny"></i>
+              </button>
+            </div>
+          </div>
+        </ng-container>
+      </ng-container>
+    </div>
+  </div>
+
+  <ng-template #noGisData>
+    <no-data-placeholder-widget small>{{
+      c['noDataMsg']
+    }}</no-data-placeholder-widget>
+  </ng-template>
+
+  <ng-template #addMapTmp>
+    <pestras-add-gis-map-modal
+      [region]="region.serial"
+      (closes)="closeDialog()"
+    ></pestras-add-gis-map-modal>
+  </ng-template>
+
+  <ng-template #updateMapTmp let-data>
+    <pestras-update-gis-map-modal
+      [region]="region.serial"
+      [map]="data.map"
+      (closes)="closeDialog()"
+    ></pestras-update-gis-map-modal>
+  </ng-template>
+
+  <ng-template #addLayer let-data>
+    <pestras-add-gis-layer-modal
+      [region]="region.serial"
+      [map]="data.map.serial"
+      (closes)="closeDialog()"
+    ></pestras-add-gis-layer-modal>
+  </ng-template>
+
+  <ng-template #updateLayer let-data>
+    <pestras-update-gis-layer-modal
+      [region]="region.serial"
+      [map]="data.map.serial"
+      [layer]="data.layer"
+      (closes)="closeDialog()"
+    ></pestras-update-gis-layer-modal>
+  </ng-template>
+
+  <ng-template #removeMap let-data>
+    <div class="card shadow-6 w-10">
+      <h4 class="card-header">{{ c['removeGisMap'] }}</h4>
+      <p class="card-body">{{ c['confirmOperation'] }}</p>
+      <div class="card-footer">
+        <button class="btn-round" (click)="closeDialog()">
+          {{ c['cancel'] }}
+        </button>
+        <button
+          class="btn-round btn-danger"
+          (click)="removeGisMap(c, data.map.serial)"
+        >
+          {{ c['delete'] }}
+        </button>
+      </div>
+    </div>
+  </ng-template>
+
+  <ng-template #removeLayer let-data>
+    <div class="card shadow-6 w-10">
+      <h4 class="card-header">{{ c['removeLayer'] }}</h4>
+      <p class="card-body">{{ c['confirmOperation'] }}</p>
+      <div class="card-footer">
+        <button class="btn-round" (click)="closeDialog()">
+          {{ c['cancel'] }}
+        </button>
+        <button
+          class="btn-round btn-danger"
+          (click)="removeGisMapLayer(c, data.map.serial, data.layer.serial)"
+        >
+          {{ c['delete'] }}
+        </button>
+      </div>
+    </div>
+  </ng-template>
+</section>

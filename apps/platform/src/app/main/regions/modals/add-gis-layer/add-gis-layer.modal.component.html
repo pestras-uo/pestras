@@ -1,0 +1,40 @@
+<form
+  [formGroup]="form"
+  class="card shadow-6 w-10"
+  *contra="let c"
+  (ngSubmit)="add(c)"
+>
+  <h4 class="card-header">{{ c['addLayer'] }}</h4>
+
+  <div class="card-body">
+    <label for="layer-name">{{ c['name'] }}</label>
+    <div class="fc mbe-4">
+      <input type="text" id="layer-name" formControlName="name" />
+    </div>
+
+    <div [class.disabled]="form.controls.id.value">
+      <label for="layer-url">{{ c['layerUrl'] }}</label>
+      <div class="fc mbe-4">
+        <input type="text" id="layer-url" formControlName="url" />
+      </div>
+    </div>
+
+    <div [class.disabled]="form.controls.url.value">
+      <label for="layer-id">{{ c['layerId'] }}</label>
+      <div class="fc mbe-4">
+        <input type="text" id="layer-id" formControlName="id" />
+      </div>
+    </div>
+  </div>
+
+  <div class="card-footer">
+    <button class="btn-round" type="reset" (click)="closes.emit()">
+      {{ c['cancel'] }}
+    </button>
+    <button class="btn-round btn-primary" [disabled]="form.invalid">
+      {{ c['add'] }}
+    </button>
+  </div>
+
+  <pui-preloader *ngIf="preloader"></pui-preloader>
+</form>

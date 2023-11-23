@@ -4,7 +4,7 @@ import { getAll, getBySerial } from "./read";
 import { nameExists } from "./util";
 import { create } from "./create";
 import { update, updateCoords } from "./update";
-import { addGisMap, addGisMapLayer, removeGisMap, removeGisMapLayer, updateGisMap, updateGisMapLayer } from "./gis";
+import { addGisMap, addGisMapLayer, removeGisMap, removeGisMapLayer, updateGisMap, updateGisMapApiKey, updateGisMapLayer } from "./gis";
 
 export class RegionsModel extends Model<Region> {
 
@@ -30,6 +30,7 @@ export class RegionsModel extends Model<Region> {
   // ------------------------------------------------------------------------------------
   addGisMap: (serial: string, input: RegionsApi.AddGisMap.Body) => Promise<GISMapConfig> = addGisMap.bind(this);
   updateGisMap: (serial: string, mapSerial: string, input: RegionsApi.UpdateGisMap.Body) => Promise<boolean> = updateGisMap.bind(this);
+  updateGisMapApiKey: (serial: string, mapSerial: string, apiKey: string) => Promise<boolean> = updateGisMapApiKey.bind(this);
   removeGisMap: (serial: string, mapSerial: string) => Promise<boolean> = removeGisMap.bind(this);
 
   // gis maps layers

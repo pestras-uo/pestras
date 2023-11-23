@@ -104,6 +104,19 @@ export const controller = {
     }
   },
 
+  async updateGisMapApiKey(
+    req: Request<RegionsApi.UpdateGisMapApiKey.Params, unknown, RegionsApi.UpdateGisMapApiKey.Body>,
+    res: Response<RegionsApi.UpdateGisMapApiKey.Response>,
+    next: NextFunction
+  ) {
+    try {
+      res.json(await regionsModel.updateGisMapApiKey(req.params.serial, req.params.map, req.body.apiKey));
+
+    } catch (error) {
+      next(error);
+    }
+  },
+
   async removeGisMap(
     req: Request<RegionsApi.RemoveGisMap.Params>,
     res: Response<RegionsApi.RemoveGisMap.Response>,
