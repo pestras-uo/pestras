@@ -3,6 +3,7 @@ import { Component, EventEmitter, Input, Output } from "@angular/core";
 import { FormControl, FormGroup, Validators } from "@angular/forms";
 import { RegionsState } from "@pestras/frontend/state";
 import { ToastService } from "@pestras/frontend/ui";
+import { GISMapConfig } from "@pestras/shared/data-model";
 
 @Component({
   selector: 'pestras-add-gis-map-modal',
@@ -24,7 +25,7 @@ export class AddGisMapModalComponent {
   region!: string;
 
   @Output()
-  closes = new EventEmitter();
+  closes = new EventEmitter<GISMapConfig | undefined>();
 
   constructor(
     private state: RegionsState,
@@ -36,7 +37,7 @@ export class AddGisMapModalComponent {
 
     this.state.addGisMap(this.region, this.form.getRawValue())
       .subscribe({
-        next: () => this.closes.emit(),
+        next: map => this.closes.emit(map),
         error: e => {
           console.error(e);
           this.toast.msg(c['errors'][e?.error ?? 'default'], { type: 'error' });

@@ -1,4 +1,4 @@
-import {  NgModule } from '@angular/core';
+import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule } from '@angular/forms';
 
@@ -7,6 +7,7 @@ import { RegionsPage } from './regions.page';
 import { RegionsListView } from './views/regions-list/regions-list.view';
 import {
   PuiFileInput,
+  PuiGisMapModule,
   PuiGoogleMapModule,
   PuiIcon,
   PuiPreloaderModule,
@@ -43,20 +44,26 @@ import { GisViewComponent } from './views/gis-view/gis-view.component';
     GisViewComponent
   ],
   imports: [
+    // Angular
     CommonModule,
     RegionsRoutingModule,
     ReactiveFormsModule,
+    // Util
     ContraModule,
     DialogModule,
+    // Pui
+    PuiGisMapModule,
     PuiIcon,
     PuiPreloaderModule,
     PuiGoogleMapModule,
-    NoDataPlaceholderWidget,
     PuiSelectInput,
     PuiFileInput,
+    PuiUtilPipesModule,
+    // Widgets
+    NoDataPlaceholderWidget,
+    // Features
     SessionFeatureModule,
     RegionsFeatureModule,
-    PuiUtilPipesModule,
   ],
 })
-export class RegionsModule {}
+export class RegionsModule { }

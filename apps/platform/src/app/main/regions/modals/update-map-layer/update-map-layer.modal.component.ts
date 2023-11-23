@@ -27,7 +27,7 @@ export class UpdateMapLayerModalComponent implements OnInit {
   layer!: GISMapFeatureLayer;
 
   @Output()
-  closes = new EventEmitter();
+  closes = new EventEmitter<GISMapFeatureLayer | undefined>();
 
   constructor(
     private state: RegionsState,
@@ -49,9 +49,11 @@ export class UpdateMapLayerModalComponent implements OnInit {
   update(c: Record<string, any>) {
     this.preloader = true;
 
-    this.state.updateGisMapLayer(this.region, this.map, this.layer.serial, this.form.getRawValue())
+    const data = this.form.getRawValue();
+
+    this.state.updateGisMapLayer(this.region, this.map, this.layer.serial, data)
       .subscribe({
-        next: () => this.closes.emit(),
+        next: () => this.closes.emit({ ...this.layer, ...data }),
         error: e => {
           console.error(e);
           this.preloader = false;

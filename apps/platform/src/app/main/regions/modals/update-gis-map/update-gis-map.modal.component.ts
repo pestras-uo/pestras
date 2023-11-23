@@ -31,7 +31,7 @@ export class UpdateGisMapModalComponent implements OnInit {
   map!: GISMapConfig;
 
   @Output()
-  closes = new EventEmitter();
+  closes = new EventEmitter<GISMapConfig | undefined>();
 
   constructor(
     private state: RegionsState,
@@ -48,9 +48,11 @@ export class UpdateGisMapModalComponent implements OnInit {
   update(c: Record<string, any>) {
     this.preloader = true;
 
-    this.state.updateGisMap(this.region, this.map.serial, this.updateForm.getRawValue())
+    const data = this.updateForm.getRawValue();
+
+    this.state.updateGisMap(this.region, this.map.serial, data)
       .subscribe({
-        next: () => this.closes.emit(),
+        next: () => this.closes.emit({ ...this.map, ...data }),
         error: e => {
           console.error(e);
           this.toast.msg(c['errors'][e?.error ?? 'default'], { type: 'error' });

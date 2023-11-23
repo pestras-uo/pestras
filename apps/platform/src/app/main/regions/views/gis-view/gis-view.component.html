@@ -15,8 +15,8 @@
       <ng-container *ngFor="let m of region.gis">
         <div
           class="list-item p-5"
-          [class.active]="gisMap === m.serial"
-          (click)="gisMap = m.serial"
+          [class.active]="gisMap?.serial === m.serial"
+          (click)="setMap(m)"
         >
           <p class="bold">{{ m.name }}</p>
           <button
@@ -33,7 +33,7 @@
           </button>
         </div>
 
-        <ng-container *ngIf="gisMap === m.serial">
+        <ng-container *ngIf="gisMap?.serial === m.serial">
           <div class="toolbar pb-4 pis-7 pie-5 border-be">
             <h5>{{ c['layers'] }}</h5>
             <div class="grow"></div>
@@ -45,24 +45,24 @@
             </button>
           </div>
 
-          <div class="list" *ngIf="m.layers.length; else noGisData">
+          <div class="list" *ngIf="layers.length; else noGisData">
             <div
               class="list-item pb-4 pis-7 pie-5"
-              *ngFor="let layer of m.layers"
+              *ngFor="let layer of layers; let i = index"
             >
               <div class="fc-checkbox">
-                <input [id]="layer.serial" type="checkbox" />
-                <label [for]="layer.serial">{{ layer.name }}</label>
+                <input [id]="'layer-' + i" type="checkbox" [formControl]="layers[i].control" />
+                <label [for]="'layer-' + i">{{ layer.layer.name }}</label>
               </div>
               <button
                 class="btn-tiny btn-icon btn-round"
-                (click)="openDialog(updateLayer, m, layer)"
+                (click)="openDialog(updateLayer, m, layer.layer)"
               >
                 <i puiIcon="edit" size="tiny"></i>
               </button>
               <button
                 class="btn-tiny btn-icon btn-round"
-                (click)="openDialog(removeLayer, m, layer)"
+                (click)="openDialog(removeLayer, m, layer.layer)"
               >
                 <i puiIcon="delete" color="danger" size="tiny"></i>
               </button>
@@ -71,6 +71,15 @@
         </ng-container>
       </ng-container>
     </div>
+  </div>
+
+  <div class="grow">
+    <pui-gis-map
+      *ngIf="gisMap"
+      [config]="gisMap"
+      [view]="{ center: [region.location.lng, region.location.lat], zoom: region.zoom }",
+      [layers]="layers | fn: layersList"
+    ></pui-gis-map>
   </div>
 
   <ng-template #noGisData>
@@ -82,7 +91,7 @@
   <ng-template #addMapTmp>
     <pestras-add-gis-map-modal
       [region]="region.serial"
-      (closes)="closeDialog()"
+      (closes)="closeDialog($event)"
     ></pestras-add-gis-map-modal>
   </ng-template>
 
@@ -90,7 +99,7 @@
     <pestras-update-gis-map-modal
       [region]="region.serial"
       [map]="data.map"
-      (closes)="closeDialog()"
+      (closes)="closeDialog($event)"
     ></pestras-update-gis-map-modal>
   </ng-template>
 
@@ -98,7 +107,7 @@
     <pestras-add-gis-layer-modal
       [region]="region.serial"
       [map]="data.map.serial"
-      (closes)="closeDialog()"
+      (closes)="closeDialog(undefined, $event)"
     ></pestras-add-gis-layer-modal>
   </ng-template>
 
@@ -107,7 +116,7 @@
       [region]="region.serial"
       [map]="data.map.serial"
       [layer]="data.layer"
-      (closes)="closeDialog()"
+      (closes)="closeDialog(undefined, $event)"
     ></pestras-update-gis-layer-modal>
   </ng-template>
 
