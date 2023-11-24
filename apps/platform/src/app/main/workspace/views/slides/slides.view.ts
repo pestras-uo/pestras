@@ -11,7 +11,6 @@ import {
 } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import {
-  DataStore,
   Workspace,
   WorkspaceDashboardSlide,
 } from '@pestras/shared/data-model';
