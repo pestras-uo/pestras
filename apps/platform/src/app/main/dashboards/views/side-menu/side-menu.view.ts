@@ -2,7 +2,14 @@
 import { Dialog, DialogRef } from '@angular/cdk/dialog';
 import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
 import { Location } from '@angular/common';
-import { Component, EventEmitter, Input, OnChanges, TemplateRef, Output } from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  Input,
+  OnChanges,
+  TemplateRef,
+  Output,
+} from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { DashboardsState } from '@pestras/frontend/state';
 import { ToastService } from '@pestras/frontend/ui';
@@ -11,16 +18,16 @@ import { Dashboard, DashboardSlide } from '@pestras/shared/data-model';
 @Component({
   selector: 'pestras-dashboard-side-menu',
   templateUrl: './side-menu.view.html',
-  styleUrls: ['./side-menu.view.scss']
+  styleUrls: ['./side-menu.view.scss'],
 })
 export class SideMenuViewComponent implements OnChanges {
   private playTimer: any = null;
   private currentSlideIndex = 0;
 
-
   readonly form = this.fb.nonNullable.group({
     title: ['', Validators.required],
-    play_time: [1, Validators.required]
+    play_time: [1, Validators.required],
+    data_store: ['', Validators.required],
   });
 
   playing = false;
@@ -35,6 +42,11 @@ export class SideMenuViewComponent implements OnChanges {
   @Input({ required: true })
   view!: string;
 
+  @Input()
+  fcClass = '';
+  @Input()
+  blueprint: string | null = null;
+
   @Output()
   selects = new EventEmitter<string>();
 
@@ -44,12 +56,12 @@ export class SideMenuViewComponent implements OnChanges {
     private dialog: Dialog,
     private toast: ToastService,
     protected loc: Location
-  ) { }
+  ) {}
 
   ngOnChanges(): void {
     this.slidesOrder = [...this.dashboard.slides_order];
     this.slides = this.slidesOrder
-      .map(o => this.dashboard.slides.find(t => t.serial === o))
+      .map((o) => this.dashboard.slides.find((t) => t.serial === o))
       .filter(Boolean) as DashboardSlide[];
   }
 
@@ -57,8 +69,7 @@ export class SideMenuViewComponent implements OnChanges {
     this.currentSlideIndex = index;
     this.selects.emit(this.slides[index].serial);
 
-    if (this.playing)
-      this.setNext();
+    if (this.playing) this.setNext();
   }
 
   play() {
@@ -79,10 +90,12 @@ export class SideMenuViewComponent implements OnChanges {
     clearTimeout(this.playTimer);
 
     this.playTimer = setTimeout(() => {
-      const nextIndex = this.slides.length - 1 === this.currentSlideIndex ? 0 : this.currentSlideIndex + 1;
+      const nextIndex =
+        this.slides.length - 1 === this.currentSlideIndex
+          ? 0
+          : this.currentSlideIndex + 1;
 
       this.selectSlide(nextIndex);
-
     }, this.slides[this.currentSlideIndex].play_time * 60 * 1000);
   }
 
@@ -92,7 +105,7 @@ export class SideMenuViewComponent implements OnChanges {
 
     if (prevOrder.some((el, i) => el !== this.slidesOrder[i])) {
       this.slides = this.slidesOrder
-        .map(o => this.dashboard.slides.find(t => t.serial === o))
+        .map((o) => this.dashboard.slides.find((t) => t.serial === o))
         .filter(Boolean) as DashboardSlide[];
 
       this.updateOrder();
@@ -101,15 +114,16 @@ export class SideMenuViewComponent implements OnChanges {
 
   updateOrder() {
     this.preloader = true;
-    this.state.updateSlidesOrder(this.dashboard.serial, this.slidesOrder)
+    this.state
+      .updateSlidesOrder(this.dashboard.serial, this.slidesOrder)
       .subscribe({
         next: () => {
           this.preloader = false;
         },
-        error: e => {
+        error: (e) => {
           console.error(e);
           this.preloader = false;
-        }
+        },
       });
   }
 
@@ -139,50 +153,57 @@ export class SideMenuViewComponent implements OnChanges {
   }
 
   addSlide(c: Record<string, any>) {
-    this.state.addSlide(this.dashboard.serial, this.form.getRawValue())
+    this.state
+      .addSlide(this.dashboard.serial, this.form.getRawValue())
       .subscribe({
         next: () => {
           this.toast.msg(c['success'].default, { type: 'success' });
           this.closeDialog();
         },
-        error: e => {
+        error: (e) => {
           console.error(e);
 
-          this.toast.msg(c['errors'][e?.error] || c['errors'].default, { type: 'error' });
+          this.toast.msg(c['errors'][e?.error] || c['errors'].default, {
+            type: 'error',
+          });
           this.preloader = false;
-        }
+        },
       });
   }
 
   updateSlide(c: Record<string, any>, serial: string) {
-    this.state.updateSlide(this.dashboard.serial, serial, this.form.getRawValue())
+    this.state
+      .updateSlide(this.dashboard.serial, serial, this.form.getRawValue())
       .subscribe({
         next: () => {
           this.toast.msg(c['success'].default, { type: 'success' });
           this.closeDialog();
         },
-        error: e => {
+        error: (e) => {
           console.error(e);
 
-          this.toast.msg(c['errors'][e?.error] || c['errors'].default, { type: 'error' });
+          this.toast.msg(c['errors'][e?.error] || c['errors'].default, {
+            type: 'error',
+          });
           this.preloader = false;
-        }
+        },
       });
   }
 
   removeSlide(c: Record<string, any>, serial: string) {
-    this.state.removeSlide(this.dashboard.serial, serial)
-      .subscribe({
-        next: () => {
-          this.toast.msg(c['success'].default, { type: 'success' });
-          this.closeDialog();
-        },
-        error: e => {
-          console.error(e);
+    this.state.removeSlide(this.dashboard.serial, serial).subscribe({
+      next: () => {
+        this.toast.msg(c['success'].default, { type: 'success' });
+        this.closeDialog();
+      },
+      error: (e) => {
+        console.error(e);
 
-          this.toast.msg(c['errors'][e?.error] || c['errors'].default, { type: 'error' });
-          this.preloader = false;
-        }
-      });
+        this.toast.msg(c['errors'][e?.error] || c['errors'].default, {
+          type: 'error',
+        });
+        this.preloader = false;
+      },
+    });
   }
 }

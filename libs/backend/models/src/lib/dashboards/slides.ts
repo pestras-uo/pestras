@@ -1,9 +1,12 @@
-import { DashboardSlide, EntityTypes, User } from "@pestras/shared/data-model";
+import { DashboardSlide, EntityTypes, User } from '@pestras/shared/data-model';
 import { Serial } from '@pestras/shared/util';
-import { DashboardsModel } from ".";
-import { HttpError, HttpCode } from "@pestras/backend/util";
+import { DashboardsModel } from '.';
+import { HttpError, HttpCode } from '@pestras/backend/util';
 
-export type AddDashboardSlideInput = Pick<DashboardSlide, 'title' | 'play_time'>;
+export type AddDashboardSlideInput = Pick<
+  DashboardSlide,
+  'title' | 'play_time' | 'data_store'
+>;
 
 export async function addSlide(
   this: DashboardsModel,
@@ -11,21 +14,24 @@ export async function addSlide(
   input: AddDashboardSlideInput,
   issuer: User
 ) {
-
   if (!(await this.exists(serial)))
     throw new HttpError(HttpCode.NOT_FOUND, 'dashboardNotFound');
 
   const date = new Date();
   const slide: DashboardSlide = {
-    serial: Serial.gen("SLIDE"),
+    serial: Serial.gen('SLIDE'),
     ...input,
     views_order: [],
-  }
+    // data_store: '',
+  };
 
-  await this.col.updateOne({ serial }, {
-    $push: { slides: slide, slides_order: slide.serial },
-    $set: { last_modified: date }
-  });
+  await this.col.updateOne(
+    { serial },
+    {
+      $push: { slides: slide, slides_order: slide.serial },
+      $set: { last_modified: date },
+    }
+  );
 
   this.channel.emitActivity({
     issuer: issuer.serial,
@@ -33,15 +39,16 @@ export async function addSlide(
     method: 'addSlide',
     serial,
     entity: EntityTypes.DASHBOARD,
-    payload: { slide }
+    payload: { slide },
   });
 
   return { slide, date };
 }
 
-
-
-export type UpdateDashboardSlideInput = Pick<DashboardSlide, 'title' | 'play_time'>;
+export type UpdateDashboardSlideInput = Pick<
+  DashboardSlide,
+  'title' | 'play_time'
+>;
 
 export async function updateSlide(
   this: DashboardsModel,
@@ -50,19 +57,21 @@ export async function updateSlide(
   input: UpdateDashboardSlideInput,
   issuer: User
 ) {
-
   if (!(await this.exists(serial)))
     throw new HttpError(HttpCode.NOT_FOUND, 'reportNotFound');
 
   const date = new Date();
 
-  await this.col.updateOne({ serial, 'slides.serial': slide }, {
-    $set: {
-      'slides.$.title': input.title,
-      'slides.$.play_time': input.play_time,
-      last_modified: date
+  await this.col.updateOne(
+    { serial, 'slides.serial': slide },
+    {
+      $set: {
+        'slides.$.title': input.title,
+        'slides.$.play_time': input.play_time,
+        last_modified: date,
+      },
     }
-  });
+  );
 
   this.channel.emitActivity({
     issuer: issuer.serial,
@@ -70,12 +79,11 @@ export async function updateSlide(
     method: 'updateSlide',
     serial,
     entity: EntityTypes.DASHBOARD,
-    payload: { serial: slide, change: input }
+    payload: { serial: slide, change: input },
   });
 
   return date;
 }
-
 
 export async function updateSlidesOrder(
   this: DashboardsModel,
@@ -85,7 +93,10 @@ export async function updateSlidesOrder(
 ) {
   const date = new Date();
 
-  await this.col.updateOne({ serial }, { $set: { slides_order: input, last_modified: date } });
+  await this.col.updateOne(
+    { serial },
+    { $set: { slides_order: input, last_modified: date } }
+  );
 
   this.channel.emitActivity({
     create_date: date,
@@ -93,13 +104,11 @@ export async function updateSlidesOrder(
     method: 'updateSlidesOrder',
     serial,
     entity: EntityTypes.DASHBOARD,
-    payload: { slides_order: input }
+    payload: { slides_order: input },
   });
 
   return date;
 }
-
-
 
 export async function removeSlide(
   this: DashboardsModel,
@@ -107,16 +116,22 @@ export async function removeSlide(
   slide: string,
   issuer: User
 ) {
-
   if (!(await this.exists(serial)))
     throw new HttpError(HttpCode.NOT_FOUND, 'reportNotFound');
 
   const date = new Date();
 
-  await this.col.updateOne({ serial }, {
-    $pull: { slides: { serial: slide }, slides_order: slide, views: { slide } },
-    $set: { last_modified: date }
-  });
+  await this.col.updateOne(
+    { serial },
+    {
+      $pull: {
+        slides: { serial: slide },
+        slides_order: slide,
+        views: { slide },
+      },
+      $set: { last_modified: date },
+    }
+  );
 
   this.channel.emitActivity({
     issuer: issuer.serial,
@@ -124,7 +139,7 @@ export async function removeSlide(
     method: 'removeSlide',
     serial,
     entity: EntityTypes.DASHBOARD,
-    payload: { serial: slide }
+    payload: { serial: slide },
   });
 
   return date;

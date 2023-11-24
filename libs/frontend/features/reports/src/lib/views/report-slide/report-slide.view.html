@@ -1,360 +1,375 @@
 <ng-container *contra="let c">
   <ng-container *ngIf="slide">
-    <div
-      #content
-      #pdfExprt="puiExportToPdf"
-      puiExportToPdf
-      [pdfName]="slide.title"
-    >
-      <div class="toolbar gap-2 mbe-6">
-        <h2>{{slide.title}}</h2>
-        <div class="grow"></div>
-        <ng-container *ngIf="editable">
-          <button
-            class="btn-icon btn-small btn-round"
-            [class.btn-success]="pdfMode"
-            (click)="pdfExprt.export()"
-          >
-            <i size="small" puiIcon="pdf"></i>
-          </button>
-
-          <button
-            class="btn-icon btn-small btn-round"
-            [class.btn-success]="reorder"
-            (click)="reorder = !reorder"
-          >
-            <i size="small" puiIcon="reorder"></i>
-          </button>
-          <button
-            class="btn-icon btn-small btn-round"
-            [class.btn-success]="editMode"
-            (click)="editMode = !editMode"
-          >
-            <i size="small" puiIcon="edit"></i>
-          </button>
-          <button
-            class="btn-icon btn-small btn-round"
-            (click)="openDialog(viewTmp)"
-          >
-            <i size="small" puiIcon="add"></i>
-          </button>
-        </ng-container>
-      </div>
-
+    <ng-container *ngIf="data$ | async as data">
       <div
-        *ngIf="views.length else noData"
-        class="views"
-        cdkDropList
-        (cdkDropListDropped)="drop($event)"
+        #content
+        #pdfExprt="puiExportToPdf"
+        puiExportToPdf
+        [pdfName]="slide.title"
       >
+        <div class="toolbar gap-2 mbe-6">
+          <h2>{{slide.title}}</h2>
+          <div class="grow"></div>
+          <ng-container *ngIf="editable">
+            <button
+              class="btn-icon btn-small btn-round"
+              [class.btn-success]="pdfMode"
+              (click)="pdfExprt.export()"
+            >
+              <i size="small" puiIcon="pdf"></i>
+            </button>
+
+            <button
+              class="btn-icon btn-small btn-round"
+              [class.btn-success]="reorder"
+              (click)="reorder = !reorder"
+            >
+              <i size="small" puiIcon="reorder"></i>
+            </button>
+            <button
+              class="btn-icon btn-small btn-round"
+              [class.btn-success]="editMode"
+              (click)="editMode = !editMode"
+            >
+              <i size="small" puiIcon="edit"></i>
+            </button>
+            <button
+              class="btn-icon btn-small btn-round"
+              (click)="openDialog(viewTmp)"
+            >
+              <i size="small" puiIcon="add"></i>
+            </button>
+          </ng-container>
+        </div>
+
         <div
-          class="report-view"
-          [class.mbe-8]="last"
-          [class.data-viz]="view.type === 'dataViz'"
-          *ngFor="let view of views; let first = first; let last = last"
-          cdkDragBoundary=".views"
-          cdkDrag
-          [cdkDragDisabled]="!reorder"
+          *ngIf="views.length else noData"
+          class="views"
+          cdkDropList
+          (cdkDropListDropped)="drop($event)"
         >
-          <div class="view-actions shadow-1 p-1" *ngIf="editMode">
-            <button
-              class="mbe-2"
-              *ngIf="reorder"
-              cdkDragHandle
-              class="btn-icon btn-tiny btn-round"
-            >
-              <i size="tiny" puiIcon="drag"></i>
-            </button>
-            <button
-              class="btn-icon btn-tiny btn-round"
-              (click)="openDialog(viewTmp, view)"
-            >
-              <i size="tiny" puiIcon="edit"></i>
-            </button>
-            <ng-container *ngIf="view.content">
+          <div
+            class="report-view"
+            [class.mbe-8]="last"
+            [class.data-viz]="view.type === 'dataViz'"
+            *ngFor="let view of views; let first = first; let last = last"
+            cdkDragBoundary=".views"
+            cdkDrag
+            [cdkDragDisabled]="!reorder"
+          >
+            <div class="view-actions shadow-1 p-1" *ngIf="editMode">
               <button
+                class="mbe-2"
+                *ngIf="reorder"
+                cdkDragHandle
+                class="btn-icon btn-tiny btn-round"
+              >
+                <i size="tiny" puiIcon="drag"></i>
+              </button>
+              <button
+                class="btn-icon btn-tiny btn-round"
+                (click)="openDialog(viewTmp, view)"
+              >
+                <i size="tiny" puiIcon="edit"></i>
+              </button>
+              <ng-container *ngIf="view.content">
+                <button
+                  *ngIf="view.type === 'richText'"
+                  class="btn-icon btn-tiny btn-round"
+                  (click)="openDialog(addTextTmp, view)"
+                >
+                  <i size="tiny" puiIcon="edit_square"></i>
+                </button>
+                <button
+                  *ngIf="view.type === 'image'"
+                  class="btn-icon btn-tiny btn-round"
+                  (click)="openDialog(addImageTmp, view)"
+                >
+                  <i size="tiny" puiIcon="edit_square"></i>
+                </button>
+                <button
+                  *ngIf="view.type === 'video'"
+                  class="btn-icon btn-tiny btn-round"
+                  (click)="openDialog(addVideoTmp, view)"
+                >
+                  <i size="tiny" puiIcon="edit_square"></i>
+                </button>
+                <button
+                  *ngIf="view.type === 'dataViz'"
+                  class="btn-icon btn-tiny btn-round"
+                  (click)="openSideDrawer(addDataVizTmp, view.serial)"
+                >
+                  <i size="tiny" puiIcon="edit_square"></i>
+                </button>
+                <button
+                  class="btn-icon btn-tiny btn-round"
+                  (click)="openDialog(delView, view)"
+                >
+                  <i size="tiny" puiIcon="delete"></i>
+                </button>
+              </ng-container>
+            </div>
+
+            <div *ngIf="!first && view.title" class="divider mb-8"></div>
+
+            <h3 *ngIf="view.title" class="mbe-6" [class.mbe-2]="view.sub_title">
+              {{view.title}}
+            </h3>
+            <h4 *ngIf="view.sub_title" class="text3 mbe-6">
+              {{view.sub_title}}
+            </h4>
+
+            <ng-container *ngIf="view.content else noViewData">
+              <p
                 *ngIf="view.type === 'richText'"
-                class="btn-icon btn-tiny btn-round"
-                (click)="openDialog(addTextTmp, view)"
-              >
-                <i size="tiny" puiIcon="edit_square"></i>
-              </button>
-              <button
+                [innerHTML]="view.content"
+              ></p>
+
+              <img
+                class="radius-4"
                 *ngIf="view.type === 'image'"
-                class="btn-icon btn-tiny btn-round"
-                (click)="openDialog(addImageTmp, view)"
-              >
-                <i size="tiny" puiIcon="edit_square"></i>
-              </button>
-              <button
+                [src]="view.content | docsPath"
+              />
+
+              <iframe
                 *ngIf="view.type === 'video'"
-                class="btn-icon btn-tiny btn-round"
-                (click)="openDialog(addVideoTmp, view)"
+                [src]="view.content"
+                title="YouTube video player"
+                frameborder="0"
+                allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                allowfullscreen
               >
-                <i size="tiny" puiIcon="edit_square"></i>
-              </button>
-              <button
+              </iframe>
+
+              <app-chart
+                [data_store]="data.data_store"
+                [records]="data.records"
                 *ngIf="view.type === 'dataViz'"
-                class="btn-icon btn-tiny btn-round"
-                (click)="openSideDrawer(addDataVizTmp, view.serial)"
-              >
-                <i size="tiny" puiIcon="edit_square"></i>
-              </button>
-              <button
-                class="btn-icon btn-tiny btn-round"
-                (click)="openDialog(delView, view)"
-              >
-                <i size="tiny" puiIcon="delete"></i>
-              </button>
+                [serial]="view.content"
+              ></app-chart>
             </ng-container>
+
+            <ng-template #noViewData>
+              <div class="align-center p-6">
+                <p class="mbe-6">{{c['noDataMsg']}}</p>
+
+                <button
+                  *ngIf="view.type === 'richText'"
+                  class="btn-primary btn-round"
+                  (click)="openDialog(addTextTmp, view)"
+                >
+                  {{c['addText']}}
+                </button>
+
+                <button
+                  *ngIf="view.type === 'image'"
+                  class="btn-primary btn-round"
+                  (click)="openDialog(addImageTmp, view)"
+                >
+                  {{c['addImage']}}
+                </button>
+
+                <button
+                  *ngIf="view.type === 'video'"
+                  class="btn-primary btn-round"
+                  (click)="openDialog(addVideoTmp, view)"
+                >
+                  {{c['addVideo']}}
+                </button>
+
+                <button
+                  *ngIf="view.type === 'dataViz'"
+                  class="btn-primary btn-round"
+                  (click)="openSideDrawer(addDataVizTmp, view.serial)"
+                >
+                  {{c['addDataViz']}}
+                </button>
+              </div>
+            </ng-template>
           </div>
 
-          <div *ngIf="!first && view.title" class="divider mb-8"></div>
+          <ng-template #addTextTmp let-view>
+            <div class="card w-25">
+              <h4 class="card-header">{{c['addText']}}</h4>
 
-          <h3 *ngIf="view.title" class="mbe-6" [class.mbe-2]="view.sub_title">
-            {{view.title}}
-          </h3>
-          <h4 *ngIf="view.sub_title" class="text3 mbe-6">{{view.sub_title}}</h4>
+              <div class="card-body">
+                <label for="view-text">{{c['text']}}</label>
+                <quill-editor
+                  [placeholder]="c['desc']"
+                  [formControl]="contentControl"
+                ></quill-editor>
+              </div>
 
-          <ng-container *ngIf="view.content else noViewData">
-            <p *ngIf="view.type === 'richText'" [innerHTML]="view.content"></p>
+              <div class="card-footer">
+                <button class="btn-outline btn-round" (click)="closeDialog()">
+                  {{c['cancel']}}
+                </button>
+                <button
+                  class="btn-outline btn-round btn-primary"
+                  (click)="updateContent(c, view.serial)"
+                >
+                  {{c['add']}}
+                </button>
+              </div>
 
-            <img
-              class="radius-4"
-              *ngIf="view.type === 'image'"
-              [src]="view.content | docsPath"
-            />
-
-            <iframe
-              *ngIf="view.type === 'video'"
-              [src]="view.content"
-              title="YouTube video player"
-              frameborder="0"
-              allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-              allowfullscreen
-            >
-            </iframe>
-
-            <app-chart *ngIf="view.type === 'dataViz'" [serial]="view.content"></app-chart>
-          </ng-container>
-
-          <ng-template #noViewData>
-            <div class="align-center p-6">
-              <p class="mbe-6">{{c['noDataMsg']}}</p>
-
-              <button
-                *ngIf="view.type === 'richText'"
-                class="btn-primary btn-round"
-                (click)="openDialog(addTextTmp, view)"
-              >
-                {{c['addText']}}
-              </button>
-
-              <button
-                *ngIf="view.type === 'image'"
-                class="btn-primary btn-round"
-                (click)="openDialog(addImageTmp, view)"
-              >
-                {{c['addImage']}}
-              </button>
-
-              <button
-                *ngIf="view.type === 'video'"
-                class="btn-primary btn-round"
-                (click)="openDialog(addVideoTmp, view)"
-              >
-                {{c['addVideo']}}
-              </button>
-
-              <button
-                *ngIf="view.type === 'dataViz'"
-                class="btn-primary btn-round"
-                (click)="openSideDrawer(addDataVizTmp, view.serial)"
-              >
-                {{c['addDataViz']}}
-              </button>
+              <pui-preloader *ngIf="preloader"></pui-preloader>
             </div>
+          </ng-template>
+
+          <ng-template #addImageTmp let-view>
+            <div class="card w-10">
+              <h4 class="card-header">{{c['addImage']}}</h4>
+
+              <div class="card-body">
+                <label for="view-image">{{c['image']}}</label>
+                <pui-image-input
+                  [placeholder]="c['uploadImage']"
+                  [newWidth]="1096"
+                  labelRef="view-image"
+                  accept=".jpg,.jpeg,.webp,.png"
+                  [formControl]="imageControl"
+                ></pui-image-input>
+              </div>
+
+              <div class="card-footer">
+                <button class="btn-outline btn-round" (click)="closeDialog()">
+                  {{c['cancel']}}
+                </button>
+                <button
+                  class="btn-outline btn-round btn-primary"
+                  (click)="addImage(c, view.serial)"
+                >
+                  {{c['add']}}
+                </button>
+              </div>
+
+              <pui-preloader *ngIf="preloader"></pui-preloader>
+            </div>
+          </ng-template>
+
+          <ng-template #addVideoTmp let-view>
+            <div class="card w-15">
+              <h4 class="card-header">{{c['addVideo']}}</h4>
+
+              <div class="card-body">
+                <label for="view-video">{{c['videoLink']}}</label>
+                <div class="fc">
+                  <input
+                    type="string"
+                    id="view-video"
+                    [formControl]="contentControl"
+                  />
+                </div>
+              </div>
+
+              <div class="card-footer">
+                <button class="btn-outline btn-round" (click)="closeDialog()">
+                  {{c['cancel']}}
+                </button>
+                <button
+                  class="btn-outline btn-round btn-primary"
+                  (click)="updateContent(c, view.serial)"
+                >
+                  {{c['add']}}
+                </button>
+              </div>
+
+              <pui-preloader *ngIf="preloader"></pui-preloader>
+            </div>
+          </ng-template>
+
+          <ng-template #addDataVizTmp>
+            <app-chart-form
+              [dataStore]="data.data_store"
+              (done)="closeDrawer(c, $event)"
+            ></app-chart-form>
           </ng-template>
         </div>
 
-        <ng-template #addTextTmp let-view>
-          <div class="card w-25">
-            <h4 class="card-header">{{c['addText']}}</h4>
-
-            <div class="card-body">
-              <label for="view-text">{{c['text']}}</label>
-              <quill-editor
-                [placeholder]="c['desc']"
-                [formControl]="contentControl"
-              ></quill-editor>
-            </div>
-
-            <div class="card-footer">
-              <button class="btn-outline btn-round" (click)="closeDialog()">
-                {{c['cancel']}}
-              </button>
-              <button
-                class="btn-outline btn-round btn-primary"
-                (click)="updateContent(c, view.serial)"
-              >
-                {{c['add']}}
-              </button>
-            </div>
-
-            <pui-preloader *ngIf="preloader"></pui-preloader>
-          </div>
+        <ng-template #noData>
+          <no-data-placeholder-widget
+            >{{c['noDataMsg']}}</no-data-placeholder-widget
+          >
         </ng-template>
 
-        <ng-template #addImageTmp let-view>
-          <div class="card w-10">
-            <h4 class="card-header">{{c['addImage']}}</h4>
+        <ng-template #viewTmp let-view>
+          <form
+            class="card w-10"
+            [formGroup]="form"
+            (ngSubmit)="submitView(c, view?.serial)"
+          >
+            <h4 *ngIf="!view" class="card-header">{{c['addView']}}</h4>
+            <h4 *ngIf="view" class="card-header">{{c['updateView']}}</h4>
 
             <div class="card-body">
-              <label for="view-image">{{c['image']}}</label>
-              <pui-image-input
-                [placeholder]="c['uploadImage']"
-                [newWidth]="1096"
-                labelRef="view-image"
-                accept=".jpg,.jpeg,.webp,.png"
-                [formControl]="imageControl"
-              ></pui-image-input>
-            </div>
+              <label for="view-title">{{c['title']}}</label>
+              <div class="fc mbe-6">
+                <input type="text" id="view-title" formControlName="title" />
+              </div>
 
-            <div class="card-footer">
-              <button class="btn-outline btn-round" (click)="closeDialog()">
-                {{c['cancel']}}
-              </button>
-              <button
-                class="btn-outline btn-round btn-primary"
-                (click)="addImage(c, view.serial)"
-              >
-                {{c['add']}}
-              </button>
-            </div>
-
-            <pui-preloader *ngIf="preloader"></pui-preloader>
-          </div>
-        </ng-template>
-
-        <ng-template #addVideoTmp let-view>
-          <div class="card w-15">
-            <h4 class="card-header">{{c['addVideo']}}</h4>
-
-            <div class="card-body">
-              <label for="view-video">{{c['videoLink']}}</label>
-              <div class="fc">
+              <label for="view-subTitle">{{c['subTitle']}}</label>
+              <div class="fc mbe-6">
                 <input
-                  type="string"
-                  id="view-video"
-                  [formControl]="contentControl"
+                  type="text"
+                  id="view-subTitle"
+                  formControlName="sub_title"
                 />
               </div>
+
+              <ng-container *ngIf="!view">
+                <label for="view-type">{{c['type']}}</label>
+                <div class="fc">
+                  <pui-select-input
+                    [list]="c['reportViewTypes']"
+                    labelRef="view-type"
+                    formControlName="type"
+                  ></pui-select-input>
+                </div>
+              </ng-container>
             </div>
 
             <div class="card-footer">
-              <button class="btn-outline btn-round" (click)="closeDialog()">
+              <button
+                class="btn-outline btn-round"
+                type="reset"
+                (click)="closeDialog()"
+              >
                 {{c['cancel']}}
               </button>
               <button
                 class="btn-outline btn-round btn-primary"
-                (click)="updateContent(c, view.serial)"
+                [disabled]="form.invalid"
               >
-                {{c['add']}}
+                {{c['submit']}}
+              </button>
+            </div>
+          </form>
+        </ng-template>
+
+        <ng-template #delView let-view>
+          <div class="card w-10 shadow-6">
+            <h4 class="card-header">{{c['deleteView']}}</h4>
+            <p class="card-body">{{c['confirmOperation']}}</p>
+            <div class="card-footer">
+              <button
+                class="btn-outline btn-round"
+                type="reset"
+                (click)="closeDialog()"
+              >
+                {{c['cancel']}}
+              </button>
+              <button
+                class="btn-outline btn-round btn-danger"
+                (click)="deleteView(c, view.serial)"
+              >
+                {{c['delete']}}
               </button>
             </div>
 
             <pui-preloader *ngIf="preloader"></pui-preloader>
           </div>
         </ng-template>
-
-        <ng-template #addDataVizTmp>
-          <app-chart-form (done)="closeDrawer(c, $event)"></app-chart-form>
-        </ng-template>
       </div>
-
-      <ng-template #noData>
-        <no-data-placeholder-widget
-          >{{c['noDataMsg']}}</no-data-placeholder-widget
-        >
-      </ng-template>
-
-      <ng-template #viewTmp let-view>
-        <form
-          class="card w-10"
-          [formGroup]="form"
-          (ngSubmit)="submitView(c, view?.serial)"
-        >
-          <h4 *ngIf="!view" class="card-header">{{c['addView']}}</h4>
-          <h4 *ngIf="view" class="card-header">{{c['updateView']}}</h4>
-
-          <div class="card-body">
-            <label for="view-title">{{c['title']}}</label>
-            <div class="fc mbe-6">
-              <input type="text" id="view-title" formControlName="title" />
-            </div>
-
-            <label for="view-subTitle">{{c['subTitle']}}</label>
-            <div class="fc mbe-6">
-              <input
-                type="text"
-                id="view-subTitle"
-                formControlName="sub_title"
-              />
-            </div>
-
-            <ng-container *ngIf="!view">
-              <label for="view-type">{{c['type']}}</label>
-              <div class="fc">
-                <pui-select-input
-                  [list]="c['reportViewTypes']"
-                  labelRef="view-type"
-                  formControlName="type"
-                ></pui-select-input>
-              </div>
-            </ng-container>
-          </div>
-
-          <div class="card-footer">
-            <button
-              class="btn-outline btn-round"
-              type="reset"
-              (click)="closeDialog()"
-            >
-              {{c['cancel']}}
-            </button>
-            <button
-              class="btn-outline btn-round btn-primary"
-              [disabled]="form.invalid"
-            >
-              {{c['submit']}}
-            </button>
-          </div>
-        </form>
-      </ng-template>
-
-      <ng-template #delView let-view>
-        <div class="card w-10 shadow-6">
-          <h4 class="card-header">{{c['deleteView']}}</h4>
-          <p class="card-body">{{c['confirmOperation']}}</p>
-          <div class="card-footer">
-            <button
-              class="btn-outline btn-round"
-              type="reset"
-              (click)="closeDialog()"
-            >
-              {{c['cancel']}}
-            </button>
-            <button
-              class="btn-outline btn-round btn-danger"
-              (click)="deleteView(c, view.serial)"
-            >
-              {{c['delete']}}
-            </button>
-          </div>
-
-          <pui-preloader *ngIf="preloader"></pui-preloader>
-        </div>
-      </ng-template>
-    </div>
+    </ng-container>
   </ng-container>
 </ng-container>

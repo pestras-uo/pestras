@@ -3,29 +3,47 @@
 /* eslint-disable @angular-eslint/component-selector */
 import { Dialog, DialogRef } from '@angular/cdk/dialog';
 import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
-import { Component, ElementRef, Input, OnChanges, TemplateRef, ViewChild } from '@angular/core';
+import {
+  Component,
+  ElementRef,
+  Input,
+  OnChanges,
+  TemplateRef,
+  ViewChild,
+} from '@angular/core';
 import { FormBuilder, FormControl, Validators } from '@angular/forms';
-import { Report, ReportSlide, ReportView, ReportViewType } from '@pestras/shared/data-model';
+import {
+  DataRecord,
+  DataStore,
+  Report,
+  ReportSlide,
+  ReportView,
+  ReportViewType,
+} from '@pestras/shared/data-model';
 import { ToastService, PuiSideDrawer } from '@pestras/frontend/ui';
-import { ReportsState } from '@pestras/frontend/state';
-import { Observable } from 'rxjs';
+import { RecordsService, ReportsState } from '@pestras/frontend/state';
+import { Observable, filter, forkJoin, map, take } from 'rxjs';
 
 @Component({
   selector: 'app-report-slide',
   templateUrl: './report-slide.view.html',
-  styleUrls: ['./report-slide.view.scss']
+  styleUrls: ['./report-slide.view.scss'],
 })
 export class ReportSlideView implements OnChanges {
-
   @ViewChild('content') content!: ElementRef;
 
   readonly form = this.fb.nonNullable.group({
     title: '',
     slide: '',
     sub_title: '',
-    type: this.fb.nonNullable.control<ReportViewType>(ReportViewType.RICH_TEXT, Validators.required),
-    content: ''
+    type: this.fb.nonNullable.control<ReportViewType>(
+      ReportViewType.RICH_TEXT,
+      Validators.required
+    ),
+    content: '',
   });
+
+  data$!: Observable<{ data_store: DataStore; records: DataRecord[] }>;
 
   slide!: ReportSlide | null;
   views: ReportView[] = [];
@@ -36,8 +54,14 @@ export class ReportSlideView implements OnChanges {
   dialogRef: DialogRef | null = null;
   preloader = false;
   editingView: string | null = null;
-  imageControl = new FormControl<File | null>(null, { validators: Validators.required, nonNullable: true });
-  contentControl = new FormControl<string>('', { validators: Validators.required, nonNullable: true });
+  imageControl = new FormControl<File | null>(null, {
+    validators: Validators.required,
+    nonNullable: true,
+  });
+  contentControl = new FormControl<string>('', {
+    validators: Validators.required,
+    nonNullable: true,
+  });
 
   @Input({ required: true })
   report!: Report;
@@ -51,22 +75,48 @@ export class ReportSlideView implements OnChanges {
     private readonly dialog: Dialog,
     private readonly sideDrawer: PuiSideDrawer,
     private readonly fb: FormBuilder,
-    private readonly toast: ToastService
-  ) { }
+    private readonly toast: ToastService,
+    private readonly recordService: RecordsService
+  ) {}
 
   ngOnChanges(): void {
-    this.slide = this.report.slides.find(s => s.serial === this.slideSerial) ?? null;
+    this.slide =
+      this.report.slides.find((s) => s.serial === this.slideSerial) ?? null;
     if (this.slide) {
       this.viewsOrder = [...this.slide.views_order];
       this.views = this.viewsOrder
-        .map(o => this.report.views.find(v => v.serial === o))
+        .map((o) => this.report.views.find((v) => v.serial === o))
         .filter(Boolean) as ReportView[];
     }
+    console.log('data store', this.slide?.data_store);
+
+    this.data$ = forkJoin([
+      this.state
+        .select(this.slide?.data_store ?? '')
+        .pipe(filter(Boolean), take(1)),
+      this.recordService
+        .search({ ds: this.slide?.data_store ?? '' }, { limit: 0 })
+        .pipe(
+          filter(Boolean),
+          map((res) => res.results),
+          take(1)
+        ),
+    ]).pipe(
+      map((data: any) => {
+        return {
+          data_store: data[0],
+          records: data[1],
+        };
+      })
+    );
   }
 
   openDialog(tmp: TemplateRef<any>, view?: ReportView) {
     if (view) {
-      if (view.type === ReportViewType.RICH_TEXT || view.type === ReportViewType.VIDEO)
+      if (
+        view.type === ReportViewType.RICH_TEXT ||
+        view.type === ReportViewType.VIDEO
+      )
         this.contentControl.setValue(view.content);
 
       this.form.controls.title.setValue(view.title || '');
@@ -95,31 +145,31 @@ export class ReportSlideView implements OnChanges {
 
     if (prevOrder.some((el, i) => el !== this.viewsOrder[i])) {
       this.views = this.viewsOrder
-        .map(o => this.report.views.find(v => v.serial === o))
+        .map((o) => this.report.views.find((v) => v.serial === o))
         .filter(Boolean) as ReportView[];
 
-      this.updateOrder()
+      this.updateOrder();
     }
   }
 
   updateOrder() {
     this.preloader = true;
 
-    this.state.updateViewsOrder(this.report.serial, this.slideSerial, this.viewsOrder)
+    this.state
+      .updateViewsOrder(this.report.serial, this.slideSerial, this.viewsOrder)
       .subscribe({
         next: () => {
           this.preloader = false;
         },
-        error: e => {
+        error: (e) => {
           console.error(e);
           this.preloader = false;
-        }
+        },
       });
   }
 
   submitView(c: Record<string, any>, view: string) {
-    if (!this.slide)
-      return;
+    if (!this.slide) return;
 
     this.preloader = true;
 
@@ -127,60 +177,67 @@ export class ReportSlideView implements OnChanges {
 
     const req: Observable<any> = view
       ? this.state.updateView(this.report.serial, view, this.form.getRawValue())
-      : this.state.addView(this.report.serial, this.form.getRawValue())
+      : this.state.addView(this.report.serial, this.form.getRawValue());
 
     req.subscribe({
       next: () => {
         this.toast.msg(c['success'].default, { type: 'success' });
         this.closeDialog();
       },
-      error: e => {
+      error: (e) => {
         console.error(e);
 
-        this.toast.msg(c['errors'][e?.error] || c['errors'].default, { type: 'error' });
+        this.toast.msg(c['errors'][e?.error] || c['errors'].default, {
+          type: 'error',
+        });
         this.preloader = false;
-      }
-    })
+      },
+    });
   }
 
   addImage(c: Record<string, any>, view: string) {
-    if (!this.imageControl.value)
-      return;
+    if (!this.imageControl.value) return;
 
     this.preloader = true;
 
-    this.state.updateViewImage(this.report.serial, view, this.imageControl.value)
+    this.state
+      .updateViewImage(this.report.serial, view, this.imageControl.value)
       .subscribe({
         next: () => {
           this.toast.msg(c['success'].default, { type: 'success' });
           this.preloader = false;
           this.closeDialog();
         },
-        error: e => {
+        error: (e) => {
           console.error(e);
 
-          this.toast.msg(c['errors'][e?.error] || c['errors'].default, { type: 'error' });
+          this.toast.msg(c['errors'][e?.error] || c['errors'].default, {
+            type: 'error',
+          });
           this.preloader = false;
-        }
+        },
       });
   }
 
   updateContent(c: Record<string, any>, view: string) {
     this.preloader = true;
 
-    this.state.updateViewContent(this.report.serial, view, this.contentControl.value)
+    this.state
+      .updateViewContent(this.report.serial, view, this.contentControl.value)
       .subscribe({
         next: () => {
           this.toast.msg(c['success'].default, { type: 'success' });
           this.preloader = false;
           this.closeDialog();
         },
-        error: e => {
+        error: (e) => {
           console.error(e);
 
-          this.toast.msg(c['errors'][e?.error] || c['errors'].default, { type: 'error' });
+          this.toast.msg(c['errors'][e?.error] || c['errors'].default, {
+            type: 'error',
+          });
           this.preloader = false;
-        }
+        },
       });
   }
 
@@ -192,48 +249,48 @@ export class ReportSlideView implements OnChanges {
   closeDrawer(c: Record<string, any>, serial: string | null) {
     this.sideDrawer.close();
 
-    if (!serial || !this.editingView)
-      return;
+    if (!serial || !this.editingView) return;
 
     this.preloader = true;
 
-    this.state.updateViewContent(this.report.serial, this.editingView, serial)
+    this.state
+      .updateViewContent(this.report.serial, this.editingView, serial)
       .subscribe({
         next: () => {
           this.toast.msg(c['success'].default, { type: 'success' });
           this.editingView = null;
           this.preloader = false;
         },
-        error: e => {
+        error: (e) => {
           console.error(e);
 
-          this.toast.msg(c['errors'][e?.error] || c['errors'].default, { type: 'error' });
+          this.toast.msg(c['errors'][e?.error] || c['errors'].default, {
+            type: 'error',
+          });
           this.editingView = null;
           this.preloader = false;
-        }
-      })
+        },
+      });
   }
 
   deleteView(c: Record<string, any>, serial: string) {
     this.preloader = true;
 
-    this.state.removeView(this.report.serial, serial)
-      .subscribe({
-        next: () => {
-          this.toast.msg(c['success'].default, { type: 'success' });
-          this.closeDialog();
-          this.preloader = false;
-        },
-        error: e => {
-          console.error(e);
+    this.state.removeView(this.report.serial, serial).subscribe({
+      next: () => {
+        this.toast.msg(c['success'].default, { type: 'success' });
+        this.closeDialog();
+        this.preloader = false;
+      },
+      error: (e) => {
+        console.error(e);
 
-          this.toast.msg(c['errors'][e?.error] || c['errors'].default, { type: 'error' });
-          this.closeDialog();
-          this.preloader = false;
-        }
-      });
+        this.toast.msg(c['errors'][e?.error] || c['errors'].default, {
+          type: 'error',
+        });
+        this.closeDialog();
+        this.preloader = false;
+      },
+    });
   }
-
-
-
 }

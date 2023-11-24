@@ -63,7 +63,7 @@ export enum DataVizTypes {
 
 export interface BaseDataViz<T = any> {
   serial: string;
-  data_store: string;
+//  data_store: string;
   aggregate: DataVizAggrStage[];
   type: DataVizTypes;
   options: T;

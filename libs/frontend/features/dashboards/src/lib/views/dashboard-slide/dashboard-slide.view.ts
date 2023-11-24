@@ -1,22 +1,37 @@
+/* eslint-disable @nx/enforce-module-boundaries */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @angular-eslint/component-selector */
 import { Dialog, DialogRef } from '@angular/cdk/dialog';
 import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
-import { Component, Input, OnChanges, TemplateRef } from '@angular/core';
+import {
+  Component,
+  HostBinding,
+  Input,
+  OnChanges,
+  TemplateRef,
+  booleanAttribute,
+} from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import {
+  BaseDataViz,
   Dashboard,
   DashboardSlide,
   DashboardSlideView,
   DashboardViewSize,
+  DataRecord,
+  DataStore,
 } from '@pestras/shared/data-model';
 import {
-  ToastService,
   PuiSideDrawer,
+  ToastService,
   ToggleThemeService,
 } from '@pestras/frontend/ui';
-import { DashboardsState } from '@pestras/frontend/state';
-import { map } from 'rxjs';
+import {
+  DashboardsState,
+  DataStoresState,
+  RecordsService,
+} from '@pestras/frontend/state';
+import { Observable, filter, forkJoin, map, take } from 'rxjs';
 
 @Component({
   selector: 'app-dashboard-slide',
@@ -57,20 +72,32 @@ export class DashboardSlideComponent implements OnChanges {
   headless = false;
   @Input()
   editable = false;
-  
+  options$!: Observable<BaseDataViz | null>;
+
+  // @Input({ required: true })
+  // serial!: string;
+  @Input({ transform: booleanAttribute })
+  dark = false;
 
   theme$ = this.toggleThemeService.isDarkMode$.pipe(
     map((isdark) => (isdark ? 'dark' : 'light'))
   );
+
+  data$!: Observable<{ data_store: DataStore; records: DataRecord[] }>;
 
   constructor(
     private state: DashboardsState,
     private fb: FormBuilder,
     private dialog: Dialog,
     private sideDrawer: PuiSideDrawer,
+
     private toast: ToastService,
-    protected toggleThemeService: ToggleThemeService
+    protected toggleThemeService: ToggleThemeService,
+    private dsState: DataStoresState,
+    private recordsService: RecordsService
   ) {}
+  @HostBinding('class.ltr')
+  ltr = false;
 
   ngOnChanges(): void {
     this.slide =
@@ -83,6 +110,27 @@ export class DashboardSlideComponent implements OnChanges {
         .map((o) => this.dashboard.views.find((v) => v.serial === o))
         .filter(Boolean) as DashboardSlideView[];
     }
+    console.log('data store', this.slide?.data_store);
+
+    this.data$ = forkJoin([
+      this.dsState
+        .select(this.slide?.data_store ?? '')
+        .pipe(filter(Boolean), take(1)),
+      this.recordsService
+        .search({ ds: this.slide?.data_store ?? '' }, { limit: 0 })
+        .pipe(
+          filter(Boolean),
+          map((res) => res.results),
+          take(1)
+        ),
+    ]).pipe(
+      map((data) => {
+        return {
+          data_store: data[0],
+          records: data[1],
+        };
+      })
+    );
   }
 
   async toggleFullScreen(elem: HTMLElement) {
