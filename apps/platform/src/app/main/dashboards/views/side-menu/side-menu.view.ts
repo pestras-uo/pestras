@@ -41,7 +41,6 @@ export class SideMenuViewComponent implements OnChanges {
   dashboard!: Dashboard;
   @Input({ required: true })
   view!: string;
-
   @Input()
   fcClass = '';
   @Input()

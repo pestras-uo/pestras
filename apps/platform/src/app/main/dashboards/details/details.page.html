@@ -3,6 +3,7 @@
   <pestras-dashboard-side-menu
     [dashboard]="d"
     [view]="view"
+    [blueprint]="(topic | topic | async)?.blueprint ?? null"
     (selects)="set($event)"
   ></pestras-dashboard-side-menu>
 

@@ -8,7 +8,6 @@ export interface DashboardSlideView {
   slide: string;
   title: string;
   data_viz: string;
-  mode: 'light' | 'dark';
   size: DashboardViewSize;
 }
 

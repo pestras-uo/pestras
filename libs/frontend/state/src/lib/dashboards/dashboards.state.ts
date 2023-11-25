@@ -164,8 +164,7 @@ export class DashboardsState extends StatorGroupState<Dashboard> {
 
             return {
               ...v,
-              size: data.size,
-              mode: data.mode
+              size: data.size
             }
           })
         };

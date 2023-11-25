@@ -87,7 +87,7 @@
               [serial]="view.data_viz"
               [dark]="theme  ==='dark'"
               [data_store]="data.data_store"
-              [records]="data.records"
+              [records]="data.records | clone"
             ></app-chart>
 
             <ng-template #noDataViz>
@@ -150,15 +150,6 @@
                   ></pui-select-input>
                 </div>
               </div>
-            </div>
-
-            <label for="theme">{{c['colorsTheme']}}</label>
-            <div class="fc">
-              <pui-select-input
-                [list]="c['colorsThemeList']"
-                labelRef="theme"
-                formControlName="mode"
-              ></pui-select-input>
             </div>
           </div>
 

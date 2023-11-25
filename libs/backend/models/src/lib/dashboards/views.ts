@@ -89,7 +89,6 @@ export async function updateView(
     $set: {
       'views.$.title': input.title,
       'views.$.size': input.size,
-      'views.$.mode': input.mode,
       last_modified: date
     }
   });

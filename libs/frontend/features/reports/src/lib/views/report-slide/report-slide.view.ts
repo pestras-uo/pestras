@@ -77,18 +77,17 @@ export class ReportSlideView implements OnChanges {
     private readonly fb: FormBuilder,
     private readonly toast: ToastService,
     private readonly recordService: RecordsService
-  ) {}
+  ) { }
 
   ngOnChanges(): void {
-    this.slide =
-      this.report.slides.find((s) => s.serial === this.slideSerial) ?? null;
+    this.slide = this.report.slides.find((s) => s.serial === this.slideSerial) ?? null;
+    
     if (this.slide) {
       this.viewsOrder = [...this.slide.views_order];
       this.views = this.viewsOrder
         .map((o) => this.report.views.find((v) => v.serial === o))
         .filter(Boolean) as ReportView[];
     }
-    console.log('data store', this.slide?.data_store);
 
     this.data$ = forkJoin([
       this.state

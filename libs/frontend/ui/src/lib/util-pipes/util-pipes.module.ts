@@ -14,6 +14,7 @@ import { RandomColorPipe } from './random-color.pipe';
 import { DocsPathPipe } from './docs-path.pipe';
 import { PUI_UTIL_PIPES_CONFIG, PuiUtilPipesConfig } from './config';
 import { SafeUrlPipe } from './safe-url.pipe';
+import { ClonePipe } from './clone.pipe';
 
 
 
@@ -31,7 +32,8 @@ import { SafeUrlPipe } from './safe-url.pipe';
     TimePipe,
     RandomColorPipe,
     DocsPathPipe,
-    SafeUrlPipe
+    SafeUrlPipe,
+    ClonePipe
   ],
   imports: [
     CommonModule
@@ -49,7 +51,8 @@ import { SafeUrlPipe } from './safe-url.pipe';
     TimePipe,
     RandomColorPipe,
     DocsPathPipe,
-    SafeUrlPipe
+    SafeUrlPipe,
+    ClonePipe
   ]
 })
 export class PuiUtilPipesModule {

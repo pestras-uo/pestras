@@ -59,7 +59,6 @@ export class DataStoreInput implements OnChanges, ControlValueAccessor {
   ) {}
 
   ngOnChanges(): void {
-    console.log(this.blueprint);
     if (this.blueprint) this.bp.setValue(this.blueprint);
 
     this.ds.valueChanges.pipe(this.ud()).subscribe((v) => {

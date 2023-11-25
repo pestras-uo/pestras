@@ -58,7 +58,6 @@ export class ChartForm implements OnInit {
     private toast: ToastService
   ) {}
   ngOnInit(): void {
-    console.log(this.dataStore);
     this.form.controls.type.valueChanges
       .pipe(this.ud(), distinctUntilChanged())
       .subscribe(() => this.form.controls.options.setValue(null));
@@ -74,7 +73,7 @@ export class ChartForm implements OnInit {
 
   filterFields(field: Field) {
     return (
-      ['int', 'double', 'boolean', 'ordinal', 'category', 'region'].includes(
+      ['int', 'double', 'boolean', 'category', 'region'].includes(
         field.type
       ) ||
       (field.type === 'string' && field.kind === TypeKind.NONE)

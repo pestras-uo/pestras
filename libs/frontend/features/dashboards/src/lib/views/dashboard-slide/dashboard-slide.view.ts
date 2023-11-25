@@ -46,11 +46,7 @@ export class DashboardSlideComponent implements OnChanges {
     size: this.fb.nonNullable.group({
       x: this.fb.nonNullable.control<DashboardViewSize['x']>(4),
       y: this.fb.nonNullable.control<DashboardViewSize['y']>(1),
-    }),
-    mode: this.fb.nonNullable.control<'light' | 'dark'>(
-      'light',
-      Validators.required
-    ),
+    })
   });
 
   dialogRef: DialogRef | null = null;
@@ -110,7 +106,6 @@ export class DashboardSlideComponent implements OnChanges {
         .map((o) => this.dashboard.views.find((v) => v.serial === o))
         .filter(Boolean) as DashboardSlideView[];
     }
-    console.log('data store', this.slide?.data_store);
 
     this.data$ = forkJoin([
       this.dsState
@@ -147,7 +142,6 @@ export class DashboardSlideComponent implements OnChanges {
     if (view) {
       this.form.controls.title.setValue(view.title);
       this.form.controls.size.setValue(view.size);
-      this.form.controls.mode.setValue(view.mode);
     }
 
     this.dialogRef = this.dialog.open(tmp, { data: view });
@@ -232,7 +226,6 @@ export class DashboardSlideComponent implements OnChanges {
       .updateView(this.dashboard.serial, serial, {
         title: data.title,
         size: data.size,
-        mode: data.mode,
       })
       .subscribe({
         next: () => {

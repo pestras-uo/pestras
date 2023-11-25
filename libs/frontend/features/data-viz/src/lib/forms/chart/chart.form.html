@@ -2,13 +2,6 @@
   <h3 class="card-header">{{c['addDataViz']}}</h3>
 
   <div class="card-body overflow-auto">
-    <!-- <app-data-store-input
-      class="mbe-4"
-      [fcClass]="fcClass"
-      [blueprint]="blueprint"
-      formControlName="data_store"
-    ></app-data-store-input> -->
-
     <ng-container *ngIf="dataStore">
       <ng-container *ngIf="dataStore.serial | records | async as records">
         <app-aggr

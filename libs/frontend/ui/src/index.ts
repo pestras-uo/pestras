@@ -85,6 +85,7 @@ export * from './lib/util-pipes/array-find.pipe';
 export * from './lib/util-pipes/array-include.pipe';
 export * from './lib/util-pipes/array-map.pipe';
 export * from './lib/util-pipes/array-slice.pipe';
+export * from './lib/util-pipes/clone.pipe';
 export * from './lib/util-pipes/docs-path.pipe';
 export * from './lib/util-pipes/fn.pipe';
 export * from './lib/util-pipes/is-dir.pipe';

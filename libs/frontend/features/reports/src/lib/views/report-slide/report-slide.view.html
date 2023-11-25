@@ -143,7 +143,7 @@
 
               <app-chart
                 [data_store]="data.data_store"
-                [records]="data.records"
+                [records]="data.records | clone"
                 *ngIf="view.type === 'dataViz'"
                 [serial]="view.content"
               ></app-chart>

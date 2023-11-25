@@ -19,7 +19,7 @@ export interface ReportSlide {
   serial: string;
   title: string;
   views_order: string[];
-  data_store: string;
+  data_store: string | null;
 }
 
 export interface Report {
