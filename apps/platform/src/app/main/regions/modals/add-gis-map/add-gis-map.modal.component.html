@@ -1,0 +1,46 @@
+<form
+  [formGroup]="form"
+  class="card shadow-6 w-15"
+  *contra="let c"
+  (ngSubmit)="add(c)"
+>
+  <h4 class="card-header">{{ c['addGisMap'] }}</h4>
+
+  <div class="card-body">
+    <label for="map-name">{{ c['name'] }}</label>
+    <div class="fc mbe-4">
+      <input type="text" id="map-name" formControlName="name" />
+    </div>
+
+    <label for="map-id">{{ c['mapId'] }}</label>
+    <div class="fc mbe-4">
+      <input type="text" id="map-id" formControlName="id" />
+    </div>
+
+    <label for="map-portal">{{ c['portalUrl'] }}</label>
+    <div class="fc mbe-4">
+      <input type="text" id="map-portal" formControlName="portal" />
+    </div>
+
+    <label for="map-basemap">{{ c['basemap'] }}</label>
+    <div class="fc mbe-4">
+      <input type="text" id="map-basemap" formControlName="basemap" />
+    </div>
+
+    <label for="map-apiKey">{{ c['apiKey'] }}</label>
+    <div class="fc">
+      <input type="password" id="map-apiKey" formControlName="apiKey" />
+    </div>
+  </div>
+
+  <div class="card-footer">
+    <button class="btn-round" type="reset" (click)="closes.emit()">
+      {{ c['cancel'] }}
+    </button>
+    <button class="btn-round btn-primary" [disabled]="form.invalid">
+      {{ c['add'] }}
+    </button>
+  </div>
+
+  <pui-preloader *ngIf="preloader"></pui-preloader>
+</form>

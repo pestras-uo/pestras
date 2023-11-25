@@ -44,7 +44,7 @@ p {
 
 a {
   cursor: pointer;
-  color: var(--primary);
+  color: var(--link-color);
   text-decoration: none;
 }
 
@@ -163,13 +163,16 @@ summary,
 ::-webkit-input-placeholder {
   /* Edge */
   font-size: 0.85rem;
+  color: var(--placeholder-color);
 }
 
 :-ms-input-placeholder {
   /* Internet Explorer 10-11 */
   font-size: 0.85rem;
+  color: var(--placeholder-color);
 }
 
 ::placeholder {
   font-size: 0.85rem;
+  color: var(--placeholder-color);
 }

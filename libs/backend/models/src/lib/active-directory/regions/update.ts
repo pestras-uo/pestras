@@ -1,13 +1,11 @@
-import { EntityTypes, Region, RegionCoords } from "@pestras/shared/data-model";
+import { EntityTypes, RegionsApi } from "@pestras/shared/data-model";
 import { RegionsModel } from ".";
 import { HttpError, HttpCode } from "@pestras/backend/util";
-
-export type UpdateRegionInput = Pick<Region, 'name' | 'type' | 'location' | 'zoom'>;
 
 export async function update(
   this: RegionsModel,
   serial: string,
-  input: UpdateRegionInput,
+  input: RegionsApi.Update.Body,
   issuer: string
 ) {
   const date = new Date();
@@ -36,7 +34,7 @@ export async function update(
 export async function updateCoords(
   this: RegionsModel,
   serial: string,
-  input: RegionCoords,
+  input: RegionsApi.UpdateCoords.Body,
   issuer: string
 ) {
   const date = new Date();

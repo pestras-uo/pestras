@@ -13,10 +13,9 @@ import {
 import {
   ToastService,
   PuiSideDrawer,
-  ToggleThemeService,
+  ThemeService,
 } from '@pestras/frontend/ui';
 import { DashboardsState } from '@pestras/frontend/state';
-import { map } from 'rxjs';
 
 @Component({
   selector: 'app-dashboard-slide',
@@ -57,11 +56,6 @@ export class DashboardSlideComponent implements OnChanges {
   headless = false;
   @Input()
   editable = false;
-  
-
-  theme$ = this.toggleThemeService.isDarkMode$.pipe(
-    map((isdark) => (isdark ? 'dark' : 'light'))
-  );
 
   constructor(
     private state: DashboardsState,
@@ -69,7 +63,7 @@ export class DashboardSlideComponent implements OnChanges {
     private dialog: Dialog,
     private sideDrawer: PuiSideDrawer,
     private toast: ToastService,
-    protected toggleThemeService: ToggleThemeService
+    protected hemeService: ThemeService
   ) {}
 
   ngOnChanges(): void {

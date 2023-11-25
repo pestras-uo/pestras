@@ -80,7 +80,7 @@
           </ng-container>
         </div>
 
-        <div class="card-body" *ngIf="theme$ | async as theme">
+        <div class="card-body" *ngIf="hemeService.theme$ | async as theme">
           <app-chart
             *ngIf="view.data_viz; else noDataViz"
             [serial]="view.data_viz"
