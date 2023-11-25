@@ -84,8 +84,11 @@ export function validateValueType(value: any, entity: TypedEntity): any {
   if (entity.length !== 1)
     return null;
 
-  if (entity.type === 'category')
-    return entity.kind === TypeKind.ORDINAL || TypeKind.RANGE ? castTypedEntityValue(value, 'int') : castTypedEntityValue(value, 'category');
+  if (entity.type === 'category') {
+    return entity.kind === TypeKind.ORDINAL || entity.kind === TypeKind.RANGE 
+      ? castTypedEntityValue(value, 'int') 
+      : castTypedEntityValue(value, 'category');
+  }
 
   return castTypedEntityValue(value, entity.type) as any;
 }
