@@ -3,7 +3,7 @@ import { Component, EventEmitter, Input, Output } from "@angular/core";
 import { AbstractControl, FormControl, FormGroup, Validators } from "@angular/forms";
 import { RegionsState } from "@pestras/frontend/state";
 import { ToastService } from "@pestras/frontend/ui";
-import { GISMapConfig, GISMapFeatureLayer } from "@pestras/shared/data-model";
+import { GISMapFeatureLayer } from "@pestras/shared/data-model";
 
 @Component({
   selector: 'pestras-add-gis-layer-modal',
@@ -22,7 +22,7 @@ export class AddGisLayerModalComponent {
   @Input({ required: true })
   region!: string;
   @Input({ required: true })
-  map!: GISMapConfig;
+  map!: string;
 
   @Output()
   closes = new EventEmitter<GISMapFeatureLayer | undefined>();
@@ -43,7 +43,7 @@ export class AddGisLayerModalComponent {
     
     const data = this.form.getRawValue();
 
-    this.state.addGisMapLayer(this.region, this.map.serial, data)
+    this.state.addGisMapLayer(this.region, this.map, data)
       .subscribe({
         next: serial => this.closes.emit({ serial, ...data }),
         error: e => {

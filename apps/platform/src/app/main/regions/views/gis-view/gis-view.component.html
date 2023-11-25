@@ -1,6 +1,6 @@
-<section *contra="let c" class="flex align-items-stretch">
-  <div class="gis-maps w-8 border-ie">
-    <div class="toolbar p-5 border-be">
+<ng-container *contra="let c" class="flex align-items-stretch">
+  <div class="w-9 border-ie">
+    <div class="toolbar p-4 border-be">
       <h4>{{ c['maps'] }}</h4>
       <div class="grow"></div>
       <button
@@ -14,11 +14,12 @@
     <div class="list list-actions" *ngIf="region.gis.length; else noGisData">
       <ng-container *ngFor="let m of region.gis">
         <div
-          class="list-item p-5"
+          class="list-item p-4"
           [class.active]="gisMap?.serial === m.serial"
           (click)="setMap(m)"
         >
           <p class="bold">{{ m.name }}</p>
+          <div class="grow"></div>
           <button
             class="btn-tiny btn-icon btn-round"
             (click)="openDialog(updateMapTmp, m)"
@@ -33,8 +34,8 @@
           </button>
         </div>
 
-        <ng-container *ngIf="gisMap?.serial === m.serial">
-          <div class="toolbar pb-4 pis-7 pie-5 border-be">
+        <ng-container [formGroup]="layersListForm" *ngIf="gisMap && gisMap.serial === m.serial">
+          <div class="toolbar pb-2 pis-7 pie-4 border-be">
             <h5>{{ c['layers'] }}</h5>
             <div class="grow"></div>
             <button
@@ -45,24 +46,25 @@
             </button>
           </div>
 
-          <div class="list" *ngIf="layers.length; else noGisData">
+          <div formArrayName="layers" class="list" *ngIf="layersControls.controls.length else noGisData">
             <div
-              class="list-item pb-4 pis-7 pie-5"
-              *ngFor="let layer of layers; let i = index"
+              class="list-item pb-2 pis-7 pie-4"
+              *ngFor="let c of layersControls.controls; let i = index"
             >
               <div class="fc-checkbox">
-                <input [id]="'layer-' + i" type="checkbox" [formControl]="layers[i].control" />
-                <label [for]="'layer-' + i">{{ layer.layer.name }}</label>
+                <input [id]="'layer-' + i" type="checkbox" [formControl]="c" />
+                <label [for]="'layer-' + i">{{ gisMap.layers[i].name }}</label>
               </div>
+              <div class="grow"></div>
               <button
                 class="btn-tiny btn-icon btn-round"
-                (click)="openDialog(updateLayer, m, layer.layer)"
+                (click)="openDialog(updateLayer, m, gisMap.layers[i])"
               >
                 <i puiIcon="edit" size="tiny"></i>
               </button>
               <button
                 class="btn-tiny btn-icon btn-round"
-                (click)="openDialog(removeLayer, m, layer.layer)"
+                (click)="openDialog(removeLayer, m, gisMap.layers[i])"
               >
                 <i puiIcon="delete" color="danger" size="tiny"></i>
               </button>
@@ -73,14 +75,12 @@
     </div>
   </div>
 
-  <div class="grow">
-    <pui-gis-map
-      *ngIf="gisMap"
-      [config]="gisMap"
-      [view]="{ center: [region.location.lng, region.location.lat], zoom: region.zoom }",
-      [layers]="layers | fn: layersList"
-    ></pui-gis-map>
-  </div>
+  <pui-gis-map
+    *ngIf="gisMap"
+    [config]="gisMap"
+    [view]="{ center: [region.location.lng, region.location.lat], zoom: region.zoom }"
+    [layers]="activeLayers"
+  ></pui-gis-map>
 
   <ng-template #noGisData>
     <no-data-placeholder-widget small>{{
@@ -91,7 +91,7 @@
   <ng-template #addMapTmp>
     <pestras-add-gis-map-modal
       [region]="region.serial"
-      (closes)="closeDialog($event)"
+      (closes)="closeDialog()"
     ></pestras-add-gis-map-modal>
   </ng-template>
 
@@ -99,7 +99,7 @@
     <pestras-update-gis-map-modal
       [region]="region.serial"
       [map]="data.map"
-      (closes)="closeDialog($event)"
+      (closes)="closeDialog()"
     ></pestras-update-gis-map-modal>
   </ng-template>
 
@@ -107,7 +107,7 @@
     <pestras-add-gis-layer-modal
       [region]="region.serial"
       [map]="data.map.serial"
-      (closes)="closeDialog(undefined, $event)"
+      (closes)="closeDialog()"
     ></pestras-add-gis-layer-modal>
   </ng-template>
 
@@ -116,7 +116,7 @@
       [region]="region.serial"
       [map]="data.map.serial"
       [layer]="data.layer"
-      (closes)="closeDialog(undefined, $event)"
+      (closes)="closeDialog()"
     ></pestras-update-gis-layer-modal>
   </ng-template>
 
@@ -155,4 +155,4 @@
       </div>
     </div>
   </ng-template>
-</section>
+</ng-container>

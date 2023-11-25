@@ -1,5 +1,6 @@
 import { Validall } from "@pestras/validall";
 import { Validators } from "../../validators";
+import { Serial } from "@pestras/shared/util";
 
 export enum RegionsValidators {
   CREATE = 'createRegion',
@@ -24,7 +25,13 @@ new Validall(RegionsValidators.CREATE, {
   type: { $type: 'string', $message: 'invalidRegionType' },
   location: { $ref: Validators.GEOLOCATION, $message: 'locationIsRequired', },
   zoom: { $type: 'number' },
-  parent: { $type: 'string', $message: 'invalidParentSerial' }
+  parent: {
+    $nullable: true,
+    $fn: (v) => {
+      if (!Serial.isValid(v, true))
+        throw "invalidParentSerial"
+    }
+  }
 });
 
 new Validall(RegionsValidators.UPDATE, {

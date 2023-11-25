@@ -1,20 +1,34 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { Dialog, DialogRef } from "@angular/cdk/dialog";
-import { Component, Input, TemplateRef } from "@angular/core";
-import { FormControl } from "@angular/forms";
+import { Component, Input, OnChanges, TemplateRef } from "@angular/core";
+import { FormArray, FormControl, FormGroup } from "@angular/forms";
 import { RegionsState } from "@pestras/frontend/state";
-import { ToastService } from "@pestras/frontend/ui";
+import { ToastService, untilDestroyed } from "@pestras/frontend/ui";
 import { GISMapConfig, GISMapFeatureLayer, Region } from "@pestras/shared/data-model";
 
 @Component({
   selector: 'pestras-gis-view',
-  templateUrl: './gis-view.component.html'
+  templateUrl: './gis-view.component.html',
+  styles:[`
+    :host {
+      display: grid;
+      grid-template-columns: auto 1fr;
+    }
+  `]
 })
-export class GisViewComponent {
-  layers: { layer: GISMapFeatureLayer, control: FormControl<boolean> }[] = [];
+export class GisViewComponent implements OnChanges {
+  private ud = untilDestroyed();
+
+  readonly layersListForm = new FormGroup({
+    layers: new FormArray<FormControl<boolean>>([])
+  });
+
+  readonly layersControls = this.layersListForm.controls.layers;
+  
   gisMap: GISMapConfig | null = null;
   dialogRef: DialogRef | null = null;
   preloader = false;
+  activeLayers: GISMapFeatureLayer[] = [];
 
   @Input({ required: true })
   region!: Region
@@ -25,56 +39,49 @@ export class GisViewComponent {
     private dialog: Dialog
   ) { }
 
+  ngOnChanges(): void {
+    this.layersControls.clear();
+
+    if (this.gisMap)
+      for (let i = 0; i < this.gisMap.layers.length; i++)
+        this.layersControls.push(new FormControl(false, { nonNullable: true }));
+
+    this.layersListForm.valueChanges
+      .pipe(this.ud())
+      .subscribe(() => {
+        this.activeLayers = this.gisMap
+          ? this.gisMap.layers.filter((l, i) => this.layersControls.at(i).value)
+          : [];
+      });
+  }
+
   openDialog(tmp: TemplateRef<unknown>, map?: GISMapConfig, layer?: GISMapFeatureLayer) {
     this.dialogRef = this.dialog.open(tmp, { data: { map, layer } });
   }
 
-  closeDialog(map?: GISMapConfig, layer?: GISMapFeatureLayer) {
+  closeDialog() {
     this.dialogRef?.close();
     this.preloader = false;
 
-    if (map)
-      this.setMap(map);
+    // if (map)
+    //   this.setMap(map);
 
-    if (layer)
-      this.updateLayer(layer, true);
+    // if (layer)
+    //   this.updateLayer(layer, true);
   }
 
   setMap(map: GISMapConfig | null) {
-    if (this.gisMap?.serial === map?.serial) {
-      // in case of update
-      this.gisMap = map;
+    if (this.gisMap?.serial === map?.serial)
       return;
-    }
 
     this.gisMap = map;
-    this.layers = [];
+    this.layersListForm.controls.layers.clear();
 
     if (map) {
-      for (const layer of map.layers)
-        this.addLayer(layer);
+      for (let i = 0; i < map.layers.length; i++) {
+        this.layersListForm.controls.layers.push(new FormControl(false, { nonNullable: true }));
+      }
     }
-  }
-
-  addLayer(layer: GISMapFeatureLayer) {
-    this.layers.push({ layer, control: new FormControl(true, { nonNullable: true }) });
-  }
-
-  removeLayer(serial: string) {
-    this.layers = this.layers.filter(l => l.layer.serial !== serial);
-  }
-
-  layersList(layers: { layer: GISMapFeatureLayer, control: FormControl<boolean>}[]) {
-    return layers.filter(l => l.control.value).map(l => l.layer);
-  }
-
-  updateLayer(layer: GISMapFeatureLayer, upsert = false) {
-    const l = this.layers.find(l => l.layer.serial === layer.serial);
-
-    if (l)
-      l.layer = layer;
-    else if (upsert)
-      this.addLayer(layer);
   }
 
   removeGisMap(c: Record<string, any>, map: string) {
@@ -102,7 +109,7 @@ export class GisViewComponent {
       .subscribe({
         next: () => {
           this.closeDialog();
-          this.removeLayer(layer);
+          // this.removeLayer(layer);
         },
         error: e => {
           console.error(e);

@@ -6,8 +6,8 @@ export class Serial {
 
   static readonly regex = new RegExp(`^([0-9]{13})([A-Z]{3})([A-Z0-9]{${this.partLength}})((_([0-9]{13})([A-Z]{3})([A-Z0-9]{${this.partLength}}))*)$`);
 
-  static isValid(serial: string) {
-    return typeof serial === 'string' && (serial === "*" || this.regex.test(serial));
+  static isValid(serial: string, orEmpty = false) {
+    return typeof serial === 'string' && ((serial === "*" || this.regex.test(serial)) || (orEmpty && !serial));
   }
 
   static isRoot(serial: string) {
@@ -33,14 +33,14 @@ export class Serial {
 
   static isChild(parent: string, child: string, level = 1, exact_lavel = true) {
     return parent === "*"
-      ? exact_lavel 
+      ? exact_lavel
         ? (child !== "*") && this.countLevels(parent) === level
         : (child !== "*") && this.countLevels(parent) >= level
       : child.endsWith(parent) && (
-      exact_lavel
-        ? this.countLevels(child) - this.countLevels(parent) === level
-        : this.countLevels(child) - this.countLevels(parent) >= level
-    );
+        exact_lavel
+          ? this.countLevels(child) - this.countLevels(parent) === level
+          : this.countLevels(child) - this.countLevels(parent) >= level
+      );
   }
 
   static toTree(serial: string) {
