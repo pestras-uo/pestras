@@ -1,9 +1,8 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { DataStore, DataStoreState, DataStoreType, intervalsByMonth } from "@pestras/shared/data-model";
-import { generateRequestPayload } from "./generate-payload";
-import { handleRequest } from "./handle-request";
 import { handleResponse } from "./handle-response";
 import { dataStoresModel, webServiceLogModel } from "@pestras/backend/models";
+import { generateRequestPayload, generateWebServiceRequest } from "@pestras/backend/util";
 
 export async function job(init: boolean) {
 
@@ -41,7 +40,9 @@ export async function job(init: boolean) {
 
         await webServiceLogModel.insertSub(logSerial, 'payload generated');
 
-        const data = await handleRequest(ds, payload, logSerial);
+        await webServiceLogModel.insertSub(logSerial, 'init http request');
+
+        const data = await generateWebServiceRequest(ds, payload);
 
         await webServiceLogModel.insertSub(logSerial, 'request responded successfully');
 

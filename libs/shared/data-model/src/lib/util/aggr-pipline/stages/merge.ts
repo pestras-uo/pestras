@@ -3,9 +3,9 @@ import { TypedEntity } from "../../data-types";
 
 export interface MergeStageOptions {
   into: string | { db: string; col: string; },
-  on: string | string[],
-  whenMatched: 'replace'| 'keepExisting' | 'merge' | 'fail',
-  whenNotMatched: 'insert' | 'discard' | 'fail'
+  on?: string | string[],
+  whenMatched?: 'replace'| 'keepExisting' | 'merge' | 'fail',
+  whenNotMatched?: 'insert' | 'discard' | 'fail'
 }
 
 export class MergeStage extends AggrPiplineStage<string | MergeStageOptions> {

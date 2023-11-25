@@ -1,4 +1,9 @@
 {
+  "primaryField": "الحقل الأساسي",
+  "skipParam": "خانة التجاوز",
+  "limitParam": "خانة تقييد العدد",
+  "enablePagination": "تفعيل التصفح",
+  "paginationInputs": "معطيات التصفح",
   "deletePartner": "حذف الشريك",
   "updatePartner": "تعديل بيانات شريك",
   "addPartner": "إضافة شريك",
@@ -1314,9 +1319,14 @@
   ],
   "updateInterval": "فترات التحديث",
   "intervals": "الفترات",
-  "intervalsList": [{
+  "intervalsList": [
+    {
       "name": "لا يوجد",
       "value": 0
+    },
+    {
+      "name": "على الطلب",
+      "value": -1
     },
     {
       "name": "شهري",

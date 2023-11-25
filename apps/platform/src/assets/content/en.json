@@ -1,4 +1,9 @@
 {
+  "primaryField": "Primary Field",
+  "skipParam": "Skip Param",
+  "limitParam": "Limit Param",
+  "enablePagination": "Enable Pagination",
+  "paginationInputs": "Pagination Inputs",
   "deletePartner": "Delete Partner",
   "updatePartner": "Update Partner",
   "addPartner": "Add New Partner",
@@ -1326,6 +1331,10 @@
     {
       "name": "None",
       "value": 0
+    },
+    {
+      "name": "On Demand",
+      "value": -1
     },
     {
       "name": "Monthly",
