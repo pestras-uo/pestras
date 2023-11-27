@@ -21,7 +21,11 @@ import {
   ReportViewType,
 } from '@pestras/shared/data-model';
 import { ToastService, PuiSideDrawer } from '@pestras/frontend/ui';
-import { RecordsService, ReportsState } from '@pestras/frontend/state';
+import {
+  DataStoresState,
+  RecordsService,
+  ReportsState,
+} from '@pestras/frontend/state';
 import { Observable, filter, forkJoin, map, take } from 'rxjs';
 
 @Component({
@@ -41,6 +45,7 @@ export class ReportSlideView implements OnChanges {
       Validators.required
     ),
     content: '',
+    data_store: '',
   });
 
   data$!: Observable<{ data_store: DataStore; records: DataRecord[] }>;
@@ -70,18 +75,25 @@ export class ReportSlideView implements OnChanges {
   @Input()
   editable = false;
 
+  filterTypes = (type: ReportViewType) => {
+    if (this.slide?.data_store) return true;
+    return type !== ReportViewType.DATA_VIZ;
+  };
+
   constructor(
     private readonly state: ReportsState,
     private readonly dialog: Dialog,
     private readonly sideDrawer: PuiSideDrawer,
     private readonly fb: FormBuilder,
     private readonly toast: ToastService,
-    private readonly recordService: RecordsService
-  ) { }
+    private readonly recordService: RecordsService,
+    private dsState: DataStoresState
+  ) {}
 
   ngOnChanges(): void {
-    this.slide = this.report.slides.find((s) => s.serial === this.slideSerial) ?? null;
-    
+    this.slide =
+      this.report.slides.find((s) => s.serial === this.slideSerial) ?? null;
+
     if (this.slide) {
       this.viewsOrder = [...this.slide.views_order];
       this.views = this.viewsOrder
@@ -90,7 +102,7 @@ export class ReportSlideView implements OnChanges {
     }
 
     this.data$ = forkJoin([
-      this.state
+      this.dsState
         .select(this.slide?.data_store ?? '')
         .pipe(filter(Boolean), take(1)),
       this.recordService

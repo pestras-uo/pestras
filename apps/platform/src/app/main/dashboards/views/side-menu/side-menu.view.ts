@@ -13,7 +13,10 @@ import {
 import { FormBuilder, Validators } from '@angular/forms';
 import { DashboardsState } from '@pestras/frontend/state';
 import { ToastService } from '@pestras/frontend/ui';
-import { Dashboard, DashboardSlide } from '@pestras/shared/data-model';
+import {
+  Dashboard,
+  DashboardSlide,
+} from '@pestras/shared/data-model';
 
 @Component({
   selector: 'pestras-dashboard-side-menu',
@@ -27,7 +30,7 @@ export class SideMenuViewComponent implements OnChanges {
   readonly form = this.fb.nonNullable.group({
     title: ['', Validators.required],
     play_time: [1, Validators.required],
-    data_store: ['', Validators.required],
+    data_store: [''],
   });
 
   playing = false;
@@ -45,6 +48,9 @@ export class SideMenuViewComponent implements OnChanges {
   fcClass = '';
   @Input()
   blueprint: string | null = null;
+
+  @Input()
+  dataStore?: string;
 
   @Output()
   selects = new EventEmitter<string>();
@@ -130,6 +136,7 @@ export class SideMenuViewComponent implements OnChanges {
     if (slide) {
       this.form.controls.title.setValue(slide.title);
       this.form.controls.play_time.setValue(slide.play_time);
+      
     }
 
     this.dialogRef = this.dialog.open(tmp, { data: slide });

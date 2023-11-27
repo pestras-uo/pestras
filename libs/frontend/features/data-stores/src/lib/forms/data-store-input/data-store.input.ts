@@ -34,8 +34,9 @@ export class DataStoreInput implements OnChanges, ControlValueAccessor {
     map((list) => list.map((bp) => ({ name: bp.name, value: bp.serial }))),
     tap((list) => list[0]?.value ?? '')
   );
+
   readonly dss$ = this.bp.valueChanges.pipe(
-    startWith(''),
+    startWith(this.bp.value),
     switchMap((bp) => this.state.selectGroup(bp)),
     map((list) => list.map((ds) => ({ name: ds.name, value: ds.serial })))
   );
@@ -59,7 +60,8 @@ export class DataStoreInput implements OnChanges, ControlValueAccessor {
   ) {}
 
   ngOnChanges(): void {
-    if (this.blueprint) this.bp.setValue(this.blueprint);
+    if (this.blueprint)
+      setTimeout(() => this.bp.setValue(this.blueprint ?? ''));
 
     this.ds.valueChanges.pipe(this.ud()).subscribe((v) => {
       this.onChange(v ?? null);
@@ -83,9 +85,11 @@ export class DataStoreInput implements OnChanges, ControlValueAccessor {
         .pipe(take(1))
         .subscribe((ds) => {
           if (ds) {
-            if (!this.blueprint) this.bp.setValue(ds.blueprint);
-
-            setTimeout(() => this.ds.setValue(ds.serial));
+            if (!this.blueprint)
+              setTimeout(() => {
+                this.bp.setValue(ds.blueprint);
+                setTimeout(() => this.ds.setValue(ds.serial));
+              });
           }
         });
     }

@@ -7,7 +7,7 @@ export enum ReportViewType {
 }
 
 export interface ReportView {
-  serial: string;
+    serial: string;
   slide: string;
   title: string | null;
   sub_title: string | null;

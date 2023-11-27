@@ -57,6 +57,7 @@
             cdkDrag
             [cdkDragDisabled]="!reorder"
           >
+          
             <div class="view-actions shadow-1 p-1" *ngIf="editMode">
               <button
                 class="mbe-2"
@@ -320,7 +321,7 @@
                 <label for="view-type">{{c['type']}}</label>
                 <div class="fc">
                   <pui-select-input
-                    [list]="c['reportViewTypes']"
+                    [list]="c['reportViewTypes'] |  arrayFilter: filterTypes"
                     labelRef="view-type"
                     formControlName="type"
                   ></pui-select-input>

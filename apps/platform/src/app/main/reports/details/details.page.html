@@ -3,6 +3,7 @@
   <app-side-menu
     [report]="d"
     [view]="view"
+    [blueprint]="(topic | topic | async)?.blueprint ?? null"
     (selects)="set($event)"
   ></app-side-menu>
 

@@ -32,6 +32,10 @@ import {
 } from '@pestras/frontend/ui';
 import { EntityAccessFeatureModule } from '@pestras/frontend/features/entity-access';
 import { AppBreadCrumbModule } from '@pestras/frontend/widgets/bread-crumb';
+import { DataStoresModule } from '../data-stores/data-stores.module';
+import { BlueprintsFeatureModule } from '@pestras/frontend/features/blueprints';
+import { DataStoresFeatureModule } from '@pestras/frontend/features/data-stores';
+import { TopicsFeatureModule } from '@pestras/frontend/features/topics';
 
 @NgModule({
   declarations: [ReportsRouter, DetailsPage, SideMenuView],
@@ -59,6 +63,7 @@ import { AppBreadCrumbModule } from '@pestras/frontend/widgets/bread-crumb';
     UsersGroupsFeatureModule,
     SessionFeatureModule,
     EntityAccessFeatureModule,
+    TopicsFeatureModule,
     // pui
     PuiPreloaderModule,
     PuiIcon,
@@ -68,6 +73,8 @@ import { AppBreadCrumbModule } from '@pestras/frontend/widgets/bread-crumb';
     PuiUtilPipesModule,
     PuiExportToPdfDirective,
     AppBreadCrumbModule,
+    //Data store:
+    DataStoresFeatureModule,
   ],
 })
 export class ReportsModule {}

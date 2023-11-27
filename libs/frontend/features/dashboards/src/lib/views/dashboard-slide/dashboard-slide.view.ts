@@ -46,7 +46,7 @@ export class DashboardSlideComponent implements OnChanges {
     size: this.fb.nonNullable.group({
       x: this.fb.nonNullable.control<DashboardViewSize['x']>(4),
       y: this.fb.nonNullable.control<DashboardViewSize['y']>(1),
-    })
+    }),
   });
 
   dialogRef: DialogRef | null = null;

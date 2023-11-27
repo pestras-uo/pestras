@@ -25,36 +25,36 @@ import { UsersFeatureModule } from '@pestras/frontend/features/users';
 import { RegionsFeatureModule } from '@pestras/frontend/features/regions';
 import { TopicsFeatureModule } from '@pestras/frontend/features/topics';
 import { SessionFeatureModule } from '@pestras/frontend/features/session';
-import { DataStoresFeatureModule } from "../../../../../../libs/frontend/features/data-stores/src/lib/data-stores.module";
+import { DataStoresFeatureModule } from '@pestras/frontend/features/data-stores';
 
 @NgModule({
-    declarations: [WorkspacePage, PinsView, SlidesView, StatsView],
-    imports: [
-        // Anguler
-        CommonModule,
-        WorkspaceRoutingModule,
-        ReactiveFormsModule,
-        // Util
-        ContraModule,
-        DialogModule,
-        // Pui
-        PuiPreloaderModule,
-        PuiIcon,
-        PuiSelectInput,
-        PuiClickOutsideDirective,
-        PuiDropdown,
-        // Features
-        SessionFeatureModule,
-        BlueprintsFeatureModule,
-        OrgunitsFeatureModule,
-        UsersFeatureModule,
-        RegionsFeatureModule,
-        TopicsFeatureModule,
-        DashboardsFeaturesModule,
-        ReportsFeaturesModule,
-        // Widgets
-        NoDataPlaceholderWidget,
-        DataStoresFeatureModule
-    ]
+  declarations: [WorkspacePage, PinsView, SlidesView, StatsView],
+  imports: [
+    // Anguler
+    CommonModule,
+    WorkspaceRoutingModule,
+    ReactiveFormsModule,
+    // Util
+    ContraModule,
+    DialogModule,
+    // Pui
+    PuiPreloaderModule,
+    PuiIcon,
+    PuiSelectInput,
+    PuiClickOutsideDirective,
+    PuiDropdown,
+    // Features
+    SessionFeatureModule,
+    BlueprintsFeatureModule,
+    OrgunitsFeatureModule,
+    UsersFeatureModule,
+    RegionsFeatureModule,
+    TopicsFeatureModule,
+    DashboardsFeaturesModule,
+    ReportsFeaturesModule,
+    // Widgets
+    NoDataPlaceholderWidget,
+    DataStoresFeatureModule,
+  ],
 })
 export class WorkspaceModule {}
