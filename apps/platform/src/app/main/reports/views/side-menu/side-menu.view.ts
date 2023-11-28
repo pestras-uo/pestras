@@ -12,7 +12,7 @@ import {
   Output,
   TemplateRef,
 } from '@angular/core';
-import { FormBuilder, Validators } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { ReportsState } from '@pestras/frontend/state';
 import { ToastService } from '@pestras/frontend/ui';
 import { Report, ReportSlide } from '@pestras/shared/data-model';
@@ -23,9 +23,9 @@ import { Report, ReportSlide } from '@pestras/shared/data-model';
   styleUrls: ['./side-menu.view.scss'],
 })
 export class SideMenuView implements OnChanges {
-  readonly form = this.fb.nonNullable.group({
-    title: ['', Validators.required],
-    data_store: [''],
+  readonly form = new FormGroup({
+    title: new FormControl<string>('', { nonNullable: true, validators: Validators.required }),
+    data_store: new FormControl<string | null>(null),
   });
 
   reorder = false;
@@ -93,6 +93,7 @@ export class SideMenuView implements OnChanges {
   openDialog(tmp: TemplateRef<any>, slide?: ReportSlide) {
     if (slide) {
       this.form.controls.title.setValue(slide.title);
+      this.form.controls.data_store.setValue(slide.data_store);
     }
 
     this.dialogRef = this.dialog.open(tmp, { data: slide });

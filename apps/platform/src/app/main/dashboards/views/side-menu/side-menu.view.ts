@@ -136,7 +136,7 @@ export class SideMenuViewComponent implements OnChanges {
     if (slide) {
       this.form.controls.title.setValue(slide.title);
       this.form.controls.play_time.setValue(slide.play_time);
-      
+      this.form.controls.data_store.setValue(slide.data_store);
     }
 
     this.dialogRef = this.dialog.open(tmp, { data: slide });
