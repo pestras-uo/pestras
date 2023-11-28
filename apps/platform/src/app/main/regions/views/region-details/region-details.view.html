@@ -1,30 +1,30 @@
 <ng-container *contra="let c">
   <ng-container *ngIf="region$ | async as region">
-    <header class="bg-surface1 pi-8 border-be">
+    <header class="bg-surface1 pbs-6 pi-8 border-be">
       <div class="container fit">
-        <div class="toolbar gap-4">
+        <div class="toolbar gap-4 mbe-6">
           <div>
             <div>
               <a class="bold" routerLink="/main/regions">{{c['all']}}</a>
               <ng-container *ngFor="let p of breadcrumb">
-              / <a class="bold" routerLink="/main/regions" [queryParams]="{ region: p.serial }">{{p.name}}</a>
+                /
+                <a
+                  class="bold"
+                  routerLink="/main/regions"
+                  [queryParams]="{ region: p.serial }"
+                  >{{p.name}}</a
+                >
               </ng-container>
             </div>
-            <h1 class="weight-8">
+            <h1 class="flex gap-2 weight-8">
               {{region.name}}
+              <span class="badge badge-small badge-primary mbs-2"
+                >{{region.type}}</span
+              >
             </h1>
-            <p class="badge badge-small badge-primary mbs-2">{{region.type}}</p>
           </div>
 
           <div class="grow"></div>
-
-          <button
-            class="color-scheme-dark btn-surface1 btn-round"
-            (click)="openModal(updateCoordsModal)"
-          >
-            <i size="small" color="white" puiIcon="draw_fill"></i>
-            {{c['newCoords']}}
-          </button>
 
           <button
             class="btn-primary btn-round"
@@ -34,11 +34,24 @@
             {{c['update']}}
           </button>
         </div>
+
+        <div class="tabs-bar">
+          <h5
+            class="tab"
+            [class.active]="tab === 'google'"
+            (click)="tab = 'google'"
+          >
+            {{c['googleMaps']}}
+          </h5>
+          <h5 class="tab" [class.active]="tab === 'gis'" (click)="tab = 'gis'">
+            {{c['gisMaps']}}
+          </h5>
+        </div>
       </div>
     </header>
 
-    <main>
-      <ng-container *ngIf="theme$ | async as theme">
+    <section *ngIf="tab === 'google'">
+      <ng-container *ngIf="hemeService.theme$ | async as theme">
         <pui-google-map
           [position]="region.location"
           [zoom]="zoom"
@@ -46,7 +59,23 @@
           [polygon]="polygon"
         ></pui-google-map
       ></ng-container>
-    </main>
+
+      <button
+        class="coords-btn color-scheme-dark btn-surface1 btn-round"
+        (click)="openModal(updateCoordsModal)"
+      >
+        <i size="small" color="white" puiIcon="draw_fill"></i>
+        {{c['newCoords']}}
+      </button>
+    </section>
+
+    <pestras-gis-view *ngIf="tab === 'gis'" [region]="region"></pestras-gis-view>
+
+    <ng-template #noGisData>
+      <no-data-placeholder-widget small
+        >{{c['noDataMsg']}}</no-data-placeholder-widget
+      >
+    </ng-template>
 
     <ng-template #updateModal>
       <app-update-region

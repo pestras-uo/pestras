@@ -10,8 +10,14 @@ export * from './lib/click-outside/click-outside.directive';
 
 // drop down
 export * from './lib/dropdown/dropdown.component';
+
 // file input
 export * from './lib/file-input/file-input.component';
+
+// gis map
+export * from './lib/gis-map/types';
+export * from './lib/gis-map/gis-map.component';
+export * from './lib/gis-map/gis-map.module';
 
 // google map
 export * from './lib/google-map/google-map.service';

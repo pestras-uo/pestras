@@ -81,14 +81,14 @@
             </ng-container>
           </div>
 
-          <div class="card-body" *ngIf="theme$ | async as theme">
-            <app-chart
-              *ngIf="view.data_viz; else noDataViz"
-              [serial]="view.data_viz"
-              [dark]="theme  ==='dark'"
-              [data_store]="data.data_store"
-              [records]="data.records | clone"
-            ></app-chart>
+        <div class="card-body" *ngIf="hemeService.theme$ | async as theme">
+          <app-chart
+            *ngIf="view.data_viz; else noDataViz"
+            [serial]="view.data_viz"
+            [dark]="theme  ==='dark'"
+            [data_store]="data.data_store"
+            [records]="data.records | clone"
+          ></app-chart>
 
             <ng-template #noDataViz>
               <no-data-placeholder-widget

@@ -6,7 +6,11 @@
 }
 
 header {
-  padding-block: 32px;
   border-block-end: 1px solid var(--border1);
 }
 
+.coords-btn {
+  position: absolute;
+  inset-block-end: 24px;
+  inset-inline-end: 24px;
+}

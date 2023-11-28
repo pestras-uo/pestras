@@ -1,44 +1,47 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable, shareReplay, tap } from 'rxjs';
+import { BehaviorSubject, shareReplay, tap } from 'rxjs';
+
+export type ThemeName = 'light' | 'dark';
 
 @Injectable({
   providedIn: 'root',
 })
-export class ToggleThemeService {
-  private readonly localStorageKey = 'darkMode';
+export class ThemeService {
+  private readonly localStorageKey = 'themeName';
 
-  private isDarkModeSubject = new BehaviorSubject<boolean>(
-    this.loadDarkModeState()
+  private theme = new BehaviorSubject<ThemeName>('light');
+
+  readonly theme$ = this.theme.pipe(
+    tap((theme) => {
+      this.updateBodyClass(theme);
+      this.saveThemeState(theme);
+    }),
+    shareReplay(1)
   );
 
-  isDarkMode$: Observable<boolean> = this.isDarkModeSubject
-    .pipe(
-      tap((isDarkMode) => {
-        this.updateBodyClass(isDarkMode);
-        this.saveDarkModeState(isDarkMode);
-      }),
-      shareReplay(1)
-    );
-
-  toggleDarkMode() {
-    const isDarkMode = !this.isDarkModeSubject.value;
-    this.isDarkModeSubject.next(isDarkMode);
+  constructor() {
+    this.theme.next(this.loadThemeState());
   }
 
-  private updateBodyClass(isDarkMode: boolean) {
-    if (isDarkMode) {
+  toggleDarkMode() {
+    this.theme.next(this.theme.value === 'dark' ? 'light' : 'dark');
+  }
+
+  private updateBodyClass(theme: ThemeName) {
+    if (theme === 'dark') {
       document.body.classList.add('color-scheme-dark');
+      document.body.classList.remove('color-scheme-light');
     } else {
+      document.body.classList.add('color-scheme-light');
       document.body.classList.remove('color-scheme-dark');
     }
   }
 
-  private saveDarkModeState(isDarkMode: boolean) {
-    localStorage.setItem(this.localStorageKey, JSON.stringify(isDarkMode));
+  private saveThemeState(theme: ThemeName) {
+    localStorage.setItem(this.localStorageKey, theme);
   }
 
-  private loadDarkModeState(): boolean {
-    const savedState = localStorage.getItem(this.localStorageKey);
-    return savedState ? JSON.parse(savedState) : false;
+  private loadThemeState(): ThemeName {
+    return localStorage.getItem(this.localStorageKey) as ThemeName ?? 'light';
   }
 }

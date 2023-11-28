@@ -24,7 +24,7 @@ import {
 import {
   PuiSideDrawer,
   ToastService,
-  ToggleThemeService,
+  ThemeService,
 } from '@pestras/frontend/ui';
 import {
   DashboardsState,
@@ -68,16 +68,6 @@ export class DashboardSlideComponent implements OnChanges {
   headless = false;
   @Input()
   editable = false;
-  options$!: Observable<BaseDataViz | null>;
-
-  // @Input({ required: true })
-  // serial!: string;
-  @Input({ transform: booleanAttribute })
-  dark = false;
-
-  theme$ = this.toggleThemeService.isDarkMode$.pipe(
-    map((isdark) => (isdark ? 'dark' : 'light'))
-  );
 
   data$!: Observable<{ data_store: DataStore; records: DataRecord[] }>;
 
@@ -86,11 +76,11 @@ export class DashboardSlideComponent implements OnChanges {
     private fb: FormBuilder,
     private dialog: Dialog,
     private sideDrawer: PuiSideDrawer,
-
     private toast: ToastService,
     protected toggleThemeService: ToggleThemeService,
     private dsState: DataStoresState,
-    private recordsService: RecordsService
+    private recordsService: RecordsService,
+    protected hemeService: ThemeService
   ) {}
   @HostBinding('class.ltr')
   ltr = false;

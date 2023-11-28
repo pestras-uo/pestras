@@ -4,8 +4,8 @@
 import { Component, Input, OnChanges, TemplateRef } from '@angular/core';
 import { Region } from '@pestras/shared/data-model';
 import { RegionsState } from '@pestras/frontend/state';
-import { Observable, map, tap } from 'rxjs';
-import { PuiMapPolygonOptions, ToggleThemeService } from '@pestras/frontend/ui';
+import { Observable, tap } from 'rxjs';
+import { PuiMapPolygonOptions, ThemeService } from '@pestras/frontend/ui';
 import { Dialog, DialogRef } from '@angular/cdk/dialog';
 import { Serial } from '@pestras/shared/util';
 
@@ -18,24 +18,19 @@ export class RegionDetailsView implements OnChanges {
   private dialogRef: DialogRef | null = null;
 
   region$!: Observable<Region | null>;
-
   polygon: PuiMapPolygonOptions | null = null;
-
   breadcrumb: { name: string; serial: string; }[] = [];
-
   zoom = 13;
+  tab = 'google';
+  gisMap = '';
 
   @Input({ required: true })
   serial!: string;
 
-  theme$ = this.toggleThemeService.isDarkMode$.pipe(
-    map((isdark) => (isdark ? 'dark' : 'light'))
-  );
-
   constructor(
     private readonly state: RegionsState,
     private readonly dialog: Dialog,
-    protected toggleThemeService: ToggleThemeService
+    protected hemeService: ThemeService
   ) { }
 
   ngOnChanges(): void {
