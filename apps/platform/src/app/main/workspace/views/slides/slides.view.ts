@@ -2,21 +2,32 @@
 /* eslint-disable @angular-eslint/component-class-suffix */
 /* eslint-disable @angular-eslint/component-selector */
 import { Dialog, DialogRef } from '@angular/cdk/dialog';
-import { Component, Input, OnChanges, OnInit, TemplateRef } from '@angular/core';
+import {
+  Component,
+  Input,
+  OnChanges,
+  OnInit,
+  TemplateRef,
+} from '@angular/core';
 import { FormControl } from '@angular/forms';
-import { Workspace, WorkspaceDashboardSlide } from '@pestras/shared/data-model';
+import {
+  Workspace,
+  WorkspaceDashboardSlide,
+} from '@pestras/shared/data-model';
 import { WorkspaceState } from '@pestras/frontend/state';
 import { startWith } from 'rxjs';
 
 @Component({
   selector: 'app-slides',
   templateUrl: './slides.view.html',
-  styles: [`
-    :host {
-      display: block;
-      padding: 32px;
-    }
-  `]
+  styles: [
+    `
+      :host {
+        display: block;
+        padding: 32px;
+      }
+    `,
+  ],
 })
 export class SlidesView implements OnInit, OnChanges {
   private playTimer: any = null;
@@ -33,33 +44,27 @@ export class SlidesView implements OnInit, OnChanges {
   @Input({ required: true })
   ws!: Workspace;
 
-  constructor(
-    private state: WorkspaceState,
-    private dialog: Dialog
-  ) { }
+  constructor(private state: WorkspaceState, private dialog: Dialog) {}
 
   ngOnChanges(): void {
     this.slides = this.ws.slides.map((s, i) => ({ name: s.name, value: i }));
   }
 
   ngOnInit(): void {
-    if (this.slides.length)
-      this.select.setValue(0);
+    if (this.slides.length) this.select.setValue(0);
 
     this.select.valueChanges
       .pipe(startWith(this.select.value ?? null))
-      .subscribe(i => {
+      .subscribe((i) => {
         if (i === null) {
           this.active = null;
           this.pause();
           this.currentSlideIndex = 0;
-
         } else {
           this.currentSlideIndex = i;
           this.active = this.ws.slides[i] ?? null;
 
-          if (this.playing)
-            this.setNext();
+          if (this.playing) this.setNext();
         }
       });
   }
@@ -86,10 +91,12 @@ export class SlidesView implements OnInit, OnChanges {
     clearTimeout(this.playTimer);
 
     this.playTimer = setTimeout(() => {
-      const nextIndex = this.ws.slides.length - 1 === this.currentSlideIndex ? 0 : this.currentSlideIndex + 1;
+      const nextIndex =
+        this.ws.slides.length - 1 === this.currentSlideIndex
+          ? 0
+          : this.currentSlideIndex + 1;
 
       this.select.setValue(this.slides[nextIndex].value);
-
     }, 60 * 1000);
   }
 
@@ -106,17 +113,21 @@ export class SlidesView implements OnInit, OnChanges {
   removeSlide(serial: string) {
     this.preloader = true;
 
-    const index = this.ws.slides.length === 1 ? null : (this.ws.slides.length - 1 === this.currentSlideIndex ? 0 : this.currentSlideIndex + 1);
+    const index =
+      this.ws.slides.length === 1
+        ? null
+        : this.ws.slides.length - 1 === this.currentSlideIndex
+        ? 0
+        : this.currentSlideIndex + 1;
 
     this.select.setValue(index);
 
-    this.state.removeSlide(serial)
-      .subscribe({
-        next: () => this.closeDialog(),
-        error: e => {
-          console.error(e);
-          this.preloader = false;
-        }
-      });
+    this.state.removeSlide(serial).subscribe({
+      next: () => this.closeDialog(),
+      error: (e) => {
+        console.error(e);
+        this.preloader = false;
+      },
+    });
   }
 }

@@ -36,11 +36,7 @@
       [cdkDragDisabled]="!reorder"
       (click)="selects.emit(slide.serial)"
     >
-      <button
-        class="btn-tiny btn-icon btn-round"
-        cdkDragHandle
-        *ngIf="reorder"
-      >
+      <button class="btn-tiny btn-icon btn-round" cdkDragHandle *ngIf="reorder">
         <i size="tiny" puiIcon="drag"></i>
       </button>
 
@@ -78,6 +74,12 @@
         <div class="fc mbe-6">
           <input type="text" id="board-title" formControlName="title" />
         </div>
+        <app-data-store-input
+          class=""
+          [fcClass]="fcClass"
+          [blueprint]="blueprint"
+          formControlName="data_store"
+        ></app-data-store-input>
       </div>
 
       <div class="card-footer">

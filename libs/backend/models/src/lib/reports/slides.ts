@@ -1,8 +1,7 @@
-import { EntityTypes, ReportSlide, User } from "@pestras/shared/data-model";
+import { EntityTypes, ReportSlide, User } from '@pestras/shared/data-model';
 import { Serial } from '@pestras/shared/util';
-import { ReportsModel } from ".";
-import { HttpError, HttpCode } from "@pestras/backend/util";
-
+import { ReportsModel } from '.';
+import { HttpError, HttpCode } from '@pestras/backend/util';
 
 export async function addSlide(
   this: ReportsModel,
@@ -10,21 +9,24 @@ export async function addSlide(
   title: string,
   issuer: User
 ) {
-
   if (!(await this.exists(serial)))
     throw new HttpError(HttpCode.NOT_FOUND, 'reportNotFound');
 
   const date = new Date();
   const slide: ReportSlide = {
-    serial: Serial.gen("TAB"),
+    serial: Serial.gen('TAB'),
     title,
     views_order: [],
-  }
+    data_store: '',
+  };
 
-  await this.col.updateOne({ serial }, {
-    $push: { slides: slide, slides_order: slide.serial },
-    $set: { last_modified: date }
-  });
+  await this.col.updateOne(
+    { serial },
+    {
+      $push: { slides: slide, slides_order: slide.serial },
+      $set: { last_modified: date },
+    }
+  );
 
   this.channel.emitActivity({
     issuer: issuer.serial,
@@ -32,13 +34,11 @@ export async function addSlide(
     method: 'addSlide',
     serial,
     entity: EntityTypes.REPORT,
-    payload: { slide }
+    payload: { slide },
   });
 
   return { slide, date };
 }
-
-
 
 export async function updateSlidesOrder(
   this: ReportsModel,
@@ -48,7 +48,10 @@ export async function updateSlidesOrder(
 ) {
   const date = new Date();
 
-  await this.col.updateOne({ serial }, { $set: { slides_order: input, last_modified: date } });
+  await this.col.updateOne(
+    { serial },
+    { $set: { slides_order: input, last_modified: date } }
+  );
 
   this.channel.emitActivity({
     create_date: date,
@@ -56,14 +59,11 @@ export async function updateSlidesOrder(
     method: 'updateSlidesOrder',
     serial,
     entity: EntityTypes.REPORT,
-    payload: { slides_order: input }
+    payload: { slides_order: input },
   });
 
   return date;
 }
-
-
-
 
 export async function updateSlide(
   this: ReportsModel,
@@ -72,18 +72,20 @@ export async function updateSlide(
   title: string,
   issuer: User
 ) {
-
   if (!(await this.exists(serial)))
     throw new HttpError(HttpCode.NOT_FOUND, 'reportNotFound');
 
   const date = new Date();
 
-  await this.col.updateOne({ serial, 'slides.serial': slide }, {
-    $set: {
-      'slides.$.title': title,
-      last_modified: date
+  await this.col.updateOne(
+    { serial, 'slides.serial': slide },
+    {
+      $set: {
+        'slides.$.title': title,
+        last_modified: date,
+      },
     }
-  });
+  );
 
   this.channel.emitActivity({
     issuer: issuer.serial,
@@ -91,13 +93,11 @@ export async function updateSlide(
     method: 'updateSlide',
     serial,
     entity: EntityTypes.REPORT,
-    payload: { serial: slide, change: { title } }
+    payload: { serial: slide, change: { title } },
   });
 
   return date;
 }
-
-
 
 export async function removeSlide(
   this: ReportsModel,
@@ -105,16 +105,22 @@ export async function removeSlide(
   slide: string,
   issuer: User
 ) {
-
   if (!(await this.exists(serial)))
     throw new HttpError(HttpCode.NOT_FOUND, 'reportNotFound');
 
   const date = new Date();
 
-  await this.col.updateOne({ serial }, {
-    $pull: { slides: { serial: slide }, slides_order: slide, views: { slide } },
-    $set: { last_modified: date }
-  });
+  await this.col.updateOne(
+    { serial },
+    {
+      $pull: {
+        slides: { serial: slide },
+        slides_order: slide,
+        views: { slide },
+      },
+      $set: { last_modified: date },
+    }
+  );
 
   this.channel.emitActivity({
     issuer: issuer.serial,
@@ -122,7 +128,7 @@ export async function removeSlide(
     method: 'removeSlide',
     serial,
     entity: EntityTypes.REPORT,
-    payload: { serial: slide }
+    payload: { serial: slide },
   });
 
   return date;

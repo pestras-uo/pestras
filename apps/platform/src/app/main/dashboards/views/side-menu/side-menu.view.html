@@ -46,11 +46,7 @@
       [cdkDragDisabled]="!reorder"
       (click)="selectSlide(i)"
     >
-      <button
-        class="btn-tiny btn-icon btn-round"
-        cdkDragHandle
-        *ngIf="reorder"
-      >
+      <button class="btn-tiny btn-icon btn-round" cdkDragHandle *ngIf="reorder">
         <i size="tiny" puiIcon="drag"></i>
       </button>
 
@@ -80,7 +76,7 @@
 
   <ng-template #slideForm let-slide>
     <form
-      class="card w-10 shadow-6"
+      class="card w-15 shadow-6"
       [formGroup]="form"
       (ngSubmit)="submit(c, slide?.serial)"
     >
@@ -97,7 +93,8 @@
           >{{c['playTime']}}: {{form.controls.play_time.value}}
           {{c['_minutes']}}</label
         >
-        <div class="fc">
+
+        <div class="fc mbe-6">
           <input
             type="range"
             min="1"
@@ -107,6 +104,12 @@
             formControlName="play_time"
           />
         </div>
+        <app-data-store-input
+          class="mb-3"
+          [fcClass]="fcClass"
+          [blueprint]="blueprint"
+          formControlName="data_store"
+        ></app-data-store-input>
       </div>
 
       <div class="card-footer">

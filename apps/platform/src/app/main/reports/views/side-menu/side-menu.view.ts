@@ -4,7 +4,14 @@
 import { Dialog, DialogRef } from '@angular/cdk/dialog';
 import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
 import { Location } from '@angular/common';
-import { Component, EventEmitter, Input, OnChanges, Output, TemplateRef } from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  Input,
+  OnChanges,
+  Output,
+  TemplateRef,
+} from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { ReportsState } from '@pestras/frontend/state';
 import { ToastService } from '@pestras/frontend/ui';
@@ -13,12 +20,12 @@ import { Report, ReportSlide } from '@pestras/shared/data-model';
 @Component({
   selector: 'app-side-menu',
   templateUrl: './side-menu.view.html',
-  styleUrls: ['./side-menu.view.scss']
+  styleUrls: ['./side-menu.view.scss'],
 })
 export class SideMenuView implements OnChanges {
-
   readonly form = this.fb.nonNullable.group({
-    title: ['', Validators.required]
+    title: ['', Validators.required],
+    data_store: [''],
   });
 
   reorder = false;
@@ -32,6 +39,11 @@ export class SideMenuView implements OnChanges {
   @Input({ required: true })
   view!: string;
 
+  @Input()
+  fcClass = '';
+  @Input()
+  blueprint: string | null = null;
+
   @Output()
   selects = new EventEmitter<string>();
 
@@ -41,12 +53,12 @@ export class SideMenuView implements OnChanges {
     private dialog: Dialog,
     private toast: ToastService,
     protected loc: Location
-  ) { }
+  ) {}
 
   ngOnChanges(): void {
     this.slidesOrder = [...this.report.slides_order];
     this.slides = this.slidesOrder
-      .map(o => this.report.slides.find(t => t.serial === o))
+      .map((o) => this.report.slides.find((t) => t.serial === o))
       .filter(Boolean) as ReportSlide[];
   }
 
@@ -56,30 +68,32 @@ export class SideMenuView implements OnChanges {
 
     if (prevOrder.some((el, i) => el !== this.slidesOrder[i])) {
       this.slides = this.slidesOrder
-        .map(o => this.report.slides.find(t => t.serial === o))
+        .map((o) => this.report.slides.find((t) => t.serial === o))
         .filter(Boolean) as ReportSlide[];
-        
+
       this.updateOrder();
     }
   }
 
   updateOrder() {
     this.preloader = true;
-    this.state.updateSlidesOrder(this.report.serial, this.report.slides_order)
+    this.state
+      .updateSlidesOrder(this.report.serial, this.report.slides_order)
       .subscribe({
         next: () => {
           this.preloader = false;
         },
-        error: e => {
+        error: (e) => {
           console.error(e);
           this.preloader = false;
-        }
+        },
       });
   }
 
   openDialog(tmp: TemplateRef<any>, slide?: ReportSlide) {
-    if (slide)
+    if (slide) {
       this.form.controls.title.setValue(slide.title);
+    }
 
     this.dialogRef = this.dialog.open(tmp, { data: slide });
   }
@@ -101,50 +115,54 @@ export class SideMenuView implements OnChanges {
   }
 
   addSlide(c: Record<string, any>) {
-    this.state.addSlide(this.report.serial, this.form.getRawValue())
-      .subscribe({
-        next: () => {
-          this.toast.msg(c['success'].default, { type: 'success' });
-          this.closeDialog();
-        },
-        error: e => {
-          console.error(e);
-
-          this.toast.msg(c['errors'][e?.error] || c['errors'].default, { type: 'error' });
-          this.preloader = false;
-        }
-      });
+    this.state.addSlide(this.report.serial, this.form.getRawValue()).subscribe({
+      next: () => {
+        this.toast.msg(c['success'].default, { type: 'success' });
+        this.closeDialog();
+      },
+      error: (e) => {
+        console.error(e);
+        this.toast.msg(c['errors'][e?.error] || c['errors'].default, {
+          type: 'error',
+        });
+        this.preloader = false;
+      },
+    });
   }
 
   updateSlide(c: Record<string, any>, serial: string) {
-    this.state.updateSlide(this.report.serial, serial, this.form.getRawValue())
+    this.state
+      .updateSlide(this.report.serial, serial, this.form.getRawValue())
       .subscribe({
         next: () => {
           this.toast.msg(c['success'].default, { type: 'success' });
           this.closeDialog();
         },
-        error: e => {
+        error: (e) => {
           console.error(e);
 
-          this.toast.msg(c['errors'][e?.error] || c['errors'].default, { type: 'error' });
+          this.toast.msg(c['errors'][e?.error] || c['errors'].default, {
+            type: 'error',
+          });
           this.preloader = false;
-        }
+        },
       });
   }
 
   removeSlide(c: Record<string, any>, serial: string) {
-    this.state.removeSlide(this.report.serial, serial)
-      .subscribe({
-        next: () => {
-          this.toast.msg(c['success'].default, { type: 'success' });
-          this.closeDialog();
-        },
-        error: e => {
-          console.error(e);
+    this.state.removeSlide(this.report.serial, serial).subscribe({
+      next: () => {
+        this.toast.msg(c['success'].default, { type: 'success' });
+        this.closeDialog();
+      },
+      error: (e) => {
+        console.error(e);
 
-          this.toast.msg(c['errors'][e?.error] || c['errors'].default, { type: 'error' });
-          this.preloader = false;
-        }
-      });
+        this.toast.msg(c['errors'][e?.error] || c['errors'].default, {
+          type: 'error',
+        });
+        this.preloader = false;
+      },
+    });
   }
 }

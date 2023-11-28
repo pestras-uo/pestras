@@ -41,7 +41,7 @@
 
   <ng-container *ngIf="active else noData">
     <app-dashboard-slide
-      *ngIf="active.dashboard | dashboard | async as d"
+      *ngIf="active.dashboard | dashboard | async as d "
       [dashboard]="d"
       [slideSerial]="active.slide"
       [headless]="true"

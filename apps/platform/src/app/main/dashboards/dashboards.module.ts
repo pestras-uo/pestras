@@ -34,6 +34,8 @@ import { SessionFeatureModule } from '@pestras/frontend/features/session';
 import { MainPageComponent } from './main/main.page';
 import { EntityAccessFeatureModule } from '@pestras/frontend/features/entity-access';
 import { AppBreadCrumbModule } from '@pestras/frontend/widgets/bread-crumb';
+import { DataStoresFeatureModule } from '@pestras/frontend/features/data-stores';
+import { TopicsFeatureModule } from '@pestras/frontend/features/topics';
 
 @NgModule({
   declarations: [
@@ -61,6 +63,7 @@ import { AppBreadCrumbModule } from '@pestras/frontend/widgets/bread-crumb';
     PuiInfiniteScroll,
     PuiTableModule,
     // Widgets
+    AppBreadCrumbModule,
     QuillModule,
     TBgWidget,
     NoDataPlaceholderWidget,
@@ -75,8 +78,9 @@ import { AppBreadCrumbModule } from '@pestras/frontend/widgets/bread-crumb';
     UsersGroupsFeatureModule,
     SessionFeatureModule,
     EntityAccessFeatureModule,
+    DataStoresFeatureModule,
+    TopicsFeatureModule,
 
-    AppBreadCrumbModule,
   ],
 })
 export class DashboardsModule {}

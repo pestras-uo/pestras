@@ -3,12 +3,11 @@ export enum ReportViewType {
   IMAGE = 'image',
   VIDEO = 'video',
   ANALYSIS = 'analysis',
-  DATA_VIZ = 'dataViz'
+  DATA_VIZ = 'dataViz',
 }
 
-
 export interface ReportView {
-  serial: string;
+    serial: string;
   slide: string;
   title: string | null;
   sub_title: string | null;
@@ -20,18 +19,18 @@ export interface ReportSlide {
   serial: string;
   title: string;
   views_order: string[];
+  data_store: string | null;
 }
-
 
 export interface Report {
   serial: string;
   topic: string;
-  
+
   /** grant access to specific users */
   collaborators: string[];
 
   title: string;
-  
+
   slides: ReportSlide[];
   slides_order: string[];
 

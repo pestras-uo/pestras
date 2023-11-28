@@ -25,6 +25,7 @@ import { UsersFeatureModule } from '@pestras/frontend/features/users';
 import { RegionsFeatureModule } from '@pestras/frontend/features/regions';
 import { TopicsFeatureModule } from '@pestras/frontend/features/topics';
 import { SessionFeatureModule } from '@pestras/frontend/features/session';
+import { DataStoresFeatureModule } from '@pestras/frontend/features/data-stores';
 
 @NgModule({
   declarations: [WorkspacePage, PinsView, SlidesView, StatsView],
@@ -35,7 +36,6 @@ import { SessionFeatureModule } from '@pestras/frontend/features/session';
     ReactiveFormsModule,
     // Util
     ContraModule,
-    
     DialogModule,
     // Pui
     PuiPreloaderModule,
@@ -54,6 +54,7 @@ import { SessionFeatureModule } from '@pestras/frontend/features/session';
     ReportsFeaturesModule,
     // Widgets
     NoDataPlaceholderWidget,
+    DataStoresFeatureModule,
   ],
 })
 export class WorkspaceModule {}
