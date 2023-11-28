@@ -47,49 +47,48 @@
         cdkDropList
         (cdkDropListDropped)="drop($event)"
       >
-        <div
-          *ngFor="let view of views; trackBy: trackBySerial"
-          class="card overflow-visible card-small"
-          [class]="'x' + view.size.x + ' y' + view.size.y"
-          cdkDragBoundary=".views"
-          cdkDrag
-          [cdkDragDisabled]="!reorder"
-        >
-          <div class="card-header">
-            <button
-              *ngIf="reorder"
-              cdkDragHandle
-              class="btn-icon btn-tiny btn-round"
-            >
-              <i size="tiny" puiIcon="drag"></i>
-            </button>
-            <h4>{{view.title}}</h4>
-            <div class="grow"></div>
-            <ng-container *ngIf="editable">
+        <ng-container *ngIf="themeService.theme$ | async as theme">
+          <div
+            *ngFor="let view of views; trackBy: trackBySerial"
+            class="card overflow-visible card-small"
+            [class]="'x' + view.size.x + ' y' + view.size.y"
+            cdkDragBoundary=".views"
+            cdkDrag
+            [cdkDragDisabled]="!reorder"
+          >
+            <div class="card-header">
               <button
+                *ngIf="reorder"
+                cdkDragHandle
                 class="btn-icon btn-tiny btn-round"
-                (click)="openDialog(updateViewTmp, view)"
               >
-                <i size="tiny" puiIcon="edit"></i>
+                <i size="tiny" puiIcon="drag"></i>
               </button>
-              <button
-                class="btn-icon btn-tiny btn-round"
-                (click)="openDialog(removeViewTmp, view)"
-              >
-                <i size="tiny" color="danger" puiIcon="delete"></i>
-              </button>
-            </ng-container>
-          </div>
-
-        <div class="card-body" *ngIf="hemeService.theme$ | async as theme">
-          <app-chart
-            *ngIf="view.data_viz; else noDataViz"
-            [serial]="view.data_viz"
-            [dark]="theme  ==='dark'"
-            [data_store]="data.data_store"
-            [records]="data.records | clone"
-          ></app-chart>
-
+              <h4>{{view.title}}</h4>
+              <div class="grow"></div>
+              <ng-container *ngIf="editable">
+                <button
+                  class="btn-icon btn-tiny btn-round"
+                  (click)="openDialog(updateViewTmp, view)"
+                >
+                  <i size="tiny" puiIcon="edit"></i>
+                </button>
+                <button
+                  class="btn-icon btn-tiny btn-round"
+                  (click)="openDialog(removeViewTmp, view)"
+                >
+                  <i size="tiny" color="danger" puiIcon="delete"></i>
+                </button>
+              </ng-container>
+            </div>
+            <app-chart
+              class="card-body"
+              *ngIf="view.data_viz; else noDataViz"
+              [serial]="view.data_viz"
+              [dark]="theme  ==='dark'"
+              [data_store]="data.data_store"
+              [records]="data.records | clone"
+            ></app-chart>
             <ng-template #noDataViz>
               <no-data-placeholder-widget
                 [actionName]="c['addDataViz']"
@@ -99,7 +98,7 @@
               >
             </ng-template>
           </div>
-        </div>
+        </ng-container>
       </main>
 
       <ng-template #noData>

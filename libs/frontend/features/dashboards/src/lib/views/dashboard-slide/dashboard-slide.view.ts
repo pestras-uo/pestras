@@ -9,11 +9,9 @@ import {
   Input,
   OnChanges,
   TemplateRef,
-  booleanAttribute,
 } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import {
-  BaseDataViz,
   Dashboard,
   DashboardSlide,
   DashboardSlideView,
@@ -77,7 +75,7 @@ export class DashboardSlideComponent implements OnChanges {
     private dialog: Dialog,
     private sideDrawer: PuiSideDrawer,
     private toast: ToastService,
-    protected toggleThemeService: ToggleThemeService,
+    protected themeService: ThemeService,
     private dsState: DataStoresState,
     private recordsService: RecordsService,
     protected hemeService: ThemeService
