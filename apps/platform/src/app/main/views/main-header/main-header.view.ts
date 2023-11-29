@@ -2,7 +2,7 @@
 /* eslint-disable @angular-eslint/component-class-suffix */
 /* eslint-disable @angular-eslint/component-selector */
 import { Dialog, DialogRef } from '@angular/cdk/dialog';
-import { Component, HostBinding, TemplateRef } from '@angular/core';
+import { Component, TemplateRef } from '@angular/core';
 import { FontSizeService } from '@pestras/frontend/ui';
 import { Role } from '@pestras/shared/data-model';
 
@@ -15,6 +15,7 @@ export class MainHeaderView {
   readonly roles = Role;
 
   dialogRef: DialogRef | null = null;
+  
 
   constructor(
     private dialog: Dialog,

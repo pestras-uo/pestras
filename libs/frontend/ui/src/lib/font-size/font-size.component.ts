@@ -1,5 +1,4 @@
 /* eslint-disable @angular-eslint/component-selector */
-
 import {
   Component,
   EventEmitter,
@@ -29,6 +28,12 @@ import { FontSizeService } from './font-size.service';
       >
         <i size="small" puiIcon="add"></i>
       </button>
+      <button
+        class="btn-success btn-tiny btn-round btn-icon"
+        (click)="resetFontSize()"
+      >
+        <i size="small" puiIcon="restart"></i>
+      </button>
     </div>
   `,
   styles: [
@@ -44,8 +49,8 @@ import { FontSizeService } from './font-size.service';
 export class FontSizeComponent implements OnInit {
   @Output() fontSizeChanged = new EventEmitter<number>();
   @Input() defaultFontSize = 14;
-  @Input() maxFontSize = 20;
-  @Input() minFontSize = 10;
+  @Input() maxFontSize = 30;
+  @Input() minFontSize = 20;
 
   @Input({ transform: booleanAttribute })
   dark = false;
@@ -58,6 +63,12 @@ export class FontSizeComponent implements OnInit {
     this.currentFontSize =
       this.fontService.getFontSize() || this.defaultFontSize;
     this.updateFontSize();
+
+    this.fontService.fontSizeChanges().subscribe((fontSize: number) => {
+      this.currentFontSize = fontSize;
+      localStorage.removeItem('fontSize');
+      this.updateFontSize();
+    });
   }
 
   increaseFontSize(): void {
@@ -74,6 +85,10 @@ export class FontSizeComponent implements OnInit {
     }
   }
 
+  resetFontSize(): void {
+    this.fontService.resetFontSize();
+  }
+
   isMaxFontSize(): boolean {
     return this.currentFontSize >= this.maxFontSize;
   }
@@ -81,15 +96,14 @@ export class FontSizeComponent implements OnInit {
   isMinFontSize(): boolean {
     return this.currentFontSize <= this.minFontSize;
   }
-
   private updateFontSize(): void {
     this.fontService.setFontSize(this.currentFontSize);
 
-    const allElements = document.querySelectorAll('*');
-    allElements.forEach((element: Node) => {
-      if (element instanceof HTMLElement) {
-        element.style.fontSize = `${this.currentFontSize}px`;
-      }
+    const textElements = document.querySelectorAll(
+      'p, span, h1, h2, h3, h4, h5, h6, a, li, td, th, label, button, input, textarea'
+    );
+    textElements.forEach((element: any) => {
+      element.style.fontSize = `${this.currentFontSize}px`;
     });
 
     this.emitFontSizeChanged();
