@@ -20,7 +20,7 @@ import {
   ReportView,
   ReportViewType,
 } from '@pestras/shared/data-model';
-import { ToastService, PuiSideDrawer } from '@pestras/frontend/ui';
+import { ToastService, PuiSideDrawer, ThemeService } from '@pestras/frontend/ui';
 import {
   DataStoresState,
   RecordsService,
@@ -87,6 +87,7 @@ export class ReportSlideView implements OnChanges {
     private readonly fb: FormBuilder,
     private readonly toast: ToastService,
     private readonly recordService: RecordsService,
+    protected readonly themeService: ThemeService,
     private dsState: DataStoresState
   ) {}
 
