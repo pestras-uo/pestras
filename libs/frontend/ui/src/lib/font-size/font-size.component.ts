@@ -15,42 +15,36 @@ import { FontSizeService } from './font-size.service';
   template: `
     <div class="fontsize">
       <button
-        class="btn-icon btn-round"
+        class="btn-danger btn-round btn-tiny btn-icon"
         (click)="decreaseFontSize()"
         [disabled]="isMinFontSize()"
       >
-        -
+        <i size="small" puiIcon="minus"></i>
       </button>
 
       <button
-        class="btn-icon btn-round"
+        class="btn-primary btn-tiny btn-round btn-icon"
         (click)="increaseFontSize()"
         [disabled]="isMaxFontSize()"
       >
-        +
+        <i size="small" puiIcon="add"></i>
       </button>
     </div>
   `,
   styles: [
     `
-      .reset-button {
-        margin-left: 10px;
-      }
       .fontsize {
         display: flex;
         align-items: center;
+        gap: 4px;
       }
-      button {
-        margin: 0 5px;
-      }
-      
     `,
   ],
 })
 export class FontSizeComponent implements OnInit {
   @Output() fontSizeChanged = new EventEmitter<number>();
   @Input() defaultFontSize = 14;
-  @Input() maxFontSize = 30;
+  @Input() maxFontSize = 20;
   @Input() minFontSize = 10;
 
   @Input({ transform: booleanAttribute })
@@ -68,14 +62,14 @@ export class FontSizeComponent implements OnInit {
 
   increaseFontSize(): void {
     if (this.currentFontSize < this.maxFontSize) {
-      this.currentFontSize += 2;
+      this.currentFontSize += 6;
       this.updateFontSize();
     }
   }
 
   decreaseFontSize(): void {
     if (this.currentFontSize > this.minFontSize) {
-      this.currentFontSize -= 2;
+      this.currentFontSize -= 6;
       this.updateFontSize();
     }
   }

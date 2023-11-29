@@ -26,21 +26,17 @@
       <i size="small" puiIcon="paint"></i>
     </button>
     <pui-dropdown #paintDD [origin]="paintBtn">
-      <div class="card card-small block shadow-4 maxh-12 overflow-auto">
+      <div class="card card-small w-7 block shadow-4 maxh-12 overflow-auto">
         <div class="card-body">
-          <div class="card card-small card-clear">
-            <div class="card-header pi-0 actions-on-hover">
-              <h4>{{c['theme']}}</h4>
-              <div class="grow"></div>
-              <toggle-theme></toggle-theme>
-            </div>
+          <div class="toolbar">
+            <h4>{{c['style']}}</h4>
+            <div class="grow"></div>
+            <toggle-theme></toggle-theme>
           </div>
-          <div class="card card-small card-clear">
-            <div class="card-header pi-0 actions-on-hover">
-              <h4>{{c['fontsizeControl']}}</h4>
-              <div class="grow"></div>
-              <pui-font-size></pui-font-size>
-            </div>
+          <div class="toolbar">
+            <h4>{{c['fontsizeControl']}}</h4>
+            <div class="grow"></div>
+            <pui-font-size></pui-font-size>
           </div>
         </div>
       </div>

@@ -59,8 +59,8 @@
   "remark": "Remark",
   "addRemark": "Add Remark",
   "deleteRecord": "Delete Record",
-  "fontsizeControl": "Size",
-  "accessbility": "accessbility",
+  "fontsizeControl": "Font Size",
+  "style": "style",
 
   "colorsTheme": "Colors Theme",
   "colorsThemeList": [{
