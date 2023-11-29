@@ -541,8 +541,7 @@
       "value": 12
     }
   ],
-  "chartWidthSizes": [
-    {
+  "chartWidthSizes": [{
       "name": "ربع الشاشة",
       "value": 3
     },
@@ -577,8 +576,7 @@
       "value": 4
     }
   ],
-  "chartHeightSizes": [
-    {
+  "chartHeightSizes": [{
       "name": "نصف الشاشة",
       "value": 2
     },
@@ -1334,8 +1332,7 @@
   ],
   "updateInterval": "فترات التحديث",
   "intervals": "الفترات",
-  "intervalsList": [
-    {
+  "intervalsList": [{
       "name": "لا يوجد",
       "value": 0
     },
@@ -1808,6 +1805,9 @@
   "group": "المجموعة",
   "addNewTopic": "إضافة موضوع جديد",
   "theme": "المحور",
+  "style": "تصميم",
+  "fontsizeControl": "حجم الخط",
+  "accessbility": "الإمكانية",
   "region": "المنطقة",
   "summary": "الملخص",
   "branchOf": "متفرع من",

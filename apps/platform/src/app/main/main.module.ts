@@ -10,6 +10,7 @@ import {
   PuiIcon,
   PuiPreloaderModule,
   ToggleThemeModule,
+  FontSizeModule,
 } from '@pestras/frontend/ui';
 import { SessionFeatureModule } from '@pestras/frontend/features/session';
 import { ContraModule } from '@pestras/frontend/util/contra';
@@ -41,6 +42,8 @@ import { WorkspaceFeatureModule } from '@pestras/frontend/features/workspace';
     ProfileModule,
 
     ToggleThemeModule,
+
+    FontSizeModule,
   ],
 })
 export class MainModule {}

@@ -6,15 +6,15 @@ import { ThemeService } from './toggle-theme.service';
 
 @Component({
   selector: 'toggle-theme',
-  templateUrl: './toggle-theme.component.html'
+  templateUrl: './toggle-theme.component.html',
 })
 export class ToggleTheme {
   readonly icons = {
-    light: '🌙',
-    dark: '☀️'
+    light: '☀️',
+    dark: '🌙',
   };
 
-  constructor(protected themeService: ThemeService) { }
+  constructor(protected themeService: ThemeService) {}
 
   toggleDarkMode(): void {
     this.themeService.toggleDarkMode();

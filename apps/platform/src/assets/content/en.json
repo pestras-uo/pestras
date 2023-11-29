@@ -29,8 +29,7 @@
   "editRelation": "Update Relation",
   "addRelation": "Add Relation",
   "relationOptions": "Relation Options",
-  "categoryTypesList": [
-    {
+  "categoryTypesList": [{
       "name": "Nominal",
       "value": "nominal"
     },
@@ -60,9 +59,11 @@
   "remark": "Remark",
   "addRemark": "Add Remark",
   "deleteRecord": "Delete Record",
+  "fontsizeControl": "Font Size",
+  "style": "style",
+
   "colorsTheme": "Colors Theme",
-  "colorsThemeList": [
-    {
+  "colorsThemeList": [{
       "name": "Light",
       "value": "light"
     },
@@ -78,8 +79,7 @@
   "review": "Review",
   "step": "Step",
   "algo": "Algorithm",
-  "algoList": [
-    {
+  "algoList": [{
       "name": "Approval: Any - Rejection: Any",
       "value": "any"
     },
@@ -115,8 +115,7 @@
   "steps": "Steps",
   "defaultAction": "Default Action",
   "defaultActionInfo": "In case user exceeded review days limit",
-  "defaultActionList": [
-    {
+  "defaultActionList": [{
       "name": "Approve",
       "value": "approve"
     },
@@ -200,8 +199,7 @@
   "clientName": "Client Name",
   "clientsList": "Clients List",
   "recordsPerPage": "Records Count per Page",
-  "contentViewTypes": [
-    {
+  "contentViewTypes": [{
       "name": "Rich Text",
       "value": "richText"
     },
@@ -210,8 +208,7 @@
       "value": "image"
     }
   ],
-  "reportViewTypes": [
-    {
+  "reportViewTypes": [{
       "name": "Rich Text",
       "value": "richText"
     },
@@ -225,8 +222,7 @@
     }
   ],
   "calcFields": "Calculate Fields",
-  "dataVizStages": [
-    {
+  "dataVizStages": [{
       "name": "Filter",
       "value": "filter"
     },
@@ -261,8 +257,7 @@
   "groupFields": "Group Fields",
   "logical": "Logical",
   "groupMethod": "Group Method",
-  "statisticsMethods": [
-    {
+  "statisticsMethods": [{
       "name": "First Value",
       "value": "first"
     },
@@ -334,8 +329,7 @@
   "_minutes": "minutes",
   "showInternalRegions": "Show Internal Regions",
   "selectMap": "Select Map",
-  "dataVizFilterOperators": [
-    {
+  "dataVizFilterOperators": [{
       "name": "equals",
       "value": "$eq"
     },
@@ -392,8 +386,7 @@
   "polynomialOrder": "Polynomial Order",
   "useRegression": "Enable Regression",
   "regressionType": "Regression Type",
-  "regressionTypes": [
-    {
+  "regressionTypes": [{
       "name": "Linear",
       "value": "linear"
     },
@@ -419,8 +412,7 @@
   "valueField": "Value Field",
   "regionField": "Region Field",
   "mapType": "Map Type",
-  "mapTypesList": [
-    {
+  "mapTypesList": [{
       "name": "Regions",
       "value": "regions"
     },
@@ -435,8 +427,7 @@
   ],
   "area": "Area Chart",
   "markPoints": "Mark Points",
-  "markPointsList": [
-    {
+  "markPointsList": [{
       "name": "Average",
       "value": "average"
     },
@@ -450,8 +441,7 @@
     }
   ],
   "markLines": "Mark Lines",
-  "markLinesList": [
-    {
+  "markLinesList": [{
       "name": "Average",
       "value": "average"
     },
@@ -468,8 +458,7 @@
   "colorsRange": "Colors Range",
   "sizeField": "Size Field",
   "nameField": "Naming Field",
-  "chartTypes": [
-    {
+  "chartTypes": [{
       "name": "Bar / Column",
       "value": "bar"
     },
@@ -525,8 +514,7 @@
   "deleteView": "Delete View",
   "viewSize": "View Size",
   "width": "Width",
-  "viewWidthSizes": [
-    {
+  "viewWidthSizes": [{
       "name": "Quarter of Screen Width",
       "value": 3
     },
@@ -551,8 +539,7 @@
       "value": 12
     }
   ],
-  "chartWidthSizes": [
-    {
+  "chartWidthSizes": [{
       "name": "Quarter of Screen Width",
       "value": 3
     },
@@ -570,8 +557,7 @@
     }
   ],
   "height": "Height",
-  "viewHeightSizes": [
-    {
+  "viewHeightSizes": [{
       "name": "Quarter of Screen Height",
       "value": 1
     },
@@ -588,8 +574,7 @@
       "value": 4
     }
   ],
-  "chartHeightSizes": [
-    {
+  "chartHeightSizes": [{
       "name": "Half of Screen Height",
       "value": 2
     },
@@ -603,8 +588,7 @@
   "viewSettingsInfo": "Select Input fields and visualizing configutations",
   "viewDetails": "View Detials",
   "viewDetailsInfo": "Choose title, data srouce and view type",
-  "dataVizTypes": [
-    {
+  "dataVizTypes": [{
       "name": "Categorical",
       "value": "categorical"
     },
@@ -711,8 +695,7 @@
   "pestras": "PESTRAS",
   "mapFields": "Unify Fields",
   "welcomeMsg": "Strategic planning, risk managment, KPIs, data Analysis and more all in one platform.",
-  "aggrStages": [
-    {
+  "aggrStages": [{
       "name": "Bucket Field",
       "value": "bucket",
       "desc": "يصنف المستندات الواردة إلى عدد محدد من المجموعات ، تسمى الحاويات ، بناءً على تعبير محدد"
@@ -785,8 +768,7 @@
   ],
   "outputs": "Outputs",
   "chooseField": "Choose Field",
-  "createFieldOptions": [
-    {
+  "createFieldOptions": [{
       "name": "Manual",
       "value": 1
     },
@@ -799,8 +781,7 @@
       "value": 3
     }
   ],
-  "setStageOperations": [
-    {
+  "setStageOperations": [{
       "name": "Convert",
       "value": "convert"
     },
@@ -833,8 +814,7 @@
       "value": "switch"
     }
   ],
-  "fillOptions": [
-    {
+  "fillOptions": [{
       "name": "value",
       "value": null
     },
@@ -847,8 +827,7 @@
       "value": "locf"
     }
   ],
-  "orderOptions": [
-    {
+  "orderOptions": [{
       "name": "Descending",
       "value": -1
     },
@@ -861,8 +840,7 @@
   "roundPlace": "Round Place",
   "onNullValue": "On Null Input Value",
   "onErrorValue": "On Error Value",
-  "convertOptionTypes": [
-    {
+  "convertOptionTypes": [{
       "name": "Integer",
       "value": "int"
     },
@@ -982,8 +960,7 @@
   "cumulationEnd": "Cumulation End",
   "partitions": "Partitions",
   "partition": "Partition",
-  "cumulateOperations": [
-    {
+  "cumulateOperations": [{
       "name": "Sumation",
       "value": "sum"
     },
@@ -1028,8 +1005,7 @@
   "maximum": "Maximum",
   "omit": "Omit Record",
   "allFields": "All Fields",
-  "castOptions": [
-    {
+  "castOptions": [{
       "name": "Text",
       "value": "string"
     },
@@ -1326,8 +1302,7 @@
   "manualEntry": "Manual Entry",
   "aggregational": "Aggregational",
   "aggregationSettings": "Aggregation Settings",
-  "dataStoresTypes": [
-    {
+  "dataStoresTypes": [{
       "value": "table",
       "name": "Table"
     },
@@ -1342,8 +1317,7 @@
   ],
   "updateInterval": "Update Interval",
   "intervals": "Intervals",
-  "intervalsList": [
-    {
+  "intervalsList": [{
       "name": "None",
       "value": 0
     },
@@ -1385,8 +1359,7 @@
   "displayName": "Display Name",
   "isSystem": "Is System",
   "unit": "Unit",
-  "fieldTypesList": [
-    {
+  "fieldTypesList": [{
       "name": "Unknown",
       "value": "unknown"
     },
@@ -1450,8 +1423,7 @@
     "image": "Image"
   },
   "referenceType": "Reference Type",
-  "referenceTypesList": [
-    {
+  "referenceTypesList": [{
       "name": "Data Store",
       "value": "data_store"
     },
@@ -1488,8 +1460,7 @@
   "updateWsConfig": "Update Web Service Config",
   "resourceUri": "Resource URI",
   "httpMethod": "HTTP Method",
-  "httpMethods": [
-    {
+  "httpMethods": [{
       "name": "GET",
       "value": "get"
     },
@@ -1526,8 +1497,7 @@
   "use": "Use",
   "usernameAndPassword": "Username and password",
   "contentType": "Content Type",
-  "httpContentTypes": [
-    {
+  "httpContentTypes": [{
       "name": "JSON",
       "value": "application/json"
     },
@@ -1537,8 +1507,7 @@
     }
   ],
   "acceptContent": "Accept Content Type",
-  "acceptContentTypes": [
-    {
+  "acceptContentTypes": [{
       "name": "JSON",
       "value": "application/json"
     },
@@ -1556,8 +1525,7 @@
   "modifyDate": "Modify Date",
   "queryDest": "Destination",
   "body": "Body",
-  "queryDests": [
-    {
+  "queryDests": [{
       "name": "Search",
       "value": "search"
     },
@@ -1571,8 +1539,7 @@
     }
   ],
   "usage": "Usage",
-  "usages": [
-    {
+  "usages": [{
       "name": "Later Requests",
       "value": 0
     },
@@ -1596,8 +1563,7 @@
   "submit": "Submit",
   "noFieldsFound": "No fields found in the current data store!",
   "constraintsOperator": "Operator",
-  "constraintsOperators": [
-    {
+  "constraintsOperators": [{
       "name": "Equals",
       "value": "$eq"
     },
@@ -1646,8 +1612,7 @@
   "inputModifiers": "Input Modifiers",
   "valueModifier": "Value Modifier",
   "compareToModifier": "Compare To Value Modifier",
-  "valueModifiers": [
-    {
+  "valueModifiers": [{
       "name": "Integer",
       "value": "int"
     },
@@ -1741,8 +1706,7 @@
   "formula": "Formula",
   "cumsum": "Cumsum",
   "dateUnit": "Date Unit",
-  "dateUnitsList": [
-    {
+  "dateUnitsList": [{
       "value": "year",
       "name": "Year"
     },
@@ -1769,8 +1733,7 @@
   "to": "To",
   "removeConstraint": "Remove Constraint",
   "confirmRemoveConstraint": "Are you sure you want to remove the selected constraint?",
-  "computeTypes": [
-    {
+  "computeTypes": [{
       "name": "Conditional",
       "value": "switch"
     },
@@ -1829,8 +1792,7 @@
   ],
   "timespan": "Tima Span",
   "priority": "Proprity",
-  "measureLevels": [
-    {
+  "measureLevels": [{
       "name": "Trivial",
       "value": 0
     },
