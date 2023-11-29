@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { BehaviorSubject, distinctUntilChanged } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -11,21 +11,19 @@ export class FontSizeService {
 
   private fontSizeSubject = new BehaviorSubject<number>(this.getFontSize());
 
-  getFontSize(): number {
+  readonly fontSize$ = this.fontSizeSubject.pipe(distinctUntilChanged());
+
+  private getFontSize(): number {
     return +localStorage.getItem(this.fontSizeKey)! || this.defaultFontSize;
   }
 
   setFontSize(fontSize: number): void {
-    localStorage.setItem(this.fontSizeKey, fontSize.toString());
     this.fontSizeSubject.next(fontSize); // Notify subscribers about the font size change
+    localStorage.setItem(this.fontSizeKey, fontSize.toString());
   }
 
   resetFontSize(): void {
-    localStorage.removeItem(this.fontSizeKey);
     this.fontSizeSubject.next(this.defaultFontSize); // Notify subscribers about the font size reset
-  }
-
-  fontSizeChanges(): Observable<number> {
-    return this.fontSizeSubject.asObservable();
+    localStorage.removeItem(this.fontSizeKey);
   }
 }

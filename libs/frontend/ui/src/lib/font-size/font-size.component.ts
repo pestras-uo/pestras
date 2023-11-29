@@ -1,88 +1,62 @@
 /* eslint-disable @angular-eslint/component-selector */
-import {
-  Component,
-  EventEmitter,
-  Input,
-  OnInit,
-  Output,
-  booleanAttribute,
-} from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FontSizeService } from './font-size.service';
+import { untilDestroyed } from '../reactive';
 
 @Component({
   selector: 'pui-font-size',
   template: `
-    <div class="fontsize">
+    <div class="flex align-items-center gap-2">
       <button
         class="btn-danger btn-round btn-tiny btn-icon"
         (click)="decreaseFontSize()"
-        [disabled]="isMinFontSize()"
+        [disabled]="currentFontSize === minFontSize"
       >
-        <i size="small" puiIcon="minus"></i>
+        <i size="tiny" puiIcon="text_decrease"></i>
       </button>
 
       <button
         class="btn-primary btn-tiny btn-round btn-icon"
         (click)="increaseFontSize()"
-        [disabled]="isMaxFontSize()"
+        [disabled]="currentFontSize === maxFontSize"
       >
-        <i size="small" puiIcon="add"></i>
+        <i size="tiny" puiIcon="text_increase"></i>
       </button>
       <button
         class="btn-success btn-tiny btn-round btn-icon"
         (click)="resetFontSize()"
+        [disabled]="currentFontSize === 14"
       >
-        <i size="small" puiIcon="restart"></i>
+        <i size="tiny" puiIcon="restart"></i>
       </button>
     </div>
-  `,
-  styles: [
-    `
-      .fontsize {
-        display: flex;
-        align-items: center;
-        gap: 4px;
-      }
-    `,
-  ],
+  `
 })
 export class FontSizeComponent implements OnInit {
-  @Output() fontSizeChanged = new EventEmitter<number>();
-  @Input() defaultFontSize = 14;
-  @Input() maxFontSize = 30;
-  @Input() minFontSize = 20;
-
-  @Input({ transform: booleanAttribute })
-  dark = false;
+  private ud = untilDestroyed();
+  
+  readonly maxFontSize = 18;
+  readonly minFontSize = 10;
 
   currentFontSize!: number;
 
-  constructor(private fontService: FontSizeService) {}
+  constructor(private fontService: FontSizeService) { }
 
   ngOnInit(): void {
-    this.currentFontSize =
-      this.fontService.getFontSize() || this.defaultFontSize;
-    this.updateFontSize();
-
-    this.fontService.fontSizeChanges().subscribe((fontSize: number) => {
-      this.currentFontSize = fontSize;
-      localStorage.removeItem('fontSize');
-      this.updateFontSize();
-    });
+    this.fontService.fontSize$
+      .pipe(this.ud())
+      .subscribe((fontSize: number) => {
+        this.currentFontSize = fontSize;
+        this.updateFontSize();
+      });
   }
 
   increaseFontSize(): void {
-    if (this.currentFontSize < this.maxFontSize) {
-      this.currentFontSize += 6;
-      this.updateFontSize();
-    }
+    this.fontService.setFontSize(this.currentFontSize + 2);
   }
 
   decreaseFontSize(): void {
-    if (this.currentFontSize > this.minFontSize) {
-      this.currentFontSize -= 6;
-      this.updateFontSize();
-    }
+    this.fontService.setFontSize(this.currentFontSize - 2);
   }
 
   resetFontSize(): void {
@@ -96,20 +70,8 @@ export class FontSizeComponent implements OnInit {
   isMinFontSize(): boolean {
     return this.currentFontSize <= this.minFontSize;
   }
+
   private updateFontSize(): void {
-    this.fontService.setFontSize(this.currentFontSize);
-
-    const textElements = document.querySelectorAll('*');
-    textElements.forEach((element: Element) => {
-      if (element instanceof HTMLElement) {
-        element.style.fontSize = `${this.currentFontSize}px`;
-      }
-    });
-
-    this.emitFontSizeChanged();
-  }
-
-  private emitFontSizeChanged(): void {
-    this.fontSizeChanged.emit(this.currentFontSize);
+    document.body.style.setProperty('--font-size', `${this.currentFontSize}px`);
   }
 }
