@@ -22,25 +22,58 @@
   </button> -->
 
   <div class="flex">
-    <toggle-theme></toggle-theme>
-
+    <button #paintBtn class="btn-icon btn-round" (click)="paintDD.show()">
+      <i size="small" puiIcon="paint"></i>
+    </button>
+    <pui-dropdown #paintDD [origin]="paintBtn">
+      <div class="card card-small block shadow-4 maxh-12 overflow-auto">
+        <div class="card-body">
+          <div class="card card-small card-clear">
+            <div class="card-header pi-0 actions-on-hover">
+              <h4>{{c['theme']}}</h4>
+              <div class="grow"></div>
+              <toggle-theme></toggle-theme>
+            </div>
+          </div>
+          <div class="card card-small card-clear">
+            <div class="card-header pi-0 actions-on-hover">
+              <h4>{{c['fontsizeControl']}}</h4>
+              <div class="grow"></div>
+              <pui-font-size></pui-font-size>
+            </div>
+          </div>
+        </div>
+      </div>
+    </pui-dropdown>
     <ng-container *ngIf="null | contraLang | async as lang">
       <button #langBtn class="btn-icon btn-round" (click)="langDD.show()">
         <i size="small" puiIcon="language"></i>
       </button>
 
       <pui-dropdown #langDD [origin]="langBtn">
-        <div class="card card-small w-4 shadow-4" contraLang #contra="contra">
-          <div class="card-body list list-actions p-0">
-            <h5 class="mbs-4 pi-4 primary">{{c['language']}}</h5>
+        <div class="card card-small shadow-4 maxh-12 overflow-auto">
+          <div class="card-body">
             <div
-              class="list-item hover-surface2 pi-4"
-              *ngFor="let language of (null | contraLanguages)"
-              (click)="contra.setLang(language.key)"
+              class="card card-small w-4 shadow-4"
+              contraLang
+              #contra="contra"
             >
-              <p>{{language.name}}</p>
-              <div class="grow"></div>
-              <i *ngIf="lang === language.key" size="small" puiIcon="check"></i>
+              <div class="card-body list list-actions p-0">
+                <h5 class="mbs-4 pi-4 primary">{{c['language']}}</h5>
+                <div
+                  class="list-item hover-surface2 pi-4"
+                  *ngFor="let language of (null | contraLanguages)"
+                  (click)="contra.setLang(language.key)"
+                >
+                  <p>{{language.name}}</p>
+                  <div class="grow"></div>
+                  <i
+                    *ngIf="lang === language.key"
+                    size="small"
+                    puiIcon="check"
+                  ></i>
+                </div>
+              </div>
             </div>
           </div>
         </div>
