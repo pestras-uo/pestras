@@ -86,8 +86,10 @@ export class FontSizeComponent implements OnInit {
     this.fontService.setFontSize(this.currentFontSize);
 
     const allElements = document.querySelectorAll('*');
-    allElements.forEach((element: any) => {
-      element.style.fontSize = `${this.currentFontSize}px`;
+    allElements.forEach((element: Node) => {
+      if (element instanceof HTMLElement) {
+        element.style.fontSize = `${this.currentFontSize}px`;
+      }
     });
 
     this.emitFontSizeChanged();
