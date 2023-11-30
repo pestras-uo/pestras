@@ -39,7 +39,7 @@ body {
 
 p {
   color: var(--text2);
-  font-size: 0.9rem;
+  font-size: 0.9em;
 }
 
 a {
@@ -90,7 +90,7 @@ label {
   display: flex;
   align-items: center;
   gap: 8px;
-  font-size: 0.85rem;
+  font-size: 0.85em;
   margin-block-end: 4px;
   font-weight: bold;
 }
@@ -162,17 +162,17 @@ summary,
 // input placeholder
 ::-webkit-input-placeholder {
   /* Edge */
-  font-size: 0.85rem;
+  font-size: 0.85em;
   color: var(--placeholder-color);
 }
 
 :-ms-input-placeholder {
   /* Internet Explorer 10-11 */
-  font-size: 0.85rem;
+  font-size: 0.85em;
   color: var(--placeholder-color);
 }
 
 ::placeholder {
-  font-size: 0.85rem;
+  font-size: 0.85em;
   color: var(--placeholder-color);
 }

@@ -14,8 +14,11 @@ export class MainHeaderView {
   readonly roles = Role;
 
   dialogRef: DialogRef | null = null;
+  
 
-  constructor(private dialog: Dialog) {}
+  constructor(
+    private dialog: Dialog
+  ) {}
 
   openDialog(tmp: TemplateRef<any>) {
     this.dialogRef = this.dialog.open(tmp);
@@ -24,5 +27,9 @@ export class MainHeaderView {
   closeDialog() {
     this.dialogRef?.close();
     this.dialogRef = null;
+  }
+  handleFontSizeChanged(fontSize: number): void {
+    // Do something with the new font size
+    console.log('Font size changed:', fontSize);
   }
 }

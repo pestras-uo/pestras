@@ -1,7 +1,7 @@
 <button
-  class="btn-icon btn-round"
+  class="btn-icon btn-round btn-tiny"
   *ngIf="themeService.theme$| async as theme"
   (click)="toggleDarkMode()"
 >
-  <span>{{icons[theme]}}</span>
+  <span class="f3">{{icons[theme]}}</span>
 </button>
