@@ -3,7 +3,6 @@
 /* eslint-disable @angular-eslint/component-selector */
 import { Dialog, DialogRef } from '@angular/cdk/dialog';
 import { Component, TemplateRef } from '@angular/core';
-import { FontSizeService } from '@pestras/frontend/ui';
 import { Role } from '@pestras/shared/data-model';
 
 @Component({
@@ -18,8 +17,7 @@ export class MainHeaderView {
   
 
   constructor(
-    private dialog: Dialog,
-    private fontSizeService: FontSizeService
+    private dialog: Dialog
   ) {}
 
   openDialog(tmp: TemplateRef<any>) {
