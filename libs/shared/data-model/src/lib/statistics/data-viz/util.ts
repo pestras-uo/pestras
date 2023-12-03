@@ -1,5 +1,11 @@
 export interface ColorRangeOption {
   color: string;
-  from: number;
-  to: number;
+  value: number;
+  label: string;
+}
+
+export interface OpacityRangeOption {
+  opaciry: string;
+  value: number;
+  label: string;
 }
