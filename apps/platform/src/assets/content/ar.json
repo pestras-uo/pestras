@@ -603,8 +603,12 @@
       "value": "hierarchical"
     },
     {
-      "name": "خريطة",
+      "name": "خرائط",
       "value": "map"
+    },
+    {
+      "name": "خرائط GIS",
+      "value": "gis"
     },
     {
       "name": "رسم بياني نقطي",

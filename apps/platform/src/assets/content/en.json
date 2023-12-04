@@ -605,6 +605,10 @@
       "value": "map"
     },
     {
+      "name": "GIS Map",
+      "value": "gis"
+    },
+    {
       "name": "Plot",
       "value": "plot"
     },

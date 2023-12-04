@@ -18,8 +18,7 @@ export interface GISMapDataVizOptions {
 
 export interface GISMapDataVizExternalLayerOptions {
   name: string;
-  url: string | null;
-  id: string | null;
+  url: string;
 }
 
 export interface GISMapDataVizLayerOptions {
@@ -33,11 +32,11 @@ export interface GISMapDataVizLayerOptions {
   // for all types
   color_field: string | null;
   opacity_field: string | null;
-  // [lng, lat] for points
-  // two dimensional array for polylines and polygons
-  coords_field: string;
+  // only when type is points
+  location_field: string | null;
+  // only when type is polygon
+  region_field: string | null;
   // visual maps
   color_range: ColorRangeOption[];
-  opacity_range: ColorRangeOption[];
 }
 

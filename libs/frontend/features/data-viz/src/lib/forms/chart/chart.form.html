@@ -61,7 +61,12 @@
         [fcClass]="fcClass"
         formControlName="options"
       ></app-pie-chart-form>
-
+      <pestras-gis-map-form
+        *ngIf="type.value === 'gis'"
+        [dsFields]="fields"
+        [fcClass]="fcClass"
+        formControlName="options"
+      ></pestras-gis-map-form>
       <app-heatmap-chart-form
         *ngIf="type.value === 'heatmap'"
         [dsFields]="fields"

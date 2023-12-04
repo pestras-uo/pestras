@@ -63,9 +63,6 @@ export class MapForm implements OnInit, ControlValueAccessor {
   readonly scatter = this.form.controls.scatter;
   readonly pie = this.form.controls.pie;
 
-  disabled = false;
-  touched = false;
-
   @Input({ required: true })
   dsFields!: Field[];
   @Input()
@@ -138,6 +135,9 @@ export class MapForm implements OnInit, ControlValueAccessor {
 
   // ControlValueAccessor interface
   // --------------------------------------------------------------
+  disabled = false;
+  touched = false;
+
   private onChange = (_: any) => {
     //
   };

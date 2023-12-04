@@ -265,8 +265,7 @@ new Validall(GISMAP, {
     external_layers: {
       $each: {
         name: { $type: 'string' },
-        url: { $nullable: true, $type: 'string' },
-        id: { $nullable: true, $type: 'string' }
+        url: { $type: 'string' }
       }
     },
     custom_layers: {
@@ -275,19 +274,14 @@ new Validall(GISMAP, {
         title_field: { $type: 'string' },
         details_fields: { $each: { $type: 'string' } },
         type: { $enum: gisLayerTypes },
+        coords_field: { $nullable: true, $type: 'string' },
+        region_field: { $nullable: true, $type: 'string' },
         size_field: { $nullable: true, $type: 'string' },
         color_field: { $nullable: true, $type: 'string' },
         opacity_field: { $nullable: true, $type: 'string' },
         color_range: {
           $each: {
             color: { $type: 'string' },
-            value: { $type: 'number' },
-            label: { $nullable: true, $type: 'string' }
-          }
-        },
-        opacity_range: {
-          $each: {
-            opacity: { $type: 'string' },
             value: { $type: 'number' },
             label: { $nullable: true, $type: 'string' }
           }

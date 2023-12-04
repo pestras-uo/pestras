@@ -54,6 +54,7 @@ import { EnvModule } from '@pestras/frontend/env';
 import { NoDataPlaceholderWidget } from '@pestras/frontend/widgets/no-data-placeholder';
 import { HeatmapForm } from './forms/heatmap-chart/heatmap-chart.form';
 import { HeatmapChartView } from './views/heatmap-chart/heatmap-chart.view';
+import { GISMapFormComponent } from './forms/gis-map/gis-map.form.component';
 
 @NgModule({
   declarations: [
@@ -92,6 +93,7 @@ import { HeatmapChartView } from './views/heatmap-chart/heatmap-chart.view';
     LimitForm,
     SortForm,
     TransposeForm,
+    GISMapFormComponent
   ],
 
   imports: [
@@ -155,6 +157,7 @@ import { HeatmapChartView } from './views/heatmap-chart/heatmap-chart.view';
     SortForm,
     TransposeForm,
     HeatmapForm,
+    GISMapFormComponent
   ],
 })
 export class DataVizFeatureModule {}
