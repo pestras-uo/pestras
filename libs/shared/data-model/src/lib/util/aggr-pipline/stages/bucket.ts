@@ -3,7 +3,8 @@ import { AggrPiplineStage, AggrStageTypes } from ".";
 import { TypedEntity, createTypedEntity } from "../../data-types";
 import { ModifiersOperation, ValueModifier } from "../operations/modifiers";
 
-export type CumulateMethod = 'sum' | 'min' | 'max' | 'count' | 'avg';
+export const cumulateMethod = ['sum', 'min', 'max', 'count', 'avg'] as const;
+export type CumulateMethod = typeof cumulateMethod[number];
 
 export interface BucketStageOptions {
   groupBy: { field: string; modifiers: ValueModifier[]; };

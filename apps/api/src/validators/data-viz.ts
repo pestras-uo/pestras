@@ -271,6 +271,7 @@ new Validall(GISMAP, {
     custom_layers: {
       $each: {
         name: { $type: 'string' },
+        primary_field: { $type: 'string' },
         title_field: { $type: 'string' },
         details_fields: { $each: { $type: 'string' } },
         type: { $enum: gisLayerTypes },

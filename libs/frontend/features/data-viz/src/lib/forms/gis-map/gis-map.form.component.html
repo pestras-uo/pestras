@@ -7,6 +7,7 @@
           labelRef="map-region"
           formControlName="region"
           [list]="'' | regions | async | arrayMap : mapRegion"
+          [placeholder]="c['region']"
         ></pui-select-input>
       </div>
     </div>
@@ -15,6 +16,7 @@
         <pui-select-input
           labelRef="gis-map"
           formControlName="map"
+          [placeholder]="c['map']"
           [list]="
             (regionCtrl.value | region | async)?.gis ?? null
               | arrayMap : mapMaps
@@ -25,7 +27,7 @@
     </div>
   </div>
 
-  <label for="gis-layers">{{ c['gisLayers'] }}</label>
+  <label for="gis-layers">{{ c['layers'] }}</label>
   <div class="fc mbe-6">
     <pui-multi-select-input
       labelRef="gis-layers"
@@ -76,7 +78,7 @@
   </ng-container>
 
   <div class="toolbar gap-2 mbe-6">
-    <h4>{{ c['customLayers'] }}</h4>
+    <h4>{{ c['customLayer'] }}</h4>
     <div class="grow"></div>
     <button class="btn-small btn-round btn-icon" (click)="addCustomLayer()">
       <i puiIcon="add" size="small"></i>
@@ -91,12 +93,15 @@
     >
       <legend>
         <h5>{{ i + 1 }} {{ c['layer'] }}</h5>
-        <button class="btn-tiny btn-icon btn-round btn-danger">
+        <button
+          class="btn-tiny btn-icon btn-round btn-danger"
+          *ngIf="!cusLayersCtrl.controls.length"
+        >
           <i puiIcon="delete" size="tiny"></i>
         </button>
       </legend>
 
-      <div class="flex gap-2 mbe-4">
+      <div class="flex gap-2 mbe-6">
         <div class="grow">
           <label [for]="i + '-layer-name'">{{ c['name'] }}</label>
           <div class="fc">
@@ -118,84 +123,92 @@
             </pui-select-input>
           </div>
         </div>
+      </div>
 
-        <div class="flex gap-2 mbe-4">
-          <div class="grow">
-            <label [for]="i + '-name-field'">{{ c['nameField'] }}</label>
-            <div class="fc">
-              <pui-select-input
-                [list]="
-                  dsFields
-                    | arrayFilter : filterTitleField
-                    | arrayMap : mapField
-                "
-                formControlName="title_field"
-                [labelRef]="i + '-name-field'"
-              >
-              </pui-select-input>
-            </div>
-          </div>
-          <div class="grow">
-            <label [for]="i + '-details-fields'">{{
-              c['detailsFields']
-            }}</label>
-            <div class="fc">
-              <pui-multi-select-input
-                [labelRef]="i + '-details-fields'"
-                [list]="dsFields | arrayMap : mapField"
-                formControlName="detailsFields"
-              >
-              </pui-multi-select-input>
-            </div>
-          </div>
-        </div>
-
-        <div
-          class="flex gap-2 mbe-4"
-          *ngIf="cusLayersCtrl.at(i).controls.type.value === 'point'"
-        >
-          <div class="grow">
-            <label [for]="i + '-location-field'">{{
-              c['locationField']
-            }}</label>
-            <div class="fc">
-              <pui-select-input
-                [labelRef]="i + '-location-field'"
-                [list]="
-                  dsFields | arrayFilter : filterLocField | arrayMap : mapField
-                "
-                formControlName="location_field"
-              >
-              </pui-select-input>
-            </div>
-          </div>
-
-          <div class="grow">
-            <label [for]="i + '-size-field'">{{ c['sizeField'] }}</label>
-            <div class="fc">
-              <pui-select-input
-                [labelRef]="i + '-size-field'"
-                [list]="
-                  dsFields
-                    | arrayFilter : filterValueField
-                    | arrayMap : mapField
-                "
-                formControlName="size_field"
-              >
-              </pui-select-input>
-            </div>
-          </div>
-        </div>
-
-        <ng-container
-          *ngIf="cusLayersCtrl.at(i).controls.type.value !== 'point'"
-        >
-          <label [for]="i + '-region-field'">{{ c['regionField'] }}</label>
+      <div class="flex gap-2 mbe-6">
+        <div class="grow">
+          <label [for]="i + '-primary-field'">{{ c['primaryField'] }}</label>
           <div class="fc">
+            <pui-select-input
+              [list]="dsFields | arrayMap : mapField"
+              formControlName="primary_field"
+              [labelRef]="i + '-primary-field'"
+            >
+            </pui-select-input>
+          </div>
+        </div>
+        <div class="grow">
+          <label [for]="i + '-title-field'">{{ c['nameField'] }}</label>
+          <div class="fc">
+            <pui-select-input
+              [list]="
+                dsFields
+                  | fn : addRegionNameField : g.controls.type.value
+                  | arrayFilter : filterTitleField
+                  | arrayMap : mapField
+              "
+              formControlName="title_field"
+              [labelRef]="i + '-title-field'"
+            >
+            </pui-select-input>
+          </div>
+        </div>
+        <div class="grow">
+          <label [for]="i + '-details-fields'">{{ c['detailsFields'] }}</label>
+          <div class="fc">
+            <pui-multi-select-input
+              [labelRef]="i + '-details-fields'"
+              [list]="
+                dsFields
+                  | fn : addRegionNameField : g.controls.type.value
+                  | arrayMap : mapField
+              "
+              formControlName="details_fields"
+            >
+            </pui-multi-select-input>
+          </div>
+        </div>
+      </div>
+
+      <ng-container *ngIf="g.controls.type.value as type">
+        <!-- point type only -->
+        <ng-container *ngIf="type === 'point'">
+          <label [for]="i + '-location-field'">{{ c['locationField'] }}</label>
+          <div class="fc mbe-6">
+            <pui-select-input
+              [labelRef]="i + '-location-field'"
+              [list]="
+                dsFields | arrayFilter : filterLocField | arrayMap : mapField
+              "
+              formControlName="location_field"
+            >
+            </pui-select-input>
+          </div>
+        </ng-container>
+
+        <!-- point and pie types -->
+        <ng-container *ngIf="type === 'point' || type === 'pie'">
+          <label [for]="i + '-size-field'">{{ c['sizeField'] }}</label>
+          <div class="fc mbe-6">
+            <pui-select-input
+              [labelRef]="i + '-size-field'"
+              [list]="
+                dsFields | arrayFilter : filterValueField | arrayMap : mapField
+              "
+              formControlName="size_field"
+            >
+            </pui-select-input>
+          </div>
+        </ng-container>
+
+        <!-- polygon and pie type only -->
+        <ng-container *ngIf="type === 'polygon' || type === 'pie'">
+          <label [for]="i + '-region-field'">{{ c['regionField'] }}</label>
+          <div class="fc mbe-6">
             <pui-select-input
               [labelRef]="i + '-region-field'"
               [list]="
-                dsFields | arrayFilter : filterLocField | arrayMap : mapField
+                dsFields | arrayFilter : filterRegionField | arrayMap : mapField
               "
               formControlName="region_field"
             >
@@ -203,11 +216,68 @@
           </div>
         </ng-container>
 
-        <div class="flex gap-2 mbe-4">
+        <!-- pie type only -->
+        <ng-container formArrayName="pie_fields" *ngIf="type === 'pie'">
+          <div class="toolbar gap-2 mbe-6">
+            <h4>{{ c['input'] }}</h4>
+            <div class="grow"></div>
+            <button
+              class="btn-small btn-icon btn-round"
+              (click)="addPieField(i)"
+            >
+              <i puiIcon="add" size="small"></i>
+            </button>
+          </div>
+
+          <div
+            *ngFor="let pf of g.controls.pie_fields.controls; let j = index"
+            [formGroup]="pf"
+            class="flex gap-2 align-items-end mbe-6"
+          >
+            <div class="grow">
+              <label [for]="i + '-' + j + '-pie-field'">{{ c['field'] }}</label>
+              <div class="fc">
+                <pui-select-input
+                  [labelRef]="i + '-' + j + '-pie-field'"
+                  [list]="
+                    dsFields
+                      | arrayFilter : filterValueField
+                      | arrayMap : mapField
+                  "
+                  formControlName="field"
+                >
+                </pui-select-input>
+              </div>
+            </div>
+            <div class="grow">
+              <label [for]="i + '-' + j + '-pie-color'">{{ c['color'] }}</label>
+              <div class="fc">
+                <pui-select-input
+                  formControlName="color"
+                  [labelRef]="i + '-' + j + '-pie-color'"
+                  [list]="c['colorsList']"
+                ></pui-select-input>
+              </div>
+            </div>
+            <button
+              class="btn-round btn-icon"
+              (click)="g.controls.pie_fields.removeAt(j)"
+            >
+              <i puiIcon="delete" color="danger" size="tiny"></i>
+            </button>
+          </div>
+        </ng-container>
+
+        <!-- point or polygon types -->
+        <div
+          *ngIf="type === 'point' || type === 'polygon'"
+          class="flex gap-2 mbe-6"
+        >
           <div class="grow">
             <label [for]="i + '-color-field'">{{ c['colorField'] }}</label>
             <div class="fc">
               <pui-select-input
+                [nullable]="true"
                 [labelRef]="i + '-color-field'"
                 [list]="
                   dsFields
@@ -223,6 +293,7 @@
             <label [for]="i + '-opacity-field'">{{ c['opacityField'] }}</label>
             <div class="fc">
               <pui-select-input
+                [nullable]="true"
                 [labelRef]="i + '-opacity-field'"
                 [list]="
                   dsFields
@@ -237,11 +308,11 @@
         </div>
 
         <ng-container
-          formArrayName="colorRange"
-          *ngIf="cusLayersCtrl.at(i).controls.color_field.value"
+          formArrayName="color_range"
+          *ngIf="g.controls.color_field.value"
         >
-          <div class="toolbar gap-2 mbe-4">
-            <h5>{{ c['colorRange'] }}</h5>
+          <div class="toolbar gap-2 mbe-6">
+            <h5>{{ c['colorVariations'] }}</h5>
             <div class="grow"></div>
             <button
               class="btn-icon btn-tiny btn-icon"
@@ -252,21 +323,19 @@
           </div>
 
           <div
-            *ngFor="
-              let cg of cusLayersCtrl.at(i).controls.color_range.controls;
-              let j = index
-            "
+            *ngFor="let cg of g.controls.color_range.controls; let j = index"
             [formGroup]="cg"
-            class="flex gap-2 align-items-end mbe-4"
+            class="flex gap-2 align-items-end mbe-6"
           >
             <div class="grow">
               <label [for]="i + '-' + j + 'color'">{{ c['color'] }}</label>
               <div class="fc">
-                <input
-                  type="color"
+                <pui-select-input
                   [id]="i + '-' + j + 'color'"
                   formControlName="color"
-                />
+                  [list]="c['colorsList']"
+                >
+                </pui-select-input>
               </div>
             </div>
             <div class="grow">
@@ -291,13 +360,13 @@
             </div>
             <button
               class="btn-round btn-icon"
-              (click)="cusLayersCtrl.at(i).controls.color_range.removeAt(j)"
+              (click)="g.controls.color_range.removeAt(j)"
             >
               <i puiIcon="delete" size="tiny" color="danger"></i>
             </button>
           </div>
         </ng-container>
-      </div>
+      </ng-container>
     </fieldset>
   </ng-container>
 </form>

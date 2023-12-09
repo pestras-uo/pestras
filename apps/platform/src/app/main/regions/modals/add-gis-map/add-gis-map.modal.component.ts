@@ -13,9 +13,9 @@ export class AddGisMapModalComponent {
 
   readonly form = new FormGroup({
     name: new FormControl<string>('', { nonNullable: true, validators: Validators.required }),
-    id: new FormControl<string>('', { nonNullable: true, validators: Validators.required }),
-    portal: new FormControl<string>('', { nonNullable: true, validators: Validators.required }),
     basemap: new FormControl<string>('', { nonNullable: true, validators: Validators.required }),
+    id: new FormControl<string | null>(null),
+    portal: new FormControl<string | null>(null),
     apiKey: new FormControl<string | null>(null)
   });
 

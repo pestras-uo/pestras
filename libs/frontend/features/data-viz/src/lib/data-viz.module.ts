@@ -4,6 +4,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { ContraModule } from '@pestras/frontend/util/contra';
 import {
   PuiCheckInput,
+  PuiGisMapModule,
   PuiGoogleMapModule,
   PuiIcon,
   PuiMultiSelectInput,
@@ -55,6 +56,7 @@ import { NoDataPlaceholderWidget } from '@pestras/frontend/widgets/no-data-place
 import { HeatmapForm } from './forms/heatmap-chart/heatmap-chart.form';
 import { HeatmapChartView } from './views/heatmap-chart/heatmap-chart.view';
 import { GISMapFormComponent } from './forms/gis-map/gis-map.form.component';
+import { GisMapVizComponent } from './views/gis-map/gis-map.viz.component';
 
 @NgModule({
   declarations: [
@@ -93,7 +95,8 @@ import { GISMapFormComponent } from './forms/gis-map/gis-map.form.component';
     LimitForm,
     SortForm,
     TransposeForm,
-    GISMapFormComponent
+    GISMapFormComponent,
+    GisMapVizComponent
   ],
 
   imports: [
@@ -112,6 +115,7 @@ import { GISMapFormComponent } from './forms/gis-map/gis-map.form.component';
     PuiGoogleMapModule,
     PuiCheckInput,
     PuiTableModule,
+    PuiGisMapModule,
     // Features
     DataStoresFeatureModule,
     NgxEchartsModule,
@@ -157,7 +161,8 @@ import { GISMapFormComponent } from './forms/gis-map/gis-map.form.component';
     SortForm,
     TransposeForm,
     HeatmapForm,
-    GISMapFormComponent
+    GISMapFormComponent,
+    GisMapVizComponent
   ],
 })
 export class DataVizFeatureModule {}

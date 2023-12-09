@@ -3,8 +3,8 @@
 import { Component, Input, OnInit } from "@angular/core";
 import { AbstractControl, ControlValueAccessor, FormArray, FormControl, FormGroup, NG_VALIDATORS, NG_VALUE_ACCESSOR, ValidationErrors, Validators } from "@angular/forms";
 import { untilDestroyed } from "@pestras/frontend/ui";
-import { Field, GISMapConfig, GISMapDataVizOptions, GISMapFeatureLayer, Region, TypeKind } from "@pestras/shared/data-model";
-import { ColorRangeModal, CustomGisMapLayerModal, ExternalGisMapLayerModal, GisMapFormModal } from "./gis-map.form.modal";
+import { Field, GISMapConfig, GISMapDataVizOptions, GISMapFeatureLayer, GisLayerTypes, Region, TypeKind, createField } from "@pestras/shared/data-model";
+import { ColorRangeModal, CustomGisMapLayerModal, ExternalGisMapLayerModal, GisMapFormModal, PieFieldsModal } from "./gis-map.form.modal";
 
 @Component({
   selector: 'pestras-gis-map-form',
@@ -75,6 +75,12 @@ export class GISMapFormComponent implements OnInit, ControlValueAccessor {
     return field.type === 'string';
   }
 
+  addRegionNameField(fields: Field[], type: GisLayerTypes) {
+    return type === 'point'
+      ? fields
+      : [...fields, createField({ name: 'region_name', display_name: 'region_name', type: 'string' })]
+  }
+
   filterRegionField(field: Field) {
     return field.type === 'region';
   }
@@ -94,6 +100,7 @@ export class GISMapFormComponent implements OnInit, ControlValueAccessor {
     this.cusLayersCtrl.push(new FormGroup<CustomGisMapLayerModal>({
       name: new FormControl('', { nonNullable: true, validators: Validators.required }),
       type: new FormControl('point', { nonNullable: true }),
+      primary_field: new FormControl('', { nonNullable: true }),
       title_field: new FormControl('', { nonNullable: true }),
       details_fields: new FormControl([], { nonNullable: true }),
       size_field: new FormControl(null),
@@ -101,7 +108,15 @@ export class GISMapFormComponent implements OnInit, ControlValueAccessor {
       opacity_field: new FormControl(null),
       location_field: new FormControl(null),
       region_field: new FormControl(null),
+      pie_fields: new FormArray<FormGroup<PieFieldsModal>>([]),
       color_range: new FormArray<FormGroup<ColorRangeModal>>([])
+    }));
+  }
+
+  addPieField(index: number) {
+    this.cusLayersCtrl.at(index).controls.pie_fields.push(new FormGroup<PieFieldsModal>({
+      field: new FormControl('', { nonNullable: true, validators: Validators.required }),
+      color: new FormControl('', { nonNullable: true, validators: Validators.required })
     }));
   }
 

@@ -1,7 +1,7 @@
 export interface GisMapComponentConfig {
-  id: string;
-  portal: string;
   basemap: string;
+  id?: string | null;
+  portal?: string | null;
   apiKey?: string | null;
 }
 

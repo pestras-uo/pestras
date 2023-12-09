@@ -4,7 +4,8 @@ import { TypedEntity, createTypedEntity } from "../../data-types";
 import { ValueModifier } from "../operations/modifiers";
 import { ModifiersOperation } from "../operations/modifiers";
 
-export type GroupStageCumulateMethod = 'sum' | 'min' | 'max' | 'count' | 'avg';
+export const groupStageCumulateMethod = ['sum', 'min', 'max', 'count', 'avg', 'median', 'first', 'last'] as const;
+export type GroupStageCumulateMethod = typeof groupStageCumulateMethod[number];
 
 export interface GroupStageOptions {
   by: { field: string; as: string | null; modifiers: ValueModifier[]; } | null;
@@ -25,11 +26,11 @@ export class GroupStage extends AggrPiplineStage<GroupStageOptions> {
 
     if (this.options.by) {
       const field = this.inputState.find(f => f.name === this.options.by?.field);
-        fields.push(createTypedEntity({
-          ...ModifiersOperation.OutputType(this.options.by.modifiers),
-          name: this.options.by.as || this.options.by.field,
-          display_name: field?.display_name ?? this.options.by.as ?? this.options.by.field
-        }));
+      fields.push(createTypedEntity({
+        ...ModifiersOperation.OutputType(this.options.by.modifiers),
+        name: this.options.by.as || this.options.by.field,
+        display_name: field?.display_name ?? this.options.by.as ?? this.options.by.field
+      }));
     }
 
     if (this.options.cumulate?.length)
@@ -52,13 +53,15 @@ export class GroupStage extends AggrPiplineStage<GroupStageOptions> {
     } else if (Array.isArray(this.options.by)) {
       group._id = {};
       for (const el of this.options.by) {
-        group._id[el.as] = new ModifiersOperation({ value: '$' + el.field, modifiers: el.modifiers });
+        group._id[el.as] = new ModifiersOperation({ value: '$' + el.field, modifiers: el.modifiers }).compile();
         project[el.as] = '$_id.' + el.as;
       }
 
     } else {
-      const name = this.options.by.as || this.options.by.field
-      group._id[name] = new ModifiersOperation({ value: '$' + this.options.by.field, modifiers: this.options.by.modifiers });
+      const name = this.options.by.as || this.options.by.field;
+      group._id = {
+        [name]: new ModifiersOperation({ value: '$' + this.options.by.field, modifiers: this.options.by.modifiers }).compile()
+      };
       project[name] = '$_id.' + name;
     }
 

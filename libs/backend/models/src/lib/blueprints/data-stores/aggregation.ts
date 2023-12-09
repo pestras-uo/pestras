@@ -76,7 +76,7 @@ export async function setAggregation(
 
   // if data store already built
   // recreate the database view with the new aggregation
-  if (ds.state !== DataStoreState.BUILD) await this.buildView(ds);
+  if (ds.state !== DataStoreState.BUILD) await this.buildView(ds, true);
 
   return await this.getBySerial(serial);
 }

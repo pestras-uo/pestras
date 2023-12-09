@@ -63,7 +63,7 @@
       ></app-pie-chart-form>
       <pestras-gis-map-form
         *ngIf="type.value === 'gis'"
-        [dsFields]="fields"
+        [dsFields]="fields | clone"
         [fcClass]="fcClass"
         formControlName="options"
       ></pestras-gis-map-form>

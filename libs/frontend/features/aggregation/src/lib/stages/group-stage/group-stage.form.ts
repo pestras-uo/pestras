@@ -31,7 +31,7 @@ export class GroupStageForm implements OnInit, ControlValueAccessor {
     cumulate: this.fb.array([this.fb.nonNullable.group({
       field: ['', Validators.required],
       display_name: ['', Validators.required],
-      method: this.fb.nonNullable.control<CumulateMethod>('count', Validators.required),
+      method: this.fb.nonNullable.control<GroupStageCumulateMethod>('count', Validators.required),
       // name of field, math formula or number to count
       expr: this.fb.nonNullable.control<string | number>(1, Validators.required)
     })])
@@ -87,7 +87,7 @@ export class GroupStageForm implements OnInit, ControlValueAccessor {
     this.cumulate.push(this.fb.nonNullable.group({
       field: [options?.field || '', Validators.required],
       display_name: [options?.display_name || '', Validators.required],
-      method: this.fb.nonNullable.control<CumulateMethod>(options?.method || 'count', Validators.required),
+      method: this.fb.nonNullable.control<GroupStageCumulateMethod>(options?.method || 'count', Validators.required),
       // name of field, math formula or number to count
       expr: this.fb.nonNullable.control<string | number>(options?.expr ?? 1, Validators.required)
     }));
@@ -103,9 +103,9 @@ export class GroupStageForm implements OnInit, ControlValueAccessor {
   };
 
   writeValue(opt: IAggrPiplineStage<GroupStageOptions>): void {
-    this.by.controls.field.setValue((opt?.options?.by as any).field || '');
-    this.by.controls.as.setValue((opt?.options?.by as any).as || '');
-    this.by.controls.modifiers.setValue((opt?.options?.by as any).modifiers || []);
+    this.by.controls.field.setValue((opt?.options?.by as any)?.field || '');
+    this.by.controls.as.setValue((opt?.options?.by as any)?.as || '');
+    this.by.controls.modifiers.setValue((opt?.options?.by as any)?.modifiers || []);
 
     this.cumulate.clear()
 

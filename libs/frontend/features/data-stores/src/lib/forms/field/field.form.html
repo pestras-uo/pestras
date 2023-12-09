@@ -269,18 +269,24 @@
       </div>
 
       <!-- region -->
-      <pui-select-input
+      <div
         *ngIf="typeField.value === 'region'"
-        labelRef="field-default-value"
-        [list]="'' | regions | async | arrayMap: mapRegion"
-        formControlName="default"
-      ></pui-select-input>
+        class="fc fc-outline fc-surface1 mbe-6"
+      >
+        <pui-select-input
+          labelRef="field-default-value"
+          [list]="'' | regions | async | arrayMap: mapRegion"
+          formControlName="default"
+        ></pui-select-input>
+      </div>
 
       <!-- Location -->
-      <pui-location-input
+      <div
         *ngIf="typeField.value === 'location'"
-        formControlName="default"
-      ></pui-location-input>
+        class="fc fc-outline fc-surface1 mbe-6"
+      >
+        <pui-location-input formControlName="default"></pui-location-input>
+      </div>
     </ng-container>
 
     <div class="divider mb-8"></div>
@@ -327,16 +333,6 @@
     >
       {{ c['errors'].refToRequired }}
     </p>
-
-    <!-- <p
-      *ngIf="
-          form.controls['group'].invalid &&
-          (form.controls['group'].dirty || form.controls['group'].touched)
-        "
-      class="note note-danger f10 mbe-4"
-    >
-      {{ c['errors'].groupRequired }}
-    </p> -->
   </div>
   <div class="divider mb-8"></div>
 

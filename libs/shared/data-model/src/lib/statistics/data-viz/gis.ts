@@ -1,7 +1,7 @@
 import { BaseDataViz, DataVizTypes } from './types';
 import { ColorRangeOption } from './util';
 
-export const gisLayerTypes = ['point', 'polyline', 'polygone'] as const;
+export const gisLayerTypes = ['point', 'polygon', 'pie'] as const;
 export type GisLayerTypes = typeof gisLayerTypes[number];
 
 export interface GISMapDataViz extends BaseDataViz<GISMapDataVizOptions> {
@@ -25,18 +25,27 @@ export interface GISMapDataVizLayerOptions {
   name: string;
   type: GisLayerTypes;
   // popup template content
+  primary_field: string;
   title_field: string;
   details_fields: string[];
-  // only for point type
+  // only for point or pie types
   size_field: string | null;
-  // for all types
+  // for point or polygon types
   color_field: string | null;
+  // for point or polygon types
   opacity_field: string | null;
-  // only when type is points
+  // only when type is points or pie
   location_field: string | null;
   // only when type is polygon
   region_field: string | null;
-  // visual maps
+  // only when type is pie
+  pie_fields: GISPieChartFieldOptions[];
+  // for point or polygon types
   color_range: ColorRangeOption[];
+}
+
+export interface GISPieChartFieldOptions {
+  field: string;
+  color: string;
 }
 
