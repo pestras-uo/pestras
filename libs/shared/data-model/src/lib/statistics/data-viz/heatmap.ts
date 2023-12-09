@@ -18,8 +18,11 @@ export interface HeatmapDataVizOptions {
    *
    * #### Supported Types:
    * - int
-   * - double
-   * - number
+   * - category
+   * - date
+   * - datetime,
+   * - time,
+   * - string
    */
   x_axis_field: string;
 
@@ -29,8 +32,11 @@ export interface HeatmapDataVizOptions {
    *
    * #### Supported Types:
    * - int
-   * - double
-   * - number
+   * - category
+   * - date
+   * - datetime,
+   * - time,
+   * - string
    */
   y_axis_field: string;
 
@@ -41,7 +47,8 @@ export interface HeatmapDataVizOptions {
    * #### Supported Types:
    * - int
    * - double
-   * - number
+   * - ordinal category
+   * - range category
    */
   value_field: 'string'; // Update the data type to reflect numerical values
 }

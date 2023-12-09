@@ -61,16 +61,16 @@ new Validall(RegionsValidators.UPDATE_COORDS, {
 
 new Validall(RegionsValidators.ADD_GIS_MAP, {
   name: { $type: 'string' },
-  apiKey: { $type: 'string' },
-  portal: { $type: 'string' },
-  id: { $type: 'string' },
+  apiKey: { $nullable: true, $type: 'string' },
+  portal: { $nullable: true, $type: 'string' },
+  id: { $nullable: true, $type: 'string' },
   basemap: { $type: 'string' }
 });
 
 new Validall(RegionsValidators.UPDATE_GIS_MAP, {
   name: { $type: 'string' },
-  portal: { $type: 'string' },
-  id: { $type: 'string' },
+  portal: { $nullable: true, $type: 'string' },
+  id: { $nullable: true, $type: 'string' },
   basemap: { $type: 'string' }
 });
 

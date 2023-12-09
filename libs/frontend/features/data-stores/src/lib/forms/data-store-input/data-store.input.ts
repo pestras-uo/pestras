@@ -2,7 +2,7 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @angular-eslint/component-class-suffix */
 /* eslint-disable @angular-eslint/component-selector */
-import { Component, HostBinding, Input, OnChanges } from '@angular/core';
+import { Component, HostBinding, Input, OnChanges, OnInit } from '@angular/core';
 import {
   AbstractControl,
   ControlValueAccessor,
@@ -24,7 +24,7 @@ import { DataStore } from '@pestras/shared/data-model';
     { provide: NG_VALIDATORS, multi: true, useExisting: DataStoreInput },
   ],
 })
-export class DataStoreInput implements OnChanges, ControlValueAccessor {
+export class DataStoreInput implements OnInit, OnChanges, ControlValueAccessor {
   private ud = untilDestroyed();
 
   readonly bp = new FormControl('', { nonNullable: true });
@@ -57,12 +57,15 @@ export class DataStoreInput implements OnChanges, ControlValueAccessor {
   constructor(
     private state: DataStoresState,
     private bpsState: BlueprintsState
-  ) {}
+  ) { }
 
   ngOnChanges(): void {
     if (this.blueprint)
       setTimeout(() => this.bp.setValue(this.blueprint ?? ''));
 
+  }
+
+  ngOnInit(): void {
     this.ds.valueChanges.pipe(this.ud()).subscribe((v) => {
       this.onChange(v ?? null);
       this.onTouched();

@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { AggrStageTypes, DataStore, DataStoreState, DataStoreType, EntityTypes, Role, TypedEntity, User, aggrPipelineFactory } from "@pestras/shared/data-model";
 import { DataStoresModel } from ".";
 import { HttpError, HttpCode } from "@pestras/backend/util";
@@ -98,8 +99,12 @@ export async function buildView(this: DataStoresModel, ds: DataStore, rebuild = 
     srcDs.fields,
     (serial: string) => joinsFields[serial]);
 
-  if (rebuild)
-    await this.dataDB.collection(ds.serial).drop();
+  if (rebuild) {
+    const exists = (await this.dataDB.listCollections().toArray()).includes((s: any) => s.name === ds.serial);
+
+    if (exists)
+      await this.dataDB.collection(ds.serial).drop();
+  }
 
   // create database view
   await this.dataDB.createCollection(ds.serial, {

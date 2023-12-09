@@ -47,7 +47,7 @@ export async function addSlide(
 
 export type UpdateDashboardSlideInput = Pick<
   DashboardSlide,
-  'title' | 'play_time'
+  'title' | 'play_time' | 'data_store'
 >;
 
 export async function updateSlide(
@@ -68,6 +68,7 @@ export async function updateSlide(
       $set: {
         'slides.$.title': input.title,
         'slides.$.play_time': input.play_time,
+        'slides.$.data_store': input.data_store,
         last_modified: date,
       },
     }

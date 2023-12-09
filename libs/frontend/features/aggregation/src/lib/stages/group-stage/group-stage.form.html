@@ -4,27 +4,36 @@
       <p class="bold">{{c['groupBy']}}</p>
     </legend>
 
-    <label [for]="id + '_group-by-field'">{{c['groupBy']}}</label>
-    <div [class]="'fc mbe-4 ' + fcClass">
-      <pui-select-input
-        [labelRef]="id + '_group-by-field'"
-        formControlName="field"
-        [list]="fields | arrayFilter : filterGroupField | arrayMap : mapField"
-      ></pui-select-input>
-    </div>
+    <div class="flex gap-2 mbe-4">
+      <div class="grow">
+        <label [for]="id + '_group-by-field'">{{c['groupBy']}}</label>
+        <div [class]="'fc ' + fcClass">
+          <pui-select-input
+            [labelRef]="id + '_group-by-field'"
+            formControlName="field"
+            [list]="fields | arrayFilter : filterGroupField | arrayMap : mapField"
+          ></pui-select-input>
+        </div>
+      </div>
+  
+      <div class="grow">
+        <label [for]="id + '_group-by-as'">{{c['newName']}}</label>
+        <div [class]="'fc ' + fcClass">
+          <input type="text" [id]="id + '_group-by-as'" formControlName="as" />
+        </div>
+      </div>
+  
+      <div class="grow">
+        <label [for]="id + '_group-by-modifiers'">{{c['modifiers']}}</label>
+        <div [class]="'fc ' + fcClass">
+          <pui-multi-select-input
+            [labelRef]="id + '_group-by-modifiers'"
+            formControlName="modifiers"
+            [list]="c['valueModifiers']"
+          ></pui-multi-select-input>
+        </div>
+      </div>
 
-    <label [for]="id + '_group-by-as'">{{c['newName']}}</label>
-    <div [class]="'fc mbe-4 ' + fcClass">
-      <input type="text" [id]="id + '_group-by-as'" formControlName="as" />
-    </div>
-
-    <label [for]="id + '_group-by-modifiers'">{{c['modifiers']}}</label>
-    <div [class]="'fc mbe-4 ' + fcClass">
-      <pui-multi-select-input
-        [labelRef]="id + '_group-by-modifiers'"
-        formControlName="modifiers"
-        [list]="c['valueModifiers']"
-      ></pui-multi-select-input>
     </div>
   </fieldset>
 
@@ -53,52 +62,65 @@
         </button>
       </legend>
 
-      <label [for]="id + i + '_field'">{{c['output']}}</label>
-      <div [class]="'fc mbe-4 ' + fcClass">
-        <input type="string" [id]="id + i + '_field'" formControlName="field" />
+      <div class="flex gap-2 mbe-4">
+        <div class="grow">
+          <label [for]="id + i + '_field'">{{c['output']}}</label>
+          <div [class]="'fc ' + fcClass">
+            <input type="string" [id]="id + i + '_field'" formControlName="field" />
+          </div>
+        </div>
+
+        <div class="grow">
+          <label [for]="id + i + '_display'">{{c['displayName']}}</label>
+          <div [class]="'fc ' + fcClass">
+            <input
+              type="string"
+              [id]="id + i + '_display'"
+              formControlName="display_name"
+            />
+          </div>
+        </div>
       </div>
 
-      <label [for]="id + i + '_display'">{{c['displayName']}}</label>
-      <div [class]="'fc mbe-4 ' + fcClass">
-        <input
-          type="string"
-          [id]="id + i + '_display'"
-          formControlName="display_name"
-        />
+      <div class="flex gap-2 mbe-4">
+        <div class="grow">
+          <label [for]="id + i + '_expr'">
+            {{c['input']}}
+            <div class="grow"></div>
+            <pui-check-input
+              #isField
+              [label]="c['selectField']"
+              [small]="true"
+            ></pui-check-input>
+          </label>
+          <div [class]="'fc ' + fcClass">
+            <input
+              *ngIf="!isField.value"
+              type="number"
+              [id]="id + i + '_expr'"
+              formControlName="expr"
+            />
+            <pui-select-input
+              *ngIf="isField.value"
+              [labelRef]="id + i + '_expr'"
+              formControlName="expr"
+              [list]="fields | arrayFilter : filterField | arrayMap : mapField"
+            ></pui-select-input>
+          </div>
+        </div>
+
+        <div class="grow">
+          <label [for]="id + i + '_method'">{{c['operation']}}</label>
+          <div [class]="'fc ' + fcClass">
+            <pui-select-input
+              [list]="c['cumulateOperations']"
+              [labelRef]="id + i + '_method'"
+              formControlName="method"
+            ></pui-select-input>
+          </div>
+        </div>
       </div>
 
-      <label [for]="id + i + '_method'">{{c['operation']}}</label>
-      <div [class]="'fc mbe-4 ' + fcClass">
-        <pui-select-input
-          [list]="c['cumulateOperations']"
-          [labelRef]="id + i + '_method'"
-          formControlName="method"
-        ></pui-select-input>
-      </div>
-
-      <label [for]="id + i + '_expr'">
-        {{c['input']}}
-        <div class="grow"></div>
-        <pui-check-input
-          #isField
-          [label]="c['selectField']"
-          [small]="true"
-        ></pui-check-input>
-      </label>
-      <div [class]="'fc mbe-4 ' + fcClass">
-        <input
-          *ngIf="!isField.value"
-          type="number"
-          [id]="id + i + '_expr'"
-          formControlName="expr"
-        />
-        <pui-select-input
-          *ngIf="isField.value"
-          [labelRef]="id + i + '_expr'"
-          formControlName="expr"
-          [list]="fields | arrayFilter : filterField | arrayMap : mapField"
-        ></pui-select-input>
-      </div>
     </fieldset>
   </ng-container>
 </form>

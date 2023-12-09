@@ -1,0 +1,372 @@
+<form [formGroup]="form" *contra="let c">
+  <label for="map-region">{{ c['gisMap'] }}</label>
+  <div class="flex gap-2 mbe-6">
+    <div class="grow">
+      <div class="fc">
+        <pui-select-input
+          labelRef="map-region"
+          formControlName="region"
+          [list]="'' | regions | async | arrayMap : mapRegion"
+          [placeholder]="c['region']"
+        ></pui-select-input>
+      </div>
+    </div>
+    <div class="grow">
+      <div class="fc">
+        <pui-select-input
+          labelRef="gis-map"
+          formControlName="map"
+          [placeholder]="c['map']"
+          [list]="
+            (regionCtrl.value | region | async)?.gis ?? null
+              | arrayMap : mapMaps
+          "
+        >
+        </pui-select-input>
+      </div>
+    </div>
+  </div>
+
+  <label for="gis-layers">{{ c['layers'] }}</label>
+  <div class="fc mbe-6">
+    <pui-multi-select-input
+      labelRef="gis-layers"
+      formControlName="layers"
+      [list]="
+        (
+          (regionCtrl.value | region | async)?.gis ?? null
+          | arrayFind : findMap : mapCtrl.value
+        )?.layers ?? null | arrayMap : mapLayer
+      "
+    >
+    </pui-multi-select-input>
+  </div>
+
+  <div class="toolbar gap-2 mbe-6">
+    <h4>{{ c['externalLayers'] }}</h4>
+    <div class="grow"></div>
+    <button class="btn-small btn-round btn-icon" (click)="addExternalLayer()">
+      <i puiIcon="add" size="small"></i>
+    </button>
+  </div>
+
+  <ng-container formArrayName="external_layers">
+    <div
+      *ngFor="let g of extLayersCtrl.controls; let i = index"
+      class="flex gap-2 align-items-end mbe-6"
+      [formGroup]="g"
+    >
+      <div class="grow">
+        <label [for]="i + '-layer-name'">{{ c['name'] }}</label>
+        <div class="fc">
+          <input type="text" [id]="i + '-layer-name'" formControlName="name" />
+        </div>
+      </div>
+      <div class="grow">
+        <label [for]="i + '-layer-url'">{{ c['url'] }}</label>
+        <div class="fc">
+          <input type="text" [id]="i + '-layer-url'" formControlName="url" />
+        </div>
+      </div>
+      <button
+        class="btn-round btn-icon btn-danger"
+        (click)="extLayersCtrl.removeAt(i)"
+      >
+        <i puiIcon="delete" size="small"></i>
+      </button>
+    </div>
+  </ng-container>
+
+  <div class="toolbar gap-2 mbe-6">
+    <h4>{{ c['customLayer'] }}</h4>
+    <div class="grow"></div>
+    <button class="btn-small btn-round btn-icon" (click)="addCustomLayer()">
+      <i puiIcon="add" size="small"></i>
+    </button>
+  </div>
+
+  <ng-container formArrayName="custom_layers">
+    <fieldset
+      *ngFor="let g of cusLayersCtrl.controls; let i = index"
+      [formGroup]="g"
+      class="mbe-6"
+    >
+      <legend>
+        <h5>{{ i + 1 }} {{ c['layer'] }}</h5>
+        <button
+          class="btn-tiny btn-icon btn-round btn-danger"
+          *ngIf="!cusLayersCtrl.controls.length"
+        >
+          <i puiIcon="delete" size="tiny"></i>
+        </button>
+      </legend>
+
+      <div class="flex gap-2 mbe-6">
+        <div class="grow">
+          <label [for]="i + '-layer-name'">{{ c['name'] }}</label>
+          <div class="fc">
+            <input
+              type="text"
+              formControlName="name"
+              [id]="i + '-layer-name'"
+            />
+          </div>
+        </div>
+        <div class="grow">
+          <label [for]="i + '-layer-type'">{{ c['type'] }}</label>
+          <div class="fc">
+            <pui-select-input
+              [labelRef]="i + '-layer-type'"
+              [list]="c['layerTypes']"
+              formControlName="type"
+            >
+            </pui-select-input>
+          </div>
+        </div>
+      </div>
+
+      <div class="flex gap-2 mbe-6">
+        <div class="grow">
+          <label [for]="i + '-primary-field'">{{ c['primaryField'] }}</label>
+          <div class="fc">
+            <pui-select-input
+              [list]="dsFields | arrayMap : mapField"
+              formControlName="primary_field"
+              [labelRef]="i + '-primary-field'"
+            >
+            </pui-select-input>
+          </div>
+        </div>
+        <div class="grow">
+          <label [for]="i + '-title-field'">{{ c['nameField'] }}</label>
+          <div class="fc">
+            <pui-select-input
+              [list]="
+                dsFields
+                  | fn : addRegionNameField : g.controls.type.value
+                  | arrayFilter : filterTitleField
+                  | arrayMap : mapField
+              "
+              formControlName="title_field"
+              [labelRef]="i + '-title-field'"
+            >
+            </pui-select-input>
+          </div>
+        </div>
+        <div class="grow">
+          <label [for]="i + '-details-fields'">{{ c['detailsFields'] }}</label>
+          <div class="fc">
+            <pui-multi-select-input
+              [labelRef]="i + '-details-fields'"
+              [list]="
+                dsFields
+                  | fn : addRegionNameField : g.controls.type.value
+                  | arrayMap : mapField
+              "
+              formControlName="details_fields"
+            >
+            </pui-multi-select-input>
+          </div>
+        </div>
+      </div>
+
+      <ng-container *ngIf="g.controls.type.value as type">
+        <!-- point type only -->
+        <ng-container *ngIf="type === 'point'">
+          <label [for]="i + '-location-field'">{{ c['locationField'] }}</label>
+          <div class="fc mbe-6">
+            <pui-select-input
+              [labelRef]="i + '-location-field'"
+              [list]="
+                dsFields | arrayFilter : filterLocField | arrayMap : mapField
+              "
+              formControlName="location_field"
+            >
+            </pui-select-input>
+          </div>
+        </ng-container>
+
+        <!-- point and pie types -->
+        <ng-container *ngIf="type === 'point' || type === 'pie'">
+          <label [for]="i + '-size-field'">{{ c['sizeField'] }}</label>
+          <div class="fc mbe-6">
+            <pui-select-input
+              [labelRef]="i + '-size-field'"
+              [list]="
+                dsFields | arrayFilter : filterValueField | arrayMap : mapField
+              "
+              formControlName="size_field"
+            >
+            </pui-select-input>
+          </div>
+        </ng-container>
+
+        <!-- polygon and pie type only -->
+        <ng-container *ngIf="type === 'polygon' || type === 'pie'">
+          <label [for]="i + '-region-field'">{{ c['regionField'] }}</label>
+          <div class="fc mbe-6">
+            <pui-select-input
+              [labelRef]="i + '-region-field'"
+              [list]="
+                dsFields | arrayFilter : filterRegionField | arrayMap : mapField
+              "
+              formControlName="region_field"
+            >
+            </pui-select-input>
+          </div>
+        </ng-container>
+
+        <!-- pie type only -->
+        <ng-container formArrayName="pie_fields" *ngIf="type === 'pie'">
+          <div class="toolbar gap-2 mbe-6">
+            <h4>{{ c['input'] }}</h4>
+            <div class="grow"></div>
+            <button
+              class="btn-small btn-icon btn-round"
+              (click)="addPieField(i)"
+            >
+              <i puiIcon="add" size="small"></i>
+            </button>
+          </div>
+
+          <div
+            *ngFor="let pf of g.controls.pie_fields.controls; let j = index"
+            [formGroup]="pf"
+            class="flex gap-2 align-items-end mbe-6"
+          >
+            <div class="grow">
+              <label [for]="i + '-' + j + '-pie-field'">{{ c['field'] }}</label>
+              <div class="fc">
+                <pui-select-input
+                  [labelRef]="i + '-' + j + '-pie-field'"
+                  [list]="
+                    dsFields
+                      | arrayFilter : filterValueField
+                      | arrayMap : mapField
+                  "
+                  formControlName="field"
+                >
+                </pui-select-input>
+              </div>
+            </div>
+            <div class="grow">
+              <label [for]="i + '-' + j + '-pie-color'">{{ c['color'] }}</label>
+              <div class="fc">
+                <pui-select-input
+                  formControlName="color"
+                  [labelRef]="i + '-' + j + '-pie-color'"
+                  [list]="c['colorsList']"
+                ></pui-select-input>
+              </div>
+            </div>
+            <button
+              class="btn-round btn-icon"
+              (click)="g.controls.pie_fields.removeAt(j)"
+            >
+              <i puiIcon="delete" color="danger" size="tiny"></i>
+            </button>
+          </div>
+        </ng-container>
+
+        <!-- point or polygon types -->
+        <div
+          *ngIf="type === 'point' || type === 'polygon'"
+          class="flex gap-2 mbe-6"
+        >
+          <div class="grow">
+            <label [for]="i + '-color-field'">{{ c['colorField'] }}</label>
+            <div class="fc">
+              <pui-select-input
+                [nullable]="true"
+                [labelRef]="i + '-color-field'"
+                [list]="
+                  dsFields
+                    | arrayFilter : filterValueField
+                    | arrayMap : mapField
+                "
+                formControlName="color_field"
+              >
+              </pui-select-input>
+            </div>
+          </div>
+          <div class="grow">
+            <label [for]="i + '-opacity-field'">{{ c['opacityField'] }}</label>
+            <div class="fc">
+              <pui-select-input
+                [nullable]="true"
+                [labelRef]="i + '-opacity-field'"
+                [list]="
+                  dsFields
+                    | arrayFilter : filterValueField
+                    | arrayMap : mapField
+                "
+                formControlName="opacity_field"
+              >
+              </pui-select-input>
+            </div>
+          </div>
+        </div>
+
+        <ng-container
+          formArrayName="color_range"
+          *ngIf="g.controls.color_field.value"
+        >
+          <div class="toolbar gap-2 mbe-6">
+            <h5>{{ c['colorVariations'] }}</h5>
+            <div class="grow"></div>
+            <button
+              class="btn-icon btn-tiny btn-icon"
+              (click)="addColorRange(i)"
+            >
+              <i puiIcon="add" size="tiny"></i>
+            </button>
+          </div>
+
+          <div
+            *ngFor="let cg of g.controls.color_range.controls; let j = index"
+            [formGroup]="cg"
+            class="flex gap-2 align-items-end mbe-6"
+          >
+            <div class="grow">
+              <label [for]="i + '-' + j + 'color'">{{ c['color'] }}</label>
+              <div class="fc">
+                <pui-select-input
+                  [id]="i + '-' + j + 'color'"
+                  formControlName="color"
+                  [list]="c['colorsList']"
+                >
+                </pui-select-input>
+              </div>
+            </div>
+            <div class="grow">
+              <label [for]="i + '-' + j + 'value'">{{ c['value'] }}</label>
+              <div class="fc">
+                <input
+                  type="number"
+                  [id]="i + '-' + j + 'value'"
+                  formControlName="value"
+                />
+              </div>
+            </div>
+            <div class="grow">
+              <label [for]="i + '-' + j + 'label'">{{ c['label'] }}</label>
+              <div class="fc">
+                <input
+                  type="text"
+                  [id]="i + '-' + j + 'label'"
+                  formControlName="label"
+                />
+              </div>
+            </div>
+            <button
+              class="btn-round btn-icon"
+              (click)="g.controls.color_range.removeAt(j)"
+            >
+              <i puiIcon="delete" size="tiny" color="danger"></i>
+            </button>
+          </div>
+        </ng-container>
+      </ng-container>
+    </fieldset>
+  </ng-container>
+</form>

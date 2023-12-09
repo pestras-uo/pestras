@@ -30,6 +30,11 @@
         [data]="data"
         [dark]="dark"
       ></app-map-chart>
+      <pestras-gis-map-viz
+        *ngSwitchCase="'gis'"
+        [conf]="options"
+        [data]="data"
+      ></pestras-gis-map-viz>
       <app-pie-chart
         *ngSwitchCase="'pie'"
         [conf]="options"

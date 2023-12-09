@@ -1,4 +1,30 @@
 {
+  "colorsList": [
+    { "name": "White", "value": "white" },
+    { "name": "Black", "value": "black" },
+    { "name": "Yellow", "value": "yellow" },
+    { "name": "Green", "value": "green" },
+    { "name": "Purple", "value": "purple" },
+    { "name": "Blue", "value": "blue" },
+    { "name": "Red", "value": "red" },
+    { "name": "Orange", "value": "orange" },
+    { "name": "Pink", "value": "pink" },
+    { "name": "Grey", "value": "grey" },
+    { "name": "Light Grey", "value": "darkgrey" },
+    { "name": "Dark Grey", "value": "lightgrey" }
+  ],
+  "layerTypes": [
+    { "name": "Points", "value": "point" },
+    { "name": "Regions", "value": "polygon" },
+    { "name": "Pie Charts", "value": "pie" }
+  ],
+  "label": "Label",
+  "colorVariations": "Color Variations",
+  "opacityField": "Opacity Field",
+  "colorField": "Color Field",
+  "locationField": "Location Field",
+  "detailsFields": "Details Fields",
+  "url": "URL",
   "removeLayer": "Remove Layer",
   "removeGisMap": "Remove Gis Map",
   "layerUrl": "Layer URL",
@@ -12,7 +38,11 @@
   "portalUrl": "Portal",
   "basemap": "Basemap",
   "layers": "Layers",
-  "gisMaps": "ArcGIS Maps",
+  "layer": "Layer",
+  "externalLayers": "External Layers",
+  "customLayer": "Custom Layer",
+  "gisMap": "GIS Map",
+  "gisMaps": "GIS Maps",
   "googleMaps": "Google Maps",
   "primaryField": "Primary Field",
   "skipParam": "Skip Param",
@@ -479,6 +509,10 @@
       "value": "map"
     },
     {
+      "name": "GIS Map",
+      "value": "gis"
+    },
+    {
       "name": "Pie / doughnat",
       "value": "pie"
     },
@@ -603,6 +637,10 @@
     {
       "name": "Map",
       "value": "map"
+    },
+    {
+      "name": "GIS Map",
+      "value": "gis"
     },
     {
       "name": "Plot",
@@ -979,6 +1017,18 @@
     {
       "name": "Count",
       "value": "count"
+    },
+    {
+      "name": "Median",
+      "value": "median"
+    },
+    {
+      "name": "First Value",
+      "value": "first"
+    },
+    {
+      "name": "Last Value",
+      "value": "last"
     }
   ],
   "sort": "Sort",

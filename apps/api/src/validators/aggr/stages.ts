@@ -1,9 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { Validall } from "@pestras/validall";
 import { Validators } from "..";
-import { CumulateMethod, filterCompareOperators } from "@pestras/shared/data-model";
-
-export const cumulateMethods: CumulateMethod[] = ['sum', 'min', 'max', 'count', 'avg'];
+import { cumulateMethod, filterCompareOperators, groupStageCumulateMethod } from "@pestras/shared/data-model";
 
 new Validall(Validators.BUCKET_STAGE, {
   type: { $equals: 'bucket' },
@@ -18,7 +16,7 @@ new Validall(Validators.BUCKET_STAGE, {
       $message: 'bucketsStageCumulateFieldsAreRequired',
       $each: {
         field: { $type: 'string', $message: 'invalidBucketsStageCumulateField' },
-        method: { $enum: cumulateMethods, $message: 'invaidBucketsStageCumulateMethod' },
+        method: { $enum: cumulateMethod, $message: 'invaidBucketsStageCumulateMethod' },
         expr: {
           $or: [
             { $type: 'number', $message: 'invalidBucketsStageCumuplateExpr' },
@@ -69,7 +67,7 @@ new Validall(Validators.GROUP_STAGE, {
       $each: {
         field: { $type: 'string', $message: 'invalidGroupStageCumulateField' },
         display_name: { $type: 'string', $message: 'invalidGroupStageCumulateDisplayName' },
-        method: { $enum: cumulateMethods, $message: 'invaidGroupStageCumulateMethod' },
+        method: { $enum: groupStageCumulateMethod, $message: 'invaidGroupStageCumulateMethod' },
         expr: {
           $or: [
             { $type: 'number', $message: 'invalidGroupStageCumuplateExpr' },
@@ -196,7 +194,7 @@ new Validall(Validators.SET_WIN_FIELD_STAGE, {
           name: { $type: 'string', $message: 'invalidSetWinFieldStageOutputsField' },
           modifiers: { $ref: Validators.VALUE_MODIFIERS }
         },
-        method: { $enum: cumulateMethods, $message: 'invaidSetWinFieldStageOutputMethod' },
+        method: { $enum: cumulateMethod, $message: 'invaidSetWinFieldStageOutputMethod' },
         documents: {
           start: {},
           end: {}

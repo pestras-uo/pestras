@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @angular-eslint/component-class-suffix */
 /* eslint-disable @angular-eslint/component-selector */
 import {
@@ -55,7 +56,7 @@ export class ChartView implements OnChanges {
     private dsState: DataStoresState,
     private regionsState: RegionsState,
     private recordsService: RecordsService
-  ) {}
+  ) { }
 
   ngOnChanges(): void {
     this.options$ = this.state.select(this.serial);
@@ -72,9 +73,12 @@ export class ChartView implements OnChanges {
           options.aggregate
         );
 
-        return [fields, records] as [TypedEntity[], DataRecord[]];
+        return [fields, records, options] as [TypedEntity[], DataRecord[], BaseDataViz<any>];
       }),
       map((data) => {
+        if (data[2].type === DataVizTypes.GIS)
+          return [data[0], data[1]];
+
         const regionFields = data[0].filter((f) => f.type === 'region');
 
         if (regionFields.length)
@@ -84,7 +88,7 @@ export class ChartView implements OnChanges {
                 r[field.name] as string
               )?.name;
 
-        return data;
+        return [data[0], data[1]];
       }),
       map((data) => ({
         fields: data[0].map((t) => createField(t)),

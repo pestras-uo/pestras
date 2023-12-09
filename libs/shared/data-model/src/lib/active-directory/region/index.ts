@@ -15,10 +15,10 @@ export interface GISMapFeatureLayer {
 export interface GISMapConfig {
   serial: string;
   name: string;
-  apiKey: string | null;
-  id: string;
-  portal: string;
   basemap: string;
+  id: string | null;
+  portal: string | null;
+  apiKey: string | null;
   layers: GISMapFeatureLayer[];
 }
 

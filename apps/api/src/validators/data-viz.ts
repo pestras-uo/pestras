@@ -5,6 +5,7 @@ import {
   DataVizTypes,
   Stats,
   dataVizFilterOperators,
+  gisLayerTypes,
 } from '@pestras/shared/data-model';
 
 // Bar
@@ -251,6 +252,46 @@ new Validall(HEATMAP, {
   },
 });
 
+// Gis Map
+// -----------------------------------------------------------------------------
+const GISMAP = 'gisMapDataViz';
+
+new Validall(GISMAP, {
+  type: { $equals: DataVizTypes.GIS },
+  options: {
+    region: { $type: 'string' },
+    map: { $type: 'string' },
+    layers: { $each: { $type: 'string' } },
+    external_layers: {
+      $each: {
+        name: { $type: 'string' },
+        url: { $type: 'string' }
+      }
+    },
+    custom_layers: {
+      $each: {
+        name: { $type: 'string' },
+        primary_field: { $type: 'string' },
+        title_field: { $type: 'string' },
+        details_fields: { $each: { $type: 'string' } },
+        type: { $enum: gisLayerTypes },
+        coords_field: { $nullable: true, $type: 'string' },
+        region_field: { $nullable: true, $type: 'string' },
+        size_field: { $nullable: true, $type: 'string' },
+        color_field: { $nullable: true, $type: 'string' },
+        opacity_field: { $nullable: true, $type: 'string' },
+        color_range: {
+          $each: {
+            color: { $type: 'string' },
+            value: { $type: 'number' },
+            label: { $nullable: true, $type: 'string' }
+          }
+        }
+      }
+    }
+  }
+})
+
 // Data Viz
 // -----------------------------------------------------------------------------
 new Validall(Validators.DATA_VIZ, {
@@ -327,6 +368,8 @@ new Validall(Validators.DATA_VIZ, {
   $or: [
     { $ref: BAR },
     { $ref: BOXPLOT },
+    { $ref: GISMAP },
+    { $ref: HEATMAP },
     { $ref: HIERARCHICAL },
     { $ref: LINE },
     { $ref: MAP },
@@ -335,7 +378,6 @@ new Validall(Validators.DATA_VIZ, {
     { $ref: RADAR },
     { $ref: SCATTER },
     { $ref: TABLE },
-    { $ref: TIMELINE },
-    { $ref: HEATMAP },
+    { $ref: TIMELINE }
   ],
 });

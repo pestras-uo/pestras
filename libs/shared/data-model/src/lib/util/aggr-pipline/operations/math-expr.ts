@@ -28,7 +28,7 @@ export class MathExprOperation extends AggrOperation<MathExprOperationOptions> {
   }
   
   static GetVariablesFromMathExpr(expr: string) {
-    const reg = /\$[a-zA-Z_]+/g;
+    const reg = /\$[a-zA-Z][a-zA-Z_0-9]+/g;
     const list = expr.match(reg)
   
     return list && list.length

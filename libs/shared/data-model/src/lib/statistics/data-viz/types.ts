@@ -56,9 +56,14 @@ export enum DataVizTypes {
   // - field types: Date, Datetime or time
   // - visualizations: Timespan or waterfall chart
   TIMELINE = 'timeline',
-
-  //  - visualizations: HeatMap Chart
+  // visualize two categories and the corresponding value
+  // - field types:
+  //  - x,y axis: category, Date, Datetime, int, string
+  //  - value: int, double, ordinal category, range category
+  // - visualizations: HeatMap Chart
   HEATMAP = 'heatmap',
+  // visualize gis maps 
+  GIS = 'gis'
 }
 
 export interface BaseDataViz<T = any> {
