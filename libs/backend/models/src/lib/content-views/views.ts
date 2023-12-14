@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { ContentView } from "@pestras/shared/data-model";
 import { Serial } from '@pestras/shared/util';
 import { ContentViewsModel } from ".";
@@ -16,7 +17,7 @@ export async function addView(
     $push: {
       views: cv,
       views_order: cv.serial
-    } 
+    }
   });
 
   return cv;
@@ -36,14 +37,19 @@ export async function updateView(
   this: ContentViewsModel,
   entity: string,
   view: string,
-  input: Pick<ContentView, 'title' | 'sub_title'>
+  input: Pick<ContentView, 'title' | 'sub_title' | 'content'>
 ) {
 
+  const update: any = {
+    'views.$.title': input.title,
+    'views.$.sub_title': input.sub_title
+  };
+
+  if (input.content)
+    update['views.$.content'] = input.content;
+
   await this.col.updateOne({ entity, 'views.serial': view }, {
-    $set: {
-      'views.$.title': input.title,
-      'views.$.sub_title': input.sub_title
-    } 
+    $set: update
   });
 
   return true;
@@ -57,7 +63,7 @@ export async function updateViewContent(
 ) {
 
   await this.col.updateOne({ entity, 'views.serial': view }, {
-    $set: { 'views.$.content': content } 
+    $set: { 'views.$.content': content }
   });
 
   return true;
@@ -70,7 +76,7 @@ export async function removeView(
 ) {
 
   await this.col.updateOne({ entity }, {
-    $pull: { views: { serial: view } } 
+    $pull: { views: { serial: view } }
   });
 
   return true;

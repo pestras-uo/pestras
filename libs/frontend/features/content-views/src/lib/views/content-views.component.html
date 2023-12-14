@@ -41,6 +41,8 @@
           cdkDrag
           [cdkDragDisabled]="!editMode"
         >
+          <div *ngIf="!first && view.title" class="divider mb-8"></div>
+
           <div class="toolbar pb-2" *ngIf="editMode">
             <div class="grow"></div>
 
@@ -51,12 +53,17 @@
               <i size="small" puiIcon="edit"></i>
             </button>
 
+            <button
+              class="btn-icon btn-small btn-round"
+              (click)="openDialog(removeViewTmp, view)"
+            >
+              <i size="small" color="danger" puiIcon="delete"></i>
+            </button>
+
             <button cdkDragHandle class="btn-icon btn-small btn-round">
               <i size="small" puiIcon="drag"></i>
             </button>
           </div>
-
-          <div *ngIf="!first && view.title" class="divider mb-8"></div>
 
           <h3 *ngIf="view.title" class="mbe-6" [class.mbe-2]="view.sub_title">
             {{ view.title }}
@@ -151,26 +158,6 @@
           >
             {{ c['errors'].titleRequired }}
           </p>
-       
-          <!-- <p
-            *ngIf="
-              form.controls['type'].invalid &&
-              (form.controls['type'].dirty || form.controls['type'].touched)
-            "
-            class="note note-danger f10 mbe-4"
-          >
-            {{ c['errors'].title }}
-          </p>
-          <p
-            *ngIf="
-              form.controls['content'].invalid &&
-              (form.controls['content'].dirty ||
-                form.controls['content'].touched)
-            "
-            class="note note-danger f10 mbe-4"
-          >
-            {{ c['errors'].title }}
-          </p> -->
         </div>
       </div>
 
@@ -185,6 +172,27 @@
 
       <pui-preloader *ngIf="preloader"></pui-preloader>
     </form>
+  </ng-template>
+
+  <ng-template #removeViewTmp let-view>
+    <div class="card shaow-6 w-12">
+      <h4 class="card-header">{{ c['delete'] }}</h4>
+      <p class="card-body">{{ c['confirmOperation'] }}</p>
+
+      <div class="card-footer">
+        <button class="btn-round" (click)="closeDialog()">
+          {{ c['cancel'] }}
+        </button>
+        <button
+          class="btn-round btn-primary btn-danger"
+          (click)="removeView(c, view.serial)"
+        >
+          {{ c['delete'] }}
+        </button>
+      </div>
+
+      <pui-preloader *ngIf="preloader"></pui-preloader>
+    </div>
   </ng-template>
 
   <ng-template #noViews>

@@ -44,7 +44,7 @@ export class ContentViewsComponent implements OnChanges {
       Validators.required
     ),
     sub_title: [''],
-    content: ['', Validators.required],
+    content: [''],
   });
 
   type = this.form.controls.type;
@@ -68,7 +68,7 @@ export class ContentViewsComponent implements OnChanges {
     private dialog: Dialog,
     private readonly fb: FormBuilder,
     private readonly toast: ToastService
-  ) {}
+  ) { }
 
   ngOnChanges(): void {
     this.content$ = this.state.select(this.entity).pipe(
@@ -161,5 +161,25 @@ export class ContentViewsComponent implements OnChanges {
         this.preloader = false;
       },
     });
+  }
+
+  removeView(c: Record<string, any>, view: string) {
+    this.preloader = true;
+
+    this.state.removeView(this.entity, view)
+      .subscribe({
+        next: () => {
+          this.toast.msg(c['success'].default, { type: 'success' });
+          this.closeDialog();
+        },
+        error: (e) => {
+          console.error(e);
+
+          this.toast.msg(c['errors'][e?.error] || c['errors'].default, {
+            type: 'error',
+          });
+          this.preloader = false;
+        },
+      })
   }
 }
