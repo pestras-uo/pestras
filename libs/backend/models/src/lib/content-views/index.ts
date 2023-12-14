@@ -14,7 +14,7 @@ export class ContentViewsModel extends Model<EntityContentViews> {
 
   addView: (entity: string, input: Omit<ContentView, 'serial'>) => Promise<ContentView> = addView.bind(this);
   updateViewsOrder: (entity: string, views: string[]) => Promise<boolean> = updateViewsOrder.bind(this);
-  updateView: (entity: string, view: string, input: Pick<ContentView, 'title' | 'sub_title'>) => Promise<boolean> = updateView.bind(this);
+  updateView: (entity: string, view: string, input: Pick<ContentView, 'title' | 'sub_title' | 'content'>) => Promise<boolean> = updateView.bind(this);
   updateViewContent: (entity: string, view: string, content: string | null) => Promise<boolean> = updateViewContent.bind(this);
   removeView: (entity: string, view: string) => Promise<boolean> = removeView.bind(this);
 

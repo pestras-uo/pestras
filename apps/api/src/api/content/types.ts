@@ -15,7 +15,7 @@ export namespace ContentViewsApi {
   export type UpdateViewsOrderReq = Request<{ entity: string; }, any, { views: string[] }>;
   export type UpdateViewsOrderRes = Response<boolean, UserSession>;
 
-  export type UpdateViewReq = Request<{ entity: string; view: string; }, any, Pick<ContentView, 'title' | 'sub_title'>>
+  export type UpdateViewReq = Request<{ entity: string; view: string; }, any, Pick<ContentView, 'title' | 'sub_title' | 'content'>>
   export type UpdateViewRes = Response<boolean, UserSession>;
 
   export type UpdateViewContentReq = Request<{ entity: string; view: string; }, any, { content: string; }>
