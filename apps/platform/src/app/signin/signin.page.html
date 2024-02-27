@@ -4,16 +4,12 @@
       <pui-preloader *ngIf="isLoading"></pui-preloader>
 
       <div class="card-body login-section">
-        <div class="flex align-items-center gap-4">
-          <img src="assets/imgs/undp-logo.png" class="logo" />
-          <img src="assets/imgs/gam-logo.jpg" class="logo" />
-          <div>
-            <h3 class="mbe-1">{{c['appName']}}</h3>
-            <p class="text3 f10">{{c['ownerName']}}</p>
-          </div>
+        <div class="flex align-items-center gap-4 justify-content-center mbe-4 ltr">
+          <img class="w-1" src="assets/imgs/logo.png" alt="pestras logo" />
+          <p class="weight-8 f7">PESTRAS</p>
         </div>
 
-        <h1 class="primary text-upper mb-8 align-center">{{c['sign']}}</h1>
+        <h1 class="primary text-upper mbe-8 align-center">{{c['sign']}}</h1>
 
         <form [formGroup]="form" (ngSubmit)="login(c)">
           <label for="username">{{c['username']}}</label>
@@ -40,10 +36,18 @@
           ></pui-check-input>
 
           <button
-            class="btn btn-primary btn-round btn-block"
+            class="btn btn-primary btn-block mbe-2"
             [disabled]="form.invalid"
           >
             {{c['signin']}}
+          </button>
+
+          <button
+            type="button"
+            class="btn btn-success btn-block"
+            (click)="guestLogin(c)"
+          >
+            {{c['guest']}}
           </button>
         </form>
       </div>
@@ -55,16 +59,14 @@
 
     <div class="banner color-scheme-dark p-16 flex align-items-center">
       <div>
-        <div class="flex gap-4 mbe-8 align-items-center">
-          <img class="p-logo" src="assets/imgs/logo.png" alt="" />
-          <h1 class="f2 weight-8">
-            {{c['welcome']}}
-            <br />
-            {{c['pestras']}}
-          </h1>
+        <div class="flex align-items-center gap-4 justify-content-center mbe-4">
+          <img class="p-logo" src="assets/imgs/undp-logo.png" alt="UNDP logo" />
+          <img class="p-logo" src="assets/imgs/gam-logo.jpg" />
         </div>
 
-        <p class="f8 text3 mbe-20">{{c['welcomeMsg']}}</p>
+        <h1 class="align-center weight-8 mbe-4">{{c['appName']}}</h1>
+
+        <p class="f8 align-center bold text3 mbe-20">{{c['ownerName']}}</p>
       </div>
 
       <img class="bg" src="assets/imgs/login-urban.png" />

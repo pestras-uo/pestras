@@ -47,3 +47,6 @@ ecosystem.config.js
 
 # uploads
 public/uploads/*
+
+#nx
+.nx

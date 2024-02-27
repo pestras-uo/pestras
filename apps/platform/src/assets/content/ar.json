@@ -1107,7 +1107,7 @@
   "documents": "الملفات",
   "relatedTopics": "مواضيع مرتبطة",
   "add": "إضافة",
-  "appName": "نظام المرصد الحضري",
+  "appName": "منصة المرصد الحضري لبيانات مدينة عمان",
   "messages": {
     "network_disconnected": "لا يوجد اتصال بالشبكة",
     "loggedout": "تم تسجيل الخروج"
@@ -1282,7 +1282,7 @@
   "author": "Author",
   "data_engineer": "Data Engineer",
   "contributer": "Contributer",
-  "guest": "Guest",
+  "guest": "زائر",
   "personalInfo": "البيانات الشخصية",
   "account": "حسابي",
   "sign": "تسجيل الدخول",

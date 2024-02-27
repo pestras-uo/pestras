@@ -48,4 +48,21 @@ export class SigninPage {
         }
       });
   }
+
+  guestLogin(c: Record<string, any>) {
+    this.isLoading = true;
+
+    this.session.login({ username: 'Guest', password: 'Guest' })
+      .subscribe({
+        next: () => {
+          this.toast.msg(c['success'].default, { type: 'success' });
+          this.router.navigate(['main/workspace']);
+        },
+        error: err => {
+          console.error(err);
+          this.isLoading = false;
+          this.toast.msg(c['errors'][err.error] || c['errors'].default, { type: 'error'});
+        }
+      });
+  }
 }
