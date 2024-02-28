@@ -35,6 +35,8 @@ export class LineChartView implements OnChanges {
   ngOnChanges() {
     const { xAxis, series } = this.init(this.conf.options);
 
+    console.log(this.data.records);
+
     this.render(xAxis, series);
   }
 

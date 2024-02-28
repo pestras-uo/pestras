@@ -33,17 +33,19 @@ export function dataVizFilterData<T extends Record<string, any>>(data: T[], opt:
     ? opt.any
       ? data.filter(r => opt.filters.some(f => {
         const field = fields.find(field => field.name === f.field);
-
+        const operator = (f.operator.startsWith('$') ? f.operator.slice(1) : f.operator) as DataVizFilterOperator;
+        
         return field && field.kind === TypeKind.RANGE
-          ? dataVizFilters[rangeFilterOperatorsMap[f.operator]](r[f.field], f.value)
-          : dataVizFilters[f.operator](r[f.field], f.value)
+          ? dataVizFilters[rangeFilterOperatorsMap[operator]](r[f.field], f.value)
+          : dataVizFilters[operator](r[f.field], f.value)
       }))
       : data.filter(r => opt.filters.every(f => {
         const field = fields.find(field => field.name === f.field);
+        const operator = (f.operator.startsWith('$') ? f.operator.slice(1) : f.operator) as DataVizFilterOperator;
 
         return field && field.kind === TypeKind.RANGE
-          ? dataVizFilters[rangeFilterOperatorsMap[f.operator]](r[f.field], f.value)
-          : dataVizFilters[f.operator](r[f.field], f.value)
+          ? dataVizFilters[rangeFilterOperatorsMap[operator]](r[f.field], f.value)
+          : dataVizFilters[operator](r[f.field], f.value)
       }))
     : data;
 }
