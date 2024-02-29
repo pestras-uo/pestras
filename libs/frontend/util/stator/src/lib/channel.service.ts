@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { Inject, Injectable } from "@angular/core";
-import { Subject, filter, merge, shareReplay, startWith } from "rxjs";
+import { BehaviorSubject, Subject, filter, merge } from "rxjs";
 import { StatorConfig, STATOR_CONFIG } from "./types";
 
 const events = new Map<string, EventState>;
@@ -8,7 +8,7 @@ const events = new Map<string, EventState>;
 interface EventState<T = any> {
   prev?: T,
   next: T,
-  subject: Subject<T>;
+  subject: BehaviorSubject<T>;
 }
 
 export abstract class StatorEvent<T = any> {
@@ -35,7 +35,7 @@ export class StatorChannel {
     const e = events.get(name);
 
     if (!e) {
-      events.set(name, { next: '@', subject: new Subject<U>() });
+      events.set(name, { next: '@', subject: new BehaviorSubject<U>('@' as any) });
       return events.get(name) as EventState;
     }
 
@@ -68,11 +68,7 @@ export class StatorChannel {
         .map(evt => StatorChannel.getEvent<T>(evt))
         .filter(Boolean) as EventState<T>[];
 
-      return merge(...group.map(e => e.subject.pipe(
-        startWith(e.next),
-        filter(v => v !== '@'))
-      ))
-        .pipe(shareReplay(1));
+      return merge(...group.map(e => e.subject.pipe(filter(v => v !== '@'))));
     }
 
     const e = StatorChannel.getEvent<T>(event);
@@ -83,10 +79,6 @@ export class StatorChannel {
       return s.asObservable();
     }
 
-    return e.subject.pipe(
-      startWith(e.next),
-      filter(v => v !== '@'),
-      shareReplay(1)
-    );
+    return e.subject.pipe(filter(v => v !== '@'));
   }
 }
