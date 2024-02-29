@@ -90,6 +90,29 @@ export class BarChartView implements OnChanges {
     return { categories, series, valueFields };
   }
 
+  private labelOptions(options: BarDataVizOptions, field: Field) {
+    const label: BarSeriesOption['label'] = {
+      show: true,
+      formatter: function (param: any) {
+        return Math.round(+param.value) + (field.unit ? ` ${field.unit}` : '');
+      },
+      fontSize: 16,
+      color: this.dark ? '#DDF' : '#335',
+    }
+
+    if (options.horizontal) {
+      label.position = [10, '25%'];
+    } else {
+      label.align = 'left';
+      label.rotate = 90;
+      label.verticalAlign = 'middle';
+      label.position = 'insideBottom';
+      label.distance = 15;
+    }
+
+    return label
+  };
+
   /**
    * Render stack bar chart with multible series
    * @param dataset
@@ -101,24 +124,6 @@ export class BarChartView implements OnChanges {
     series: BarSeriesOption[],
     valueFields: Field[]
   ) {
-    const labelOptions: BarSeriesOption['label'] = {
-      show: true,
-      formatter: function (param: any) {
-        return '' + Math.round(+param.value);
-      },
-      fontSize: 16,
-      color: this.dark ? '#DDF' : '#335',
-    };
-
-    if (options.horizontal) {
-      labelOptions.position = [10, '25%'];
-    } else {
-      labelOptions.align = 'left';
-      labelOptions.rotate = 90;
-      labelOptions.verticalAlign = 'middle';
-      labelOptions.position = 'insideBottom';
-      labelOptions.distance = 15;
-    }
 
     this.chartOptions = {
       textStyle: { fontFamily: 'Almarai' },
@@ -127,9 +132,8 @@ export class BarChartView implements OnChanges {
         formatter: function (param: any) {
           return `
             <h4>${param.seriesName}</h4>
-            <p>${param.marker} <span style='margin-inline-end: 28px'>${
-            param.name
-          }</span> <strong>${Math.round(+param.value)}</strong></p>
+            <p>${param.marker} <span style='margin-inline-end: 28px'>${param.name
+            }</span> <strong>${Math.round(+param.value)}</strong></p>
           `;
         },
         backgroundColor: this.dark ? '#224' : '#FFF',
@@ -140,13 +144,13 @@ export class BarChartView implements OnChanges {
       legend:
         series.length > 1
           ? {
-              textStyle: {
-                color: this.dark ? '#DDF' : '#335',
-              },
-              // orient: 'vertical',
-              // left: 'right',
-              // top: 'center'
-            }
+            textStyle: {
+              color: this.dark ? '#DDF' : '#335',
+            },
+            // orient: 'vertical',
+            // left: 'right',
+            // top: 'center'
+          }
           : undefined,
       grid: {
         top: series.length > 1 ? '8%' : '3%',
@@ -157,49 +161,52 @@ export class BarChartView implements OnChanges {
       },
       xAxis: options.horizontal
         ? {
-            type: 'value',
-            boundaryGap: [0.2, 0.2],
-            alignTicks: true,
-            axisLabel: {
-              color: this.dark ? '#DDF' : '#335',
-            },
-          }
-        : {
-            type: 'category',
-            data: categories,
-            axisLabel: {
-              rotate: 45,
-              color: this.dark ? '#DDF' : '#335',
-            },
+          type: 'value',
+          boundaryGap: [0.2, 0.2],
+          alignTicks: true,
+          min: 0,
+          axisLabel: {
+            color: this.dark ? '#DDF' : '#335',
           },
+        }
+        : {
+          type: 'category',
+          data: categories,
+          axisLabel: {
+            rotate: 45,
+            color: this.dark ? '#DDF' : '#335',
+          },
+        },
       yAxis: !options.horizontal
         ? valueFields.map((f) => ({
-            type: 'value',
-            boundaryGap: [0.2, 0.2],
-            formatter: function (value: number) {
-              return value + ' ' + f.unit;
-            },
-            alignTicks: true,
-            axisLabel: {
-              color: this.dark ? '#DDF' : '#335',
-            },
-          }))
-        : {
-            type: 'category',
-            data: categories,
-            axisLabel: {
-              color: this.dark ? '#DDF' : '#335',
-            },
+          type: 'value',
+          boundaryGap: [0.2, 0.2],
+          formatter: function (value: number) {
+            return value + ' ' + f.unit;
           },
+          alignTicks: true,
+          min: 0,
+          axisLabel: {
+            color: this.dark ? '#DDF' : '#335',
+          },
+        }))
+        : {
+          type: 'category',
+          data: categories,
+          axisLabel: {
+            color: this.dark ? '#DDF' : '#335',
+          },
+        },
       series: series.map((s, i) => ({
         ...s,
-        label: labelOptions,
+        label: this.labelOptions(options, valueFields[i]),
         itemStyle: {
           color: new graphic.LinearGradient(0, 0, 0, 1, [
             { offset: 0, color: colors[i][0] },
             { offset: 0.5, color: colors[i][1] },
             { offset: 1, color: colors[i][2] },
           ]),
+          borderRadius: [8, 8, 0, 0]
         },
         emphasis: {
           itemStyle: {
