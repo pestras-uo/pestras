@@ -14,6 +14,8 @@ export abstract class StatorGroupState<T extends Record<string, any> = any> {
 
   public readonly loading$!: Observable<boolean>;
 
+  protected _data$ = this._data.asObservable();
+
   constructor(
     public readonly name: string,
     protected readonly key: keyof T,

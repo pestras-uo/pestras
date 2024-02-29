@@ -10,23 +10,25 @@ export async function search(
   user: User
 ) {
 
-  const match: Filter<Report> = user.orgunit === "*"
-    ? {}
-    : {
-      $or: [
-        { owner: user.serial },
-        {
-          $and: [
-            { 'access.orgunits': { $size: 0 } },
-            { 'access.users': { $size: 0 } },
-            { 'access.groups': { $size: 0 } }
-          ],
-        },
-        { 'access.orgunits': user.orgunit },
-        { 'access.users': user.serial },
-        { 'access.group': { $in: user.groups } }
-      ]
-    };
+  const match: Filter<Report> = user.is_guest
+    ? { 'access.allow_guests': true }
+    : user.orgunit === "*"
+      ? {}
+      : {
+        $or: [
+          { owner: user.serial },
+          {
+            $and: [
+              { 'access.orgunits': { $size: 0 } },
+              { 'access.users': { $size: 0 } },
+              { 'access.groups': { $size: 0 } }
+            ],
+          },
+          { 'access.orgunits': user.orgunit },
+          { 'access.users': user.serial },
+          { 'access.group': { $in: user.groups } }
+        ]
+      };
 
   return (await this.col.aggregate([
     { $match: query.search },

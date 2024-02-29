@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { EntityAccessViewComponent } from './entity-access/entity-access.view';
 import { ReactiveFormsModule } from '@angular/forms';
 import { ContraModule } from '@pestras/frontend/util/contra';
-import { PuiIcon, PuiPreloaderModule, PuiSelectInput, PuiToastModule, PuiUtilPipesModule } from '@pestras/frontend/ui';import { DialogModule } from '@angular/cdk/dialog';
+import { PuiCheckInput, PuiIcon, PuiPreloaderModule, PuiSelectInput, PuiToastModule, PuiUtilPipesModule } from '@pestras/frontend/ui';import { DialogModule } from '@angular/cdk/dialog';
 import { OrgunitsFeatureModule } from '@pestras/frontend/features/orgunits';
 import { UsersFeatureModule } from '@pestras/frontend/features/users';
 import { UsersGroupsFeatureModule } from '@pestras/frontend/features/users-groups';
@@ -24,6 +24,7 @@ import { NoDataPlaceholderWidget } from '@pestras/frontend/widgets/no-data-place
     PuiToastModule,
     PuiUtilPipesModule,
     PuiSelectInput,
+    PuiCheckInput,
     // Features
     OrgunitsFeatureModule,
     UsersFeatureModule,

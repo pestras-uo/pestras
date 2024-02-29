@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { BehaviorSubject, Observable, distinctUntilChanged, filter, map, shareReplay } from "rxjs";
+import { BehaviorSubject, Observable, distinctUntilChanged, map, shareReplay } from "rxjs";
 import { objUtil } from "@pestras/shared/util";
 import { DeepPartial, UpdateMode } from "./types";
 import { gate } from './util';
@@ -22,7 +22,6 @@ export abstract class StatorObjectState<T extends Record<string, any> = any> {
     this._data = new BehaviorSubject<T | null>(objUtil.freezeObj(_initState));
     this.data$ = this._data.pipe(
       gate(this.loading$, true),
-      filter(data => !!data),
       distinctUntilChanged(),
       shareReplay(1)
     );
@@ -60,7 +59,7 @@ export abstract class StatorObjectState<T extends Record<string, any> = any> {
   select<U>(path?: string): Observable<U | null>
   select<U>(path?: string): Observable<T | U | null> {
     return this.data$.pipe(
-      map(data => path ? objUtil.getValueFromPath(path, data): data),
+      map(data => path ? objUtil.getValueFromPath(path, data) : data),
       distinctUntilChanged(),
       shareReplay(1)
     );

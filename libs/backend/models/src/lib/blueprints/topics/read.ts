@@ -4,23 +4,25 @@ import { TopicsModel } from ".";
 import { Filter } from "mongodb";
 
 export async function getByBlueprint(this: TopicsModel, bp: string, user: User) {
-  const match: Filter<Topic> = user.orgunit === "*"
-    ? {}
-    : {
-      $or: [
-        { owner: user.serial },
-        {
-          $and: [
-            { 'access.orgunits': { $size: 0 } },
-            { 'access.users': { $size: 0 } },
-            { 'access.groups': { $size: 0 } }
-          ],
-        },
-        { 'access.orgunits': user.orgunit },
-        { 'access.users': user.serial },
-        { 'access.group': { $in: user.groups } }
-      ]
-    };
+  const match: Filter<Topic> = user.is_guest
+    ? { 'access.allow_guests': true }
+    : user.orgunit === "*"
+      ? {}
+      : {
+        $or: [
+          { owner: user.serial },
+          {
+            $and: [
+              { 'access.orgunits': { $size: 0 } },
+              { 'access.users': { $size: 0 } },
+              { 'access.groups': { $size: 0 } }
+            ],
+          },
+          { 'access.orgunits': user.orgunit },
+          { 'access.users': user.serial },
+          { 'access.group': { $in: user.groups } }
+        ]
+      };
 
   return this.col.aggregate<Topic>([
     { $match: { blueprin: bp } },
@@ -40,23 +42,25 @@ export async function getByBlueprint(this: TopicsModel, bp: string, user: User) 
 }
 
 export async function getByParent(this: TopicsModel, parent: string, user: User) {
-  const match: Filter<Topic> = user.orgunit === "*"
-    ? {}
-    : {
-      $or: [
-        { owner: user.serial },
-        {
-          $and: [
-            { 'access.orgunits': { $size: 0 } },
-            { 'access.users': { $size: 0 } },
-            { 'access.groups': { $size: 0 } }
-          ],
-        },
-        { 'access.orgunits': user.orgunit },
-        { 'access.users': user.serial },
-        { 'access.group': { $in: user.groups } }
-      ]
-    };
+  const match: Filter<Topic> = user.is_guest
+    ? { 'access.allow_guests': true }
+    : user.orgunit === "*"
+      ? {}
+      : {
+        $or: [
+          { owner: user.serial },
+          {
+            $and: [
+              { 'access.orgunits': { $size: 0 } },
+              { 'access.users': { $size: 0 } },
+              { 'access.groups': { $size: 0 } }
+            ],
+          },
+          { 'access.orgunits': user.orgunit },
+          { 'access.users': user.serial },
+          { 'access.group': { $in: user.groups } }
+        ]
+      };
 
   return this.col.aggregate<Topic>([
     { $match: { parent: parent ?? null } },

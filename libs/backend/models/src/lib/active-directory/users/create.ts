@@ -29,6 +29,7 @@ export async function create(
     fullname: data.fullname,
     email: data.email,
     mobile: data.mobile,
+    is_guest: false,
     create_date: date,
     last_modified: date
   };

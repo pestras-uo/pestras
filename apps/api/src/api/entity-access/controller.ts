@@ -7,6 +7,10 @@ export const controller = {
     res.json(await entityAccessModel.getByEntity(req.params.entity));
   },
 
+  async allowGuests(req: EntityAccessApi.allowGuestsReq, res: EntityAccessApi.allowGuestsRes) {
+    res.json(await entityAccessModel.allowGuests(req.params.entity, req.body.allow));
+  },
+
   async addOrgunit(req: EntityAccessApi.AddOrgunitReq, res: EntityAccessApi.AddOrgunitRes) {
     res.json(await entityAccessModel.addOrgunit(req.params.entity, req.params.orgunit));
   },

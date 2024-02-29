@@ -18,6 +18,12 @@ export class EntityAccessService {
     return this.http.get<EntityAccessApi.GetByEntity.Response>(path);
   }
 
+  allowGuests(params: EntityAccessApi.AllowGuests.Params, body: EntityAccessApi.AllowGuests.Body) {
+    const path = injectURLPayload(this.envServ.env.api + EntityAccessApi.AllowGuests.path, params);
+
+    return this.http.put<EntityAccessApi.AllowGuests.Response>(path, body);
+  }
+
   // Orgunits
   addOrgunit(params: EntityAccessApi.AddOrgunit.Params) {
     const path = injectURLPayload(this.envServ.env.api + EntityAccessApi.AddOrgunit.path, params);

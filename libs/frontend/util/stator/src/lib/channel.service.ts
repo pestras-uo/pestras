@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { Inject, Injectable } from "@angular/core";
-import { Subject, distinctUntilChanged, filter, merge, shareReplay, startWith } from "rxjs";
+import { Subject, filter, merge, shareReplay, startWith } from "rxjs";
 import { StatorConfig, STATOR_CONFIG } from "./types";
 
 interface EventState<T = any> {
@@ -68,7 +68,6 @@ export class StatorChannel {
         .filter(Boolean) as EventState<T>[];
 
       return merge(...group.map(e => e.subject.pipe(
-        distinctUntilChanged(),
         startWith(e.next),
         filter(v => v !== '@'))
       ))
@@ -84,7 +83,6 @@ export class StatorChannel {
     }
 
     return e.subject.pipe(
-      distinctUntilChanged(),
       startWith(e.next),
       filter(v => v !== '@'),
       shareReplay(1)

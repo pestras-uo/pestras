@@ -21,9 +21,7 @@ export class WorkspaceState extends StatorObjectState<Workspace> {
       .subscribe(() => this._setLoading(false));
 
     this.channel.select(SessionEnd)
-      .subscribe(() => {
-        this._clear();
-      });
+      .subscribe(() => this._clear());
   }
 
   private init() {

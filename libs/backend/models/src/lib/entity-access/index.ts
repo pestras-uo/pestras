@@ -10,6 +10,7 @@ export class EntityAccessModel extends Model<EntityAccess> {
   async create(entity: string) {
     await this.col.insertOne({
       entity,
+      allow_guests: false,
       orgunits: [],
       users: [],
       groups: []
@@ -20,6 +21,11 @@ export class EntityAccessModel extends Model<EntityAccess> {
 
   async delete(entity: string) {
     await this.col.deleteOne({ entity });
+    return true;
+  }
+
+  async allowGuests(entity: string, allow: boolean) {
+    await this.col.updateOne({ entity }, { $set: { allow_guests: allow } });
     return true;
   }
 

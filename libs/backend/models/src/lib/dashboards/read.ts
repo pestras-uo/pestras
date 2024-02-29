@@ -9,25 +9,27 @@ export async function search(
   user: User
 ) {
 
-  const match: Filter<Dashboard> = user.orgunit === "*"
-    ? {}
-    : {
-      $or: [
-        { owner: user.serial },
-        {
-          $and: [
-            { 'access.orgunits': { $size: 0 } },
-            { 'access.users': { $size: 0 } },
-            { 'access.groups': { $size: 0 } }
-          ],
-        },
-        { 'access.orgunits': user.orgunit },
-        { 'access.users': user.serial },
-        { 'access.group': { $in: user.groups } }
-      ]
-    };
+  const match: Filter<Dashboard> = user.is_guest
+    ? { 'access.allow_guests': true }
+    : user.orgunit === "*"
+      ? {}
+      : {
+        $or: [
+          { owner: user.serial },
+          {
+            $and: [
+              { 'access.orgunits': { $size: 0 } },
+              { 'access.users': { $size: 0 } },
+              { 'access.groups': { $size: 0 } }
+            ],
+          },
+          { 'access.orgunits': user.orgunit },
+          { 'access.users': user.serial },
+          { 'access.group': { $in: user.groups } }
+        ]
+      };
 
-  return (await this.col.aggregate([
+  const data = (await this.col.aggregate([
     { $match: query.search },
     {
       $lookup: {
@@ -58,7 +60,9 @@ export async function search(
         results: '$results'
       }
     }
-  ]).toArray())[0] as ApiQueryResults<Dashboard>;
+  ]).toArray())[0];
+
+  return (data ?? { count: 0, results: [] }) as ApiQueryResults<Dashboard>
 }
 
 
@@ -70,23 +74,25 @@ export function getByTopic(
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   projection?: any
 ) {
-  const match: Filter<Dashboard> = user.orgunit === "*"
-    ? {}
-    : {
-      $or: [
-        { owner: user.serial },
-        {
-          $and: [
-            { 'access.orgunits': { $size: 0 } },
-            { 'access.users': { $size: 0 } },
-            { 'access.groups': { $size: 0 } }
-          ],
-        },
-        { 'access.orgunits': user.orgunit },
-        { 'access.users': user.serial },
-        { 'access.group': { $in: user.groups } }
-      ]
-    };
+  const match: Filter<Dashboard> = user.is_guest
+    ? { 'access.allow_guests': true }
+    : user.orgunit === "*"
+      ? {}
+      : {
+        $or: [
+          { owner: user.serial },
+          {
+            $and: [
+              { 'access.orgunits': { $size: 0 } },
+              { 'access.users': { $size: 0 } },
+              { 'access.groups': { $size: 0 } }
+            ],
+          },
+          { 'access.orgunits': user.orgunit },
+          { 'access.users': user.serial },
+          { 'access.group': { $in: user.groups } }
+        ]
+      };
 
   return this.col.aggregate<Dashboard>([
     { $match: { topic } },

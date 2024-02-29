@@ -1,4 +1,5 @@
 {
+  "allowGuestsAccess": "سماح الوصول للزائرين",
   "colorsList": [
     { "name": "أبيض", "value": "white" },
     { "name": "أسود", "value": "black" },

@@ -3,9 +3,9 @@ import { Dialog, DialogRef } from '@angular/cdk/dialog';
 import { Component, Input, OnInit, TemplateRef } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
 import { EntityAccessState } from '@pestras/frontend/state';
-import { ToastService } from '@pestras/frontend/ui';
+import { ToastService, untilDestroyed } from '@pestras/frontend/ui';
 import { EntityAccess } from '@pestras/shared/data-model';
-import { Observable } from 'rxjs';
+import { Observable, tap } from 'rxjs';
 
 @Component({
   selector: 'pestras-entity-access',
@@ -13,8 +13,11 @@ import { Observable } from 'rxjs';
 })
 export class EntityAccessViewComponent implements OnInit {
 
-  readonly control = new FormControl('', { validators: Validators.required, nonNullable: true });
+  private ud = untilDestroyed();
 
+  readonly control = new FormControl('', { validators: Validators.required, nonNullable: true });
+  
+  allowCtrl!: FormControl<boolean>;
   access$!: Observable<EntityAccess | null>;
   preloader = false;
   dialogRef: DialogRef | null = null;
@@ -29,7 +32,14 @@ export class EntityAccessViewComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.access$ = this.state.select(this.entity);
+    this.access$ = this.state.select(this.entity)
+      .pipe(tap(access => {
+        this.allowCtrl = new FormControl(!!access?.allow_guests, { nonNullable: true });
+
+        this.allowCtrl.valueChanges
+          .pipe(this.ud())
+          .subscribe(v => this.allowGuests(v));
+      }))
   }
 
   openDialog(tmp: TemplateRef<unknown>, type: string) {
@@ -51,6 +61,16 @@ export class EntityAccessViewComponent implements OnInit {
 
   mapEntity<T extends { serial: string; name?: string; fullname?: string; }>(entity: T) {
     return { name: entity.name ?? entity.fullname, value: entity.serial };
+  }
+
+  allowGuests(allow: boolean) {
+    this.preloader = true;
+
+    this.state.allowGuests(this.entity, allow)
+      .subscribe({
+        next: () => this.preloader = false,
+        error: () => this.preloader = false
+      });
   }
 
   add(c: Record<string, any>, type: string) {

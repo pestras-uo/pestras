@@ -14,6 +14,17 @@ export namespace EntityAccessApi {
     export type Response = EntityAccess;
   }
   
+  // PUT
+  export namespace AllowGuests {
+    export const path = basePath + '/:entity/guests';
+
+    export interface Params { entity: string; }
+
+    export interface Body { allow: boolean; }
+
+    export type Response = EntityAccess;
+  }
+  
   // POST
   export namespace AddOrgunit {
     export const path = basePath + '/:entity/orgunits/:orgunit';

@@ -27,6 +27,7 @@
           </h5>
           <div class="grow"></div>
           <button
+            *ngIf="(roles.REPORTER | hasRoles)"
             class="btn-small btn-icon btn-round"
             (click)="openDialog(addTmp)"
           >
@@ -69,6 +70,7 @@
             <ng-template #noData>
               <no-data-placeholder-widget
                 [actionName]="c['addNew']"
+                [showAction]="(roles.REPORTER | hasRoles)"
                 (action)="openDialog(addTmp)"
                 >{{c['noDataMsg']}}</no-data-placeholder-widget
               >

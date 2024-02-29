@@ -4,6 +4,7 @@ import { Component, TemplateRef } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
 import { DashboardsState, SessionState } from '@pestras/frontend/state';
 import { ToastService } from '@pestras/frontend/ui';
+import { Role } from '@pestras/shared/data-model';
 import { BehaviorSubject, combineLatest, distinctUntilChanged, switchMap, tap } from 'rxjs';
 
 @Component({
@@ -12,6 +13,7 @@ import { BehaviorSubject, combineLatest, distinctUntilChanged, switchMap, tap } 
   styleUrls: ['./main.page.scss'],
 })
 export class MainPageComponent {
+  readonly roles = Role;
   readonly tab$ = new BehaviorSubject('public');
   readonly page$ = new BehaviorSubject(1);
   readonly pageSize = 10;

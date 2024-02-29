@@ -23,6 +23,11 @@ export class EntityAccessState extends StatorEntitiesState<EntityAccess> {
     return this.service.getByEntity({ entity });
   }
 
+  allowGuests(entity: string, allow: boolean) {
+    return this.service.allowGuests({ entity }, { allow })
+      .pipe(tap(() => this._update(entity, { allow_guests: allow })));
+  }
+
   addOrgunit(entity: string, orgunit: string) {
     return this.service.addOrgunit({ entity, orgunit })
       .pipe(tap(() => this._update(entity, t => {

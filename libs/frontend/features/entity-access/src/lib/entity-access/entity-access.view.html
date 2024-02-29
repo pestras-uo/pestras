@@ -5,6 +5,14 @@
 
   <div class="divider mbs-4 mbe-8"></div>
 
+  <pui-check-input
+    *ngIf="allowCtrl"
+    class="mbe-6"
+    [class.disabled]="preloader"
+    [label]="c['allowGuestsAccess']"
+    [formControl]="allowCtrl"
+  ></pui-check-input>
+
   <div class="grid cols-3 gap-4" *ngIf="access$ | async as access">
     <!--  orgunits -->
     <div class="card">

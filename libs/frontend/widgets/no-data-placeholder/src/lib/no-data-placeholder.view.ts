@@ -19,7 +19,7 @@ import { CommonModule } from '@angular/common';
       <ng-content></ng-content>
     </p>
     <button
-      *ngIf="actionName"
+      *ngIf="actionName && showAction"
       class="btn-primary btn-round"
       (click)="action.emit()"
     >

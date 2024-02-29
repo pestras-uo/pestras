@@ -1,4 +1,5 @@
 {
+  "allowGuestsAccess": "Allow Guests Access",
   "colorsList": [
     { "name": "White", "value": "white" },
     { "name": "Black", "value": "black" },

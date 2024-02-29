@@ -37,6 +37,8 @@ export interface User extends UserProfile {
   state: UserState;
   
   avatar?: string | null; // image
+
+  is_guest: boolean;
   
   create_date: Date;
   last_modified: Date;

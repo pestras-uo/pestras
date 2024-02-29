@@ -8,6 +8,11 @@ export const entityAccessRouter = Router()
     apiAuth(),
     controller.getByEntity
   )
+  .put(
+    '/:entity/guests',
+    apiAuth(),
+    controller.allowGuests
+  )
   .post(
     '/:entity/orgunits/:orgunit',
     apiAuth(),

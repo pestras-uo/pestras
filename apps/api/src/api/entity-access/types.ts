@@ -8,6 +8,9 @@ export namespace EntityAccessApi {
   export type GetByEntityReq = Request<{ entity: string; }>;
   export type GetByEntityRes = Response<EntityAccess, UserSession>;
 
+  export type allowGuestsReq = Request<{ entity: string; }, unknown, { allow: boolean; }>;
+  export type allowGuestsRes = Response<boolean, UserSession>;
+
   export type AddOrgunitReq = Request<{ entity: string; orgunit: string }>;
   export type AddOrgunitRes = Response<boolean, UserSession>;
 

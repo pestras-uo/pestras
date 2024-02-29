@@ -39,6 +39,7 @@
   <ng-template #noData>
     <no-data-placeholder-widget
       [actionName]="c['addNew']"
+      [showAction]="roles.REPORTER | hasRoles"
       (action)="openDialog(addTmp)"
       >{{c['noDataMsg']}}</no-data-placeholder-widget
     >

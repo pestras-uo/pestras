@@ -1,6 +1,8 @@
 export interface EntityAccess {
-  // topic, dashboard or report
+  /** topic, dashboard or report */
   entity: string;
+  /** allow guest accenss */
+  allow_guests: boolean;
   /** grant access to specific orgunits */
   orgunits: string[];
   /** grant access to specific users */
