@@ -3,6 +3,8 @@ import { Inject, Injectable } from "@angular/core";
 import { Subject, filter, merge, shareReplay, startWith } from "rxjs";
 import { StatorConfig, STATOR_CONFIG } from "./types";
 
+const events = new Map<string, EventState>;
+
 interface EventState<T = any> {
   prev?: T,
   next: T,
@@ -13,12 +15,11 @@ export abstract class StatorEvent<T = any> {
   static group: typeof StatorEvent[] = [];
   static meta = 'Unknown Event';
 
-  constructor(readonly payload?: T) { }
+  constructor(readonly payload?: T) {}
 }
 
 @Injectable()
 export class StatorChannel {
-  private static events = new Map<string, EventState>;
 
   constructor(@Inject(STATOR_CONFIG) private config: StatorConfig) { }
 
@@ -31,11 +32,11 @@ export class StatorChannel {
     if (name === null)
       return null;
 
-    const e = this.events.get(name);
+    const e = events.get(name);
 
     if (!e) {
-      this.events.set(name, { next: '@', subject: new Subject<U>() });
-      return this.events.get(name) as EventState;
+      events.set(name, { next: '@', subject: new Subject<U>() });
+      return events.get(name) as EventState;
     }
 
     return e as EventState<U>;

@@ -97,8 +97,6 @@ export class SessionState extends StatorObjectState<User> {
           this._set(res.user);
           
           this.channel.dispatch(new SessionStart(res.user));
-          
-
         }
       }));
   }

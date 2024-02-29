@@ -32,7 +32,7 @@ export class UsersState extends StatorCollectionState<User> {
     // when session profile, username or avater changes update user
     this.channel.select(SessionChange)
       .subscribe(session => {
-        const user = this.get(session.serial);
+        const user = this.get(session?.serial);
 
         if (user)
           this._upsert(user, 'replace');
