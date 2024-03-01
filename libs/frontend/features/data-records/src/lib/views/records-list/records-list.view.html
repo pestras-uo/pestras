@@ -93,14 +93,16 @@
       <div class="card shadow-4 w-5">
         <div class="card-body list list-actions p-0">
           <!-- export options -->
-          <h5 class="pi-4 mbs-4 mbe-2 primary">{{c['export']}}</h5>
-          <div
-            class="list-item hover-surface2 pi-4"
-            (click)="exportData(); optionsList.hide()"
-          >
-            <i puiIcon="export" size="small"></i>
-            <p>{{c['excel']}}</p>
-          </div>
+          <ng-container *ngIf="(null | isGuest) === false">
+            <h5 class="pi-4 mbs-4 mbe-2 primary">{{c['export']}}</h5>
+            <div
+              class="list-item hover-surface2 pi-4"
+              (click)="exportData(); optionsList.hide()"
+            >
+              <i puiIcon="export" size="small"></i>
+              <p>{{c['excel']}}</p>
+            </div>
+          </ng-container>
           <!-- display options -->
           <ng-container *ngIf="hasCardsView || hasTreeView">
             <h5 class="pi-4 mbs-4 mbe-2 primary">{{c['view']}}</h5>

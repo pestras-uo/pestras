@@ -5,25 +5,32 @@ import { InOrgunitPipe } from './pipes/in-orgunit.pipe';
 import { InGroupsPipe } from './pipes/in-groups.pipe';
 import { SessionDirective } from './directives/session.directive';
 import { SessionIsPipe } from './pipes/session-is.pipe';
+import { IsGuestPipe } from './pipes/is-guest.pipe';
 
 
 
 @NgModule({
-  declarations: [
-    HasRolesPipe,
-    InOrgunitPipe,
-    InGroupsPipe,
-    SessionIsPipe,
-    SessionDirective
-  ],
   imports: [
     CommonModule
   ],
-  exports: [
+  declarations: [
+    // pipes
     HasRolesPipe,
     InOrgunitPipe,
     InGroupsPipe,
     SessionIsPipe,
+    IsGuestPipe,
+    // directives
+    SessionDirective
+  ],
+  exports: [
+    // pipes
+    HasRolesPipe,
+    InOrgunitPipe,
+    InGroupsPipe,
+    SessionIsPipe,
+    IsGuestPipe,
+    // directives
     SessionDirective
   ]
 })
