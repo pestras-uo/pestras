@@ -12,15 +12,17 @@
 
   <img class="short mi-auto p-logo" src="assets/imgs/logo.png" alt="" />
 
-  <app-avatar
-    class="cursor-pointer"
-    *session="let user"
-    [serial]="user.serial"
-    [size]="full ? 'huge':'small'"
-    [imageOnly]="!full"
-    vertical
-    (click)="nav(['/main/profile'])"
-  ></app-avatar>
+  <ng-container *session="let user">
+    <app-avatar
+      class="cursor-pointer"
+      *ngIf="!user.is_guest"
+      [serial]="user.serial"
+      [size]="full ? 'huge':'small'"
+      [imageOnly]="!full"
+      vertical
+      (click)="nav(['/main/profile'])"
+    ></app-avatar>
+  </ng-container>
 
   <div class="grow"></div>
 

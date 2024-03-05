@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { RegionsState } from '@pestras/frontend/state';
+import { OrgunitsState, RegionsState } from '@pestras/frontend/state';
 import { ThemeService, ToastService } from '@pestras/frontend/ui';
 import { ContraService } from '@pestras/frontend/util/contra';
 import { SSEService } from '@pestras/frontend/state';
@@ -22,7 +22,7 @@ export class AppComponent implements OnInit {
     protected readonly toast: ToastService,
     protected readonly sse: SSEService,
     protected readonly regions: RegionsState,
-    protected readonly orgunits: RegionsState,
+    protected readonly orgunits: OrgunitsState,
     protected readonly themeService: ThemeService
   ) { }
 
